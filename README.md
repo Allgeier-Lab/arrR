@@ -15,7 +15,7 @@ You can install the released version of coRal from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-remotes::install_github("allgeier-lab/coRal")
+remotes::install_github("Allgeier-Lab/coRAL")
 ```
 
 ## Example
