@@ -4,10 +4,12 @@
 \alias{run_simulation}
 \title{run_simulation}
 \usage{
-run_simulation(parameters, max_i, verbose = FALSE)
+run_simulation(parameters, reef = NULL, max_i, verbose = FALSE)
 }
 \arguments{
 \item{parameters}{List with all parameters.}
+
+\item{reef}{Matrix with coordinates of reef.}
 
 \item{max_i}{Maximum numbers of ticks to run.}
 
@@ -27,8 +29,9 @@ Parameters include ...
 }
 \examples{
 \dontrun{
-parameters <- read.csv(file = "inst/parameters_example.csv")
-result <- run_simulation(parameters = parameters, max_i = 10)
+
+run_simulation()
+
 }
 
 }
