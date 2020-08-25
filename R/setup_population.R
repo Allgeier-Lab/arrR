@@ -13,7 +13,7 @@
 #'
 #' Parameters include ...
 #'
-#' @return data frame
+#' @return data.table
 #'
 #' @examples
 #' reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -64,10 +64,12 @@ setup_population <- function(environment, starting_values, parameters, verbose =
   reserves <- n_body / 100 * size$weight * 0.05
 
   # combine to final data frame
-  population <- data.frame(i = 0, id = 1:starting_values$n, x = x, y = y,
-                           size = size$size, weight = size$weight,
-                           aen = aen, n_body = n_body,
-                           reserves = reserves, reserves_max = reserves_max)
+  population <- data.table::data.table(i = 0, id = 1:starting_values$n,
+                                       x = x, y = y,
+                                       size = size$size, weight = size$weight,
+                                       aen = aen, n_body = n_body,
+                                       reserves = reserves, reserves_max = reserves_max,
+                                       status = "living")
 
   return(population)
 }

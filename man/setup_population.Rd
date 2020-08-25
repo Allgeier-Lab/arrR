@@ -16,7 +16,7 @@ setup_population(environment, starting_values, parameters, verbose = TRUE)
 \item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data frame
+data.table
 }
 \description{
 Initiate fish population.
