@@ -16,7 +16,7 @@
 #'
 #' Parameters include ...
 #'
-#' @return data frame
+#' @return RasterBrick
 #'
 #' @examples
 #' reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -38,6 +38,13 @@ setup_environment <- function(extent, grain, reefs = NULL,
                               starting_values, parameters,
                               verbose = TRUE, ...) {
 
+  # print progress
+  if (verbose) {
+
+    message("Creating environment with extent(", extent[1], ", ", extent[2], ")...")
+
+  }
+
   # calculate extent of environment with the center being (0,0)
   extent_x <- c(0 - extent[1] / 2, 0 + extent[1] / 2)
   extent_y <- c(0 - extent[2] / 2, 0 + extent[2] / 2)
@@ -54,7 +61,7 @@ setup_environment <- function(extent, grain, reefs = NULL,
                                      ymn = extent_y[1], ymx = extent_y[2],
                                      vals = NA, ...)
 
-  # setup seagrass values
+  # setup environmental values
   environ_template <- int_setup_envir_values(object = environ_template,
                                              starting_values = starting_values,
                                              parameters = parameters)
@@ -62,26 +69,29 @@ setup_environment <- function(extent, grain, reefs = NULL,
   # AR coords provided
   if (!is.null(reefs)) {
 
+    # print progress
+    if (verbose) {
+
+      message("Creating ", nrow(reefs), " artifical reef cells...")
+
+    }
+
     # check if matrix with coords is provided
     if (!inherits(x = reefs, what = "matrix") | ncol(reefs) != 2) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
+
     }
 
-    # print progress
-    if (verbose) {
-
-      message("Setting up artifical reefs...")
-    }
-
-    # get cell ids of provided coordinates
+    # set AR = 1 and non-AR = 0 and reset environmental values to 0
     environ_template <- int_setup_reefs(object = environ_template, xy = reefs)
 
   # no AR coords provided
   } else {
 
     message("No artifical reefs present...")
+
   }
 
   return(environ_template)

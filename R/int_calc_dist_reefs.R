@@ -50,6 +50,7 @@ int_calc_dist_reefs <- function(object) {
       if (dist_temp < dist_min) {
 
         dist_min <- dist_temp
+
       }
     }
 

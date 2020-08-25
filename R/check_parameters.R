@@ -64,5 +64,6 @@ check_parameters <- function(starting_values, parameters) {
     # return warning
     warning("The following parameters are missing: ", missing,
             call. = FALSE)
+
   }
 }

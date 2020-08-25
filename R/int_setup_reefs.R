@@ -6,9 +6,10 @@
 #' @param xy 2-Column matrix with coordinates of artificial reefs
 #'
 #' @details
-#' Internal function to set cell values of AR to 1.
+#' Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
+#' environmental values of AR to 0.
 #'
-#' @return vector
+#' @return RasterBrick
 #'
 #' @aliases setup_reefs
 #' @rdname setup_reefs
@@ -21,7 +22,7 @@ int_setup_reefs <- function(object, xy) {
   # get cell ids of provided coordinates
   cell_ids <- raster::cellFromXY(object = object, xy = xy)
 
-  # set biomass values of AR cells to 0
+  # set environmental values of AR cells to 0
   object[cell_ids] <- 0
 
   # add reef layer

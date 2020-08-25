@@ -2,7 +2,6 @@
 #'
 #' @description Initiate fish population.
 #'
-#' @param n Integer with number of individuals.
 #' @param environment Environment created with \code{\link{setup_environment}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -28,14 +27,20 @@
 #' input_environment <- setup_environment(extent = c(100, 100), grain = 1,
 #' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 #'
-#' input_population <- setup_population(n = 50, environment = input_environment,
+#' input_population <- setup_population(environment = input_environment,
 #' starting_values = starting_values, parameters = parameters)
 #'
 #' @aliases setup_population
 #' @rdname setup_population
 #'
 #' @export
-setup_population <- function(n, environment, starting_values, parameters, verbose = TRUE) {
+setup_population <- function(environment, starting_values, parameters, verbose = TRUE) {
+
+  if (verbose) {
+
+    message("Creating ", starting_values$n, " individuals within ", raster::extent(environment), "...")
+
+  }
 
   # create random coordinates within environment
   x <- stats::runif(n = starting_values$n, min = raster::xmin(environment),
@@ -45,27 +50,24 @@ setup_population <- function(n, environment, starting_values, parameters, verbos
                     max = raster::ymax(environment))
 
   # calculate size and weight
-  size <- int_calc_size(n = n, parameters = parameters)
+  size <- int_calc_size(starting_values = starting_values,
+                        parameters = parameters)
 
-  # what is this?
+  # MH: What is this?
+  # MH: Why are this values not treated as parameters?
   n_body <- 2.999
   aen <-  0.75
 
-  # where do these numbers/parameters come from?
-  # why is reserves and reserves_max identical?
+  # MH: Where do these formula come from?
+  # MH: Why is reserves_max = reserves?
   reserves_max <- n_body / 100 * size$weight * 0.05
-  reserves <- n_body / 100 * size$weight * 0.05   ;
+  reserves <- n_body / 100 * size$weight * 0.05
 
   # combine to final data frame
-  population <- data.frame(i = 0, id = 1:n, x = x, y = y,
+  population <- data.frame(i = 0, id = 1:starting_values$n, x = x, y = y,
                            size = size$size, weight = size$weight,
                            aen = aen, n_body = n_body,
                            reserves = reserves, reserves_max = reserves_max)
-
-  if (verbose) {
-
-    message("Created ", n, " individuals within ", raster::extent(environment), "...")
-  }
 
   return(population)
 }

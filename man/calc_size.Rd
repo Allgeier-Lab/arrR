@@ -5,12 +5,12 @@
 \alias{calc_size}
 \title{calc_size}
 \usage{
-int_calc_size(n, parameters)
+int_calc_size(starting_values, parameters)
 }
 \arguments{
-\item{object}{Raster* object}
+\item{starting_values}{List with all starting value parameters.}
 
-\item{xy}{2-Column matrix with coordinates of artificial reefs}
+\item{parameters}{List with all model parameters.}
 }
 \value{
 vector
@@ -19,6 +19,6 @@ vector
 Internal function
 }
 \details{
-Internal function to set biomass cell values of non-ARs cells.
+Internal function to calculate size and weight of individuals.
 }
 \keyword{internal}

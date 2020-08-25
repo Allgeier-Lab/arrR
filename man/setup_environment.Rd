@@ -30,7 +30,7 @@ setup_environment(
 \item{...}{Additional arguments passed on to \code{\link{raster}}.}
 }
 \value{
-data frame
+RasterBrick
 }
 \description{
 Initiate environment

@@ -21,16 +21,15 @@ int_setup_envir_values <- function(object, starting_values, parameters) {
   # calculate aboveground biomass
   ag_biomass <- starting_values$ag_biomass * parameters$sg_density
 
-  # calculate belowground biomass
-  # this is set per m^2 based on Layman 2016 data
+  # calculate belowground biomass (Layman 2016)
+  # MH: Why are these values no model parameters?
   bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941
 
-  # calculate detrital
+  # calculate detrital (Layman et al. 2016)
   detrital_pool <- (ag_biomass * parameters$gamma_ag +
                       bg_biomass * parameters$gamma_bg) * parameters$detrital_fraction
 
-  # start with moderate pools to ensure that there are sufficient nutrients for preliminary growth;
-  # roughly estimated for realistic values based on Lee & Dunton 2000
+  # Value based on (Lee & Dunton 2000)
   wc_nutrients <- parameters$wc_nutrients
 
   # create RasterLayer

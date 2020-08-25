@@ -2,11 +2,11 @@
 #'
 #' @description Internal function
 #'
-#' @param object Raster* object
-#' @param xy 2-Column matrix with coordinates of artificial reefs
+#' @param starting_values List with all starting value parameters.
+#' @param parameters List with all model parameters.
 #'
 #' @details
-#' Internal function to set biomass cell values of non-ARs cells.
+#' Internal function to calculate size and weight of individuals.
 #'
 #' @return vector
 #'
@@ -16,20 +16,32 @@
 #' @keywords internal
 #'
 #' @export
-int_calc_size <- function(n, parameters) {
+int_calc_size <- function(starting_values, parameters) {
 
-  v <- 10 # why is variance set to 10?
-  u <- log(parameters$mean_size ^ 2 / sqrt(v + parameters$mean_size ^ 2))
-  o <- sqrt(log(1 + (v / (parameters$mean_size ^ 2))))
+  # MH: Why is the variance set to v = 10?
+  variance <- 10
 
-  ns <- stats::rnorm(n = n, mean = u, sd = o)
+  # MH: Where is this function coming from?
+  norm_mean <- log((parameters$mean_size ^ 2) / sqrt(variance + (parameters$mean_size ^ 2)))
+  norm_sd <- sqrt(log(1 + (variance / (parameters$mean_size ^ 2))))
 
-  body_length <- exp(ns)
+  # get random numbers from norm distribution
+  norm_random <- stats::rnorm(n = starting_values$n, mean = norm_mean, sd = norm_sd)
 
-  body_length <- ifelse(test = ns == 0, yes = 20, no = body_length)
+  # calculate body length based on random number
+  # MH: Why is the body length the exp of the random number?
+  body_length <- exp(norm_random)
 
+  # set body length to minimum 20
+  # MH: Is that even mathematical possible? I guess it depends on norm_mean and norm_sd
+  body_length <- ifelse(test = body_length == 0, yes = 20, no = body_length)
+
+  # calculate weight of individuals based on body length
+  # MH: Where is this formula coming from?
   weight <- parameters$a_grunt * (body_length ^ parameters$b_grunt)
 
+  # caluclate the size of individuals
+  # MH: Why is size different than body length?
   size <- (2 * body_length / 40)
 
   return(list(size = size, weight = weight))

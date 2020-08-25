@@ -13,12 +13,13 @@ int_setup_reefs(object, xy)
 \item{xy}{2-Column matrix with coordinates of artificial reefs}
 }
 \value{
-vector
+RasterBrick
 }
 \description{
 Internal function
 }
 \details{
-Internal function to set cell values of AR to 1.
+Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
+environmental values of AR to 0.
 }
 \keyword{internal}
