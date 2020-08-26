@@ -18,16 +18,16 @@
 #' @export
 int_setup_envir_values <- function(object, starting_values, parameters) {
 
-  # calculate aboveground biomass
+  # calculate above ground biomass
   ag_biomass <- starting_values$ag_biomass * parameters$sg_density
 
-  # calculate belowground biomass (Layman 2016)
+  # calculate below ground biomass (Layman 2016)
   # MH: Why are these values no model parameters?
   bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941
 
   # calculate detrital (Layman et al. 2016)
-  detrital_pool <- (ag_biomass * parameters$gamma_ag +
-                      bg_biomass * parameters$gamma_bg) * parameters$detrital_fraction
+  detrital_pool <- (ag_biomass * parameters$ag_gamma +
+                      bg_biomass * parameters$bg_gamma) * parameters$detrital_fraction
 
   # Value based on (Lee & Dunton 2000)
   wc_nutrients <- parameters$wc_nutrients

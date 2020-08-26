@@ -27,7 +27,7 @@
 #' starting_values <- read_parameters(file = starting_values, sep = ";")
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
-#' input_environment <- setup_environment(extent = c(100, 100), grain = 1,
+#' environment <- setup_environment(extent = c(50, 50), grain = 1,
 #' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 #'
 #' @aliases setup_environment

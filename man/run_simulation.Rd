@@ -4,16 +4,30 @@
 \alias{run_simulation}
 \title{run_simulation}
 \usage{
-run_simulation(parameters, reef = NULL, max_i, verbose = FALSE)
+run_simulation(
+  environment,
+  population,
+  starting_values,
+  parameters,
+  max_i,
+  min_per_i = 120,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{parameters}{List with all parameters.}
+\item{environment}{RasterBrick with environment created with \code{\link{setup_environment}}.}
 
-\item{reef}{Matrix with coordinates of reef.}
+\item{population}{Data frame population created with \code{\link{setup_population}}.}
 
-\item{max_i}{Maximum numbers of ticks to run.}
+\item{starting_values}{List with all starting value parameters.}
 
-\item{verbose}{If TRUE, prints progress report.}
+\item{parameters}{List with all model parameters.}
+
+\item{max_i}{Integer with maximum number of simulation time steps.}
+
+\item{min_per_i}{Integer to specify minutes per i.}
+
+\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
 data frame
