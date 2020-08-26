@@ -38,15 +38,15 @@ setup_population <- function(environment, starting_values, parameters, verbose =
 
   if (verbose) {
 
-    message("Creating ", starting_values$n, " individuals within ", raster::extent(environment), "...")
+    message("Creating ", starting_values$pop_n, " individuals within ", raster::extent(environment), "...")
 
   }
 
   # create random coordinates within environment
-  x <- stats::runif(n = starting_values$n, min = raster::xmin(environment),
+  x <- stats::runif(n = starting_values$pop_n, min = raster::xmin(environment),
                     max = raster::xmax(environment))
 
-  y <- stats::runif(n = starting_values$n, min = raster::ymin(environment),
+  y <- stats::runif(n = starting_values$pop_n, min = raster::ymin(environment),
                     max = raster::ymax(environment))
 
   # calculate size and weight
@@ -64,7 +64,7 @@ setup_population <- function(environment, starting_values, parameters, verbose =
   reserves <- n_body / 100 * size$weight * 0.05
 
   # combine to final data frame
-  population <- data.table::data.table(i = 0, id = 1:starting_values$n,
+  population <- data.table::data.table(id = 1:starting_values$pop_n, age = 0,
                                        x = x, y = y,
                                        size = size$size, weight = size$weight,
                                        aen = aen, n_body = n_body,

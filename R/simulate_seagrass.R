@@ -20,8 +20,8 @@
 simulate_seagrass <- function(environment, starting_values, parameters, min_per_i,
                               verbose = TRUE) {
 
-  # get all environmental values of non-reef cells
-  environment_dt <- int_as_data_table_ras(environment)
+  # # get all environmental values of non-reef cells
+  # environment_dt <- int_as_data_table_ras(environment)
 
   # environment_dt <- environment_dt[reef == 0] # get rid of reef cells here?
 
@@ -36,10 +36,10 @@ simulate_seagrass <- function(environment, starting_values, parameters, min_per_
                                      to = "umol") / 10000
 
   # convert wet to dry biomass
-  biomass_dry_ag <- int_convert_dry(x = environment_dt$ag_biomass,
+  biomass_dry_ag <- int_convert_dry(x = environment$ag_biomass[],
                                     what = "above")
 
-  biomass_dry_bg <- int_convert_dry(x = environment_dt$bg_biomass,
+  biomass_dry_bg <- int_convert_dry(x = environment$bg_biomass[],
                                     what = "below")
 
   # MH: Why is this not a parameter as ag?
@@ -95,20 +95,20 @@ simulate_seagrass <- function(environment, starting_values, parameters, min_per_
                                       verbose = verbose)
 
   # update environment RasterBrick
-  environment$ag_biomass <- environment_dt$ag_biomass + seagrass_ag$biomass_wet +
+  environment$ag_biomass <- environment$ag_biomass + seagrass_ag$biomass_wet +
     seagrass_accl$biomass_wet
 
-  environment$bg_biomass <- environment_dt$bg_biomass + seagrass_bg$biomass_wet
+  environment$bg_biomass <- environment$bg_biomass + seagrass_bg$biomass_wet
 
-  environment$detrital_pool <- environment_dt$detrital_pool + seagrass_ag$detritus +
+  environment$detrital_pool <- environment$detrital_pool + seagrass_ag$detritus +
     seagrass_bg$detritus + seagrass_accl$detritus
 
-  environment$wc_nutrients <- environment_dt$wc_nutrients + seagrass_ag$nutrients +
+  environment$wc_nutrients <- environment$wc_nutrients + seagrass_ag$nutrients +
     seagrass_bg$nutrients + seagrass_accl$nutrients
 
 
   # set environmental values of AR cells to 0
-  environment[environment$reef == 1][, 1:4] <- 0
+  environment[environment$reef == 1][, 1:4] <- NA
 
   return(environment)
 }

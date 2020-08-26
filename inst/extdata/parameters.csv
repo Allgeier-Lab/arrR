@@ -20,6 +20,7 @@
 "slough_detritus_ratio";0.9
 "detrital_fraction";0.15
 "wc_nutrients";0.25
-"mean_size";9
-"a_grunt";0.0121
-"b_grunt";3.161
+"pop_mean_size";9
+"pop_mean_move";8
+"pop_a_grunt";0.0121
+"pop_b_grunt";3.161

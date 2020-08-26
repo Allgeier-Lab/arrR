@@ -22,11 +22,11 @@ int_calc_size <- function(starting_values, parameters) {
   variance <- 10
 
   # MH: Where is this function coming from?
-  norm_mean <- log((parameters$mean_size ^ 2) / sqrt(variance + (parameters$mean_size ^ 2)))
-  norm_sd <- sqrt(log(1 + (variance / (parameters$mean_size ^ 2))))
+  norm_mean <- log((parameters$pop_mean_size ^ 2) / sqrt(variance + (parameters$pop_mean_size ^ 2)))
+  norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_size ^ 2))))
 
   # get random numbers from norm distribution
-  norm_random <- stats::rnorm(n = starting_values$n, mean = norm_mean, sd = norm_sd)
+  norm_random <- stats::rnorm(n = starting_values$pop_n, mean = norm_mean, sd = norm_sd)
 
   # calculate body length based on random number
   # MH: Why is the body length the exp of the random number?
@@ -38,7 +38,7 @@ int_calc_size <- function(starting_values, parameters) {
 
   # calculate weight of individuals based on body length
   # MH: Where is this formula coming from?
-  weight <- parameters$a_grunt * (body_length ^ parameters$b_grunt)
+  weight <- parameters$pop_a_grunt * (body_length ^ parameters$pop_b_grunt)
 
   # caluclate the size of individuals
   # MH: Why is size different than body length?

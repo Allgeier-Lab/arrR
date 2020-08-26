@@ -27,7 +27,7 @@
 #' starting_values <- read_parameters(file = starting_values, sep = ";")
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
-#' environment <- setup_environment(extent = c(50, 50), grain = 1,
+#' input_environment <- setup_environment(extent = c(50, 50), grain = 1,
 #' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 #'
 #' @aliases setup_environment
@@ -46,8 +46,8 @@ setup_environment <- function(extent, grain, reefs = NULL,
   }
 
   # calculate extent of environment with the center being (0,0)
-  extent_x <- c(0 - extent[1] / 2, 0 + extent[1] / 2)
-  extent_y <- c(0 - extent[2] / 2, 0 + extent[2] / 2)
+  extent_x <- extent[1] / 2 * c(-1, 1)
+  extent_y <- extent[2] / 2 * c(-1, 1)
 
   # force CRS to NA if not provided
   if (!exists("crs")) {

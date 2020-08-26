@@ -23,7 +23,7 @@ int_setup_reefs <- function(object, xy) {
   cell_ids <- raster::cellFromXY(object = object, xy = xy)
 
   # set environmental values of AR cells to 0
-  object[cell_ids] <- 0
+  object[cell_ids] <- NA
 
   # add reef layer
   object$reef <- 0

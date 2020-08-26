@@ -30,7 +30,7 @@ check_parameters <- function(starting_values, parameters) {
   # specify all required starting values
   required_starting <- c("ag_biomass",
                          "bg_biomass",
-                         "n")
+                         "pop_n")
 
   # check if all starting values are present
   check_starting <- which(!required_starting %in% names(starting_values))
@@ -58,9 +58,10 @@ check_parameters <- function(starting_values, parameters) {
                            "slough_detritus_ratio",
                            "detrital_fraction",
                            "wc_nutrients",
-                           "mean_size",
-                           "a_grunt",
-                           "b_grunt")
+                           "pop_mean_size",
+                           "pop_mean_move",
+                           "pop_a_grunt",
+                           "pop_b_grunt")
 
   # check if all parameters are there
   check_parameters <- which(!required_parameters %in% names(parameters))

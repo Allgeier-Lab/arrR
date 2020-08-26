@@ -34,12 +34,22 @@ run_simulation <- function(environment, population,
                            verbose = TRUE) {
 
   # save first environmental values to data table
-  environment_dt <- int_as_data_table_ras(x = environment)
-  environment_dt$i <- 0
+  environment_track <- int_as_data_table_ras(x = environment)
+  environment_track[, i := 0]
+
+  population_track <- population
+  population_track[, i := 0]
+
+  # get extent of environment
+  extent <- raster::extent(environment)
+
+  # MH: make update i pop similar that population dt ist only current one and pop_2 is growing
 
   for (i in 1:max_i) {
 
     if (verbose) {
+
+      cat("\f")
 
       message("Progress: ", i, "/", max_i)
 
@@ -48,11 +58,27 @@ run_simulation <- function(environment, population,
     environment <- simulate_seagrass(environment = environment,
                                      starting_values = starting_values,
                                      parameters = parameters,
+                                     min_per_i = min_per_i,
                                      verbose = verbose)
 
-    environment_dt <- int_update_i_envir(environment = environment,
-                                         environment_dt = environment_dt)
+    # MH: Missing: dead-fish-detritus
+
+
+    population <- simulate_movement(environment = environment, population = population,
+                                    mean_move = parameters$pop_mean_move,
+                                    extent = extent,
+                                    reef_attraction = FALSE, # allow this the be changed
+                                    verbose = verbose)
+
+
+    environment_track <- int_update_i(data_current = environment,
+                                      data_track = environment_track,
+                                      ras = TRUE)
+
+    population_track <- int_update_i(data_current = population,
+                                     data_track = population_track,
+                                     ras = FALSE)
   }
 
-  return(list(environment = environment_dt), population = population)
+  return(list(environment = environment_track, population = population_track))
 }
