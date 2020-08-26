@@ -18,9 +18,8 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(environment, population, mean_move, reef_attraction,
-                              extent,
-                              verbose = TRUE, ...) {
+simulate_movement <- function(environment, population, mean_move,extent,
+                              reef_attraction, verbose = TRUE) {
 
   if (verbose) {
 

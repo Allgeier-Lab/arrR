@@ -1,25 +1,15 @@
 #' animate_result
 #'
-#' @description Wrapper functions to run model
+#' @description Wrapper functions to animate results
 #'
 #' @param result RasterBrick with environment created with \code{\link{setup_environment}}.
 #' @param fill Character to specify which values of environmental data is used as fill.
 #' @param ... Arguments passed on to \code{gganimate::animate}.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) ...
-#' (ii) ...
-#'
-#' Parameters include ...
+#' Animate results
 #'
 #' @return data frame
-#'
-#' @examples
-#' \dontrun{
-#'
-#' animate_result()
-#'
-#' }
 #'
 #' @aliases animate_result
 #' @rdname animate_result

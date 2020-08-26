@@ -9,9 +9,7 @@
 #' @importFrom data.table :=
 NULL
 
-globalVariables(c(
-  "current", "i", "status"
-))
+globalVariables(names = c("current", "i", "status", "x", "y"))
 
 # Make sure data.table knows we know we're using it
 .datatable.aware = TRUE

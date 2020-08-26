@@ -10,8 +10,7 @@ simulate_movement(
   mean_move,
   reef_attraction,
   extent,
-  verbose = TRUE,
-  ...
+  verbose = TRUE
 )
 }
 \arguments{

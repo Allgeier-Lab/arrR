@@ -4,7 +4,7 @@
 \alias{animate_result}
 \title{animate_result}
 \usage{
-animate_result(result, fill = "reef")
+animate_result(result, fill = "reef", ...)
 }
 \arguments{
 \item{result}{RasterBrick with environment created with \code{\link{setup_environment}}.}
@@ -17,19 +17,8 @@ animate_result(result, fill = "reef")
 data frame
 }
 \description{
-Wrapper functions to run model
+Wrapper functions to animate results
 }
 \details{
-Wrapper function to run model. Executes the following sub-processes (i) ...
-(ii) ...
-
-Parameters include ...
-}
-\examples{
-\dontrun{
-
-animate_result()
-
-}
-
+Animate results
 }
