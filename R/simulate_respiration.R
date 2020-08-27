@@ -41,6 +41,8 @@ simulate_respiration <- function(population, water_temp, min_per_i, verbose = TR
   f_tr <- vr ^ xr * exp(xr * (1 - vr))
 
   # update respiration col
-  population[, respiration := ra * weight ^ rb * f_tr * activity]
-  population[, respiration := respiration * 13560 * (1 / 4800)]
+  # MH: Why multiplied by 13560 etc.?
+  population$respiration <- (ra * population$weight ^ rb * f_tr * population$activity) * 13560 * (1 / 4800)
+
+  return(population)
 }

@@ -18,7 +18,7 @@ simulate_growth(
 \arguments{
 \item{population}{Data frame population created with \code{\link{setup_population}}.}
 
-\item{seafloor}{RasterBrick with environment created with \code{\link{setup_environment}}.}
+\item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
 \item{k_grunt, linf_grunt, a_grunt, b_grunt}{Numeric growth parameter.}
 

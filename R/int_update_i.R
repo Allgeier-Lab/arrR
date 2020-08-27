@@ -21,11 +21,11 @@
 int_update_i <- function(data_current, data_track, ras = FALSE, increase = 1){
 
   if (ras) {
-    data_current <- int_as_data_table_ras(data_current, xy = TRUE)
+    data_current <- raster::as.data.frame(data_current, xy = TRUE)
   }
 
   # update/increase time step
-  data_current[, i := max(data_track$i) + increase]
+  data_current$i <- max(data_track$i) + increase
 
   # combine data table with all data
   rbind(data_track, data_current)

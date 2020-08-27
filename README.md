@@ -85,7 +85,7 @@ This will produce a GIF, but you need the packages `ggplot2`,
 
 ``` r
 
-animate_result(result, fill = "ag_biomass", end_pause = 5, duration = 30)
+animate_result(result, fill = "detrital_pool", end_pause = 5, duration = 30)
 ```
 
 <img src="man/figures/README-animate_sim-1.gif" width="100%" style="display: block; margin: auto;" />

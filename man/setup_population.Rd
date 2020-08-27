@@ -7,7 +7,7 @@
 setup_population(seafloor, starting_values, parameters, verbose = TRUE)
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_environment}}.}
+\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -36,10 +36,10 @@ parameters <- system.file("extdata", "parameters.csv", package = "coRal")
 starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
-input_environment <- setup_environment(extent = c(100, 100), grain = 1,
+input_seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
 reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 
-input_population <- setup_population(seafloor = input_environment,
+input_population <- setup_population(seafloor = input_seafloor,
 starting_values = starting_values, parameters = parameters)
 
 }

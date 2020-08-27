@@ -2,7 +2,7 @@
 #'
 #' @description Wrapper functions to run model
 #'
-#' @param seafloor RasterBrick with environment created with \code{\link{setup_environment}}.
+#' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param population Data frame population created with \code{\link{setup_population}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -33,16 +33,13 @@ run_simulation <- function(seafloor, population,
                            starting_values, parameters, max_i, min_per_i = 120,
                            verbose = TRUE) {
 
-  # create one deep copy of data to not change input data.table
-  population <- data.table::copy(population)
-
   # save first environmental values to data table
-  seafloor_track <- int_as_data_table_ras(x = seafloor)
-  seafloor_track[, i := 0]
+  seafloor_track <- raster::as.data.frame(x = seafloor, xy = TRUE)
+  seafloor_track$i <- 0
 
   # save first population values to data table (copy)
-  population_track <- data.table::copy(population)
-  population_track[, i := 0]
+  population_track <- population
+  population_track$i <- 0
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -64,26 +61,30 @@ run_simulation <- function(seafloor, population,
 
     # MH: Missing: dead-fish-detritus
 
-    simulate_movement(population = population,
-                      mean_move = parameters$pop_mean_move,
-                      extent = extent,
-                      reef_attraction = FALSE, # allow this the be changed
-                      verbose = verbose)
+    population <- simulate_movement(population = population,
+                                    mean_move = parameters$pop_mean_move,
+                                    extent = extent,
+                                    reef_attraction = FALSE, # allow this the be changed
+                                    verbose = verbose)
 
-    simulate_respiration(population = population, water_temp = parameters$water_temp,
-                         min_per_i = min_per_i, verbose = verbose)
+    population <- simulate_respiration(population = population,
+                                       water_temp = parameters$water_temp,
+                                       min_per_i = min_per_i, verbose = verbose)
 
-    simulate_growth(population = population,
-                    seafloor = seafloor,
-                    k_grunt = parameters$pop_k_grunt,
-                    a_grunt = parameters$pop_a_grunt,
-                    b_grunt = parameters$pop_b_grunt,
-                    linf_grunt = parameters$pop_linf_grunt,
-                    min_per_i = min_per_i,
-                    verbose = verbose)
+    result_temp <- simulate_growth(population = population,
+                                   seafloor = seafloor,
+                                   k_grunt = parameters$pop_k_grunt,
+                                   a_grunt = parameters$pop_a_grunt,
+                                   b_grunt = parameters$pop_b_grunt,
+                                   linf_grunt = parameters$pop_linf_grunt,
+                                   min_per_i = min_per_i,
+                                   verbose = verbose)
 
-    # update track data.tables
+    # update results
+    seafloor <- result_temp$seafloor
+    population <- result_temp$population
 
+    # update tracking data.frames
     seafloor_track <- int_update_i(data_current = seafloor,
                                    data_track = seafloor_track,
                                    ras = TRUE)
@@ -92,7 +93,7 @@ run_simulation <- function(seafloor, population,
                                      data_track = population_track,
                                      ras = FALSE)
 
-    population[, age := age + 1]
+    population$age <-  population$age + 1
   }
 
   return(list(seafloor = seafloor_track, population = population_track))

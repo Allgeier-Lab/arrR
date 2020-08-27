@@ -1,4 +1,4 @@
-#' setup_environment
+#' setup_seafloor
 #'
 #' @description Initiate environment
 #'
@@ -27,11 +27,11 @@
 #' starting_values <- read_parameters(file = starting_values, sep = ";")
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
-#' input_environment <- setup_environment(extent = c(50, 50), grain = 1,
+#' input_environment <- setup_seafloor(extent = c(50, 50), grain = 1,
 #' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 #'
-#' @aliases setup_environment
-#' @rdname setup_environment
+#' @aliases setup_seafloor
+#' @rdname setup_seafloor
 #'
 #' @export
 setup_seafloor <- function(extent, grain, reefs = NULL,

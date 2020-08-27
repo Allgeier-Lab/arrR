@@ -7,7 +7,7 @@
 simulate_seagrass(seafloor, parameters, min_per_i, verbose = TRUE)
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_environment}}.}
+\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
 
 \item{parameters}{List with all model parameters.}
 

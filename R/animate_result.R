@@ -2,7 +2,7 @@
 #'
 #' @description Wrapper functions to animate results
 #'
-#' @param result RasterBrick with environment created with \code{\link{setup_environment}}.
+#' @param result RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fill Character to specify which values of environmental data is used as fill.
 #' @param ... Arguments passed on to \code{gganimate::animate}.
 #'

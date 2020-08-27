@@ -2,8 +2,7 @@
 % Please edit documentation in R/setup_seafloor.R
 \name{setup_seafloor}
 \alias{setup_seafloor}
-\alias{setup_environment}
-\title{setup_environment}
+\title{setup_seafloor}
 \usage{
 setup_seafloor(
   extent,
@@ -51,7 +50,7 @@ parameters <- system.file("extdata", "parameters.csv", package = "coRal")
 starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
-input_environment <- setup_environment(extent = c(50, 50), grain = 1,
+input_environment <- setup_seafloor(extent = c(50, 50), grain = 1,
 reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 
 }

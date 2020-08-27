@@ -2,7 +2,7 @@
 #'
 #' @description Simulate seagrass.
 #'
-#' @param seafloor Environment created with \code{\link{setup_environment}}.
+#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param verbose If TRUE, progress reports are printed.
@@ -17,11 +17,6 @@
 #'
 #' @export
 simulate_seagrass <- function(seafloor, parameters, min_per_i, verbose = TRUE) {
-
-  # # get all environmental values of non-reef cells
-  # environment_dt <- int_as_data_table_ras(environment)
-
-  # environment_dt <- environment_dt[reef == 0] # get rid of reef cells here?
 
   # convert water coloumn nutrients to umol/l
   # MH: Why is the value in int_convert_n 18.039?

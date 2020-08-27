@@ -45,18 +45,34 @@ simulate_movement <- function(population, mean_move, extent,
 
   # move individuals
   # MH: In NetLogo individuals only turn between 0 to 25° all the time?
-  population[, x := x + (move_dist * cos(move_angle * (pi / 180)))]
-  population[, y := y + (move_dist * sin(move_angle * (pi / 180)))]
+  population$x <- population$x + (move_dist * cos(move_angle * (pi / 180)))
+  population$y <- population$y + (move_dist * sin(move_angle * (pi / 180)))
 
-  # Torus at edges
-  population[x < extent[1], x := extent[2] - (extent[1] - x)]
-  population[x > extent[2], x := extent[1] + (x - extent[2])]
+  # Torus edge correction at boundaries
 
-  population[y < extent[3], y := extent[4] - (extent[3] - y)]
-  population[y > extent[4], y := extent[3] + (y - extent[4])]
+  population$x[which(population$x < extent[1])] <-
+    extent[2] - (extent[1] - population$x[which(population$x < extent[1])])
+
+  population$x[which(population$x > extent[2])] <-
+    extent[1] + (population$x[which(population$x > extent[2])] - extent[2])
+
+  population$y[which(population$y < extent[3])] <-
+    extent[4] - (extent[3] - population$y[which(population$y < extent[3])])
+
+  population$y[which(population$y > extent[4])] <-
+    extent[3] + (population$y[which(population$y > extent[4])] - extent[4])
+
+  # population[x < extent[1], x := extent[2] - (extent[1] - x)]
+  # population[x > extent[2], x := extent[1] + (x - extent[2])]
+
+  # population[y < extent[3], y := extent[4] - (extent[3] - y)]
+  # population[y > extent[4], y := extent[3] + (y - extent[4])]
 
   # update activity
+
   # MH: Are there () missing?
-  # MH: 1 is the standard dev set up in movement parameters; is it?
-  population[, activity := (1 / (mean_move + 1)) * move_dist + 1]
+  # MH: Why is + 1 added to mean move?
+  population$activity <-  (1 / (mean_move + 1)) * move_dist + 1
+
+  return(population)
 }

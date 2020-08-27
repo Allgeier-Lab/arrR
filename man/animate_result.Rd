@@ -7,7 +7,7 @@
 animate_result(result, fill = "reef", ...)
 }
 \arguments{
-\item{result}{RasterBrick with environment created with \code{\link{setup_environment}}.}
+\item{result}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
 \item{fill}{Character to specify which values of environmental data is used as fill.}
 
