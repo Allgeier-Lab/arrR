@@ -73,7 +73,7 @@ To rum a simulation, simply provide the previously created environment and popul
 ```{r run_sim}
 result <- run_simulation(environment = input_environment, population = input_population, 
                          starting_values = starting_values, parameters = parameters, 
-                         max_i = 50)
+                         max_i = 50, verbose = FALSE)
 ```
 
 The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`.
