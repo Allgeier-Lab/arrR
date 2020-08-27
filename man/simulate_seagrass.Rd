@@ -4,18 +4,10 @@
 \alias{simulate_seagrass}
 \title{simulate_seagrass}
 \usage{
-simulate_seagrass(
-  environment,
-  starting_values,
-  parameters,
-  min_per_i,
-  verbose = TRUE
-)
+simulate_seagrass(seafloor, parameters, min_per_i, verbose = TRUE)
 }
 \arguments{
-\item{environment}{Environment created with \code{\link{setup_environment}}.}
-
-\item{starting_values}{List with all starting value parameters.}
+\item{seafloor}{Environment created with \code{\link{setup_environment}}.}
 
 \item{parameters}{List with all model parameters.}
 

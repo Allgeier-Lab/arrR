@@ -5,10 +5,10 @@
 \alias{setup_envir_values}
 \title{setup_envir_values}
 \usage{
-int_setup_envir_values(object, starting_values, parameters)
+int_setup_envir_values(seafloor, starting_values, parameters)
 }
 \arguments{
-\item{object}{Raster* object}
+\item{seafloor}{Raster* object}
 
 \item{xy}{2-Column matrix with coordinates of artificial reefs}
 }

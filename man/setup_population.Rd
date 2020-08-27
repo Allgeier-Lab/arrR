@@ -4,10 +4,10 @@
 \alias{setup_population}
 \title{setup_population}
 \usage{
-setup_population(environment, starting_values, parameters, verbose = TRUE)
+setup_population(seafloor, starting_values, parameters, verbose = TRUE)
 }
 \arguments{
-\item{environment}{Environment created with \code{\link{setup_environment}}.}
+\item{seafloor}{Environment created with \code{\link{setup_environment}}.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -39,7 +39,7 @@ parameters <- read_parameters(file = parameters, sep = ";")
 input_environment <- setup_environment(extent = c(100, 100), grain = 1,
 reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
 
-input_population <- setup_population(environment = input_environment,
+input_population <- setup_population(seafloor = input_environment,
 starting_values = starting_values, parameters = parameters)
 
 }

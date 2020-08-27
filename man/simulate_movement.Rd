@@ -5,24 +5,21 @@
 \title{simulate_movement}
 \usage{
 simulate_movement(
-  environment,
   population,
   mean_move,
-  reef_attraction,
   extent,
+  reef_attraction,
   verbose = TRUE
 )
 }
 \arguments{
-\item{environment}{RasterBrick with environment created with \code{\link{setup_environment}}.}
-
 \item{population}{Data frame population created with \code{\link{setup_population}}.}
 
 \item{mean_move}{Numeric with mean move parameter of individuals.}
 
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
-
 \item{extent}{Vector with number of rows and columns (spatial extent).}
+
+\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

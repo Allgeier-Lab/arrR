@@ -18,15 +18,17 @@
 animate_result <- function(result, fill = "reef", ...) {
 
   # check if fill argument makes sense
-  if (!fill %in% names(result$environment)) {
+  if (!fill %in% names(result$seafloor)) {
 
     stop("Please select valid layer as fill argument.", call. = FALSE)
 
   }
 
-  gg_result <-  ggplot2::ggplot(data = result$environment) +
+  # add layer with reef on top to control colour of reef cells result$seafloor$reef
+
+  gg_result <-  ggplot2::ggplot(data = result$seafloor) +
     ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = !! ggplot2::sym(fill))) +
-    ggplot2::geom_point(data = result$population, ggplot2::aes(x = x, y = y), col = "white") +
+    ggplot2::geom_point(data = result$population, ggplot2::aes(x = x, y = y), col = "grey") +
     gganimate::transition_time(i) +
     ggplot2::scale_fill_viridis_c(option = "A") +
     ggplot2::coord_equal() +

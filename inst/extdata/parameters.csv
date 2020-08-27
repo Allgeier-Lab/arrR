@@ -24,3 +24,6 @@
 "pop_mean_move";8
 "pop_a_grunt";0.0121
 "pop_b_grunt";3.161
+"pop_k_grunt";0.2
+"pop_linf_grunt";41.6
+"water_temp";26

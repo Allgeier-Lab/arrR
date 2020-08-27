@@ -61,7 +61,10 @@ check_parameters <- function(starting_values, parameters) {
                            "pop_mean_size",
                            "pop_mean_move",
                            "pop_a_grunt",
-                           "pop_b_grunt")
+                           "pop_b_grunt",
+                           "pop_k_grunt",
+                           "pop_linf_grunt",
+                           "water_temp")
 
   # check if all parameters are there
   check_parameters <- which(!required_parameters %in% names(parameters))

@@ -34,9 +34,9 @@
 #' @rdname setup_environment
 #'
 #' @export
-setup_environment <- function(extent, grain, reefs = NULL,
-                              starting_values, parameters,
-                              verbose = TRUE, ...) {
+setup_seafloor <- function(extent, grain, reefs = NULL,
+                           starting_values, parameters,
+                           verbose = TRUE, ...) {
 
   # print progress
   if (verbose) {
@@ -56,15 +56,15 @@ setup_environment <- function(extent, grain, reefs = NULL,
   }
 
   # setup template landscape
-  environ_template <- raster::raster(nrows = extent[1], ncol = extent[2], res = grain,
+  seafloor <- raster::raster(nrows = extent[1], ncol = extent[2], res = grain,
                                      xmn = extent_x[1], xmx = extent_x[2],
                                      ymn = extent_y[1], ymx = extent_y[2],
                                      vals = NA, ...)
 
   # setup environmental values
-  environ_template <- int_setup_envir_values(object = environ_template,
-                                             starting_values = starting_values,
-                                             parameters = parameters)
+  seafloor <- int_setup_envir_values(seafloor = seafloor,
+                                     starting_values = starting_values,
+                                     parameters = parameters)
 
   # AR coords provided
   if (!is.null(reefs)) {
@@ -85,7 +85,7 @@ setup_environment <- function(extent, grain, reefs = NULL,
     }
 
     # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    environ_template <- int_setup_reefs(object = environ_template, xy = reefs)
+    seafloor <- int_setup_reefs(object = seafloor, xy = reefs)
 
   # no AR coords provided
   } else {
@@ -94,5 +94,5 @@ setup_environment <- function(extent, grain, reefs = NULL,
 
   }
 
-  return(environ_template)
+  return(seafloor)
 }

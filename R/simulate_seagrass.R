@@ -2,8 +2,7 @@
 #'
 #' @description Simulate seagrass.
 #'
-#' @param environment Environment created with \code{\link{setup_environment}}.
-#' @param starting_values List with all starting value parameters.
+#' @param seafloor Environment created with \code{\link{setup_environment}}.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param verbose If TRUE, progress reports are printed.
@@ -17,8 +16,7 @@
 #' @rdname simulate_seagrass
 #'
 #' @export
-simulate_seagrass <- function(environment, starting_values, parameters, min_per_i,
-                              verbose = TRUE) {
+simulate_seagrass <- function(seafloor, parameters, min_per_i, verbose = TRUE) {
 
   # # get all environmental values of non-reef cells
   # environment_dt <- int_as_data_table_ras(environment)
@@ -36,10 +34,10 @@ simulate_seagrass <- function(environment, starting_values, parameters, min_per_
                                      to = "umol") / 10000
 
   # convert wet to dry biomass
-  biomass_dry_ag <- int_convert_dry(x = environment$ag_biomass[],
+  biomass_dry_ag <- int_convert_dry(x = seafloor$ag_biomass[],
                                     what = "above")
 
-  biomass_dry_bg <- int_convert_dry(x = environment$bg_biomass[],
+  biomass_dry_bg <- int_convert_dry(x = seafloor$bg_biomass[],
                                     what = "below")
 
   # MH: Why is this not a parameter as ag?
@@ -95,20 +93,20 @@ simulate_seagrass <- function(environment, starting_values, parameters, min_per_
                                       verbose = verbose)
 
   # update environment RasterBrick
-  environment$ag_biomass <- environment$ag_biomass + seagrass_ag$biomass_wet +
+  seafloor$ag_biomass <- seafloor$ag_biomass + seagrass_ag$biomass_wet +
     seagrass_accl$biomass_wet
 
-  environment$bg_biomass <- environment$bg_biomass + seagrass_bg$biomass_wet
+  seafloor$bg_biomass <- seafloor$bg_biomass + seagrass_bg$biomass_wet
 
-  environment$detrital_pool <- environment$detrital_pool + seagrass_ag$detritus +
+  seafloor$detrital_pool <- seafloor$detrital_pool + seagrass_ag$detritus +
     seagrass_bg$detritus + seagrass_accl$detritus
 
-  environment$wc_nutrients <- environment$wc_nutrients + seagrass_ag$nutrients +
+  seafloor$wc_nutrients <- seafloor$wc_nutrients + seagrass_ag$nutrients +
     seagrass_bg$nutrients + seagrass_accl$nutrients
 
 
   # set environmental values of AR cells to 0
-  environment[environment$reef == 1][, 1:4] <- NA
+  seafloor[seafloor$reef == 1][, 1:4] <- 0
 
-  return(environment)
+  return(seafloor)
 }

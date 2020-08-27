@@ -40,9 +40,10 @@ int_calc_size <- function(starting_values, parameters) {
   # MH: Where is this formula coming from?
   weight <- parameters$pop_a_grunt * (body_length ^ parameters$pop_b_grunt)
 
-  # caluclate the size of individuals
-  # MH: Why is size different than body length?
-  size <- (2 * body_length / 40)
+  # # calculate the size of individuals
+  # # MH: Why is size different than body length?
+  # # MH: Only needed for plotting, right?
+  # size <- (2 * body_length / 40)
 
-  return(list(size = size, weight = weight))
+  return(list(length = body_length, weight = weight))
 }

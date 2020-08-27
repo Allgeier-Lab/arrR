@@ -5,7 +5,7 @@
 \title{run_simulation}
 \usage{
 run_simulation(
-  environment,
+  seafloor,
   population,
   starting_values,
   parameters,
@@ -15,7 +15,7 @@ run_simulation(
 )
 }
 \arguments{
-\item{environment}{RasterBrick with environment created with \code{\link{setup_environment}}.}
+\item{seafloor}{RasterBrick with environment created with \code{\link{setup_environment}}.}
 
 \item{population}{Data frame population created with \code{\link{setup_population}}.}
 

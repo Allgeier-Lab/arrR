@@ -28,9 +28,7 @@ int_update_i <- function(data_current, data_track, ras = FALSE, increase = 1){
   data_current[, i := max(data_track$i) + increase]
 
   # combine data table with all data
-  data_track <- rbind(data_track, data_current)
-
-  return(data_track)
+  rbind(data_track, data_current)
 }
 
 #### old function ####

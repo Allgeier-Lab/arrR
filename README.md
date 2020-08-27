@@ -49,32 +49,32 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 #> All starting values and parameters are available...
 ```
 
-To setup the simulation environment and individuals, simply run
-`setup_environment` and `setup_population`. If you want to add
-artificial reefs to the environment, provide a `matrix` with x,y
-coordinates of all AR cells.
+To setup the simulation seafloor and individuals, simply run
+`setup_seafloor` and `setup_population`. If you want to add artificial
+reefs to the seafloor, provide a `matrix` with x,y coordinates of all AR
+cells.
 
 ``` r
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
-                      ncol = 2, byrow = TRUE) * 5
+                      ncol = 2, byrow = TRUE)
 
-input_environment <- setup_environment(extent = c(100, 100), grain = 5, reefs = reef_matrix, 
+input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, reefs = reef_matrix, 
                                        starting_values = starting_values, parameters = parameters)
-#> Creating environment with extent(100, 100)...
+#> Creating environment with extent(50, 50)...
 #> Creating 5 artifical reef cells...
 
-input_population <- setup_population(environment = input_environment, 
+input_population <- setup_population(seafloor = input_seafloor, 
                                      starting_values = starting_values, parameters = parameters)
-#> Creating 10 individuals within extent(-50, 50, -50, 50)...
+#> Creating 10 individuals within extent(-25, 25, -25, 25)...
 ```
 
-To rum a simulation, simply provide the previously created environment
-and population as well as all parameters and starting values the
+To rum a simulation, simply provide the previously created seafloor and
+population as well as all parameters and starting values the
 `run_simulation` function. Additionally, you need to specify the number
 of time steps that are simulated.
 
 ``` r
-result <- run_simulation(environment = input_environment, population = input_population, 
+result <- run_simulation(seafloor = input_seafloor, population = input_population, 
                          starting_values = starting_values, parameters = parameters, 
                          max_i = 50, verbose = FALSE)
 ```
@@ -85,7 +85,7 @@ This will produce a GIF, but you need the packages `ggplot2`,
 
 ``` r
 
-animate_result(result, fill = "ag_biomass", end_pause = 10, duration = 30)
+animate_result(result, fill = "ag_biomass", end_pause = 5, duration = 30)
 ```
 
 <img src="man/figures/README-animate_sim-1.gif" width="100%" style="display: block; margin: auto;" />

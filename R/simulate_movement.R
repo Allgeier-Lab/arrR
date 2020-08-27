@@ -2,7 +2,6 @@
 #'
 #' @description Simulate movement of population.
 #'
-#' @param environment RasterBrick with environment created with \code{\link{setup_environment}}.
 #' @param population Data frame population created with \code{\link{setup_population}}.
 #' @param mean_move Numeric with mean move parameter of individuals.
 #' @param extent Vector with number of rows and columns (spatial extent).
@@ -18,7 +17,7 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(environment, population, mean_move,extent,
+simulate_movement <- function(population, mean_move, extent,
                               reef_attraction, verbose = TRUE) {
 
   if (verbose) {
@@ -33,6 +32,12 @@ simulate_movement <- function(environment, population, mean_move,extent,
   # calculate distribution for normal dist of movement distances
   mean_x <- log(mean_move ^ 2 / sqrt(variance + mean_move ^ 2))
   sd_x <- sqrt(log( 1 + (variance / (mean_move ^ 2))))
+
+  if (reef_attraction) {
+
+    # add attraction towards reef cells
+
+  }
 
   # create random movement distance and angel in degree
   move_dist <- exp(stats::rnorm(n = nrow(population), mean = mean_x, sd = sd_x))
@@ -50,5 +55,8 @@ simulate_movement <- function(environment, population, mean_move,extent,
   population[y < extent[3], y := extent[4] - (extent[3] - y)]
   population[y > extent[4], y := extent[3] + (y - extent[4])]
 
-  return(population)
+  # update activity
+  # MH: Are there () missing?
+  # MH: 1 is the standard dev set up in movement parameters; is it?
+  population[, activity := (1 / (mean_move + 1)) * move_dist + 1]
 }

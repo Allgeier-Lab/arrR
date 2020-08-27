@@ -2,7 +2,7 @@
 #'
 #' @description Internal function
 #'
-#' @param object Raster* object
+#' @param seafloor Raster* object
 #' @param xy 2-Column matrix with coordinates of artificial reefs
 #'
 #' @details
@@ -16,7 +16,7 @@
 #' @keywords internal
 #'
 #' @export
-int_setup_envir_values <- function(object, starting_values, parameters) {
+int_setup_envir_values <- function(seafloor, starting_values, parameters) {
 
   # calculate above ground biomass
   ag_biomass <- starting_values$ag_biomass * parameters$sg_density
@@ -33,16 +33,16 @@ int_setup_envir_values <- function(object, starting_values, parameters) {
   wc_nutrients <- parameters$wc_nutrients
 
   # create RasterLayer
-  ag_biomass <- raster::setValues(x = object, values = ag_biomass)
-  bg_biomass <- raster::setValues(x = object, values = bg_biomass)
-  detrital_pool <- raster::setValues(x = object, values = detrital_pool)
-  wc_nutrients <- raster::setValues(x = object, values = wc_nutrients)
+  ag_biomass <- raster::setValues(x = seafloor, values = ag_biomass)
+  bg_biomass <- raster::setValues(x = seafloor, values = bg_biomass)
+  detrital_pool <- raster::setValues(x = seafloor, values = detrital_pool)
+  wc_nutrients <- raster::setValues(x = seafloor, values = wc_nutrients)
 
   # combine to one RasterBrick
-  object <- raster::brick(ag_biomass, bg_biomass, detrital_pool, wc_nutrients)
+  seafloor <- raster::brick(ag_biomass, bg_biomass, detrital_pool, wc_nutrients)
 
   # set names
-  names(object) <- c("ag_biomass", "bg_biomass", "detrital_pool", "wc_nutrients")
+  names(seafloor) <- c("ag_biomass", "bg_biomass", "detrital_pool", "wc_nutrients")
 
-  return(object)
+  return(seafloor)
 }
