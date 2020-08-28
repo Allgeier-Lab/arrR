@@ -27,8 +27,8 @@
 #' starting_values <- read_parameters(file = starting_values, sep = ";")
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
-#' input_environment <- setup_seafloor(extent = c(50, 50), grain = 1,
-#' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
+#' input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
+#' reefs = NULL, starting_values = starting_values, parameters = parameters)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
@@ -41,7 +41,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
   # print progress
   if (verbose) {
 
-    message("Creating environment with extent(", extent[1], ", ", extent[2], ")...")
+    message("> Creating seafloor with extent(", extent[1], ", ", extent[2], ")...")
 
   }
 
@@ -72,7 +72,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
     # print progress
     if (verbose) {
 
-      message("Creating ", nrow(reefs), " artifical reef cells...")
+      message("> Creating ", nrow(reefs), " artifical reef cells...")
 
     }
 
@@ -90,7 +90,14 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
   # no AR coords provided
   } else {
 
-    message("No artifical reefs present...")
+    if (verbose) {
+
+      message("> No artifical reefs present...")
+
+    }
+
+    # add reef layer
+    seafloor$reef <- 0
 
   }
 

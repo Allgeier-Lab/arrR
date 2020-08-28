@@ -6,7 +6,7 @@
 \usage{
 run_simulation(
   seafloor,
-  population,
+  fish_population,
   starting_values,
   parameters,
   max_i,
@@ -17,7 +17,7 @@ run_simulation(
 \arguments{
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
-\item{population}{Data frame population created with \code{\link{setup_population}}.}
+\item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -30,7 +30,7 @@ run_simulation(
 \item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data frame
+data.frame
 }
 \description{
 Wrapper functions to run model

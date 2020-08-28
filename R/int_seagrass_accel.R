@@ -13,7 +13,6 @@
 #' @param gamma Add info about parameter.
 #' @param slough_ratio Add info about parameter.
 #' @param slough_detritus_ratio Add info about parameter.
-#' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
 #' Internal function to simulate above ground seagrass processes. This
@@ -30,14 +29,7 @@
 int_seagrass_accel <- function(biomass_dry_bg, biomass_dry_ag, biomass_max_bg,
                                nutrients, nutrients_thres,
                                sigmoid_slope, v_max, k_max, gamma,
-                               slough_ratio, slough_detritus_ratio,
-                               verbose ) {
-
-  if (verbose) {
-
-    message("Simulating accelerated seagrass...")
-
-  }
+                               slough_ratio, slough_detritus_ratio) {
 
   # calculate maximum biomass
   biomass_diff_bg <- biomass_dry_bg - biomass_max_bg # (450 + 0.039) / 0.0941

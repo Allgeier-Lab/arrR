@@ -25,9 +25,12 @@ int_setup_envir_values <- function(seafloor, starting_values, parameters) {
   # MH: Why are these values no model parameters?
   bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941
 
-  # calculate detrital (Layman et al. 2016)
-  detrital_pool <- (ag_biomass * parameters$ag_gamma +
-                      bg_biomass * parameters$bg_gamma) * parameters$detrital_fraction
+  # calculate detritus (Layman et al. 2016)
+  detritus_pool <- (ag_biomass * parameters$ag_gamma +
+                      bg_biomass * parameters$bg_gamma) * parameters$detritus_fraction
+
+  # pool for dead detritus
+  detritus_dead <- 0
 
   # Value based on (Lee & Dunton 2000)
   wc_nutrients <- parameters$wc_nutrients
@@ -35,14 +38,19 @@ int_setup_envir_values <- function(seafloor, starting_values, parameters) {
   # create RasterLayer
   ag_biomass <- raster::setValues(x = seafloor, values = ag_biomass)
   bg_biomass <- raster::setValues(x = seafloor, values = bg_biomass)
-  detrital_pool <- raster::setValues(x = seafloor, values = detrital_pool)
+  detritus_pool <- raster::setValues(x = seafloor, values = detritus_pool)
+  detritus_dead <- raster::setValues(x = seafloor, values = detritus_dead)
   wc_nutrients <- raster::setValues(x = seafloor, values = wc_nutrients)
 
   # combine to one RasterBrick
-  seafloor <- raster::brick(ag_biomass, bg_biomass, detrital_pool, wc_nutrients)
+  seafloor <- raster::brick(ag_biomass, bg_biomass,
+                            detritus_pool,detritus_dead = detritus_dead,
+                            wc_nutrients)
 
   # set names
-  names(seafloor) <- c("ag_biomass", "bg_biomass", "detrital_pool", "wc_nutrients")
+  names(seafloor) <- c("ag_biomass", "bg_biomass",
+                       "detritus_pool", "detritus_dead",
+                       "wc_nutrients")
 
   return(seafloor)
 }

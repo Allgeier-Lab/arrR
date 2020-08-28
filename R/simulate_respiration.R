@@ -2,27 +2,22 @@
 #'
 #' @description Simulate movement of population.
 #'
-#' @param population Data frame population created with \code{\link{setup_population}}.
+#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
 #' @param water_temp Numeric with water temperature.
 #' @param min_per_i Integer to specify minutes per i.
-#' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
 #' Function to simulate movement of population individuals.
 #'
-#' @return data.table
+#' @return data.frame
 #'
 #' @aliases simulate_respiration
 #' @rdname simulate_respiration
 #'
 #' @export
-simulate_respiration <- function(population, water_temp, min_per_i, verbose = TRUE) {
+simulate_respiration <- function(fish_population, water_temp, min_per_i) {
 
-  if (verbose) {
-
-    message("Simulating respiration of individuals...")
-
-  }
+  # MH: This only depends on the water temp?
 
   # MH: Why are none of these values parameters?
   ra <- 0.0108 * (1 / 24) * (1 / 60 ) * min_per_i
@@ -42,7 +37,7 @@ simulate_respiration <- function(population, water_temp, min_per_i, verbose = TR
 
   # update respiration col
   # MH: Why multiplied by 13560 etc.?
-  population$respiration <- (ra * population$weight ^ rb * f_tr * population$activity) * 13560 * (1 / 4800)
+  fish_population$respiration <- (ra * fish_population$weight ^ rb * f_tr * fish_population$activity) * 13560 * (1 / 4800)
 
-  return(population)
+  return(fish_population)
 }

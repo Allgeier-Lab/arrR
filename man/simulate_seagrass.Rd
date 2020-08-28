@@ -4,7 +4,7 @@
 \alias{simulate_seagrass}
 \title{simulate_seagrass}
 \usage{
-simulate_seagrass(seafloor, parameters, min_per_i, verbose = TRUE)
+simulate_seagrass(seafloor, parameters, min_per_i)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
@@ -12,8 +12,6 @@ simulate_seagrass(seafloor, parameters, min_per_i, verbose = TRUE)
 \item{parameters}{List with all model parameters.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
-
-\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
 RasterBrick

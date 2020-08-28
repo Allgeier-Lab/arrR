@@ -4,27 +4,19 @@
 \alias{simulate_movement}
 \title{simulate_movement}
 \usage{
-simulate_movement(
-  population,
-  mean_move,
-  extent,
-  reef_attraction,
-  verbose = TRUE
-)
+simulate_movement(fish_population, parameters, extent, reef_attraction)
 }
 \arguments{
-\item{population}{Data frame population created with \code{\link{setup_population}}.}
+\item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
 
-\item{mean_move}{Numeric with mean move parameter of individuals.}
+\item{parameters}{List with all model parameters.}
 
 \item{extent}{Vector with number of rows and columns (spatial extent).}
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
-
-\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.table
+data.frame
 }
 \description{
 Simulate movement of population.

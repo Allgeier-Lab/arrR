@@ -15,8 +15,7 @@ int_seagrass_accel(
   k_max,
   gamma,
   slough_ratio,
-  slough_detritus_ratio,
-  verbose
+  slough_detritus_ratio
 )
 }
 \arguments{
@@ -35,8 +34,6 @@ int_seagrass_accel(
 \item{slough_ratio}{Add info about parameter.}
 
 \item{slough_detritus_ratio}{Add info about parameter.}
-
-\item{verbose}{If TRUE, progress reports are printed.}
 
 \item{biomass_dry}{Add info about parameter.}
 

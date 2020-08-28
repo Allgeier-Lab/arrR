@@ -5,29 +5,24 @@
 \title{simulate_growth}
 \usage{
 simulate_growth(
-  population,
+  fish_population,
+  fish_population_track,
   seafloor,
-  k_grunt,
-  linf_grunt,
-  a_grunt,
-  b_grunt,
-  min_per_i,
-  verbose = TRUE
+  parameters,
+  min_per_i
 )
 }
 \arguments{
-\item{population}{Data frame population created with \code{\link{setup_population}}.}
+\item{fish_population, fish_population_track}{Data frame population created with \code{\link{setup_fish_population}}.}
 
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
-\item{k_grunt, linf_grunt, a_grunt, b_grunt}{Numeric growth parameter.}
+\item{parameters}{List with all model parameters.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
-
-\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.table
+data.frame
 }
 \description{
 Simulate movement of population.

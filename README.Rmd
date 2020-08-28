@@ -64,14 +64,16 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, reefs = reef_matrix, 
                                        starting_values = starting_values, parameters = parameters)
 
-input_population <- setup_population(seafloor = input_seafloor, 
-                                     starting_values = starting_values, parameters = parameters)
+input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
+                                               starting_values = starting_values, 
+                                               parameters = parameters)
 ```
 
 To rum a simulation, simply provide the previously created seafloor and population as well as all parameters and starting values the `run_simulation` function. Additionally, you need to specify the number of time steps that are simulated.
 
 ```{r run_sim}
-result <- run_simulation(seafloor = input_seafloor, population = input_population, 
+result <- run_simulation(seafloor = input_seafloor, 
+                         fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
                          max_i = 50, verbose = FALSE)
 ```
@@ -80,7 +82,7 @@ The animate the results, pass the resulting object to `animate_result`. This wil
 
 ```{r animate_sim, fig.align="center"}
 
-animate_result(result, fill = "detrital_pool", end_pause = 5, duration = 30)
+animate_result(result, fill = "detritus_pool", end_pause = 5, duration = 30)
 
 ``` 
 

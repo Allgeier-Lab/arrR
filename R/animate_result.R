@@ -28,8 +28,8 @@ animate_result <- function(result, fill = "reef", ...) {
 
   gg_result <-  ggplot2::ggplot(data = result$seafloor) +
     ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = !! ggplot2::sym(fill))) +
-    ggplot2::geom_point(data = result$population, ggplot2::aes(x = x, y = y), col = "grey") +
-    gganimate::transition_time(i) +
+    ggplot2::geom_point(data = result$fish_population, ggplot2::aes(x = x, y = y), col = "grey") +
+    gganimate::transition_time(track_i) +
     ggplot2::scale_fill_viridis_c(option = "A") +
     ggplot2::coord_equal() +
     ggplot2::theme_classic() +

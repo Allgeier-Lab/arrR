@@ -46,7 +46,7 @@ starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
 check_parameters(starting_values = starting_values, parameters = parameters)
-#> All starting values and parameters are available...
+#> > All starting values and parameters are available...
 ```
 
 To setup the simulation seafloor and individuals, simply run
@@ -60,12 +60,13 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 
 input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, reefs = reef_matrix, 
                                        starting_values = starting_values, parameters = parameters)
-#> Creating environment with extent(50, 50)...
-#> Creating 5 artifical reef cells...
+#> > Creating seafloor with extent(50, 50)...
+#> > Creating 5 artifical reef cells...
 
-input_population <- setup_population(seafloor = input_seafloor, 
-                                     starting_values = starting_values, parameters = parameters)
-#> Creating 10 individuals within extent(-25, 25, -25, 25)...
+input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
+                                               starting_values = starting_values, 
+                                               parameters = parameters)
+#> > Creating 10 individuals within extent(-25, 25, -25, 25)...
 ```
 
 To rum a simulation, simply provide the previously created seafloor and
@@ -74,7 +75,8 @@ population as well as all parameters and starting values the
 of time steps that are simulated.
 
 ``` r
-result <- run_simulation(seafloor = input_seafloor, population = input_population, 
+result <- run_simulation(seafloor = input_seafloor, 
+                         fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
                          max_i = 50, verbose = FALSE)
 ```
@@ -85,7 +87,7 @@ This will produce a GIF, but you need the packages `ggplot2`,
 
 ``` r
 
-animate_result(result, fill = "detrital_pool", end_pause = 5, duration = 30)
+animate_result(result, fill = "detritus_pool", end_pause = 5, duration = 30)
 ```
 
 <img src="man/figures/README-animate_sim-1.gif" width="100%" style="display: block; margin: auto;" />

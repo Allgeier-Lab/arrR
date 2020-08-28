@@ -50,7 +50,7 @@ parameters <- system.file("extdata", "parameters.csv", package = "coRal")
 starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
-input_environment <- setup_seafloor(extent = c(50, 50), grain = 1,
-reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
+input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
+reefs = NULL, starting_values = starting_values, parameters = parameters)
 
 }

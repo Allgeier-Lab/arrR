@@ -3,7 +3,7 @@
 #' @description Wrapper functions to run model
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param population Data frame population created with \code{\link{setup_population}}.
+#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -16,7 +16,7 @@
 #'
 #' Parameters include ...
 #'
-#' @return data frame
+#' @return data.frame
 #'
 #' @examples
 #' \dontrun{
@@ -29,17 +29,41 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, population,
+run_simulation <- function(seafloor, fish_population,
                            starting_values, parameters, max_i, min_per_i = 120,
                            verbose = TRUE) {
 
-  # save first environmental values to data table
-  seafloor_track <- raster::as.data.frame(x = seafloor, xy = TRUE)
-  seafloor_track$i <- 0
+  # print some basic information about model run
+  if (verbose) {
 
-  # save first population values to data table (copy)
-  population_track <- population
-  population_track$i <- 0
+    message("> Using '", deparse(substitute(parameters)), "' as parameter file; '",
+            deparse(substitute(starting_values)), "' as starting values.")
+
+    message("> Seafloor with ", raster::extent(seafloor), "; ",
+            sum(raster::values(seafloor$reef)), " reef cells.")
+
+    message("> Population with ", nrow(fish_population), " individuals.")
+
+    message("> One simulation run equals ", min_per_i, " minutes.")
+
+    message("")
+    message("> ...Starting simulation...")
+
+  }
+
+  # save original environmental values to data.frame
+  seafloor_track <- raster::as.data.frame(x = seafloor, xy = TRUE)
+  seafloor_track$track_i <- 0
+
+  # save original population values to data.frame
+  fish_population_track <- fish_population
+
+  # check if individuals are preset
+  if (nrow(fish_population) > 0) {
+
+    fish_population_track$track_i <- 0
+
+  }
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -49,52 +73,60 @@ run_simulation <- function(seafloor, population,
 
     if (verbose) {
 
-      # cat("\f")
-      message("Progress: ", i, "/", max_i)
-
+      message("\r> Progress: ", i, "/", max_i, " simulations runs \t\t\t",
+              appendLF = FALSE)
     }
 
+    # simulate seagrass growth
     seafloor <- simulate_seagrass(seafloor = seafloor,
                                   parameters = parameters,
-                                  min_per_i = min_per_i,
-                                  verbose = verbose)
+                                  min_per_i = min_per_i)
 
     # MH: Missing: dead-fish-detritus
 
-    population <- simulate_movement(population = population,
-                                    mean_move = parameters$pop_mean_move,
-                                    extent = extent,
-                                    reef_attraction = FALSE, # allow this the be changed
-                                    verbose = verbose)
+    # simulate fish movement
+    fish_population <- simulate_movement(fish_population = fish_population,
+                                         parameters = parameters,
+                                         extent = extent,
+                                         reef_attraction = FALSE) # allow this the be change
 
-    population <- simulate_respiration(population = population,
-                                       water_temp = parameters$water_temp,
-                                       min_per_i = min_per_i, verbose = verbose)
+    # simulate fish respiration
+    fish_population <- simulate_respiration(fish_population = fish_population,
+                                            water_temp = parameters$water_temp,
+                                            min_per_i = min_per_i)
 
-    result_temp <- simulate_growth(population = population,
+    # simulate growth and nutrient feedback (returns population data.frame and raster)
+    result_temp <- simulate_growth(fish_population = fish_population,
+                                   fish_population_track = fish_population_track,
                                    seafloor = seafloor,
-                                   k_grunt = parameters$pop_k_grunt,
-                                   a_grunt = parameters$pop_a_grunt,
-                                   b_grunt = parameters$pop_b_grunt,
-                                   linf_grunt = parameters$pop_linf_grunt,
-                                   min_per_i = min_per_i,
-                                   verbose = verbose)
+                                   parameters = parameters,
+                                   min_per_i = min_per_i)
 
     # update results
     seafloor <- result_temp$seafloor
-    population <- result_temp$population
+    fish_population <- result_temp$fish_population
+
+    fish_population <- simulate_mortality(fish_population = fish_population,
+                                          fish_population_track = fish_population_track,
+                                          seafloor = seafloor)
+
+    # # diffuse values between neighbors (really slow at the moment)
+    # seafloor <- simulate_diffusion(seafloor = seafloor, parameters = parameters)
 
     # update tracking data.frames
     seafloor_track <- int_update_i(data_current = seafloor,
                                    data_track = seafloor_track,
                                    ras = TRUE)
 
-    population_track <- int_update_i(data_current = population,
-                                     data_track = population_track,
-                                     ras = FALSE)
-
-    population$age <-  population$age + 1
+    fish_population_track <- int_update_i(data_current = fish_population,
+                                          data_track = fish_population_track,
+                                          ras = FALSE)
   }
 
-  return(list(seafloor = seafloor_track, population = population_track))
+  # new line after last progress message
+  if (verbose) {
+    message("")
+  }
+
+  return(list(seafloor = seafloor_track, fish_population = fish_population_track))
 }

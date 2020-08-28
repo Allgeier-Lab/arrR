@@ -39,7 +39,7 @@ check_parameters <- function(starting_values, parameters) {
   # specify all required parameters
   required_parameters <- c("sg_density",
                            "ag_gamma",
-                           "ag_max",
+                           "ag_biomass_max",
                            "ag_sigmoid_slope_a",
                            "ag_sigmoid_slope_b",
                            "ag_v_max_a",
@@ -56,8 +56,11 @@ check_parameters <- function(starting_values, parameters) {
                            "bg_k_max",
                            "bg_slough_ratio",
                            "slough_detritus_ratio",
-                           "detrital_fraction",
+                           "detritus_fraction",
+                           "detritus_diffusion",
+                           "detritus_death_diffusion",
                            "wc_nutrients",
+                           "wc_diffusion",
                            "pop_mean_size",
                            "pop_mean_move",
                            "pop_a_grunt",
@@ -72,7 +75,7 @@ check_parameters <- function(starting_values, parameters) {
   # length equals 0 if all parameters are present
   if (length(check_starting) == 0 & length(check_parameters) == 0 ) {
 
-    message("All starting values and parameters are available...")
+    message("> All starting values and parameters are available...")
 
   } else {
 

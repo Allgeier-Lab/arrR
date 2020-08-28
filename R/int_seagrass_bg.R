@@ -12,7 +12,6 @@
 #' @param gamma Add info about parameter.
 #' @param slough_ratio Add info about parameter.
 #' @param slough_detritus_ratio Add info about parameter.
-#' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
 #' Internal function to simulate below ground seagrass processes. This
@@ -28,14 +27,8 @@
 #' @export
 int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
                             nutrients_thres_a, nutrients_thres_b,
-                            v_max, k_max, gamma, slough_ratio, slough_detritus_ratio,
-                            verbose) {
-
-  if (verbose) {
-
-    message("Simulating below ground seagrass...")
-
-  }
+                            v_max, k_max, gamma, slough_ratio,
+                            slough_detritus_ratio) {
 
   # calculate uptake
   # MH: Why are there two different thresholds?

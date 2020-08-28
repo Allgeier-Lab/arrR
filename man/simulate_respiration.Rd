@@ -4,19 +4,17 @@
 \alias{simulate_respiration}
 \title{simulate_respiration}
 \usage{
-simulate_respiration(population, water_temp, min_per_i, verbose = TRUE)
+simulate_respiration(fish_population, water_temp, min_per_i)
 }
 \arguments{
-\item{population}{Data frame population created with \code{\link{setup_population}}.}
+\item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
 
 \item{water_temp}{Numeric with water temperature.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
-
-\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.table
+data.frame
 }
 \description{
 Simulate movement of population.
