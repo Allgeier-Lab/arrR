@@ -25,7 +25,7 @@ simulate_seagrass <- function(seafloor, parameters, min_per_i) {
                                      to = "umol") / 10000
 
   bg_nutrients_thres_b <- int_convert_n(x = parameters$bg_nutrients_thres_b,
-                                     to = "umol") / 10000
+                                        to = "umol") / 10000
 
   # convert wet to dry biomass
   ag_biomass_dry <- int_convert_dry(x = raster::values(seafloor$ag_biomass),
@@ -57,7 +57,6 @@ simulate_seagrass <- function(seafloor, parameters, min_per_i) {
                                  slough_detritus_ratio = parameters$slough_detritus_ratio)
 
   # simulate below ground seagrass
-  # MH: This is still missing the accelerated growth
   seagrass_bg <- int_seagrass_bg(biomass_dry = bg_biomass_dry,
                                  sigmoid_slope = parameters$bg_sigmoid_slope,
                                  nutrients = wc_nutrients,
@@ -69,7 +68,7 @@ simulate_seagrass <- function(seafloor, parameters, min_per_i) {
                                  slough_ratio = parameters$bg_slough_ratio,
                                  slough_detritus_ratio = parameters$slough_detritus_ratio)
 
-  # M: What is this?
+  # MH: What is this?
   seagrass_accl <- int_seagrass_accel(biomass_dry_ag = ag_biomass_dry,
                                       biomass_dry_bg = bg_biomass_dry,
                                       biomass_max_bg = bg_biomass_max,

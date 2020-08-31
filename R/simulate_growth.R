@@ -137,6 +137,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
 
         # # set nutrient pool to 0
         detritus_pool[i] <- 0
+
       }
     }
   }

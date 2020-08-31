@@ -69,6 +69,7 @@ int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass, sg_density,
 
   # add remaining nutrients to pool
   # MH: This is negative?
+  # MH: Couldn't this be easier calculated using blade_slough - detritus?
   nutrients <- (-1) * int_convert_n(blade_uptake, to = "g") +
     (1 - slough_detritus_ratio) * blade_slough * gamma
 
