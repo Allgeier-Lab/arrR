@@ -78,6 +78,7 @@ of time steps that are simulated.
 result <- run_simulation(seafloor = input_seafloor, 
                          fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
+                         reef_attraction = TRUE,
                          max_i = 50, verbose = FALSE)
 ```
 
@@ -88,6 +89,8 @@ This will produce a GIF, but you need the packages `ggplot2`,
 ``` r
 
 animate_result(result, fill = "detritus_pool", end_pause = 5, duration = 30)
+#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+#> when loading 'dplyr'
 ```
 
 <img src="man/figures/README-animate_sim-1.gif" width="100%" style="display: block; margin: auto;" />

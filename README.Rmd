@@ -75,6 +75,7 @@ To rum a simulation, simply provide the previously created seafloor and populati
 result <- run_simulation(seafloor = input_seafloor, 
                          fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
+                         reef_attraction = TRUE,
                          max_i = 50, verbose = FALSE)
 ```
 
