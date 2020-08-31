@@ -5,12 +5,12 @@
 \alias{calc_dist_reefs}
 \title{calc_dist_reefs}
 \usage{
-int_calc_dist_reefs(object)
+int_calc_dist_reefs(fish_population, coords_reef)
 }
 \arguments{
-\item{object}{Raster* object}
+\item{fish_population}{2-column matrix with coordinates of individual fish.}
 
-\item{xy}{2-Column matrix with coordinates of artificial reefs}
+\item{coords_reef}{2-column matrix with coordinates of AR.}
 }
 \value{
 vector

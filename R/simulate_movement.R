@@ -6,6 +6,7 @@
 #' @param parameters List with all model parameters.
 #' @param extent Vector with number of rows and columns (spatial extent).
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
+#' @param coords_reef 2-column matrix with coordinates of AR.
 #'
 #' @details
 #' Function to simulate movement of population individuals.
@@ -17,7 +18,7 @@
 #'
 #' @export
 simulate_movement <- function(fish_population, parameters, extent,
-                              reef_attraction) {
+                              coords_reef, reef_attraction) {
 
   # MH: Why is this not a parameter?
   variance <- 5
@@ -26,15 +27,55 @@ simulate_movement <- function(fish_population, parameters, extent,
   mean_x <- log(parameters$pop_mean_move ^ 2 / sqrt(variance + parameters$pop_mean_move ^ 2))
   sd_x <- sqrt(log( 1 + (variance / (parameters$pop_mean_move ^ 2))))
 
-  if (reef_attraction) {
-
-    # add attraction towards reef cells
-
-  }
-
   # create random movement distance and angel in degree
   move_dist <- exp(stats::rnorm(n = nrow(fish_population), mean = mean_x, sd = sd_x))
   move_angle <- stats::runif(n = nrow(fish_population), min = 0, max = 360)
+
+  # move towards reef
+  if (reef_attraction) {
+
+    # get distance to nearest reef
+    reef_dist <- int_calc_dist_reefs(fish_population = fish_population[, c("x", "y")],
+                                     coords_reef = coords_reef)
+
+    # which individuals are not more than 10 m from a reef
+    # MH: This is also something to explore as a parameter
+    attract_id <- which(reef_dist$dist < 10)
+
+    if (length(attract_id) > 0) {
+
+      # which are the corresponding reef cells
+      reef_id <- reef_dist$counter[attract_id]
+
+      # calculate bearing between individuals and reef cells
+      theta <- atan2(coords_reef[reef_id, 2] - fish_population$y[attract_id],
+                     coords_reef[reef_id, 1] - fish_population$x[attract_id])
+
+      # correct for 4 quadrants of coordinate system
+      theta[theta < 0] <- theta[theta < 0] + 2 * pi
+
+      # add some random deviation from straight line
+      # MH: This could explored as parameter
+      theta_lo <- theta * 0.75
+      theta_hi <- theta * 1.25
+
+      # # add some random deviation to distance
+      # # MH: This could explored as parameter
+      # dist_lo <- reef_dist$dist[attract_id] * 0.75
+      # dist_hi <- reef_dist$dist[attract_id] * 1.25
+
+      # convert to degree and replace angle
+      move_angle[attract_id] <- runif(n = length(attract_id),
+                                      min = theta_lo, max = theta_hi) * (180 / pi)
+
+      # # replace distance
+      # move_dist[attract_id] <- runif(n = length(attract_id),
+      #                                min = dist_lo, max = dist_hi)
+
+      # MH: How to move away from reef?
+
+    }
+  }
 
   # move individuals
   # MH: In NetLogo individuals only turn between 0 to 25° all the time?

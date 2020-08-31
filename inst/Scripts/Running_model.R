@@ -1,7 +1,7 @@
 # code to play around with model
 library(coRal)
 library(raster)
-library(tidyverse)
+# library(tidyverse)
 
 # load parameter and starting value files
 starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
@@ -18,11 +18,11 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # create seafloor
-input_seafloor <- setup_seafloor(extent = c(51, 51), grain = 1, reefs = NULL,
+input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, reefs = reef_matrix,
                                  starting_values = starting_values, parameters = parameters)
 
-# change some parameters
-starting_values$pop_n <- 5
+# # # change some parameters
+# starting_values$pop_n <- 20
 
 # create population
 input_fish_population <- setup_fish_population(seafloor = input_seafloor,
@@ -32,10 +32,11 @@ input_fish_population <- setup_fish_population(seafloor = input_seafloor,
 # run model
 result <- run_simulation(seafloor = input_seafloor, fish_population = input_fish_population,
                          starting_values = starting_values, parameters = parameters,
-                         max_i = 20, verbose = TRUE)
+                         reef_attraction = TRUE,
+                         max_i = 50, verbose = TRUE)
 
 animate_result(result = result, fill = "ag_biomass")
 
-result$seafloor %>% dplyr::filter(track_i == 20) %>%
-  dplyr::pull(ag_biomass) %>%
-  mean
+# result$seafloor %>% dplyr::filter(track_i == 20) %>%
+#   dplyr::pull(ag_biomass) %>%
+#   mean

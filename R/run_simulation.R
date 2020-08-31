@@ -6,6 +6,7 @@
 #' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
+#' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param verbose If TRUE, progress reports are printed.
@@ -30,7 +31,8 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fish_population,
-                           starting_values, parameters, max_i, min_per_i = 120,
+                           starting_values, parameters, reef_attraction,
+                           max_i, min_per_i = 120,
                            verbose = TRUE) {
 
   # print some basic information about model run
@@ -68,6 +70,10 @@ run_simulation <- function(seafloor, fish_population,
   # get extent of environment
   extent <- raster::extent(seafloor)
 
+  coords_reef <- raster::xyFromCell(object = seafloor$reef,
+                                    cell = raster::Which(seafloor$reef == 1,
+                                                         cells = TRUE))
+
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
@@ -88,7 +94,8 @@ run_simulation <- function(seafloor, fish_population,
     fish_population <- simulate_movement(fish_population = fish_population,
                                          parameters = parameters,
                                          extent = extent,
-                                         reef_attraction = FALSE) # allow this the be change
+                                         coords_reef = coords_reef,
+                                         reef_attraction = reef_attraction) # allow this the be change
 
     # simulate fish respiration
     fish_population <- simulate_respiration(fish_population = fish_population,

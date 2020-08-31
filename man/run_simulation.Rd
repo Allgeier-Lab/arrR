@@ -9,6 +9,7 @@ run_simulation(
   fish_population,
   starting_values,
   parameters,
+  reef_attraction,
   max_i,
   min_per_i = 120,
   verbose = TRUE
@@ -22,6 +23,8 @@ run_simulation(
 \item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
 \item{max_i}{Integer with maximum number of simulation time steps.}
 

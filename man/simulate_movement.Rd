@@ -4,7 +4,13 @@
 \alias{simulate_movement}
 \title{simulate_movement}
 \usage{
-simulate_movement(fish_population, parameters, extent, reef_attraction)
+simulate_movement(
+  fish_population,
+  parameters,
+  extent,
+  coords_reef,
+  reef_attraction
+)
 }
 \arguments{
 \item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
@@ -12,6 +18,8 @@ simulate_movement(fish_population, parameters, extent, reef_attraction)
 \item{parameters}{List with all model parameters.}
 
 \item{extent}{Vector with number of rows and columns (spatial extent).}
+
+\item{coords_reef}{2-column matrix with coordinates of AR.}
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 }

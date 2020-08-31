@@ -2,8 +2,8 @@
 #'
 #' @description Internal function
 #'
-#' @param object Raster* object
-#' @param xy 2-Column matrix with coordinates of artificial reefs
+#' @param fish_population 2-column matrix with coordinates of individual fish.
+#' @param coords_reef 2-column matrix with coordinates of AR.
 #'
 #' @details
 #' Internal function calculate distance to reef cells.
@@ -16,51 +16,32 @@
 #' @keywords internal
 #'
 #' @export
-int_calc_dist_reefs <- function(object) {
+int_calc_dist_reefs <- function(fish_population, coords_reef) {
 
-  # convert to data.frame to get coords
-  object_df <- raster::as.data.frame(object, xy = TRUE)
+  min_dist <- rep(Inf, times = nrow(fish_population))
 
-  # split in AR/no AR data
-  reefs <- object_df[object_df$layer == 1, ]
-  no_reefs <- object_df[object_df$layer != 1, ]
+  counter <- vector(mode = "numeric", length = nrow(fish_population))
 
-  dist_to_reef <- vector(mode = "numeric", length = nrow(no_reefs))
+  for (i in 1:nrow(fish_population)) {
 
-  for (i in 1:nrow(no_reefs)) {
+    for (j in 1:nrow(coords_reef)) {
 
-    # get current no_reef coord
-    no_reef_temp <- no_reefs[i, c(1:2)]
+      dist_x <- fish_population[i, 1] - coords_reef[j, 1]
 
-    # calculate distance to first reef cell
-    dist_min <- sqrt((reefs[1, 1] - no_reef_temp[1]) ^ 2 +
-                       (reefs[1, 2] - no_reef_temp[2]) ^ 2)
+      dist_y <- fish_population[i, 2] - coords_reef[j, 2]
 
-    # loop through all reef cells
-    for (j in 2:nrow(reefs)) {
+      dist_xy <- sqrt(dist_x * dist_x + dist_y * dist_y)
 
-      # get current reef cell
-      reef_temp <- reefs[j, c(1:2)]
+      if (dist_xy < min_dist[i]) {
 
-      # calculate distance
-      dist_temp <- sqrt((reef_temp[1] - no_reef_temp[1]) ^ 2 +
-                          (reef_temp[2] - no_reef_temp[2]) ^ 2)
+        min_dist[i] <- dist_xy
 
-      # replace minimum distance if smaller
-      if (dist_temp < dist_min) {
-
-        dist_min <- dist_temp
+        counter[i] <- j
 
       }
     }
-
-    dist_to_reef[[i]] <- as.numeric(dist_min)
-
   }
 
-  reefs$dist <- 0
-  no_reefs$dist <- dist_to_reef
-
-  raster::rasterFromXYZ(xyz = rbind(reefs, no_reefs),
-                        res = raster::res(object), crs = raster::crs(object))
+  return(list(dist = min_dist, counter = counter))
 }
+
