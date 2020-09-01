@@ -88,7 +88,7 @@ This will produce a GIF, but you need the packages `ggplot2`,
 
 ``` r
 
-animate_result(result, fill = "detritus_pool", end_pause = 5, duration = 30)
+animate_result(result, fill = "detritus_pool", end_pause = 10)
 #> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
 #> when loading 'dplyr'
 ```

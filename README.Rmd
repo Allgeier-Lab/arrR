@@ -83,7 +83,7 @@ The animate the results, pass the resulting object to `animate_result`. This wil
 
 ```{r animate_sim, fig.align="center"}
 
-animate_result(result, fill = "detritus_pool", end_pause = 5, duration = 30)
+animate_result(result, fill = "detritus_pool", end_pause = 10)
 
 ``` 
 
