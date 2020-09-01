@@ -12,10 +12,30 @@ The goal of coRal is to …
 ## Installation
 
 You can install coRal from
-[GitHub](https://github.com/Allgeier-Lab/coRal) with:
+[GitHub](https://github.com/Allgeier-Lab/coRal) with the following line
+of code. You will need the `auth_token` because the repository is
+currently set to private so only members of the Allgeier Lab can see it.
+**PlEASE DON’T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW
+FIRST**.
 
 ``` r
-remotes::install_github("Allgeier-Lab/coRAL")
+remotes::install_github("Allgeier-Lab/coRAL", 
+                        auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
+#> Downloading GitHub repo Allgeier-Lab/coRAL@HEAD
+#> 
+#>      checking for file ‘/private/var/folders/c9/1rf3y_7s78bfksgs4tgswtcw0000gs/T/RtmpBQtb49/remotes100d63beb686c/Allgeier-Lab-coRal-9432f1e368bcfd4ad797d3adcdbe1617b05bfeb5/DESCRIPTION’ ...  ✓  checking for file ‘/private/var/folders/c9/1rf3y_7s78bfksgs4tgswtcw0000gs/T/RtmpBQtb49/remotes100d63beb686c/Allgeier-Lab-coRal-9432f1e368bcfd4ad797d3adcdbe1617b05bfeb5/DESCRIPTION’
+#>   ─  preparing ‘coRal’:
+#>      checking DESCRIPTION meta-information ...  ✓  checking DESCRIPTION meta-information
+#>   ─  excluding invalid files
+#>      Subdirectory 'R' contains invalid file names:
+#>      ‘run_simulation.html’
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘coRal_0.1.0.tar.gz’
+#>      
+#> 
+#> Installing package into '/Users/mhesselbarth/Library/R/4.0/library'
+#> (as 'lib' is unspecified)
 ```
 
 <!-- Add CRAN link if applicable -->
