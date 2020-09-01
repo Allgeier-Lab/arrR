@@ -70,9 +70,17 @@ run_simulation <- function(seafloor, fish_population,
   # get extent of environment
   extent <- raster::extent(seafloor)
 
+  # get coordinates of reef cells
   coords_reef <- raster::xyFromCell(object = seafloor$reef,
                                     cell = raster::Which(seafloor$reef == 1,
                                                          cells = TRUE))
+
+  # get neighboring cells for each focal cell
+  cell_adj <- raster::adjacent(x = seafloor, cells = 1:raster::ncell(seafloor),
+                               directions = 8, pairs = TRUE, sort = TRUE)
+
+  # get number of neighboring cells for each focal cell
+  adj_tab <- table(cell_adj[, 1])
 
   # simulate until max_i is reached
   for (i in 1:max_i) {
@@ -120,7 +128,9 @@ run_simulation <- function(seafloor, fish_population,
                                           seafloor = seafloor)
 
     # # diffuse values between neighbors (really slow at the moment)
-    # seafloor <- simulate_diffusion(seafloor = seafloor, parameters = parameters)
+    seafloor <- simulate_diffusion(seafloor = seafloor,
+                                   cell_adj = cell_adj, adj_tab = adj_tab,
+                                   parameters = parameters)
 
     # update tracking data.frames
     seafloor_track <- int_update_i(data_current = seafloor,

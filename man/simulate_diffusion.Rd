@@ -4,10 +4,14 @@
 \alias{simulate_diffusion}
 \title{simulate_diffusion}
 \usage{
-simulate_diffusion(seafloor, parameters)
+simulate_diffusion(seafloor, cell_adj, adj_tab, parameters)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
+
+\item{cell_adj}{2 column matrix with cell adjacencies.}
+
+\item{adj_tab}{Table with count of neighbors for each focal cell.}
 
 \item{parameters}{List with all model parameters.}
 }
@@ -18,5 +22,5 @@ RasterBrick
 Simulate diffusion.
 }
 \details{
-A certain share of each cell value is diffused to its 8 neighbouring cells.
+A certain share of each cell value is diffused to its 8 neighboring cells.
 }
