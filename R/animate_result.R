@@ -17,20 +17,42 @@
 #' @export
 animate_result <- function(result, fill = "reef", ...) {
 
-  # check if fill argument makes sense
-  if (!fill %in% names(result$seafloor)) {
+  # use discrete scale
+  if (fill == "reef") {
 
-    stop("Please select valid layer as fill argument.", call. = FALSE)
+    fill_manual <- ggplot2::scale_fill_manual(values = c("#E9EAF0", "#9B964A"),
+                                              name = "Cover Type")
+
+    result$seafloor$reef <- factor(result$seafloor$reef, levels = c(0, 1),
+                                   labels = c("Seafloor", "Artifical reef"))
+
+  # use continuous scale
+  } else if (fill %in% c("ag_biomass", "bg_biomass", "detritus_pool",
+                  "detritus_dead", "wc_nutrients")) {
+
+    # specifiy fill values; AR cells will be classified as NA
+    fill_manual <- ggplot2::scale_fill_gradientn(colours = c("#E9EAF0",
+                                                             "#368AC0",
+                                                             "#EC747F"),
+                                                 na.value = "#9B964A")
+
+    # reclassify AR as NA for better plotting
+    result$seafloor[result$seafloor$reef == 1, fill] <- NA
+
+  # check if fill argument makes sense
+  } else {
+
+    stop("Please select a valid layer as 'fill' argument.", call. = FALSE)
 
   }
 
-  # add layer with reef on top to control colour of reef cells result$seafloor$reef
-
-  gg_result <-  ggplot2::ggplot(data = result$seafloor) +
+  # create plot
+  gg_result <- ggplot2::ggplot(data = result$seafloor) +
     ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = !! ggplot2::sym(fill))) +
-    ggplot2::geom_point(data = result$fish_population, ggplot2::aes(x = x, y = y), col = "grey") +
+    ggplot2::geom_point(data = result$fish_population,
+                        ggplot2::aes(x = x, y = y), shape = 1, col = "black") +
     gganimate::transition_time(track_i) +
-    ggplot2::scale_fill_viridis_c(option = "A") +
+    fill_manual +
     ggplot2::coord_equal() +
     ggplot2::theme_classic() +
     ggplot2::ggtitle(label = "Time step i: {as.integer(frame_time)}")
