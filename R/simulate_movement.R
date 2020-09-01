@@ -65,8 +65,8 @@ simulate_movement <- function(fish_population, parameters, extent,
       # dist_hi <- reef_dist$dist[attract_id] * 1.25
 
       # convert to degree and replace angle
-      move_angle[attract_id] <- runif(n = length(attract_id),
-                                      min = theta_lo, max = theta_hi) * (180 / pi)
+      move_angle[attract_id] <- stats::runif(n = length(attract_id),
+                                             min = theta_lo, max = theta_hi) * (180 / pi)
 
       # # replace distance
       # move_dist[attract_id] <- runif(n = length(attract_id),

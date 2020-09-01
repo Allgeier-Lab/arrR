@@ -81,6 +81,7 @@ run_simulation <- function(seafloor, fish_population,
 
       message("\r> Progress: ", i, "/", max_i, " simulations runs \t\t\t",
               appendLF = FALSE)
+
     }
 
     # simulate seagrass growth
@@ -113,6 +114,7 @@ run_simulation <- function(seafloor, fish_population,
     seafloor <- result_temp$seafloor
     fish_population <- result_temp$fish_population
 
+    # simulate mortality
     fish_population <- simulate_mortality(fish_population = fish_population,
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
