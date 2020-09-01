@@ -36,8 +36,12 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
     0.55 * (fish_population$n_body / 100)
 
   # get detritus pool at location
-  detritus_pool <- raster::extract(x = seafloor$detritus_pool, y = fish_population[, c("x", "y")])
-  detritus_dead <- raster::extract(x = seafloor$detritus_dead, y = fish_population[, c("x", "y")])
+  detritus_pool <- raster::extract(x = seafloor$detritus_pool,
+                                   y = fish_population[, c("x", "y")])
+  detritus_dead <- raster::extract(x = seafloor$detritus_dead,
+                                   y = fish_population[, c("x", "y")])
+  wc_nutrients <- raster::extract(x = seafloor$wc_nutrients,
+                                  y = fish_population[, c("x", "y")])
 
   # sample random ordering of individuals
   id <- sample(x = fish_population$id, size = n)
@@ -57,7 +61,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
         indiv_starting_values$weight
 
       # add to dead detritus pool
-      detritus_dead[i] <- mass_diff
+      detritus_dead[i] <- detritus_dead[i] + mass_diff
 
       fish_population[i ,] <- indiv_starting_values[,-19]
 
@@ -65,7 +69,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
       # by 0.01 and 0.05 as during setup
       reserves_wanted <- fish_population$reserves[i] / 5
 
-      # if more reserver are wanted than availaible, all are used
+      # if more reserves are wanted than available, all are used
       if (reserves_wanted >= detritus_pool[i]) {
 
         fish_population$reserves[i] <- detritus_pool[i]
@@ -100,6 +104,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
 
       # update reserves
       fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * (fish_population$n_body[i] / 100)
+
       fish_population$reserves_diff[i] <- fish_population$reserves_max[i] - fish_population$reserves[i]
 
       # consumption requirement cant be meet by nutrients pool completely
@@ -143,17 +148,21 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
   }
 
   egestion_nutrient <- 0 # Cn.real * FAn
+
   detritus_pool <- detritus_pool + egestion_nutrient
-  wc_nutrients <- fish_population$consumption_req - egestion_nutrient - fish_population$growth_nutrient
+
+  wc_nutrients <- wc_nutrients + (fish_population$consumption_req -
+                                    egestion_nutrient - fish_population$growth_nutrient)
 
   # get raster cells that need to be updated
+  # MH: Could I do this at the beginning and not raster::extract?
   cell_id <- raster::cellFromXY(object = seafloor$detritus_pool,
                                 xy = fish_population[, c("x", "y")])
 
-  # update the detritial pool values
-  seafloor$detritus_pool[cell_id] <- seafloor$detritus_pool[cell_id] + detritus_pool
-  seafloor$detritus_dead[cell_id] <- seafloor$detritus_dead[cell_id] + detritus_dead
-  seafloor$wc_nutrients[cell_id] <- seafloor$wc_nutrients[cell_id] + wc_nutrients
+  # update the detritus pool values
+  seafloor$detritus_pool[cell_id] <- detritus_pool
+  seafloor$detritus_dead[cell_id] <- detritus_dead
+  seafloor$wc_nutrients[cell_id] <- wc_nutrients
 
   return(list(seafloor = seafloor, fish_population = fish_population))
 }
