@@ -11,13 +11,7 @@ Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              email = "kesquivel@berkeley.edu"),
              person("Jacob E.", "Allgeier", 
              role = "rth", 
-             email = "jeallg@umich.edu"), 
-             person("Etienne B.", "Racine", 
-             role = "ctb", 
-             comment = "Original author of underlying code of as_data_table_ras()"), 
-             person("Lyndon", "Estes", 
-             role = "ctb", 
-             comment = "Contributor to underlying code of as_data_table_ras()"))
+             email = "jeallg@umich.edu"))
 Maintainer: Maximillian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
