@@ -53,19 +53,9 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-  # save original environmental values to data.frame
-  seafloor_track <- raster::as.data.frame(x = seafloor, xy = TRUE)
-  seafloor_track$track_i <- 0
-
-  # save original population values to data.frame
-  fish_population_track <- fish_population
-
-  # check if individuals are preset
-  if (nrow(fish_population) > 0) {
-
-    fish_population_track$track_i <- 0
-
-  }
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = max_i)
+  fish_population_track <- vector(mode = "list", length = max_i)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -133,19 +123,23 @@ run_simulation <- function(seafloor, fish_population,
                                    parameters = parameters)
 
     # update tracking data.frames
-    seafloor_track <- int_update_i(data_current = seafloor,
-                                   data_track = seafloor_track,
-                                   ras = TRUE)
+    seafloor_track[[i]] <- raster::as.data.frame(seafloor, xy = TRUE)
+    fish_population_track[[i]] <- fish_population
 
-    fish_population_track <- int_update_i(data_current = fish_population,
-                                          data_track = fish_population_track,
-                                          ras = FALSE)
   }
 
   # new line after last progress message
   if (verbose) {
     message("")
   }
+
+  # Combine to one data.frame
+  seafloor_track <- do.call(what = "rbind", args = seafloor_track)
+  fish_population_track <- do.call(what = "rbind", args = fish_population_track)
+
+  # Add timestep tracker
+  seafloor_track$timestep <- rep(x = 1:max_i, each = raster::ncell(seafloor))
+  fish_population_track$timestep <- rep(x = 1:max_i, each = starting_values$pop_n)
 
   return(list(seafloor = seafloor_track, fish_population = fish_population_track))
 }
