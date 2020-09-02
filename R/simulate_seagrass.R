@@ -15,7 +15,7 @@
 #' @rdname simulate_seagrass
 #'
 #' @export
-simulate_seagrass <- function(seafloor, parameters, min_per_i) {
+simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
 
   # convert water coloumn nutrients to umol/l
   # MH: Why is the value in int_convert_n 18.039?
@@ -82,22 +82,23 @@ simulate_seagrass <- function(seafloor, parameters, min_per_i) {
                                       slough_detritus_ratio = parameters$slough_detritus_ratio)
 
   # update environment RasterBrick
-  seafloor$ag_biomass <- seafloor$ag_biomass + seagrass_ag$biomass_wet +
-    seagrass_accl$biomass_wet
+  raster::values(seafloor$ag_biomass) <- raster::values(seafloor$ag_biomass) +
+    (seagrass_ag$biomass_wet + seagrass_accl$biomass_wet)
 
-  seafloor$bg_biomass <- seafloor$bg_biomass + seagrass_bg$biomass_wet
+  raster::values(seafloor$bg_biomass) <- raster::values(seafloor$bg_biomass) +
+    seagrass_bg$biomass_wet
 
-  seafloor$detritus_pool <- seafloor$detritus_pool + seagrass_ag$detritus +
-    seagrass_bg$detritus + seagrass_accl$detritus
+  raster::values(seafloor$detritus_pool) <- raster::values(seafloor$detritus_pool) +
+    (seagrass_ag$detritus + seagrass_bg$detritus + seagrass_accl$detritus)
 
-  seafloor$wc_nutrients <- seafloor$wc_nutrients + seagrass_ag$nutrients +
-    seagrass_bg$nutrients + seagrass_accl$nutrients
+  raster::values(seafloor$wc_nutrients) <- raster::values(seafloor$wc_nutrients) +
+    (seagrass_ag$nutrients + seagrass_bg$nutrients + seagrass_accl$nutrients)
 
   # check if reef cells are available
   if (sum(raster::values(seafloor$reef)) > 0) {
 
-    # set environmental values of AR cells to 0
-    seafloor[seafloor$reef == 1][, 1:4] <- 0
+    # set reef values to 0
+    raster::values(seafloor)[cells_reef, -6] <- 0
 
   }
 
