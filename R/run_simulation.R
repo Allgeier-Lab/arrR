@@ -32,7 +32,7 @@
 #' @export
 run_simulation <- function(seafloor, fish_population,
                            starting_values, parameters, reef_attraction,
-                           max_i, min_per_i = 120,
+                           max_i, min_per_i,
                            verbose = TRUE) {
 
   # print some basic information about model run
@@ -60,10 +60,13 @@ run_simulation <- function(seafloor, fish_population,
   # get extent of environment
   extent <- raster::extent(seafloor)
 
+  # get cell id of reef cells
+  cells_reef <- raster::Which(seafloor$reef == 1,
+                              cells = TRUE)
+
   # get coordinates of reef cells
   coords_reef <- raster::xyFromCell(object = seafloor$reef,
-                                    cell = raster::Which(seafloor$reef == 1,
-                                                         cells = TRUE))
+                                    cell = cells_reef)
 
   # get neighboring cells for each focal cell
   cell_adj <- raster::adjacent(x = seafloor, cells = 1:raster::ncell(seafloor),
@@ -85,6 +88,7 @@ run_simulation <- function(seafloor, fish_population,
     # simulate seagrass growth
     seafloor <- simulate_seagrass(seafloor = seafloor,
                                   parameters = parameters,
+                                  cells_reef = cells_reef,
                                   min_per_i = min_per_i)
 
     # MH: Missing: dead-fish-detritus
