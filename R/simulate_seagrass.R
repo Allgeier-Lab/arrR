@@ -4,6 +4,7 @@
 #'
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param parameters List with all model parameters.
+#' @param cells_reef Vector with cell ids of AR.
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details

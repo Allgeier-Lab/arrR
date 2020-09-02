@@ -11,6 +11,8 @@ simulate_seagrass(seafloor, parameters, cells_reef, min_per_i)
 
 \item{parameters}{List with all model parameters.}
 
+\item{cells_reef}{Vector with cell ids of AR.}
+
 \item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{

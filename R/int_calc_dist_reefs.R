@@ -1,4 +1,4 @@
-#' calc_dist_reefs
+#' int_calc_dist_reef
 #'
 #' @description Internal function
 #'
@@ -10,13 +10,13 @@
 #'
 #' @return vector
 #'
-#' @aliases calc_dist_reefs
-#' @rdname calc_dist_reefs
+#' @aliases int_calc_dist_reef
+#' @rdname int_calc_dist_reef
 #'
 #' @keywords internal
 #'
 #' @export
-int_calc_dist_reefs <- function(fish_population, coords_reef) {
+int_calc_dist_reef <- function(fish_population, coords_reef) {
 
   min_dist <- rep(Inf, times = nrow(fish_population))
 
@@ -42,6 +42,6 @@ int_calc_dist_reefs <- function(fish_population, coords_reef) {
     }
   }
 
-  return(list(dist = min_dist, counter = counter))
+  return(cbind(min_dist, counter))
 }
 
