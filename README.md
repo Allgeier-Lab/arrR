@@ -15,27 +15,12 @@ You can install coRal from
 [GitHub](https://github.com/Allgeier-Lab/coRal) with the following line
 of code. You will need the `auth_token` because the repository is
 currently set to private so only members of the Allgeier Lab can see it.
-**PlEASE DON’T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW
+**PLEASE DON’T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW
 FIRST**.
 
 ``` r
 remotes::install_github("Allgeier-Lab/coRAL", 
                         auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
-#> Downloading GitHub repo Allgeier-Lab/coRAL@HEAD
-#> 
-#>      checking for file ‘/private/var/folders/c9/1rf3y_7s78bfksgs4tgswtcw0000gs/T/RtmpBQtb49/remotes100d63beb686c/Allgeier-Lab-coRal-9432f1e368bcfd4ad797d3adcdbe1617b05bfeb5/DESCRIPTION’ ...  ✓  checking for file ‘/private/var/folders/c9/1rf3y_7s78bfksgs4tgswtcw0000gs/T/RtmpBQtb49/remotes100d63beb686c/Allgeier-Lab-coRal-9432f1e368bcfd4ad797d3adcdbe1617b05bfeb5/DESCRIPTION’
-#>   ─  preparing ‘coRal’:
-#>      checking DESCRIPTION meta-information ...  ✓  checking DESCRIPTION meta-information
-#>   ─  excluding invalid files
-#>      Subdirectory 'R' contains invalid file names:
-#>      ‘run_simulation.html’
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘coRal_0.1.0.tar.gz’
-#>      
-#> 
-#> Installing package into '/Users/mhesselbarth/Library/R/4.0/library'
-#> (as 'lib' is unspecified)
 ```
 
 <!-- Add CRAN link if applicable -->
@@ -99,21 +84,43 @@ result <- run_simulation(seafloor = input_seafloor,
                          fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
                          reef_attraction = TRUE,
-                         max_i = 50, verbose = FALSE)
+                         max_i = 10800, min_per_i = 120,
+                         verbose = FALSE)
+
+result
+#> Total simulated time: 900 d 
+#> 
+#> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
+#> Minimum: 0, 0, 0, 0, -1e-05
+#> Median: 2270.65862, 2657.55888, 1.9981, 0, 0.00016
+#> Maximum: 2270.65862, 2657.55888, 2.00419, 19.55918, 0.01807
+#> 
+#> Fish population: (length, weight)
+#> Minimum: 4.469, 1.37436
+#> Median: 7.48477, 7.01894
+#> Maximum: 14.42224, 55.78125
+#> Total deaths: 10
 ```
 
-The animate the results, pass the resulting object to `animate_result`.
-This will produce a GIF, but you need the packages `ggplot2`,
-`gganimate` and `gifski`.
+To plot the results, pass the resulting object to the `plot` function.
+This will automatically create a plot of the selected timestep (default:
+last timestep). It is possible to either plot a single `RasterLayer` or
+the whole `RasterBrick`
 
 ``` r
 
-animate_result(result, fill = "detritus_pool", end_pause = 10)
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
+plot(result, fill = "detritus_pool")
 ```
 
-<img src="man/figures/README-animate_sim-1.gif" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
+
+<!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->
+
+<!-- ```{r animate_sim, fig.align="center"} -->
+
+<!-- animate_result(result, fill = "detritus_pool", end_pause = 10) -->
+
+<!-- ```  -->
 
 ### Code of Conduct
 

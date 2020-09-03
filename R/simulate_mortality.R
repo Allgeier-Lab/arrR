@@ -29,7 +29,7 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor)
   if (length(id_dying) > 0) {
 
     # get starting values of individual
-    indiv_starting_values <- subset(fish_population_track, id %in% id_dying & track_i == 0)
+    indiv_starting_values <- subset(fish_population_track[[1]], id %in% id_dying)
 
     # calculate mass difference + reserves
     mass_diff <- (fish_population$weight[id_dying] + fish_population$reserves[id_dying]) -

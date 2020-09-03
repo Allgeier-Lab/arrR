@@ -38,8 +38,10 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
   # get detritus pool at location
   detritus_pool <- raster::extract(x = seafloor$detritus_pool,
                                    y = fish_population[, c("x", "y")])
+
   detritus_dead <- raster::extract(x = seafloor$detritus_dead,
                                    y = fish_population[, c("x", "y")])
+
   wc_nutrients <- raster::extract(x = seafloor$wc_nutrients,
                                   y = fish_population[, c("x", "y")])
 
@@ -54,7 +56,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
         (fish_population$reserves[i] + detritus_pool[i])) {
 
       # get starting values of individual
-      indiv_starting_values <- subset(fish_population_track, id == i & track_i == 0)
+      indiv_starting_values <- subset(fish_population_track[[1]], id == i)
 
       # calculate mass difference + reserves
       mass_diff <- (fish_population$weight[i] + fish_population$reserves[i]) -

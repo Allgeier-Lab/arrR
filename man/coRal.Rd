@@ -26,9 +26,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Jacob E. Allgeier \email{jeallg@umich.edu} [contributor]
-  \item Etienne B. Racine (Original author of underlying code of as_data_table_ras()) [contributor]
-  \item Lyndon Estes (Contributor to underlying code of as_data_table_ras()) [contributor]
+  \item Jacob E. Allgeier \email{jeallg@umich.edu} [research team head]
 }
 
 }

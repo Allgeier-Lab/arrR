@@ -10,8 +10,15 @@
 "_PACKAGE"
 
 globalVariables(names = c(
+  "ag_biomass",
+  "bg_biomass",
+  "detritus_dead",
+  "detritus_pool",
+  "died",
   "i",
   "id",
-  "track_i",
+  "timestep",
+  "wc_nutrients",
+  "weight",
   "x",
   "y"))

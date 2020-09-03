@@ -51,7 +51,7 @@ animate_result <- function(result, fill = "reef", ...) {
     ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = !! ggplot2::sym(fill))) +
     ggplot2::geom_point(data = result$fish_population,
                         ggplot2::aes(x = x, y = y), shape = 1, col = "black") +
-    gganimate::transition_time(track_i) +
+    gganimate::transition_time(timestep) +
     fill_manual +
     ggplot2::coord_equal() +
     ggplot2::theme_classic() +
