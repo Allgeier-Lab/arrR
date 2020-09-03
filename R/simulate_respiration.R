@@ -37,7 +37,8 @@ simulate_respiration <- function(fish_population, water_temp, min_per_i) {
 
   # update respiration col
   # MH: Why multiplied by 13560 etc.?
-  fish_population$respiration <- (ra * fish_population$weight ^ rb * f_tr * fish_population$activity) * 13560 * (1 / 4800)
+  fish_population$respiration <- (ra * fish_population$weight ^ rb * f_tr *
+                                    fish_population$activity) * 13560 * (1 / 4800)
 
   return(fish_population)
 }

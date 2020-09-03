@@ -35,17 +35,17 @@ simulate_movement <- function(fish_population, parameters, extent,
   if (reef_attraction) {
 
     # get distance to nearest reef
-    reef_dist <- int_calc_dist_reefs(fish_population = fish_population[, c("x", "y")],
-                                     coords_reef = coords_reef)
+    reef_dist <- rcpp_calc_dist_reef(as.matrix(fish_population[, c("x", "y")]),
+                                     coords_reef)
 
     # which individuals are not more than 10 m from a reef
     # MH: This is also something to explore as a parameter
-    attract_id <- which(reef_dist$dist < 10)
+    attract_id <- which(reef_dist[, 1] < 15)
 
     if (length(attract_id) > 0) {
 
       # which are the corresponding reef cells
-      reef_id <- reef_dist$counter[attract_id]
+      reef_id <- reef_dist[attract_id, 2]
 
       # calculate bearing between individuals and reef cells
       theta <- atan2(coords_reef[reef_id, 2] - fish_population$y[attract_id],
@@ -83,7 +83,6 @@ simulate_movement <- function(fish_population, parameters, extent,
   fish_population$y <- fish_population$y + (move_dist * sin(move_angle * (pi / 180)))
 
   # Torus edge correction at boundaries
-
   fish_population$x[which(fish_population$x < extent[1])] <-
     extent[2] - (extent[1] - fish_population$x[which(fish_population$x < extent[1])])
 

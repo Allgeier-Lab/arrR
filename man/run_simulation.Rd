@@ -11,7 +11,7 @@ run_simulation(
   parameters,
   reef_attraction,
   max_i,
-  min_per_i = 120,
+  min_per_i,
   verbose = TRUE
 )
 }

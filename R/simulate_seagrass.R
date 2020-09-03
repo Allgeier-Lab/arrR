@@ -4,6 +4,7 @@
 #'
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param parameters List with all model parameters.
+#' @param cells_reef Vector with cell ids of AR.
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
@@ -15,23 +16,26 @@
 #' @rdname simulate_seagrass
 #'
 #' @export
-simulate_seagrass <- function(seafloor, parameters, min_per_i) {
+simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
+
+  # get seafloor values
+  seafloor_values <- raster::values(seafloor)
 
   # convert water coloumn nutrients to umol/l
   # MH: Why is the value in int_convert_n 18.039?
   wc_nutrients <- int_convert_n(parameters$wc_nutrients, to = "umol") / 10000
 
   ag_nutrients_thres <- int_convert_n(x = parameters$ag_nutrients_thres,
-                                     to = "umol") / 10000
+                                      to = "umol") / 10000
 
   bg_nutrients_thres_b <- int_convert_n(x = parameters$bg_nutrients_thres_b,
                                         to = "umol") / 10000
 
   # convert wet to dry biomass
-  ag_biomass_dry <- int_convert_dry(x = raster::values(seafloor$ag_biomass),
+  ag_biomass_dry <- int_convert_dry(x = seafloor_values[, 1],
                                     what = "above")
 
-  bg_biomass_dry <- int_convert_dry(x = raster::values(seafloor$bg_biomass),
+  bg_biomass_dry <- int_convert_dry(x = seafloor_values[, 2],
                                     what = "below")
 
   # MH: Why is this not a parameter as ag?
@@ -81,25 +85,31 @@ simulate_seagrass <- function(seafloor, parameters, min_per_i) {
                                       slough_ratio = parameters$ag_slough_ratio,
                                       slough_detritus_ratio = parameters$slough_detritus_ratio)
 
-  # update environment RasterBrick
-  seafloor$ag_biomass <- seafloor$ag_biomass + seagrass_ag$biomass_wet +
-    seagrass_accl$biomass_wet
-
-  seafloor$bg_biomass <- seafloor$bg_biomass + seagrass_bg$biomass_wet
-
-  seafloor$detritus_pool <- seafloor$detritus_pool + seagrass_ag$detritus +
-    seagrass_bg$detritus + seagrass_accl$detritus
-
-  seafloor$wc_nutrients <- seafloor$wc_nutrients + seagrass_ag$nutrients +
-    seagrass_bg$nutrients + seagrass_accl$nutrients
-
   # check if reef cells are available
-  if (sum(raster::values(seafloor$reef)) > 0) {
+  if (length(cells_reef) > 0) {
 
-    # set environmental values of AR cells to 0
-    seafloor[seafloor$reef == 1][, 1:4] <- 0
+    # get current value of reef cells
+    reef_values <- seafloor_values[cells_reef, -6]
 
   }
+
+  # update seafloor values
+  seafloor_values[, c(-4, -6)] <- seafloor_values[, c(-4, -6)] +
+    cbind((seagrass_ag$biomass_wet + seagrass_accl$biomass_wet),
+          seagrass_bg$biomass_wet,
+          (seagrass_ag$detritus + seagrass_bg$detritus + seagrass_accl$detritus),
+          (seagrass_ag$nutrients + seagrass_bg$nutrients + seagrass_accl$nutrients))
+
+  # check if reef cells are available
+  if (length(cells_reef) > 0) {
+
+    # set reef values to old values
+    seafloor_values[cells_reef, -6] <- reef_values
+
+  }
+
+  # update environment RasterBrick
+  raster::values(seafloor) <- seafloor_values
 
   return(seafloor)
 }

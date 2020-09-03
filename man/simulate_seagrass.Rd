@@ -4,12 +4,14 @@
 \alias{simulate_seagrass}
 \title{simulate_seagrass}
 \usage{
-simulate_seagrass(seafloor, parameters, min_per_i)
+simulate_seagrass(seafloor, parameters, cells_reef, min_per_i)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{cells_reef}{Vector with cell ids of AR.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 }
