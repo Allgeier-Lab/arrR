@@ -160,9 +160,16 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
                                 xy = fish_population[, c("x", "y")])
 
   # update the detritus pool values
-  seafloor$detritus_pool[cell_id] <- detritus_pool
-  seafloor$detritus_dead[cell_id] <- detritus_dead
-  seafloor$wc_nutrients[cell_id] <- wc_nutrients
+  raster::values(seafloor)[cell_id, c("detritus_pool",
+                                      "detritus_dead",
+                                      "wc_nutrients")] <- cbind(detritus_pool,
+                                                                detritus_dead,
+                                                                wc_nutrients)
+
+
+  # raster::values(seafloor$detritus_pool)[cell_id] <- detritus_pool
+  # raster::values(seafloor$detritus_dead)[cell_id] <- detritus_dead
+  # raster::values(seafloor$wc_nutrients)[cell_id] <- wc_nutrients
 
   return(list(seafloor = seafloor, fish_population = fish_population))
 }

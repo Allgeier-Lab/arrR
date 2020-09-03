@@ -1,9 +1,9 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' int_calc_dist_reef
+//' rcpp_calc_dist_reef
 //'
-//' @description Internal function
+//' @description Internal rcpp function
 //'
 //' @param fish_population 2-column matrix with coordinates of individual fish.
 //' @param coords_reef 2-column matrix with coordinates of AR.
@@ -13,12 +13,12 @@ using namespace Rcpp;
 //'
 //' @return matrix
 //'
-//' @aliases int_calc_dist_reef
-//' @rdname int_calc_dist_reef
+//' @aliases rcpp_calc_dist_reef
+//' @rdname rcpp_calc_dist_reef
 //'
 //' @keywords internal
 //'
-//' @export
+//' @keywords export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix rcpp_calc_dist_reef(Rcpp::NumericMatrix fish_population,
                                         Rcpp::NumericMatrix coords_reef) {
