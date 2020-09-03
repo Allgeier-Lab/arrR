@@ -37,7 +37,10 @@ int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
 
   # set blade uptake to -nutrients if it exceeds available nutrients
   # MH: But this is not really what is happening here? Seems to be an issue with units?
-  uptake[uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
+  # uptake[uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
+  uptake_exceed <- which(uptake > (nutrients * 10000))
+
+  uptake[uptake_exceed] <- nutrients[uptake_exceed] * 10000 - 0.001
 
   # convert update to wet biomass
   biomass_wet <- int_convert_n(uptake, to = "g") * (gamma ^ -1)

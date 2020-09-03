@@ -23,7 +23,7 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
 
   # convert water coloumn nutrients to umol/l
   # MH: Why is the value in int_convert_n 18.039?
-  wc_nutrients <- int_convert_n(parameters$wc_nutrients, to = "umol") / 10000
+  wc_nutrients <- int_convert_n(seafloor_values[, 5], to = "umol") / 10000
 
   ag_nutrients_thres <- int_convert_n(x = parameters$ag_nutrients_thres,
                                       to = "umol") / 10000

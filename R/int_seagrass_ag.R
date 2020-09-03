@@ -39,17 +39,20 @@ int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass, sg_density,
 
   # calculate uptake of nutrients by blades
   # MH: Where does the numbers for int_convert_dry come from?
-  blade_uptake <- (1 / (1 + exp(sigmoid_slope * biomass_diff))) *
+  uptake <- (1 / (1 + exp(sigmoid_slope * biomass_diff))) *
     (v_max * (nutrients - nutrients_thres) /
        (k_max + (nutrients - nutrients_thres))) * biomass_dry
 
   # set blade uptake to XXX if it exceeds available nutrients
   # MH: But this is not really what is happening here? Seems to be an issue with units?
-  blade_uptake[blade_uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
+  # uptake[uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
+  uptake_exceed <- which(uptake > (nutrients * 10000))
+
+  uptake[uptake_exceed] <- nutrients[uptake_exceed] * 10000 - 0.001
 
   # convert nutrient uptake to g wet biomass / tick
   # MH: What is gamma doing?
-  biomass_wet <- int_convert_n(blade_uptake, to = "g") * (gamma ^ -1)
+  biomass_wet <- int_convert_n(uptake, to = "g") * (gamma ^ -1)
 
   # calculate slough amount of blades
   # MH: In NetLogo, this part is very error prone
@@ -70,7 +73,7 @@ int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass, sg_density,
   # add remaining nutrients to pool
   # MH: This is negative?
   # MH: Couldn't this be easier calculated using blade_slough - detritus?
-  nutrients <- (-1) * int_convert_n(blade_uptake, to = "g") +
+  nutrients <- (-1) * int_convert_n(uptake, to = "g") +
     (1 - slough_detritus_ratio) * blade_slough * gamma
 
   return(list(biomass_wet = biomass_wet,
