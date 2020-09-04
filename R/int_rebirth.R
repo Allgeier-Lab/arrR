@@ -23,18 +23,21 @@ int_rebirth <- function(fish_population, fish_population_track,
                         detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
-  starting_values <- subset(fish_population_track[[1]],
+  fish_population_start <- subset(fish_population_track[[1]],
                                   id == fish_population$id)
 
   # calculate mass difference + reserves
   mass_diff <- (fish_population$weight + fish_population$reserves) -
-    starting_values$weight
+    fish_population_start$weight
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff
 
-  # create new individual with timestep tracker
-  fish_population <- starting_values[, -20]
+  # get death counter
+  counter_died <- fish_population[, c(18, 19)]
+
+  # create new individual
+  fish_population <- fish_population_start
 
   # divide starting reserves by 5 because here the formula is multiplied
   # by 0.01 and 0.05 as during setup
@@ -59,11 +62,11 @@ int_rebirth <- function(fish_population, fish_population_track,
   # increase counter died
   if (reason == "consumption") {
 
-    fish_population$died_consumption <- fish_population$died_consumption + 1
+    fish_population$died_consumption <- counter_died[[1]] + 1
 
   } else if (reason == "background") {
 
-    fish_population$died_background <- fish_population$died_background + 1
+    fish_population$died_background <- counter_died[[2]] + 1
 
   } else {
 
