@@ -2,7 +2,6 @@
 % Please edit documentation in R/int_calc_size.R
 \name{int_calc_size}
 \alias{int_calc_size}
-\alias{calc_size}
 \title{calc_size}
 \usage{
 int_calc_size(starting_values, parameters)

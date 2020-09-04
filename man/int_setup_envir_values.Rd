@@ -2,7 +2,6 @@
 % Please edit documentation in R/int_setup_envir_values.R
 \name{int_setup_envir_values}
 \alias{int_setup_envir_values}
-\alias{setup_envir_values}
 \title{setup_envir_values}
 \usage{
 int_setup_envir_values(seafloor, starting_values, parameters)

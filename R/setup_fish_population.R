@@ -80,7 +80,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
                                   activity = numeric(n), respiration = numeric(n),
                                   growth_length = numeric(n), growth_weight = numeric(n),
                                   growth_nutrient = numeric(n), consumption_req = numeric(n),
-                                  died = numeric(n))
+                                  died_consumption = numeric(n), died_background = numeric(n))
 
   # No individuals need to be created
   } else {
@@ -95,8 +95,8 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
                                   activity = numeric(), respiration = numeric(),
                                   growth_length = numeric(), growth_weight = numeric(),
                                   growth_nutrient = numeric(),
-                                  consumption_req = numeric(), died = numeric())
-
+                                  consumption_req = numeric(),
+                                  died_consumption = numeric(n), died_background = numeric(n))
   }
 
   return(fish_population)

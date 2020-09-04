@@ -17,51 +17,44 @@
 simulate_mortality <- function(fish_population, fish_population_track, seafloor){
 
   # get detritus pool at location
-  detritus_pool <- raster::extract(x = seafloor$detritus_pool, y = fish_population[, c("x", "y")])
-  detritus_dead <- raster::extract(x = seafloor$detritus_dead, y = fish_population[, c("x", "y")])
+  detritus_pool <- raster::extract(x = seafloor$detritus_pool,
+                                   y = fish_population[, c("x", "y")])
 
+  detritus_dead <- raster::extract(x = seafloor$detritus_dead,
+                                   y = fish_population[, c("x", "y")])
+
+  # create death probability
   death_prob <- exp(1 * (fish_population$length - 45)) / 120
 
+  # create random number to test death prob against
   random_prob <- stats::runif(n = nrow(fish_population), min = 0, max = 1)
 
-  id_dying <- which(random_prob < death_prob)
+  # identify who dies
+  id <- which(random_prob < death_prob)
 
-  if (length(id_dying) > 0) {
+  # check if mortality occurs
+  if (length(id) > 0) {
 
-    # get starting values of individual
-    indiv_starting_values <- subset(fish_population_track[[1]], id %in% id_dying)
+    # loop through all dying individuals
+    # MH: This could be vectorized but would need changes in int_rebirth
+    # MH: Only very few individuals each time, so loop might not be a problem
+    for (i in id) {
 
-    # calculate mass difference + reserves
-    mass_diff <- (fish_population$weight[id_dying] + fish_population$reserves[id_dying]) -
-      indiv_starting_values$weight
-
-    # add to dead detritus pool
-    detritus_dead[id_dying] <- mass_diff
-
-    fish_population[id_dying ,] <- indiv_starting_values[,-19]
-
-    # divide starting reserves by 5 because here the formula is multiplied
-    # by 0.01 and 0.05 as during setup
-    reserves_wanted <- fish_population$reserves[id_dying] / 5
-
-    # if more reserver are wanted than availaible, all are used
-    if (reserves_wanted >= detritus_pool[id_dying]) {
-
-      fish_population$reserves[id_dying] <- detritus_pool[id_dying]
-
-      detritus_pool[id_dying] <- 0
-
-      # pool is larger than what is wanted, so only subset is used
-    } else {
-
-      fish_population$reserves[id_dying] <- reserves_wanted
-
-      detritus_pool[id_dying] <- detritus_pool[id_dying] - reserves_wanted
+      # create new individual
+      fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
+                                   fish_population_track = fish_population_track,
+                                   detritus_pool = detritus_pool[i],
+                                   detritus_dead = detritus_dead[i],
+                                   reason = "background")
 
     }
 
-    # increase counter died
-    fish_population$died[id_dying] <- fish_population$died[id_dying] + 1
+    # update data frames
+    fish_population[i, ] <-  fish_pop_temp$fish_population
+
+    # update detritus
+    detritus_pool[i] <- detritus_pool
+    detritus_dead[i] <- detritus_dead
 
   }
 

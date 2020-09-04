@@ -11,8 +11,8 @@
 #'
 #' @return RasterBrick
 #'
-#' @aliases setup_reefs
-#' @rdname setup_reefs
+#' @aliases int_setup_reefs
+#' @rdname int_setup_reefs
 #'
 #' @keywords internal
 #'

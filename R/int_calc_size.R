@@ -10,8 +10,8 @@
 #'
 #' @return vector
 #'
-#' @aliases calc_size
-#' @rdname calc_size
+#' @aliases int_calc_size
+#' @rdname int_calc_size
 #'
 #' @keywords internal
 #'

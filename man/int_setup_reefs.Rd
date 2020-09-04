@@ -2,7 +2,6 @@
 % Please edit documentation in R/int_setup_reefs.R
 \name{int_setup_reefs}
 \alias{int_setup_reefs}
-\alias{setup_reefs}
 \title{setup_reefs}
 \usage{
 int_setup_reefs(object, xy)

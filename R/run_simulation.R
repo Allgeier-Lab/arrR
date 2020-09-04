@@ -106,15 +106,15 @@ run_simulation <- function(seafloor, fish_population,
                                             min_per_i = min_per_i)
 
     # simulate growth and nutrient feedback (returns population data.frame and raster)
-    result_temp <- simulate_growth(fish_population = fish_population,
+    growth_temp <- simulate_growth(fish_population = fish_population,
                                    fish_population_track = fish_population_track,
                                    seafloor = seafloor,
                                    parameters = parameters,
                                    min_per_i = min_per_i)
 
     # update results
-    seafloor <- result_temp$seafloor
-    fish_population <- result_temp$fish_population
+    seafloor <- growth_temp$seafloor
+    fish_population <- growth_temp$fish_population
 
     # simulate mortality
     fish_population <- simulate_mortality(fish_population = fish_population,

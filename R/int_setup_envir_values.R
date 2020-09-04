@@ -10,8 +10,8 @@
 #'
 #' @return vector
 #'
-#' @aliases setup_envir_values
-#' @rdname setup_envir_values
+#' @aliases int_setup_envir_values
+#' @rdname int_setup_envir_values
 #'
 #' @keywords internal
 #'

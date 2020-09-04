@@ -21,6 +21,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
   # MH: Use several sub-functions
 
   # get number of individuals
+  # MH: That's actually always the same
   n <- nrow(fish_population)
 
   fish_population$growth_length <- parameters$pop_k_grunt * (1 / 365) * (1 / 24) * (1 / 60 ) *
@@ -55,40 +56,19 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
     if (fish_population$consumption_req[i] >
         (fish_population$reserves[i] + detritus_pool[i])) {
 
-      # get starting values of individual
-      indiv_starting_values <- subset(fish_population_track[[1]], id == i)
+      # create new individual
+      fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
+                                   fish_population_track = fish_population_track,
+                                   detritus_pool = detritus_pool[i],
+                                   detritus_dead = detritus_dead[i],
+                                   reason = "consumption")
 
-      # calculate mass difference + reserves
-      mass_diff <- (fish_population$weight[i] + fish_population$reserves[i]) -
-        indiv_starting_values$weight
+      # update data frames
+      fish_population[i, ] <-  fish_pop_temp$fish_population
 
-      # add to dead detritus pool
-      detritus_dead[i] <- detritus_dead[i] + mass_diff
-
-      fish_population[i ,] <- indiv_starting_values[,-19]
-
-      # divide starting reserves by 5 because here the formula is multiplied
-      # by 0.01 and 0.05 as during setup
-      reserves_wanted <- fish_population$reserves[i] / 5
-
-      # if more reserves are wanted than available, all are used
-      if (reserves_wanted >= detritus_pool[i]) {
-
-        fish_population$reserves[i] <- detritus_pool[i]
-
-        detritus_pool[i] <- 0
-
-      # pool is larger than what is wanted, so only subset is used
-      } else {
-
-        fish_population$reserves[i] <- reserves_wanted
-
-        detritus_pool[i] <- detritus_pool[i] - reserves_wanted
-
-      }
-
-      # increase counter died
-      fish_population$died[i] <- fish_population$died[i] + 1
+      # update detritus
+      detritus_pool[i] <- detritus_pool
+      detritus_dead[i] <- detritus_dead
 
     # consumption requirements can be met
     } else {
