@@ -6,12 +6,8 @@
 <!-- badges: start -->
 
 \[![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
-
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
-[![License:
+\[![Project Status:
+Active](https://www.repostatus.org/badges/latest/active.svg) [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- badges: end -->
@@ -104,13 +100,13 @@ result
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
 #> Minimum: 0, 0, 0, 0, 0.07
-#> Median: 733.25431, 2657.16919, 0.81523, 0, 0.07
-#> Maximum: 1479.54316, 2657.16924, 0.85604, 0.69495, 0.07825
+#> Median: 733.31931, 2657.16919, 0.81372, 0, 0.07001
+#> Maximum: 1437.23803, 2657.16926, 0.85315, 0.08741, 0.07961
 #> 
 #> Fish population: (length, weight)
-#> Minimum: 5.38436, 2.47685
-#> Median: 7.28646, 6.44472
-#> Maximum: 18.56379, 123.89115
+#> Minimum: 3.82154, 0.83799
+#> Median: 8.26574, 9.61683
+#> Maximum: 18.64158, 125.53968
 #> Total deaths: 10
 ```
 
