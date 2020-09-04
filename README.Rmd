@@ -18,6 +18,13 @@ knitr::opts_chunk$set(
 # coRal
 
 <!-- badges: start -->
+
+[![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 <!-- badges: end -->
 
 The goal of coRal is to ...
@@ -39,6 +46,7 @@ To access all functions to run the mode, simply load the library.
 
 ```{r example}
 library(coRal)
+library(patchwork) # needed for plotting
 ```
 
 The starting values and parameters must be imported as two separated list with a named object for each value. There is a function to import these values and automatically convert them to a list (`read_parameters`). The files must be a table with two columns. The first column must be called "parameter" and include a string of all parameter names. The second column must the called "value" and include the actual values.
@@ -87,8 +95,10 @@ To plot the results, pass the resulting object to the  `plot` function. This wil
 
 ```{r plot, fig.align="center"}
 
-plot(result, fill = "detritus_pool")
+gg_biomass <- plot(result, fill = "ag_biomass")
+gg_detritus <- plot(result, fill = "detritus_pool")
 
+gg_biomass + gg_detritus
 ```
 
 <!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->

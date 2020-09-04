@@ -5,6 +5,15 @@
 
 <!-- badges: start -->
 
+\[![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
+
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 <!-- badges: end -->
 
 The goal of coRal is to …
@@ -31,6 +40,9 @@ To access all functions to run the mode, simply load the library.
 
 ``` r
 library(coRal)
+library(patchwork) # needed for plotting
+#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+#> when loading 'dplyr'
 ```
 
 The starting values and parameters must be imported as two separated
@@ -88,17 +100,17 @@ result <- run_simulation(seafloor = input_seafloor,
                          verbose = FALSE)
 
 result
-#> Total simulated time: 900 d 
+#> Total simulated time: 900 days
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
-#> Minimum: 0, 0, 0, 0, -1e-05
-#> Median: 2270.65862, 2657.55888, 1.9981, 0, 0.00016
-#> Maximum: 2270.65862, 2657.55888, 2.00419, 19.55918, 0.01807
+#> Minimum: 0, 0, 0, 0, 0.07
+#> Median: 733.25431, 2657.16919, 0.81523, 0, 0.07
+#> Maximum: 1479.54316, 2657.16924, 0.85604, 0.69495, 0.07825
 #> 
 #> Fish population: (length, weight)
-#> Minimum: 4.469, 1.37436
-#> Median: 7.48477, 7.01894
-#> Maximum: 14.42224, 55.78125
+#> Minimum: 5.38436, 2.47685
+#> Median: 7.28646, 6.44472
+#> Maximum: 18.56379, 123.89115
 #> Total deaths: 10
 ```
 
@@ -109,7 +121,10 @@ the whole `RasterBrick`
 
 ``` r
 
-plot(result, fill = "detritus_pool")
+gg_biomass <- plot(result, fill = "ag_biomass")
+gg_detritus <- plot(result, fill = "detritus_pool")
+
+gg_biomass + gg_detritus
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
