@@ -96,7 +96,7 @@ To plot the results, pass the resulting object to the  `plot` function. This wil
 gg_biomass <- plot(result, fill = "ag_biomass")
 gg_detritus <- plot(result, fill = "detritus_pool")
 
-gg_biomass + gg_detritus
+gg_biomass + gg_detritus + plot_layout(nrow = 2)
 ```
 
 <!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->

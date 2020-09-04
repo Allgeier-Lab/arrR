@@ -102,13 +102,13 @@ result
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
 #> Minimum: 0, 0, 0, 0, 0.07
-#> Median: 733.40819, 2657.16919, 0.81441, 0, 0.07001
-#> Maximum: 1438.58249, 2657.16924, 0.84914, 0.24125, 0.07653
+#> Median: 732.97811, 2657.16919, 0.81655, 0, 0.07001
+#> Maximum: 1372.48677, 2657.16924, 0.85421, 0.20231, 0.07539
 #> 
 #> Fish population: (length, weight)
-#> Minimum: 5.59786, 2.80081
-#> Median: 7.91688, 8.38178
-#> Maximum: 16.14654, 79.7121
+#> Minimum: 4.77365, 1.6929
+#> Median: 7.89807, 8.32907
+#> Maximum: 11.10646, 24.42584
 #> Total deaths: 10
 ```
 
@@ -122,7 +122,7 @@ the whole `RasterBrick`
 gg_biomass <- plot(result, fill = "ag_biomass")
 gg_detritus <- plot(result, fill = "detritus_pool")
 
-gg_biomass + gg_detritus
+gg_biomass + gg_detritus + plot_layout(nrow = 2)
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
