@@ -61,7 +61,7 @@ print.mdl_rn <- function(x, digits = 5, ...) {
   total_deaths <- sum(fish_population_values$died)
 
   # print result
-  cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " d \n",
+  cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",
              "\n",
              "Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)\n",
              "Minimum: ", paste0(min_seafloor, collapse = ", "), "\n",

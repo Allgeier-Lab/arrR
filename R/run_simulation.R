@@ -72,12 +72,8 @@ run_simulation <- function(seafloor, fish_population,
   coords_reef <- raster::xyFromCell(object = seafloor$reef,
                                     cell = cells_reef)
 
-  # get neighboring cells for each focal cell
-  cell_adj <- raster::adjacent(x = seafloor, cells = 1:raster::ncell(seafloor),
-                               directions = 8, pairs = TRUE, sort = TRUE)
-
-  # get number of neighboring cells for each focal cell
-  adj_tab <- table(cell_adj[, 1])
+  # get neighboring cells for each focal cell using torus
+  cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
   # simulate until max_i is reached
   for (i in 1:max_i) {
@@ -97,12 +93,12 @@ run_simulation <- function(seafloor, fish_population,
 
     # MH: Missing: dead-fish-detritus
 
-    # simulate fish movement
+    # # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
                                          parameters = parameters,
                                          extent = extent,
                                          coords_reef = coords_reef,
-                                         reef_attraction = reef_attraction) # allow this the be change
+                                         reef_attraction = reef_attraction)
 
     # simulate fish respiration
     fish_population <- simulate_respiration(fish_population = fish_population,
@@ -127,7 +123,7 @@ run_simulation <- function(seafloor, fish_population,
 
     # # diffuse values between neighbors (really slow at the moment)
     seafloor <- simulate_diffusion(seafloor = seafloor,
-                                   cell_adj = cell_adj, adj_tab = adj_tab,
+                                   cell_adj = cell_adj,
                                    parameters = parameters)
 
     # update tracking data.frames

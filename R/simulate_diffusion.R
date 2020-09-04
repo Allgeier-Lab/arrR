@@ -4,7 +4,6 @@
 #'
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param cell_adj 2 column matrix with cell adjacencies.
-#' @param adj_tab Table with count of neighbors for each focal cell.
 #' @param parameters List with all model parameters.
 #'
 #' @details
@@ -16,7 +15,7 @@
 #' @rdname simulate_diffusion
 #'
 #' @export
-simulate_diffusion <- function(seafloor, cell_adj, adj_tab, parameters) {
+simulate_diffusion <- function(seafloor, cell_adj, parameters) {
 
   # get id of focal cell and neighboring cell
   id_from <- cell_adj[, 1]
@@ -32,10 +31,10 @@ simulate_diffusion <- function(seafloor, cell_adj, adj_tab, parameters) {
                                               parameters$detritus_death_diffusion))
 
   # add diffusion values to neighboring cells
-  seafloor_values[id_to, ] <- seafloor_values[id_to, ] + seafloor_diff[id_from, ] / 8
+  seafloor_values[id_to, ] <- seafloor_values[id_to, ] + (seafloor_diff[id_from, ] / 8)
 
   # remove diffusion values from focal cell
-  seafloor_values <- seafloor_values - (seafloor_diff / as.numeric(adj_tab))
+  seafloor_values <- seafloor_values - (seafloor_diff / 8)
 
   raster::values(seafloor)[, c("wc_nutrients", "detritus_pool",
                                "detritus_dead")] <- seafloor_values

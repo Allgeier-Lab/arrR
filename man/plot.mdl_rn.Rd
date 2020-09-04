@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{Random patterns.}
 
+\item{fill}{Character to specify which values of environmental data is used as fill.}
+
 \item{i}{Integer to specify which timestep is plotted.}
 
 \item{...}{Not used.}

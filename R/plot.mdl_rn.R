@@ -3,6 +3,7 @@
 #' @description Plotting method for mdl_rn object
 #'
 #' @param x Random patterns.
+#' @param fill Character to specify which values of environmental data is used as fill.
 #' @param i Integer to specify which timestep is plotted.
 #' @param ... Not used.
 #'

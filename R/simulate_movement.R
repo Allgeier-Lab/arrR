@@ -59,15 +59,15 @@ simulate_movement <- function(fish_population, parameters, extent,
       theta_lo <- theta * 0.75
       theta_hi <- theta * 1.25
 
-      # # add some random deviation to distance
-      # # MH: This could explored as parameter
-      # dist_lo <- reef_dist$dist[attract_id] * 0.75
-      # dist_hi <- reef_dist$dist[attract_id] * 1.25
-
       # convert to degree and replace angle
       move_angle[attract_id] <- stats::runif(n = length(attract_id),
                                              min = theta_lo, max = theta_hi) * (180 / pi)
 
+      # # add some random deviation to distance
+      # # MH: This could explored as parameter
+      # dist_lo <- reef_dist[attract_id, 1] * 0.75
+      # dist_hi <- reef_dist[attract_id, 1] * 1.25
+      #
       # # replace distance
       # move_dist[attract_id] <- runif(n = length(attract_id),
       #                                min = dist_lo, max = dist_hi)
