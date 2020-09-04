@@ -32,7 +32,7 @@ simulate_movement <- function(fish_population, parameters, extent,
   move_angle <- stats::runif(n = nrow(fish_population), min = 0, max = 360)
 
   # move towards reef
-  if (reef_attraction) {
+  if (reef_attraction & nrow(coords_reef) > 0) {
 
     # get distance to nearest reef
     reef_dist <- rcpp_calc_dist_reef(as.matrix(fish_population[, c("x", "y")]),
