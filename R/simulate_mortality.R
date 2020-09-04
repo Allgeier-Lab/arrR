@@ -53,8 +53,8 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor)
       fish_population[i, ] <-  fish_pop_temp$fish_population
 
       # update detritus
-      detritus_pool[i] <- detritus_pool
-      detritus_dead[i] <- detritus_dead
+      detritus_pool[i] <- fish_pop_temp$detritus_pool
+      detritus_dead[i] <- fish_pop_temp$detritus_dead
 
     }
   }
