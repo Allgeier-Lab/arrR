@@ -9,8 +9,6 @@
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![GitHub
-release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -96,22 +94,22 @@ result <- run_simulation(seafloor = input_seafloor,
                          fish_population = input_fish_population, 
                          starting_values = starting_values, parameters = parameters, 
                          reef_attraction = TRUE,
-                         max_i = 10, min_per_i = 120,
+                         max_i = 10800, min_per_i = 120,
                          verbose = FALSE)
 
 result
-#> Total simulated time: 0.833333333333333 days
+#> Total simulated time: 900 days
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
-#> Minimum: 0, 0, 0, 0, 0.0392
-#> Median: 708.08975, 2657.16915, 0.80299, 0, 0.20463
-#> Maximum: 708.23103, 2657.16917, 0.80302, 0, 0.211
+#> Minimum: 0, 0, 0, 0, 0.07
+#> Median: 733.40819, 2657.16919, 0.81441, 0, 0.07001
+#> Maximum: 1438.58249, 2657.16924, 0.84914, 0.24125, 0.07653
 #> 
 #> Fish population: (length, weight)
-#> Minimum: 4.70287, 1.61482
-#> Median: 7.79804, 7.9864
-#> Maximum: 14.9644, 62.68278
-#> Total deaths: 0
+#> Minimum: 5.59786, 2.80081
+#> Median: 7.91688, 8.38178
+#> Maximum: 16.14654, 79.7121
+#> Total deaths: 10
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
