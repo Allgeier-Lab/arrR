@@ -9,14 +9,14 @@ distribute_dead_detritus(seafloor, detritus_death_decomp)
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
 
-\item{detritus_death_decomp}{}
+\item{detritus_death_decomp}{Decomposition rate of death detritus.}
 }
 \value{
 RasterBrick
 }
 \description{
-Simulate seagrass.
+Redistribute dead detritus pool
 }
 \details{
-Function to simulate processes of above ground and below ground seagrass.
+Function to redistribute dead detritus pool to overall detritus pool
 }

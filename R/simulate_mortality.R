@@ -17,6 +17,7 @@
 simulate_mortality <- function(fish_population, fish_population_track, seafloor){
 
   # get detritus pool at location
+  # MH: This is only needed of id > 0 correct?
   detritus_pool <- raster::extract(x = seafloor$detritus_pool,
                                    y = fish_population[, c("x", "y")])
 
