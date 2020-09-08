@@ -91,6 +91,13 @@ run_simulation <- function(seafloor, fish_population,
                                   cells_reef = cells_reef,
                                   min_per_i = min_per_i)
 
+    # MH: Does this make sense here in terms of scheduling?
+    seafloor <- distribute_dead_detritus(seafloor = seafloor,
+                                         detritus_death_decomp = parameters$detritus_death_decomp)
+
+
+
+
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
                                          parameters = parameters,

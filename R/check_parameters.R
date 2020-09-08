@@ -59,6 +59,7 @@ check_parameters <- function(starting_values, parameters) {
                            "detritus_fraction",
                            "detritus_diffusion",
                            "detritus_death_diffusion",
+                           "detritus_death_decomp",
                            "wc_nutrients",
                            "wc_diffusion",
                            "pop_mean_size",
