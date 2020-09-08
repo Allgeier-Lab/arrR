@@ -17,8 +17,6 @@
 #' @export
 simulate_respiration <- function(fish_population, water_temp, min_per_i) {
 
-  # MH: This only depends on the water temp?
-
   # MH: Why are none of these values parameters?
   ra <- 0.0108 * (1 / 24) * (1 / 60 ) * min_per_i
 

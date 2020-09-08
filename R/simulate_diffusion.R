@@ -36,6 +36,7 @@ simulate_diffusion <- function(seafloor, cell_adj, parameters) {
   # remove diffusion values from focal cell
   seafloor_values <- seafloor_values - (seafloor_diff / 8)
 
+  # update values
   raster::values(seafloor)[, c("wc_nutrients", "detritus_pool",
                                "detritus_dead")] <- seafloor_values
 

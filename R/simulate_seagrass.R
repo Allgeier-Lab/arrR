@@ -41,13 +41,13 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   # MH: Why is this not a parameter as ag?
   bg_biomass_max = (450 + 0.039) / 0.0941
 
+  # Convert to correct tick scale
   ag_v_max_a <- parameters$ag_v_max_a / 60 * min_per_i
   ag_v_max_b <- parameters$ag_v_max_b / 60 * min_per_i
 
   bg_v_max <- parameters$bg_v_max / 60 * min_per_i
 
   # simulate above ground seagrass
-  # MH: This is still missing the accelerated growth
   seagrass_ag <- int_seagrass_ag(biomass_dry = ag_biomass_dry,
                                  max_biomass = parameters$ag_biomass_max,
                                  sg_density = parameters$sg_density,

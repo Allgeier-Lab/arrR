@@ -36,8 +36,6 @@ int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
     (v_max * (nutrients - nutrients_thres_b) / (k_max + (nutrients_thres_b))) * biomass_dry
 
   # set blade uptake to -nutrients if it exceeds available nutrients
-  # MH: But this is not really what is happening here? Seems to be an issue with units?
-  # uptake[uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
   uptake_exceed <- which(uptake > (nutrients * 10000))
 
   uptake[uptake_exceed] <- nutrients[uptake_exceed] * 10000 - 0.001
@@ -46,7 +44,6 @@ int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
   biomass_wet <- int_convert_n(uptake, to = "g") * (gamma ^ -1)
 
   # calculate slough amount of blades
-  # MH: In NetLogo, this part is very error prone
   blade_slough <- ifelse(biomass_wet > 0,
                          yes = biomass_wet * slough_ratio,
                          no = 0)
@@ -54,14 +51,12 @@ int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
   # remove blade slough from growth biomass
   biomass_wet <- biomass_wet - blade_slough
 
-  # add remaining nutrients to pool
-  # MH: This is negative?
+  # remove used nutrients from wc pool
+  # MH: Can't this be calculated directly from uptake and slough?
   nutrients <- (-1) * int_convert_n(uptake, to = "g") +
     (1 - slough_detritus_ratio) * blade_slough * gamma
 
   # calculate detritus amount
-  # MH: Whats gamma again?
-  # MH: In NetLogo, this is very error prone
   detritus <- blade_slough * slough_detritus_ratio * gamma
 
   return(list(biomass_wet = biomass_wet,

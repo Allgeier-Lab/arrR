@@ -39,14 +39,11 @@ int_seagrass_accel <- function(biomass_dry_bg, biomass_dry_ag, biomass_max_bg,
   biomass_diff_bg <- ifelse(test = biomass_diff_bg >= 20, yes = 20, no = -20)
 
   # calculate update
-  # MH: Why is this a mixture of ag and bg?
   uptake <- (1 / (1 + exp((-1) * sigmoid_slope * biomass_diff_bg))) *
     (v_max * (nutrients - nutrients_thres) /
        (k_max + (nutrients - nutrients_thres))) * biomass_dry_ag
 
   # set blade uptake to -nutrients if it exceeds available nutrients
-  # MH: But this is not really what is happening here? Seems to be an issue with units?
-  # uptake[uptake > nutrients * 10000] <- nutrients * 10000 - 0.001
   uptake_exceed <- which(uptake > (nutrients * 10000))
 
   uptake[uptake_exceed] <- nutrients[uptake_exceed] * 10000 - 0.001
@@ -55,7 +52,6 @@ int_seagrass_accel <- function(biomass_dry_bg, biomass_dry_ag, biomass_max_bg,
   biomass_wet <- int_convert_n(uptake, to = "g") * (gamma ^ -1)
 
   # calculate slough amount of blades
-  # MH: In NetLogo, this part is very error prone
   blade_slough <- ifelse(biomass_wet > 0,
                          yes = biomass_wet * slough_ratio,
                          no = 0)
@@ -64,12 +60,9 @@ int_seagrass_accel <- function(biomass_dry_bg, biomass_dry_ag, biomass_max_bg,
   biomass_wet <- biomass_wet - blade_slough
 
   # calculate detritus amount
-  # MH: Whats ag_gamma again?
-  # MH: In NetLogo, this is very error prone
   detritus <- blade_slough * slough_detritus_ratio * gamma
 
-  # add remaining nutrients to pool
-  # MH: This is negative?
+  # remove nutrients from wc pool
   nutrients <- (-1) * int_convert_n(uptake, to = "g") +
     (1 - slough_detritus_ratio) * blade_slough * gamma
 

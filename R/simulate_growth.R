@@ -16,9 +16,8 @@
 #' @rdname simulate_growth
 #'
 #' @export
-simulate_growth <- function(fish_population, fish_population_track, seafloor, parameters, min_per_i) {
-
-  # MH: Use several sub-functions
+simulate_growth <- function(fish_population, fish_population_track,
+                            seafloor, parameters, min_per_i) {
 
   # get number of individuals
   # MH: That's actually always the same
@@ -129,6 +128,7 @@ simulate_growth <- function(fish_population, fish_population_track, seafloor, pa
     }
   }
 
+  # MH: Hard coded parameter that is not even used
   egestion_nutrient <- 0 # Cn.real * FAn
 
   detritus_pool <- detritus_pool + egestion_nutrient

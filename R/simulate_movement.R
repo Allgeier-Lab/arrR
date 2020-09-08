@@ -38,7 +38,7 @@ simulate_movement <- function(fish_population, parameters, extent,
     reef_dist <- rcpp_calc_dist_reef(as.matrix(fish_population[, c("x", "y")]),
                                      coords_reef)
 
-    # which individuals are not more than 10 m from a reef
+    # which individuals are not more than 15 m from a reef
     # MH: This is also something to explore as a parameter
     attract_id <- which(reef_dist[, 1] < 15)
 
@@ -78,7 +78,6 @@ simulate_movement <- function(fish_population, parameters, extent,
   }
 
   # move individuals
-  # MH: In NetLogo individuals only turn between 0 to 25° all the time?
   fish_population$x <- fish_population$x + (move_dist * cos(move_angle * (pi / 180)))
   fish_population$y <- fish_population$y + (move_dist * sin(move_angle * (pi / 180)))
 
