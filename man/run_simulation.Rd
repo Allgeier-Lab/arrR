@@ -7,7 +7,6 @@
 run_simulation(
   seafloor,
   fish_population,
-  starting_values,
   parameters,
   reef_attraction,
   max_i,
@@ -19,8 +18,6 @@ run_simulation(
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
 \item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
-
-\item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
 

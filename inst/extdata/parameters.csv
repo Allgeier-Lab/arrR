@@ -22,7 +22,6 @@
 "detritus_diffusion";0
 "detritus_death_diffusion";0.6
 "detritus_death_decomp";0.6
-"wc_nutrients";0.25
 "wc_diffusion";0.6
 "pop_mean_size";9
 "pop_mean_move";8

@@ -53,13 +53,14 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
   if (!exists("crs")) {
 
     crs <- NA
+
   }
 
   # setup template landscape
   seafloor <- raster::raster(nrows = extent[1], ncol = extent[2], res = grain,
-                                     xmn = extent_x[1], xmx = extent_x[2],
-                                     ymn = extent_y[1], ymx = extent_y[2],
-                                     vals = NA, ...)
+                             xmn = extent_x[1], xmx = extent_x[2],
+                             ymn = extent_y[1], ymx = extent_y[2],
+                             vals = NA, ...)
 
   # setup environmental values
   seafloor <- int_setup_envir_values(seafloor = seafloor,

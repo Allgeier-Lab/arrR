@@ -4,12 +4,12 @@
 \alias{distribute_dead_detritus}
 \title{distribute_dead_detritus}
 \usage{
-distribute_dead_detritus(seafloor, detritus_death_decomp)
+distribute_dead_detritus(seafloor, parameters)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
 
-\item{detritus_death_decomp}{Decomposition rate of death detritus.}
+\item{parameters}{List with all model parameters.}
 }
 \value{
 RasterBrick

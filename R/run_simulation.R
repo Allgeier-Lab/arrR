@@ -4,7 +4,6 @@
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
-#' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -30,16 +29,14 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fish_population,
-                           starting_values, parameters, reef_attraction,
+run_simulation <- function(seafloor, fish_population, parameters, reef_attraction,
                            max_i, min_per_i,
                            verbose = TRUE) {
 
   # print some basic information about model run
   if (verbose) {
 
-    message("> Using '", deparse(substitute(parameters)), "' as parameter file; '",
-            deparse(substitute(starting_values)), "' as starting values.")
+    message("> Using '", deparse(substitute(parameters)), "' as parameter list")
 
     message("> Seafloor with ", raster::extent(seafloor), "; ",
             sum(raster::values(seafloor$reef)), " reef cells.")
@@ -93,10 +90,7 @@ run_simulation <- function(seafloor, fish_population,
 
     # MH: Does this make sense here in terms of scheduling?
     seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         detritus_death_decomp = parameters$detritus_death_decomp)
-
-
-
+                                         parameters = parameters)
 
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
@@ -148,7 +142,7 @@ run_simulation <- function(seafloor, fish_population,
 
   # Add timestep tracker
   seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
-  fish_population_track$timestep <- rep(x = 0:max_i, each = starting_values$pop_n)
+  fish_population_track$timestep <- rep(x = 0:max_i, each = nrow(fish_population))
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,

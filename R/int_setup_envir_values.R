@@ -22,7 +22,7 @@ int_setup_envir_values <- function(seafloor, starting_values, parameters) {
   ag_biomass <- starting_values$ag_biomass * parameters$sg_density
 
   # calculate below ground biomass (Layman 2016)
-  # MH: Why are these values no model parameters?
+  # MH: Wet-Dry conversion
   bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941
 
   # calculate detritus (Layman et al. 2016)
@@ -33,7 +33,7 @@ int_setup_envir_values <- function(seafloor, starting_values, parameters) {
   detritus_dead <- 0
 
   # Value based on (Lee & Dunton 2000)
-  wc_nutrients <- parameters$wc_nutrients
+  wc_nutrients <- starting_values$wc_nutrients
 
   # create RasterLayer
   ag_biomass <- raster::setValues(x = seafloor, values = ag_biomass)
