@@ -62,8 +62,9 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     # MH: Why are this values not treated as parameters?
     # MH: aen=N assimilation efficiency?
     # MH: But if its identical all the time, no need to store it for each individual
+    # MH: aen is never really used?
     n_body <- 2.999
-    aen <-  0.75
+    # aen <-  0.75
 
     # MH: Where do these formula come from?
     # MH: Why is reserves_max = reserves?
@@ -74,7 +75,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     fish_population <- data.frame(id = 1:n, age = 0,
                                   x = x, y = y,
                                   length = size$length, weight = size$weight,
-                                  aen = aen, n_body = n_body,
+                                  n_body = n_body, # aen = aen,
                                   reserves = reserves, reserves_max = reserves_max,
                                   reserves_diff = reserves_max - reserves,
                                   activity = numeric(n), respiration = numeric(n),
@@ -89,7 +90,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     fish_population <- data.frame(id = numeric(), age = numeric(),
                                   x = numeric(), y = numeric(),
                                   length = numeric(), weight = numeric(),
-                                  aen = numeric(), n_body = numeric(),
+                                  n_body = numeric(), # aen = numeric(),
                                   reserves = numeric(), reserves_max = numeric(),
                                   reserves_diff = numeric(),
                                   activity = numeric(), respiration = numeric(),

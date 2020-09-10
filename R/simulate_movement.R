@@ -25,7 +25,7 @@ simulate_movement <- function(fish_population, parameters, extent,
 
   # calculate distribution for normal dist of movement distances
   mean_x <- log(parameters$pop_mean_move ^ 2 / sqrt(variance + parameters$pop_mean_move ^ 2))
-  sd_x <- sqrt(log( 1 + (variance / (parameters$pop_mean_move ^ 2))))
+  sd_x <- sqrt(log(1 + (variance / (parameters$pop_mean_move ^ 2))))
 
   # create random movement distance and angel in degree
   move_dist <- exp(stats::rnorm(n = nrow(fish_population), mean = mean_x, sd = sd_x))
@@ -40,7 +40,9 @@ simulate_movement <- function(fish_population, parameters, extent,
 
     # which individuals are not more than 15 m from a reef
     # MH: This is also something to explore as a parameter
-    attract_id <- which(reef_dist[, 1] < 15)
+    reef_visibility <- 15
+
+    attract_id <- which(reef_dist[, 1] <= reef_visibility)
 
     if (length(attract_id) > 0) {
 
@@ -56,8 +58,10 @@ simulate_movement <- function(fish_population, parameters, extent,
 
       # add some random deviation from straight line
       # MH: This could explored as parameter
-      theta_lo <- theta * 0.75
-      theta_hi <- theta * 1.25
+      reef_correction <- 0.25
+
+      theta_lo <- theta * (1 - reef_correction)
+      theta_hi <- theta * (1 + reef_correction)
 
       # convert to degree and replace angle
       move_angle[attract_id] <- stats::runif(n = length(attract_id),

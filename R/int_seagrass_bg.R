@@ -30,6 +30,8 @@ int_seagrass_bg <- function(biomass_dry, nutrients, sigmoid_slope,
                             v_max, k_max, gamma, slough_ratio,
                             slough_detritus_ratio) {
 
+  # MH: Why is here the difference between current and max not calculated here?
+
   # calculate uptake
   # MH: Why are there two different thresholds?
   uptake <- (1 / (1 + exp( -1 * sigmoid_slope * (nutrients - nutrients_thres_a)))) *
