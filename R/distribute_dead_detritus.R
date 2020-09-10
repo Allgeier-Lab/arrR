@@ -20,9 +20,9 @@ distribute_dead_detritus <- function(seafloor, parameters) {
   seafloor_values <- raster::values(seafloor)
 
   # get values of both pools
-  detritus_pool <- seafloor_values[, 3]
+  detritus_pool <- seafloor_values[, "detritus_pool"]
 
-  detritus_dead <- seafloor_values[, 4]
+  detritus_dead <- seafloor_values[, "detritus_dead"]
 
   # redistribute decomposition value to detritus pool
   detritus_pool <- detritus_pool + (detritus_dead * parameters$detritus_death_decomp)
@@ -30,7 +30,7 @@ distribute_dead_detritus <- function(seafloor, parameters) {
   detritus_dead <- detritus_dead - (detritus_dead * parameters$detritus_death_decomp)
 
   # update values
-  seafloor_values[, c(3, 4)] <- cbind(detritus_pool, detritus_dead)
+  seafloor_values[, c("detritus_pool", "detritus_dead")] <- cbind(detritus_pool, detritus_dead)
 
   # update environment RasterBrick
   raster::values(seafloor) <- seafloor_values

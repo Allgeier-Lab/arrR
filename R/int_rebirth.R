@@ -34,14 +34,14 @@ int_rebirth <- function(fish_population, fish_population_track,
   detritus_dead <- detritus_dead + mass_diff
 
   # get death counter
-  counter_died <- fish_population[, c(18, 19)]
+  counter_died <- fish_population[, c("died_consumption", "died_background")]
 
   # create new individual
   fish_population <- fish_population_start
 
   # divide starting reserves by 5 because here the formula is multiplied
   # by 0.01 and 0.05 as during setup
-  reserves_wanted <- fish_population$n_body / 100 * fish_population$weight * 0.01
+  reserves_wanted <- parameters$pop_n_body / 100 * fish_population$weight * 0.01
 
   # if more reserves are wanted than available, all are used
   if (reserves_wanted >= detritus_pool) {

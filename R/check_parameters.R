@@ -68,6 +68,7 @@ check_parameters <- function(starting_values, parameters) {
                            "pop_b_grunt",
                            "pop_k_grunt",
                            "pop_linf_grunt",
+                           "pop_n_body",
                            "water_temp")
 
   # check if all parameters are there

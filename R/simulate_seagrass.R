@@ -42,7 +42,7 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
 
   # MH: Why is this not a parameter as ag?
   # MH: No need to do this within loop
-  bg_biomass_max = (450 + 0.039) / 0.0941
+  bg_biomass_max <- (450 + 0.039) / 0.0941
 
   # Convert to correct tick scale
   # MH: No need to do this within loop
@@ -99,7 +99,8 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   }
 
   # update seafloor values
-  seafloor_values[, c(-4, -6)] <- seafloor_values[, c(-4, -6)] +
+  seafloor_values[, c("ag_biomass", "bg_biomass", "detritus_pool", "wc_nutrients")] <-
+    seafloor_values[, c("ag_biomass", "bg_biomass", "detritus_pool", "wc_nutrients")] +
     cbind((seagrass_ag$biomass_wet + seagrass_accl$biomass_wet),
           seagrass_bg$biomass_wet,
           (seagrass_ag$detritus + seagrass_bg$detritus + seagrass_accl$detritus),
