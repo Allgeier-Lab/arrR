@@ -19,6 +19,7 @@
 int_convert_n <- function(x, to) {
 
   # MH: Where is the value 18.039 coming from?
+  # MH: Mol mass NH4
 
   # convert to gram by multiplying factor
   if (to == "g") {

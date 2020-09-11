@@ -41,6 +41,7 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                     what = "below")
 
   # MH: Why is this not a parameter as ag?
+  # MH: 450 is parameter and just converted
   # MH: No need to do this within loop
   bg_biomass_max <- (450 + 0.039) / 0.0941
 

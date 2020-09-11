@@ -22,6 +22,7 @@ int_calc_size <- function(starting_values, parameters) {
   variance <- 10
 
   # MH: Where is this function coming from?
+  # MH: Again, just sample from norm distribution with values
   norm_mean <- log((parameters$pop_mean_size ^ 2) / sqrt(variance + (parameters$pop_mean_size ^ 2)))
   norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_size ^ 2))))
 

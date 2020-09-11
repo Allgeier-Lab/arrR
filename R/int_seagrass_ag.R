@@ -48,7 +48,6 @@ int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass, sg_density,
   uptake[uptake_exceed] <- nutrients[uptake_exceed] * 10000 - 0.001
 
   # convert nutrient uptake to g wet biomass / tick
-  # MH: What is gamma doing?
   biomass_wet <- int_convert_n(uptake, to = "g") * (gamma ^ -1)
 
   # calculate slough amount of blades

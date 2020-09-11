@@ -31,6 +31,8 @@ simulate_growth <- function(fish_population, fish_population_track,
        (fish_population$length) ^ parameters$pop_b_grunt)
 
   # MH: Why divided by 0.55? And why multiplied by Nbody / 100
+  # MH: 1 - 0.45 maybe? But why do we acually need to change to orginal formula
+  # because we want C
   fish_population$consumption_req <-
     (fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
     0.55 * (parameters$pop_n_body / 100)
@@ -57,7 +59,7 @@ simulate_growth <- function(fish_population, fish_population_track,
 
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
-                                   fish_population_track = fish_population_track,
+                                   fish_population_track = fish_population_track[[1]],
                                    detritus_pool = detritus_pool[i],
                                    detritus_dead = detritus_dead[i],
                                    reason = "consumption")

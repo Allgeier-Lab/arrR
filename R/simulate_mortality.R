@@ -43,12 +43,10 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor)
 
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
-                                   fish_population_track = fish_population_track,
+                                   fish_population_track = fish_population_track[[1]],
                                    detritus_pool = detritus_pool[i],
                                    detritus_dead = detritus_dead[i],
                                    reason = "background")
-
-
 
       # update data frames
       fish_population[i, ] <-  fish_pop_temp$fish_population

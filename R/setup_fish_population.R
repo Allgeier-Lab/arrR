@@ -54,6 +54,8 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     y <- stats::runif(n = n, min = raster::ymin(seafloor),
                       max = raster::ymax(seafloor))
 
+    heading <- stats::runif(n = n, min = 0, max = 360)
+
     # calculate length and weight
     size <- int_calc_size(starting_values = starting_values,
                           parameters = parameters)
@@ -73,7 +75,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
 
     # combine to final data frame
     fish_population <- data.frame(id = 1:n, age = 0,
-                                  x = x, y = y,
+                                  x = x, y = y, heading = heading,
                                   length = size$length, weight = size$weight,
                                   # n_body = n_body, # aen = aen,
                                   reserves = reserves, reserves_max = reserves_max,
@@ -88,7 +90,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
 
     # combine to final data frame
     fish_population <- data.frame(id = numeric(), age = numeric(),
-                                  x = numeric(), y = numeric(),
+                                  x = numeric(), y = numeric(), heading = numeric(),
                                   length = numeric(), weight = numeric(),
                                   # n_body = numeric(), # aen = numeric(),
                                   reserves = numeric(), reserves_max = numeric(),
