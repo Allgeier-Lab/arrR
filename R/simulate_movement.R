@@ -26,15 +26,22 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
   # MH: Why is this not a parameter?
   visibility <- 1 # parameters$pop_mean_move * 0.25
 
-  # set variance of movement distance
-  # MH: Why is this not a parameter?
+  # MH: Why is the variance set to v = 5?
   variance <- 5
 
-  # create random movement distance and angel in degree
-  # MH: Because it is forced to be positive, this might be slightly skewed
-  move_dist <- abs(stats::rnorm(n = nrow(fish_population),
-                                mean = parameters$pop_mean_move,
-                                sd = sqrt(variance)))
+  # calc mean of log-norm distribution
+  norm_mean <- log((parameters$pop_mean_move ^ 2) /
+                     sqrt(parameters$pop_mean_move ^ 2 + variance))
+
+  # calc sd of log-norm distribution
+  norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_move ^ 2))))
+
+  # get random numbers from log-norm distribution
+  norm_random <- stats::rnorm(n = nrow(fish_population),
+                              mean = norm_mean, sd = norm_sd)
+
+  # calculate body length based on random number
+  move_dist <- exp(norm_random)
 
   # move towards reef
   if (reef_attraction & nrow(coords_reef) > 0) {
