@@ -5,7 +5,6 @@
 #' @param biomass_dry Add info about parameter.
 #' @param nutrients Add info about parameter.
 #' @param max_biomass Add info about parameter.
-#' @param sg_density Add info about parameter.
 #' @param sigmoid_slope Add info about parameter.
 #' @param v_max Add info about parameter.
 #' @param nutrients_thres Add info about parameter.

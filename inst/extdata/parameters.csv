@@ -1,7 +1,6 @@
 "parameter";"value"
-"sg_density";1000
 "ag_gamma";0.00484
-"ag_biomass_max";0.76
+"ag_biomass_max";760
 "ag_sigmoid_slope_a";6
 "ag_sigmoid_slope_b";6
 "ag_v_max_a";8.1

@@ -8,7 +8,6 @@ int_seagrass_ag(
   biomass_dry,
   nutrients,
   max_biomass,
-  sg_density,
   sigmoid_slope,
   v_max,
   nutrients_thres,
@@ -24,8 +23,6 @@ int_seagrass_ag(
 \item{nutrients}{Add info about parameter.}
 
 \item{max_biomass}{Add info about parameter.}
-
-\item{sg_density}{Add info about parameter.}
 
 \item{sigmoid_slope}{Add info about parameter.}
 

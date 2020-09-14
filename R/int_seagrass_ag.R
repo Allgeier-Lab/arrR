@@ -5,7 +5,6 @@
 #' @param biomass_dry Add info about parameter.
 #' @param nutrients Add info about parameter.
 #' @param max_biomass Add info about parameter.
-#' @param sg_density Add info about parameter.
 #' @param sigmoid_slope Add info about parameter.
 #' @param v_max Add info about parameter.
 #' @param nutrients_thres Add info about parameter.
@@ -26,12 +25,12 @@
 #' @keywords internal
 #'
 #' @export
-int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass, sg_density,
+int_seagrass_ag <- function(biomass_dry, nutrients, max_biomass,
                             sigmoid_slope, v_max, nutrients_thres,
                             k_max, gamma, slough_ratio, slough_detritus_ratio) {
 
   # calculate difference between current and maximum biomass
-  biomass_diff <- biomass_dry - max_biomass * sg_density
+  biomass_diff <- biomass_dry - max_biomass
 
   # reclassify difference between current and maximum biomass
   # MH: Why is the threshold 20? And why do only two possible values exist?

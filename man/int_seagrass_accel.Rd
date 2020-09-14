@@ -38,8 +38,6 @@ int_seagrass_accel(
 \item{biomass_dry}{Add info about parameter.}
 
 \item{max_biomass}{Add info about parameter.}
-
-\item{sg_density}{Add info about parameter.}
 }
 \value{
 RasterBrick
