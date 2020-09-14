@@ -21,7 +21,7 @@ with \code{\link{setup_fish_population}}.}
 
 \item{coords_reef}{2-column matrix with coordinates of AR.}
 
-\item{extent}{Vector with number of rows and columns (spatial extent).}
+\item{extent}{Spatial extent object of the seafloor RasterBr.}
 
 \item{parameters}{List with all model parameters.}
 
