@@ -4,7 +4,7 @@
 \alias{plot.mdl_rn}
 \title{plot.mdl_rn}
 \usage{
-\method{plot}{mdl_rn}(x, fill = "reef", i = x$max_i, ...)
+\method{plot}{mdl_rn}(x, fill = "reef", i = x$max_i, base_size = 10, ...)
 }
 \arguments{
 \item{x}{Random patterns.}
@@ -12,6 +12,8 @@
 \item{fill}{Character to specify which values of environmental data is used as fill.}
 
 \item{i}{Integer to specify which timestep is plotted.}
+
+\item{base_size}{Numeric to specify base font size.}
 
 \item{...}{Not used.}
 }

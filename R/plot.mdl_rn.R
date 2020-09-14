@@ -5,6 +5,7 @@
 #' @param x Random patterns.
 #' @param fill Character to specify which values of environmental data is used as fill.
 #' @param i Integer to specify which timestep is plotted.
+#' @param base_size Numeric to specify base font size.
 #' @param ... Not used.
 #'
 #' @details
@@ -24,7 +25,7 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, ...) {
+plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
   # get seafloor values of last timestep
   seafloor <- subset(x$seafloor, timestep == i, select = -timestep)
@@ -41,12 +42,11 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, ...) {
     # create plot
     gg_result <- ggplot2::ggplot(data = seafloor) +
       ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = reef)) +
-      ggplot2::geom_point(data = fish_population, ggplot2::aes(x = x, y = y), shape = 1) +
       ggplot2::scale_fill_manual(values = c("#E9EAF0", "#9B964A"), name = "Cover Type") +
       ggplot2::coord_equal() +
-      ggplot2::theme_classic() +
+      ggplot2::theme_classic(base_size = base_size) +
       ggplot2::labs(title = paste0("Timestep: ", i,
-                                   "; Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+                                   "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
 
     # use continuous scale
   } else if (fill %in% c("ag_biomass", "bg_biomass", "detritus_pool",
@@ -58,13 +58,12 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, ...) {
     # create plot
     gg_result <- ggplot2::ggplot(data = seafloor) +
       ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = !! ggplot2::sym(fill))) +
-      ggplot2::geom_point(data = fish_population, ggplot2::aes(x = x, y = y), shape = 1) +
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A") +
       ggplot2::coord_equal() +
-      ggplot2::theme_classic() +
+      ggplot2::theme_classic(base_size = base_size) +
       ggplot2::labs(title = paste0("Timestep: ", i,
-                                   "; Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+                                   "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
 
   } else if (fill == "density") {
 
@@ -89,9 +88,9 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, ...) {
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A", name = "Density") +
       ggplot2::coord_equal() +
-      ggplot2::theme_classic() +
+      ggplot2::theme_classic(base_size = base_size) +
       ggplot2::labs(title = paste0("Timestep: ", i,
-                                   "; Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+                                   "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
 
 
   # check if fill argument makes sense
