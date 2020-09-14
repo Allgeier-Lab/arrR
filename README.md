@@ -91,8 +91,8 @@ of time steps that are simulated.
 
 ``` r
 result <- run_simulation(seafloor = input_seafloor, 
-                         fish_population = input_fish_population, 
-                         starting_values = starting_values, parameters = parameters, 
+                         fish_population = input_fish_population,
+                         parameters = parameters, 
                          reef_attraction = TRUE,
                          max_i = 10800, min_per_i = 120,
                          verbose = FALSE)
@@ -102,14 +102,13 @@ result
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
 #> Minimum: 0, 0, 0, 0, 0.07
-#> Median: 732.97811, 2657.16919, 0.81655, 0, 0.07001
-#> Maximum: 1372.48677, 2657.16924, 0.85421, 0.20231, 0.07539
+#> Mean: 777.5326, 2651.8549, 0.5672, 0, 0.0714
+#> Maximum: 1100.173, 2657.1692, 0.8252, 0, 0.0945
 #> 
-#> Fish population: (length, weight)
-#> Minimum: 4.77365, 1.6929
-#> Median: 7.89807, 8.32907
-#> Maximum: 11.10646, 24.42584
-#> Total deaths: 10
+#> Fish population: (length, weight, died_consumption, died_background)
+#> Minimum: 20.429, 167.679, 0, 0
+#> Mean: 21.6912, 203.1681, 0, 0
+#> Maximum: 22.6008, 230.7643, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
