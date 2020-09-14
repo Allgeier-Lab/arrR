@@ -60,6 +60,7 @@ simulate_growth <- function(fish_population, fish_population_track,
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
                                    fish_population_track = fish_population_track[[1]],
+                                   n_body = parameters$pop_n_body,
                                    detritus_pool = detritus_pool[i],
                                    detritus_dead = detritus_dead[i],
                                    reason = "consumption")

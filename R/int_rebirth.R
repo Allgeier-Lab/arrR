@@ -20,15 +20,15 @@
 #'
 #' @export
 int_rebirth <- function(fish_population, fish_population_track,
-                        detritus_pool, detritus_dead, reason) {
+                        n_body, detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
   fish_population_start <- subset(fish_population_track,
                                   id == fish_population$id)
 
-  # calculate mass difference + reserves
-  mass_diff <- (fish_population$weight + fish_population$reserves) -
-    fish_population_start$weight
+  # # calculate mass difference + reserves
+  mass_diff <- ((fish_population$weight - fish_population_start$weight) *
+                  (parameters$pop_n_body / 100)) + fish_population$reserves
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff

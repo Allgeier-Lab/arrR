@@ -7,6 +7,10 @@
 int_rebirth(
   fish_population,
   fish_population_track,
+  a_grunt,
+  b_grunt,
+  n_body,
+  parameters,
   detritus_pool,
   detritus_dead,
   reason
