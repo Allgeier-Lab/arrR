@@ -4,12 +4,14 @@
 \alias{int_setup_reefs}
 \title{setup_reefs}
 \usage{
-int_setup_reefs(object, xy)
+int_setup_reefs(object, xy, extent)
 }
 \arguments{
 \item{object}{Raster* object}
 
 \item{xy}{2-Column matrix with coordinates of artificial reefs}
+
+\item{extent}{Vector with number of rows and columns (spatial extent).}
 }
 \value{
 RasterBrick

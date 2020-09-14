@@ -29,6 +29,8 @@ rcpp_calc_dist_fish <- function(fish_population, coords_reef) {
 #'
 #' @param fish_population 2-column matrix with coordinates of individual fish.
 #' @param coords_reef 2-column matrix with coordinates of AR.
+#' @param torus If TRUE the distance will be calculated using a torus.
+#' @param extent Vector with dimension in x and y direction.
 #'
 #' @details
 #' Internal function calculate distance to reef cells.
@@ -41,7 +43,7 @@ rcpp_calc_dist_fish <- function(fish_population, coords_reef) {
 #' @keywords internal
 #'
 #' @keywords export
-rcpp_calc_dist_reef <- function(seafloor, coords_reef) {
-    .Call(`_coRal_rcpp_calc_dist_reef`, seafloor, coords_reef)
+rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
+    .Call(`_coRal_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
