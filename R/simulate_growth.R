@@ -35,7 +35,7 @@ simulate_growth <- function(fish_population, fish_population_track,
   # because we want C
   fish_population$consumption_req <-
     (fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
-    0.55 * (parameters$pop_n_body / 100)
+    0.55 * parameters$pop_n_body
 
   # get detritus pool at location
   detritus_pool <- raster::extract(x = seafloor$detritus_pool,
@@ -80,14 +80,14 @@ simulate_growth <- function(fish_population, fish_population_track,
 
       # individual growth
       fish_population$growth_nutrient[i] <- fish_population$growth_weight[i] *
-        (parameters$pop_n_body / 100)
+        parameters$pop_n_body
 
       fish_population$length[i] <- fish_population$length[i] + fish_population$growth_length[i]
 
       fish_population$weight[i] <- fish_population$weight[i] + fish_population$growth_weight[i]
 
       # update reserves
-      fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * (parameters$pop_n_body / 100)
+      fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * parameters$pop_n_body
 
       fish_population$reserves_diff[i] <- fish_population$reserves_max[i] - fish_population$reserves[i]
 
