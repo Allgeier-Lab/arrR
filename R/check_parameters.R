@@ -33,13 +33,8 @@ check_parameters <- function(starting_values, parameters) {
                          "wc_nutrients",
                          "pop_n")
 
-  # check if all starting values are present
-  check_starting <- which(!required_starting %in% names(starting_values))
-
-
   # specify all required parameters
-  required_parameters <- c("sg_density",
-                           "ag_gamma",
+  required_parameters <- c("ag_gamma",
                            "ag_biomass_max",
                            "ag_sigmoid_slope_a",
                            "ag_sigmoid_slope_b",
@@ -70,6 +65,10 @@ check_parameters <- function(starting_values, parameters) {
                            "pop_linf_grunt",
                            "pop_n_body",
                            "water_temp")
+
+
+  # check if all starting values are present
+  check_starting <- which(!required_starting %in% names(starting_values))
 
   # check if all parameters are there
   check_parameters <- which(!required_parameters %in% names(parameters))

@@ -4,7 +4,7 @@
 \alias{print.mdl_rn}
 \title{print.mdl_rn}
 \usage{
-\method{print}{mdl_rn}(x, digits = 5, ...)
+\method{print}{mdl_rn}(x, digits = 4, ...)
 }
 \arguments{
 \item{x}{Random patterns.}

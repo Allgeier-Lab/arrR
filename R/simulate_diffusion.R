@@ -19,7 +19,16 @@ simulate_diffusion <- function(seafloor, cell_adj, parameters) {
 
   # get id of focal cell and neighboring cell
   id_from <- cell_adj[, 1]
+
   id_to <- cell_adj[, 2]
+
+  # randomize row id to avoid strange patterns
+  random_id <- sample(x = 1:length(id_from), size = length(id_from))
+
+  # reorder values
+  id_from[random_id] <- id_from
+
+  id_to[random_id] <- id_to
 
   # get current values
   seafloor_values <- raster::values(seafloor)[, c("wc_nutrients", "detritus_pool",

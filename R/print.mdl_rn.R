@@ -23,7 +23,7 @@
 #' @rdname print.mdl_rn
 #'
 #' @export
-print.mdl_rn <- function(x, digits = 5, ...) {
+print.mdl_rn <- function(x, digits = 4, ...) {
 
   # get max_i
   max_i <- x$max_i
@@ -37,9 +37,8 @@ print.mdl_rn <- function(x, digits = 5, ...) {
   min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = min),
                         digits = digits)
 
-  median_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
-                                 FUN = stats::median),
-                           digits = digits)
+  mean_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = mean),
+                         digits = digits)
 
   max_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = max),
                         digits = digits)
@@ -53,27 +52,22 @@ print.mdl_rn <- function(x, digits = 5, ...) {
   min_fish_population <- round(apply(X = fish_population_values,
                                      MARGIN = 2, FUN = min), digits = digits)
 
-  median_fish_population <- round(apply(X = fish_population_values,
-                                        MARGIN = 2, FUN = stats::median), digits = digits)
+  mean_fish_population <- round(apply(X = fish_population_values,
+                                      MARGIN = 2, FUN = mean), digits = digits)
 
   max_fish_population <- round(apply(X = fish_population_values,
                                      MARGIN = 2, FUN = max), digits = digits)
-
-  consumption_deaths <- sum(fish_population_values$died_consumption)
-  background_deaths <- sum(fish_population_values$died_background)
 
   # print result
   cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",
              "\n",
              "Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)\n",
              "Minimum: ", paste0(min_seafloor, collapse = ", "), "\n",
-             "Median: ", paste0(median_seafloor, collapse = ", "), "\n",
+             "Mean: ", paste0(mean_seafloor, collapse = ", "), "\n",
              "Maximum: ", paste0(max_seafloor, collapse = ", "), "\n",
              "\n",
-             "Fish population: (length, weight)\n",
-             "Minimum: ", paste0(min_fish_population[-3], collapse = ", "), "\n",
-             "Median: ", paste0(median_fish_population[-3], collapse = ", "), "\n",
-             "Maximum: ", paste0(max_fish_population[-3], collapse = ", "), "\n",
-             "Deaths: (consumption, background)\n",
-             "Total: ", paste0(c(consumption_deaths, background_deaths), collapse = ", "), "\n"))
+             "Fish population: (length, weight, died_consumption, died_background)\n",
+             "Minimum: ", paste0(min_fish_population, collapse = ", "), "\n",
+             "Mean: ", paste0(mean_fish_population, collapse = ", "), "\n",
+             "Maximum: ", paste0(max_fish_population, collapse = ", "), "\n"))
 }

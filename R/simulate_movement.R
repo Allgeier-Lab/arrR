@@ -2,9 +2,11 @@
 #'
 #' @description Simulate movement of population.
 #'
-#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fish_population Data frame population created
+#' with \code{\link{setup_fish_population}}.
+#' @param reef_dist RasterLayer with distance to reef.
 #' @param parameters List with all model parameters.
-#' @param extent Vector with number of rows and columns (spatial extent).
+#' @param extent Spatial extent object of the seafloor RasterBr.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param coords_reef 2-column matrix with coordinates of AR.
 #'
@@ -17,91 +19,98 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fish_population, parameters, extent,
-                              coords_reef, reef_attraction) {
+simulate_movement <- function(fish_population, reef_dist, coords_reef,
+                              extent, parameters, reef_attraction) {
 
+  # set visibility in which fish try to minimize distance to reef
   # MH: Why is this not a parameter?
+  visibility <- 1 # parameters$pop_mean_move * 0.25
+
+  # MH: Why is the variance set to v = 5?
   variance <- 5
 
-  # calculate distribution for normal dist of movement distances
-  mean_x <- log(parameters$pop_mean_move ^ 2 / sqrt(variance + parameters$pop_mean_move ^ 2))
-  sd_x <- sqrt(log(1 + (variance / (parameters$pop_mean_move ^ 2))))
+  # calc mean of log-norm distribution
+  norm_mean <- log((parameters$pop_mean_move ^ 2) /
+                     sqrt(parameters$pop_mean_move ^ 2 + variance))
 
-  # create random movement distance and angel in degree
-  move_dist <- exp(stats::rnorm(n = nrow(fish_population), mean = mean_x, sd = sd_x))
-  move_angle <- stats::runif(n = nrow(fish_population), min = 0, max = 360)
+  # calc sd of log-norm distribution
+  norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_move ^ 2))))
+
+  # get random numbers from log-norm distribution
+  norm_random <- stats::rnorm(n = nrow(fish_population),
+                              mean = norm_mean, sd = norm_sd)
+
+  # calculate body length based on random number
+  move_dist <- exp(norm_random)
 
   # move towards reef
   if (reef_attraction & nrow(coords_reef) > 0) {
 
-    # get distance to nearest reef
-    reef_dist <- rcpp_calc_dist_reef(as.matrix(fish_population[, c("x", "y")]),
-                                     coords_reef)
+    # get coordinates within visibility left, straight in right of individuals
+    heading_l <- cbind(fish_population$x +
+                         (visibility * cos((fish_population$heading + -45) * (pi / 180))),
+                       fish_population$y +
+                         (visibility * sin((fish_population$heading + -45) * (pi / 180))))
 
-    # which individuals are not more than 15 m from a reef
-    # MH: This is also something to explore as a parameter
-    reef_visibility <- 15
+    heading_s <- cbind(fish_population$x +
+                         (visibility * cos(fish_population$heading * (pi / 180))),
+                       fish_population$y +
+                         (visibility * sin(fish_population$heading * (pi / 180))))
 
-    attract_id <- which(reef_dist[, 1] <= reef_visibility)
+    heading_r <- cbind(fish_population$x +
+                         (visibility * cos((fish_population$heading + 45) * (pi / 180))),
+                       fish_population$y +
+                         (visibility * sin((fish_population$heading + 45) * (pi / 180))))
 
-    if (length(attract_id) > 0) {
+    # torus translation if coords are outside plot
+    heading_l <- int_translate_torus(coords = heading_l, extent = extent)
 
-      # which are the corresponding reef cells
-      reef_id <- reef_dist[attract_id, 2]
+    heading_s <- int_translate_torus(coords = heading_s, extent = extent)
 
-      # calculate bearing between individuals and reef cells
-      theta <- atan2(coords_reef[reef_id, 2] - fish_population$y[attract_id],
-                     coords_reef[reef_id, 1] - fish_population$x[attract_id])
+    heading_r <- int_translate_torus(coords = heading_r, extent = extent)
 
-      # correct for 4 quadrants of coordinate system
-      theta[theta < 0] <- theta[theta < 0] + 2 * pi
+    # get distance values in directions
+    # MH: This can be NA for individuals at the edge
+    heading_l <- raster::extract(x = reef_dist, y = heading_l)
 
-      # add some random deviation from straight line
-      # MH: This could explored as parameter
-      reef_correction <- 0.25
+    heading_s <- raster::extract(x = reef_dist, y = heading_s)
 
-      theta_lo <- theta * (1 - reef_correction)
-      theta_hi <- theta * (1 + reef_correction)
+    heading_r <- raster::extract(x = reef_dist, y = heading_r)
 
-      # convert to degree and replace angle
-      move_angle[attract_id] <- stats::runif(n = length(attract_id),
-                                             min = theta_lo, max = theta_hi) * (180 / pi)
+    # get ids of fish that turn one direction
+    id_l <- which(heading_l < heading_s)
 
-      # # add some random deviation to distance
-      # # MH: This could explored as parameter
-      # dist_lo <- reef_dist[attract_id, 1] * 0.75
-      # dist_hi <- reef_dist[attract_id, 1] * 1.25
-      #
-      # # replace distance
-      # move_dist[attract_id] <- runif(n = length(attract_id),
-      #                                min = dist_lo, max = dist_hi)
+    id_r <- which(heading_r < heading_s)
 
-      # MH: How to move away from reef?
+    # turn fish heading towards reef
+    fish_population$heading[id_l] <- fish_population$heading[id_l] - 45
+
+    fish_population$heading[id_r] <- fish_population$heading[id_r] + 45
 
     }
-  }
 
   # move individuals
-  fish_population$x <- fish_population$x + (move_dist * cos(move_angle * (pi / 180)))
-  fish_population$y <- fish_population$y + (move_dist * sin(move_angle * (pi / 180)))
+  fish_population$x <- fish_population$x +
+    (move_dist * cos(fish_population$heading * (pi / 180)))
 
-  # Torus edge correction at boundaries
-  fish_population$x[which(fish_population$x < extent[1])] <-
-    extent[2] - (extent[1] - fish_population$x[which(fish_population$x < extent[1])])
+  fish_population$y <- fish_population$y +
+    (move_dist * sin(fish_population$heading * (pi / 180)))
 
-  fish_population$x[which(fish_population$x > extent[2])] <-
-    extent[1] + (fish_population$x[which(fish_population$x > extent[2])] - extent[2])
+  # torus edge correction at boundaries
+  fish_population[, c("x", "y")] <-
+    int_translate_torus(coords = fish_population[, c("x", "y")], extent = extent)
 
-  fish_population$y[which(fish_population$y < extent[3])] <-
-    extent[4] - (extent[3] - fish_population$y[which(fish_population$y < extent[3])])
-
-  fish_population$y[which(fish_population$y > extent[4])] <-
-    extent[3] + (fish_population$y[which(fish_population$y > extent[4])] - extent[4])
+  # turn fish randomly after moving
+  # MH: This could be correlated to heading before
+  # MH: runif(min = heading - x, max = heading + x)
+  fish_population$heading <- stats::runif(n = nrow(fish_population),
+                                          min = 0, max = 360)
 
   # update activity
-
   # MH: Are there () missing?
   # MH: Why is + 1 added to mean move?
+  # MH: Linear relationship between movement and activity not less than 1
+  # MH: Should be basically higher if they swim more (ask Jake)
   fish_population$activity <-  (1 / (parameters$pop_mean_move + 1)) * move_dist + 1
 
   return(fish_population)

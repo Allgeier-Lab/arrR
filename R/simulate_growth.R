@@ -31,9 +31,11 @@ simulate_growth <- function(fish_population, fish_population_track,
        (fish_population$length) ^ parameters$pop_b_grunt)
 
   # MH: Why divided by 0.55? And why multiplied by Nbody / 100
+  # MH: 1 - 0.45 maybe? But why do we acually need to change to orginal formula
+  # because we want C
   fish_population$consumption_req <-
     (fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
-    0.55 * (parameters$pop_n_body / 100)
+    0.55 * parameters$pop_n_body
 
   # get detritus pool at location
   detritus_pool <- raster::extract(x = seafloor$detritus_pool,
@@ -57,7 +59,8 @@ simulate_growth <- function(fish_population, fish_population_track,
 
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
-                                   fish_population_track = fish_population_track,
+                                   fish_population_track = fish_population_track[[1]],
+                                   n_body = parameters$pop_n_body,
                                    detritus_pool = detritus_pool[i],
                                    detritus_dead = detritus_dead[i],
                                    reason = "consumption")
@@ -77,14 +80,14 @@ simulate_growth <- function(fish_population, fish_population_track,
 
       # individual growth
       fish_population$growth_nutrient[i] <- fish_population$growth_weight[i] *
-        (parameters$pop_n_body / 100)
+        parameters$pop_n_body
 
       fish_population$length[i] <- fish_population$length[i] + fish_population$growth_length[i]
 
       fish_population$weight[i] <- fish_population$weight[i] + fish_population$growth_weight[i]
 
       # update reserves
-      fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * (parameters$pop_n_body / 100)
+      fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * parameters$pop_n_body
 
       fish_population$reserves_diff[i] <- fish_population$reserves_max[i] - fish_population$reserves[i]
 

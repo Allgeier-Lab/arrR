@@ -7,6 +7,7 @@
 int_rebirth(
   fish_population,
   fish_population_track,
+  n_body,
   detritus_pool,
   detritus_dead,
   reason

@@ -88,12 +88,9 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                   cells_reef = cells_reef,
                                   min_per_i = min_per_i)
 
-    # MH: Does this make sense here in terms of scheduling?
-    seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         parameters = parameters)
-
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
+                                         reef_dist = seafloor$reef_dist,
                                          parameters = parameters,
                                          extent = extent,
                                          coords_reef = coords_reef,
@@ -119,6 +116,10 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
     fish_population <- simulate_mortality(fish_population = fish_population,
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
+
+    # MH: Does this make sense here in terms of scheduling?
+    seafloor <- distribute_dead_detritus(seafloor = seafloor,
+                                         parameters = parameters)
 
     # # diffuse values between neighbors (really slow at the moment)
     seafloor <- simulate_diffusion(seafloor = seafloor,
@@ -146,7 +147,8 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 max_i = max_i, min_per_i = min_per_i)
+                 max_i = max_i, min_per_i = min_per_i,
+                 extent = extent, grain = raster::res(seafloor))
 
   # set class of result
   class(result) <- "mdl_rn"

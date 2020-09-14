@@ -31,5 +31,14 @@ int_setup_reefs <- function(object, xy) {
   # add reef layer
   object$reef[cell_ids] <- 1
 
+
+  object_mat <- as.matrix(raster::as.data.frame(object$reef,
+                                                xy = TRUE), ncol = 3)
+
+  # Calculate vsiablity value
+  object$reef_dist <- rcpp_calc_dist_reef(seafloor = object_mat,
+                                          coords_reef = xy)
+
+
   return(object)
 }
