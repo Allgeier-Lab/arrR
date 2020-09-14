@@ -21,13 +21,11 @@ int_calc_size <- function(starting_values, parameters) {
   # MH: Why is the variance set to v = 10?
   variance <- 10
 
-  # MH: Where is this function coming from?
-  # MH: Again, just sample from norm distribution with values
-  norm_mean <- log((parameters$pop_mean_size ^ 2) / sqrt(variance + (parameters$pop_mean_size ^ 2)))
-  norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_size ^ 2))))
-
   # get random numbers from norm distribution
-  norm_random <- stats::rnorm(n = starting_values$pop_n, mean = norm_mean, sd = norm_sd)
+  # MH: Because it is forced to be positive, this might be slightly skewed
+  norm_random <- abs(stats::rnorm(n = starting_values$pop_n,
+                                  mean = parameters$pop_mean_size,
+                                  sd = variance))
 
   # calculate body length based on random number
   # MH: Why is the body length the exp of the random number?

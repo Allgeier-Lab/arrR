@@ -31,8 +31,10 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
   variance <- 5
 
   # create random movement distance and angel in degree
-  move_dist <-  stats::rnorm(n = nrow(fish_population),
-                             mean = parameters$pop_mean_move, sd = sqrt(variance))
+  # MH: Because it is forced to be positive, this might be slightly skewed
+  move_dist <- abs(stats::rnorm(n = nrow(fish_population),
+                                mean = parameters$pop_mean_move,
+                                sd = sqrt(variance)))
 
   # move towards reef
   if (reef_attraction & nrow(coords_reef) > 0) {
