@@ -117,14 +117,14 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
 
+    # MH: Does this make sense here in terms of scheduling?
+    seafloor <- distribute_dead_detritus(seafloor = seafloor,
+                                         parameters = parameters)
+
     # # diffuse values between neighbors (really slow at the moment)
     seafloor <- simulate_diffusion(seafloor = seafloor,
                                    cell_adj = cell_adj,
                                    parameters = parameters)
-
-    # MH: Does this make sense here in terms of scheduling?
-    seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         parameters = parameters)
 
     # update tracking data.frames
     seafloor_track[[i + 1]] <- raster::as.data.frame(seafloor, xy = TRUE)
