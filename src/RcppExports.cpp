@@ -18,21 +18,23 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_calc_dist_reef
-Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix coords_reef);
-RcppExport SEXP _coRal_rcpp_calc_dist_reef(SEXP seafloorSEXP, SEXP coords_reefSEXP) {
+Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, bool torus);
+RcppExport SEXP _coRal_rcpp_calc_dist_reef(SEXP seafloorSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP torusSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calc_dist_reef(seafloor, coords_reef));
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< bool >::type torus(torusSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calc_dist_reef(seafloor, coords_reef, extent, torus));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_coRal_rcpp_calc_dist_fish", (DL_FUNC) &_coRal_rcpp_calc_dist_fish, 2},
-    {"_coRal_rcpp_calc_dist_reef", (DL_FUNC) &_coRal_rcpp_calc_dist_reef, 2},
+    {"_coRal_rcpp_calc_dist_reef", (DL_FUNC) &_coRal_rcpp_calc_dist_reef, 4},
     {NULL, NULL, 0}
 };
 

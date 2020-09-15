@@ -14,15 +14,13 @@
 #' @rdname simulate_mortality
 #'
 #' @export
-simulate_mortality <- function(fish_population, fish_population_track, seafloor){
+simulate_mortality <- function(fish_population, fish_population_track, seafloor) {
 
-  # get detritus pool at location
-  # MH: This is only needed of id > 0 correct?
-  detritus_pool <- raster::extract(x = seafloor$detritus_pool,
-                                   y = fish_population[, c("x", "y")])
-
-  detritus_dead <- raster::extract(x = seafloor$detritus_dead,
-                                   y = fish_population[, c("x", "y")])
+  # get detritus/nutrient pools at location
+  pools <- raster::extract(x = raster::subset(seafloor,
+                                              subset = c("detritus_pool",
+                                                         "detritus_dead")),
+                           y = fish_population[, c("x", "y")])
 
   # create death probability
   death_prob <- exp(1 * (fish_population$length - 45)) / 120
@@ -44,16 +42,16 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor)
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
                                    fish_population_track = fish_population_track[[1]],
-                                   detritus_pool = detritus_pool[i],
-                                   detritus_dead = detritus_dead[i],
+                                   detritus_pool = pools[i, "detritus_pool"],
+                                   detritus_dead = pools[i, "detritus_dead"],
                                    reason = "background")
 
       # update data frames
       fish_population[i, ] <-  fish_pop_temp$fish_population
 
       # update detritus
-      detritus_pool[i] <- fish_pop_temp$detritus_pool
-      detritus_dead[i] <- fish_pop_temp$detritus_dead
+      pools[i, "detritus_pool"] <- fish_pop_temp$detritus_pool
+      pools[i, "detritus_dead"] <- fish_pop_temp$detritus_dead
 
     }
   }

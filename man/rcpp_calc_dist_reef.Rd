@@ -4,10 +4,14 @@
 \alias{rcpp_calc_dist_reef}
 \title{rcpp_calc_dist_reef}
 \usage{
-rcpp_calc_dist_reef(seafloor, coords_reef)
+rcpp_calc_dist_reef(seafloor, coords_reef, extent, torus = FALSE)
 }
 \arguments{
 \item{coords_reef}{2-column matrix with coordinates of AR.}
+
+\item{extent}{Vector with dimension in x and y direction.}
+
+\item{torus}{If TRUE the distance will be calculated using a torus.}
 
 \item{fish_population}{2-column matrix with coordinates of individual fish.}
 }
