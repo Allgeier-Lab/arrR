@@ -46,16 +46,19 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
     message("> One simulation run equals ", min_per_i, " minutes.")
 
     message("")
+
     message("> ...Starting simulation...")
 
   }
 
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = max_i + 1)
+
   fish_population_track <- vector(mode = "list", length = max_i + 1)
 
   # add starting conditions to track lists
   seafloor_track[[1]] <- raster::as.data.frame(seafloor, xy = TRUE)
+
   fish_population_track[[1]] <- fish_population
 
   # get extent of environment
@@ -110,6 +113,7 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
 
     # update results
     seafloor <- growth_temp$seafloor
+
     fish_population <- growth_temp$fish_population
 
     # simulate mortality
@@ -139,10 +143,12 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
 
   # Combine to one data.frame
   seafloor_track <- do.call(what = "rbind", args = seafloor_track)
+
   fish_population_track <- do.call(what = "rbind", args = fish_population_track)
 
   # Add timestep tracker
   seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
+
   fish_population_track$timestep <- rep(x = 0:max_i, each = nrow(fish_population))
 
   # combine result to list

@@ -70,24 +70,19 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
     heading_r <- int_translate_torus(coords = heading_r, extent = extent)
 
     # get distance values in directions
-    # MH: This can be NA for individuals at the edge
-    heading_l <- raster::extract(x = reef_dist, y = heading_l)
-
-    heading_s <- raster::extract(x = reef_dist, y = heading_s)
-
-    heading_r <- raster::extract(x = reef_dist, y = heading_r)
+    dist_values <- raster::extract(x = reef_dist, y = rbind(heading_l, heading_s, heading_r))
 
     # get ids of fish that turn one direction
-    id_l <- which(heading_l < heading_s)
+    id_l <- which(dist_values[1:10] < dist_values[11:20])
 
-    id_r <- which(heading_r < heading_s)
+    id_r <- which(dist_values[21:30] < dist_values[11:20])
 
     # turn fish heading towards reef
     fish_population$heading[id_l] <- fish_population$heading[id_l] - 45
 
     fish_population$heading[id_r] <- fish_population$heading[id_r] + 45
 
-    }
+  }
 
   # move individuals
   fish_population$x <- fish_population$x +
