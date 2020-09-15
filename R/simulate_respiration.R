@@ -18,25 +18,28 @@
 simulate_respiration <- function(fish_population, water_temp, min_per_i) {
 
   # MH: Why are none of these values parameters?
-  ra <- 0.0108 * (1 / 24) * (1 / 60 ) * min_per_i
+  allometric_intercept <- 0.0108 * (1 / 24) * (1 / 60 ) * min_per_i
 
-  rb <- -0.2
-  rq <- 2.1
-  rto <- 36
-  rtm <- 40
+  allometric_slope <- -0.2
+
+  temp_low <- 2.1
+  temp_optm <- 36
+  temp_max <- 40
 
   # for f(T) temperature dependence function for respiration
-  vr <- (rtm - water_temp) / (rtm - rto)
-  zr <- log(rq) * (rtm - rto)
-  yr <- log(rq) * (rtm - rto + 2)
-  xr <- (zr ^ 2 * (1 + (1 + 40 / yr) ^ 0.5 ) ^ 2) / 400
+  v_resp <- (temp_max - water_temp) / (temp_max - temp_optm)
+  z_resp <- log(temp_low) * (temp_max - temp_optm)
+  y_resp <- log(temp_low) * (temp_max - temp_optm + 2)
+  x_resp <- (z_resp ^ 2 * (1 + (1 + 40 / y_resp) ^ 0.5 ) ^ 2) / 400
+
   # ;this is the f(t) equation 2 ()
-  f_tr <- vr ^ xr * exp(xr * (1 - vr))
+  temp_dependence <- v_resp ^ x_resp * exp(x_resp * (1 - v_resp))
 
   # update respiration col
   # MH: Why multiplied by 13560 etc.?
-  fish_population$respiration <- (ra * fish_population$weight ^ rb * f_tr *
-                                    fish_population$activity) * 13560 * (1 / 4800)
+  fish_population$respiration <-
+    (allometric_intercept * fish_population$weight ^ allometric_slope *
+       temp_dependence * fish_population$activity) * 13560 * (1 / 4800)
 
   return(fish_population)
 }
