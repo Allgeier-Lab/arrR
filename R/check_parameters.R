@@ -36,20 +36,18 @@ check_parameters <- function(starting_values, parameters) {
   # specify all required parameters
   required_parameters <- c("ag_gamma",
                            "ag_biomass_max",
-                           "ag_sigmoid_slope_a",
-                           "ag_sigmoid_slope_b",
-                           "ag_v_max_a",
-                           "ag_v_max_b",
-                           "ag_nutrients_thres",
-                           "ag_k_max_a",
-                           "ag_k_max_b",
+                           "ag_biomass_thres",
+                           "ag_v_max",
+                           "ag_k_max",
+                           "ag_sigmoid_slope",
+                           "bg_reduction",
                            "ag_slough_ratio",
                            "bg_gamma",
-                           "bg_sigmoid_slope",
-                           "bg_nutrients_thres_a",
-                           "bg_nutrients_thres_b",
+                           "ag_biomass_max",
                            "bg_v_max",
                            "bg_k_max",
+                           "bg_sigmoid_slope",
+                           "bg_reduction",
                            "bg_slough_ratio",
                            "slough_detritus_ratio",
                            "detritus_fraction",
@@ -65,7 +63,6 @@ check_parameters <- function(starting_values, parameters) {
                            "pop_linf_grunt",
                            "pop_n_body",
                            "water_temp")
-
 
   # check if all starting values are present
   check_starting <- which(!required_starting %in% names(starting_values))

@@ -23,12 +23,12 @@ int_convert_dry <- function(x, what) {
   # convert above ground biomass
   if (what == "above") {
 
-    0.3436 * x - 0.0213
+    result <- 0.3436 * x - 0.0213
 
   # convert below ground biomass
   } else if (what == "below") {
 
-    0.0941 * x - 0.0396
+    result <- 0.0941 * x - 0.0396
 
   }
 
@@ -39,4 +39,8 @@ int_convert_dry <- function(x, what) {
          call. = FALSE)
 
   }
+
+  result <- ifelse(result < 0, yes = 0, no = result)
+
+  return(result)
 }
