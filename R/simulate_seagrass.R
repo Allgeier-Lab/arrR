@@ -40,11 +40,11 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   bg_biomass_dry <- int_convert_dry(x = seafloor_values[, "bg_biomass"],
                                     what = "below")
 
-  # convert uptake parameters to correct tick scale
+  # convert uptake parameters to correct tick scale (from per h to day)
   # MH: No need to do this within loop
-  ag_v_max <- parameters$ag_v_max / 60 * min_per_i
+  ag_v_max <- parameters$ag_v_max * 24
 
-  bg_v_max <- parameters$bg_v_max / 60 * min_per_i
+  bg_v_max <- parameters$bg_v_max * 24
 
   # calculate bg and ag uptake depending on nutrients and biomass
   uptake_bg <- (bg_v_max * wc_nutrients /
@@ -164,6 +164,9 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
     seafloor_values[cells_reef, -c(6, 7)] <- reef_values
 
   }
+
+  # update environment RasterBrick
+  raster::values(seafloor) <- seafloor_values
 
   return(seafloor)
 
