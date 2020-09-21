@@ -165,6 +165,9 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
 
   }
 
+  # update environment RasterBrick
+  raster::values(seafloor) <- seafloor_values
+
   return(seafloor)
 
 }
