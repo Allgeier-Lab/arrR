@@ -122,8 +122,8 @@ run_simulation <- function(seafloor, fish_population,
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
 
-    # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
-    if (counter_day == 1440) {
+    # # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
+    # if (counter_day == 1440) {
 
       # reset counter day
       counter_day <- 0
@@ -143,7 +143,7 @@ run_simulation <- function(seafloor, fish_population,
                                      cell_adj = cell_adj,
                                      parameters = parameters)
 
-    }
+    # }
 
     # update tracking data.frames
     seafloor_track[[i + 1]] <- raster::as.data.frame(seafloor, xy = TRUE)
