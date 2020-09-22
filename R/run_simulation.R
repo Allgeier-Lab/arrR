@@ -29,7 +29,8 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fish_population, parameters, reef_attraction,
+run_simulation <- function(seafloor, fish_population,
+                           parameters, reef_attraction,
                            max_i, min_per_i,
                            verbose = TRUE) {
 
@@ -75,6 +76,9 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
   # get neighboring cells for each focal cell using torus
   cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
+  # init counter for days
+  counter_day <- 0
+
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
@@ -85,11 +89,7 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
 
     }
 
-    # simulate seagrass growth
-    seafloor <- simulate_seagrass(seafloor = seafloor,
-                                  parameters = parameters,
-                                  cells_reef = cells_reef,
-                                  min_per_i = min_per_i)
+    counter_day <- counter_day + min_per_i
 
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
@@ -121,14 +121,27 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
 
-    # dead detritus goes into available detritus
-    seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         parameters = parameters)
+    # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
+    if (counter_day == 1440) {
 
-    # diffuse values between neighbors (really slow at the moment)
-    seafloor <- simulate_diffusion(seafloor = seafloor,
-                                   cell_adj = cell_adj,
-                                   parameters = parameters)
+      # reset counter day
+      counter_day <- 0
+
+      # simulate seagrass growth
+      seafloor <- simulate_seagrass(seafloor = seafloor,
+                                    parameters = parameters,
+                                    cells_reef = cells_reef,
+                                    min_per_i = min_per_i)
+
+      # MH: Does this make sense here in terms of scheduling?
+      seafloor <- distribute_dead_detritus(seafloor = seafloor,
+                                           parameters = parameters)
+
+      # # diffuse values between neighbors (really slow at the moment)
+      seafloor <- simulate_diffusion(seafloor = seafloor,
+                                     cell_adj = cell_adj,
+                                     parameters = parameters)
+    }
 
     # update tracking data.frames
     seafloor_track[[i + 1]] <- raster::as.data.frame(seafloor, xy = TRUE)

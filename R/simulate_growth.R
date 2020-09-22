@@ -73,8 +73,8 @@ simulate_growth <- function(fish_population, fish_population_track,
       # consumption requirements can be met
     } else {
 
-      # increase age
-      fish_population$age[i] <- fish_population$age[i] + min_per_i * (1 / 60) * (1 / 24)
+      # increase age (60 min * 24 h = 1440 min/day)
+      fish_population$age[i] <- fish_population$age[i] + min_per_i / 1440
 
       # individual growth
       fish_population$growth_nutrient[i] <- fish_population$growth_weight[i] *
