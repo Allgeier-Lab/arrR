@@ -99,9 +99,9 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                          coords_reef = coords_reef,
                                          reef_attraction = reef_attraction)
 
-    # simulate fish respiration
+    # simulate fish respiration (26°C is mean water temperature in the Bahamas)
     fish_population <- simulate_respiration(fish_population = fish_population,
-                                            water_temp = starting_values$water_temp,
+                                            water_temp = 26,
                                             min_per_i = min_per_i)
 
     # simulate growth and nutrient feedback (returns population data.frame and raster)
@@ -121,11 +121,11 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                           fish_population_track = fish_population_track,
                                           seafloor = seafloor)
 
-    # MH: Does this make sense here in terms of scheduling?
+    # dead detritus goes into available detritus
     seafloor <- distribute_dead_detritus(seafloor = seafloor,
                                          parameters = parameters)
 
-    # # diffuse values between neighbors (really slow at the moment)
+    # diffuse values between neighbors (really slow at the moment)
     seafloor <- simulate_diffusion(seafloor = seafloor,
                                    cell_adj = cell_adj,
                                    parameters = parameters)

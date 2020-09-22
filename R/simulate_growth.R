@@ -115,7 +115,7 @@ simulate_growth <- function(fish_population, fish_population_track,
 
         }
 
-        # reserves are needed to meet consumption requirement
+      # reserves are needed to meet consumption requirement
       } else {
 
         # reduced reserves
@@ -127,15 +127,11 @@ simulate_growth <- function(fish_population, fish_population_track,
 
       }
     }
+
+    # add non-used consumption to nutrient pool
+    pools[i, "wc_nutrients"] <- pools[i, "wc_nutrients"] +
+      (fish_population$consumption_req[i] - fish_population$growth_nutrient[i])
   }
-
-  # MH: Hard coded parameter that is not even used
-  egestion_nutrient <- 0 # Cn.real * FAn
-
-  pools[, "detritus_pool"] <- pools[, "detritus_pool"] + egestion_nutrient
-
-  pools[, "wc_nutrients"] <- pools[, "wc_nutrients"] +
-    (fish_population$consumption_req - egestion_nutrient - fish_population$growth_nutrient)
 
   # update the detritus pool values
   raster::values(seafloor)[pools[, "cells"], c("detritus_pool",
