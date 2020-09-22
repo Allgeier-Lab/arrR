@@ -30,15 +30,8 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   }
 
   # convert water column nutrients to umol/l
-  # MH: Why is the value in int_convert_n 18.039?
-  wc_nutrients <- int_convert_n(seafloor_values[, "wc_nutrients"], to = "umol") / 10000
-
-  # convert wet to dry biomass
-  ag_biomass_dry <- int_convert_dry(x = seafloor_values[, "ag_biomass"],
-                                    what = "above")
-
-  bg_biomass_dry <- int_convert_dry(x = seafloor_values[, "bg_biomass"],
-                                    what = "below")
+  wc_nutrients_umol <- int_convert_nutr(seafloor_values[, "wc_nutrients"],
+                                        to = "umol") / 10000
 
   # convert uptake parameters to correct tick scale
   # MH: No need to do this within loop
@@ -47,32 +40,37 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   bg_v_max <- parameters$bg_v_max / 60 * min_per_i
 
   # calculate bg and ag uptake depending on nutrients and biomass
-  uptake_bg <- (bg_v_max * wc_nutrients /
-                  (parameters$bg_k_max + wc_nutrients)) * bg_biomass_dry
+  uptake_bg <- (bg_v_max * wc_nutrients_umol /
+                  (parameters$bg_k_max + wc_nutrients_umol)) *
+    seafloor_values[, "bg_biomass"]
 
-  uptake_ag <- (ag_v_max * wc_nutrients /
-                  (parameters$ag_k_max + wc_nutrients)) * ag_biomass_dry
+  uptake_ag <- (ag_v_max * wc_nutrients_umol /
+                  (parameters$ag_k_max + wc_nutrients_umol)) *
+    seafloor_values[, "ag_biomass"]
 
   # sum bg and ag to get total uptake
-  uptake_total <- uptake_bg + uptake_ag
+  uptake_total <- int_convert_nutr(x = uptake_bg + uptake_ag, to = "g")
 
   # get cell ids for different growing behaviors
-  id_bg_growth <- which(bg_biomass_dry <= parameters$bg_biomass_max)
+  id_bg_growth <- which(seafloor_values[, "bg_biomass"] <= parameters$bg_biomass_max)
 
-  id_ag_growth <- which(bg_biomass_dry > parameters$bg_biomass_max &
-                          ag_biomass_dry <= parameters$ag_biomass_thres)
+  id_ag_growth <- which(seafloor_values[, "bg_biomass"] > parameters$bg_biomass_max &
+                          seafloor_values[, "ag_biomass"] <= parameters$ag_biomass_thres)
 
-  id_bg_decrease <- which(bg_biomass_dry > parameters$bg_biomass_max &
-                            ag_biomass_dry > parameters$ag_biomass_thres)
+  id_bg_decrease <- which(seafloor_values[, "bg_biomass"] > parameters$bg_biomass_max &
+                            seafloor_values[, "ag_biomass"] > parameters$ag_biomass_thres)
 
   # get difference between current and maximum biomass/threshold
-  bg_biomass_diff <- 1 - ((parameters$bg_biomass_max - bg_biomass_dry) /
+  bg_biomass_diff <- 1 - ((parameters$bg_biomass_max -
+                             seafloor_values[, "bg_biomass"]) /
                             parameters$bg_biomass_max)
 
-  ag_biomass_diff_thres <- 1 - ((parameters$ag_biomass_thres - ag_biomass_dry) /
+  ag_biomass_diff_thres <- 1 - ((parameters$ag_biomass_thres -
+                                   seafloor_values[, "ag_biomass"]) /
                                   parameters$ag_biomass_thres)
 
-  ag_biomass_diff <- 1 - ((parameters$ag_biomass_max - ag_biomass_dry) /
+  ag_biomass_diff <- 1 - ((parameters$ag_biomass_max -
+                             seafloor_values[, "ag_biomass"]) /
                             parameters$ag_biomass_max)
 
   # below ground growth
@@ -82,14 +80,14 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                       log_slope = parameters$bg_sigmoid_slope)
 
   # calculate ratio allocation ag
-  ag_biomass_sigm <- bg_biomass_sigm * -1
+  ag_biomass_sigm <- 0 # bg_biomass_sigm * -1
 
-  result_temp <- int_seagrass_growth(biomass_growth = bg_biomass_dry[id_bg_growth],
-                                     biomass_reduction = ag_biomass_dry[id_bg_growth],
+  result_temp <- int_seagrass_growth(biomass_growth = seafloor_values[id_bg_growth, "bg_biomass"],
+                                     biomass_reduction = seafloor_values[id_bg_growth, "ag_biomass"],
                                      nutrients = uptake_total[id_bg_growth],
                                      growth_fraction = bg_biomass_sigm,
                                      reduction_fraction = ag_biomass_sigm,
-                                     gamma = parameters$bg_gamma,
+                                     gamma = 0.0082,
                                      slough_ratio = parameters$bg_slough_ratio,
                                      slough_detritus_ratio = parameters$slough_detritus_ratio,
                                      reduction = parameters$ag_reduction)
@@ -111,12 +109,12 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   # calculate ratio allocation bg
   bg_biomass_sigm <- 0
 
-  result_temp <- int_seagrass_growth(biomass_growth = ag_biomass_dry[id_ag_growth],
-                                     biomass_reduction = bg_biomass_dry[id_ag_growth],
+  result_temp <- int_seagrass_growth(biomass_growth = seafloor_values[id_ag_growth, "ag_biomass"],
+                                     biomass_reduction = seafloor_values[id_ag_growth, "bg_biomass"],
                                      nutrients = uptake_total[id_ag_growth],
                                      growth_fraction = ag_biomass_sigm,
                                      reduction_fraction = bg_biomass_sigm,
-                                     gamma = parameters$ag_gamma,
+                                     gamma = 0.0144,
                                      slough_ratio = parameters$ag_slough_ratio,
                                      slough_detritus_ratio = parameters$slough_detritus_ratio,
                                      reduction = parameters$bg_reduction)
@@ -129,7 +127,6 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
     cbind(result_temp$growth, result_temp$reduction,
           result_temp$detritus, result_temp$nutrients)
 
-
   # above ground growth; below ground reduction
 
   # calculate ratio allocation ag
@@ -137,14 +134,14 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                       log_slope = parameters$ag_sigmoid_slope)
 
   # calculate ratio allocation bg
-  bg_biomass_sigm <- ag_biomass_sigm * -1
+  bg_biomass_sigm <- 0 # ag_biomass_sigm * -1
 
-  result_temp <- int_seagrass_growth(biomass_growth = ag_biomass_dry[id_bg_decrease],
-                                     biomass_reduction = bg_biomass_dry[id_bg_decrease],
+  result_temp <- int_seagrass_growth(biomass_growth = seafloor_values[id_bg_decrease, "ag_biomass"],
+                                     biomass_reduction = seafloor_values[id_bg_decrease, "bg_biomass"],
                                      nutrients = uptake_total[id_bg_decrease],
                                      growth_fraction = ag_biomass_sigm,
                                      reduction_fraction = bg_biomass_sigm,
-                                     gamma = parameters$ag_gamma,
+                                     gamma = 0.0144,
                                      slough_ratio = parameters$ag_slough_ratio,
                                      slough_detritus_ratio = parameters$slough_detritus_ratio,
                                      reduction = parameters$bg_reduction)
@@ -169,5 +166,4 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   raster::values(seafloor) <- seafloor_values
 
   return(seafloor)
-
 }

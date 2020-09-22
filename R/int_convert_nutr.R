@@ -1,4 +1,4 @@
-#' convert_n
+#' int_convert_nutr
 #'
 #' @description Convert nutrients from g to umol (and vice versa)
 #'
@@ -7,6 +7,7 @@
 #'
 #' @details
 #' Converts the amount of nutrients from gram to micromole or the other way around.
+#' The conversion is based on the molecular mass of NH4.
 #'
 #' @return numeric
 #'
@@ -16,10 +17,7 @@
 #' @keywords internal
 #'
 #' @export
-int_convert_n <- function(x, to) {
-
-  # MH: Where is the value 18.039 coming from?
-  # MH: Mol mass NH4
+int_convert_nutr <- function(x, to) {
 
   # convert to gram by multiplying factor
   if (to == "g") {

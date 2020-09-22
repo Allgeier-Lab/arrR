@@ -25,11 +25,8 @@ int_seagrass_growth <- function(biomass_growth, biomass_reduction, nutrients,
                                 growth_fraction, reduction_fraction,
                                 gamma, slough_ratio, slough_detritus_ratio, reduction) {
 
-  # get fraction of available nutrients
-  nutrients <- int_convert_n(x = nutrients * growth_fraction, to = "g")
-
-  # calculate biomass growth from nutrients
-  growth <- nutrients * (gamma ^ -1)
+  # divide by N%/g to calculate biomass growth from nutrients
+  growth <- (nutrients * growth_fraction) / gamma
 
   # calculate slough amount growth
   blade_slough <- ifelse(growth > 0,

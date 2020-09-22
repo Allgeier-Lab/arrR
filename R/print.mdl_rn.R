@@ -48,15 +48,30 @@ print.mdl_rn <- function(x, digits = 4, ...) {
                                    select = c(length, weight,
                                               died_consumption, died_background))
 
-  # calculate min, median, max values
-  min_fish_population <- round(apply(X = fish_population_values,
-                                     MARGIN = 2, FUN = min), digits = digits)
+  # no fish population present
+  if (nrow(fish_population_values) == 0) {
 
-  mean_fish_population <- round(apply(X = fish_population_values,
-                                      MARGIN = 2, FUN = mean), digits = digits)
+    min_fish_population <- NA
 
-  max_fish_population <- round(apply(X = fish_population_values,
-                                     MARGIN = 2, FUN = max), digits = digits)
+    mean_fish_population <- NA
+
+    max_fish_population <- NA
+  }
+
+  # fish population present
+  else {
+
+    # calculate min, median, max values
+    min_fish_population <- round(apply(X = fish_population_values,
+                                       MARGIN = 2, FUN = min), digits = digits)
+
+    mean_fish_population <- round(apply(X = fish_population_values,
+                                        MARGIN = 2, FUN = mean), digits = digits)
+
+    max_fish_population <- round(apply(X = fish_population_values,
+                                       MARGIN = 2, FUN = max), digits = digits)
+
+  }
 
   # print result
   cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",

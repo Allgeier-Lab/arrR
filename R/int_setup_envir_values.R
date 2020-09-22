@@ -19,16 +19,20 @@
 int_setup_envir_values <- function(seafloor, starting_values, parameters) {
 
   # calculate below ground biomass
-  # MH: Wet-Dry conversion
-  bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941
+  # # MH: Wet-Dry conversion
+  # bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941; (250 + 0.0396) / 0.0941
 
-  # calculate detritus (Layman et al. 2016)
-  detritus_pool <- (starting_values$ag_biomass * parameters$ag_gamma +
-                      bg_biomass * parameters$bg_gamma) * parameters$detritus_fraction
+  # # calculate detritus (Layman et al. 2016)
+  # detritus_pool <- (starting_values$ag_biomass * parameters$ag_gamma +
+  #                     bg_biomass * parameters$bg_gamma) * parameters$detritus_fraction
+
+  # calculate detritus nutrients (mean %N dry of Layman et al. 2016)
+  detritus_pool <- (starting_values$ag_biomass * 0.0144 +
+                      starting_values$bg_biomass * 0.0082) * parameters$detritus_fraction
 
   # create RasterLayer
   ag_biomass <- raster::setValues(x = seafloor, values = starting_values$ag_biomass)
-  bg_biomass <- raster::setValues(x = seafloor, values = bg_biomass)
+  bg_biomass <- raster::setValues(x = seafloor, values = starting_values$bg_biomass)
   detritus_pool <- raster::setValues(x = seafloor, values = detritus_pool)
   detritus_dead <- raster::setValues(x = seafloor, values = 0)
   wc_nutrients <- raster::setValues(x = seafloor, values = starting_values$wc_nutrients)

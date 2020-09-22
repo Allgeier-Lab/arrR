@@ -21,4 +21,12 @@ Calculate sigmoid to distribute uptake.
 \details{
 Calculates sigmoid that redistributes total uptake depending on x.
 }
+\examples{
+biomass <- seq(from = 0, to = 1, by = 0.01)
+f_bg <- int_calc_sigmoid(biomass, log_slope = -2, rescale = FALSE, to = c(-1, 1))
+
+plot(biomass, f_bg, type = "l")
+lines(biomass, 1 - f_bg)
+
+}
 \keyword{internal}

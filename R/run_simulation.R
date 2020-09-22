@@ -101,7 +101,7 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
 
     # simulate fish respiration
     fish_population <- simulate_respiration(fish_population = fish_population,
-                                            water_temp = parameters$water_temp,
+                                            water_temp = starting_values$water_temp,
                                             min_per_i = min_per_i)
 
     # simulate growth and nutrient feedback (returns population data.frame and raster)

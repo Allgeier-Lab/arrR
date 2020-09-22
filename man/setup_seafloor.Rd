@@ -38,6 +38,7 @@ Initiate environment
 \details{
 Function to setup the environment.....
 Center of the environment is always set to (0,0).
+All biomass values are dry values, nutrient values are g
 
 Parameters include ...
 }

@@ -31,18 +31,17 @@ check_parameters <- function(starting_values, parameters) {
   required_starting <- c("ag_biomass",
                          "bg_biomass",
                          "wc_nutrients",
-                         "pop_n")
+                         "pop_n",
+                         "water_temp")
 
   # specify all required parameters
-  required_parameters <- c("ag_gamma",
-                           "ag_biomass_max",
+  required_parameters <- c("ag_biomass_max",
                            "ag_biomass_thres",
                            "ag_v_max",
                            "ag_k_max",
                            "ag_sigmoid_slope",
                            "bg_reduction",
                            "ag_slough_ratio",
-                           "bg_gamma",
                            "ag_biomass_max",
                            "bg_v_max",
                            "bg_k_max",
@@ -61,8 +60,7 @@ check_parameters <- function(starting_values, parameters) {
                            "pop_b_grunt",
                            "pop_k_grunt",
                            "pop_linf_grunt",
-                           "pop_n_body",
-                           "water_temp")
+                           "pop_n_body")
 
   # check if all starting values are present
   check_starting <- which(!required_starting %in% names(starting_values))
