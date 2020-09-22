@@ -18,14 +18,6 @@
 #' @export
 int_setup_envir_values <- function(seafloor, starting_values, parameters) {
 
-  # calculate below ground biomass
-  # # MH: Wet-Dry conversion
-  # bg_biomass <- (starting_values$bg_biomass + 0.0396) / 0.0941; (250 + 0.0396) / 0.0941
-
-  # # calculate detritus (Layman et al. 2016)
-  # detritus_pool <- (starting_values$ag_biomass * parameters$ag_gamma +
-  #                     bg_biomass * parameters$bg_gamma) * parameters$detritus_fraction
-
   # calculate detritus nutrients (mean %N dry of Layman et al. 2016)
   detritus_pool <- (starting_values$ag_biomass * 0.0144 +
                       starting_values$bg_biomass * 0.0082) * parameters$detritus_fraction
