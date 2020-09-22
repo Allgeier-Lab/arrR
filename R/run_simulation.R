@@ -89,6 +89,7 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
+    # increase counter by minutes
     counter_day <- counter_day + min_per_i
 
     # simulate fish movement
@@ -141,6 +142,7 @@ run_simulation <- function(seafloor, fish_population,
       seafloor <- simulate_diffusion(seafloor = seafloor,
                                      cell_adj = cell_adj,
                                      parameters = parameters)
+
     }
 
     # update tracking data.frames
@@ -151,7 +153,9 @@ run_simulation <- function(seafloor, fish_population,
 
   # new line after last progress message
   if (verbose) {
+
     message("")
+
   }
 
   # Combine to one data.frame
