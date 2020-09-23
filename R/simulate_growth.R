@@ -23,6 +23,7 @@ simulate_growth <- function(fish_population, fish_population_track,
   # MH: That's actually always the same
   n <- nrow(fish_population)
 
+  # calculate growth in lenth and weight
   fish_population$growth_length <- parameters$pop_k_grunt * (1 / 365) * (1 / 24) * (1 / 60 ) *
     min_per_i * (parameters$pop_linf_grunt - fish_population$length)
 
@@ -30,9 +31,7 @@ simulate_growth <- function(fish_population, fish_population_track,
     ((fish_population$length + fish_population$growth_length) ^ parameters$pop_b_grunt -
        (fish_population$length) ^ parameters$pop_b_grunt)
 
-  # MH: Why divided by 0.55?
-  # MH: 1 - 0.45 maybe? But why do we actually need to change to original formula
-  # because we want C
+  # calculate consumption requirements
   fish_population$consumption_req <-
     (fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
     0.55 * parameters$pop_n_body
@@ -85,7 +84,8 @@ simulate_growth <- function(fish_population, fish_population_track,
       fish_population$weight[i] <- fish_population$weight[i] + fish_population$growth_weight[i]
 
       # update reserves
-      fish_population$reserves_max[i] <- 0.05 * fish_population$weight[i] * parameters$pop_n_body
+      fish_population$reserves_max[i] <- fish_population$weight[i] * parameters$pop_n_body *
+        parameters$pop_max_reserves
 
       fish_population$reserves_diff[i] <- fish_population$reserves_max[i] - fish_population$reserves[i]
 

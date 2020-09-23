@@ -76,8 +76,8 @@ run_simulation <- function(seafloor, fish_population,
   # get neighboring cells for each focal cell using torus
   cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
-  # init counter for days
-  counter_day <- 0
+  # # init counter for days
+  # counter_day <- 0
 
   # simulate until max_i is reached
   for (i in 1:max_i) {
@@ -89,8 +89,8 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
-    # increase counter by minutes
-    counter_day <- counter_day + min_per_i
+    # # increase counter by minutes
+    # counter_day <- counter_day + min_per_i
 
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
@@ -102,6 +102,7 @@ run_simulation <- function(seafloor, fish_population,
 
     # simulate fish respiration (26°C is mean water temperature in the Bahamas)
     fish_population <- simulate_respiration(fish_population = fish_population,
+                                            parameters = parameters,
                                             water_temp = 26,
                                             min_per_i = min_per_i)
 
@@ -120,28 +121,30 @@ run_simulation <- function(seafloor, fish_population,
     # simulate mortality
     fish_population <- simulate_mortality(fish_population = fish_population,
                                           fish_population_track = fish_population_track,
-                                          seafloor = seafloor)
+                                          seafloor = seafloor,
+                                          parameters = parameters,
+                                          min_per_i = min_per_i)
 
     # # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
     # if (counter_day == 1440) {
 
-      # reset counter day
-      counter_day <- 0
+    # # reset counter day
+    # counter_day <- 0
 
-      # simulate seagrass growth
-      seafloor <- simulate_seagrass(seafloor = seafloor,
-                                    parameters = parameters,
-                                    cells_reef = cells_reef,
-                                    min_per_i = min_per_i)
+    # simulate seagrass growth
+    seafloor <- simulate_seagrass(seafloor = seafloor,
+                                  parameters = parameters,
+                                  cells_reef = cells_reef,
+                                  min_per_i = min_per_i)
 
-      # MH: Does this make sense here in terms of scheduling?
-      seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                           parameters = parameters)
+    # MH: Does this make sense here in terms of scheduling?
+    seafloor <- distribute_dead_detritus(seafloor = seafloor,
+                                         parameters = parameters)
 
-      # # diffuse values between neighbors (really slow at the moment)
-      seafloor <- simulate_diffusion(seafloor = seafloor,
-                                     cell_adj = cell_adj,
-                                     parameters = parameters)
+    # # diffuse values between neighbors (really slow at the moment)
+    seafloor <- simulate_diffusion(seafloor = seafloor,
+                                   cell_adj = cell_adj,
+                                   parameters = parameters)
 
     # }
 

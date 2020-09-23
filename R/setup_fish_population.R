@@ -57,19 +57,23 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     heading <- stats::runif(n = n, min = 0, max = 360)
 
     # calculate length and weight
-    size <- int_calc_size(starting_values = starting_values,
-                          parameters = parameters)
+    size <- int_calc_size(pop_n = n,
+                          pop_mean_size = parameters$pop_mean_size,
+                          pop_var_size = parameters$pop_var_size,
+                          pop_a_grunt = parameters$pop_a_grunt,
+                          pop_b_grunt = parameters$pop_b_grunt)
 
-    # MH: Where do these formula come from?
-    # MH: Why is reserves_max = reserves?
-    reserves_max <- parameters$pop_n_body * size$weight * 0.05
-    reserves <- parameters$pop_n_body * size$weight * 0.05
+    # calculate maximum reserves
+    reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves
+
+    # calculate starting reserves
+    reserves <- parameters$pop_n_body * size$weight *
+      parameters$pop_want_reserves # reserves_max
 
     # combine to final data frame
     fish_population <- data.frame(id = 1:n, age = 0,
                                   x = x, y = y, heading = heading,
                                   length = size$length, weight = size$weight,
-                                  # n_body = n_body, # aen = aen,
                                   reserves = reserves, reserves_max = reserves_max,
                                   reserves_diff = reserves_max - reserves,
                                   activity = numeric(n), respiration = numeric(n),
@@ -84,7 +88,6 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     fish_population <- data.frame(id = numeric(), age = numeric(),
                                   x = numeric(), y = numeric(), heading = numeric(),
                                   length = numeric(), weight = numeric(),
-                                  # n_body = numeric(), # aen = numeric(),
                                   reserves = numeric(), reserves_max = numeric(),
                                   reserves_diff = numeric(),
                                   activity = numeric(), respiration = numeric(),
@@ -92,6 +95,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
                                   growth_nutrient = numeric(),
                                   consumption_req = numeric(),
                                   died_consumption = numeric(n), died_background = numeric(n))
+
   }
 
   return(fish_population)

@@ -23,7 +23,7 @@ Calculates sigmoid that redistributes total uptake depending on x.
 }
 \examples{
 biomass <- seq(from = 0, to = 1, by = 0.01)
-f_bg <- int_calc_sigmoid(biomass, log_slope = -2)
+f_bg <- int_calc_sigmoid(biomass, log_slope = -2.5)
 
 plot(biomass, f_bg, type = "l")
 lines(biomass, 1 - f_bg)

@@ -4,12 +4,22 @@
 \alias{simulate_mortality}
 \title{simulate_mortality}
 \usage{
-simulate_mortality(fish_population, fish_population_track, seafloor)
+simulate_mortality(
+  fish_population,
+  fish_population_track,
+  seafloor,
+  parameters,
+  min_per_i
+)
 }
 \arguments{
 \item{fish_population, fish_population_track}{Data frame population created with \code{\link{setup_fish_population}}.}
 
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
+
+\item{parameters}{List with all model parameters.}
+
+\item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
 data.frame

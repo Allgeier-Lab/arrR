@@ -35,14 +35,14 @@ check_parameters <- function(starting_values, parameters) {
                          "water_temp")
 
   # specify all required parameters
-  required_parameters <- c("ag_biomass_max",
-                           "ag_biomass_thres",
+  required_parameters <- c("ag_biomass_thres",
+                           "ag_biomass_max",
                            "ag_v_max",
                            "ag_k_max",
                            "ag_sigmoid_slope",
-                           "bg_reduction",
+                           "ag_reduction",
                            "ag_slough_ratio",
-                           "ag_biomass_max",
+                           "bg_biomass_max",
                            "bg_v_max",
                            "bg_k_max",
                            "bg_sigmoid_slope",
@@ -55,12 +55,23 @@ check_parameters <- function(starting_values, parameters) {
                            "detritus_death_decomp",
                            "wc_diffusion",
                            "pop_mean_size",
+                           "pop_var_size",
+                           "pop_max_size",
+                           "pop_max_reserves",
+                           "pop_want_reserves",
+                           "pop_visibility",
                            "pop_mean_move",
+                           "pop_var_move",
                            "pop_a_grunt",
                            "pop_b_grunt",
                            "pop_k_grunt",
                            "pop_linf_grunt",
-                           "pop_n_body")
+                           "pop_n_body",
+                           "resp_intercept",
+                           "resp_slope",
+                           "resp_temp_low",
+                           "resp_temp_optm",
+                           "resp_temp_max")
 
   # check if all starting values are present
   check_starting <- which(!required_starting %in% names(starting_values))

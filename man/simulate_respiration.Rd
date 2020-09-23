@@ -4,10 +4,12 @@
 \alias{simulate_respiration}
 \title{simulate_respiration}
 \usage{
-simulate_respiration(fish_population, water_temp, min_per_i)
+simulate_respiration(fish_population, parameters, water_temp, min_per_i)
 }
 \arguments{
 \item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
+
+\item{parameters}{List with all model parameters.}
 
 \item{water_temp}{Numeric with water temperature.}
 

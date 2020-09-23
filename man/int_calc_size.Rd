@@ -4,12 +4,14 @@
 \alias{int_calc_size}
 \title{calc_size}
 \usage{
-int_calc_size(starting_values, parameters)
+int_calc_size(pop_n, pop_mean_size, pop_var_size, pop_a_grunt, pop_b_grunt)
 }
 \arguments{
-\item{starting_values}{List with all starting value parameters.}
+\item{pop_n}{Numeric with starting values for number of individuals.}
 
-\item{parameters}{List with all model parameters.}
+\item{pop_mean_size, pop_var_size}{Numeric with parameters for mean size and variance.}
+
+\item{pop_a_grunt, pop_b_grunt}{Numeric with parameters for weight calculation.}
 }
 \value{
 vector

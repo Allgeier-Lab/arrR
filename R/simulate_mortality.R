@@ -4,6 +4,8 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
+#' @param parameters List with all model parameters.
+#' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
 #' Function to simulate background mortality of population individuals.
@@ -14,7 +16,8 @@
 #' @rdname simulate_mortality
 #'
 #' @export
-simulate_mortality <- function(fish_population, fish_population_track, seafloor) {
+simulate_mortality <- function(fish_population, fish_population_track, seafloor,
+                               parameters, min_per_i) {
 
   # get detritus/nutrient pools at location
   pools <- raster::extract(x = raster::subset(seafloor,
@@ -23,7 +26,7 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor)
                            y = fish_population[, c("x", "y")])
 
   # create death probability
-  death_prob <- exp(1 * (fish_population$length - 45)) / 120
+  death_prob <- exp(fish_population$length - parameters$pop_max_size)
 
   # create random number to test death prob against
   random_prob <- stats::runif(n = nrow(fish_population), min = 0, max = 1)

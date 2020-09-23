@@ -22,19 +22,12 @@
 simulate_movement <- function(fish_population, reef_dist, coords_reef,
                               extent, parameters, reef_attraction) {
 
-  # set visibility in which fish try to minimize distance to reef
-  # MH: Why is this not a parameter?
-  visibility <- 1 # parameters$pop_mean_move * 0.25
-
-  # MH: Why is the variance set to v = 5?
-  variance <- 5
-
   # calc mean of log-norm distribution
   norm_mean <- log((parameters$pop_mean_move ^ 2) /
-                     sqrt(parameters$pop_mean_move ^ 2 + variance))
+                     sqrt(parameters$pop_mean_move ^ 2 + parameters$pop_var_move))
 
   # calc sd of log-norm distribution
-  norm_sd <- sqrt(log(1 + (variance / (parameters$pop_mean_move ^ 2))))
+  norm_sd <- sqrt(log(1 + (parameters$pop_var_move / (parameters$pop_mean_move ^ 2))))
 
   # get random numbers from log-norm distribution
   norm_random <- stats::rnorm(n = nrow(fish_population),
@@ -47,20 +40,20 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
   if (reef_attraction & nrow(coords_reef) > 0) {
 
     # get coordinates within visibility left, straight in right of individuals
-    heading_l <- cbind(fish_population$x +
-                         (visibility * cos((fish_population$heading + -45) * (pi / 180))),
-                       fish_population$y +
-                         (visibility * sin((fish_population$heading + -45) * (pi / 180))))
+    heading_l <- cbind(fish_population$x + (parameters$pop_visibility *
+                                              cos((fish_population$heading + -45) * (pi / 180))),
+                       fish_population$y + (parameters$pop_visibility *
+                                              sin((fish_population$heading + -45) * (pi / 180))))
 
-    heading_s <- cbind(fish_population$x +
-                         (visibility * cos(fish_population$heading * (pi / 180))),
-                       fish_population$y +
-                         (visibility * sin(fish_population$heading * (pi / 180))))
+    heading_s <- cbind(fish_population$x + (parameters$pop_visibility *
+                                              cos(fish_population$heading * (pi / 180))),
+                       fish_population$y + (parameters$pop_visibility *
+                                              sin(fish_population$heading * (pi / 180))))
 
-    heading_r <- cbind(fish_population$x +
-                         (visibility * cos((fish_population$heading + 45) * (pi / 180))),
-                       fish_population$y +
-                         (visibility * sin((fish_population$heading + 45) * (pi / 180))))
+    heading_r <- cbind(fish_population$x + (parameters$pop_visibility *
+                                              cos((fish_population$heading + 45) * (pi / 180))),
+                       fish_population$y + (parameters$pop_visibility *
+                                              sin((fish_population$heading + 45) * (pi / 180))))
 
     # torus translation if coords are outside plot
     heading_l <- int_translate_torus(coords = heading_l, extent = extent)
@@ -70,7 +63,8 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
     heading_r <- int_translate_torus(coords = heading_r, extent = extent)
 
     # get distance values in directions
-    dist_values <- raster::extract(x = reef_dist, y = rbind(heading_l, heading_s, heading_r))
+    dist_values <- raster::extract(x = reef_dist,
+                                   y = rbind(heading_l, heading_s, heading_r))
 
     # get ids of fish that turn one direction
     id_l <- which(dist_values[1:10] < dist_values[11:20])
@@ -96,16 +90,11 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
     int_translate_torus(coords = fish_population[, c("x", "y")], extent = extent)
 
   # turn fish randomly after moving
-  # MH: This could be correlated to heading before
-  # MH: runif(min = heading - x, max = heading + x)
+  # MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
   fish_population$heading <- stats::runif(n = nrow(fish_population),
                                           min = 0, max = 360)
 
   # update activity
-  # MH: Are there () missing?
-  # MH: Why is + 1 added to mean move?
-  # MH: Linear relationship between movement and activity not less than 1
-  # MH: Should be basically higher if they swim more (ask Jake)
   fish_population$activity <-  (1 / (parameters$pop_mean_move + 1)) * move_dist + 1
 
   return(fish_population)

@@ -4,12 +4,20 @@
 \alias{int_setup_envir_values}
 \title{setup_envir_values}
 \usage{
-int_setup_envir_values(seafloor, starting_values, parameters)
+int_setup_envir_values(
+  seafloor,
+  ag_biomass,
+  bg_biomass,
+  wc_nutrients,
+  detritus_fraction
+)
 }
 \arguments{
-\item{seafloor}{Raster* object}
+\item{seafloor}{Raster* object.}
 
-\item{xy}{2-Column matrix with coordinates of artificial reefs}
+\item{ag_biomass, bg_biomass, wc_nutrients}{Numeric with starting values.}
+
+\item{detritus_fraction}{Numeric with parameter for detritus fraction.}
 }
 \value{
 vector
