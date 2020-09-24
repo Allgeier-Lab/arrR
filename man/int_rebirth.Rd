@@ -8,6 +8,7 @@ int_rebirth(
   fish_population,
   fish_population_track,
   n_body,
+  want_reserves,
   detritus_pool,
   detritus_dead,
   reason
@@ -16,6 +17,8 @@ int_rebirth(
 \arguments{
 \item{fish_population, fish_population_track}{Data frame population created
 with \code{\link{setup_fish_population}}.}
+
+\item{n_body, want_reserves}{Numeric with parameters to calculate reserves.}
 
 \item{detritus_pool, detritus_dead}{Vector with detritus values at location of
 individual.}

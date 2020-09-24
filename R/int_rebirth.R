@@ -4,6 +4,7 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created
 #' with \code{\link{setup_fish_population}}.
+#' @param n_body,want_reserves Numeric with parameters to calculate reserves.
 #' @param detritus_pool,detritus_dead Vector with detritus values at location of
 #' individual.
 #' @param reason Character specifying reason of death ('consumption' or 'background').
@@ -20,7 +21,7 @@
 #'
 #' @export
 int_rebirth <- function(fish_population, fish_population_track,
-                        n_body, detritus_pool, detritus_dead, reason) {
+                        n_body, want_reserves, detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
   fish_population_start <- subset(fish_population_track,
@@ -28,7 +29,7 @@ int_rebirth <- function(fish_population, fish_population_track,
 
   # # calculate mass difference + reserves
   mass_diff <- (fish_population$weight - fish_population_start$weight) *
-    parameters$pop_n_body + fish_population$reserves
+    n_body + fish_population$reserves
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff
@@ -40,8 +41,7 @@ int_rebirth <- function(fish_population, fish_population_track,
   fish_population <- fish_population_start
 
   # calculate wanted reserves
-  reserves_wanted <- parameters$pop_n_body * fish_population$weight *
-    parameters$pop_want_reserves
+  reserves_wanted <- n_body * fish_population$weight * want_reserves
 
   # if more reserves are wanted than available, all are used
   if (reserves_wanted >= detritus_pool) {
