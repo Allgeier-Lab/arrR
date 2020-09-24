@@ -36,11 +36,16 @@ simulate_respiration <- function(fish_population, parameters, water_temp, min_pe
   # ;this is the f(t) equation 2 ()
   temp_dependence <- v_resp ^ x_resp * exp(x_resp * (1 - v_resp))
 
-  # update respiration col
+  # calculate respiration
   # MH: Why multiplied by 13560 etc.?
-  fish_population$respiration <-
-    (resp_intercept * fish_population$weight ^ parameters$resp_slope *
-       temp_dependence * fish_population$activity) * 13560 * (1 / 4800)
+  respiration <- (resp_intercept * fish_population$weight ^ parameters$resp_slope *
+                    temp_dependence * fish_population$activity) * 13560 * (1 / 4800)
+
+  # check if finite number
+  respiration <- ifelse(test = !is.finite(respiration), yes = 1, no = respiration)
+
+  # update respiration col
+  fish_population$respiration <- respiration
 
   return(fish_population)
 }

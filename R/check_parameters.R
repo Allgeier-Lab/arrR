@@ -96,4 +96,12 @@ check_parameters <- function(starting_values, parameters) {
             call. = FALSE)
 
   }
+
+  # check if respiration temp is above max
+  if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >= parameters$resp_temp_max)) {
+
+    warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
+            call. = FALSE)
+
+  }
 }
