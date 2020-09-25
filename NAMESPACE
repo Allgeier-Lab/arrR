@@ -2,7 +2,6 @@
 
 S3method(plot,mdl_rn)
 S3method(print,mdl_rn)
-export(animate_result)
 export(check_parameters)
 export(distribute_dead_detritus)
 export(int_calc_sigmoid)
