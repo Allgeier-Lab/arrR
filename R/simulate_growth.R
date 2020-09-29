@@ -24,12 +24,13 @@ simulate_growth <- function(fish_population, fish_population_track,
   n <- nrow(fish_population)
 
   # calculate growth in length and weight
-  fish_population$growth_length <- parameters$pop_k_grunt * (1 / 365) * (1 / 24) * (1 / 60 ) *
+  fish_population$growth_length <- parameters$pop_k_grunt *
+    (1 / 365) * (1 / 24) * (1 / 60 ) *
     min_per_i * (parameters$pop_linf_grunt - fish_population$length)
 
   fish_population$growth_weight <- parameters$pop_a_grunt *
     ((fish_population$length + fish_population$growth_length) ^ parameters$pop_b_grunt -
-       (fish_population$length) ^ parameters$pop_b_grunt)
+       fish_population$length ^ parameters$pop_b_grunt)
 
   # calculate consumption requirements
   fish_population$consumption_req <-
@@ -64,7 +65,7 @@ simulate_growth <- function(fish_population, fish_population_track,
                                    reason = "consumption")
 
       # update data frames
-      fish_population[i, ] <-  fish_pop_temp$fish_population
+      fish_population[i, ] <- fish_pop_temp$fish_population
 
       # update detritus
       pools[i, "detritus_pool"] <- fish_pop_temp$detritus_pool

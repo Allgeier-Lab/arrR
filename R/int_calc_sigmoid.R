@@ -25,7 +25,7 @@
 #' @export
 int_calc_sigmoid <- function(x, log_slope) {
 
-  result <- (1 - (1 / (1 + ((1 / x) - 1) ^ -log_slope)))
+  result <- 1 - (1 / (1 + ((1 / x) - 1) ^ -log_slope))
 
   return(result)
 

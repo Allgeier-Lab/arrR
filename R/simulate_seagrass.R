@@ -40,11 +40,11 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   bg_v_max <- parameters$bg_v_max / 60 * min_per_i # * 24
 
   # calculate bg and ag uptake depending on nutrients and biomass
-  uptake_bg <- (bg_v_max * wc_nutrients_umol /
+  uptake_bg <- ((bg_v_max * wc_nutrients_umol) /
                   (parameters$bg_k_max + wc_nutrients_umol)) *
     seafloor_values[, "bg_biomass"]
 
-  uptake_ag <- (ag_v_max * wc_nutrients_umol /
+  uptake_ag <- ((ag_v_max * wc_nutrients_umol) /
                   (parameters$ag_k_max + wc_nutrients_umol)) *
     seafloor_values[, "ag_biomass"]
 

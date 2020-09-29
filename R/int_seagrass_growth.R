@@ -28,7 +28,7 @@ int_seagrass_growth <- function(biomass_growth, biomass_reduction, nutrients,
   # divide by N%/g to calculate biomass growth from nutrients
   growth <- (nutrients * growth_fraction) / gamma
 
-  # remove nutrients from wc pool reduced by slough that not goes into detritus pools
+  # remove nutrients for growth from wc pool
   nutrients <- growth * gamma * -1
 
   # calculate slough amount growth
