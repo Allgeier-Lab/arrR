@@ -55,21 +55,30 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
                        fish_population$y + (parameters$pop_visibility *
                                               sin((fish_population$heading + 45) * (pi / 180))))
 
-    # torus translation if coords are outside plot
+    # torus translation if coords are outside plot and add id col
     heading_l <- int_translate_torus(coords = heading_l, extent = extent)
 
     heading_s <- int_translate_torus(coords = heading_s, extent = extent)
 
     heading_r <- int_translate_torus(coords = heading_r, extent = extent)
 
+    # create id for direction
+    # MH: No need to do this within loop
+    direction_id <- rep(c("s", "l", "r"), each = nrow(fish_population))
+
+    # combine to one matrix
+    heading_full <- rbind(heading_s, heading_l, heading_r)
+
     # get distance values in directions
     dist_values <- raster::extract(x = reef_dist,
-                                   y = rbind(heading_l, heading_s, heading_r))
+                                   y = heading_full)
 
     # get ids of fish that turn one direction
-    id_l <- which(dist_values[1:10] < dist_values[11:20])
+    id_l <- which(dist_values[direction_id == "l"] <
+                    dist_values[direction_id == "s"])
 
-    id_r <- which(dist_values[21:30] < dist_values[11:20])
+    id_r <- which(dist_values[direction_id == "r"] <
+                    dist_values[direction_id == "s"])
 
     # turn fish heading towards reef
     fish_population$heading[id_l] <- fish_population$heading[id_l] - 45
