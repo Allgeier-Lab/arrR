@@ -3,6 +3,7 @@
 #' @description Simulate movement of population.
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
+#' @param n_pop Numeric with number of individuals.
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
@@ -17,11 +18,7 @@
 #'
 #' @export
 simulate_growth <- function(fish_population, fish_population_track,
-                            seafloor, parameters, min_per_i) {
-
-  # get number of individuals
-  # MH: That's actually always the same
-  n <- nrow(fish_population)
+                            n_pop, seafloor, parameters, min_per_i) {
 
   # calculate growth in length and weight
   fish_population$growth_length <- parameters$pop_k_grunt *
@@ -44,7 +41,7 @@ simulate_growth <- function(fish_population, fish_population_track,
                            cellnumbers = TRUE)
 
   # sample random ordering of individuals
-  id <- sample(x = fish_population$id, size = n)
+  id <- sample(x = fish_population$id, size = n_pop)
 
   # loop through all individuals, because one individual might use all nutrients
   for (i in id) {
@@ -123,7 +120,7 @@ simulate_growth <- function(fish_population, fish_population_track,
         fish_population$reserves[i] <- fish_population$reserves[i] -
           (fish_population$consumption_req[i] - pools[[i, "detritus_pool"]])
 
-        # # set nutrient pool to 0
+        # set nutrient pool to 0
         pools[[i, "detritus_pool"]] <- 0
 
       }

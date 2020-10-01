@@ -3,6 +3,7 @@
 #' @description Simulate background mortality of population.
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
+#' @param n_pop Numeric with number of individuals.
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
@@ -17,13 +18,13 @@
 #'
 #' @export
 simulate_mortality <- function(fish_population, fish_population_track, seafloor,
-                               parameters, min_per_i) {
+                               n_pop, parameters, min_per_i) {
 
   # create death probability
   death_prob <- exp(fish_population$length - parameters$pop_max_size)
 
   # create random number to test death prob against
-  random_prob <- stats::runif(n = nrow(fish_population), min = 0, max = 1)
+  random_prob <- stats::runif(n = n_pop, min = 0, max = 1)
 
   # identify who dies
   mort_id <- which(random_prob < death_prob)

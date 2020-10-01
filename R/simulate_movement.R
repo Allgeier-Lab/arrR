@@ -4,6 +4,7 @@
 #'
 #' @param fish_population Data frame population created
 #' with \code{\link{setup_fish_population}}.
+#' @param n_pop Numeric with number of individuals.
 #' @param reef_dist RasterLayer with distance to reef.
 #' @param parameters List with all model parameters.
 #' @param extent Spatial extent object of the seafloor RasterBr.
@@ -19,7 +20,7 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fish_population, reef_dist, coords_reef,
+simulate_movement <- function(fish_population, n_pop, reef_dist, coords_reef,
                               extent, parameters, reef_attraction) {
 
   # calc mean of log-norm distribution
@@ -30,7 +31,7 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
   norm_sd <- sqrt(log(1 + (parameters$pop_var_move / (parameters$pop_mean_move ^ 2))))
 
   # get random numbers from log-norm distribution
-  norm_random <- stats::rnorm(n = nrow(fish_population),
+  norm_random <- stats::rnorm(n = n_pop,
                               mean = norm_mean, sd = norm_sd)
 
   # calculate body length based on random number
@@ -63,8 +64,7 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
     heading_r <- int_translate_torus(coords = heading_r, extent = extent)
 
     # create id for direction
-    # MH: No need to do this within loop
-    direction_id <- rep(c("s", "l", "r"), each = nrow(fish_population))
+    direction_id <- rep(c("s", "l", "r"), each = n_pop)
 
     # combine to one matrix
     heading_full <- rbind(heading_s, heading_l, heading_r)
@@ -100,7 +100,7 @@ simulate_movement <- function(fish_population, reef_dist, coords_reef,
 
   # turn fish randomly after moving
   # MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-  fish_population$heading <- stats::runif(n = nrow(fish_population),
+  fish_population$heading <- stats::runif(n = n_pop,
                                           min = 0, max = 360)
 
   # update activity

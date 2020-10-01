@@ -8,6 +8,7 @@ simulate_mortality(
   fish_population,
   fish_population_track,
   seafloor,
+  n_pop,
   parameters,
   min_per_i
 )
@@ -16,6 +17,8 @@ simulate_mortality(
 \item{fish_population, fish_population_track}{Data frame population created with \code{\link{setup_fish_population}}.}
 
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
+
+\item{n_pop}{Numeric with number of individuals.}
 
 \item{parameters}{List with all model parameters.}
 

@@ -6,6 +6,7 @@
 \usage{
 simulate_movement(
   fish_population,
+  n_pop,
   reef_dist,
   coords_reef,
   extent,
@@ -16,6 +17,8 @@ simulate_movement(
 \arguments{
 \item{fish_population}{Data frame population created
 with \code{\link{setup_fish_population}}.}
+
+\item{n_pop}{Numeric with number of individuals.}
 
 \item{reef_dist}{RasterLayer with distance to reef.}
 
