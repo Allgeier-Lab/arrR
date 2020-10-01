@@ -24,8 +24,8 @@ int_rebirth <- function(fish_population, fish_population_track,
                         n_body, want_reserves, detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
-  fish_population_start <- subset(fish_population_track,
-                                  id == fish_population$id)
+  fish_population_start <- fish_population_track[fish_population_track$id ==
+                                                   fish_population$id, ]
 
   # # calculate mass difference + reserves
   mass_diff <- (fish_population$weight - fish_population_start$weight) *
@@ -50,7 +50,7 @@ int_rebirth <- function(fish_population, fish_population_track,
 
     detritus_pool <- 0
 
-    # pool is larger than what is wanted, so only subset is used
+  # pool is larger than what is wanted, so only subset is used
   } else {
 
     fish_population$reserves <- reserves_wanted
