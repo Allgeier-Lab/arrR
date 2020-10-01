@@ -29,7 +29,7 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor,
   mort_id <- which(random_prob < death_prob)
 
   # check if mortality occurs
-  if (length(id) > 0) {
+  if (length(mort_id) > 0) {
 
     # get detritus/nutrient pools at location
     pools <- raster::extract(x = raster::subset(seafloor,

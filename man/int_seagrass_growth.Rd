@@ -6,22 +6,22 @@
 \usage{
 int_seagrass_growth(
   biomass_growth,
-  biomass_reduction,
   nutrients,
   growth_fraction,
   reduction_fraction,
   gamma,
   slough_ratio,
-  slough_detritus_ratio,
-  reduction
+  slough_detritus_ratio
 )
 }
 \arguments{
 \item{biomass_growth}{Add info about parameter.}
 
-\item{biomass_reduction}{Add info about parameter.}
-
 \item{nutrients}{Add info about parameter.}
+
+\item{growth_fraction}{Add info about parameter.}
+
+\item{reduction_fraction}{Add info about parameter.}
 
 \item{gamma}{Add info about parameter.}
 

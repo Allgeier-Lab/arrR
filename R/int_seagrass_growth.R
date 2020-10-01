@@ -3,8 +3,9 @@
 #' @description Internal function to simulate above ground seagrass
 #'
 #' @param biomass_growth Add info about parameter.
-#' @param biomass_reduction Add info about parameter.
 #' @param nutrients Add info about parameter.
+#' @param growth_fraction Add info about parameter.
+#' @param reduction_fraction Add info about parameter.
 #' @param gamma Add info about parameter.
 #' @param slough_ratio Add info about parameter.
 #' @param slough_detritus_ratio Add info about parameter.
@@ -21,9 +22,9 @@
 #' @keywords internal
 #'
 #' @export
-int_seagrass_growth <- function(biomass_growth, biomass_reduction, nutrients,
+int_seagrass_growth <- function(biomass_growth, nutrients,
                                 growth_fraction, reduction_fraction,
-                                gamma, slough_ratio, slough_detritus_ratio, reduction) {
+                                gamma, slough_ratio, slough_detritus_ratio) {
 
   # divide by N%/g to calculate biomass growth from nutrients
   growth <- (nutrients * growth_fraction) / gamma
@@ -43,7 +44,7 @@ int_seagrass_growth <- function(biomass_growth, biomass_reduction, nutrients,
   detritus <- blade_slough * slough_detritus_ratio * gamma
 
   # calculate reduction biomass
-  reduction <- biomass_reduction * (reduction_fraction * reduction)
+  reduction <- growth * reduction_fraction * -1
 
   return(list(growth = growth, reduction = reduction,
               detritus = detritus, nutrients = nutrients))
