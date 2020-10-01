@@ -119,11 +119,16 @@ run_simulation <- function(seafloor, fish_population,
     fish_population <- growth_temp$fish_population
 
     # simulate mortality
-    fish_population <- simulate_mortality(fish_population = fish_population,
-                                          fish_population_track = fish_population_track,
-                                          seafloor = seafloor,
-                                          parameters = parameters,
-                                          min_per_i = min_per_i)
+    mortality_temp <- simulate_mortality(fish_population = fish_population,
+                                         fish_population_track = fish_population_track,
+                                         seafloor = seafloor,
+                                         parameters = parameters,
+                                         min_per_i = min_per_i)
+
+    # update results
+    seafloor <- mortality_temp$seafloor
+
+    fish_population <- mortality_temp$fish_population
 
     # # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
     # if (counter_day == 1440) {
