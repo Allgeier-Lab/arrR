@@ -114,13 +114,13 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                        slough_detritus_ratio = parameters$slough_detritus_ratio)
 
     # update values
-    seafloor_values[id_bg_growth, ] <- seafloor_values[id_bg_growth, ] +
+    seafloor_values[id_ag_growth, ] <- seafloor_values[id_ag_growth, ] +
       cbind(result_temp$growth, result_temp$reduction,
             result_temp$detritus, result_temp$nutrients)
   }
 
   # above ground growth; below ground reduction
-  if (length(id_ag_growth) > 0) {
+  if (length(id_bg_decrease) > 0) {
 
     # get difference between current and maximum biomass/threshold
     biomass_diff <- 1 - ((parameters$ag_biomass_max -
@@ -141,7 +141,7 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                        slough_detritus_ratio = parameters$slough_detritus_ratio)
 
     # update values
-    seafloor_values[id_bg_growth, ] <- seafloor_values[id_bg_growth, ] +
+    seafloor_values[id_bg_decrease, ] <- seafloor_values[id_bg_decrease, ] +
       cbind(result_temp$growth, result_temp$reduction,
             result_temp$detritus, result_temp$nutrients)
   }
