@@ -39,8 +39,11 @@ run_simulation <- function(seafloor, fish_population,
 
   fish_population_track <- vector(mode = "list", length = max_i + 1)
 
+  # convert seafloor as data.frame
+  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+
   # add starting conditions to track lists
-  seafloor_track[[1]] <- raster::as.data.frame(seafloor, xy = TRUE)
+  seafloor_track[[1]] <- seafloor_values
 
   fish_population_track[[1]] <- fish_population
 
@@ -97,10 +100,11 @@ run_simulation <- function(seafloor, fish_population,
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
                                          n_pop = n_pop,
-                                         reef_dist = seafloor$reef_dist,
-                                         parameters = parameters,
-                                         extent = extent,
+                                         seafloor = seafloor$reef,
+                                         seafloor_values = seafloor_values,
                                          coords_reef = coords_reef,
+                                         extent = extent,
+                                         parameters = parameters,
                                          reef_attraction = reef_attraction)
 
     # simulate fish respiration (26°C is mean water temperature in the Bahamas)
@@ -113,12 +117,13 @@ run_simulation <- function(seafloor, fish_population,
     growth_temp <- simulate_growth(fish_population = fish_population,
                                    fish_population_track = fish_population_track,
                                    n_pop = n_pop,
-                                   seafloor = seafloor,
+                                   seafloor = seafloor$reef,
+                                   seafloor_values = seafloor_values,
                                    parameters = parameters,
                                    min_per_i = min_per_i)
 
     # update results
-    seafloor <- growth_temp$seafloor
+    seafloor_values <- growth_temp$seafloor
 
     fish_population <- growth_temp$fish_population
 
@@ -126,12 +131,13 @@ run_simulation <- function(seafloor, fish_population,
     mortality_temp <- simulate_mortality(fish_population = fish_population,
                                          fish_population_track = fish_population_track,
                                          n_pop = n_pop,
-                                         seafloor = seafloor,
+                                         seafloor = seafloor$reef,
+                                         seafloor_values = seafloor_values,
                                          parameters = parameters,
                                          min_per_i = min_per_i)
 
     # update results
-    seafloor <- mortality_temp$seafloor
+    seafloor_values <- mortality_temp$seafloor
 
     fish_population <- mortality_temp$fish_population
 
@@ -142,24 +148,24 @@ run_simulation <- function(seafloor, fish_population,
     # counter_day <- 0
 
     # simulate seagrass growth
-    seafloor <- simulate_seagrass(seafloor = seafloor,
-                                  parameters = parameters,
-                                  cells_reef = cells_reef,
-                                  min_per_i = min_per_i)
+    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
+                                         parameters = parameters,
+                                         cells_reef = cells_reef,
+                                         min_per_i = min_per_i)
 
     # MH: Does this make sense here in terms of scheduling?
-    seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         parameters = parameters)
+    seafloor_values <- distribute_dead_detritus(seafloor_values = seafloor_values,
+                                                parameters = parameters)
 
-    # # diffuse values between neighbors (really slow at the moment)
-    seafloor <- simulate_diffusion(seafloor = seafloor,
-                                   cell_adj = cell_adj,
-                                   parameters = parameters)
+    # diffuse values between neighbors (really slow at the moment)
+    seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
+                                          cell_adj = cell_adj,
+                                          parameters = parameters)
 
     # }
 
     # update tracking data.frames
-    seafloor_track[[i + 1]] <- raster::as.data.frame(seafloor, xy = TRUE)
+    seafloor_track[[i + 1]] <- seafloor_values
     fish_population_track[[i + 1]] <- fish_population
 
   }

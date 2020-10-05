@@ -4,7 +4,7 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
-#' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @export
 simulate_growth <- function(fish_population, fish_population_track,
-                            n_pop, seafloor, parameters, min_per_i) {
+                            n_pop, seafloor, seafloor_values, parameters, min_per_i) {
 
   # calculate growth in length and weight
   fish_population$growth_length <- parameters$pop_k_grunt *
@@ -35,10 +35,14 @@ simulate_growth <- function(fish_population, fish_population_track,
     0.55 * parameters$pop_n_body
 
   # get detritus/nutrient pools at location and raster cells
-  pools <- raster::extract(x = seafloor[[c("detritus_pool", "detritus_dead",
-                                           "wc_nutrients")]],
-                           y = fish_population[, c("x", "y")],
-                           cellnumbers = TRUE)
+  cell_id <- raster::cellFromXY(object = seafloor,
+                                xy = fish_population[, c("x", "y")])
+
+  detritus_pool <- seafloor_values$detritus_pool[cell_id]
+
+  detritus_dead <- seafloor_values$detritus_dead[cell_id]
+
+  wc_nutrients <- seafloor_values$wc_nutrients[cell_id]
 
   # sample random ordering of individuals
   id <- sample(x = fish_population$id, size = n_pop)
@@ -48,24 +52,24 @@ simulate_growth <- function(fish_population, fish_population_track,
 
     # Individuals die if the required consumption can not be met by reserves + pool
     if (fish_population$consumption_req[i] >
-        (fish_population$reserves[i] + pools[[i, "detritus_pool"]])) {
+        (fish_population$reserves[i] + detritus_pool[i])) {
 
       # create new individual
       fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
                                    fish_population_track = fish_population_track[[1]],
                                    n_body = parameters$pop_n_body,
                                    want_reserves = parameters$pop_want_reserves,
-                                   detritus_pool = pools[[i, "detritus_pool"]],
-                                   detritus_dead = pools[[i, "detritus_dead"]],
+                                   detritus_pool = detritus_pool[i],
+                                   detritus_dead = detritus_dead[i],
                                    reason = "consumption")
 
       # update data frames
       fish_population[i, ] <- fish_pop_temp$fish_population
 
       # update detritus
-      pools[[i, "detritus_pool"]] <- fish_pop_temp$detritus_pool
+      detritus_pool[i] <- fish_pop_temp$detritus_pool
 
-      pools[[i, "detritus_dead"]] <- fish_pop_temp$detritus_dead
+      detritus_dead[i] <- fish_pop_temp$detritus_dead
 
       # consumption requirements can be met
     } else {
@@ -88,10 +92,10 @@ simulate_growth <- function(fish_population, fish_population_track,
       fish_population$reserves_diff[i] <- fish_population$reserves_max[i] - fish_population$reserves[i]
 
       # consumption requirement cant be meet by nutrients pool completely
-      if (fish_population$consumption_req[i] <= pools[[i, "detritus_pool"]]) {
+      if (fish_population$consumption_req[i] <= detritus_pool[i]) {
 
         # calculate remaining nutrients in pool
-        nutrients_left <- pools[[i, "detritus_pool"]] - fish_population$consumption_req[i]
+        nutrients_left <- detritus_pool[i] - fish_population$consumption_req[i]
 
         # reserves can be filled completely
         if (fish_population$reserves_diff[i] <= nutrients_left) {
@@ -100,7 +104,7 @@ simulate_growth <- function(fish_population, fish_population_track,
           fish_population$reserves[i] <- fish_population$reserves_max[i]
 
           # reduce nutrient pool
-          pools[[i, "detritus_pool"]] <- nutrients_left - fish_population$reserves_diff[i]
+          detritus_pool[i] <- nutrients_left - fish_population$reserves_diff[i]
 
           # reserves cannot be filled completely by nutrient pool
         } else {
@@ -109,7 +113,7 @@ simulate_growth <- function(fish_population, fish_population_track,
           fish_population$reserves[i] <- fish_population$reserves[i] + nutrients_left
 
           # set pool to zero
-          pools[[i, "detritus_pool"]] <- 0
+          detritus_pool[i] <- 0
 
         }
 
@@ -118,23 +122,25 @@ simulate_growth <- function(fish_population, fish_population_track,
 
         # reduced reserves
         fish_population$reserves[i] <- fish_population$reserves[i] -
-          (fish_population$consumption_req[i] - pools[[i, "detritus_pool"]])
+          (fish_population$consumption_req[i] - detritus_pool[i])
 
         # set nutrient pool to 0
-        pools[[i, "detritus_pool"]] <- 0
+        detritus_pool[i] <- 0
 
       }
     }
 
     # add non-used consumption to nutrient pool
-    pools[[i, "wc_nutrients"]] <- pools[[i, "wc_nutrients"]] +
+    wc_nutrients[i] <- wc_nutrients[i] +
       (fish_population$consumption_req[i] - fish_population$growth_nutrient[i])
   }
 
-  # update the detritus pool values
-  raster::values(seafloor)[pools[, "cells"], c("detritus_pool",
-                                               "detritus_dead",
-                                               "wc_nutrients")] <- pools[, -1]
+  # update values
+  seafloor_values$detritus_pool[cell_id] <- detritus_pool
 
-  return(list(seafloor = seafloor, fish_population = fish_population))
+  seafloor_values$detritus_dead[cell_id] <- detritus_dead
+
+  seafloor_values$wc_nutrients[cell_id] <- wc_nutrients
+
+  return(list(seafloor = seafloor_values, fish_population = fish_population))
 }

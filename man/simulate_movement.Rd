@@ -7,11 +7,12 @@
 simulate_movement(
   fish_population,
   n_pop,
-  reef_dist,
+  seafloor,
+  seafloor_values,
   coords_reef,
+  reef_attraction,
   extent,
-  parameters,
-  reef_attraction
+  parameters
 )
 }
 \arguments{
@@ -20,15 +21,15 @@ with \code{\link{setup_fish_population}}.}
 
 \item{n_pop}{Numeric with number of individuals.}
 
-\item{reef_dist}{RasterLayer with distance to reef.}
+\item{seafloor, seafloor_values}{RasterLayer and data.frame with seafloor values}
 
 \item{coords_reef}{2-column matrix with coordinates of AR.}
+
+\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
 \item{extent}{Spatial extent object of the seafloor RasterBr.}
 
 \item{parameters}{List with all model parameters.}
-
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 }
 \value{
 data.frame

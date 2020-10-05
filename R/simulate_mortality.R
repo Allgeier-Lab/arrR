@@ -4,7 +4,7 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
-#' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #'
@@ -17,7 +17,8 @@
 #' @rdname simulate_mortality
 #'
 #' @export
-simulate_mortality <- function(fish_population, fish_population_track, seafloor,
+simulate_mortality <- function(fish_population, fish_population_track,
+                               seafloor, seafloor_values,
                                n_pop, parameters, min_per_i) {
 
   # create death probability
@@ -32,12 +33,14 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor,
   # check if mortality occurs
   if (length(mort_id) > 0) {
 
-    # get detritus/nutrient pools at location
-    pools <- raster::extract(x = raster::subset(seafloor,
-                                                subset = c("detritus_pool",
-                                                           "detritus_dead")),
-                             y = fish_population[mort_id, c("x", "y")],
-                             cellnumbers = TRUE)
+    # get detritus/nutrient pools at location and raster cells
+    cell_id <- raster::cellFromXY(object = seafloor,
+                                  xy = fish_population[mort_id, c("x", "y")])
+
+    detritus_pool <- seafloor_values$detritus_pool[cell_id]
+
+    detritus_dead <- seafloor_values$detritus_dead[cell_id]
+
 
     # loop through all dying individuals
     # MH: This could be vectorized but would need changes in int_rebirth
@@ -49,25 +52,26 @@ simulate_mortality <- function(fish_population, fish_population_track, seafloor,
                                    fish_population_track = fish_population_track[[1]],
                                    n_body = parameters$pop_n_body,
                                    want_reserves = parameters$pop_want_reserves,
-                                   detritus_pool = pools[[i, "detritus_pool"]],
-                                   detritus_dead = pools[[i, "detritus_dead"]],
+                                   detritus_pool = detritus_pool[i],
+                                   detritus_dead = detritus_dead[i],
                                    reason = "background")
 
       # update data frames
-      fish_population[i, ] <-  fish_pop_temp$fish_population
+      fish_population[mort_id[i], ] <- fish_pop_temp$fish_population
 
       # update detritus
-      pools[i, "detritus_pool"] <- fish_pop_temp$detritus_pool
+      detritus_pool[i] <- fish_pop_temp$detritus_pool
 
-      pools[i, "detritus_dead"] <- fish_pop_temp$detritus_dead
+      detritus_dead[i] <- fish_pop_temp$detritus_dead
 
     }
 
     # update the detritus pool values
-    raster::values(seafloor)[pools[, "cells"], c("detritus_pool",
-                                                 "detritus_dead")] <- pools[, -1]
+    seafloor_values$detritus_pool[cell_id] <- detritus_pool
+
+    seafloor_values$detritus_dead[cell_id] <- detritus_dead
 
   }
 
-  return(list(seafloor = seafloor, fish_population = fish_population))
+  return(list(seafloor = seafloor_values, fish_population = fish_population))
 }
