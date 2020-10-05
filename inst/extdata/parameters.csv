@@ -15,8 +15,8 @@
 "slough_detritus_ratio";0.9
 "detritus_fraction";0.15
 "detritus_diffusion";0.3
-"detritus_death_diffusion";0.6
-"detritus_death_decomp";0.6
+"detritus_dead_diffusion";0.6
+"detritus_dead_decomp";0.6
 "wc_diffusion";0.6
 "pop_mean_size";9
 "pop_var_size";10

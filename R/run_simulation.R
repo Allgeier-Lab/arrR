@@ -157,7 +157,7 @@ run_simulation <- function(seafloor, fish_population,
     seafloor_values <- distribute_dead_detritus(seafloor_values = seafloor_values,
                                                 parameters = parameters)
 
-    # # diffuse values between neighbors (really slow at the moment)
+    # diffuse values between neighbors (really slow at the moment)
     seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
                                           cell_adj = cell_adj,
                                           parameters = parameters)
