@@ -4,10 +4,10 @@
 \alias{distribute_dead_detritus}
 \title{distribute_dead_detritus}
 \usage{
-distribute_dead_detritus(seafloor, parameters)
+distribute_dead_detritus(seafloor_values, parameters)
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor_values}{Data.frame of seafloor values.}
 
 \item{parameters}{List with all model parameters.}
 }

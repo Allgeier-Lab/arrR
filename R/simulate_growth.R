@@ -4,7 +4,7 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
-#' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @export
 simulate_growth <- function(fish_population, fish_population_track,
-                            n_pop, seafloor, parameters, min_per_i) {
+                            n_pop, seafloor, seafloor_values, parameters, min_per_i) {
 
   # calculate growth in length and weight
   fish_population$growth_length <- parameters$pop_k_grunt *
@@ -35,10 +35,11 @@ simulate_growth <- function(fish_population, fish_population_track,
     0.55 * parameters$pop_n_body
 
   # get detritus/nutrient pools at location and raster cells
-  pools <- raster::extract(x = seafloor[[c("detritus_pool", "detritus_dead",
-                                           "wc_nutrients")]],
-                           y = fish_population[, c("x", "y")],
-                           cellnumbers = TRUE)
+  cell_id <- raster::cellFromXY(object = seafloor,
+                                xy = fish_population[, c("x", "y")])
+
+  pools <- seafloor_values[cell_id, c("detritus_pool", "detritus_dead",
+                                      "wc_nutrients")]
 
   # sample random ordering of individuals
   id <- sample(x = fish_population$id, size = n_pop)
@@ -131,10 +132,9 @@ simulate_growth <- function(fish_population, fish_population_track,
       (fish_population$consumption_req[i] - fish_population$growth_nutrient[i])
   }
 
-  # update the detritus pool values
-  raster::values(seafloor)[pools[, "cells"], c("detritus_pool",
-                                               "detritus_dead",
-                                               "wc_nutrients")] <- pools[, -1]
+  seafloor_values[cell_id, c("detritus_pool",
+                             "detritus_dead",
+                             "wc_nutrients")] <- pools
 
-  return(list(seafloor = seafloor, fish_population = fish_population))
+  return(list(seafloor = seafloor_values, fish_population = fish_population))
 }

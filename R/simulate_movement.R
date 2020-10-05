@@ -5,11 +5,11 @@
 #' @param fish_population Data frame population created
 #' with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
-#' @param reef_dist RasterLayer with distance to reef.
-#' @param parameters List with all model parameters.
-#' @param extent Spatial extent object of the seafloor RasterBr.
-#' @param reef_attraction If TRUE, individuals are attracted to AR.
+#' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values
 #' @param coords_reef 2-column matrix with coordinates of AR.
+#' @param reef_attraction If TRUE, individuals are attracted to AR.
+#' @param extent Spatial extent object of the seafloor RasterBr.
+#' @param parameters List with all model parameters.
 #'
 #' @details
 #' Function to simulate movement of population individuals.
@@ -20,8 +20,8 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fish_population, n_pop, reef_dist, coords_reef,
-                              extent, parameters, reef_attraction) {
+simulate_movement <- function(fish_population, n_pop, seafloor, seafloor_values,
+                              coords_reef, reef_attraction, extent, parameters) {
 
   # calc mean of log-norm distribution
   norm_mean <- log((parameters$pop_mean_move ^ 2) /
@@ -70,8 +70,9 @@ simulate_movement <- function(fish_population, n_pop, reef_dist, coords_reef,
     heading_full <- rbind(heading_s, heading_l, heading_r)
 
     # get distance values in directions
-    dist_values <- raster::extract(x = reef_dist,
-                                   y = heading_full)
+    cell_id <- raster::cellFromXY(object = seafloor, xy = heading_full)
+
+    dist_values <- seafloor_values[cell_id, "reef_dist"]
 
     # get ids of fish that turn one direction
     id_l <- which(dist_values[direction_id == "l"] <
@@ -104,7 +105,7 @@ simulate_movement <- function(fish_population, n_pop, reef_dist, coords_reef,
                                           min = 0, max = 360)
 
   # update activity
-  fish_population$activity <-  (1 / (parameters$pop_mean_move + 1)) * move_dist + 1
+  fish_population$activity <- (1 / (parameters$pop_mean_move + 1)) * move_dist + 1
 
   return(fish_population)
 }

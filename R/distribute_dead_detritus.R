@@ -2,7 +2,7 @@
 #'
 #' @description Redistribute dead detritus pool
 #'
-#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor_values Data.frame of seafloor values.
 #' @param parameters List with all model parameters.
 #'
 #' @details
@@ -14,11 +14,7 @@
 #' @rdname distribute_dead_detritus
 #'
 #' @export
-distribute_dead_detritus <- function(seafloor, parameters) {
-
-  # get seafloor values
-  seafloor_values <- raster::values(seafloor)[, -c(6, 7)]
-
+distribute_dead_detritus <- function(seafloor_values, parameters) {
 
   # get values of both pools
   detritus_pool <- seafloor_values[, "detritus_pool"]
@@ -33,8 +29,5 @@ distribute_dead_detritus <- function(seafloor, parameters) {
   # update values
   seafloor_values[, c("detritus_pool", "detritus_dead")] <- cbind(detritus_pool, detritus_dead)
 
-  # update environment RasterBrick
-  raster::values(seafloor)[, -c(6, 7)] <- seafloor_values
-
-  return(seafloor)
+  return(seafloor_values)
 }

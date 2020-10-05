@@ -2,7 +2,7 @@
 #'
 #' @description Simulate seagrass.
 #'
-#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor_values Data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param cells_reef Vector with cell ids of AR.
 #' @param min_per_i Integer to specify minutes per i.
@@ -16,7 +16,7 @@
 #' @rdname simulate_seagrass
 #'
 #' @export
-simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
+simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i) {
 
   # convert uptake parameters to correct tick scale (from per h to day)
   ag_v_max <- parameters$ag_v_max / 60 * min_per_i # * 24
@@ -24,13 +24,13 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   bg_v_max <- parameters$bg_v_max / 60 * min_per_i # * 24
 
   # get seafloor values
-  seafloor_values <- raster::values(seafloor)[, -c(4, 6, 7)]
+  # seafloor_values <- raster::values(seafloor)[, -c(4, 6, 7)]
 
   # check if reef cells are available
   if (length(cells_reef) > 0) {
 
     # get current value of reef cells
-    reef_values <- seafloor_values[cells_reef, ]
+    reef_values <- seafloor_values[cells_reef, -c(1, 2, 8, 9)]
 
   }
 
@@ -86,7 +86,10 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                        slough_detritus_ratio = parameters$slough_detritus_ratio)
 
     # update values
-    seafloor_values[id_bg_growth, ] <- seafloor_values[id_bg_growth, ] +
+    seafloor_values[id_bg_growth, c("ag_biomass", "bg_biomass",
+                                    "detritus_pool", "wc_nutrients")] <-
+      seafloor_values[id_bg_growth, c("ag_biomass", "bg_biomass",
+                                      "detritus_pool", "wc_nutrients")] +
       cbind(result_temp$reduction, result_temp$growth,
             result_temp$detritus, result_temp$nutrients)
 
@@ -114,7 +117,10 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                        slough_detritus_ratio = parameters$slough_detritus_ratio)
 
     # update values
-    seafloor_values[id_ag_growth, ] <- seafloor_values[id_ag_growth, ] +
+    seafloor_values[id_ag_growth, c("ag_biomass", "bg_biomass",
+                                    "detritus_pool", "wc_nutrients")] <-
+      seafloor_values[id_ag_growth, c("ag_biomass", "bg_biomass",
+                                      "detritus_pool", "wc_nutrients")] +
       cbind(result_temp$growth, result_temp$reduction,
             result_temp$detritus, result_temp$nutrients)
   }
@@ -141,7 +147,10 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
                                        slough_detritus_ratio = parameters$slough_detritus_ratio)
 
     # update values
-    seafloor_values[id_bg_decrease, ] <- seafloor_values[id_bg_decrease, ] +
+    seafloor_values[id_bg_decrease, c("ag_biomass", "bg_biomass",
+                                      "detritus_pool", "wc_nutrients")] <-
+      seafloor_values[id_bg_decrease, c("ag_biomass", "bg_biomass",
+                                        "detritus_pool", "wc_nutrients")] +
       cbind(result_temp$growth, result_temp$reduction,
             result_temp$detritus, result_temp$nutrients)
   }
@@ -150,12 +159,9 @@ simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
   if (length(cells_reef) > 0) {
 
     # set reef values to old values
-    seafloor_values[cells_reef, ] <- reef_values
+    seafloor_values[cells_reef, -c(1, 2, 8, 9)] <- reef_values
 
   }
 
-  # update environment RasterBrick
-  raster::values(seafloor)[, -c(4, 6, 7)] <- seafloor_values
-
-  return(seafloor)
+  return(seafloor_values)
 }
