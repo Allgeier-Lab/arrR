@@ -72,7 +72,7 @@ simulate_movement <- function(fish_population, n_pop, seafloor, seafloor_values,
     # get distance values in directions
     cell_id <- raster::cellFromXY(object = seafloor, xy = heading_full)
 
-    dist_values <- seafloor_values[cell_id, "reef_dist"]
+    dist_values <- seafloor_values$reef_dist[cell_id]
 
     # get ids of fish that turn one direction
     id_l <- which(dist_values[direction_id == "l"] <
