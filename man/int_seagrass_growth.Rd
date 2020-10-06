@@ -4,28 +4,18 @@
 \alias{int_seagrass_growth}
 \title{seagrass_growth}
 \usage{
-int_seagrass_growth(
-  biomass_growth,
-  nutrients,
-  growth_fraction,
-  reduction_fraction,
-  gamma,
-  slough_ratio,
-  slough_detritus_ratio
-)
+int_seagrass_growth(nutrients, gamma, slough_ratio)
 }
 \arguments{
-\item{biomass_growth}{Add info about parameter.}
-
 \item{nutrients}{Add info about parameter.}
-
-\item{growth_fraction}{Add info about parameter.}
-
-\item{reduction_fraction}{Add info about parameter.}
 
 \item{gamma}{Add info about parameter.}
 
 \item{slough_ratio}{Add info about parameter.}
+
+\item{growth_fraction}{Add info about parameter.}
+
+\item{reduction_fraction}{Add info about parameter.}
 
 \item{slough_detritus_ratio}{Add info about parameter.}
 }
