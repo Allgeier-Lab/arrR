@@ -5,19 +5,17 @@ using namespace Rcpp;
 //'
 //' @description Rcpp sample function
 //'
-//' @param x Vector of elements to sample from.
-//' @param n Size of the sample.
-//' @param replace Sample with replacement.
+//' @param seafloor_values Matrix with seafloor values.
+//' @param cell_adj Matrix with cell adjacencies.
+//' @param wc_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 //'
 //' @details
-//' \code{Rcpp} implementation of the \code{sample} function.
+//' \code{Rcpp} implementation of to diffuse nutrients.
 //'
-//' @seealso
-//' \code{\link{sample}}
-//'
-//' @return vector
+//' @return Matrix
 //'
 //' @name rcpp_diffuse_values
+//'
 //' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
@@ -44,13 +42,7 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
 
   }
 
-  // // get random sample of cell adj rows
-  // Rcpp::IntegerVector row_id = Rcpp::seq_len(n_row_adj);
-  // Rcpp::IntegerVector random_id = Rcpp::sample(row_id, n_row_adj);
-
   for (int j = 0; j < n_row_adj; j++) {
-
-    // int k = random_id(j);
 
     //  get current focal and neighbor cell; C++ starts at 0
     int focal = cell_adj(j, 0) - 1;

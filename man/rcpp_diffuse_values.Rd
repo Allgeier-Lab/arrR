@@ -13,21 +13,18 @@ rcpp_diffuse_values(
 )
 }
 \arguments{
-\item{x}{Vector of elements to sample from.}
+\item{seafloor_values}{Matrix with seafloor values.}
 
-\item{n}{Size of the sample.}
+\item{cell_adj}{Matrix with cell adjacencies.}
 
-\item{replace}{Sample with replacement.}
+\item{wc_diffusion, detritus_diffusion, detritus_dead_diffusion}{Numeric with parameters.}
 }
 \value{
-vector
+Matrix
 }
 \description{
 Rcpp sample function
 }
 \details{
-\code{Rcpp} implementation of the \code{sample} function.
-}
-\seealso{
-\code{\link{sample}}
+\code{Rcpp} implementation of to diffuse nutrients.
 }
