@@ -47,3 +47,25 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
     .Call(`_coRal_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
+#' rcpp_diffuse_values
+#'
+#' @description Rcpp sample function
+#'
+#' @param x Vector of elements to sample from.
+#' @param n Size of the sample.
+#' @param replace Sample with replacement.
+#'
+#' @details
+#' \code{Rcpp} implementation of the \code{sample} function.
+#'
+#' @seealso
+#' \code{\link{sample}}
+#'
+#' @return vector
+#'
+#' @name rcpp_diffuse_values
+#' @export
+rcpp_diffuse_values <- function(seafloor_values, cell_adj, wc_diffusion, detritus_diffusion, detritus_dead_diffusion) {
+    .Call(`_coRal_rcpp_diffuse_values`, seafloor_values, cell_adj, wc_diffusion, detritus_diffusion, detritus_dead_diffusion)
+}
+
