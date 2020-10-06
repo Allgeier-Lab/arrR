@@ -40,12 +40,12 @@ int_seagrass_growth <- function(biomass_growth, nutrients,
   # remove blade slough from growth biomass
   growth <- growth - blade_slough
 
-  # calculate detritus amount
-  detritus <- blade_slough * slough_detritus_ratio * gamma
-
   # calculate reduction biomass
-  reduction <- growth * reduction_fraction * -1
+  reduction <- growth * reduction_fraction
 
-  return(list(growth = growth, reduction = reduction,
+  # calculate detritus amount
+  detritus <- (blade_slough * slough_detritus_ratio * gamma) + (reduction * gamma)
+
+  return(list(growth = growth, reduction = reduction * -1,
               detritus = detritus, nutrients = nutrients))
 }
