@@ -9,7 +9,6 @@ setup_seafloor(
   grain,
   reefs = NULL,
   starting_values,
-  parameters,
   verbose = TRUE,
   ...
 )
@@ -22,8 +21,6 @@ setup_seafloor(
 \item{reefs}{2-Column matrix with coordinates of artificial reefs.}
 
 \item{starting_values}{List with all starting value parameters.}
-
-\item{parameters}{List with all model parameters.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
@@ -52,6 +49,6 @@ starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
 input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
-reefs = NULL, starting_values = starting_values, parameters = parameters)
+reefs = NULL, starting_values = starting_values)
 
 }

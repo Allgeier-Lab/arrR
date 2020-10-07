@@ -11,7 +11,8 @@ run_simulation(
   reef_attraction,
   max_i,
   min_per_i,
-  verbose = TRUE
+  verbose = TRUE,
+  return_mean = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ run_simulation(
 \item{min_per_i}{Integer to specify minutes per i.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
+
+\item{return_mean}{If TRUE, only the mean of each timestep will be returned.}
 }
 \value{
 data.frame

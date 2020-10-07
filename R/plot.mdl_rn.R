@@ -27,6 +27,14 @@
 #' @export
 plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
+  # no plotting if return_mean = TRUE
+  # MH: We could plot mean over time in this case
+  if (x$return_mean) {
+
+    stop("Plotting only available if model was run with 'return_mean = FALSE'.", call. = FALSE)
+
+  }
+
   # get seafloor values of last timestep
   seafloor <- subset(x$seafloor, timestep == i, select = -timestep)
 
