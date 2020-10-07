@@ -18,7 +18,6 @@
 #' @export
 simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i) {
 
-
   # check if reef cells are available
   if (length(cells_reef) > 0) {
 
@@ -37,16 +36,15 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)
-  # MH: Formula 3.2; Formula 3.7;
   uptake_bg_umol <- int_calc_uptake(nutrients = wc_nutrients_umol,
                                     biomass = seafloor_values$bg_biomass,
                                     v_max = parameters$bg_v_max / 60 * min_per_i, # * 24
                                     k_m = parameters$bg_k_m)
 
-  uptake_ag_umol <-  int_calc_uptake(nutrients = wc_nutrients_umol,
-                                     biomass = seafloor_values$ag_biomass,
-                                     v_max = parameters$ag_v_max / 60 * min_per_i, # * 24
-                                     k_m = parameters$ag_k_m)
+  uptake_ag_umol <- int_calc_uptake(nutrients = wc_nutrients_umol,
+                                    biomass = seafloor_values$ag_biomass,
+                                    v_max = parameters$ag_v_max / 60 * min_per_i, # * 24
+                                    k_m = parameters$ag_k_m)
 
   # sum bg and ag to get total uptake in g
   uptake_total_g <- int_convert_nutr(x = uptake_bg_umol + uptake_ag_umol, to = "g")
@@ -67,7 +65,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     # calculation growing values
     growth_temp <- int_seagrass_growth(nutrients = uptake_total_g[id_bg_growth],
                                        gamma = 0.0082,
-                                       slough_ratio = parameters$bg_slough_ratio)
+                                       detritus_ratio = parameters$detritus_ratio,
+                                       detritus_decomposition = parameters$detritus_decomposition)
 
     # increase biomass
     seafloor_values$bg_biomass[id_bg_growth] <-
@@ -79,7 +78,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
     # remove nutrients used for growth from water column
     seafloor_values$wc_nutrients[id_bg_growth] <-
-      seafloor_values$wc_nutrients[id_bg_growth] - uptake_total_g[id_bg_growth]
+      seafloor_values$wc_nutrients[id_bg_growth] - growth_temp$nutrients
 
   }
 
@@ -89,7 +88,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     # calculation growing values
     growth_temp <- int_seagrass_growth(nutrients = uptake_total_g[id_ag_growth],
                                        gamma = 0.0144,
-                                       slough_ratio = parameters$ag_slough_ratio)
+                                       detritus_ratio = parameters$detritus_ratio,
+                                       detritus_decomposition = parameters$detritus_decomposition)
 
     # increase biomass
     seafloor_values$ag_biomass[id_ag_growth] <-
@@ -101,8 +101,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
     # remove nutrients used for growth from water column
     seafloor_values$wc_nutrients[id_ag_growth] <-
-      seafloor_values$wc_nutrients[id_ag_growth] - uptake_total_g[id_ag_growth]
-
+      seafloor_values$wc_nutrients[id_ag_growth] - growth_temp$nutrients
   }
 
   # check if reef cells are available

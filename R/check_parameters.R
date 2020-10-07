@@ -41,15 +41,13 @@ check_parameters <- function(starting_values, parameters) {
                            "ag_k_m",
                            "ag_sigmoid_slope",
                            "ag_reduction",
-                           "ag_slough_ratio",
                            "bg_biomass_max",
                            "bg_v_max",
                            "bg_k_m",
                            "bg_sigmoid_slope",
                            "bg_reduction",
-                           "bg_slough_ratio",
-                           "slough_detritus_ratio",
-                           "detritus_fraction",
+                           "detritus_ratio",
+                           "detritus_decomposition",
                            "detritus_diffusion",
                            "detritus_dead_diffusion",
                            "detritus_dead_decomp",
@@ -93,6 +91,25 @@ check_parameters <- function(starting_values, parameters) {
 
     # return warning
     warning("The following parameters are missing: ", missing,
+            call. = FALSE)
+
+  }
+
+  # check if any additional parameters are present
+  add_starting <- which(!names(starting_values) %in% required_starting)
+
+  add_parameters <- which(!names(parameters) %in% required_parameters)
+
+  # length equals 0 if all parameters are present
+  if (length(add_starting) > 0 | length(add_parameters) > 0) {
+
+    # combine missing values with separator
+    additional <- paste(names(starting_values)[add_starting],
+                        names(parameters)[add_parameters],
+                        sep = " ")
+
+    # return warning
+    warning("The following parameters are not needed: ", additional,
             call. = FALSE)
 
   }

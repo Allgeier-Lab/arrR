@@ -9,7 +9,7 @@ int_setup_envir_values(
   ag_biomass,
   bg_biomass,
   wc_nutrients,
-  detritus_fraction
+  detritus_ratio
 )
 }
 \arguments{
@@ -17,7 +17,7 @@ int_setup_envir_values(
 
 \item{ag_biomass, bg_biomass, wc_nutrients}{Numeric with starting values.}
 
-\item{detritus_fraction}{Numeric with parameter for detritus fraction.}
+\item{detritus_ratio}{Numeric with parameter for detritus fraction.}
 }
 \value{
 vector

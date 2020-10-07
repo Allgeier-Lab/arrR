@@ -3,7 +3,7 @@
 S3method(plot,mdl_rn)
 S3method(print,mdl_rn)
 export(check_parameters)
-export(distribute_dead_detritus)
+export(distribute_detritus)
 export(int_calc_sigmoid)
 export(int_calc_size)
 export(int_calc_uptake)

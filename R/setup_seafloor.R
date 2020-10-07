@@ -61,7 +61,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
                                      ag_biomass = starting_values$ag_biomass,
                                      bg_biomass = starting_values$bg_biomass,
                                      wc_nutrients = starting_values$wc_nutrients,
-                                     detritus_fraction = parameters$detritus_fraction)
+                                     detritus_ratio = parameters$detritus_ratio)
 
   # AR coords provided
   if (!is.null(reefs)) {

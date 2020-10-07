@@ -154,8 +154,8 @@ run_simulation <- function(seafloor, fish_population,
                                          min_per_i = min_per_i)
 
     # MH: Does this make sense here in terms of scheduling?
-    seafloor_values <- distribute_dead_detritus(seafloor_values = seafloor_values,
-                                                parameters = parameters)
+    seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
+                                           parameters = parameters)
 
     # diffuse values between neighbors
     seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,

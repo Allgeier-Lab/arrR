@@ -4,20 +4,16 @@
 \alias{int_seagrass_growth}
 \title{seagrass_growth}
 \usage{
-int_seagrass_growth(nutrients, gamma, slough_ratio)
+int_seagrass_growth(nutrients, gamma, detritus_ratio, detritus_decomposition)
 }
 \arguments{
 \item{nutrients}{Add info about parameter.}
 
 \item{gamma}{Add info about parameter.}
 
-\item{slough_ratio}{Add info about parameter.}
+\item{detritus_ratio}{Add info about parameter.}
 
-\item{growth_fraction}{Add info about parameter.}
-
-\item{reduction_fraction}{Add info about parameter.}
-
-\item{slough_detritus_ratio}{Add info about parameter.}
+\item{detritus_decomposition}{Add info about parameter.}
 }
 \value{
 RasterBrick
@@ -28,5 +24,9 @@ Internal function to simulate above ground seagrass
 \details{
 Internal function to simulate below ground seagrass processes. This
 includes i) ... ii) ...
+
+#' @references
+DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 }
 \keyword{internal}
