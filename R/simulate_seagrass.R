@@ -24,9 +24,9 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     # get current value of reef cells
     reef_ag <- seafloor_values$ag_biomass[cells_reef]
     reef_bg <- seafloor_values$bg_biomass[cells_reef]
+    reef_nutr <- seafloor_values$nutrients_pool[cells_reef]
     reef_detritus <- seafloor_values$detritus_pool[cells_reef]
     reef_dead <- seafloor_values$detritus_dead[cells_reef]
-    reef_nutr <- seafloor_values$nutrients_pool[cells_reef]
 
   }
 
@@ -72,13 +72,13 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     seafloor_values$bg_biomass[id_bg_growth] <-
       seafloor_values$bg_biomass[id_bg_growth] + growth_temp$biomass
 
-    # increase detritus pool
-    seafloor_values$detritus_pool[id_bg_growth] <-
-      seafloor_values$detritus_pool[id_bg_growth] + growth_temp$detritus
-
     # remove nutrients used for growth from water column
     seafloor_values$nutrients_pool[id_bg_growth] <-
       seafloor_values$nutrients_pool[id_bg_growth] - growth_temp$nutrients
+
+    # increase detritus pool
+    seafloor_values$detritus_pool[id_bg_growth] <-
+      seafloor_values$detritus_pool[id_bg_growth] + growth_temp$detritus
 
   }
 
@@ -95,13 +95,14 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     seafloor_values$ag_biomass[id_ag_growth] <-
       seafloor_values$ag_biomass[id_ag_growth] + growth_temp$biomass
 
+    # remove nutrients used for growth from water column
+    seafloor_values$nutrients_pool[id_ag_growth] <-
+      seafloor_values$nutrients_pool[id_ag_growth] - growth_temp$nutrients
+
     # increase detritus pool
     seafloor_values$detritus_pool[id_ag_growth] <-
       seafloor_values$detritus_pool[id_ag_growth] + growth_temp$detritus
 
-    # remove nutrients used for growth from water column
-    seafloor_values$nutrients_pool[id_ag_growth] <-
-      seafloor_values$nutrients_pool[id_ag_growth] - growth_temp$nutrients
   }
 
   # check if reef cells are available
@@ -110,9 +111,9 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     # set reef values to old values
     seafloor_values$ag_biomass[cells_reef] <- reef_ag
     seafloor_values$bg_biomass[cells_reef] <- reef_bg
+    seafloor_values$nutrients_pool[cells_reef] <- reef_nutr
     seafloor_values$detritus_pool[cells_reef] <- reef_detritus
     seafloor_values$detritus_dead[cells_reef] <- reef_dead
-    seafloor_values$nutrients_pool[cells_reef] <- reef_nutr
 
   }
 

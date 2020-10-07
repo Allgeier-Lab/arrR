@@ -19,7 +19,7 @@ simulate_diffusion <- function(seafloor_values, cell_adj, parameters) {
 
   seafloor_values <- rcpp_diffuse_values(seafloor_values = as.matrix(seafloor_values),
                                          cell_adj = cell_adj,
-                                         wc_diffusion = parameters$wc_diffusion,
+                                         nutrients_diffusion = parameters$nutrients_diffusion,
                                          detritus_diffusion = parameters$detritus_diffusion,
                                          detritus_dead_diffusion = parameters$detritus_dead_diffusion)
 

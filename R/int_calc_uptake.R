@@ -2,7 +2,7 @@
 #'
 #' @description Internal function
 #'
-#' @param nutrients Vector with amount of wc nutrients.
+#' @param nutrients Vector with amount of nutrients.
 #' @param biomass Vector with biomass.
 #' @param v_max Numeric with maximum uptake rate.
 #' @param k_m Numeric with half-saturation rate.

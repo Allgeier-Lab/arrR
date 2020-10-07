@@ -43,5 +43,5 @@ int_seagrass_growth <- function(nutrients, gamma, detritus_ratio, detritus_decom
   # remove decomposed detritus nutrients
   detritus <- (detritus * gamma) - decomposition
 
-  return(list(biomass = biomass, detritus = detritus, nutrients = nutrients))
+  return(list(biomass = biomass, nutrients = nutrients, detritus = detritus))
 }

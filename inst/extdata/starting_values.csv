@@ -2,6 +2,6 @@
 "ag_biomass";200
 "bg_biomass";550
 "nutrients_pool";0.25
-"detritus_pool";0.1
+"detritus_pool";0.85
 "pop_n";25
 "water_temp";26

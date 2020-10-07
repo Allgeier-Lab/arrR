@@ -7,7 +7,7 @@ using namespace Rcpp;
 //'
 //' @param seafloor_values Matrix with seafloor values.
 //' @param cell_adj Matrix with cell adjacencies.
-//' @param wc_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
+//' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 //'
 //' @details
 //' \code{Rcpp} implementation of to diffuse nutrients.
@@ -20,7 +20,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
                                         Rcpp::NumericMatrix cell_adj,
-                                        double wc_diffusion,
+                                        double nutrients_diffusion,
                                         double detritus_diffusion,
                                         double detritus_dead_diffusion) {
 
@@ -36,9 +36,9 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
   // get all seafloor values
   for(int i = 0; i < n_row_sea; i++) {
 
-    nutrients(i) = (seafloor_values(i, 6) * wc_diffusion) / 8;
-    detritus(i) = (seafloor_values(i, 4) * detritus_diffusion) / 8;
-    detritus_dead(i) = (seafloor_values(i, 5) * detritus_dead_diffusion) / 8;
+    nutrients(i) = (seafloor_values(i, 4) * nutrients_diffusion) / 8;
+    detritus(i) = (seafloor_values(i, 5) * detritus_diffusion) / 8;
+    detritus_dead(i) = (seafloor_values(i, 6) * detritus_dead_diffusion) / 8;
 
   }
 
@@ -49,14 +49,14 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
     int neighbor = cell_adj(j, 1) - 1;
 
     // add values of focal cell to neighbor cell
-    seafloor_values(neighbor, 6) += nutrients(focal);
-    seafloor_values(neighbor, 4) += detritus(focal);
-    seafloor_values(neighbor, 5) += detritus_dead(focal);
+    seafloor_values(neighbor, 4) += nutrients(focal);
+    seafloor_values(neighbor, 5) += detritus(focal);
+    seafloor_values(neighbor, 6) += detritus_dead(focal);
 
     // remove value from focal cell
-    seafloor_values(focal, 6) -= nutrients(focal);
-    seafloor_values(focal, 4) -= detritus(focal);
-    seafloor_values(focal, 5) -= detritus_dead(focal);
+    seafloor_values(focal, 4) -= nutrients(focal);
+    seafloor_values(focal, 5) -= detritus(focal);
+    seafloor_values(focal, 6) -= detritus_dead(focal);
 
   }
 
@@ -67,7 +67,7 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
 /*** R
 rcpp_diffuse_values(seafloor_values = as.matrix(seafloor_values),
                     cell_adj = cell_adj,
-                    wc_diffusion = parameters$wc_diffusion,
+                    nutrients_diffusion = parameters$nutrients_diffusion,
                     detritus_diffusion = parameters$detritus_diffusion,
                     detritus_dead_diffusion = parameters$detritus_dead_diffusion)
 */

@@ -38,11 +38,11 @@ simulate_growth <- function(fish_population, fish_population_track,
   cell_id <- raster::cellFromXY(object = seafloor,
                                 xy = fish_population[, c("x", "y")])
 
+  nutrients_pool <- seafloor_values$nutrients_pool[cell_id]
+
   detritus_pool <- seafloor_values$detritus_pool[cell_id]
 
   detritus_dead <- seafloor_values$detritus_dead[cell_id]
-
-  nutrients_pool <- seafloor_values$nutrients_pool[cell_id]
 
   # sample random ordering of individuals
   id <- sample(x = fish_population$id, size = n_pop)
@@ -136,11 +136,11 @@ simulate_growth <- function(fish_population, fish_population_track,
   }
 
   # update values
+  seafloor_values$nutrients_pool[cell_id] <- nutrients_pool
+
   seafloor_values$detritus_pool[cell_id] <- detritus_pool
 
   seafloor_values$detritus_dead[cell_id] <- detritus_dead
-
-  seafloor_values$nutrients_pool[cell_id] <- nutrients_pool
 
   return(list(seafloor = seafloor_values, fish_population = fish_population))
 }

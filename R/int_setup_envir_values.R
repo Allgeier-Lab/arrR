@@ -25,20 +25,24 @@ int_setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
 
   # create RasterLayer
   ag_biomass <- raster::setValues(x = seafloor, values = ag_biomass)
+
   bg_biomass <- raster::setValues(x = seafloor, values = bg_biomass)
-  detritus_pool <- raster::setValues(x = seafloor, values = detritus_pool)
-  detritus_dead <- raster::setValues(x = seafloor, values = 0)
+
   nutrients_pool <- raster::setValues(x = seafloor, values = nutrients_pool)
+
+  detritus_pool <- raster::setValues(x = seafloor, values = detritus_pool)
+
+  detritus_dead <- raster::setValues(x = seafloor, values = 0)
 
   # combine to one RasterBrick
   seafloor <- raster::brick(ag_biomass, bg_biomass,
-                            detritus_pool, detritus_dead,
-                            nutrients_pool)
+                            nutrients_pool,
+                            detritus_pool, detritus_dead)
 
   # set names
   names(seafloor) <- c("ag_biomass", "bg_biomass",
-                       "detritus_pool", "detritus_dead",
-                       "nutrients_pool")
+                       "nutrients_pool",
+                       "detritus_pool", "detritus_dead")
 
   return(seafloor)
 }
