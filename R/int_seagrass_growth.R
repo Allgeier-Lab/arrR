@@ -26,22 +26,22 @@
 int_seagrass_growth <- function(nutrients, gamma, detritus_ratio, detritus_decomposition) {
 
   # convert nutrient uptake to biomass growth
-  biomass <- nutrients / gamma
+  biomass <- nutrients / gamma # (gamma ^ -1)
 
-  # calculate detritus
+  # calculate detritus biomass
   detritus <- biomass * detritus_ratio
 
-  # remove blade slough from growth biomass
+  # remove blade slough biomass from growth biomass
   biomass <- biomass - detritus
 
-  # calculate amount of detritus that goes directly into nutrient pool again
-  decomposition <- detritus * detritus_decomposition
+  # calculate detritus nutrients that go directly into nutrient pool again
+  decomposition <- (detritus * gamma) * detritus_decomposition
 
   # calculate decomposition of detritus into nutrients pool
-  nutrients <- nutrients - (decomposition * gamma)
+  nutrients <- nutrients - decomposition
 
-  # remove decomposed detritus
-  detritus <- detritus - decomposition
+  # remove decomposed detritus nutrients
+  detritus <- (detritus * gamma) - decomposition
 
   return(list(biomass = biomass, detritus = detritus, nutrients = nutrients))
 }
