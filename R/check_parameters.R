@@ -31,6 +31,7 @@ check_parameters <- function(starting_values, parameters) {
   required_starting <- c("ag_biomass",
                          "bg_biomass",
                          "nutrients_pool",
+                         "detritus_pool",
                          "pop_n",
                          "water_temp")
 
