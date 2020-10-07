@@ -8,6 +8,7 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param return_mean If TRUE, only the mean of each timestep will be returned.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
@@ -32,7 +33,7 @@
 run_simulation <- function(seafloor, fish_population,
                            parameters, reef_attraction,
                            max_i, min_per_i,
-                           verbose = TRUE) {
+                           verbose = TRUE, return_mean = TRUE) {
 
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = max_i + 1)
@@ -42,10 +43,30 @@ run_simulation <- function(seafloor, fish_population,
   # convert seafloor as data.frame
   seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
 
-  # add starting conditions to track lists
-  seafloor_track[[1]] <- seafloor_values
 
-  fish_population_track[[1]] <- fish_population
+  # add starting conditions to track lists
+  if (return_mean) {
+
+    seafloor_track[[1]] <- c(ag_biomass = mean(seafloor_values$ag_biomass),
+                             bg_biomass = mean(seafloor_values$bg_biomass),
+                             nutrients_pool = mean(seafloor_values$nutrients_pool),
+                             detritus_pool = mean(seafloor_values$detritus_pool),
+                             detritus_dead = mean(seafloor_values$detritus_dead))
+
+    fish_population_track[[1]] <- c(length = mean(fish_population$length),
+                                    weight = mean(fish_population$weight),
+                                    reserves = mean(fish_population$reserves),
+                                    reserves_max = mean(fish_population$reserves_max),
+                                    died_consumption = mean(fish_population$died_consumption),
+                                    died_background = mean(fish_population$died_background))
+
+  } else {
+
+    seafloor_track[[1]] <- seafloor_values
+
+    fish_population_track[[1]] <- fish_population
+
+  }
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -165,8 +186,28 @@ run_simulation <- function(seafloor, fish_population,
     # }
 
     # update tracking data.frames
-    seafloor_track[[i + 1]] <- seafloor_values
-    fish_population_track[[i + 1]] <- fish_population
+    if (return_mean) {
+
+      seafloor_track[[i + 1]] <- c(ag_biomass = mean(seafloor_values$ag_biomass),
+                                   bg_biomass = mean(seafloor_values$bg_biomass),
+                                   nutrients_pool = mean(seafloor_values$nutrients_pool),
+                                   detritus_pool = mean(seafloor_values$detritus_pool),
+                                   detritus_dead = mean(seafloor_values$detritus_dead))
+
+      fish_population_track[[i + 1]] <- c(length = mean(fish_population$length),
+                                          weight = mean(fish_population$weight),
+                                          reserves = mean(fish_population$reserves),
+                                          reserves_max = mean(fish_population$reserves_max),
+                                          died_consumption = mean(fish_population$died_consumption),
+                                          died_background = mean(fish_population$died_background))
+
+    } else {
+
+      seafloor_track[[i + 1]] <- seafloor_values
+
+      fish_population_track[[i + 1]] <- fish_population
+
+    }
 
   }
 
@@ -183,14 +224,28 @@ run_simulation <- function(seafloor, fish_population,
   fish_population_track <- do.call(what = "rbind", args = fish_population_track)
 
   # Add timestep tracker
-  seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
+  if (return_mean) {
 
-  fish_population_track$timestep <- rep(x = 0:max_i, each = n_pop)
+    seafloor_track <- as.data.frame(seafloor_track)
+
+    fish_population_track <- as.data.frame(fish_population_track)
+
+    seafloor_track$timestep <- seq(from = 0, to = max_i, by = 1)
+
+    fish_population_track$timestep <- seq(from = 0, to = max_i, by = 1)
+
+  } else {
+
+    seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
+
+    fish_population_track$timestep <- rep(x = 0:max_i, each = n_pop)
+
+  }
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
                  max_i = max_i, min_per_i = min_per_i,
-                 extent = extent, grain = raster::res(seafloor))
+                 extent = extent, grain = raster::res(seafloor), return_mean = return_mean)
 
   # set class of result
   class(result) <- "mdl_rn"

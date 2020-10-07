@@ -8,7 +8,7 @@
 int_calc_uptake(nutrients, biomass, v_max, k_m)
 }
 \arguments{
-\item{nutrients}{Vector with amount of wc nutrients.}
+\item{nutrients}{Vector with amount of nutrients.}
 
 \item{biomass}{Vector with biomass.}
 

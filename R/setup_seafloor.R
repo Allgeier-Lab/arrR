@@ -6,7 +6,6 @@
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
 #' @param reefs 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
-#' @param parameters List with all model parameters.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
@@ -29,14 +28,13 @@
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
 #' input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
-#' reefs = NULL, starting_values = starting_values, parameters = parameters)
+#' reefs = NULL, starting_values = starting_values)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(extent, grain, reefs = NULL,
-                           starting_values, parameters,
+setup_seafloor <- function(extent, grain, reefs = NULL, starting_values,
                            verbose = TRUE, ...) {
 
   # print progress

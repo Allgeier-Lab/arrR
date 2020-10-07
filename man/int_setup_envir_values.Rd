@@ -8,16 +8,16 @@ int_setup_envir_values(
   seafloor,
   ag_biomass,
   bg_biomass,
-  wc_nutrients,
-  detritus_ratio
+  nutrients_pool,
+  detritus_pool
 )
 }
 \arguments{
 \item{seafloor}{Raster* object.}
 
-\item{ag_biomass, bg_biomass, wc_nutrients}{Numeric with starting values.}
+\item{ag_biomass, bg_biomass, nutrients_pool}{Numeric with starting values.}
 
-\item{detritus_ratio}{Numeric with parameter for detritus fraction.}
+\item{detritus_pool}{Numeric with parameter for detritus fraction.}
 }
 \value{
 vector

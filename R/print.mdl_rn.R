@@ -30,10 +30,21 @@ print.mdl_rn <- function(x, digits = 4, ...) {
 
   # get seafloor values of last timestep
   seafloor_values <- subset(x$seafloor, timestep == max_i,
-                            select = c(ag_biomass, bg_biomass,
-                                       detritus_pool, detritus_dead, nutrients_pool))
+                            select = c(ag_biomass, bg_biomass, nutrients_pool,
+                                       detritus_pool, detritus_dead))
 
-  # calculate min, median, max values
+  # if return_mean = TRUE, no min or max can be calculated
+  if (x$return_mean) {
+
+    min_seafloor <- NA
+
+    mean_seafloor <- round(seafloor_values, digits = digits)
+
+    max_seafloor <- NA
+
+  # calculate min, mean, max
+  } else {
+
   min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = min),
                         digits = digits)
 
@@ -42,6 +53,8 @@ print.mdl_rn <- function(x, digits = 4, ...) {
 
   max_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = max),
                         digits = digits)
+
+  }
 
   # get fish population values of last timestep
   fish_population_values <- subset(x$fish_population, timestep == max_i,
@@ -56,27 +69,41 @@ print.mdl_rn <- function(x, digits = 4, ...) {
     mean_fish_population <- NA
 
     max_fish_population <- NA
+
   }
 
   # fish population present
   else {
 
-    # calculate min, median, max values
-    min_fish_population <- round(apply(X = fish_population_values,
-                                       MARGIN = 2, FUN = min), digits = digits)
+    # if return_mean = TRUE, no min or max can be calculated
+    if (x$return_mean) {
 
-    mean_fish_population <- round(apply(X = fish_population_values,
-                                        MARGIN = 2, FUN = mean), digits = digits)
+      min_fish_population <- NA
 
-    max_fish_population <- round(apply(X = fish_population_values,
-                                       MARGIN = 2, FUN = max), digits = digits)
+      mean_fish_population <- round(fish_population_values, digits = digits)
 
+      max_fish_population <- NA
+
+    # calculate min, mean, max
+    } else {
+
+      # calculate min, median, max values
+      min_fish_population <- round(apply(X = fish_population_values,
+                                         MARGIN = 2, FUN = min), digits = digits)
+
+      mean_fish_population <- round(apply(X = fish_population_values,
+                                          MARGIN = 2, FUN = mean), digits = digits)
+
+      max_fish_population <- round(apply(X = fish_population_values,
+                                         MARGIN = 2, FUN = max), digits = digits)
+
+    }
   }
 
   # print result
   cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",
              "\n",
-             "Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, nutrients_pool)\n",
+             "Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
              "Minimum: ", paste0(min_seafloor, collapse = ", "), "\n",
              "Mean: ", paste0(mean_seafloor, collapse = ", "), "\n",
              "Maximum: ", paste0(max_seafloor, collapse = ", "), "\n",
