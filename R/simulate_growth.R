@@ -42,7 +42,7 @@ simulate_growth <- function(fish_population, fish_population_track,
 
   detritus_dead <- seafloor_values$detritus_dead[cell_id]
 
-  wc_nutrients <- seafloor_values$wc_nutrients[cell_id]
+  nutrients_pool <- seafloor_values$nutrients_pool[cell_id]
 
   # sample random ordering of individuals
   id <- sample(x = fish_population$id, size = n_pop)
@@ -131,7 +131,7 @@ simulate_growth <- function(fish_population, fish_population_track,
     }
 
     # add non-used consumption to nutrient pool
-    wc_nutrients[i] <- wc_nutrients[i] +
+    nutrients_pool[i] <- nutrients_pool[i] +
       (fish_population$consumption_req[i] - fish_population$growth_nutrient[i])
   }
 
@@ -140,7 +140,7 @@ simulate_growth <- function(fish_population, fish_population_track,
 
   seafloor_values$detritus_dead[cell_id] <- detritus_dead
 
-  seafloor_values$wc_nutrients[cell_id] <- wc_nutrients
+  seafloor_values$nutrients_pool[cell_id] <- nutrients_pool
 
   return(list(seafloor = seafloor_values, fish_population = fish_population))
 }

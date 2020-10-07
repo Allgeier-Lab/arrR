@@ -26,22 +26,22 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     reef_bg <- seafloor_values$bg_biomass[cells_reef]
     reef_detritus <- seafloor_values$detritus_pool[cells_reef]
     reef_dead <- seafloor_values$detritus_dead[cells_reef]
-    reef_nutr <- seafloor_values$wc_nutrients[cells_reef]
+    reef_nutr <- seafloor_values$nutrients_pool[cells_reef]
 
   }
 
   # convert water column nutrients to umol/l
-  wc_nutrients_umol <- int_convert_nutr(seafloor_values$wc_nutrients,
+  nutrients_pool_umol <- int_convert_nutr(seafloor_values$nutrients_pool,
                                         to = "umol") / 10000
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)
-  uptake_bg_umol <- int_calc_uptake(nutrients = wc_nutrients_umol,
+  uptake_bg_umol <- int_calc_uptake(nutrients = nutrients_pool_umol,
                                     biomass = seafloor_values$bg_biomass,
                                     v_max = parameters$bg_v_max / 60 * min_per_i, # * 24
                                     k_m = parameters$bg_k_m)
 
-  uptake_ag_umol <- int_calc_uptake(nutrients = wc_nutrients_umol,
+  uptake_ag_umol <- int_calc_uptake(nutrients = nutrients_pool_umol,
                                     biomass = seafloor_values$ag_biomass,
                                     v_max = parameters$ag_v_max / 60 * min_per_i, # * 24
                                     k_m = parameters$ag_k_m)
@@ -50,8 +50,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   uptake_total_g <- int_convert_nutr(x = uptake_bg_umol + uptake_ag_umol, to = "g")
 
   # check if total uptake exceeds total available nutrients
-  uptake_total_g <- ifelse(test = uptake_total_g > seafloor_values$wc_nutrients,
-                           yes = seafloor_values$wc_nutrients, no = uptake_total_g)
+  uptake_total_g <- ifelse(test = uptake_total_g > seafloor_values$nutrients_pool,
+                           yes = seafloor_values$nutrients_pool, no = uptake_total_g)
 
   # get cell ids cells in which bg or ag growth
   id_bg_growth <- which(seafloor_values$bg_biomass < parameters$bg_biomass_max)
@@ -77,8 +77,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
       seafloor_values$detritus_pool[id_bg_growth] + growth_temp$detritus
 
     # remove nutrients used for growth from water column
-    seafloor_values$wc_nutrients[id_bg_growth] <-
-      seafloor_values$wc_nutrients[id_bg_growth] - growth_temp$nutrients
+    seafloor_values$nutrients_pool[id_bg_growth] <-
+      seafloor_values$nutrients_pool[id_bg_growth] - growth_temp$nutrients
 
   }
 
@@ -100,8 +100,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
       seafloor_values$detritus_pool[id_ag_growth] + growth_temp$detritus
 
     # remove nutrients used for growth from water column
-    seafloor_values$wc_nutrients[id_ag_growth] <-
-      seafloor_values$wc_nutrients[id_ag_growth] - growth_temp$nutrients
+    seafloor_values$nutrients_pool[id_ag_growth] <-
+      seafloor_values$nutrients_pool[id_ag_growth] - growth_temp$nutrients
   }
 
   # check if reef cells are available
@@ -112,7 +112,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     seafloor_values$bg_biomass[cells_reef] <- reef_bg
     seafloor_values$detritus_pool[cells_reef] <- reef_detritus
     seafloor_values$detritus_dead[cells_reef] <- reef_dead
-    seafloor_values$wc_nutrients[cells_reef] <- reef_nutr
+    seafloor_values$nutrients_pool[cells_reef] <- reef_nutr
 
   }
 

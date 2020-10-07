@@ -50,7 +50,7 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
     # use continuous scale
   } else if (fill %in% c("ag_biomass", "bg_biomass", "detritus_pool",
-                         "detritus_dead", "wc_nutrients")) {
+                         "detritus_dead", "nutrients_pool")) {
 
     # reclassify AR as NA for better plotting
     seafloor[seafloor$reef == 1, fill] <- NA

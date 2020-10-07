@@ -1,6 +1,6 @@
 "parameter";"value"
 "ag_biomass";200
 "bg_biomass";550
-"wc_nutrients";0.25
+"nutrients_pool";0.25
 "pop_n";25
 "water_temp";26

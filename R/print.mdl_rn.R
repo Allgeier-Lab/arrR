@@ -31,7 +31,7 @@ print.mdl_rn <- function(x, digits = 4, ...) {
   # get seafloor values of last timestep
   seafloor_values <- subset(x$seafloor, timestep == max_i,
                             select = c(ag_biomass, bg_biomass,
-                                       detritus_pool, detritus_dead, wc_nutrients))
+                                       detritus_pool, detritus_dead, nutrients_pool))
 
   # calculate min, median, max values
   min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = min),
@@ -76,7 +76,7 @@ print.mdl_rn <- function(x, digits = 4, ...) {
   # print result
   cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",
              "\n",
-             "Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)\n",
+             "Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, nutrients_pool)\n",
              "Minimum: ", paste0(min_seafloor, collapse = ", "), "\n",
              "Mean: ", paste0(mean_seafloor, collapse = ", "), "\n",
              "Maximum: ", paste0(max_seafloor, collapse = ", "), "\n",

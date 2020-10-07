@@ -60,7 +60,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
   seafloor <- int_setup_envir_values(seafloor = seafloor,
                                      ag_biomass = starting_values$ag_biomass,
                                      bg_biomass = starting_values$bg_biomass,
-                                     wc_nutrients = starting_values$wc_nutrients,
+                                     nutrients_pool = starting_values$nutrients_pool,
                                      detritus_ratio = parameters$detritus_ratio)
 
   # AR coords provided

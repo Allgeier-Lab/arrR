@@ -22,7 +22,7 @@ globalVariables(names = c(
   "parameters",
   "reef",
   "timestep",
-  "wc_nutrients",
+  "nutrients_pool",
   "weight",
   "x",
   "y"))
