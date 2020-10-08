@@ -72,6 +72,21 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     seafloor_values$bg_biomass[id_bg_growth] <-
       seafloor_values$bg_biomass[id_bg_growth] + growth_temp$biomass
 
+    # check which bg is above bg_max
+    extra_bg <- which(seafloor_values$bg_biomass > parameters$bg_biomass_max)
+
+    # reallocate nutrients to above ground
+    if (length(extra_bg) > 0) {
+
+      # add difference to ag
+      seafloor_values$ag_biomass[extra_bg] <- seafloor_values$ag_biomass[extra_bg] +
+        (seafloor_values$bg_biomass[extra_bg] - parameters$bg_biomass_max)
+
+      # set bg to bg max
+      seafloor_values$bg_biomass[extra_bg] <-  parameters$bg_biomass_max
+
+    }
+
     # remove nutrients used for growth from water column
     seafloor_values$nutrients_pool[id_bg_growth] <-
       seafloor_values$nutrients_pool[id_bg_growth] - growth_temp$nutrients
@@ -102,6 +117,21 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     # increase detritus pool
     seafloor_values$detritus_pool[id_ag_growth] <-
       seafloor_values$detritus_pool[id_ag_growth] + growth_temp$detritus
+
+  }
+
+  # check which ag is above bg_max
+  extra_ag <- which(seafloor_values$ag_biomass > parameters$ag_biomass_max)
+
+  # set ag to ag max and release nutrients to detritius pool
+  if (length(extra_ag) > 0) {
+
+    # add difference to detritius pool 0.0144
+    seafloor_values$detritus_pool[extra_ag] <- seafloor_values$detritus_pool[extra_ag] +
+        ((seafloor_values$ag_biomass[extra_ag] - parameters$ag_biomass_max) * 0.0144)
+
+    # set bg to bg max
+    seafloor_values$bg_biomass[extra_ag] <- parameters$bg_biomass_max
 
   }
 
