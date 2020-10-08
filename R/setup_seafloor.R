@@ -6,6 +6,8 @@
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
 #' @param reefs 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
+#' @param random Numeric with fraction by which starting values vary,
+#' i.e. 0 = 0% variation; 1 = 100% variation.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
@@ -34,7 +36,7 @@
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(extent, grain, reefs = NULL, starting_values,
+setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress
@@ -59,7 +61,8 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values,
                                      ag_biomass = starting_values$ag_biomass,
                                      bg_biomass = starting_values$bg_biomass,
                                      nutrients_pool = starting_values$nutrients_pool,
-                                     detritus_pool = starting_values$detritus_pool)
+                                     detritus_pool = starting_values$detritus_pool,
+                                     random = random)
 
   # AR coords provided
   if (!is.null(reefs)) {
