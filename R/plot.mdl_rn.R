@@ -29,9 +29,9 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
   # no plotting if return_mean = TRUE
   # MH: We could plot mean over time in this case
-  if (x$return_mean) {
+  if (!is.null(use_summary)) {
 
-    stop("Plotting only available if model was run with 'return_mean = FALSE'.", call. = FALSE)
+    stop("Plotting only available if model was run with 'use_summary = NULL'.", call. = FALSE)
 
   }
 

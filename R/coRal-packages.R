@@ -19,10 +19,11 @@ globalVariables(names = c(
   "i",
   "id",
   "layer",
+  "nutrients_pool",
   "parameters",
   "reef",
   "timestep",
-  "nutrients_pool",
+  "use_summary",
   "weight",
   "x",
   "y"))

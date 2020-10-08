@@ -12,7 +12,7 @@ run_simulation(
   max_i,
   min_per_i,
   verbose = TRUE,
-  return_mean = TRUE
+  use_summary = "mean"
 )
 }
 \arguments{
@@ -30,7 +30,8 @@ run_simulation(
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
-\item{return_mean}{If TRUE, only the mean of each timestep will be returned.}
+\item{use_summary}{String specifying which  summary function to use. Set to NULL to
+return full data.frames.}
 }
 \value{
 data.frame

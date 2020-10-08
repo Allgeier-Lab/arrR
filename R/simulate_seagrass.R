@@ -131,7 +131,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
         ((seafloor_values$ag_biomass[extra_ag] - parameters$ag_biomass_max) * 0.0144)
 
     # set bg to bg max
-    seafloor_values$bg_biomass[extra_ag] <- parameters$bg_biomass_max
+    seafloor_values$ag_biomass[extra_ag] <- parameters$ag_biomass_max
 
   }
 
