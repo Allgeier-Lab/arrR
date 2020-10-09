@@ -5,8 +5,7 @@
 #' @param seafloor Raster* object.
 #' @param ag_biomass,bg_biomass,nutrients_pool Numeric with starting values.
 #' @param detritus_pool Numeric with parameter for detritus fraction.
-#' @param random Numeric with fraction by which starting values vary,
-#' i.e. 0 = 0% variation; 1 = 100% variation
+#' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #'
 #' @details
 #' Internal function to set biomass cell values of non-ARs cells.
@@ -22,9 +21,7 @@
 int_setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
                                    nutrients_pool, detritus_pool, random) {
 
-  # # calculate detritus nutrients (mean %N dry of Layman et al. 2016)
-  # detritus_pool <- (ag_biomass * 0.0144 + bg_biomass * 0.0082) * detritus_ratio
-
+  # get number of cells
   n_cells <- raster::ncell(seafloor)
 
   # create RasterLayer

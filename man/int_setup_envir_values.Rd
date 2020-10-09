@@ -9,7 +9,8 @@ int_setup_envir_values(
   ag_biomass,
   bg_biomass,
   nutrients_pool,
-  detritus_pool
+  detritus_pool,
+  random
 )
 }
 \arguments{
@@ -18,6 +19,8 @@ int_setup_envir_values(
 \item{ag_biomass, bg_biomass, nutrients_pool}{Numeric with starting values.}
 
 \item{detritus_pool}{Numeric with parameter for detritus fraction.}
+
+\item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
 }
 \value{
 vector

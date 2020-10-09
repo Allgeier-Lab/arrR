@@ -9,6 +9,7 @@ setup_seafloor(
   grain,
   reefs = NULL,
   starting_values,
+  random = 0,
   verbose = TRUE,
   ...
 )
@@ -21,6 +22,8 @@ setup_seafloor(
 \item{reefs}{2-Column matrix with coordinates of artificial reefs.}
 
 \item{starting_values}{List with all starting value parameters.}
+
+\item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
