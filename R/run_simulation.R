@@ -41,6 +41,13 @@ run_simulation <- function(seafloor, fish_population,
 
   fish_population_track <- vector(mode = "list", length = max_i + 1)
 
+  # get summary function
+  if (!is.null(use_summary)) {
+
+    foo <- get(use_summary, mode = "function")
+
+  }
+
   # convert seafloor as data.frame
   seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
 
@@ -61,41 +68,13 @@ run_simulation <- function(seafloor, fish_population,
   # get number of individiuals
   n_pop <- nrow(fish_population)
 
-  # add starting conditions to track lists
-  if (!is.null(use_summary)) {
-
-    foo <- get(use_summary, mode = "function")
-
-    seafloor_track[[1]] <- c(ag_biomass = foo(seafloor_values$ag_biomass),
-                             bg_biomass = foo(seafloor_values$bg_biomass),
-                             nutrients_pool = foo(seafloor_values$nutrients_pool),
-                             detritus_pool = foo(seafloor_values$detritus_pool),
-                             detritus_dead = foo(seafloor_values$detritus_dead))
-
-    if (n_pop > 0) {
-
-    fish_population_track[[1]] <- c(length = foo(fish_population$length),
-                                    weight = foo(fish_population$weight),
-                                    reserves = foo(fish_population$reserves),
-                                    reserves_max = foo(fish_population$reserves_max),
-                                    died_consumption = foo(fish_population$died_consumption),
-                                    died_background = foo(fish_population$died_background))
-    } else {
-
-      fish_population_track[[1]] <- fish_population
-
-    }
-
-  } else {
-
-    seafloor_track[[1]] <- seafloor_values
-
-    fish_population_track[[1]] <- fish_population
-
-  }
-
   # # init counter for days
   # counter_day <- 0
+
+  # save input_data as first list element
+  seafloor_track[[1]] <- seafloor_values
+
+  fish_population_track[[1]] <- fish_population
 
   # print some basic information about model run
   if (verbose) {
@@ -197,21 +176,15 @@ run_simulation <- function(seafloor, fish_population,
     # update tracking data.frames
     if (!is.null(use_summary)) {
 
-      seafloor_track[[i + 1]] <- c(ag_biomass = foo(seafloor_values$ag_biomass),
-                                   bg_biomass = foo(seafloor_values$bg_biomass),
-                                   nutrients_pool = foo(seafloor_values$nutrients_pool),
-                                   detritus_pool = foo(seafloor_values$detritus_pool),
-                                   detritus_dead = foo(seafloor_values$detritus_dead))
+      seafloor_track[[i + 1]] <- int_calc_foo(x = seafloor_values, foo = foo,
+                                              what = "seafloor")
 
       # check if fish_population is present
       if (n_pop > 0) {
 
-        fish_population_track[[i + 1]] <- c(length = foo(fish_population$length),
-                                            weight = foo(fish_population$weight),
-                                            reserves = foo(fish_population$reserves),
-                                            reserves_max = foo(fish_population$reserves_max),
-                                            died_consumption = foo(fish_population$died_consumption),
-                                            died_background = foo(fish_population$died_background))
+        fish_population_track[[i + 1]] <- int_calc_foo(x = fish_population, foo = foo,
+                                                       what = "fish_population")
+
       } else {
 
         fish_population_track[[i + 1]] <- fish_population
@@ -234,18 +207,28 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-  # Combine to one data.frame
-  seafloor_track <- do.call(what = "rbind", args = seafloor_track)
-
-  fish_population_track <- do.call(what = "rbind", args = fish_population_track)
-
   # Add timestep tracker
   if (!is.null(use_summary)) {
 
+    # get foo of first list entry
+    fish_population_track[[1]] <- int_calc_foo(x =  fish_population_track[[1]],
+                                               foo = foo, what = "fish_population")
+
+    # get foo of first list entry
+    seafloor_track[[1]] <- int_calc_foo(x =  seafloor_track[[1]],
+                                        foo = foo, what = "seafloor")
+
+    # Combine to one data.frame
+    seafloor_track <- do.call(what = "rbind", args = seafloor_track)
+
+    fish_population_track <- do.call(what = "rbind", args = fish_population_track)
+
+    # convert to data frame
     seafloor_track <- as.data.frame(seafloor_track)
 
     fish_population_track <- as.data.frame(fish_population_track)
 
+    # add timestep
     seafloor_track$timestep <- seq(from = 0, to = max_i, by = 1)
 
     if (n_pop > 0) {
@@ -253,7 +236,13 @@ run_simulation <- function(seafloor, fish_population,
       fish_population_track$timestep <- seq(from = 0, to = max_i, by = 1)
 
     }
+
   } else {
+
+    # Combine to one data.frame
+    seafloor_track <- do.call(what = "rbind", args = seafloor_track)
+
+    fish_population_track <- do.call(what = "rbind", args = fish_population_track)
 
     seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
 
