@@ -26,24 +26,24 @@ int_setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
 
   # create RasterLayer
   ag_biomass <- raster::setValues(x = seafloor,
-                                  values = runif(n = n_cells,
-                                                 min = ag_biomass * (1 - random),
-                                                 max = ag_biomass * (1 + random)))
+                                  values = stats::runif(n = n_cells,
+                                                        min = ag_biomass * (1 - random),
+                                                        max = ag_biomass * (1 + random)))
 
   bg_biomass <- raster::setValues(x = seafloor,
-                                  values = runif(n = n_cells,
-                                                 min = bg_biomass * (1 - random),
-                                                 max = bg_biomass * (1 + random)))
+                                  values = stats::runif(n = n_cells,
+                                                        min = bg_biomass * (1 - random),
+                                                        max = bg_biomass * (1 + random)))
 
   nutrients_pool <- raster::setValues(x = seafloor,
-                                      values = runif(n = n_cells,
-                                                     min = nutrients_pool * (1 - random),
-                                                     max = nutrients_pool * (1 + random)))
+                                      values = stats::runif(n = n_cells,
+                                                            min = nutrients_pool * (1 - random),
+                                                            max = nutrients_pool * (1 + random)))
 
   detritus_pool <- raster::setValues(x = seafloor,
-                                     values = runif(n = n_cells,
-                                                    min = detritus_pool * (1 - random),
-                                                    max = detritus_pool * (1 + random)))
+                                     values = stats::runif(n = n_cells,
+                                                           min = detritus_pool * (1 - random),
+                                                           max = detritus_pool * (1 + random)))
 
   detritus_dead <- raster::setValues(x = seafloor, values = 0)
 
