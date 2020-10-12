@@ -4,12 +4,10 @@
 \alias{int_calc_monod}
 \title{calc_monod}
 \usage{
-int_calc_monod(nutrients, biomass, v_max, k_m)
+int_calc_monod(nutrients, v_max, k_m)
 }
 \arguments{
 \item{nutrients}{Vector with amount of nutrients.}
-
-\item{biomass}{Vector with biomass.}
 
 \item{v_max}{Numeric with maximum uptake rate.}
 

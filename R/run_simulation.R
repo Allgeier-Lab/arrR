@@ -68,9 +68,6 @@ run_simulation <- function(seafloor, fish_population,
   # get number of individiuals
   n_pop <- nrow(fish_population)
 
-  # # init counter for days
-  # counter_day <- 0
-
   # save input_data as first list element
   seafloor_track[[1]] <- seafloor_values
 
@@ -103,8 +100,12 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
-    # # increase counter by minutes
-    # counter_day <- counter_day + min_per_i
+    # # possibility to break at certain i
+    # if (i == 4000) {
+    #
+    #   print("Set breakpoint here")
+    #
+    # }
 
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
@@ -170,8 +171,6 @@ run_simulation <- function(seafloor, fish_population,
     seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
                                           cell_adj = cell_adj,
                                           parameters = parameters)
-
-    # }
 
     # update tracking data.frames
     # calculate summary stats

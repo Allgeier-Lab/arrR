@@ -34,15 +34,13 @@ int_calc_nutr_uptake <- function(nutrients, bg_biomass, ag_biomass,
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)
-  uptake_bg_umol <- int_calc_monod(nutrients = nutrients_umol,
-                                   biomass = bg_biomass,
-                                   v_max = v_max[1] * time_fac,
-                                   k_m = k_m[1])
+  uptake_bg_umol <- bg_biomass * int_calc_monod(nutrients = nutrients_umol,
+                                                v_max = v_max[1] * time_fac,
+                                                k_m = k_m[1])
 
-  uptake_ag_umol <- int_calc_monod(nutrients = nutrients_umol,
-                                   biomass = ag_biomass,
-                                   v_max = v_max[2] * time_fac,
-                                   k_m = k_m[2])
+  uptake_ag_umol <- ag_biomass * int_calc_monod(nutrients = nutrients_umol,
+                                                v_max = v_max[2] * time_fac,
+                                                k_m = k_m[2])
 
   # sum bg and ag to get total uptake in g
   uptake_total_g <- int_convert_nutr(x = uptake_bg_umol + uptake_ag_umol, to = "g")
