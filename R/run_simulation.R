@@ -211,8 +211,12 @@ run_simulation <- function(seafloor, fish_population,
   if (!is.null(use_summary)) {
 
     # get foo of first list entry
-    fish_population_track[[1]] <- int_calc_foo(x =  fish_population_track[[1]],
-                                               foo = foo, what = "fish_population")
+    if (n_pop > 0) {
+
+      fish_population_track[[1]] <- int_calc_foo(x =  fish_population_track[[1]],
+                                                 foo = foo, what = "fish_population")
+
+    }
 
     # get foo of first list entry
     seafloor_track[[1]] <- int_calc_foo(x =  seafloor_track[[1]],
@@ -235,6 +239,10 @@ run_simulation <- function(seafloor, fish_population,
 
       fish_population_track$timestep <- seq(from = 0, to = max_i, by = 1)
 
+    } else {
+
+      fish_population_track <- cbind(fish_population_track, timestep = numeric(0))
+
     }
 
   } else {
@@ -251,6 +259,7 @@ run_simulation <- function(seafloor, fish_population,
       fish_population_track$timestep <- rep(x = 0:max_i, each = n_pop)
 
     }
+
   }
 
   # combine result to list
