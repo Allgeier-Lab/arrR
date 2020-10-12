@@ -162,7 +162,7 @@ run_simulation <- function(seafloor, fish_population,
                                          cells_reef = cells_reef,
                                          min_per_i = min_per_i)
 
-    # MH: Does this make sense here in terms of scheduling?
+    # redistribute detritus
     seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
                                            parameters = parameters)
 
@@ -174,6 +174,7 @@ run_simulation <- function(seafloor, fish_population,
     # }
 
     # update tracking data.frames
+    # calculate summary stats
     if (!is.null(use_summary)) {
 
       seafloor_track[[i + 1]] <- int_calc_foo(x = seafloor_values, foo = foo,
@@ -185,12 +186,14 @@ run_simulation <- function(seafloor, fish_population,
         fish_population_track[[i + 1]] <- int_calc_foo(x = fish_population, foo = foo,
                                                        what = "fish_population")
 
+      # no fish population is present
       } else {
 
         fish_population_track[[i + 1]] <- fish_population
 
       }
 
+    # save full data.frame
     } else {
 
       seafloor_track[[i + 1]] <- seafloor_values

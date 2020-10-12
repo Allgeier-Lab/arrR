@@ -1,12 +1,12 @@
 #' distribute_detritus
 #'
-#' @description Redistribute dead detritus pool
+#' @description Redistribute detritus pool
 #'
 #' @param seafloor_values Data.frame of seafloor values.
 #' @param parameters List with all model parameters.
 #'
 #' @details
-#' Function to redistribute dead detritus pool to overall detritus pool
+#' Function to redistribute dead detritus pool to overall detritus pool and decomposition.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
@@ -20,12 +20,21 @@
 #' @export
 distribute_detritus <- function(seafloor_values, parameters) {
 
-  # update values
+  # redistribute dead detritus to active detritus
   seafloor_values$detritus_pool <- seafloor_values$detritus_pool +
     (seafloor_values$detritus_dead * parameters$detritus_dead_decomp)
 
   seafloor_values$detritus_dead <- seafloor_values$detritus_dead -
     (seafloor_values$detritus_dead * parameters$detritus_dead_decomp)
+
+  # get detritus amount that goes into nutrients pool
+  decomposition <- seafloor_values$detritus_pool * parameters$detritus_decomposition
+
+  # add to nutrients pool
+  seafloor_values$nutrients_pool <- seafloor_values$nutrients_pool + decomposition
+
+  # remove from detritus pool
+  seafloor_values$detritus_pool <- seafloor_values$detritus_pool - decomposition
 
   return(seafloor_values)
 }

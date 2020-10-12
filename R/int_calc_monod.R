@@ -1,4 +1,4 @@
-#' int_calc_uptake
+#' calc_monod
 #'
 #' @description Internal function
 #'
@@ -20,13 +20,13 @@
 #'
 #' @return Vector
 #'
-#' @aliases int_int_calc_uptake
-#' @rdname int_int_calc_uptake
+#' @aliases int_calc_monod
+#' @rdname int_calc_monod
 #'
 #' @keywords internal
 #'
 #' @export
-int_calc_uptake <- function(nutrients, biomass, v_max, k_m) {
+int_calc_monod <- function(nutrients, biomass, v_max, k_m) {
 
   uptake <- ((v_max * nutrients) / (k_m + nutrients)) * biomass
 

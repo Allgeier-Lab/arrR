@@ -16,10 +16,10 @@ distribute_detritus(seafloor_values, parameters)
 RasterBrick
 }
 \description{
-Redistribute dead detritus pool
+Redistribute detritus pool
 }
 \details{
-Function to redistribute dead detritus pool to overall detritus pool
+Function to redistribute dead detritus pool to overall detritus pool and decomposition.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

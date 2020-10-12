@@ -1,11 +1,10 @@
-#' seagrass_growth
+#' grow_seagrass
 #'
 #' @description Internal function to simulate above ground seagrass
 #'
 #' @param nutrients Add info about parameter.
 #' @param gamma Add info about parameter.
 #' @param detritus_ratio Add info about parameter.
-#' @param detritus_decomposition Add info about parameter.
 #'
 #' @details
 #' Internal function to simulate below ground seagrass processes. This
@@ -17,16 +16,16 @@
 #'
 #' @return RasterBrick
 #'
-#' @aliases int_seagrass_growth
-#' @rdname int_seagrass_growth
+#' @aliases int_grow_seagrass
+#' @rdname int_grow_seagrass
 #'
 #' @keywords internal
 #'
 #' @export
-int_seagrass_growth <- function(nutrients, gamma, detritus_ratio, detritus_decomposition) {
+int_grow_seagrass <- function(nutrients, gamma, detritus_ratio) {
 
   # convert nutrient uptake to biomass growth
-  biomass <- nutrients / gamma # (gamma ^ -1)
+  biomass <- nutrients / gamma
 
   # calculate detritus biomass
   detritus <- biomass * detritus_ratio
@@ -34,14 +33,8 @@ int_seagrass_growth <- function(nutrients, gamma, detritus_ratio, detritus_decom
   # remove blade slough biomass from growth biomass
   biomass <- biomass - detritus
 
-  # calculate detritus nutrients that go directly into nutrient pool again
-  decomposition <- (detritus * gamma) * detritus_decomposition
-
-  # calculate decomposition of detritus into nutrients pool
-  nutrients <- nutrients - decomposition
-
   # remove decomposed detritus nutrients
-  detritus <- (detritus * gamma) - decomposition
+  detritus <- detritus * gamma
 
   return(list(biomass = biomass, nutrients = nutrients, detritus = detritus))
 }
