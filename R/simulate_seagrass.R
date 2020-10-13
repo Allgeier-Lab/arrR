@@ -34,7 +34,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
   }
 
-  # calculate total nutrient uptake
+  # calculate total possible nutrient uptake
   uptake_total_g <- int_calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
                                          bg_biomass = seafloor_values$bg_biomass,
                                          ag_biomass = seafloor_values$ag_biomass,
@@ -42,7 +42,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
                                          k_m = c(parameters$bg_k_m, parameters$ag_k_m),
                                          time_fac = min_per_i / 60)
 
-  # calculate bg growth
+  # calculate bg growth in biomass; reduce growth closer to max biomass
   bg_growth <- (uptake_total_g / 0.0082) *
     ((parameters$bg_biomass_max - seafloor_values$bg_biomass) /
        parameters$bg_biomass_max)
@@ -56,13 +56,14 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   # remove nutrients from uptake
   uptake_total_g <- uptake_total_g - (bg_growth * 0.0082)
 
-  # check which ag should grow
-  id_ag_growth <- which(seafloor_values$bg_biomass >= parameters$bg_biomass_max * 0.5)
+  # check which ag should grow when bg biomass reaches certain level
+  id_ag_growth <- which(seafloor_values$bg_biomass >=
+                          parameters$bg_biomass_max * parameters$bg_biomass_thres)
 
   # above ground growth
   if (length(id_ag_growth) > 0) {
 
-    # calculate ag biomass grow
+    # calculate ag biomass grow; reduce growth closer to max biomass
     ag_growth <- (uptake_total_g[id_ag_growth] / 0.0144) *
       ((parameters$ag_biomass_max - seafloor_values$ag_biomass[id_ag_growth]) /
          parameters$ag_biomass_max)

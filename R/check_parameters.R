@@ -36,13 +36,13 @@ check_parameters <- function(starting_values, parameters) {
                          "water_temp")
 
   # specify all required parameters
-  required_parameters <- c("ag_biomass_thres",
-                           "ag_biomass_max",
+  required_parameters <- c("ag_biomass_max",
                            "ag_v_max",
                            "ag_k_m",
                            "ag_sigmoid_slope",
                            "ag_reduction",
                            "bg_biomass_max",
+                           "bg_biomass_thres",
                            "bg_v_max",
                            "bg_k_m",
                            "bg_sigmoid_slope",
@@ -122,4 +122,14 @@ check_parameters <- function(starting_values, parameters) {
             call. = FALSE)
 
   }
+
+  # check if respiration temp is above max
+  if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) >
+          c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+
+    warning("Starting biomass is larger than maximum biomass.",
+            call. = FALSE)
+
+  }
+
 }

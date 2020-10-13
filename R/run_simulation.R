@@ -65,7 +65,7 @@ run_simulation <- function(seafloor, fish_population,
   # get neighboring cells for each focal cell using torus
   cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
-  # get number of individiuals
+  # get number of individuals
   n_pop <- nrow(fish_population)
 
   # save input_data as first list element

@@ -1,11 +1,11 @@
 "parameter";"value"
-"ag_biomass_thres";450
-"ag_biomass_max";500
+"ag_biomass_max";159.5
 "ag_v_max";8.1
 "ag_k_m";12.6
 "ag_sigmoid_slope";-2.5
 "ag_reduction";1
-"bg_biomass_max";1000
+"bg_biomass_max";746.9
+"bg_biomass_thres";0.5
 "bg_v_max";9.8
 "bg_k_m";178.1
 "bg_sigmoid_slope";-2.5
