@@ -47,7 +47,7 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
     ((parameters$bg_biomass_max - seafloor_values$bg_biomass) /
        parameters$bg_biomass_max)
 
-  # increase bg biomass
+    # increase bg biomass
   seafloor_values$bg_biomass <- seafloor_values$bg_biomass + bg_growth
 
   # remove nutrients used for bg growth from water column
@@ -56,7 +56,6 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   # remove nutrients from uptake
   uptake_total_g <- uptake_total_g - (bg_growth * 0.0082)
 
-  # check which ag should grow when bg biomass reaches certain level
   id_ag_growth <- which(seafloor_values$bg_biomass >=
                           parameters$bg_biomass_max * parameters$bg_biomass_thres)
 
@@ -79,11 +78,15 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   }
 
   # calculate biomass of detritus ratio
-  # MH: If detritus > growth, there will be biomass reduction
-  # MH: At one point detritus == growth -> no change anymore
-  bg_detritus <- seafloor_values$bg_biomass * parameters$detritus_ratio
+  bg_detritus <- (seafloor_values$bg_biomass - parameters$bg_biomass_min) *
+    (parameters$detritus_ratio *
+       ((-parameters$bg_biomass_min + seafloor_values$bg_biomass) /
+          (-parameters$bg_biomass_min + parameters$bg_biomass_max)))
 
-  ag_detritus <- seafloor_values$ag_biomass * parameters$detritus_ratio
+  ag_detritus <- (seafloor_values$ag_biomass - parameters$ag_biomass_min) *
+    (parameters$detritus_ratio *
+       ((-parameters$ag_biomass_min + seafloor_values$ag_biomass) /
+          (-parameters$ag_biomass_min + parameters$ag_biomass_max)))
 
   # remove detritus from biomass
   seafloor_values$bg_biomass <- seafloor_values$bg_biomass - bg_detritus

@@ -37,11 +37,13 @@ check_parameters <- function(starting_values, parameters) {
 
   # specify all required parameters
   required_parameters <- c("ag_biomass_max",
+                           "ag_biomass_min",
                            "ag_v_max",
                            "ag_k_m",
                            "ag_sigmoid_slope",
                            "ag_reduction",
                            "bg_biomass_max",
+                           "bg_biomass_min",
                            "bg_biomass_thres",
                            "bg_v_max",
                            "bg_k_m",
@@ -123,11 +125,29 @@ check_parameters <- function(starting_values, parameters) {
 
   }
 
-  # check if respiration temp is above max
+  # check if biomass starting is above max
   if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) >
           c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
 
     warning("Starting biomass is larger than maximum biomass.",
+            call. = FALSE)
+
+  }
+
+  # check if biomass starting is below min
+  if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) <
+          c(parameters$bg_biomass_min, parameters$ag_biomass_min))) {
+
+    warning("Starting biomass is smaller than minimum biomass.",
+            call. = FALSE)
+
+  }
+
+  # check if biomass starting is below min
+  if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
+          c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+
+    warning("Minimum biomass is larger than maximum biomass.",
             call. = FALSE)
 
   }

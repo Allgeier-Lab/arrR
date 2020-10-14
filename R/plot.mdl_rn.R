@@ -44,7 +44,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = !! ggplot2::sym(fill))) +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::labs(title = paste0("Simulation time: ",
-                                     round(i * x$min_per_i / 60 / 24, 1), " days"))
+                                     round(i * x$min_per_i / 60 / 24, 1), " days"),
+                      subtitle = paste0("Timestep: ", min(seafloor$timestep), " - ", max(seafloor$timestep)))
 
     # fill not available
     } else {
@@ -70,8 +71,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
         ggplot2::scale_fill_manual(values = c("#E9EAF0", "#9B964A"), name = "Cover Type") +
         ggplot2::coord_equal() +
         ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::labs(title = paste0("Timestep: ", i,
-                                     "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+        ggplot2::labs(title = paste0("Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"),
+                      subtitle = paste0("Timestep: ", i))
 
       # use continuous scale
     } else if (fill %in% c("ag_biomass", "bg_biomass", "nutrients_pool",
@@ -87,8 +88,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
                                       na.value = "#9B964A") +
         ggplot2::coord_equal() +
         ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::labs(title = paste0("Timestep: ", i,
-                                     "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+        ggplot2::labs(title = paste0("Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"),
+                      subtitle = paste0("Timestep: ", i))
 
     } else if (fill == "density") {
 
@@ -117,8 +118,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
                                       na.value = "#9B964A", name = "Density") +
         ggplot2::coord_equal() +
         ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::labs(title = paste0("Timestep: ", i,
-                                     "\nSimulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"))
+        ggplot2::labs(title = paste0("Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"),
+                      subtitle = paste0("Timestep: ", i))
 
 
     # check if fill argument makes sense

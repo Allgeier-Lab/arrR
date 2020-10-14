@@ -100,13 +100,6 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
-    # # possibility to break at certain i
-    # if (i == 4000) {
-    #
-    #   print("Set breakpoint here")
-    #
-    # }
-
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
                                          n_pop = n_pop,
