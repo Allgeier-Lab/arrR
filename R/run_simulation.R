@@ -76,7 +76,7 @@ run_simulation <- function(seafloor, fish_population,
   # print some basic information about model run
   if (verbose) {
 
-    message("> Using '", deparse(substitute(parameters)), "' as parameter list")
+    message("> Using '", deparse(substitute(parameters)), "' as parameter list.")
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
@@ -95,7 +95,7 @@ run_simulation <- function(seafloor, fish_population,
 
     if (verbose) {
 
-      message("\r> Progress: ", i, "/", max_i, " simulations runs \t\t\t",
+      message("\r> ...Progress: ", i, "/", max_i, " simulations runs... \t\t\t",
               appendLF = FALSE)
 
     }
@@ -143,12 +143,6 @@ run_simulation <- function(seafloor, fish_population,
     seafloor_values <- mortality_temp$seafloor
 
     fish_population <- mortality_temp$fish_population
-
-    # # run seagrass procedures once a day (60 min * 24 h = 1440 min/day)
-    # if (counter_day == 1440) {
-
-    # # reset counter day
-    # counter_day <- 0
 
     # simulate seagrass growth
     seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
@@ -199,6 +193,8 @@ run_simulation <- function(seafloor, fish_population,
   if (verbose) {
 
     message("")
+
+    message("> ...Saving results...")
 
   }
 
@@ -264,6 +260,15 @@ run_simulation <- function(seafloor, fish_population,
 
   # set class of result
   class(result) <- "mdl_rn"
+
+  # new line after last progress message
+  if (verbose) {
+
+    message("")
+
+    message("> All done.")
+
+  }
 
   return(result)
 }

@@ -25,16 +25,16 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
                                         double detritus_dead_diffusion) {
 
   // get number of rows for cell adj and seafloor
-  int n_row_adj = cell_adj.nrow();
-  int n_row_sea = seafloor_values.nrow();
+  int n_row_cell_adj = cell_adj.nrow();
+  int n_row_seafloor = seafloor_values.nrow();
 
   // create vectors to store seafloor values
-  Rcpp::NumericVector nutrients (n_row_sea);
-  Rcpp::NumericVector detritus (n_row_sea);
-  Rcpp::NumericVector detritus_dead (n_row_sea);
+  Rcpp::NumericVector nutrients (n_row_seafloor);
+  Rcpp::NumericVector detritus (n_row_seafloor);
+  Rcpp::NumericVector detritus_dead (n_row_seafloor);
 
   // get all seafloor values
-  for(int i = 0; i < n_row_sea; i++) {
+  for(int i = 0; i < n_row_seafloor; i++) {
 
     nutrients(i) = (seafloor_values(i, 4) * nutrients_diffusion) / 8;
     detritus(i) = (seafloor_values(i, 5) * detritus_diffusion) / 8;
@@ -42,7 +42,8 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
 
   }
 
-  for (int j = 0; j < n_row_adj; j++) {
+  // add and remove diffused amounts
+  for (int j = 0; j < n_row_cell_adj; j++) {
 
     //  get current focal and neighbor cell; C++ starts at 0
     int focal = cell_adj(j, 0) - 1;
@@ -70,4 +71,7 @@ rcpp_diffuse_values(seafloor_values = as.matrix(seafloor_values),
                     nutrients_diffusion = parameters$nutrients_diffusion,
                     detritus_diffusion = parameters$detritus_diffusion,
                     detritus_dead_diffusion = parameters$detritus_dead_diffusion)
+
 */
+
+

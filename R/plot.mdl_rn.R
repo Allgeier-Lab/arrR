@@ -28,7 +28,6 @@
 plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
   # no plotting if return_mean = TRUE
-  # MH: We could plot mean over time in this case
   if (!is.null(x$use_summary)) {
 
     if (fill %in% c("ag_biomass", "bg_biomass", "nutrients_pool",
@@ -78,8 +77,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
     } else if (fill %in% c("ag_biomass", "bg_biomass", "nutrients_pool",
                            "detritus_pool", "detritus_dead")) {
 
-      # reclassify AR as NA for better plotting
-      seafloor[seafloor$reef == 1, fill] <- NA
+      # # reclassify AR as NA for better plotting
+      # seafloor[seafloor$reef == 1, fill] <- NA
 
       # create plot
       gg_result <- ggplot2::ggplot(data = seafloor) +
