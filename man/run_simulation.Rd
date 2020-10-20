@@ -11,8 +11,8 @@ run_simulation(
   reef_attraction,
   max_i,
   min_per_i,
-  verbose = TRUE,
-  use_summary = NULL
+  save_each = 1,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -28,10 +28,9 @@ run_simulation(
 
 \item{min_per_i}{Integer to specify minutes per i.}
 
-\item{verbose}{If TRUE, progress reports are printed.}
+\item{save_each}{Numeric how often data should be saved to return.}
 
-\item{use_summary}{String specifying which  summary function to use. Set to NULL to
-return full data.frames.}
+\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
 data.frame

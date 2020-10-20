@@ -8,8 +8,7 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
-#' @param use_summary String specifying which  summary function to use. Set to NULL to
-#' return full data.frames.
+#' @param save_each Numeric how often data should be saved to return.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
@@ -33,20 +32,20 @@
 #' @export
 run_simulation <- function(seafloor, fish_population,
                            parameters, reef_attraction,
-                           max_i, min_per_i,
-                           verbose = TRUE, use_summary = NULL) {
+                           max_i, min_per_i, save_each = 1,
+                           verbose = TRUE) {
+
+  # check if max_i can be divided by provided save_each without reminder
+  if (max_i %% save_each != 0) {
+
+    stop("'max_i' cannot be divided by 'save_each' without rest.",
+            call. = FALSE)
+  }
 
   # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = max_i + 1)
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
-  fish_population_track <- vector(mode = "list", length = max_i + 1)
-
-  # get summary function
-  if (!is.null(use_summary)) {
-
-    summary_fun <- get(use_summary, mode = "function")
-
-  }
+  fish_population_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   # convert seafloor as data.frame
   seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
@@ -160,33 +159,11 @@ run_simulation <- function(seafloor, fish_population,
                                           parameters = parameters)
 
     # update tracking data.frames
-    # calculate summary stats
-    if (!is.null(use_summary)) {
+    if (i %% save_each == 0) {
 
-      seafloor_track[[i + 1]] <- calc_summary(x = seafloor_values,
-                                              foo = summary_fun,
-                                              what = "seafloor")
+      seafloor_track[[i / save_each + 1]] <- seafloor_values
 
-      # check if fish_population is present
-      if (n_pop > 0) {
-
-        fish_population_track[[i + 1]] <- calc_summary(x = fish_population,
-                                                       foo = summary_fun,
-                                                       what = "fish_population")
-
-      # no fish population is present
-      } else {
-
-        fish_population_track[[i + 1]] <- fish_population
-
-      }
-
-    # save full data.frame
-    } else {
-
-      seafloor_track[[i + 1]] <- seafloor_values
-
-      fish_population_track[[i + 1]] <- fish_population
+      fish_population_track[[i / save_each + 1]] <- fish_population
 
     }
   }
@@ -200,66 +177,32 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-  # Add timestep tracker
-  if (!is.null(use_summary)) {
+  # combine seafloor to one dataframe
+  seafloor_track <- do.call(what = "rbind", args = seafloor_track)
 
-    # get foo of first list entry
-    if (n_pop > 0) {
+  # add timestep counter
+  seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                 each = raster::ncell(seafloor))
 
-      fish_population_track[[1]] <- calc_summary(x =  fish_population_track[[1]],
-                                                 foo = summary_fun,
-                                                 what = "fish_population")
+  # combine fish population to one dataframe
+  fish_population_track <- do.call(what = "rbind", args = fish_population_track)
 
-    }
+  # add timestep counter
+  if (n_pop > 0) {
 
-    # get foo of first list entry
-    seafloor_track[[1]] <- calc_summary(x =  seafloor_track[[1]],
-                                        foo = summary_fun, what = "seafloor")
-
-    # Combine to one data.frame
-    seafloor_track <- do.call(what = "rbind", args = seafloor_track)
-
-    fish_population_track <- do.call(what = "rbind", args = fish_population_track)
-
-    # convert to data frame
-    seafloor_track <- as.data.frame(seafloor_track)
-
-    fish_population_track <- as.data.frame(fish_population_track)
-
-    # add timestep
-    seafloor_track$timestep <- seq(from = 0, to = max_i, by = 1)
-
-    if (n_pop > 0) {
-
-      fish_population_track$timestep <- seq(from = 0, to = max_i, by = 1)
-
-    } else {
-
-      fish_population_track <- cbind(fish_population_track, timestep = numeric(0))
-
-    }
+    fish_population_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                          each = n_pop)
 
   } else {
 
-    # Combine to one data.frame
-    seafloor_track <- do.call(what = "rbind", args = seafloor_track)
-
-    fish_population_track <- do.call(what = "rbind", args = fish_population_track)
-
-    seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
-
-    if (n_pop > 0) {
-
-      fish_population_track$timestep <- rep(x = 0:max_i, each = n_pop)
-
-    }
+    fish_population_track$timestep <- numeric(0)
 
   }
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 max_i = max_i, min_per_i = min_per_i,
-                 extent = extent, grain = raster::res(seafloor), use_summary = use_summary)
+                 max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                 extent = extent, grain = raster::res(seafloor))
 
   # set class of result
   class(result) <- "mdl_rn"

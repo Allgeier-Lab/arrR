@@ -4,14 +4,16 @@
 \alias{plot.mdl_rn}
 \title{plot.mdl_rn}
 \usage{
-\method{plot}{mdl_rn}(x, fill = "reef", i = x$max_i, base_size = 10, ...)
+\method{plot}{mdl_rn}(x, what, summarize = FALSE, timestep = x$max_i, base_size = 10, ...)
 }
 \arguments{
-\item{x}{Random patterns.}
+\item{x}{mdl_rn object of simulation run.}
 
-\item{fill}{Character to specify which values of environmental data is used as fill.}
+\item{what}{Character specifying what to plot.}
 
-\item{i}{Integer to specify which timestep is plotted.}
+\item{summarize}{Character to specify which values of environmental data is used as fill.}
+
+\item{timestep}{Integer to specify which timestep is plotted.}
 
 \item{base_size}{Numeric to specify base font size.}
 

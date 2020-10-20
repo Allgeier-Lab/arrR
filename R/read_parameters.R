@@ -46,7 +46,6 @@ read_parameters <- function(file, return_list = TRUE, ...) {
     # add names
     names(parameters) <- names_param
 
-    # God, I hate reshape...
   }
 
   # return result
