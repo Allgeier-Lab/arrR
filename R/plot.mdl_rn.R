@@ -46,7 +46,12 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
                                      round(i * x$min_per_i / 60 / 24, 1), " days"),
                       subtitle = paste0("Timestep: ", min(seafloor$timestep), " - ", max(seafloor$timestep)))
 
-    # fill not available
+
+    # invalid fill argument
+    } else if (fill == "density") {
+
+      stop("fill = 'density' not possible if summary functions was used.", call. = FALSE)
+
     } else {
 
       stop("Please select a valid layer as 'fill' argument.", call. = FALSE)
@@ -73,7 +78,7 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
         ggplot2::labs(title = paste0("Simulation time: ", round(i * x$min_per_i / 60 / 24, 1), " days"),
                       subtitle = paste0("Timestep: ", i))
 
-      # use continuous scale
+    # use continuous scale
     } else if (fill %in% c("ag_biomass", "bg_biomass", "nutrients_pool",
                            "detritus_pool", "detritus_dead")) {
 
@@ -92,11 +97,6 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
     } else if (fill == "density") {
 
-      # get fish population values of last timestep
-      fish_population <- subset(x$fish_population, timestep == i, select = -timestep)
-
-      fish_population <- subset(x$fish_population, timestep <= i, select = -timestep)
-
       ras_density <- raster::raster(ext = x$extent, resolution = x$grain)
 
       ras_density <- raster::rasterize(x = x$fish_population[, c("x", "y")],
@@ -107,8 +107,8 @@ plot.mdl_rn <- function(x, fill = "reef", i = x$max_i, base_size = 10, ...) {
 
       ras_density$layer <- ras_density$layer / i
 
-      # reclassify AR as NA for better plotting
-      ras_density[seafloor$reef == 1, "layer"] <- NA
+      # # reclassify AR as NA for better plotting
+      # ras_density[seafloor$reef == 1, "layer"] <- NA
 
       # create plot
       gg_result <- ggplot2::ggplot(data = ras_density) +

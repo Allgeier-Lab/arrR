@@ -3,8 +3,9 @@
 #' @description Internal function to calculate nutrient uptake
 #'
 #' @param nutrients Add info about parameter.
-#' @param gamma Add info about parameter.
-#' @param detritus_ratio Add info about parameter.
+#' @param biomass Add info about parameter.
+#' @param v_max,k_m Add info about parameter.
+#' @param time_fac Add info about parameter.
 #'
 #' @details
 #' Add details
@@ -25,7 +26,7 @@
 #' @keywords internal
 #'
 #' @export
-int_calc_nutr_uptake <- function(nutrients, bg_biomass, ag_biomass,
+int_calc_nutr_uptake <- function(nutrients, biomass,
                                  v_max, k_m, time_fac) {
 
   # convert water column nutrients to umol/l
@@ -34,20 +35,12 @@ int_calc_nutr_uptake <- function(nutrients, bg_biomass, ag_biomass,
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)
-  uptake_bg_umol <- bg_biomass * int_calc_monod(nutrients = nutrients_umol,
-                                                v_max = v_max[1] * time_fac,
-                                                k_m = k_m[1])
-
-  uptake_ag_umol <- ag_biomass * int_calc_monod(nutrients = nutrients_umol,
-                                                v_max = v_max[2] * time_fac,
-                                                k_m = k_m[2])
+  uptake_umol <- biomass * int_calc_monod(nutrients = nutrients_umol,
+                                          v_max = v_max * time_fac,
+                                          k_m = k_m)
 
   # sum bg and ag to get total uptake in g
-  uptake_total_g <- int_convert_nutr(x = uptake_bg_umol + uptake_ag_umol, to = "g")
+  uptake_g <- int_convert_nutr(x = uptake_umol, to = "g")
 
-  # check if total uptake exceeds total available nutrients
-  uptake_total_g <- ifelse(test = uptake_total_g > nutrients,
-                           yes = nutrients, no = uptake_total_g)
-
-  return(uptake_total_g)
+  return(uptake_g)
 }

@@ -20,12 +20,12 @@
 #' @export
 distribute_detritus <- function(seafloor_values, parameters) {
 
-  # redistribute dead detritus to active detritus
-  seafloor_values$detritus_pool <- seafloor_values$detritus_pool +
-    (seafloor_values$detritus_dead * parameters$detritus_dead_decomp)
+  dead_decompostion <- seafloor_values$detritus_dead * parameters$detritus_dead_decomp
 
-  seafloor_values$detritus_dead <- seafloor_values$detritus_dead -
-    (seafloor_values$detritus_dead * parameters$detritus_dead_decomp)
+  # redistribute dead detritus to active detritus
+  seafloor_values$detritus_pool <- seafloor_values$detritus_pool + dead_decompostion
+
+  seafloor_values$detritus_dead <- seafloor_values$detritus_dead - dead_decompostion
 
   # get detritus amount that goes into nutrients pool
   decomposition <- seafloor_values$detritus_pool * parameters$detritus_decomposition

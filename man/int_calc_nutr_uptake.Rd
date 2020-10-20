@@ -4,14 +4,16 @@
 \alias{int_calc_nutr_uptake}
 \title{calc_nutr_uptake}
 \usage{
-int_calc_nutr_uptake(nutrients, bg_biomass, ag_biomass, v_max, k_m, time_fac)
+int_calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_fac)
 }
 \arguments{
 \item{nutrients}{Add info about parameter.}
 
-\item{gamma}{Add info about parameter.}
+\item{biomass}{Add info about parameter.}
 
-\item{detritus_ratio}{Add info about parameter.}
+\item{v_max, k_m}{Add info about parameter.}
+
+\item{time_fac}{Add info about parameter.}
 }
 \value{
 vector

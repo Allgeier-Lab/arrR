@@ -67,13 +67,16 @@ print.mdl_rn <- function(x, digits = 4, ...) {
   # calculate min, mean, max
   } else {
 
-    min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = min),
+    min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
+                                FUN = min, na.rm = TRUE),
                           digits = digits)
 
-    mean_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = mean),
+    mean_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
+                                 FUN = mean, na.rm = TRUE),
                            digits = digits)
 
-    max_seafloor <- round(apply(X = seafloor_values, MARGIN = 2, FUN = max),
+    max_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
+                                FUN = max, na.rm = TRUE),
                           digits = digits)
 
     # no fish population present
@@ -90,13 +93,16 @@ print.mdl_rn <- function(x, digits = 4, ...) {
 
       # calculate min, median, max values
       min_fish_population <- round(apply(X = fish_population_values,
-                                         MARGIN = 2, FUN = min), digits = digits)
+                                         MARGIN = 2, FUN = min, na.rm = TRUE),
+                                   digits = digits)
 
       mean_fish_population <- round(apply(X = fish_population_values,
-                                          MARGIN = 2, FUN = mean), digits = digits)
+                                          MARGIN = 2, FUN = mean, na.rm = TRUE),
+                                    digits = digits)
 
       max_fish_population <- round(apply(X = fish_population_values,
-                                           MARGIN = 2, FUN = max), digits = digits)
+                                           MARGIN = 2, FUN = max, na.rm = TRUE),
+                                   digits = digits)
 
       }
 

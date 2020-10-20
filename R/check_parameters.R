@@ -44,7 +44,6 @@ check_parameters <- function(starting_values, parameters) {
                            "ag_reduction",
                            "bg_biomass_max",
                            "bg_biomass_min",
-                           "bg_biomass_thres",
                            "bg_v_max",
                            "bg_k_m",
                            "bg_sigmoid_slope",
