@@ -11,7 +11,8 @@ run_simulation(
   reef_attraction,
   max_i,
   min_per_i,
-  verbose = TRUE
+  verbose = TRUE,
+  use_summary = "mean"
 )
 }
 \arguments{
@@ -28,6 +29,9 @@ run_simulation(
 \item{min_per_i}{Integer to specify minutes per i.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
+
+\item{use_summary}{String specifying which  summary function to use. Set to NULL to
+return full data.frames.}
 }
 \value{
 data.frame

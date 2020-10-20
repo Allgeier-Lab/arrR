@@ -6,7 +6,7 @@
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
 #' @param reefs 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
-#' @param parameters List with all model parameters.
+#' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
@@ -29,14 +29,13 @@
 #' parameters <- read_parameters(file = parameters, sep = ";")
 #'
 #' input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
-#' reefs = NULL, starting_values = starting_values, parameters = parameters)
+#' reefs = NULL, starting_values = starting_values)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(extent, grain, reefs = NULL,
-                           starting_values, parameters,
+setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress
@@ -60,8 +59,9 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
   seafloor <- int_setup_envir_values(seafloor = seafloor,
                                      ag_biomass = starting_values$ag_biomass,
                                      bg_biomass = starting_values$bg_biomass,
-                                     wc_nutrients = starting_values$wc_nutrients,
-                                     detritus_fraction = parameters$detritus_fraction)
+                                     nutrients_pool = starting_values$nutrients_pool,
+                                     detritus_pool = starting_values$detritus_pool,
+                                     random = random)
 
   # AR coords provided
   if (!is.null(reefs)) {

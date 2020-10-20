@@ -53,7 +53,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @param seafloor_values Matrix with seafloor values.
 #' @param cell_adj Matrix with cell adjacencies.
-#' @param wc_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
+#' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 #'
 #' @details
 #' \code{Rcpp} implementation of to diffuse nutrients.
@@ -63,7 +63,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @name rcpp_diffuse_values
 #'
 #' @export
-rcpp_diffuse_values <- function(seafloor_values, cell_adj, wc_diffusion, detritus_diffusion, detritus_dead_diffusion) {
-    .Call(`_coRal_rcpp_diffuse_values`, seafloor_values, cell_adj, wc_diffusion, detritus_diffusion, detritus_dead_diffusion)
+rcpp_diffuse_values <- function(seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
+    .Call(`_coRal_rcpp_diffuse_values`, seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion)
 }
 

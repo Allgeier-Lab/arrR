@@ -24,7 +24,9 @@ int_setup_reefs <- function(object, xy, extent) {
   cell_ids <- raster::cellFromXY(object = object, xy = xy)
 
   # set environmental values of AR cells to 0
-  object[cell_ids] <- 0
+  raster::values(object)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)
+
+  # raster::values(object)[cell_ids, c("nutrients_pool", "detritus_pool")] <- c(0, 0)
 
   # add reef layer
   object$reef <- 0

@@ -7,7 +7,7 @@
 rcpp_diffuse_values(
   seafloor_values,
   cell_adj,
-  wc_diffusion,
+  nutrients_diffusion,
   detritus_diffusion,
   detritus_dead_diffusion
 )
@@ -17,7 +17,7 @@ rcpp_diffuse_values(
 
 \item{cell_adj}{Matrix with cell adjacencies.}
 
-\item{wc_diffusion, detritus_diffusion, detritus_dead_diffusion}{Numeric with parameters.}
+\item{nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion}{Numeric with parameters.}
 }
 \value{
 Matrix

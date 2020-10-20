@@ -24,3 +24,7 @@ Simulate seagrass.
 \details{
 Function to simulate processes of above ground and below ground seagrass.
 }
+\references{
+DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+}

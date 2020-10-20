@@ -17,9 +17,17 @@
 #' @export
 simulate_diffusion <- function(seafloor_values, cell_adj, parameters) {
 
+  # MH: I don't think we need to randomize the order
+  # # randomize row id to avoid strange patterns
+  # random_id <- sample(x = 1:nrow(cell_adj), size = nrow(cell_adj))
+  #
+  # # reorder values
+  # cell_adj[, 1] <- cell_adj[random_id, 1]
+  # cell_adj[, 2] <- cell_adj[random_id, 2]
+
   seafloor_values <- rcpp_diffuse_values(seafloor_values = as.matrix(seafloor_values),
                                          cell_adj = cell_adj,
-                                         wc_diffusion = parameters$wc_diffusion,
+                                         nutrients_diffusion = parameters$nutrients_diffusion,
                                          detritus_diffusion = parameters$detritus_diffusion,
                                          detritus_dead_diffusion = parameters$detritus_dead_diffusion)
 

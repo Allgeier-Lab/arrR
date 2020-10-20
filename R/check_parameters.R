@@ -30,30 +30,30 @@ check_parameters <- function(starting_values, parameters) {
   # specify all required starting values
   required_starting <- c("ag_biomass",
                          "bg_biomass",
-                         "wc_nutrients",
+                         "nutrients_pool",
+                         "detritus_pool",
                          "pop_n",
                          "water_temp")
 
   # specify all required parameters
-  required_parameters <- c("ag_biomass_thres",
-                           "ag_biomass_max",
+  required_parameters <- c("ag_biomass_max",
+                           "ag_biomass_min",
                            "ag_v_max",
-                           "ag_k_max",
+                           "ag_k_m",
                            "ag_sigmoid_slope",
                            "ag_reduction",
-                           "ag_slough_ratio",
                            "bg_biomass_max",
+                           "bg_biomass_min",
                            "bg_v_max",
-                           "bg_k_max",
+                           "bg_k_m",
                            "bg_sigmoid_slope",
                            "bg_reduction",
-                           "bg_slough_ratio",
-                           "slough_detritus_ratio",
-                           "detritus_fraction",
+                           "nutrients_diffusion",
+                           "detritus_ratio",
+                           "detritus_decomposition",
                            "detritus_diffusion",
                            "detritus_dead_diffusion",
                            "detritus_dead_decomp",
-                           "wc_diffusion",
                            "pop_mean_size",
                            "pop_var_size",
                            "pop_max_size",
@@ -97,6 +97,25 @@ check_parameters <- function(starting_values, parameters) {
 
   }
 
+  # check if any additional parameters are present
+  add_starting <- which(!names(starting_values) %in% required_starting)
+
+  add_parameters <- which(!names(parameters) %in% required_parameters)
+
+  # length equals 0 if all parameters are present
+  if (length(add_starting) > 0 | length(add_parameters) > 0) {
+
+    # combine missing values with separator
+    additional <- paste(names(starting_values)[add_starting],
+                        names(parameters)[add_parameters],
+                        sep = " ")
+
+    # return warning
+    warning("The following parameters are not needed: ", additional,
+            call. = FALSE)
+
+  }
+
   # check if respiration temp is above max
   if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >= parameters$resp_temp_max)) {
 
@@ -104,4 +123,32 @@ check_parameters <- function(starting_values, parameters) {
             call. = FALSE)
 
   }
+
+  # check if biomass starting is above max
+  if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) >
+          c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+
+    warning("Starting biomass is larger than maximum biomass.",
+            call. = FALSE)
+
+  }
+
+  # check if biomass starting is below min
+  if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) <
+          c(parameters$bg_biomass_min, parameters$ag_biomass_min))) {
+
+    warning("Starting biomass is smaller than minimum biomass.",
+            call. = FALSE)
+
+  }
+
+  # check if biomass starting is below min
+  if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
+          c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+
+    warning("Minimum biomass is larger than maximum biomass.",
+            call. = FALSE)
+
+  }
+
 }
