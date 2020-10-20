@@ -102,7 +102,7 @@ To plot the results, pass the resulting object to the  `plot` function. This wil
 gg_ag_biomass <- plot(result, fill = "ag_biomass")
 gg_bg_biomass <- plot(result, fill = "bg_biomass")
 
-gg_ag_biomass + gg_ag_biomass + plot_layout(ncol = 2)
+gg_ag_biomass + gg_bg_biomass + plot_layout(ncol = 2)
 ```
 
 <!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->

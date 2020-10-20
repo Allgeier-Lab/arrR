@@ -105,14 +105,14 @@ result
 #> Total simulated time: 1095 days
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 49.3542, 153.2665, 0.3767, 2.5099, 0
-#> Mean: 50.2055, 153.9585, 0.3857, 2.624, 0
-#> Maximum: 54.3118, 157.3331, 0.4335, 2.649, 0
+#> Minimum: 49.38, 153.2829, 0.377, 2.4942, 0
+#> Mean: 50.2317, 153.9806, 0.3859, 2.6185, 0
+#> Maximum: 54.4129, 157.4481, 0.4401, 2.6431, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 21.0357, 183.9305, 0, 0
-#> Mean: 23.1257, 250.1574, 0, 0
-#> Maximum: 25.5291, 339.1746, 0, 0
+#> Minimum: 21.0697, 184.8713, 0, 0
+#> Mean: 23.6703, 270.4295, 0, 0
+#> Maximum: 27.4059, 424.4321, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
@@ -125,7 +125,7 @@ the whole `RasterBrick`
 gg_ag_biomass <- plot(result, fill = "ag_biomass")
 gg_bg_biomass <- plot(result, fill = "bg_biomass")
 
-gg_ag_biomass + gg_ag_biomass + plot_layout(ncol = 2)
+gg_ag_biomass + gg_bg_biomass + plot_layout(ncol = 2)
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
