@@ -1,7 +1,7 @@
 Package: coRal
 Type: Package
 Title: Individual-based simulation model of coral fish
-Version: 0.2.0
+Version: 0.1
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",

@@ -43,18 +43,18 @@ simulate_mortality <- function(fish_population, fish_population_track,
 
 
     # loop through all dying individuals
-    # MH: This could be vectorized but would need changes in int_rebirth
+    # MH: This could be vectorized but would need changes in create_rebirth
     # MH: Only very few individuals each time, so loop might not be a problem
     for (i in 1:length(mort_id)) {
 
       # create new individual
-      fish_pop_temp <- int_rebirth(fish_population = fish_population[mort_id[i], ],
-                                   fish_population_track = fish_population_track[[1]],
-                                   n_body = parameters$pop_n_body,
-                                   want_reserves = parameters$pop_want_reserves,
-                                   detritus_pool = detritus_pool[i],
-                                   detritus_dead = detritus_dead[i],
-                                   reason = "background")
+      fish_pop_temp <- create_rebirth(fish_population = fish_population[mort_id[i], ],
+                                      fish_population_track = fish_population_track[[1]],
+                                      n_body = parameters$pop_n_body,
+                                      want_reserves = parameters$pop_want_reserves,
+                                      detritus_pool = detritus_pool[i],
+                                      detritus_dead = detritus_dead[i],
+                                      reason = "background")
 
       # update data frames
       fish_population[mort_id[i], ] <- fish_pop_temp$fish_population

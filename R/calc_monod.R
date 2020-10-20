@@ -19,13 +19,11 @@
 #'
 #' @return Vector
 #'
-#' @aliases int_calc_monod
-#' @rdname int_calc_monod
-#'
-#' @keywords internal
+#' @aliases calc_monod
+#' @rdname calc_monod
 #'
 #' @export
-int_calc_monod <- function(nutrients, v_max, k_m) {
+calc_monod <- function(nutrients, v_max, k_m) {
 
   uptake <- ((v_max * nutrients) / (k_m + nutrients))
 

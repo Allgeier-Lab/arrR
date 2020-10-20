@@ -57,11 +57,11 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     heading <- stats::runif(n = n, min = 0, max = 360)
 
     # calculate length and weight
-    size <- int_calc_size(pop_n = n,
-                          pop_mean_size = parameters$pop_mean_size,
-                          pop_var_size = parameters$pop_var_size,
-                          pop_a_grunt = parameters$pop_a_grunt,
-                          pop_b_grunt = parameters$pop_b_grunt)
+    size <- calc_size(pop_n = n,
+                      pop_mean_size = parameters$pop_mean_size,
+                      pop_var_size = parameters$pop_var_size,
+                      pop_a_grunt = parameters$pop_a_grunt,
+                      pop_b_grunt = parameters$pop_b_grunt)
 
     # calculate maximum reserves
     reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves

@@ -55,13 +55,13 @@ simulate_growth <- function(fish_population, fish_population_track,
         (fish_population$reserves[i] + detritus_pool[i])) {
 
       # create new individual
-      fish_pop_temp <- int_rebirth(fish_population = fish_population[i, ],
-                                   fish_population_track = fish_population_track[[1]],
-                                   n_body = parameters$pop_n_body,
-                                   want_reserves = parameters$pop_want_reserves,
-                                   detritus_pool = detritus_pool[i],
-                                   detritus_dead = detritus_dead[i],
-                                   reason = "consumption")
+      fish_pop_temp <- create_rebirth(fish_population = fish_population[i, ],
+                                      fish_population_track = fish_population_track[[1]],
+                                      n_body = parameters$pop_n_body,
+                                      want_reserves = parameters$pop_want_reserves,
+                                      detritus_pool = detritus_pool[i],
+                                      detritus_dead = detritus_dead[i],
+                                      reason = "consumption")
 
       # update data frames
       fish_population[i, ] <- fish_pop_temp$fish_population

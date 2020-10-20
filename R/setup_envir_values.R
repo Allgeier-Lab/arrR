@@ -12,13 +12,11 @@
 #'
 #' @return vector
 #'
-#' @aliases int_setup_envir_values
-#' @rdname int_setup_envir_values
-#'
-#' @keywords internal
+#' @aliases setup_envir_values
+#' @rdname setup_envir_values
 #'
 #' @export
-int_setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
+setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
                                    nutrients_pool, detritus_pool, random) {
 
   # get number of cells

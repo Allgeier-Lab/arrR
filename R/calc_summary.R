@@ -1,4 +1,4 @@
-#' calc_foo
+#' calc_summary
 #'
 #' @description Calculate sigmoid to distribute uptake.
 #'
@@ -11,13 +11,11 @@
 #'
 #' @return vector
 #'
-#' @aliases int_int_calc_foo
-#' @rdname int_int_calc_foo
-#'
-#' @keywords internal
+#' @aliases calc_summary
+#' @rdname calc_summary
 #'
 #' @export
-int_calc_foo <- function(x, foo, what) {
+calc_summary <- function(x, foo, what) {
 
   if (what == "seafloor") {
 

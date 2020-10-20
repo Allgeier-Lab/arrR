@@ -33,11 +33,11 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   }
 
   # calculate total possible nutrient uptake bg
-  bg_uptake <- int_calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
-                                    biomass = seafloor_values$bg_biomass,
-                                    v_max = parameters$bg_v_max,
-                                    k_m = parameters$bg_k_m,
-                                    time_fac = min_per_i / 60)
+  bg_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+                                biomass = seafloor_values$bg_biomass,
+                                v_max = parameters$bg_v_max,
+                                k_m = parameters$bg_k_m,
+                                time_fac = min_per_i / 60)
 
   # check if total uptake exceeds total available nutrients
   bg_uptake <- ifelse(test = bg_uptake > seafloor_values$nutrients,
@@ -65,11 +65,11 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   }
 
   # calculate total possible nutrient uptake ag
-  ag_uptake <- int_calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
-                                    biomass = seafloor_values$ag_biomass,
-                                    v_max = parameters$ag_v_max,
-                                    k_m = parameters$ag_k_m,
-                                    time_fac = min_per_i / 60)
+  ag_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+                                biomass = seafloor_values$ag_biomass,
+                                v_max = parameters$ag_v_max,
+                                k_m = parameters$ag_k_m,
+                                time_fac = min_per_i / 60)
 
   # check if total uptake exceeds total available nutrients
   ag_uptake <- ifelse(test = ag_uptake > seafloor_values$nutrients,
@@ -140,18 +140,18 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 #'   }
 #'
 #'   # calculate total possible nutrient uptake bg
-#'   bg_uptake <- int_calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
-#'                                     biomass = seafloor_values$bg_biomass,
-#'                                     v_max = parameters$bg_v_max,
-#'                                     k_m = parameters$bg_k_m,
-#'                                     time_fac = min_per_i / 60)
+#'   bg_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+#'                                 biomass = seafloor_values$bg_biomass,
+#'                                 v_max = parameters$bg_v_max,
+#'                                 k_m = parameters$bg_k_m,
+#'                                 time_fac = min_per_i / 60)
 #'
 #'   # calculate total possible nutrient uptake ag
-#'   ag_uptake <- int_calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
-#'                                     biomass = seafloor_values$ag_biomass,
-#'                                     v_max = parameters$ag_v_max,
-#'                                     k_m = parameters$ag_k_m,
-#'                                     time_fac = min_per_i / 60)
+#'   ag_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+#'                                 biomass = seafloor_values$ag_biomass,
+#'                                 v_max = parameters$ag_v_max,
+#'                                 k_m = parameters$ag_k_m,
+#'                                 time_fac = min_per_i / 60)
 #'
 #'   # sum total uptake
 #'   total_uptake_g <- bg_uptake + ag_uptake

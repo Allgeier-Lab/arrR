@@ -57,11 +57,11 @@ simulate_movement <- function(fish_population, n_pop, seafloor, seafloor_values,
                                               sin((fish_population$heading + 45) * (pi / 180))))
 
     # torus translation if coords are outside plot and add id col
-    heading_l <- int_translate_torus(coords = heading_l, extent = extent)
+    heading_l <- translate_torus(coords = heading_l, extent = extent)
 
-    heading_s <- int_translate_torus(coords = heading_s, extent = extent)
+    heading_s <- translate_torus(coords = heading_s, extent = extent)
 
-    heading_r <- int_translate_torus(coords = heading_r, extent = extent)
+    heading_r <- translate_torus(coords = heading_r, extent = extent)
 
     # create id for direction
     direction_id <- rep(c("s", "l", "r"), each = n_pop)
@@ -97,7 +97,7 @@ simulate_movement <- function(fish_population, n_pop, seafloor, seafloor_values,
 
   # torus edge correction at boundaries
   fish_population[, c("x", "y")] <-
-    int_translate_torus(coords = fish_population[, c("x", "y")], extent = extent)
+    translate_torus(coords = fish_population[, c("x", "y")], extent = extent)
 
   # turn fish randomly after moving
   # MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)

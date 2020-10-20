@@ -12,7 +12,7 @@ run_simulation(
   max_i,
   min_per_i,
   verbose = TRUE,
-  use_summary = "mean"
+  use_summary = NULL
 )
 }
 \arguments{

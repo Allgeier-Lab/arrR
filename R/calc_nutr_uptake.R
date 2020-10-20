@@ -20,27 +20,24 @@
 #'
 #' @return vector
 #'
-#' @aliases int_calc_nutr_uptake
-#' @rdname int_calc_nutr_uptake
-#'
-#' @keywords internal
+#' @aliases calc_nutr_uptake
+#' @rdname calc_nutr_uptake
 #'
 #' @export
-int_calc_nutr_uptake <- function(nutrients, biomass,
+calc_nutr_uptake <- function(nutrients, biomass,
                                  v_max, k_m, time_fac) {
 
   # convert water column nutrients to umol/l
-  nutrients_umol <- int_convert_nutr(nutrients,
-                                     to = "umol") / 10000
+  nutrients_umol <- convert_nutr(nutrients, to = "umol") / 10000
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)
-  uptake_umol <- biomass * int_calc_monod(nutrients = nutrients_umol,
-                                          v_max = v_max * time_fac,
-                                          k_m = k_m)
+  uptake_umol <- biomass * calc_monod(nutrients = nutrients_umol,
+                                      v_max = v_max * time_fac,
+                                      k_m = k_m)
 
   # sum bg and ag to get total uptake in g
-  uptake_g <- int_convert_nutr(x = uptake_umol, to = "g")
+  uptake_g <- convert_nutr(x = uptake_umol, to = "g")
 
   return(uptake_g)
 }

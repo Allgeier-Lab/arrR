@@ -16,13 +16,11 @@
 #'
 #' @return RasterBrick
 #'
-#' @aliases int_grow_seagrass
-#' @rdname int_grow_seagrass
-#'
-#' @keywords internal
+#' @aliases grow_seagrass
+#' @rdname grow_seagrass
 #'
 #' @export
-int_grow_seagrass <- function(nutrients, gamma, detritus_ratio) {
+grow_seagrass <- function(nutrients, gamma, detritus_ratio) {
 
   # convert nutrient uptake to biomass growth
   biomass <- nutrients / gamma

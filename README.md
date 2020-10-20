@@ -39,8 +39,6 @@ To access all functions to run the mode, simply load the library.
 ``` r
 library(coRal)
 library(patchwork) # needed for plotting
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
 ```
 
 The starting values and parameters must be imported as two separated
@@ -73,15 +71,16 @@ cells.
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
                       ncol = 2, byrow = TRUE)
 
-input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, reefs = reef_matrix, 
-                                       starting_values = starting_values, parameters = parameters)
+input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, 
+                                 reefs = reef_matrix, 
+                                 starting_values = starting_values)
 #> > Creating seafloor with extent(50, 50)...
 #> > Creating 5 artifical reef cells...
 
 input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
                                                starting_values = starting_values, 
                                                parameters = parameters)
-#> > Creating 10 individuals within extent(-25, 25, -25, 25)...
+#> > Creating 25 individuals within extent(-25, 25, -25, 25)...
 ```
 
 To rum a simulation, simply provide the previously created seafloor and
@@ -90,25 +89,30 @@ population as well as all parameters and starting values the
 of time steps that are simulated.
 
 ``` r
+min_per_i <- 120
+
+# run the model for three years
+max_i <- (60 * 24 * 365 * 3) / min_per_i
+
 result <- run_simulation(seafloor = input_seafloor, 
                          fish_population = input_fish_population,
                          parameters = parameters, 
                          reef_attraction = TRUE,
-                         max_i = 10800, min_per_i = 120,
+                         max_i = max_i, min_per_i = min_per_i,
                          verbose = FALSE)
 
 result
-#> Total simulated time: 900 days
+#> Total simulated time: 1095 days
 #> 
-#> Seafloor: (ag_biomass, bg_biomass, detritus_pool, detritus_dead, wc_nutrients)
-#> Minimum: 0, 0, 0, 0, 0.07
-#> Mean: 777.5326, 2651.8549, 0.5672, 0, 0.0714
-#> Maximum: 1100.173, 2657.1692, 0.8252, 0, 0.0945
+#> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
+#> Minimum: 49.3542, 153.2665, 0.3767, 2.5099, 0
+#> Mean: 50.2055, 153.9585, 0.3857, 2.624, 0
+#> Maximum: 54.3118, 157.3331, 0.4335, 2.649, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 20.429, 167.679, 0, 0
-#> Mean: 21.6912, 203.1681, 0, 0
-#> Maximum: 22.6008, 230.7643, 0, 0
+#> Minimum: 21.0357, 183.9305, 0, 0
+#> Mean: 23.1257, 250.1574, 0, 0
+#> Maximum: 25.5291, 339.1746, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
@@ -118,10 +122,10 @@ the whole `RasterBrick`
 
 ``` r
 
-gg_biomass <- plot(result, fill = "ag_biomass")
-gg_detritus <- plot(result, fill = "detritus_pool")
+gg_ag_biomass <- plot(result, fill = "ag_biomass")
+gg_bg_biomass <- plot(result, fill = "bg_biomass")
 
-gg_biomass + gg_detritus + plot_layout(nrow = 2)
+gg_ag_biomass + gg_ag_biomass + plot_layout(ncol = 2)
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />

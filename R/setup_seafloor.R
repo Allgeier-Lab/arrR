@@ -56,12 +56,12 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
                              vals = NA, crs = NA, ...)
 
   # setup environmental values
-  seafloor <- int_setup_envir_values(seafloor = seafloor,
-                                     ag_biomass = starting_values$ag_biomass,
-                                     bg_biomass = starting_values$bg_biomass,
-                                     nutrients_pool = starting_values$nutrients_pool,
-                                     detritus_pool = starting_values$detritus_pool,
-                                     random = random)
+  seafloor <- setup_envir_values(seafloor = seafloor,
+                                 ag_biomass = starting_values$ag_biomass,
+                                 bg_biomass = starting_values$bg_biomass,
+                                 nutrients_pool = starting_values$nutrients_pool,
+                                 detritus_pool = starting_values$detritus_pool,
+                                 random = random)
 
   # AR coords provided
   if (!is.null(reefs)) {
@@ -82,7 +82,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
     }
 
     # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    seafloor <- int_setup_reefs(object = seafloor, xy = reefs, extent = extent)
+    seafloor <- setup_reefs(object = seafloor, xy = reefs, extent = extent)
 
   # no AR coords provided
   } else {

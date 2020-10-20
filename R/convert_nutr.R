@@ -1,4 +1,4 @@
-#' int_convert_nutr
+#' convert_nutr
 #'
 #' @description Convert nutrients from g to umol (and vice versa)
 #'
@@ -11,13 +11,11 @@
 #'
 #' @return numeric
 #'
-#' @aliases int_convert_n
-#' @rdname int_convert_n
-#'
-#' @keywords internal
+#' @aliases convert_nutr
+#' @rdname convert_nutr
 #'
 #' @export
-int_convert_nutr <- function(x, to) {
+convert_nutr <- function(x, to) {
 
   # convert to gram by multiplying factor
   if (to == "g") {

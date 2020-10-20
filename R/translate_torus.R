@@ -10,13 +10,11 @@
 #'
 #' @return vector
 #'
-#' @aliases int_translate_torus
-#' @rdname int_translate_torus
-#'
-#' @keywords internal
+#' @aliases translate_torus
+#' @rdname translate_torus
 #'
 #' @export
-int_translate_torus <- function(coords, extent) {
+translate_torus <- function(coords, extent) {
 
   # loop in case torus translation is largeer than plot again
   while (any(c(coords[, 1] < extent[1], coords[, 1] > extent[2],

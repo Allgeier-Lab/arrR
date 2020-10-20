@@ -14,14 +14,12 @@
 #'
 #' @return data.frame
 #'
-#' @aliases int_rebirth
-#' @rdname int_rebirth
-#'
-#' @keywords internal
+#' @aliases create_rebirth
+#' @rdname create_rebirth
 #'
 #' @export
-int_rebirth <- function(fish_population, fish_population_track,
-                        n_body, want_reserves, detritus_pool, detritus_dead, reason) {
+create_rebirth <- function(fish_population, fish_population_track, n_body,
+                           want_reserves, detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
   fish_population_start <- fish_population_track[fish_population_track$id ==

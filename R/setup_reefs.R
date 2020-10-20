@@ -12,13 +12,11 @@
 #'
 #' @return RasterBrick
 #'
-#' @aliases int_setup_reefs
-#' @rdname int_setup_reefs
-#'
-#' @keywords internal
+#' @aliases setup_reefs
+#' @rdname setup_reefs
 #'
 #' @export
-int_setup_reefs <- function(object, xy, extent) {
+setup_reefs <- function(object, xy, extent) {
 
   # get cell ids of provided coordinates
   cell_ids <- raster::cellFromXY(object = object, xy = xy)

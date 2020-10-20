@@ -11,13 +11,11 @@
 #'
 #' @return vector
 #'
-#' @aliases int_calc_size
-#' @rdname int_calc_size
-#'
-#' @keywords internal
+#' @aliases calc_size
+#' @rdname calc_size
 #'
 #' @export
-int_calc_size <- function(pop_n, pop_mean_size, pop_var_size,
+calc_size <- function(pop_n, pop_mean_size, pop_var_size,
                           pop_a_grunt, pop_b_grunt) {
 
   # calc mean of log-norm distribution

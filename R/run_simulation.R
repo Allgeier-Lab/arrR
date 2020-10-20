@@ -34,7 +34,7 @@
 run_simulation <- function(seafloor, fish_population,
                            parameters, reef_attraction,
                            max_i, min_per_i,
-                           verbose = TRUE, use_summary = "mean") {
+                           verbose = TRUE, use_summary = NULL) {
 
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = max_i + 1)
@@ -44,7 +44,7 @@ run_simulation <- function(seafloor, fish_population,
   # get summary function
   if (!is.null(use_summary)) {
 
-    foo <- get(use_summary, mode = "function")
+    summary_fun <- get(use_summary, mode = "function")
 
   }
 
@@ -63,7 +63,7 @@ run_simulation <- function(seafloor, fish_population,
                                     cell = cells_reef)
 
   # get neighboring cells for each focal cell using torus
-  cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
+  cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
   # get number of individuals
   n_pop <- nrow(fish_population)
@@ -163,13 +163,15 @@ run_simulation <- function(seafloor, fish_population,
     # calculate summary stats
     if (!is.null(use_summary)) {
 
-      seafloor_track[[i + 1]] <- int_calc_foo(x = seafloor_values, foo = foo,
+      seafloor_track[[i + 1]] <- calc_summary(x = seafloor_values,
+                                              foo = summary_fun,
                                               what = "seafloor")
 
       # check if fish_population is present
       if (n_pop > 0) {
 
-        fish_population_track[[i + 1]] <- int_calc_foo(x = fish_population, foo = foo,
+        fish_population_track[[i + 1]] <- calc_summary(x = fish_population,
+                                                       foo = summary_fun,
                                                        what = "fish_population")
 
       # no fish population is present
@@ -204,14 +206,15 @@ run_simulation <- function(seafloor, fish_population,
     # get foo of first list entry
     if (n_pop > 0) {
 
-      fish_population_track[[1]] <- int_calc_foo(x =  fish_population_track[[1]],
-                                                 foo = foo, what = "fish_population")
+      fish_population_track[[1]] <- calc_summary(x =  fish_population_track[[1]],
+                                                 foo = summary_fun,
+                                                 what = "fish_population")
 
     }
 
     # get foo of first list entry
-    seafloor_track[[1]] <- int_calc_foo(x =  seafloor_track[[1]],
-                                        foo = foo, what = "seafloor")
+    seafloor_track[[1]] <- calc_summary(x =  seafloor_track[[1]],
+                                        foo = summary_fun, what = "seafloor")
 
     # Combine to one data.frame
     seafloor_track <- do.call(what = "rbind", args = seafloor_track)
