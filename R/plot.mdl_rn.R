@@ -26,8 +26,8 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, what, summarize = FALSE,
-                        timestep = x$max_i, base_size = 10, ...) {
+plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i,
+                        base_size = 10, ...) {
 
   i <- timestep
 
@@ -42,19 +42,19 @@ plot.mdl_rn <- function(x, what, summarize = FALSE,
   if (summarize) {
 
     # summarize results
-    summarised_result <- summarize_results(result = x, summary_fun = "mean")
+    summarised_result <- summarize_results(result = x)
 
     # plot seafloor
     if (what == "seafloor") {
 
       # get seafloor data
       seafloor <- subset(summarised_result$seafloor,
-                         select = c("timestep",
+                         select = c("timestep", "summary",
                                     "ag_biomass", "bg_biomass",
                                     "nutrients_pool", "detritus_pool"))
 
       # reshape to long
-      seafloor <- stats::reshape(data = seafloor, idvar = "timestep",
+      seafloor <- stats::reshape(data = seafloor, idvar = c("timestep", "summary"),
                                  varying = c("ag_biomass", "bg_biomass",
                                              "nutrients_pool", "detritus_pool"),
                                  times = c("ag_biomass", "bg_biomass",
@@ -66,16 +66,23 @@ plot.mdl_rn <- function(x, what, summarize = FALSE,
                               levels = c("ag_biomass", "bg_biomass",
                                          "nutrients_pool", "detritus_pool"))
 
+      # make sure ordering is identical
+      seafloor$summary <- factor(seafloor$summary,
+                              levels = c("min", "mean", "max"))
+
       # create plot
       gg_seafloor <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_line(ggplot2::aes(x = timestep, y = value)) +
+        ggplot2::geom_line(ggplot2::aes(x = timestep, y = value,
+                                        col = summary, linetype = summary)) +
         ggplot2::facet_wrap(~ type, scales = "free_y") +
+        ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
+        ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
+        ggplot2::guides(col = FALSE, linetype = FALSE) +
         ggplot2::labs(title = paste0("Simulation time: ",
                                      round(i * x$min_per_i / 60 / 24, 1),
                                      " days\n(Timesteps: ", i, ")")) +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
-
 
       return(gg_seafloor)
 
@@ -84,12 +91,12 @@ plot.mdl_rn <- function(x, what, summarize = FALSE,
 
       # get fish  data
       fish_population <- subset(summarised_result$fish_population,
-                         select = c("timestep",
+                         select = c("timestep" ,"summary",
                                     "length", "weight",
                                     "died_consumption", "died_background"))
 
       # reshape to long
-      fish_population <- stats::reshape(data = fish_population, idvar = "timestep",
+      fish_population <- stats::reshape(data = fish_population, idvar = c("timestep", "summary"),
                                         varying = c("length", "weight",
                                                     "died_consumption", "died_background"),
                                         times = c("length", "weight",
@@ -101,10 +108,18 @@ plot.mdl_rn <- function(x, what, summarize = FALSE,
                                      levels = c("length", "weight",
                                                 "died_consumption", "died_background"))
 
+      # make sure ordering is identical
+      fish_population$summary <- factor(fish_population$summary,
+                                     levels = c("min", "mean", "max"))
+
       # create plot
       gg_fish <- ggplot2::ggplot(data = fish_population) +
-        ggplot2::geom_line(ggplot2::aes(x = timestep, y = value)) +
+        ggplot2::geom_line(ggplot2::aes(x = timestep, y = value,
+                                        col = summary, linetype = summary)) +
         ggplot2::facet_wrap(~ type, scales = "free_y") +
+        ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
+        ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
+        ggplot2::guides(col = FALSE, linetype = FALSE) +
         ggplot2::labs(title = paste0("Simulation time: ",
                                      round(i * x$min_per_i / 60 / 24, 1),
                                      " days\n(Timesteps: ", i, ")")) +

@@ -4,12 +4,10 @@
 \alias{summarize_results}
 \title{summarize_results}
 \usage{
-summarize_results(result, summary_fun)
+summarize_results(result)
 }
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
-
-\item{summary_fun}{List with all model parameters.}
 }
 \value{
 data.frame
