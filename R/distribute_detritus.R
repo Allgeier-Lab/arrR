@@ -20,6 +20,7 @@
 #' @export
 distribute_detritus <- function(seafloor_values, parameters) {
 
+  # calculate decomposition amount
   dead_decompostion <- seafloor_values$detritus_dead * parameters$detritus_dead_decomp
 
   # redistribute dead detritus to active detritus
