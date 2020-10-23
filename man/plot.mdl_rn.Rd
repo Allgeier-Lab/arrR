@@ -4,7 +4,15 @@
 \alias{plot.mdl_rn}
 \title{plot.mdl_rn}
 \usage{
-\method{plot}{mdl_rn}(x, what, summarize = FALSE, timestep = x$max_i, base_size = 10, ...)
+\method{plot}{mdl_rn}(
+  x,
+  what,
+  summarize = FALSE,
+  timestep = x$max_i,
+  limits = NULL,
+  base_size = 10,
+  ...
+)
 }
 \arguments{
 \item{x}{mdl_rn object of simulation run.}
@@ -14,6 +22,8 @@
 \item{summarize}{Character to specify which values of environmental data is used as fill.}
 
 \item{timestep}{Integer to specify which timestep is plotted.}
+
+\item{limits}{Named list with vectors with min and maximum value of values.}
 
 \item{base_size}{Numeric to specify base font size.}
 
