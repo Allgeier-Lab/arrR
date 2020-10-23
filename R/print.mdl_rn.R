@@ -90,13 +90,13 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
              "Results printed: ", i, " timestep\n",
              "\n",
              "Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
-             "Minimum: ", paste0(min_seafloor, collapse = ", "), "\n",
-             "Mean: ", paste0(mean_seafloor, collapse = ", "), "\n",
-             "Maximum: ", paste0(max_seafloor, collapse = ", "), "\n",
+             "Minimum:\t", paste0(min_seafloor, collapse = ", "), "\n",
+             "Mean:\t\t", paste0(mean_seafloor, collapse = ", "), "\n",
+             "Maximum:\t", paste0(max_seafloor, collapse = ", "), "\n",
              "\n",
              "Fish population: (length, weight, died_consumption, died_background)\n",
-             "Minimum: ", paste0(min_fish_population, collapse = ", "), "\n",
-             "Mean: ", paste0(mean_fish_population, collapse = ", "), "\n",
-             "Maximum: ", paste0(max_fish_population, collapse = ", "), "\n"))
+             "Minimum:\t", paste0(min_fish_population, collapse = ", "), "\n",
+             "Mean:\t\t", paste0(mean_fish_population, collapse = ", "), "\n",
+             "Maximum:\t", paste0(max_fish_population, collapse = ", "), "\n"))
 
 }

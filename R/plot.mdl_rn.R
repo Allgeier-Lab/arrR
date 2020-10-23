@@ -153,6 +153,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i,
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A") +
         ggplot2::coord_equal() +
+        ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -162,6 +163,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i,
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A") +
         ggplot2::coord_equal() +
+        ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -171,6 +173,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i,
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A") +
         ggplot2::coord_equal() +
+        ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -180,6 +183,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i,
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A") +
         ggplot2::coord_equal() +
+        ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
