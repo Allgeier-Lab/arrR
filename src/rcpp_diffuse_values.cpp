@@ -36,9 +36,9 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
   // get all seafloor values
   for(int i = 0; i < n_row_seafloor; i++) {
 
-    nutrients(i) = (seafloor_values(i, 4) * nutrients_diffusion) / 8;
-    detritus(i) = (seafloor_values(i, 5) * detritus_diffusion) / 8;
-    detritus_dead(i) = (seafloor_values(i, 6) * detritus_dead_diffusion) / 8;
+    nutrients(i) = (seafloor_values(i, 0) * nutrients_diffusion) / 8;
+    detritus(i) = (seafloor_values(i, 1) * detritus_diffusion) / 8;
+    detritus_dead(i) = (seafloor_values(i, 2) * detritus_dead_diffusion) / 8;
 
   }
 
@@ -50,14 +50,14 @@ Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values,
     int neighbor = cell_adj(j, 1) - 1;
 
     // add values of focal cell to neighbor cell
-    seafloor_values(neighbor, 4) += nutrients(focal);
-    seafloor_values(neighbor, 5) += detritus(focal);
-    seafloor_values(neighbor, 6) += detritus_dead(focal);
+    seafloor_values(neighbor, 0) += nutrients(focal);
+    seafloor_values(neighbor, 1) += detritus(focal);
+    seafloor_values(neighbor, 2) += detritus_dead(focal);
 
     // remove value from focal cell
-    seafloor_values(focal, 4) -= nutrients(focal);
-    seafloor_values(focal, 5) -= detritus(focal);
-    seafloor_values(focal, 6) -= detritus_dead(focal);
+    seafloor_values(focal, 0) -= nutrients(focal);
+    seafloor_values(focal, 1) -= detritus(focal);
+    seafloor_values(focal, 2) -= detritus_dead(focal);
 
   }
 

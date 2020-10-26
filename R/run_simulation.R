@@ -99,6 +99,16 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
+    # simulate seagrass growth
+    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
+                                         parameters = parameters,
+                                         cells_reef = cells_reef,
+                                         min_per_i = min_per_i)
+
+    # redistribute detritus
+    seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
+                                           parameters = parameters)
+
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
                                          n_pop = n_pop,
@@ -142,16 +152,6 @@ run_simulation <- function(seafloor, fish_population,
     seafloor_values <- mortality_temp$seafloor
 
     fish_population <- mortality_temp$fish_population
-
-    # simulate seagrass growth
-    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
-                                         parameters = parameters,
-                                         cells_reef = cells_reef,
-                                         min_per_i = min_per_i)
-
-    # redistribute detritus
-    seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
-                                           parameters = parameters)
 
     # diffuse values between neighbors
     seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,

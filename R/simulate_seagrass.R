@@ -131,9 +131,14 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
   seafloor_values$ag_biomass <- seafloor_values$ag_biomass - ag_detritus
 
+  # convert slough biomass to nutrients
+  detritus_nutr <- (bg_detritus * 0.0082) + (ag_detritus * 0.0144)
+
+  # save slough amount
+  seafloor_values$slough <- seafloor_values$slough + detritus_nutr
+
   # add nutrients to detritus pool
-  seafloor_values$detritus_pool <- seafloor_values$detritus_pool +
-    ((bg_detritus * 0.0082) + (ag_detritus * 0.0144))
+  seafloor_values$detritus_pool <- seafloor_values$detritus_pool + detritus_nutr
 
   # check if reef cells are available
   if (length(cells_reef) > 0) {

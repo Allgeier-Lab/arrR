@@ -21,9 +21,6 @@ setup_reefs <- function(object, xy, extent) {
   # get cell ids of provided coordinates
   cell_ids <- raster::cellFromXY(object = object, xy = xy)
 
-  # set environmental values of AR cells to NA and 0
-  raster::values(object)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)
-
   # add reef layer
   object$reef <- 0
 
@@ -40,6 +37,9 @@ setup_reefs <- function(object, xy, extent) {
 
   # set distance to 0 at reef cells
   object$reef_dist[cell_ids] <- 0
+
+  # set environmental values of AR cells to NA and 0
+  raster::values(object)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)
 
   return(object)
 }
