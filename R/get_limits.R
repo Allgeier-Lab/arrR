@@ -56,10 +56,10 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   limits <- do.call(what = "rbind", args = limits)
 
   # create final list
-  limits <- list(ag_biomass = c(min(limits_df[, 1]), max(limits_df[, 2])),
-                 bg_biomass = c(min(limits_df[, 3]), max(limits_df[, 4])),
-                 nutrients_pool = c(min(limits_df[, 5]), max(limits_df[, 6])),
-                 detritus_pool = c(min(limits_df[, 7]), max(limits_df[, 8])))
+  limits <- list(ag_biomass = c(min(limits[, 1]), max(limits[, 2])),
+                 bg_biomass = c(min(limits[, 3]), max(limits[, 4])),
+                 nutrients_pool = c(min(limits[, 5]), max(limits[, 6])),
+                 detritus_pool = c(min(limits[, 7]), max(limits[, 8])))
 
   return(limits)
 
