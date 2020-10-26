@@ -42,6 +42,12 @@ run_simulation <- function(seafloor, fish_population,
             call. = FALSE)
   }
 
+  if (save_each %% 1 != 0) {
+
+    stop("'save_each' must be a whole number.", call. = FALSE)
+
+  }
+
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 

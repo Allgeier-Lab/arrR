@@ -35,25 +35,41 @@ get_density <- function(result, timestep = result$max_i, plot = FALSE,  base_siz
          call. = FALSE)
   }
 
-  fish_population <- subset(result$fish_population,
-                            timestep <= i, select = c("x", "y"))
-
   # create empty raster
   ras_density <- raster::raster(ext = result$extent, resolution = result$grain)
 
-  # count fish within each cell
-  ras_density <- raster::rasterize(x = result$fish_population[, c("x", "y")],
-                                   y = ras_density,
-                                   fun = "count", background = 0)
+  if (nrow(result$fish_population > 0)) {
 
-  # convert to data frame
-  ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
+    fish_population <- subset(result$fish_population,
+                              timestep <= i, select = c("x", "y"))
 
-  # rename
-  names(ras_density) <- c("x", "y", "density")
+    # count fish within each cell
+    ras_density <- raster::rasterize(x = result$fish_population[, c("x", "y")],
+                                     y = ras_density,
+                                     fun = "count", background = 0)
 
-  # normalize by max_i
-  ras_density$density <- ras_density$density / i
+    # convert to data frame
+    ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
+
+    # rename
+    names(ras_density) <- c("x", "y", "density")
+
+    # normalize by max_i
+    ras_density$density <- ras_density$density / i
+
+  } else {
+
+    # conver to dataframe
+    ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
+
+    # set density to 0
+    ras_density$layer <- 0
+
+    # rename
+    names(ras_density) <- c("x", "y", "density")
+
+
+  }
 
   # return dataframe
   if (!plot) {
