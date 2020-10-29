@@ -118,12 +118,6 @@ run_simulation <- function(seafloor, fish_population,
 
     }
 
-    if (i == (max_i - 1)) {
-
-      print("Break it boy")
-
-    }
-
     # simulate seagrass growth
     seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
                                          parameters = parameters,
