@@ -42,6 +42,7 @@ run_simulation <- function(seafloor, fish_population,
             call. = FALSE)
   }
 
+  # check if save_each is whole number
   if (save_each %% 1 != 0) {
 
     stop("'save_each' must be a whole number.", call. = FALSE)
@@ -55,6 +56,16 @@ run_simulation <- function(seafloor, fish_population,
 
   # convert seafloor as data.frame
   seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+
+  # check if all values are within boundaries
+  if (any(seafloor_values$ag_biomass < parameters$ag_biomass_min, na.rm = TRUE) |
+      any(seafloor_values$bg_biomass < parameters$bg_biomass_min, na.rm = TRUE) |
+      any(seafloor_values$ag_biomass > parameters$ag_biomass_max, na.rm = TRUE) |
+      any(seafloor_values$bg_biomass > parameters$bg_biomass_max, na.rm = TRUE)) {
+
+    stop("Please make sure all starting biomass values are within min/max boundaries.",
+         call. = FALSE)
+  }
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -87,6 +98,8 @@ run_simulation <- function(seafloor, fish_population,
 
     message("> Population with ", n_pop, " individuals.")
 
+    message("> Simulating ", max_i, " simulation iterations; Saving every ", save_each, " iterations.")
+
     message("> One simulation iteration equals ", min_per_i, " minutes.")
 
     message("")
@@ -102,6 +115,12 @@ run_simulation <- function(seafloor, fish_population,
 
       message("\r> ...Progress: ", i, "/", max_i, " simulations runs... \t\t\t",
               appendLF = FALSE)
+
+    }
+
+    if (i == (max_i - 1)) {
+
+      print("Break it boy")
 
     }
 
