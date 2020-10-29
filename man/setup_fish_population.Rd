@@ -4,7 +4,13 @@
 \alias{setup_fish_population}
 \title{setup_fish_population}
 \usage{
-setup_fish_population(seafloor, starting_values, parameters, verbose = TRUE)
+setup_fish_population(
+  seafloor,
+  starting_values,
+  parameters,
+  use_log = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
@@ -12,6 +18,8 @@ setup_fish_population(seafloor, starting_values, parameters, verbose = TRUE)
 \item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{use_log}{Logical if TRUE, random log distribution is used.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

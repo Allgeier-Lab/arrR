@@ -4,14 +4,25 @@
 \alias{calc_size}
 \title{calc_size}
 \usage{
-calc_size(pop_n, pop_mean_size, pop_var_size, pop_a_grunt, pop_b_grunt)
+calc_size(
+  pop_n,
+  pop_mean_size,
+  pop_max_size,
+  pop_var_size,
+  pop_a_grunt,
+  pop_b_grunt,
+  use_log
+)
 }
 \arguments{
 \item{pop_n}{Numeric with starting values for number of individuals.}
 
-\item{pop_mean_size, pop_var_size}{Numeric with parameters for mean size and variance.}
+\item{pop_mean_size, pop_max_size, pop_var_size}{Numeric with parameters for mean size
+and variance.}
 
 \item{pop_a_grunt, pop_b_grunt}{Numeric with parameters for weight calculation.}
+
+\item{use_log}{Logical if TRUE, random log distribution is used.}
 }
 \value{
 vector

@@ -5,6 +5,7 @@
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
+#' @param use_log Logical if TRUE, random log distribution is used.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
@@ -34,7 +35,8 @@
 #' @rdname setup_fish_population
 #'
 #' @export
-setup_fish_population <- function(seafloor, starting_values, parameters, verbose = TRUE) {
+setup_fish_population <- function(seafloor, starting_values, parameters, use_log = TRUE,
+                                  verbose = TRUE) {
 
   n <- starting_values$pop_n
 
@@ -59,9 +61,11 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     # calculate length and weight
     size <- calc_size(pop_n = n,
                       pop_mean_size = parameters$pop_mean_size,
+                      pop_max_size = parameters$pop_max_size,
                       pop_var_size = parameters$pop_var_size,
                       pop_a_grunt = parameters$pop_a_grunt,
-                      pop_b_grunt = parameters$pop_b_grunt)
+                      pop_b_grunt = parameters$pop_b_grunt,
+                      use_log = use_log)
 
     # calculate maximum reserves
     reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves
