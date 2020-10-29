@@ -86,7 +86,7 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
 
   # print result
   cat(paste0("Total simulated time: ", x$max_i * x$min_per_i / 60 / 24, " days\n",
-             "Saved each: ", save_each, " timesteps\n",
+             "Saved each: ", x$save_each, " timesteps\n",
              "Results printed: ", i, " timestep\n",
              "\n",
              "Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
