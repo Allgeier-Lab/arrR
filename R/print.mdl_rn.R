@@ -2,10 +2,10 @@
 #'
 #' @description Printing method for mdl_rn object
 #'
-#' @param x Random patterns.
+#' @param x mdl_rn object.
 #' @param timestep Numeric with timestep to print.
 #' @param digits Numeric of decimal places (round).
-#' @param ... Arguments passed to cat
+#' @param ... Arguments passed to cat.
 #'
 #' @details
 #' Printing method for model run results simulated with \code{\link{run_simulation}}.
@@ -85,7 +85,7 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
   }
 
   # print result
-  cat(paste0("Total simulated time: ", max_i * x$min_per_i / 60 / 24, " days\n",
+  cat(paste0("Total simulated time: ", x$max_i * x$min_per_i / 60 / 24, " days\n",
              "Saved each: ", save_each, " timesteps\n",
              "Results printed: ", i, " timestep\n",
              "\n",
