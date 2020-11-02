@@ -17,8 +17,9 @@ get_neighbors(x, direction = 4, torus = FALSE)
 matrix
 }
 \description{
-Simulate diffusion.
+Internal function to get id of neighbouring cells
 }
 \details{
-Return matrix with cell ids of neighboring cells.
+Return matrix with cell ids of neighboring cells. If \code{torus = TRUE} a neighbors
+are considerd on a torus.
 }

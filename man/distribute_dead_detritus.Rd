@@ -13,7 +13,7 @@ distribute_detritus(seafloor_values, parameters)
 \item{parameters}{List with all model parameters.}
 }
 \value{
-RasterBrick
+data.frame
 }
 \description{
 Redistribute detritus pool

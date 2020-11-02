@@ -1,6 +1,6 @@
 #' check_parameters
 #'
-#' @description Check model parameters
+#' @description Check model parameters and starting values.
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -8,9 +8,9 @@
 #' @details
 #' The function checks if all required starting values and parameters are provided.
 #' If values are missing, a vector with the name of the corresponding values will
-#' be returned.
+#' be returned. If no arguments are provided, a list of all required values is printed
 #'
-#' @return vector
+#' @return void
 #'
 #' @examples
 #' # Add example code

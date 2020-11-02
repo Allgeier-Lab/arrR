@@ -6,7 +6,8 @@
 \alias{arrR-package}
 \title{arrR}
 \description{
-More about what it does (maybe more than one line)
+Individual-based simulation model to analyze how artificial reefs in combination
+with a fish population influence seagrass growth.
 }
 \seealso{
 Useful links:

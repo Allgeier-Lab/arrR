@@ -10,9 +10,6 @@
 #' @details
 #' Printing method for model run results simulated with \code{\link{run_simulation}}.
 #'
-#' @seealso
-#' \code{\link{run_simulation}}
-#'
 #' @examples
 #' # Add example code
 #'

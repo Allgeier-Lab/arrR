@@ -1,6 +1,6 @@
 #' summarize_results
 #'
-#' @description Summarize results
+#' @description Summarize results.
 #'
 #' @param result mdl_rn object of simulation run.
 #'

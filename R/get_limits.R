@@ -1,16 +1,16 @@
 #' get_limits
 #'
-#' @description Get density of fish
+#' @description Get list with min and max values of seafloor for better plotting
 #'
 #' @param result List with results of model run.
 #' @param timestep Integer to specify which timestep is plotted.
 #'
 #' @details
 #' Returns list with minimum and maximum values of several result runs for better
-#' plotting.
+#' plotting. Can be provided to the \code{limits} argument of the
+#' \code{\link{plot.mdl_rn}} function.
 #'
-#' @seealso
-#' \code{\link{run_simulation}}
+#' @return list
 #'
 #' @examples
 #' # Add example code

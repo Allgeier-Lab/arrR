@@ -12,15 +12,15 @@ check_parameters(starting_values = NULL, parameters = NULL)
 \item{parameters}{List with all model parameters.}
 }
 \value{
-vector
+void
 }
 \description{
-Check model parameters
+Check model parameters and starting values.
 }
 \details{
 The function checks if all required starting values and parameters are provided.
 If values are missing, a vector with the name of the corresponding values will
-be returned.
+be returned. If no arguments are provided, a list of all required values is printed
 }
 \examples{
 # Add example code

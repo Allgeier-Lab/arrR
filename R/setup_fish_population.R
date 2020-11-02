@@ -9,12 +9,10 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Function to setup the environment.....
-#' Center of the environment is always set to (0,0).
+#' Function to setup the fish population. If no fish shoud be created, set
+#' \code{starting_values$pop_n = 0}.
 #'
-#' Parameters include ...
-#'
-#' @return data.table
+#' @return data.frame
 #'
 #' @examples
 #' # Add example code

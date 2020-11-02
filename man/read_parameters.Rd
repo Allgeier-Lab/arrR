@@ -4,12 +4,14 @@
 \alias{read_parameters}
 \title{read_parameters}
 \usage{
-read_parameters(file, return_list = TRUE, ...)
+read_parameters(file, sep = ";", return_list = TRUE, ...)
 }
 \arguments{
 \item{file}{String with path to text file.}
 
-\item{return_list}{Logical if true parameters are returned as list.}
+\item{sep}{String with separator of columns.}
+
+\item{return_list}{Logical if TRUE parameters are returned as list.}
 
 \item{...}{Arguments passed on to \code{read.table}.}
 }
@@ -17,10 +19,11 @@ read_parameters(file, return_list = TRUE, ...)
 list
 }
 \description{
-Read parameters from text file
+Read parameters from text file.
 }
 \details{
-Construct a list with all default parameters. columns
+Construct a list with all default parameters. Columns must be named 'parameter' and
+'value'.
 }
 \examples{
 # Add example code

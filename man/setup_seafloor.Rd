@@ -33,14 +33,11 @@ setup_seafloor(
 RasterBrick
 }
 \description{
-Initiate environment
+Initiate environment (seafloor)
 }
 \details{
-Function to setup the environment.....
-Center of the environment is always set to (0,0).
-All biomass values are dry values, nutrient values are g
-
-Parameters include ...
+Function to setup the environment (seafloor). The center of the environment is
+always set to (0,0). All biomass values are dry values, nutrient values are in gram.
 }
 \examples{
 # Add example code

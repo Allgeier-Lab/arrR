@@ -17,11 +17,11 @@ setup_reefs(object, xy, extent)
 RasterBrick
 }
 \description{
-Internal function
+Internal function to setup reefs
 }
 \details{
 Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
-environmental values of AR to 0.
+environmental values of AR to NA/0.
 }
 \examples{
 # Add example code

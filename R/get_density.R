@@ -1,17 +1,15 @@
 #' get_density
 #'
-#' @description Get density of fish
+#' @description Get density of fish occurrence within each raster cell.
 #'
 #' @param result mdl_rn object of simulation run.
-#' @param timestep Integer to specify which timestep is plotted.
-#' @param plot Logical if true result is plotted.
-#' @param base_size Numeric to specify base font size.
+#' @param timestep Integer to specify maximum timestep.
 #'
 #' @details
-#' Return raster with density of fish.
+#' Calculates the fish density for each cells. This means the total count of
+#' fish occurrence within a raster cell is divided by the maximum timestep.
 #'
-#' @seealso
-#' \code{\link{run_simulation}}
+#' @return data.frame
 #'
 #' @examples
 #' # Add example code
@@ -20,7 +18,7 @@
 #' @rdname get_density
 #'
 #' @export
-get_density <- function(result, timestep = result$max_i, plot = FALSE,  base_size = 10) {
+get_density <- function(result, timestep = result$max_i) {
 
   i <- timestep
 
@@ -67,27 +65,5 @@ get_density <- function(result, timestep = result$max_i, plot = FALSE,  base_siz
 
   }
 
-  # return dataframe
-  if (!plot) {
-
-    return(ras_density)
-
-  # return ggplot
-  } else {
-
-    # create plot
-    gg_density <- ggplot2::ggplot(data = ras_density) +
-      ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = density)) +
-      ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
-                                    na.value = "#9B964A", name = "Density") +
-      ggplot2::coord_equal() +
-      ggplot2::theme_classic(base_size = base_size) +
-      ggplot2::labs(title = paste0("Simulation time: ",
-                                   round(i * result$min_per_i / 60 / 24, 1),
-                                   " days\n(Timesteps: ", i, ")")) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
-
-    return(gg_density)
-
-  }
+  return(ras_density)
 }

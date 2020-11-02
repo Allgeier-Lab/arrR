@@ -13,9 +13,6 @@
 #' @details
 #' Plotting method for model run results simulated with \code{\link{run_simulation}}.
 #'
-#' @seealso
-#' \code{\link{run_simulation}}
-#'
 #' @examples
 #' # Add example code
 #'
@@ -201,8 +198,22 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
     # plot fishpopulation
     } else if (what == "fish_population") {
 
-      stop("Currently there is no visualization for the fish population if not summarized.",
-           call. = FALSE)
+      # get seafloor data
+      fish_population <- get_density(x, timestep = i)
+
+      # create plot
+      gg_density <- ggplot2::ggplot(data = fish_population) +
+        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = density)) +
+        ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
+                                      na.value = "#9B964A", name = "Density") +
+        ggplot2::coord_equal() +
+        ggplot2::theme_classic(base_size = base_size) +
+        ggplot2::labs(title = paste0("Simulation time: ",
+                                     round(i * x$min_per_i / 60 / 24, 1),
+                                     " days\n(Timesteps: ", i, ")")) +
+        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+
+      return(gg_density)
 
     # what doesn't make sense
     } else {

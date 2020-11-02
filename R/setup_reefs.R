@@ -1,6 +1,6 @@
 #' setup_reefs
 #'
-#' @description Internal function
+#' @description Internal function to setup reefs
 #'
 #' @param object Raster* object
 #' @param xy 2-Column matrix with coordinates of artificial reefs
@@ -8,7 +8,7 @@
 #'
 #' @details
 #' Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
-#' environmental values of AR to 0.
+#' environmental values of AR to NA/0.
 #'
 #' @return RasterBrick
 #'

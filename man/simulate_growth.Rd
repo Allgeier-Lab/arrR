@@ -29,8 +29,9 @@ simulate_growth(
 data.frame
 }
 \description{
-Simulate movement of population.
+Simulate consumption of fish population.
 }
 \details{
-Function to simulate movement of population individuals.
+Function to simulate consumption, possible mortality, growth and excretion of fish
+population.
 }

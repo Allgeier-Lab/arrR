@@ -1,15 +1,15 @@
 #' convert_nutr
 #'
-#' @description Convert nutrients from g to umol (and vice versa)
+#' @description Internal function to to convert nutrients
 #'
-#' @param x Numeric value to convert
+#' @param x Vector with values to convert
 #' @param to Character specifying unit to convert to. Either "g" (gram) or "um" (micromole).
 #'
 #' @details
 #' Converts the amount of nutrients from gram to micromole or the other way around.
 #' The conversion is based on the molecular mass of NH4.
 #'
-#' @return numeric
+#' @return vector
 #'
 #' @aliases convert_nutr
 #' @rdname convert_nutr

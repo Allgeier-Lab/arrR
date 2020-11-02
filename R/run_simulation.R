@@ -1,9 +1,9 @@
 #' run_simulation
 #'
-#' @description Wrapper functions to run model
+#' @description Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fish_population Data.frame population created with \code{\link{setup_fish_population}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -12,12 +12,11 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) ...
-#' (ii) ...
+#' Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
+#' (ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
+#' (vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
 #'
-#' Parameters include ...
-#'
-#' @return data.frame
+#' @return mdl_rn
 #'
 #' @examples
 #' # Add example code

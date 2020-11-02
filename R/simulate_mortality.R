@@ -2,14 +2,15 @@
 #'
 #' @description Simulate background mortality of population.
 #'
-#' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fish_population,fish_population_track Data frame population created
+#' with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
-#' Function to simulate background mortality of population individuals.
+#' Function to simulate background mortality of fish population individuals.
 #'
 #' @return data.frame
 #'

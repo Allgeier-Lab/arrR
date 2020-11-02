@@ -7,15 +7,15 @@
 convert_nutr(x, to)
 }
 \arguments{
-\item{x}{Numeric value to convert}
+\item{x}{Vector with values to convert}
 
 \item{to}{Character specifying unit to convert to. Either "g" (gram) or "um" (micromole).}
 }
 \value{
-numeric
+vector
 }
 \description{
-Convert nutrients from g to umol (and vice versa)
+Internal function to to convert nutrients
 }
 \details{
 Converts the amount of nutrients from gram to micromole or the other way around.

@@ -15,7 +15,8 @@ simulate_mortality(
 )
 }
 \arguments{
-\item{fish_population, fish_population_track}{Data frame population created with \code{\link{setup_fish_population}}.}
+\item{fish_population, fish_population_track}{Data frame population created
+with \code{\link{setup_fish_population}}.}
 
 \item{seafloor, seafloor_values}{RasterLayer and data.frame with seafloor values.}
 
@@ -32,5 +33,5 @@ data.frame
 Simulate background mortality of population.
 }
 \details{
-Function to simulate background mortality of population individuals.
+Function to simulate background mortality of fish population individuals.
 }

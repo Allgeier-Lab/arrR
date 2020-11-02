@@ -24,16 +24,14 @@ setup_fish_population(
 \item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.table
+data.frame
 }
 \description{
 Initiate fish population.
 }
 \details{
-Function to setup the environment.....
-Center of the environment is always set to (0,0).
-
-Parameters include ...
+Function to setup the fish population. If no fish shoud be created, set
+\code{starting_values$pop_n = 0}.
 }
 \examples{
 # Add example code

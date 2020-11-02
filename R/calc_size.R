@@ -1,6 +1,6 @@
 #' calc_size
 #'
-#' @description Internal function
+#' @description Internal function to calculate size
 #'
 #' @param pop_n Numeric with starting values for number of individuals.
 #' @param pop_mean_size,pop_max_size,pop_var_size Numeric with parameters for mean size
@@ -9,7 +9,7 @@
 #' @param use_log Logical if TRUE, random log distribution is used.
 #'
 #' @details
-#' Internal function to calculate size and weight of individuals.
+#' Internal function to calculate size and weight of fish individuals.
 #'
 #' @return vector
 #'

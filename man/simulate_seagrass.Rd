@@ -16,13 +16,14 @@ simulate_seagrass(seafloor_values, parameters, cells_reef, min_per_i)
 \item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
-RasterBrick
+data.frame
 }
 \description{
 Simulate seagrass.
 }
 \details{
-Function to simulate processes of above ground and below ground seagrass.
+Function to simulate processes of aboveground and belowground seagrass growth and
+slough.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

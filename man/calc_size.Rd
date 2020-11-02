@@ -28,8 +28,8 @@ and variance.}
 vector
 }
 \description{
-Internal function
+Internal function to calculate size
 }
 \details{
-Internal function to calculate size and weight of individuals.
+Internal function to calculate size and weight of fish individuals.
 }

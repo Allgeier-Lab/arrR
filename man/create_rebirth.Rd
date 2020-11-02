@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_rebirth.R
 \name{create_rebirth}
 \alias{create_rebirth}
-\title{rebirth}
+\title{create_rebirth}
 \usage{
 create_rebirth(
   fish_population,
@@ -15,13 +15,13 @@ create_rebirth(
 )
 }
 \arguments{
-\item{fish_population, fish_population_track}{Data frame population created
-with \code{\link{setup_fish_population}}.}
+\item{fish_population, fish_population_track}{Data.frame with current fish population
+and fish population of first time step.}
 
 \item{n_body, want_reserves}{Numeric with parameters to calculate reserves.}
 
 \item{detritus_pool, detritus_dead}{Vector with detritus values at location of
-individual.}
+individuals.}
 
 \item{reason}{Character specifying reason of death ('consumption' or 'background').}
 }
@@ -29,8 +29,9 @@ individual.}
 data.frame
 }
 \description{
-Internal function
+Internal function to create new fish individual
 }
 \details{
-Internal function to create new individual if mortality takes place
+Internal function to create new individual with same starting values as at timestep=0
+if an individual dies.
 }

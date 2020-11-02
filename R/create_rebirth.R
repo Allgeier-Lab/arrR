@@ -1,16 +1,17 @@
-#' rebirth
+#' create_rebirth
 #'
-#' @description Internal function
+#' @description Internal function to create new fish individual
 #'
-#' @param fish_population,fish_population_track Data frame population created
-#' with \code{\link{setup_fish_population}}.
+#' @param fish_population,fish_population_track Data.frame with current fish population
+#' and fish population of first time step.
 #' @param n_body,want_reserves Numeric with parameters to calculate reserves.
 #' @param detritus_pool,detritus_dead Vector with detritus values at location of
-#' individual.
+#' individuals.
 #' @param reason Character specifying reason of death ('consumption' or 'background').
 #'
 #' @details
-#' Internal function to create new individual if mortality takes place
+#' Internal function to create new individual with same starting values as at timestep=0
+#' if an individual dies.
 #'
 #' @return data.frame
 #'

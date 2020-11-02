@@ -11,17 +11,18 @@ get_limits(result, timestep = result[[1]]$max_i)
 
 \item{timestep}{Integer to specify which timestep is plotted.}
 }
+\value{
+list
+}
 \description{
-Get density of fish
+Get list with min and max values of seafloor for better plotting
 }
 \details{
 Returns list with minimum and maximum values of several result runs for better
-plotting.
+plotting. Can be provided to the \code{limits} argument of the
+\code{\link{plot.mdl_rn}} function.
 }
 \examples{
 # Add example code
 
-}
-\seealso{
-\code{\link{run_simulation}}
 }

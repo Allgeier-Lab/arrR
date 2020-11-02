@@ -12,7 +12,7 @@
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
 #' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 #'
-#' @return RasterBrick
+#' @return data.frame
 #'
 #' @aliases distribute_dead_detritus
 #' @rdname distribute_dead_detritus
