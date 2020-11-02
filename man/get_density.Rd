@@ -22,11 +22,7 @@ Get density of fish
 Return raster with density of fish.
 }
 \examples{
-\dontrun{
-
-example code
-
-}
+# Add example code
 
 }
 \seealso{

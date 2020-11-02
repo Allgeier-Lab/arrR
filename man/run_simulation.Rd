@@ -45,10 +45,6 @@ Wrapper function to run model. Executes the following sub-processes (i) ...
 Parameters include ...
 }
 \examples{
-\dontrun{
-
-run_simulation()
-
-}
+# Add example code
 
 }

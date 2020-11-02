@@ -20,11 +20,7 @@
 #' @return data.frame
 #'
 #' @examples
-#' \dontrun{
-#'
-#' run_simulation()
-#'
-#' }
+#' # Add example code
 #'
 #' @aliases run_simulation
 #' @rdname run_simulation

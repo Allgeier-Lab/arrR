@@ -15,11 +15,7 @@
 #' @rdname read_parameters
 #'
 #' @examples
-#' starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-#' parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-#'
-#' starting_values <- read_parameters(file = starting_values, sep = ";")
-#' parameters <- read_parameters(file = parameters, sep = ";")
+#' # Add example code
 #'
 #' @export
 read_parameters <- function(file, return_list = TRUE, ...) {

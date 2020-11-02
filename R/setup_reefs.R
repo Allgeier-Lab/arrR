@@ -12,6 +12,9 @@
 #'
 #' @return RasterBrick
 #'
+#' @examples
+#' # Add example code
+#'
 #' @aliases setup_reefs
 #' @rdname setup_reefs
 #'

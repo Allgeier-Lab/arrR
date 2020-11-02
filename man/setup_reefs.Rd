@@ -23,3 +23,7 @@ Internal function
 Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
 environmental values of AR to 0.
 }
+\examples{
+# Add example code
+
+}

@@ -1,7 +1,7 @@
-Package: coRal
+Package: arrR
 Type: Package
-Title: Individual-based simulation model of coral fish
-Version: 0.1
+Title: Individual-based simulation model of artifical reefs in R
+Version: 0.2.0
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
@@ -16,8 +16,8 @@ Maintainer: Maximillian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
-URL: https://github.com/Allgeier-Lab/coRAL
-BugReports: https://github.com/Allgeier-Lab/coRAL/issues
+URL: https://github.com/Allgeier-Lab/arrR
+BugReports: https://github.com/Allgeier-Lab/arrR/issues
 Depends: R (>= 3.1)
 Imports:
     cowplot,
@@ -30,6 +30,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 LinkingTo: 
     Rcpp
+VignetteBuilder: knitr

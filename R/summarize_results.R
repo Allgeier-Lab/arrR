@@ -10,6 +10,9 @@
 #'
 #' @return data.frame
 #'
+#' @examples
+#' # Add example code
+#'
 #' @aliases summarize_results
 #' @rdname summarize_results
 #'

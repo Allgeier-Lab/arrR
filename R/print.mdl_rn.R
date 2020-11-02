@@ -14,11 +14,7 @@
 #' \code{\link{run_simulation}}
 #'
 #' @examples
-#' \dontrun{
-#'
-#' example code
-#'
-#' }
+#' # Add example code
 #'
 #' @aliases print.mdl_rn
 #' @rdname print.mdl_rn

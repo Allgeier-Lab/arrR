@@ -19,11 +19,7 @@ Returns list with minimum and maximum values of several result runs for better
 plotting.
 }
 \examples{
-\dontrun{
-
-example code
-
-}
+# Add example code
 
 }
 \seealso{

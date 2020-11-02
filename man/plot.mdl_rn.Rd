@@ -36,11 +36,7 @@ Plotting method for mdl_rn object
 Plotting method for model run results simulated with \code{\link{run_simulation}}.
 }
 \examples{
-\dontrun{
-
-example code
-
-}
+# Add example code
 
 }
 \seealso{

@@ -1,11 +1,11 @@
-#' @title coRal
+#' @title arrR
 #'
 #' @description
 #' More about what it does (maybe more than one line)
 #'
-#' @name coRal
+#' @name arrR
 #' @docType package
-#' @useDynLib coRal, .registration = TRUE
+#' @useDynLib arrR, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 "_PACKAGE"
 

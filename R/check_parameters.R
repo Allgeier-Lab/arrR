@@ -13,13 +13,7 @@
 #' @return vector
 #'
 #' @examples
-#' starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-#' parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-#'
-#' starting_values <- read_parameters(file = starting_values, sep = ";")
-#' parameters <- read_parameters(file = parameters, sep = ";")
-#'
-#' check_parameters(starting_values = starting_values, parameters = parameters)
+#' # Add example code
 #'
 #' @aliases check_parameters
 #' @rdname check_parameters
