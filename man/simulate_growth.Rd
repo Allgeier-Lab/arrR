@@ -7,7 +7,9 @@
 simulate_growth(
   fish_population,
   fish_population_track,
+  n_pop,
   seafloor,
+  seafloor_values,
   parameters,
   min_per_i
 )
@@ -15,7 +17,9 @@ simulate_growth(
 \arguments{
 \item{fish_population, fish_population_track}{Data frame population created with \code{\link{setup_fish_population}}.}
 
-\item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
+\item{n_pop}{Numeric with number of individuals.}
+
+\item{seafloor, seafloor_values}{RasterLayer and data.frame with seafloor values.}
 
 \item{parameters}{List with all model parameters.}
 

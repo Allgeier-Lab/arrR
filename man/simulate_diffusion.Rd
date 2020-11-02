@@ -4,10 +4,10 @@
 \alias{simulate_diffusion}
 \title{simulate_diffusion}
 \usage{
-simulate_diffusion(seafloor, cell_adj, parameters)
+simulate_diffusion(seafloor_values, cell_adj, parameters)
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor_values}{Data.frame of seafloor values.}
 
 \item{cell_adj}{2 column matrix with cell adjacencies.}
 

@@ -1,4 +1,4 @@
-#' int_get_neighbors
+#' get_neighbors
 #'
 #' @description Simulate diffusion.
 #'
@@ -11,13 +11,11 @@
 #'
 #' @return matrix
 #'
-#' @aliases int_get_neighbors
-#' @rdname int_get_neighbors
-#'
-#' @keywords internal
+#' @aliases get_neighbors
+#' @rdname get_neighbors
 #'
 #' @export
-int_get_neighbors <- function(x, direction = 4, torus = FALSE) {
+get_neighbors <- function(x, direction = 4, torus = FALSE) {
 
   # get number of cols
   n_ncol <- raster::ncol(x)

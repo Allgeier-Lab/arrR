@@ -4,7 +4,7 @@
 \alias{check_parameters}
 \title{check_parameters}
 \usage{
-check_parameters(starting_values, parameters)
+check_parameters(starting_values = NULL, parameters = NULL)
 }
 \arguments{
 \item{starting_values}{List with all starting value parameters.}

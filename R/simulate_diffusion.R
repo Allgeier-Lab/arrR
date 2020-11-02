@@ -2,7 +2,7 @@
 #'
 #' @description Simulate diffusion.
 #'
-#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor_values Data.frame of seafloor values.
 #' @param cell_adj 2 column matrix with cell adjacencies.
 #' @param parameters List with all model parameters.
 #'
@@ -15,39 +15,25 @@
 #' @rdname simulate_diffusion
 #'
 #' @export
-simulate_diffusion <- function(seafloor, cell_adj, parameters) {
+simulate_diffusion <- function(seafloor_values, cell_adj, parameters) {
 
-  # get id of focal cell and neighboring cell
-  id_from <- cell_adj[, 1]
+  # convert to matrix for rcpp
+  seafloor_values_mat <- cbind(seafloor_values$nutrients_pool,
+                               seafloor_values$detritus_pool,
+                               seafloor_values$detritus_dead)
 
-  id_to <- cell_adj[, 2]
-
-  # randomize row id to avoid strange patterns
-  random_id <- sample(x = 1:length(id_from), size = length(id_from))
-
-  # reorder values
-  id_from[random_id] <- id_from
-
-  id_to[random_id] <- id_to
-
-  # get current values
-  seafloor_values <- raster::values(seafloor)[, c("wc_nutrients", "detritus_pool",
-                                                  "detritus_dead")]
-
-  # get amount of nutrients that are diffused
-  seafloor_diff <- seafloor_values %*% diag(c(parameters$wc_diffusion,
-                                              parameters$detritus_diffusion,
-                                              parameters$detritus_death_diffusion))
-
-  # add diffusion values to neighboring cells
-  seafloor_values[id_to, ] <- seafloor_values[id_to, ] + (seafloor_diff[id_from, ] / 8)
-
-  # remove diffusion values from focal cell
-  seafloor_values <- seafloor_values - (seafloor_diff / 8)
+  # diffuse values and save result
+  values_diffused <- rcpp_diffuse_values(seafloor_values = seafloor_values_mat,
+                                         cell_adj = cell_adj,
+                                         nutrients_diffusion = parameters$nutrients_diffusion,
+                                         detritus_diffusion = parameters$detritus_diffusion,
+                                         detritus_dead_diffusion = parameters$detritus_dead_diffusion)
 
   # update values
-  raster::values(seafloor)[, c("wc_nutrients", "detritus_pool",
-                               "detritus_dead")] <- seafloor_values
+  seafloor_values$nutrients_pool <- values_diffused[, 1]
+  seafloor_values$detritus_pool <- values_diffused[, 2]
+  seafloor_values$detritus_dead <- values_diffused[, 3]
 
-  return(seafloor)
+  return(seafloor_values)
+
 }

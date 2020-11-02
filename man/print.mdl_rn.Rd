@@ -4,14 +4,16 @@
 \alias{print.mdl_rn}
 \title{print.mdl_rn}
 \usage{
-\method{print}{mdl_rn}(x, digits = 4, ...)
+\method{print}{mdl_rn}(x, timestep = x$max_i, digits = 4, ...)
 }
 \arguments{
-\item{x}{Random patterns.}
+\item{x}{mdl_rn object.}
 
-\item{digits}{Number of decimal places (round).}
+\item{timestep}{Numeric with timestep to print.}
 
-\item{...}{Arguments passed to cat}
+\item{digits}{Numeric of decimal places (round).}
+
+\item{...}{Arguments passed to cat.}
 }
 \description{
 Printing method for mdl_rn object

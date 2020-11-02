@@ -2,7 +2,7 @@
 #'
 #' @description Simulate seagrass.
 #'
-#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor_values Data.frame with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param cells_reef Vector with cell ids of AR.
 #' @param min_per_i Integer to specify minutes per i.
@@ -10,112 +10,185 @@
 #' @details
 #' Function to simulate processes of above ground and below ground seagrass.
 #'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#'
 #' @return RasterBrick
 #'
 #' @aliases simulate_seagrass
 #' @rdname simulate_seagrass
 #'
 #' @export
-simulate_seagrass <- function(seafloor, parameters, cells_reef, min_per_i) {
-
-  # get seafloor values
-  seafloor_values <- raster::values(seafloor)
-
-  # convert water coloumn nutrients to umol/l
-  # MH: Why is the value in int_convert_n 18.039?
-  wc_nutrients <- int_convert_n(seafloor_values[, 5], to = "umol") / 10000
-
-  # MH: No need to do this within loop
-  ag_nutrients_thres <- int_convert_n(x = parameters$ag_nutrients_thres,
-                                      to = "umol") / 10000
-
-  # MH: No need to do this within loop
-  bg_nutrients_thres_b <- int_convert_n(x = parameters$bg_nutrients_thres_b,
-                                        to = "umol") / 10000
-
-  # convert wet to dry biomass
-  ag_biomass_dry <- int_convert_dry(x = seafloor_values[, 1],
-                                    what = "above")
-
-  bg_biomass_dry <- int_convert_dry(x = seafloor_values[, 2],
-                                    what = "below")
-
-  # MH: Why is this not a parameter as ag?
-  # MH: 450 is parameter and just converted
-  # MH: No need to do this within loop
-  bg_biomass_max <- (450 + 0.039) / 0.0941
-
-  # Convert to correct tick scale
-  # MH: No need to do this within loop
-  ag_v_max_a <- parameters$ag_v_max_a / 60 * min_per_i
-  ag_v_max_b <- parameters$ag_v_max_b / 60 * min_per_i
-
-  # MH: No need to do this within loop
-  bg_v_max <- parameters$bg_v_max / 60 * min_per_i
-
-  # simulate above ground seagrass
-  seagrass_ag <- int_seagrass_ag(biomass_dry = ag_biomass_dry,
-                                 max_biomass = parameters$ag_biomass_max,
-                                 sigmoid_slope = parameters$ag_sigmoid_slope_a,
-                                 v_max = ag_v_max_a,
-                                 nutrients = wc_nutrients,
-                                 nutrients_thres = ag_nutrients_thres,
-                                 k_max = parameters$ag_k_max_a,
-                                 gamma = parameters$ag_gamma,
-                                 slough_ratio = parameters$ag_slough_ratio,
-                                 slough_detritus_ratio = parameters$slough_detritus_ratio)
-
-  # simulate below ground seagrass
-  seagrass_bg <- int_seagrass_bg(biomass_dry = bg_biomass_dry,
-                                 sigmoid_slope = parameters$bg_sigmoid_slope,
-                                 nutrients = wc_nutrients,
-                                 nutrients_thres_a = parameters$bg_nutrients_thres_a,
-                                 nutrients_thres_b = bg_nutrients_thres_b,
-                                 v_max = bg_v_max,
-                                 k_max = parameters$bg_k_max,
-                                 gamma = parameters$bg_gamma,
-                                 slough_ratio = parameters$bg_slough_ratio,
-                                 slough_detritus_ratio = parameters$slough_detritus_ratio)
-
-  # MH: What is this?
-  seagrass_accl <- int_seagrass_accel(biomass_dry_ag = ag_biomass_dry,
-                                      biomass_dry_bg = bg_biomass_dry,
-                                      biomass_max_bg = bg_biomass_max,
-                                      nutrients = wc_nutrients,
-                                      nutrients_thres = ag_nutrients_thres,
-                                      sigmoid_slope = parameters$ag_sigmoid_slope_b,
-                                      v_max = ag_v_max_b,
-                                      k_max = parameters$ag_k_max_b,
-                                      gamma = parameters$ag_gamma,
-                                      slough_ratio = parameters$ag_slough_ratio,
-                                      slough_detritus_ratio = parameters$slough_detritus_ratio)
+simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i) {
 
   # check if reef cells are available
   if (length(cells_reef) > 0) {
 
     # get current value of reef cells
-    reef_values <- seafloor_values[cells_reef, -6]
+    reef_nutr <- seafloor_values$nutrients_pool[cells_reef]
+    reef_detritus <- seafloor_values$detritus_pool[cells_reef]
+    reef_dead <- seafloor_values$detritus_dead[cells_reef]
 
   }
 
-  # update seafloor values
-  seafloor_values[, c("ag_biomass", "bg_biomass", "detritus_pool", "wc_nutrients")] <-
-    seafloor_values[, c("ag_biomass", "bg_biomass", "detritus_pool", "wc_nutrients")] +
-    cbind((seagrass_ag$biomass_wet + seagrass_accl$biomass_wet),
-          seagrass_bg$biomass_wet,
-          (seagrass_ag$detritus + seagrass_bg$detritus + seagrass_accl$detritus),
-          (seagrass_ag$nutrients + seagrass_bg$nutrients + seagrass_accl$nutrients))
+  # MH: Check what happens if bg nutrients are removed from pool before ag is calc
+
+  # calculate total possible nutrient uptake bg
+  bg_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+                                biomass = seafloor_values$bg_biomass,
+                                v_max = parameters$bg_v_max,
+                                k_m = parameters$bg_k_m,
+                                time_fac = min_per_i / 60)
+
+  # calculate total possible nutrient uptake ag
+  ag_uptake <- calc_nutr_uptake(nutrients = seafloor_values$nutrients_pool,
+                                biomass = seafloor_values$ag_biomass,
+                                v_max = parameters$ag_v_max,
+                                k_m = parameters$ag_k_m,
+                                time_fac = min_per_i / 60)
+
+  # sum total uptake
+  total_uptake_g <- bg_uptake + ag_uptake
+
+  # check if total uptake exceeds total available nutrients
+  total_uptake_g <- ifelse(test = total_uptake_g > seafloor_values$nutrients,
+                           yes = seafloor_values$nutrients, no = total_uptake_g)
+
+  # remove nutrients used for ag and bg growth from water column
+  seafloor_values$nutrients_pool <- seafloor_values$nutrients_pool - total_uptake_g
+
+  # calculate bg detritus modifier
+  bg_modf <- (parameters$bg_biomass_max - seafloor_values$bg_biomass) /
+    (parameters$bg_biomass_max - parameters$bg_biomass_min)
+
+  # calculate ag detritus modifier
+  ag_modf <- (parameters$ag_biomass_max - seafloor_values$ag_biomass) /
+    (parameters$ag_biomass_max - parameters$ag_biomass_min)
+
+  # calculate detritus fraction from bg biomass
+  bg_detritus <- seafloor_values$bg_biomass * (parameters$detritus_ratio * (1 - bg_modf))
+
+  # calculate detritus fraction from ag biomass
+  ag_detritus <- seafloor_values$ag_biomass * (parameters$detritus_ratio * (1 - ag_modf))
+
+  # get cells for bg growth and stable ag biomass
+  bg_growth_id_a <- which(seafloor_values$bg_biomass < parameters$bg_biomass_max &
+                            total_uptake_g >= (ag_detritus * 0.0144))
+
+  # get cells for bg growth only
+  bg_growth_id_b <- which(seafloor_values$bg_biomass < parameters$bg_biomass_max &
+                            total_uptake_g < (ag_detritus * 0.0144))
+
+  # get cells for ag growth and stable bg biomass
+  ag_growth_id_a <- which(seafloor_values$bg_biomass >= parameters$bg_biomass_max &
+                            total_uptake_g >= (bg_detritus * 0.0082))
+
+  # get cells for ag growth only
+  ag_growth_id_b <- which(seafloor_values$bg_biomass >= parameters$bg_biomass_max &
+                            total_uptake_g < (bg_detritus * 0.0082))
+
+  # remove detritus from bg biomass
+  seafloor_values$bg_biomass <- seafloor_values$bg_biomass - bg_detritus
+
+  # remove detritus from ag biomass
+  seafloor_values$ag_biomass <- seafloor_values$ag_biomass - ag_detritus
+
+  # save slough amount nutrients
+  seafloor_values$slough <- seafloor_values$slough +
+    ((bg_detritus * 0.0082) + (ag_detritus * 0.0144))
+
+  # add nutrients to detritus pool
+  seafloor_values$detritus_pool <- seafloor_values$detritus_pool +
+    ((bg_detritus * 0.0082) + (ag_detritus * 0.0144))
+
+  # bg growth and stable ag biomass
+  if (length(bg_growth_id_a) > 0) {
+
+    # add detritus fraction for stable ag biomass
+    seafloor_values$ag_biomass[bg_growth_id_a] <- seafloor_values$ag_biomass[bg_growth_id_a] +
+      ag_detritus[bg_growth_id_a]
+
+    # calculate bg growth with remaining nutrients
+    seafloor_values$bg_biomass[bg_growth_id_a] <- seafloor_values$bg_biomass[bg_growth_id_a] +
+      ((total_uptake_g[bg_growth_id_a] - (ag_detritus[bg_growth_id_a] * 0.0144)) / 0.0082)
+
+  }
+
+  # bg growth only
+  if (length(bg_growth_id_b) > 0) {
+
+    # calculate bg growth for cells with insufficient uptake to equalize ag detritus
+    seafloor_values$bg_biomass[bg_growth_id_b] <- seafloor_values$bg_biomass[bg_growth_id_b] +
+      (total_uptake_g[bg_growth_id_b] / 0.0082)
+
+  }
+
+  # ag growth and stable bg biomass
+  if (length(ag_growth_id_a) > 0) {
+
+    # add detritus fraction for stable bg biomass
+    seafloor_values$bg_biomass[ag_growth_id_a] <- seafloor_values$bg_biomass[ag_growth_id_a] +
+      bg_detritus[ag_growth_id_a]
+
+    # calculate bg growth with remaining nutrients
+    seafloor_values$ag_biomass[ag_growth_id_a] <- seafloor_values$ag_biomass[ag_growth_id_a] +
+      ((total_uptake_g[ag_growth_id_a] - (bg_detritus[ag_growth_id_a] * 0.0082)) / 0.0144)
+
+  }
+
+  # ag growth only
+  if (length(ag_growth_id_b) > 0) {
+
+    # calculate bg growth with remaining nutrients
+    seafloor_values$ag_biomass[ag_growth_id_b] <- seafloor_values$ag_biomass[ag_growth_id_b] +
+      (total_uptake_g[ag_growth_id_b] / 0.0144)
+
+  }
+
+  # check if bg biomass is above max
+  bg_max_id <- which(seafloor_values$bg_biomass > parameters$bg_biomass_max)
+
+  # set to bg biomass to max biomass and add directly to detritus
+  if (length(bg_max_id) > 0) {
+
+    # calculate difference between current and max
+    bg_diff <- seafloor_values$bg_biomass[bg_max_id] - parameters$bg_biomass_max
+
+    # remove difference from biomass
+    seafloor_values$bg_biomass[bg_max_id] <- seafloor_values$bg_biomass[bg_max_id] - bg_diff
+
+    # add nutrients of biomass to detritus pool
+    seafloor_values$detritus_pool[bg_max_id] <- seafloor_values$detritus_pool[bg_max_id] + (bg_diff * 0.0082)
+
+  }
+
+  # check if ag biomass is above max
+  ag_max_id <- which(seafloor_values$ag_biomass > parameters$ag_biomass_max)
+
+  # set to ag biomass to max biomass and add directly to detritus
+  if (length(ag_max_id) > 0) {
+
+    # calculate difference between current and max
+    ag_diff <- seafloor_values$ag_biomass[ag_max_id] - parameters$ag_biomass_max
+
+    # remove difference from biomass
+    seafloor_values$ag_biomass[ag_max_id] <- seafloor_values$ag_biomass[ag_max_id] - ag_diff
+
+    # add nutrients of biomass to detritus pool
+    seafloor_values$detritus_pool[ag_max_id] <- seafloor_values$detritus_pool[ag_max_id] + (ag_diff * 0.0082)
+
+  }
 
   # check if reef cells are available
   if (length(cells_reef) > 0) {
 
     # set reef values to old values
-    seafloor_values[cells_reef, -6] <- reef_values
+    seafloor_values$nutrients_pool[cells_reef] <- reef_nutr
+    seafloor_values$detritus_pool[cells_reef] <- reef_detritus
+    seafloor_values$detritus_dead[cells_reef] <- reef_dead
 
   }
 
-  # update environment RasterBrick
-  raster::values(seafloor) <- seafloor_values
-
-  return(seafloor)
+  return(seafloor_values)
 }

@@ -12,19 +12,14 @@
 #'
 #' @return RasterBrick
 #'
-#' @aliases int_setup_reefs
-#' @rdname int_setup_reefs
-#'
-#' @keywords internal
+#' @aliases setup_reefs
+#' @rdname setup_reefs
 #'
 #' @export
-int_setup_reefs <- function(object, xy, extent) {
+setup_reefs <- function(object, xy, extent) {
 
   # get cell ids of provided coordinates
   cell_ids <- raster::cellFromXY(object = object, xy = xy)
-
-  # set environmental values of AR cells to 0
-  object[cell_ids] <- 0
 
   # add reef layer
   object$reef <- 0
@@ -32,13 +27,19 @@ int_setup_reefs <- function(object, xy, extent) {
   # add reef layer
   object$reef[cell_ids] <- 1
 
-  # conver to matrix
+  # convert to matrix
   object_mat <- as.matrix(raster::as.data.frame(object$reef,
                                                 xy = TRUE), ncol = 3)
 
   # calculate distance value
   object$reef_dist <- rcpp_calc_dist_reef(seafloor = object_mat, coords_reef = xy,
                                           extent = extent, torus = TRUE)
+
+  # set distance to 0 at reef cells
+  object$reef_dist[cell_ids] <- 0
+
+  # set environmental values of AR cells to NA and 0
+  raster::values(object)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)
 
   return(object)
 }

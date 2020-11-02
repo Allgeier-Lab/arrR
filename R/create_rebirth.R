@@ -4,6 +4,7 @@
 #'
 #' @param fish_population,fish_population_track Data frame population created
 #' with \code{\link{setup_fish_population}}.
+#' @param n_body,want_reserves Numeric with parameters to calculate reserves.
 #' @param detritus_pool,detritus_dead Vector with detritus values at location of
 #' individual.
 #' @param reason Character specifying reason of death ('consumption' or 'background').
@@ -13,22 +14,20 @@
 #'
 #' @return data.frame
 #'
-#' @aliases int_rebirth
-#' @rdname int_rebirth
-#'
-#' @keywords internal
+#' @aliases create_rebirth
+#' @rdname create_rebirth
 #'
 #' @export
-int_rebirth <- function(fish_population, fish_population_track,
-                        n_body, detritus_pool, detritus_dead, reason) {
+create_rebirth <- function(fish_population, fish_population_track, n_body,
+                           want_reserves, detritus_pool, detritus_dead, reason) {
 
   # get starting values of individual
-  fish_population_start <- subset(fish_population_track,
-                                  id == fish_population$id)
+  fish_population_start <- fish_population_track[fish_population_track$id ==
+                                                   fish_population$id, ]
 
   # # calculate mass difference + reserves
   mass_diff <- (fish_population$weight - fish_population_start$weight) *
-    parameters$pop_n_body + fish_population$reserves
+    n_body + fish_population$reserves
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff
@@ -39,9 +38,8 @@ int_rebirth <- function(fish_population, fish_population_track,
   # create new individual
   fish_population <- fish_population_start
 
-  # divide starting reserves by 5 because here the formula is multiplied
-  # by 0.01 and 0.05 as during setup
-  reserves_wanted <- parameters$pop_n_body * fish_population$weight * 0.01
+  # calculate wanted reserves
+  reserves_wanted <- n_body * fish_population$weight * want_reserves
 
   # if more reserves are wanted than available, all are used
   if (reserves_wanted >= detritus_pool) {
@@ -50,7 +48,7 @@ int_rebirth <- function(fish_population, fish_population_track,
 
     detritus_pool <- 0
 
-    # pool is larger than what is wanted, so only subset is used
+  # pool is larger than what is wanted, so only subset is used
   } else {
 
     fish_population$reserves <- reserves_wanted

@@ -11,6 +11,7 @@ run_simulation(
   reef_attraction,
   max_i,
   min_per_i,
+  save_each = 1,
   verbose = TRUE
 )
 }
@@ -26,6 +27,8 @@ run_simulation(
 \item{max_i}{Integer with maximum number of simulation time steps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
+
+\item{save_each}{Numeric how often data should be saved to return.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }
