@@ -31,8 +31,8 @@ simulate_growth <- function(fish_population, fish_population_track,
 
   # calculate consumption requirements
   fish_population$consumption_req <-
-    (fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
-    0.55 * parameters$pop_n_body
+    ((fish_population$growth_weight + fish_population$respiration * fish_population$weight) /
+    0.55) * parameters$pop_n_body
 
   # get detritus/nutrient pools at location and raster cells
   cell_id <- raster::cellFromXY(object = seafloor,

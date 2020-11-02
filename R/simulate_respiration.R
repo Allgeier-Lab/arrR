@@ -37,7 +37,8 @@ simulate_respiration <- function(fish_population, parameters, water_temp, min_pe
   temp_dependence <- v_resp ^ x_resp * exp(x_resp * (1 - v_resp))
 
   # calculate respiration
-  # MH: Why multiplied by 13560 etc.?
+  # Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
+  # to result in unit of tick^-1
   respiration <- (resp_intercept * fish_population$weight ^ parameters$resp_slope *
                     temp_dependence * fish_population$activity) * 13560 * (1 / 4800)
 
