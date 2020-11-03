@@ -29,8 +29,8 @@
 #' @export
 calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_fac) {
 
-  # convert water column nutrients to umol/l
-  nutrients_umol <- convert_nutr(nutrients, to = "umol") / 10000
+  # convert water column nutrients to umol/l -> 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
+  nutrients_umol <- convert_nutr(nutrients, to = "umol") / (1000 * 3)
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)

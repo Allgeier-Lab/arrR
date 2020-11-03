@@ -23,8 +23,8 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
 
   # calculate growth in length and weight
   fish_population$growth_length <- parameters$pop_k_grunt *
-    (1 / 365) * (1 / 24) * (1 / 60 ) *
-    min_per_i * (parameters$pop_linf_grunt - fish_population$length)
+    (1 / 365) * (1 / 24) * (1 / 60) * min_per_i *
+    (parameters$pop_linf_grunt - fish_population$length)
 
   fish_population$growth_weight <- parameters$pop_a_grunt *
     ((fish_population$length + fish_population$growth_length) ^ parameters$pop_b_grunt -
