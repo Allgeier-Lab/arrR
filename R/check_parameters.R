@@ -44,7 +44,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL) {
                            "bg_reduction",
                            "nutrients_diffusion",
                            "detritus_ratio",
-                           "detritus_decomposition",
+                           "detritus_mineralization",
                            "detritus_diffusion",
                            "detritus_dead_diffusion",
                            "detritus_dead_decomp",

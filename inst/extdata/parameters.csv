@@ -13,7 +13,7 @@
 "bg_reduction";1
 "nutrients_diffusion";0.6
 "detritus_ratio";0.01
-"detritus_decomposition";0.001
+"detritus_mineralization";0.001
 "detritus_diffusion";0.3
 "detritus_dead_diffusion";0.3
 "detritus_dead_decomp";0.6
