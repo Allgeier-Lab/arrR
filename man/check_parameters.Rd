@@ -4,12 +4,14 @@
 \alias{check_parameters}
 \title{check_parameters}
 \usage{
-check_parameters(starting_values = NULL, parameters = NULL)
+check_parameters(starting_values = NULL, parameters = NULL, verbose = TRUE)
 }
 \arguments{
 \item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
 void

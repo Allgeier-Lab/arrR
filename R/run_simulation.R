@@ -30,6 +30,18 @@ run_simulation <- function(seafloor, fish_population,
                            max_i, min_per_i, save_each = 1,
                            verbose = TRUE) {
 
+  # check parameters
+  param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
+                             warning = function(wrn) wrn)
+
+  # stop with error
+  if (length(param_warnings$message) > 0) {
+
+    stop(param_warnings$message, call. = FALSE)
+
+  }
+
+
   # check if max_i can be divided by provided save_each without reminder
   if (max_i %% save_each != 0) {
 
