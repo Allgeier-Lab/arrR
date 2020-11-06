@@ -1,3 +1,8 @@
+# arrR 0.2.2
+
+* Better plotting labels
+* Renamed `parameters$detritus_decomposition` to `parameter$detritus_mineralization`
+
 # arrR 0.2.1
 
 * Reworked seagrass growth
