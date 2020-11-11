@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# coRal
+# arrR
 
 <!-- badges: start -->
 
@@ -14,19 +14,18 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
-The goal of coRal is to …
+The goal of arrR is to …
 
 ## Installation
 
-You can install coRal from
-[GitHub](https://github.com/Allgeier-Lab/coRal) with the following line
-of code. You will need the `auth_token` because the repository is
-currently set to private so only members of the Allgeier Lab can see it.
-**PLEASE DON’T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW
-FIRST**.
+You can install arrR from [GitHub](https://github.com/Allgeier-Lab/arrR)
+with the following line of code. You will need the `auth_token` because
+the repository is currently set to private so only members of the
+Allgeier Lab can see it. **PLEASE DON’T SHARE THIS TOKEN WITH ANYONE
+WITHOUT LETTING ME KNOW FIRST**.
 
 ``` r
-remotes::install_github("Allgeier-Lab/coRAL", 
+remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
                         auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
 ```
 
@@ -37,7 +36,7 @@ remotes::install_github("Allgeier-Lab/coRAL",
 To access all functions to run the mode, simply load the library.
 
 ``` r
-library(coRal)
+library(arrR)
 library(patchwork) # needed for plotting
 ```
 
@@ -52,8 +51,8 @@ the actual values.
 To check if all parameters are available, use `check_parameters`.
 
 ``` r
-starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-parameters <- system.file("extdata", "parameters.csv", package = "coRal")
+starting_values <- system.file("extdata", "starting_values.csv", package = "arrR")
+parameters <- system.file("extdata", "parameters.csv", package = "arrR")
 
 starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
@@ -92,7 +91,7 @@ of time steps that are simulated.
 min_per_i <- 120
 
 # run the model for three years
-max_i <- (60 * 24 * 365 * 3) / min_per_i
+max_i <- (60 * 24 * 365 * 1) / min_per_i
 
 result <- run_simulation(seafloor = input_seafloor, 
                          fish_population = input_fish_population,
@@ -102,17 +101,19 @@ result <- run_simulation(seafloor = input_seafloor,
                          verbose = FALSE)
 
 result
-#> Total simulated time: 1095 days
+#> Total simulated time: 365 days
+#> Saved each: 1 timesteps
+#> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 49.38, 153.2829, 0.377, 2.4942, 0
-#> Mean: 50.2317, 153.9806, 0.3859, 2.6185, 0
-#> Maximum: 54.4129, 157.4481, 0.4401, 2.6431, 0
+#> Minimum: 52.2737, 145.1707, 0.3735, 2.646, 0
+#> Mean:        52.5178, 146.1845, 0.3775, 2.7216, 0
+#> Maximum: 54.1012, 150.4948, 0.4094, 2.7333, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 21.0697, 184.8713, 0, 0
-#> Mean: 23.6703, 270.4295, 0, 0
-#> Maximum: 27.4059, 424.4321, 0, 0
+#> Minimum: 10.4274, 20.0099, 0, 0
+#> Mean:        14.9959, 86.8897, 0, 0
+#> Maximum: 32.2559, 710.3942, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
@@ -122,10 +123,7 @@ the whole `RasterBrick`
 
 ``` r
 
-gg_ag_biomass <- plot(result, fill = "ag_biomass")
-gg_bg_biomass <- plot(result, fill = "bg_biomass")
-
-gg_ag_biomass + gg_bg_biomass + plot_layout(ncol = 2)
+plot(result, what = "seafloor")
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" style="display: block; margin: auto;" />
@@ -140,7 +138,7 @@ gg_ag_biomass + gg_bg_biomass + plot_layout(ncol = 2)
 
 ### Code of Conduct
 
-Please note that the coRal project is released with a [Contributor Code
+Please note that the arrR project is released with a [Contributor Code
 of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

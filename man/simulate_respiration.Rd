@@ -19,8 +19,13 @@ simulate_respiration(fish_population, parameters, water_temp, min_per_i)
 data.frame
 }
 \description{
-Simulate movement of population.
+Simulate respiration of population.
 }
 \details{
-Function to simulate movement of population individuals.
+Function to simulate respiration of fish population individuals.
+}
+\references{
+Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+Centre for Limnology, Madison,USA.
 }

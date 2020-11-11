@@ -1,9 +1,9 @@
 #' run_simulation
 #'
-#' @description Wrapper functions to run model
+#' @description Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fish_population Data.frame population created with \code{\link{setup_fish_population}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -12,19 +12,14 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) ...
-#' (ii) ...
+#' Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
+#' (ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
+#' (vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
 #'
-#' Parameters include ...
-#'
-#' @return data.frame
+#' @return mdl_rn
 #'
 #' @examples
-#' \dontrun{
-#'
-#' run_simulation()
-#'
-#' }
+#' # Add example code
 #'
 #' @aliases run_simulation
 #' @rdname run_simulation
@@ -34,6 +29,18 @@ run_simulation <- function(seafloor, fish_population,
                            parameters, reef_attraction,
                            max_i, min_per_i, save_each = 1,
                            verbose = TRUE) {
+
+  # check parameters
+  param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
+                             warning = function(wrn) wrn)
+
+  # stop with error
+  if (length(param_warnings$message) > 0) {
+
+    stop(param_warnings$message, call. = FALSE)
+
+  }
+
 
   # check if max_i can be divided by provided save_each without reminder
   if (max_i %% save_each != 0) {

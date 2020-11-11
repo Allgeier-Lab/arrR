@@ -1,6 +1,6 @@
 #' simulate_respiration
 #'
-#' @description Simulate movement of population.
+#' @description Simulate respiration of population.
 #'
 #' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
 #' @param parameters List with all model parameters.
@@ -8,7 +8,12 @@
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
-#' Function to simulate movement of population individuals.
+#' Function to simulate respiration of fish population individuals.
+#'
+#' @references
+#' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+#' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+#' Centre for Limnology, Madison,USA.
 #'
 #' @return data.frame
 #'

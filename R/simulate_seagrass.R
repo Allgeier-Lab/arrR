@@ -8,13 +8,14 @@
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
-#' Function to simulate processes of above ground and below ground seagrass.
+#' Function to simulate processes of aboveground and belowground seagrass growth and
+#' slough.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
 #' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 #'
-#' @return RasterBrick
+#' @return data.frame
 #'
 #' @aliases simulate_seagrass
 #' @rdname simulate_seagrass

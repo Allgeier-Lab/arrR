@@ -1,6 +1,6 @@
 #' summarize_results
 #'
-#' @description Summarize results
+#' @description Summarize results.
 #'
 #' @param result mdl_rn object of simulation run.
 #'
@@ -9,6 +9,9 @@
 #'
 #'
 #' @return data.frame
+#'
+#' @examples
+#' # Add example code
 #'
 #' @aliases summarize_results
 #' @rdname summarize_results
@@ -40,7 +43,7 @@ summarize_results <- function(result) {
   seafloor <- rbind(seafloor_min, seafloor_mean, seafloor_max)
 
   seafloor$summary <- rep(x = c("min", "mean", "max"),
-                          each = (result$max_i / result$save_each) + 1)
+                          each = nrow(seafloor) / 3)
 
   if (nrow(result$fish_population > 0)) {
 
@@ -71,7 +74,7 @@ summarize_results <- function(result) {
     fish_population <- rbind(fish_population_min, fish_population_mean, fish_population_max)
 
     fish_population$summary <- rep(x = c("min", "mean", "max"),
-                                   each = (result$max_i / result$save_each) + 1)
+                                   each = nrow(fish_population) / 3)
 
   # no fish present
   } else {

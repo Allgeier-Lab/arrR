@@ -3,13 +3,14 @@
 #' @description Simulate diffusion.
 #'
 #' @param seafloor_values Data.frame of seafloor values.
-#' @param cell_adj 2 column matrix with cell adjacencies.
+#' @param cell_adj 2-column matrix with cell adjacencies.
 #' @param parameters List with all model parameters.
 #'
 #' @details
-#' A certain share of each cell value is diffused to its 8 neighboring cells.
+#' A certain share of each cell value, specified by the diffusion parameters, is
+#' diffused to its 8 neighboring cells.
 #'
-#' @return RasterBrick
+#' @return data.frame
 #'
 #' @aliases simulate_diffusion
 #' @rdname simulate_diffusion

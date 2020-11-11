@@ -22,13 +22,6 @@ Printing method for mdl_rn object
 Printing method for model run results simulated with \code{\link{run_simulation}}.
 }
 \examples{
-\dontrun{
+# Add example code
 
-example code
-
-}
-
-}
-\seealso{
-\code{\link{run_simulation}}
 }

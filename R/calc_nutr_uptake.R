@@ -2,13 +2,16 @@
 #'
 #' @description Internal function to calculate nutrient uptake
 #'
-#' @param nutrients Add info about parameter.
-#' @param biomass Add info about parameter.
-#' @param v_max,k_m Add info about parameter.
-#' @param time_fac Add info about parameter.
+#' @param nutrients Vector with nutrients pool values.
+#' @param biomass Vector with biomass values.
+#' @param v_max,k_m Parameters of Michaelis–Menten model.
+#' @param time_fac Numeric that specifies time period one iteration corresponds to.
 #'
 #' @details
-#' Add details
+#' Calculates the nutrient uptake for a given nutrients concentration in the water
+#' column and biomass. The total uptake is based on the Michaelis–Menten model which
+#' describes the acutal uptake in relation to the total possible uptake based on
+#' the nutrient concentration.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
@@ -24,11 +27,10 @@
 #' @rdname calc_nutr_uptake
 #'
 #' @export
-calc_nutr_uptake <- function(nutrients, biomass,
-                                 v_max, k_m, time_fac) {
+calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_fac) {
 
-  # convert water column nutrients to umol/l
-  nutrients_umol <- convert_nutr(nutrients, to = "umol") / 10000
+  # convert water column nutrients to umol/l -> 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
+  nutrients_umol <- convert_nutr(nutrients, to = "umol") / (1000 * 3)
 
   # calculate bg and ag uptake depending on nutrients and biomass
   # convert uptake parameters to correct tick scale (from per h to day)

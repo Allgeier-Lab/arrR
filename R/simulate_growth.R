@@ -1,6 +1,6 @@
 #' simulate_growth
 #'
-#' @description Simulate movement of population.
+#' @description Simulate consumption of fish population.
 #'
 #' @param fish_population,fish_population_track Data frame population created with \code{\link{setup_fish_population}}.
 #' @param n_pop Numeric with number of individuals.
@@ -9,7 +9,8 @@
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
-#' Function to simulate movement of population individuals.
+#' Function to simulate consumption, possible mortality, growth and excretion of fish
+#' population.
 #'
 #' @return data.frame
 #'
@@ -17,13 +18,13 @@
 #' @rdname simulate_growth
 #'
 #' @export
-simulate_growth <- function(fish_population, fish_population_track,
-                            n_pop, seafloor, seafloor_values, parameters, min_per_i) {
+simulate_growth <- function(fish_population, fish_population_track, n_pop,
+                            seafloor, seafloor_values, parameters, min_per_i) {
 
   # calculate growth in length and weight
   fish_population$growth_length <- parameters$pop_k_grunt *
-    (1 / 365) * (1 / 24) * (1 / 60 ) *
-    min_per_i * (parameters$pop_linf_grunt - fish_population$length)
+    (1 / 365) * (1 / 24) * (1 / 60) * min_per_i *
+    (parameters$pop_linf_grunt - fish_population$length)
 
   fish_population$growth_weight <- parameters$pop_a_grunt *
     ((fish_population$length + fish_population$growth_length) ^ parameters$pop_b_grunt -

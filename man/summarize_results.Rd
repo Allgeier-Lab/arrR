@@ -13,8 +13,12 @@ summarize_results(result)
 data.frame
 }
 \description{
-Summarize results
+Summarize results.
 }
 \details{
 Function to summarize results for each timestep.
+}
+\examples{
+# Add example code
+
 }

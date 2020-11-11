@@ -1,6 +1,6 @@
 #' setup_envir_values
 #'
-#' @description Internal function
+#' @description Internal function to setup environmental values
 #'
 #' @param seafloor Raster* object.
 #' @param ag_biomass,bg_biomass,nutrients_pool Numeric with starting values.
@@ -10,14 +10,14 @@
 #' @details
 #' Internal function to set biomass cell values of non-ARs cells.
 #'
-#' @return vector
+#' @return RasterBrick
 #'
 #' @aliases setup_envir_values
 #' @rdname setup_envir_values
 #'
 #' @export
 setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
-                                   nutrients_pool, detritus_pool, random) {
+                               nutrients_pool, detritus_pool, random) {
 
   # get number of cells
   n_cells <- raster::ncell(seafloor)

@@ -12,7 +12,7 @@
 #' @param parameters List with all model parameters.
 #'
 #' @details
-#' Function to simulate movement of population individuals.
+#' Function to simulate movement of fish population individuals.
 #'
 #' @return data.frame
 #'

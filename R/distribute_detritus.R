@@ -12,7 +12,7 @@
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
 #' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 #'
-#' @return RasterBrick
+#' @return data.frame
 #'
 #' @aliases distribute_dead_detritus
 #' @rdname distribute_dead_detritus
@@ -29,13 +29,13 @@ distribute_detritus <- function(seafloor_values, parameters) {
   seafloor_values$detritus_dead <- seafloor_values$detritus_dead - dead_decompostion
 
   # get detritus amount that goes into nutrients pool
-  decomposition <- seafloor_values$detritus_pool * parameters$detritus_decomposition
+  mineralization <- seafloor_values$detritus_pool * parameters$detritus_mineralization
 
   # add to nutrients pool
-  seafloor_values$nutrients_pool <- seafloor_values$nutrients_pool + decomposition
+  seafloor_values$nutrients_pool <- seafloor_values$nutrients_pool + mineralization
 
   # remove from detritus pool
-  seafloor_values$detritus_pool <- seafloor_values$detritus_pool - decomposition
+  seafloor_values$detritus_pool <- seafloor_values$detritus_pool - mineralization
 
   return(seafloor_values)
 }

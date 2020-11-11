@@ -38,5 +38,5 @@ data.frame
 Simulate movement of population.
 }
 \details{
-Function to simulate movement of population individuals.
+Function to simulate movement of fish population individuals.
 }

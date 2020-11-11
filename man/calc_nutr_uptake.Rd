@@ -7,13 +7,13 @@
 calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_fac)
 }
 \arguments{
-\item{nutrients}{Add info about parameter.}
+\item{nutrients}{Vector with nutrients pool values.}
 
-\item{biomass}{Add info about parameter.}
+\item{biomass}{Vector with biomass values.}
 
-\item{v_max, k_m}{Add info about parameter.}
+\item{v_max, k_m}{Parameters of Michaelis–Menten model.}
 
-\item{time_fac}{Add info about parameter.}
+\item{time_fac}{Numeric that specifies time period one iteration corresponds to.}
 }
 \value{
 vector
@@ -22,7 +22,10 @@ vector
 Internal function to calculate nutrient uptake
 }
 \details{
-Add details
+Calculates the nutrient uptake for a given nutrients concentration in the water
+column and biomass. The total uptake is based on the Michaelis–Menten model which
+describes the acutal uptake in relation to the total possible uptake based on
+the nutrient concentration.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

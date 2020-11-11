@@ -23,10 +23,10 @@ setup_envir_values(
 \item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
 }
 \value{
-vector
+RasterBrick
 }
 \description{
-Internal function
+Internal function to setup environmental values
 }
 \details{
 Internal function to set biomass cell values of non-ARs cells.

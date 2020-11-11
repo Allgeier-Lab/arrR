@@ -1,11 +1,12 @@
-#' @title coRal
+#' @title arrR
 #'
 #' @description
-#' More about what it does (maybe more than one line)
+#' Individual-based simulation model to analyze how artificial reefs in combination
+#' with a fish population influence seagrass growth.
 #'
-#' @name coRal
+#' @name arrR
 #' @docType package
-#' @useDynLib coRal, .registration = TRUE
+#' @useDynLib arrR, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 "_PACKAGE"
 

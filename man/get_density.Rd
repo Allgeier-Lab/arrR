@@ -4,31 +4,24 @@
 \alias{get_density}
 \title{get_density}
 \usage{
-get_density(result, timestep = result$max_i, plot = FALSE, base_size = 10)
+get_density(result, timestep = result$max_i)
 }
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
 
-\item{timestep}{Integer to specify which timestep is plotted.}
-
-\item{plot}{Logical if true result is plotted.}
-
-\item{base_size}{Numeric to specify base font size.}
+\item{timestep}{Integer to specify maximum timestep.}
+}
+\value{
+data.frame
 }
 \description{
-Get density of fish
+Get density of fish occurrence within each raster cell.
 }
 \details{
-Return raster with density of fish.
+Calculates the fish density for each cells. This means the total count of
+fish occurrence within a raster cell is divided by the maximum timestep.
 }
 \examples{
-\dontrun{
+# Add example code
 
-example code
-
-}
-
-}
-\seealso{
-\code{\link{run_simulation}}
 }

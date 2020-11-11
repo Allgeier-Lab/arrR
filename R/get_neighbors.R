@@ -1,13 +1,14 @@
 #' get_neighbors
 #'
-#' @description Simulate diffusion.
+#' @description Internal function to get id of neighbouring cells
 #'
 #' @param x RasterLayer.
 #' @param direction Integer specifying if 4 or 8 neighborhood rule should be applied.
 #' @param torus If TRUE RasterLayer is treated as torus.
 #'
 #' @details
-#' Return matrix with cell ids of neighboring cells.
+#' Return matrix with cell ids of neighboring cells. If \code{torus = TRUE} a neighbors
+#' are considerd on a torus.
 #'
 #' @return matrix
 #'

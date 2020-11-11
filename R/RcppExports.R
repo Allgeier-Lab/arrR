@@ -22,7 +22,7 @@
 #'
 #' @keywords export
 rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
-    .Call(`_coRal_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
+    .Call(`_arrR_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
 #' rcpp_diffuse_values
@@ -42,6 +42,6 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @export
 rcpp_diffuse_values <- function(seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
-    .Call(`_coRal_rcpp_diffuse_values`, seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion)
+    .Call(`_arrR_rcpp_diffuse_values`, seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion)
 }
 
