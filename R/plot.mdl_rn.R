@@ -51,6 +51,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = ag_biomass,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -62,6 +63,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = bg_biomass,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -73,6 +75,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = nutrients_pool,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -84,6 +87,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = detritus_pool,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
