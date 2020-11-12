@@ -22,22 +22,27 @@
 create_rebirth <- function(fish_population, fish_population_track, n_body,
                            want_reserves, detritus_pool, detritus_dead, reason) {
 
+  # extract values that could not be overwritten
+  fish_population_coords <- fish_population[, c("x", "y")]
+
+  counter_died <- fish_population[, c("died_consumption", "died_background")]
+
   # get starting values of individual
   fish_population_start <- fish_population_track[fish_population_track$id ==
                                                    fish_population$id, ]
 
-  # # calculate mass difference + reserves
+  # calculate mass difference + reserves
   mass_diff <- (fish_population$weight - fish_population_start$weight) *
     n_body + fish_population$reserves
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff
 
-  # get death counter
-  counter_died <- fish_population[, c("died_consumption", "died_background")]
-
   # create new individual
   fish_population <- fish_population_start
+
+  # keep old coordinates
+  fish_population[, c("x", "y")] <- fish_population_coords
 
   # calculate wanted reserves
   reserves_wanted <- n_body * fish_population$weight * want_reserves
@@ -63,7 +68,11 @@ create_rebirth <- function(fish_population, fish_population_track, n_body,
 
     fish_population$died_consumption <- counter_died[[1]] + 1
 
+    fish_population$died_background <- counter_died[[2]]
+
   } else if (reason == "background") {
+
+    fish_population$died_consumption <- counter_died[[1]]
 
     fish_population$died_background <- counter_died[[2]] + 1
 
