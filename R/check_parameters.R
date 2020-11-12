@@ -35,7 +35,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "ag_biomass_min",
                            "ag_v_max",
                            "ag_k_m",
-                           "ag_sigmoid_slope",
                            "ag_reduction",
                            "bg_biomass_max",
                            "bg_biomass_min",

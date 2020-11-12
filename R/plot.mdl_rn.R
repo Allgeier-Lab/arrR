@@ -20,7 +20,7 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits = NULL,
+plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$max_i, limits = NULL,
                         base_size = 10, ...) {
 
   i <- timestep
@@ -172,7 +172,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = ag_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$ag_biomass,
-                                      name = "Dry weight\nag biomass [g/cell]") +
+                                      name = "Dry weight ag\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
@@ -183,7 +183,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = bg_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$bg_biomass,
-                                      name = "Dry weight\nbg biomass [g/cell]") +
+                                      name = "Dry weight bg\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
