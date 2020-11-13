@@ -73,11 +73,9 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
 
   # calculate detritus fraction from bg biomass
   bg_detritus <- seafloor_values$bg_biomass * (parameters$detritus_ratio * (1 - bg_modf))
-  # bg_detritus <- seafloor_values$bg_biomass * parameters$detritus_ratio
 
   # calculate detritus fraction from ag biomass
   ag_detritus <- seafloor_values$ag_biomass * (parameters$detritus_ratio * (1 - ag_modf))
-  # ag_detritus <- seafloor_values$ag_biomass * parameters$detritus_ratio
 
   # calculate nutrients of total detritus
   total_detritus <- (bg_detritus * 0.0082) + (ag_detritus * 0.0144)
