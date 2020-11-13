@@ -41,7 +41,6 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-
   # check if max_i can be divided by provided save_each without reminder
   if (max_i %% save_each != 0) {
 
@@ -56,23 +55,13 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
+  # convert seafloor as data.frame
+  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   fish_population_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # convert seafloor as data.frame
-  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
-
-  # check if all values are within boundaries
-  if (any(seafloor_values$ag_biomass < parameters$ag_biomass_min, na.rm = TRUE) |
-      any(seafloor_values$bg_biomass < parameters$bg_biomass_min, na.rm = TRUE) |
-      any(seafloor_values$ag_biomass > parameters$ag_biomass_max, na.rm = TRUE) |
-      any(seafloor_values$bg_biomass > parameters$bg_biomass_max, na.rm = TRUE)) {
-
-    stop("Please make sure all starting biomass values are within min/max boundaries.",
-         call. = FALSE)
-  }
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -91,6 +80,9 @@ run_simulation <- function(seafloor, fish_population,
   # get number of individuals
   n_pop <- nrow(fish_population)
 
+  # inverse of threshold parameter because easier to calc later
+  parameters$bg_thres <- 1 - parameters$bg_thres
+
   # save input_data as first list element
   seafloor_track[[1]] <- seafloor_values
 
@@ -98,8 +90,6 @@ run_simulation <- function(seafloor, fish_population,
 
   # print some basic information about model run
   if (verbose) {
-
-    message("> Using '", deparse(substitute(parameters)), "' as parameter list.")
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
