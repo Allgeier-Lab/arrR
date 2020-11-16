@@ -58,6 +58,10 @@ run_simulation <- function(seafloor, fish_population,
   # convert seafloor as data.frame
   seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
 
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fish_population = fish_population)
+
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
@@ -217,7 +221,7 @@ run_simulation <- function(seafloor, fish_population,
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 parameters = parameters, max_i = max_i, min_per_i = min_per_i,
+                 starting_values = starting_values, parameters = parameters, max_i = max_i, min_per_i = min_per_i,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor))
 
   # set class of result
