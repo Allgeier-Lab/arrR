@@ -95,19 +95,19 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
   # check in which cells nutrients used for bg growth only
   # i) bg biomass below threshold, but uptake not enough to keep bg/ag stable
   # ii) bg biomass above threshold, but uptake not enough to keep bg stable
-  id_bg_growth_only <- c(which(bg_modf > parameters$bg_thres &
+  id_bg_growth_only <- c(which(bg_modf > (1 - parameters$bg_thres) &
                                  total_uptake_g <= total_detritus),
-                         which(bg_modf <= parameters$bg_thres &
+                         which(bg_modf <= (1 - parameters$bg_thres) &
                                  total_uptake_g <= (bg_detritus * 0.0082)))
 
   # check in which cells nutrients used for bg growth and stable ag biomass
   # iii) bg biomass below threshold and uptake large enough to keep bg/ag stable
-  id_bg_growth <- which(bg_modf > parameters$bg_thres &
+  id_bg_growth <- which(bg_modf > (1 - parameters$bg_thres) &
                           total_uptake_g > total_detritus)
 
   # check in which cells nutrients are shared between ag and bg
   # iv) bg biomass above threshold and uptake large enough to keep bg stable
-  id_shared_growth <- which(bg_modf <= parameters$bg_thres &
+  id_shared_growth <- which(bg_modf <= (1 - parameters$bg_thres) &
                               total_uptake_g > (bg_detritus * 0.0082))
 
   # only nutrients for bg growth

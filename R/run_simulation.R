@@ -84,9 +84,6 @@ run_simulation <- function(seafloor, fish_population,
   # get number of individuals
   n_pop <- nrow(fish_population)
 
-  # inverse of threshold parameter because easier to calc later
-  parameters$bg_thres <- 1 - parameters$bg_thres
-
   # save input_data as first list element
   seafloor_track[[1]] <- seafloor_values
 
