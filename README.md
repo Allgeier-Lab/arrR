@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# arrR
+# *arrR*
 
 <!-- badges: start -->
 
@@ -9,14 +9,15 @@
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- badges: end -->
 
-The goal of arrR is to …
+The goal of *arrR* is to simulate seagrass growth around artificial
+reefs.
 
 ## Installation
 
@@ -112,14 +113,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8609, 0.292, 2.7787, 0
-#> Mean:        6.5494, 221.6571, 0.2947, 2.8479, 0
-#> Maximum: 7.2843, 228.1941, 0.322, 2.8577, 0
+#> Minimum: 6.498, 220.8825, 0.2922, 2.7856, 0
+#> Mean:        6.5395, 221.6441, 0.2947, 2.8482, 0
+#> Maximum: 7.0222, 227.8889, 0.3189, 2.8574, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 12.4604, 35.1367, 0, 0
-#> Mean:        14.7027, 65.3905, 0, 0
-#> Maximum: 24.1883, 285.9975, 0, 0
+#> Minimum: 11.7134, 28.8995, 0, 0
+#> Mean:        14.6482, 62.8519, 0, 0
+#> Maximum: 19.4247, 142.9785, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.

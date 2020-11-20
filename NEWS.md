@@ -1,5 +1,6 @@
 # arrR 0.2.3
 
+* Add GitHub actions
 * Resulting object contains parameters and starting values
 * `get_limits` can return limits over time period
 * `plot.mdl_rn` also takes limits if `summarize = TRUE` for seafloor
