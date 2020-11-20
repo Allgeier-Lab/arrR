@@ -3,14 +3,11 @@
 "ag_biomass_min";5.1
 "ag_v_max";8.1
 "ag_k_m";12.6
-"ag_sigmoid_slope";-2.5
-"ag_reduction";1
 "bg_biomass_max";746.9
 "bg_biomass_min";122.1
 "bg_v_max";9.8
 "bg_k_m";178.1
-"bg_sigmoid_slope";-2.5
-"bg_reduction";1
+"bg_thres";0.75
 "nutrients_diffusion";0.6
 "detritus_ratio";0.01
 "detritus_mineralization";0.001

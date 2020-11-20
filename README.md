@@ -11,6 +11,8 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![R build
+status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
 
 <!-- badges: end -->
 
@@ -58,7 +60,11 @@ starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
 
 check_parameters(starting_values = starting_values, parameters = parameters)
-#> > All starting values and parameters are available...
+#> > ...Checking starting values...
+#> > ...Checking parameter values...
+#> > ...Checking if starting values are within parameter boundaries...
+#> 
+#> > All checking done.
 ```
 
 To setup the simulation seafloor and individuals, simply run
@@ -106,14 +112,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 52.2737, 145.1707, 0.3735, 2.646, 0
-#> Mean:        52.5178, 146.1845, 0.3775, 2.7216, 0
-#> Maximum: 54.1012, 150.4948, 0.4094, 2.7333, 0
+#> Minimum: 6.498, 220.8609, 0.292, 2.7787, 0
+#> Mean:        6.5494, 221.6571, 0.2947, 2.8479, 0
+#> Maximum: 7.2843, 228.1941, 0.322, 2.8577, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 10.4274, 20.0099, 0, 0
-#> Mean:        14.9959, 86.8897, 0, 0
-#> Maximum: 32.2559, 710.3942, 0, 0
+#> Minimum: 12.4604, 35.1367, 0, 0
+#> Mean:        14.7027, 65.3905, 0, 0
+#> Maximum: 24.1883, 285.9975, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.

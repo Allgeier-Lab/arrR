@@ -42,10 +42,7 @@ simulate_mortality <- function(fish_population, fish_population_track,
 
     detritus_dead <- seafloor_values$detritus_dead[cell_id]
 
-
     # loop through all dying individuals
-    # MH: This could be vectorized but would need changes in create_rebirth
-    # MH: Only very few individuals each time, so loop might not be a problem
     for (i in 1:length(mort_id)) {
 
       # create new individual

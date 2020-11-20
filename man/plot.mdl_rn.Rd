@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{mdl_rn}(
   x,
-  what,
+  what = "seafloor",
   summarize = FALSE,
   timestep = x$max_i,
   limits = NULL,

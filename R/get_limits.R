@@ -28,7 +28,7 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   limits <- lapply(X = result, FUN = function(x) {
 
     # filter current result
-    result_temp <- subset(x$seafloor, timestep == i,
+    result_temp <- subset(x$seafloor, timestep %in% i,
                           select = c("ag_biomass", "bg_biomass",
                                      "nutrients_pool", "detritus_pool"))
 
@@ -48,7 +48,7 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
 
   })
 
-  # combind to matrix
+  # combine to matrix
   limits <- do.call(what = "rbind", args = limits)
 
   # create final list
@@ -60,4 +60,3 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   return(limits)
 
 }
-

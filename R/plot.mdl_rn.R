@@ -20,7 +20,7 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits = NULL,
+plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$max_i, limits = NULL,
                         base_size = 10, ...) {
 
   i <- timestep
@@ -51,6 +51,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = ag_biomass,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -62,6 +63,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = bg_biomass,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -73,6 +75,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = nutrients_pool,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -84,6 +87,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = detritus_pool,
                                         col = summary, linetype = summary)) +
+        ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
         ggplot2::guides(col = FALSE, linetype = FALSE) +
@@ -168,7 +172,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = ag_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$ag_biomass,
-                                      name = "Dry weight\nag biomass [g/cell]") +
+                                      name = "Dry weight ag\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
@@ -179,7 +183,7 @@ plot.mdl_rn <- function(x, what, summarize = FALSE, timestep = x$max_i, limits =
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = bg_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$bg_biomass,
-                                      name = "Dry weight\nbg biomass [g/cell]") +
+                                      name = "Dry weight bg\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +

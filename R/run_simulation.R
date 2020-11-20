@@ -41,7 +41,6 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-
   # check if max_i can be divided by provided save_each without reminder
   if (max_i %% save_each != 0) {
 
@@ -56,23 +55,17 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
+  # convert seafloor as data.frame
+  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fish_population = fish_population)
+
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   fish_population_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # convert seafloor as data.frame
-  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
-
-  # check if all values are within boundaries
-  if (any(seafloor_values$ag_biomass < parameters$ag_biomass_min, na.rm = TRUE) |
-      any(seafloor_values$bg_biomass < parameters$bg_biomass_min, na.rm = TRUE) |
-      any(seafloor_values$ag_biomass > parameters$ag_biomass_max, na.rm = TRUE) |
-      any(seafloor_values$bg_biomass > parameters$bg_biomass_max, na.rm = TRUE)) {
-
-    stop("Please make sure all starting biomass values are within min/max boundaries.",
-         call. = FALSE)
-  }
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -98,8 +91,6 @@ run_simulation <- function(seafloor, fish_population,
 
   # print some basic information about model run
   if (verbose) {
-
-    message("> Using '", deparse(substitute(parameters)), "' as parameter list.")
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
@@ -227,8 +218,8 @@ run_simulation <- function(seafloor, fish_population,
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                 extent = extent, grain = raster::res(seafloor))
+                 starting_values = starting_values, parameters = parameters, max_i = max_i, min_per_i = min_per_i,
+                 save_each = save_each, extent = extent, grain = raster::res(seafloor))
 
   # set class of result
   class(result) <- "mdl_rn"
