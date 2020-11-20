@@ -4,7 +4,7 @@ on:
       - master
       - development
 
-name: pkgdown
+name: deploy-pkgdown
 
 jobs:
   pkgdown:
