@@ -40,7 +40,6 @@ To access all functions to run the mode, simply load the library.
 
 ``` r
 library(arrR)
-library(patchwork) # needed for plotting
 ```
 
 The starting values and parameters must be imported as two separated
@@ -113,14 +112,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8825, 0.2922, 2.7856, 0
-#> Mean:        6.5395, 221.6441, 0.2947, 2.8482, 0
-#> Maximum: 7.0222, 227.8889, 0.3189, 2.8574, 0
+#> Minimum: 6.498, 220.8467, 0.2919, 2.7777, 0
+#> Mean:        6.5585, 221.7158, 0.2948, 2.8463, 0
+#> Maximum: 7.2107, 228.4847, 0.3224, 2.8566, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 11.7134, 28.8995, 0, 0
-#> Mean:        14.6482, 62.8519, 0, 0
-#> Maximum: 19.4247, 142.9785, 0, 0
+#> Minimum: 10.6235, 21.2237, 0, 0
+#> Mean:        15.0021, 74.2507, 0, 0
+#> Maximum: 25.4796, 337.1031, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
