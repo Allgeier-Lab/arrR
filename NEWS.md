@@ -1,3 +1,6 @@
+# arrR 0.2.4
+* Better memory usage
+
 # arrR 0.2.3
 
 * Add GitHub actions
