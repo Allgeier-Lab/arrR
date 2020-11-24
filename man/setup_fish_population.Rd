@@ -4,7 +4,13 @@
 \alias{setup_fish_population}
 \title{setup_fish_population}
 \usage{
-setup_fish_population(seafloor, starting_values, parameters, verbose = TRUE)
+setup_fish_population(
+  seafloor,
+  starting_values,
+  parameters,
+  use_log = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
@@ -13,33 +19,21 @@ setup_fish_population(seafloor, starting_values, parameters, verbose = TRUE)
 
 \item{parameters}{List with all model parameters.}
 
+\item{use_log}{Logical if TRUE, random log distribution is used.}
+
 \item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.table
+data.frame
 }
 \description{
 Initiate fish population.
 }
 \details{
-Function to setup the environment.....
-Center of the environment is always set to (0,0).
-
-Parameters include ...
+Function to setup the fish population. If no fish shoud be created, set
+\code{starting_values$pop_n = 0}.
 }
 \examples{
-reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
-ncol = 2, byrow = TRUE)
-
-starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-starting_values <- read_parameters(file = starting_values, sep = ";")
-parameters <- read_parameters(file = parameters, sep = ";")
-
-input_seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
-
-input_fish_population <- setup_fish_population(seafloor = input_seafloor,
-starting_values = starting_values, parameters = parameters)
+# Add example code
 
 }

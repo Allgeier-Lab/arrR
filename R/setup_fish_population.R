@@ -5,36 +5,24 @@
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
+#' @param use_log Logical if TRUE, random log distribution is used.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Function to setup the environment.....
-#' Center of the environment is always set to (0,0).
+#' Function to setup the fish population. If no fish shoud be created, set
+#' \code{starting_values$pop_n = 0}.
 #'
-#' Parameters include ...
-#'
-#' @return data.table
+#' @return data.frame
 #'
 #' @examples
-#' reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
-#' ncol = 2, byrow = TRUE)
-#'
-#' starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-#' parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-#' starting_values <- read_parameters(file = starting_values, sep = ";")
-#' parameters <- read_parameters(file = parameters, sep = ";")
-#'
-#' input_seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-#' reefs = reef_matrix, starting_values = starting_values, parameters = parameters)
-#'
-#' input_fish_population <- setup_fish_population(seafloor = input_seafloor,
-#' starting_values = starting_values, parameters = parameters)
+#' # Add example code
 #'
 #' @aliases setup_fish_population
 #' @rdname setup_fish_population
 #'
 #' @export
-setup_fish_population <- function(seafloor, starting_values, parameters, verbose = TRUE) {
+setup_fish_population <- function(seafloor, starting_values, parameters, use_log = TRUE,
+                                  verbose = TRUE) {
 
   n <- starting_values$pop_n
 
@@ -57,19 +45,25 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     heading <- stats::runif(n = n, min = 0, max = 360)
 
     # calculate length and weight
-    size <- int_calc_size(starting_values = starting_values,
-                          parameters = parameters)
+    size <- calc_size(pop_n = n,
+                      pop_mean_size = parameters$pop_mean_size,
+                      pop_max_size = parameters$pop_max_size,
+                      pop_var_size = parameters$pop_var_size,
+                      pop_a_grunt = parameters$pop_a_grunt,
+                      pop_b_grunt = parameters$pop_b_grunt,
+                      use_log = use_log)
 
-    # MH: Where do these formula come from?
-    # MH: Why is reserves_max = reserves?
-    reserves_max <- parameters$pop_n_body * size$weight * 0.05
-    reserves <- parameters$pop_n_body * size$weight * 0.05
+    # calculate maximum reserves
+    reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves
+
+    # calculate starting reserves
+    reserves <- parameters$pop_n_body * size$weight *
+      parameters$pop_want_reserves # reserves_max
 
     # combine to final data frame
     fish_population <- data.frame(id = 1:n, age = 0,
                                   x = x, y = y, heading = heading,
                                   length = size$length, weight = size$weight,
-                                  # n_body = n_body, # aen = aen,
                                   reserves = reserves, reserves_max = reserves_max,
                                   reserves_diff = reserves_max - reserves,
                                   activity = numeric(n), respiration = numeric(n),
@@ -84,7 +78,6 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
     fish_population <- data.frame(id = numeric(), age = numeric(),
                                   x = numeric(), y = numeric(), heading = numeric(),
                                   length = numeric(), weight = numeric(),
-                                  # n_body = numeric(), # aen = numeric(),
                                   reserves = numeric(), reserves_max = numeric(),
                                   reserves_diff = numeric(),
                                   activity = numeric(), respiration = numeric(),
@@ -92,6 +85,7 @@ setup_fish_population <- function(seafloor, starting_values, parameters, verbose
                                   growth_nutrient = numeric(),
                                   consumption_req = numeric(),
                                   died_consumption = numeric(n), died_background = numeric(n))
+
   }
 
   return(fish_population)

@@ -1,0 +1,13 @@
+---
+title: "Publication record"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Publication record}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+We try to maintain a list of publications that have used the **arrR** package. If you have used **arrR** in your own work, we would love to hear from you. Please file an issue on GitHub so we can add your work to this list or contact us via [e-mail](mailto:mhessel@umich.edu). 
+
+## List of publications

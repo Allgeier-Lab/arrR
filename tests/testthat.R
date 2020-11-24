@@ -1,4 +1,4 @@
 library(testthat)
-library(coRal)
+library(arrR)
 
-test_check("coRal")
+test_check("arrR")

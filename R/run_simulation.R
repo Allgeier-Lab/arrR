@@ -1,65 +1,71 @@
 #' run_simulation
 #'
-#' @description Wrapper functions to run model
+#' @description Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fish_population Data.frame population created with \code{\link{setup_fish_population}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param save_each Numeric how often data should be saved to return.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) ...
-#' (ii) ...
+#' Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
+#' (ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
+#' (vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
 #'
-#' Parameters include ...
-#'
-#' @return data.frame
+#' @return mdl_rn
 #'
 #' @examples
-#' \dontrun{
-#'
-#' run_simulation()
-#'
-#' }
+#' # Add example code
 #'
 #' @aliases run_simulation
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fish_population, parameters, reef_attraction,
-                           max_i, min_per_i,
+run_simulation <- function(seafloor, fish_population,
+                           parameters, reef_attraction,
+                           max_i, min_per_i, save_each = 1,
                            verbose = TRUE) {
 
-  # print some basic information about model run
-  if (verbose) {
+  # check parameters
+  param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
+                             warning = function(wrn) wrn)
 
-    message("> Using '", deparse(substitute(parameters)), "' as parameter list")
+  # stop with error
+  if (length(param_warnings$message) > 0) {
 
-    message("> Seafloor with ", raster::extent(seafloor), "; ",
-            sum(raster::values(seafloor$reef)), " reef cells.")
-
-    message("> Population with ", nrow(fish_population), " individuals.")
-
-    message("> One simulation run equals ", min_per_i, " minutes.")
-
-    message("")
-
-    message("> ...Starting simulation...")
+    stop(param_warnings$message, call. = FALSE)
 
   }
 
+  # check if max_i can be divided by provided save_each without reminder
+  if (max_i %% save_each != 0) {
+
+    stop("'max_i' cannot be divided by 'save_each' without rest.",
+            call. = FALSE)
+  }
+
+  # check if save_each is whole number
+  if (save_each %% 1 != 0) {
+
+    stop("'save_each' must be a whole number.", call. = FALSE)
+
+  }
+
+  # convert seafloor as data.frame
+  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fish_population = fish_population)
+
   # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = max_i + 1)
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
-  fish_population_track <- vector(mode = "list", length = max_i + 1)
-
-  # add starting conditions to track lists
-  seafloor_track[[1]] <- raster::as.data.frame(seafloor, xy = TRUE)
-
-  fish_population_track[[1]] <- fish_population
+  fish_population_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -73,91 +79,159 @@ run_simulation <- function(seafloor, fish_population, parameters, reef_attractio
                                     cell = cells_reef)
 
   # get neighboring cells for each focal cell using torus
-  cell_adj <- int_get_neighbors(x = seafloor, direction = 8, torus = TRUE)
+  cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
+
+  # get number of individuals
+  n_pop <- nrow(fish_population)
+
+  # save input_data as first list element
+  seafloor_track[[1]] <- seafloor_values
+
+  fish_population_track[[1]] <- fish_population
+
+  # print some basic information about model run
+  if (verbose) {
+
+    message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
+
+    message("> Population with ", n_pop, " individuals.")
+
+    message("> Simulating ", max_i, " simulation iterations; Saving every ", save_each, " iterations.")
+
+    message("> One simulation iteration equals ", min_per_i, " minutes.")
+
+    message("")
+
+    message("> ...Starting simulation...")
+
+  }
 
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
     if (verbose) {
 
-      message("\r> Progress: ", i, "/", max_i, " simulations runs \t\t\t",
+      message("\r> ...Progress: ", i, "/", max_i, " simulations runs... \t\t\t",
               appendLF = FALSE)
 
     }
 
     # simulate seagrass growth
-    seafloor <- simulate_seagrass(seafloor = seafloor,
-                                  parameters = parameters,
-                                  cells_reef = cells_reef,
-                                  min_per_i = min_per_i)
+    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
+                                         parameters = parameters,
+                                         cells_reef = cells_reef,
+                                         min_per_i = min_per_i)
+
+    # redistribute detritus
+    seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
+                                           parameters = parameters)
 
     # simulate fish movement
     fish_population <- simulate_movement(fish_population = fish_population,
-                                         reef_dist = seafloor$reef_dist,
-                                         parameters = parameters,
-                                         extent = extent,
+                                         n_pop = n_pop,
+                                         seafloor = seafloor$reef,
+                                         seafloor_values = seafloor_values,
                                          coords_reef = coords_reef,
+                                         extent = extent,
+                                         parameters = parameters,
                                          reef_attraction = reef_attraction)
 
-    # simulate fish respiration
+    # simulate fish respiration (26°C is mean water temperature in the Bahamas)
     fish_population <- simulate_respiration(fish_population = fish_population,
-                                            water_temp = parameters$water_temp,
+                                            parameters = parameters,
+                                            water_temp = 26,
                                             min_per_i = min_per_i)
 
     # simulate growth and nutrient feedback (returns population data.frame and raster)
     growth_temp <- simulate_growth(fish_population = fish_population,
                                    fish_population_track = fish_population_track,
-                                   seafloor = seafloor,
+                                   n_pop = n_pop,
+                                   seafloor = seafloor$reef,
+                                   seafloor_values = seafloor_values,
                                    parameters = parameters,
                                    min_per_i = min_per_i)
 
     # update results
-    seafloor <- growth_temp$seafloor
+    seafloor_values <- growth_temp$seafloor
 
     fish_population <- growth_temp$fish_population
 
     # simulate mortality
-    fish_population <- simulate_mortality(fish_population = fish_population,
-                                          fish_population_track = fish_population_track,
-                                          seafloor = seafloor)
+    mortality_temp <- simulate_mortality(fish_population = fish_population,
+                                         fish_population_track = fish_population_track,
+                                         n_pop = n_pop,
+                                         seafloor = seafloor$reef,
+                                         seafloor_values = seafloor_values,
+                                         parameters = parameters,
+                                         min_per_i = min_per_i)
 
-    # MH: Does this make sense here in terms of scheduling?
-    seafloor <- distribute_dead_detritus(seafloor = seafloor,
-                                         parameters = parameters)
+    # update results
+    seafloor_values <- mortality_temp$seafloor
 
-    # # diffuse values between neighbors (really slow at the moment)
-    seafloor <- simulate_diffusion(seafloor = seafloor,
-                                   cell_adj = cell_adj,
-                                   parameters = parameters)
+    fish_population <- mortality_temp$fish_population
+
+    # diffuse values between neighbors
+    seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
+                                          cell_adj = cell_adj,
+                                          parameters = parameters)
 
     # update tracking data.frames
-    seafloor_track[[i + 1]] <- raster::as.data.frame(seafloor, xy = TRUE)
-    fish_population_track[[i + 1]] <- fish_population
+    if (i %% save_each == 0) {
 
+      seafloor_track[[i / save_each + 1]] <- seafloor_values
+
+      fish_population_track[[i / save_each + 1]] <- fish_population
+
+    }
   }
 
   # new line after last progress message
   if (verbose) {
+
     message("")
+
+    message("> ...Saving results...")
+
   }
 
-  # Combine to one data.frame
+  # combine seafloor to one dataframe
   seafloor_track <- do.call(what = "rbind", args = seafloor_track)
 
+  # add timestep counter
+  seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                 each = raster::ncell(seafloor))
+
+  # combine fish population to one dataframe
   fish_population_track <- do.call(what = "rbind", args = fish_population_track)
 
-  # Add timestep tracker
-  seafloor_track$timestep <- rep(x = 0:max_i, each = raster::ncell(seafloor))
+  # add timestep counter
+  if (n_pop > 0) {
 
-  fish_population_track$timestep <- rep(x = 0:max_i, each = nrow(fish_population))
+    fish_population_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                          each = n_pop)
+
+  } else {
+
+    fish_population_track$timestep <- numeric(0)
+
+  }
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 max_i = max_i, min_per_i = min_per_i,
-                 extent = extent, grain = raster::res(seafloor))
+                 starting_values = starting_values, parameters = parameters, max_i = max_i, min_per_i = min_per_i,
+                 save_each = save_each, extent = extent, grain = raster::res(seafloor))
 
   # set class of result
   class(result) <- "mdl_rn"
+
+  # new line after last progress message
+  if (verbose) {
+
+    message("")
+
+    message("> All done.")
+
+  }
 
   return(result)
 }

@@ -4,21 +4,22 @@
 \alias{simulate_diffusion}
 \title{simulate_diffusion}
 \usage{
-simulate_diffusion(seafloor, cell_adj, parameters)
+simulate_diffusion(seafloor_values, cell_adj, parameters)
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor_values}{Data.frame of seafloor values.}
 
-\item{cell_adj}{2 column matrix with cell adjacencies.}
+\item{cell_adj}{2-column matrix with cell adjacencies.}
 
 \item{parameters}{List with all model parameters.}
 }
 \value{
-RasterBrick
+data.frame
 }
 \description{
 Simulate diffusion.
 }
 \details{
-A certain share of each cell value is diffused to its 8 neighboring cells.
+A certain share of each cell value, specified by the diffusion parameters, is
+diffused to its 8 neighboring cells.
 }

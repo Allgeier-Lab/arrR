@@ -11,13 +11,14 @@ run_simulation(
   reef_attraction,
   max_i,
   min_per_i,
+  save_each = 1,
   verbose = TRUE
 )
 }
 \arguments{
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
-\item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
+\item{fish_population}{Data.frame population created with \code{\link{setup_fish_population}}.}
 
 \item{parameters}{List with all model parameters.}
 
@@ -27,25 +28,22 @@ run_simulation(
 
 \item{min_per_i}{Integer to specify minutes per i.}
 
+\item{save_each}{Numeric how often data should be saved to return.}
+
 \item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-data.frame
+mdl_rn
 }
 \description{
-Wrapper functions to run model
+Core function to run model.
 }
 \details{
-Wrapper function to run model. Executes the following sub-processes (i) ...
-(ii) ...
-
-Parameters include ...
+Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
+(ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
+(vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
 }
 \examples{
-\dontrun{
-
-run_simulation()
-
-}
+# Add example code
 
 }

@@ -4,31 +4,27 @@
 \alias{check_parameters}
 \title{check_parameters}
 \usage{
-check_parameters(starting_values, parameters)
+check_parameters(starting_values = NULL, parameters = NULL, verbose = TRUE)
 }
 \arguments{
 \item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{verbose}{If TRUE, progress reports are printed.}
 }
 \value{
-vector
+void
 }
 \description{
-Check model parameters
+Check model parameters and starting values.
 }
 \details{
 The function checks if all required starting values and parameters are provided.
 If values are missing, a vector with the name of the corresponding values will
-be returned.
+be returned. If no arguments are provided, a list of all required values is printed
 }
 \examples{
-starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-
-starting_values <- read_parameters(file = starting_values, sep = ";")
-parameters <- read_parameters(file = parameters, sep = ";")
-
-check_parameters(starting_values = starting_values, parameters = parameters)
+# Add example code
 
 }

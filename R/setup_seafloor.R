@@ -1,41 +1,29 @@
 #' setup_seafloor
 #'
-#' @description Initiate environment
+#' @description Initiate environment (seafloor)
 #'
 #' @param extent Vector with number of rows and columns (spatial extent).
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
 #' @param reefs 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
-#' @param parameters List with all model parameters.
+#' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
 #' @details
-#' Function to setup the environment.....
-#' Center of the environment is always set to (0,0).
-#'
-#' Parameters include ...
+#' Function to setup the environment (seafloor). The center of the environment is
+#' always set to (0,0). All biomass values are dry values, nutrient values are in gram.
 #'
 #' @return RasterBrick
 #'
 #' @examples
-#' reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
-#' ncol = 2, byrow = TRUE)
-#'
-#' starting_values <- system.file("extdata", "starting_values.csv", package = "coRal")
-#' parameters <- system.file("extdata", "parameters.csv", package = "coRal")
-#' starting_values <- read_parameters(file = starting_values, sep = ";")
-#' parameters <- read_parameters(file = parameters, sep = ";")
-#'
-#' input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
-#' reefs = NULL, starting_values = starting_values, parameters = parameters)
+#' # Add example code
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(extent, grain, reefs = NULL,
-                           starting_values, parameters,
+setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress
@@ -56,9 +44,12 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
                              vals = NA, crs = NA, ...)
 
   # setup environmental values
-  seafloor <- int_setup_envir_values(seafloor = seafloor,
-                                     starting_values = starting_values,
-                                     parameters = parameters)
+  seafloor <- setup_envir_values(seafloor = seafloor,
+                                 ag_biomass = starting_values$ag_biomass,
+                                 bg_biomass = starting_values$bg_biomass,
+                                 nutrients_pool = starting_values$nutrients_pool,
+                                 detritus_pool = starting_values$detritus_pool,
+                                 random = random)
 
   # AR coords provided
   if (!is.null(reefs)) {
@@ -79,7 +70,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL,
     }
 
     # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    seafloor <- int_setup_reefs(object = seafloor, xy = reefs, extent = extent)
+    seafloor <- setup_reefs(object = seafloor, xy = reefs, extent = extent)
 
   # no AR coords provided
   } else {

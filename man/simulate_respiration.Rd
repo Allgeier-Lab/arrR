@@ -4,10 +4,12 @@
 \alias{simulate_respiration}
 \title{simulate_respiration}
 \usage{
-simulate_respiration(fish_population, water_temp, min_per_i)
+simulate_respiration(fish_population, parameters, water_temp, min_per_i)
 }
 \arguments{
 \item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
+
+\item{parameters}{List with all model parameters.}
 
 \item{water_temp}{Numeric with water temperature.}
 
@@ -17,8 +19,13 @@ simulate_respiration(fish_population, water_temp, min_per_i)
 data.frame
 }
 \description{
-Simulate movement of population.
+Simulate respiration of population.
 }
 \details{
-Function to simulate movement of population individuals.
+Function to simulate respiration of fish population individuals.
+}
+\references{
+Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+Centre for Limnology, Madison,USA.
 }

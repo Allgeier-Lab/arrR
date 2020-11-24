@@ -1,0 +1,69 @@
+title: arrR | Simulating artifical reefs in R
+
+template:
+  params:
+    bootswatch: sandstone
+
+reference:
+  - title: Main functions
+    contents:
+      - read_parameters
+      - check_parameters
+      - setup_fish_population
+      - setup_seafloor
+      - run_simulation
+  - title: Sub-models
+    contents:
+      - simulate_seagrass
+      - distribute_detritus
+      - simulate_movement
+      - simulate_respiration
+      - simulate_growth
+      - simulate_mortality
+      - simulate_diffusion
+  - title: Various
+    contents:
+      - get_density
+      - get_limits
+      - summarize_results
+      - print.mdl_rn
+      - plot.mdl_rn
+  - title: Internal functions
+    contents:
+      - calc_nutr_uptake
+      - calc_size
+      - calc_summary
+      - convert_nutr
+      - create_rebirth
+      - get_neighbors
+      - grow_seagrass
+      - rcpp_diffuse_values
+      - setup_envir_values
+      - setup_reefs
+      - translate_torus
+
+navbar:
+  title: arrR
+  left:
+    - icon: fa-gears
+      text: "Functions"
+      href: reference/index.html
+    - text: "More"
+      icon: fa-graduation-cap
+      menu:
+       - text: "General Background"
+         icon: fa-book
+         href: articles/background.html
+       - text: "Publication Record"
+         icon: fa-file-text-o
+         href: articles/publication_record.html
+  right:
+    - icon: fa-newspaper-o
+      text: "News"
+      href: news/index.html
+    - icon: fa-github fa-lg
+      text: "Github"
+      href: https://github.com/Allgeier-Lab/arrR
+    - icon: fa-user
+      text: "Contact"
+      hreft: https://mhesselbarth.rbind.io
