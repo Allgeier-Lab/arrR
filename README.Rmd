@@ -23,8 +23,6 @@ knitr::opts_chunk$set(
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 [![R build status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-![Render README](https://github.com/Allgeier-Lab/arrR/workflows/Render%20README/badge.svg)
-![pkgdown](https://github.com/Allgeier-Lab/arrR/workflows/pkgdown/badge.svg)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
