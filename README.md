@@ -114,14 +114,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8336, 0.2919, 2.7759, 0
-#> Mean:        6.5465, 221.6718, 0.2947, 2.8474, 0
-#> Maximum: 7.5962, 228.3554, 0.3239, 2.8577, 0
+#> Minimum: 6.498, 220.8665, 0.292, 2.7829, 0
+#> Mean:        6.5438, 221.6974, 0.2948, 2.8467, 0
+#> Maximum: 7.3303, 228.8202, 0.3209, 2.8568, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 10.8264, 22.5315, 0, 0
-#> Mean:        14.8429, 67.2372, 0, 0
-#> Maximum: 23.7417, 269.6346, 0, 0
+#> Minimum: 11.9824, 31.0502, 0, 0
+#> Mean:        14.9722, 70.8525, 0, 0
+#> Maximum: 22.7966, 237.145, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
