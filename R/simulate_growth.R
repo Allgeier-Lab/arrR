@@ -45,22 +45,24 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
 
   if (length(id_mort) > 0) {
 
+    cell_id_temp <- cell_id[id_mort]
+
     # create new individual
     mort_temp <- create_rebirth(fish_population = fish_population[id_mort, ],
                                 fish_population_track = fish_population_track[[1]],
                                 n_body = parameters$pop_n_body,
                                 want_reserves = parameters$pop_want_reserves,
-                                detritus_pool = detritus_pool[i],
-                                detritus_dead = detritus_dead[i],
+                                detritus_pool = seafloor_values$detritus_pool[cell_id_temp],
+                                detritus_dead = seafloor_values$detritus_dead[cell_id_temp],
                                 reason = "consumption")
 
     # update data frames
     fish_population[id_mort, ] <- mort_temp$fish_population
 
     # update detritus
-    seafloor_values[id_mort, "detritus_pool"] <- mort_temp$detritus_pool
+    seafloor_values$detritus_pool[cell_id_temp] <- mort_temp$detritus_pool
 
-    seafloor_values[id_mort, "detritus_dead"] <- mort_temp$detritus_dead
+    seafloor_values$detritus_pool[cell_id_temp] <- mort_temp$detritus_dead
 
   }
 
@@ -69,11 +71,13 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
 
   if (length(id_growth) > 0) {
 
+    cell_id_temp <- cell_id[id_growth]
+
     growth_values <- cbind(consumption_req, growth_length, growth_weight)
 
-    seafloor_temp <- as.matrix(seafloor_values[id_growth, c("nutrients_pool", "detritus_pool",
-                                                            "detritus_dead", "consumption",
-                                                            "excretion")])
+    seafloor_temp <- as.matrix(seafloor_values[cell_id_temp, c("nutrients_pool", "detritus_pool",
+                                                               "detritus_dead", "consumption",
+                                                               "excretion")])
 
     fish_temp <- as.matrix(fish_population[id_growth, c("id", "age",
                                                         "length", "weight",
@@ -92,9 +96,9 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
                                  "reserves", "reserves_max")] <- fish_temp
 
     # update data frames
-    seafloor_values[id_growth, c("nutrients_pool", "detritus_pool",
-                                 "detritus_dead", "consumption",
-                                 "excretion")] <- seafloor_temp
+    seafloor_values[cell_id_temp, c("nutrients_pool", "detritus_pool",
+                                    "detritus_dead", "consumption",
+                                    "excretion")] <- seafloor_temp
   }
 
   return(list(seafloor = seafloor_values, fish_population = fish_population))
