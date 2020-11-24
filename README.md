@@ -12,9 +12,6 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-![Render
-README](https://github.com/Allgeier-Lab/arrR/workflows/Render%20README/badge.svg)
-![pkgdown](https://github.com/Allgeier-Lab/arrR/workflows/pkgdown/badge.svg)
 
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -117,14 +114,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8377, 0.292, 2.7868, 0
-#> Mean:        6.5372, 221.6266, 0.2947, 2.8488, 0
-#> Maximum: 7.2618, 228.0764, 0.3181, 2.8586, 0
+#> Minimum: 6.498, 220.8336, 0.2919, 2.7759, 0
+#> Mean:        6.5465, 221.6718, 0.2947, 2.8474, 0
+#> Maximum: 7.5962, 228.3554, 0.3239, 2.8577, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 11.4555, 26.9354, 0, 0
-#> Mean:        14.4887, 60.6025, 0, 0
-#> Maximum: 19.2082, 138.0019, 0, 0
+#> Minimum: 10.8264, 22.5315, 0, 0
+#> Mean:        14.8429, 67.2372, 0, 0
+#> Maximum: 23.7417, 269.6346, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
