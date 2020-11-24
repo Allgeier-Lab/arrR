@@ -23,7 +23,7 @@ rcpp_diffuse_values(
 Matrix
 }
 \description{
-Rcpp sample function
+Rcpp function to diffuse seafloor values
 }
 \details{
 \code{Rcpp} implementation of to diffuse nutrients.

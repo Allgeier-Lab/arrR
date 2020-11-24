@@ -19,6 +19,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_calc_growth
+void rcpp_calc_growth(Rcpp::NumericMatrix fish_pop, Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix growth_values, double pop_n_body, double pop_max_reserves, double min_per_i);
+RcppExport SEXP _arrR_rcpp_calc_growth(SEXP fish_popSEXP, SEXP seafloorSEXP, SEXP growth_valuesSEXP, SEXP pop_n_bodySEXP, SEXP pop_max_reservesSEXP, SEXP min_per_iSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fish_pop(fish_popSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type growth_values(growth_valuesSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
+    Rcpp::traits::input_parameter< double >::type pop_max_reserves(pop_max_reservesSEXP);
+    Rcpp::traits::input_parameter< double >::type min_per_i(min_per_iSEXP);
+    rcpp_calc_growth(fish_pop, seafloor, growth_values, pop_n_body, pop_max_reserves, min_per_i);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_diffuse_values
 Rcpp::NumericMatrix rcpp_diffuse_values(Rcpp::NumericMatrix seafloor_values, Rcpp::NumericMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_dead_diffusion);
 RcppExport SEXP _arrR_rcpp_diffuse_values(SEXP seafloor_valuesSEXP, SEXP cell_adjSEXP, SEXP nutrients_diffusionSEXP, SEXP detritus_diffusionSEXP, SEXP detritus_dead_diffusionSEXP) {
@@ -37,6 +52,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_dist_reef", (DL_FUNC) &_arrR_rcpp_calc_dist_reef, 4},
+    {"_arrR_rcpp_calc_growth", (DL_FUNC) &_arrR_rcpp_calc_growth, 6},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {NULL, NULL, 0}
 };

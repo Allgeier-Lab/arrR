@@ -25,9 +25,30 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
     .Call(`_arrR_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
+#' rcpp_calc_growth
+#'
+#' @description Rcpp calc growth
+#'
+#' @param fish_pop Matrix with fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param growth_values Matrix with growth values.
+#' @param pop_n_body,pop_max_reserves,min_per_i Numeric with parameters.
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @name rcpp_calc_growth
+#'
+#' @export
+rcpp_calc_growth <- function(fish_pop, seafloor, growth_values, pop_n_body, pop_max_reserves, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_growth`, fish_pop, seafloor, growth_values, pop_n_body, pop_max_reserves, min_per_i))
+}
+
 #' rcpp_diffuse_values
 #'
-#' @description Rcpp sample function
+#' @description Rcpp function to diffuse seafloor values
 #'
 #' @param seafloor_values Matrix with seafloor values.
 #' @param cell_adj Matrix with cell adjacencies.

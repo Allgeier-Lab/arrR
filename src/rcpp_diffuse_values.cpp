@@ -3,7 +3,7 @@ using namespace Rcpp;
 
 //' rcpp_diffuse_values
 //'
-//' @description Rcpp sample function
+//' @description Rcpp function to diffuse seafloor values
 //'
 //' @param seafloor_values Matrix with seafloor values.
 //' @param cell_adj Matrix with cell adjacencies.
