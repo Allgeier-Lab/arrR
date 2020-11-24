@@ -4,12 +4,12 @@
 \alias{get_starting_values}
 \title{get_starting_values}
 \usage{
-get_starting_values(seafloor_values, fish_population)
+get_starting_values(seafloor_values, fishpop_values)
 }
 \arguments{
-\item{seafloor_values}{Data.frame with seafloor values.}
+\item{seafloor_values}{Matrix with seafloor values.}
 
-\item{fish_population}{Data.frame population created with \code{\link{setup_fish_population}}.}
+\item{fishpop_values}{Matrix population created with \code{\link{setup_fishpop}}.}
 }
 \value{
 list

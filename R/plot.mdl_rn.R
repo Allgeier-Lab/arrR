@@ -96,16 +96,15 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # plot fish population
-    } else if (what == "fish_population") {
+    } else if (what == "fishpop") {
 
       # get fish  data
-      fish_population <- subset(summarised_result$fish_population,
-                         select = c("timestep" ,"summary",
-                                    "length", "weight",
-                                    "died_consumption", "died_background"))
+      fishpop <- subset(summarised_result$fishpop,
+                        select = c("timestep" ,"summary", "length", "weight",
+                                   "died_consumption", "died_background"))
 
       # create plot
-      gg_top_left <- ggplot2::ggplot(data = fish_population) +
+      gg_top_left <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = length,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -116,7 +115,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
       # create plot
-      gg_top_right <- ggplot2::ggplot(data = fish_population) +
+      gg_top_right <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = weight,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -127,7 +126,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
       # create plot
-      gg_bottom_left <- ggplot2::ggplot(data = fish_population) +
+      gg_bottom_left <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = died_consumption,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -138,7 +137,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
       # create plot
-      gg_bottom_right <- ggplot2::ggplot(data = fish_population) +
+      gg_bottom_right <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = died_background,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -151,7 +150,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
     # what doesn't make sense
     } else {
 
-      stop("Please select 'seafloor' or 'fish_population' as 'what argument.",
+      stop("Please select 'seafloor' or 'fishpop' as 'what argument.",
            call. = FALSE)
 
     }
@@ -212,13 +211,13 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # plot fishpopulation
-    } else if (what == "fish_population") {
+    } else if (what == "fishpop") {
 
       # get seafloor data
-      fish_population <- get_density(x, timestep = i)
+      fishpop <- get_density(x, timestep = i)
 
       # create plot
-      gg_density <- ggplot2::ggplot(data = fish_population) +
+      gg_density <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = density)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", name = "Density [#/cell]") +
@@ -234,7 +233,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
     # what doesn't make sense
     } else {
 
-      stop("Please select 'seafloor' or 'fish_population' as 'what argument.",
+      stop("Please select 'seafloor' or 'fishpop' as 'what argument.",
            call. = FALSE)
 
     }

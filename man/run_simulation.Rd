@@ -6,7 +6,7 @@
 \usage{
 run_simulation(
   seafloor,
-  fish_population,
+  fishpop,
   parameters,
   reef_attraction,
   max_i,
@@ -18,7 +18,7 @@ run_simulation(
 \arguments{
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
-\item{fish_population}{Data.frame population created with \code{\link{setup_fish_population}}.}
+\item{fishpop}{Data.frame population created with \code{\link{setup_fishpop}}.}
 
 \item{parameters}{List with all model parameters.}
 

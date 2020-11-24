@@ -5,7 +5,7 @@
 \title{rcpp_calc_growth}
 \usage{
 rcpp_calc_growth(
-  fish_pop,
+  fishpop,
   seafloor,
   growth_values,
   pop_n_body,
@@ -14,7 +14,7 @@ rcpp_calc_growth(
 )
 }
 \arguments{
-\item{fish_pop}{Matrix with fishpop values.}
+\item{fishpop}{Matrix with fishpop values.}
 
 \item{seafloor}{Matrix with seafloor values.}
 

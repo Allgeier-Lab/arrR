@@ -5,10 +5,10 @@
 #'
 #' @description Internal rcpp function
 #'
-#' @param fish_population 2-column matrix with coordinates of individual fish.
+#' @param seafloor Matrix.
 #' @param coords_reef 2-column matrix with coordinates of AR.
-#' @param torus If TRUE the distance will be calculated using a torus.
 #' @param extent Vector with dimension in x and y direction.
+#' @param torus If TRUE the distance will be calculated using a torus.
 #'
 #' @details
 #' Internal function calculate distance to reef cells.
@@ -29,7 +29,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @description Rcpp calc growth
 #'
-#' @param fish_pop Matrix with fishpop values.
+#' @param fishpop Matrix with fishpop values.
 #' @param seafloor Matrix with seafloor values.
 #' @param growth_values Matrix with growth values.
 #' @param pop_n_body,pop_max_reserves,min_per_i Numeric with parameters.
@@ -42,8 +42,8 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @name rcpp_calc_growth
 #'
 #' @export
-rcpp_calc_growth <- function(fish_pop, seafloor, growth_values, pop_n_body, pop_max_reserves, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_growth`, fish_pop, seafloor, growth_values, pop_n_body, pop_max_reserves, min_per_i))
+rcpp_calc_growth <- function(fishpop, fishpop_track, seafloor, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_growth`, fishpop, fishpop_track, seafloor, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
 }
 
 #' rcpp_diffuse_values

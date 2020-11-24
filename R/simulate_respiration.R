@@ -2,7 +2,7 @@
 #'
 #' @description Simulate respiration of population.
 #'
-#' @param fish_population Data frame population created with \code{\link{setup_fish_population}}.
+#' @param fishpop_values Matrix with population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
 #' @param water_temp Numeric with water temperature.
 #' @param min_per_i Integer to specify minutes per i.
@@ -15,13 +15,13 @@
 #' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
 #' Centre for Limnology, Madison,USA.
 #'
-#' @return data.frame
+#' @return matrix
 #'
 #' @aliases simulate_respiration
 #' @rdname simulate_respiration
 #'
 #' @export
-simulate_respiration <- function(fish_population, parameters, water_temp, min_per_i) {
+simulate_respiration <- function(fishpop_values, parameters, water_temp, min_per_i) {
 
   # MH: Why are none of these values parameters?
   resp_intercept <- parameters$resp_intercept * (1 / 24) * (1 / 60 ) * min_per_i
@@ -44,14 +44,14 @@ simulate_respiration <- function(fish_population, parameters, water_temp, min_pe
   # calculate respiration
   # Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
   # to result in unit of tick^-1
-  respiration <- (resp_intercept * fish_population$weight ^ parameters$resp_slope *
-                    temp_dependence * fish_population$activity) * 13560 * (1 / 4800)
+  respiration <- (resp_intercept * fishpop_values[, "weight"] ^ parameters$resp_slope *
+                    temp_dependence * fishpop_values[, "activity"]) * 13560 * (1 / 4800)
 
   # check if finite number
   respiration <- ifelse(test = !is.finite(respiration), yes = 1, no = respiration)
 
   # update respiration col
-  fish_population$respiration <- respiration
+  fishpop_values[, "respiration"] <- respiration
 
-  return(fish_population)
+  return(fishpop_values)
 }

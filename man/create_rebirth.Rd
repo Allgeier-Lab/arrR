@@ -5,8 +5,8 @@
 \title{create_rebirth}
 \usage{
 create_rebirth(
-  fish_population,
-  fish_population_track,
+  fishpop_values,
+  fishpop_track,
   n_body,
   want_reserves,
   detritus_pool,
@@ -15,7 +15,7 @@ create_rebirth(
 )
 }
 \arguments{
-\item{fish_population, fish_population_track}{Data.frame with current fish population
+\item{fishpop_values, fishpop_track}{Matrix with current fish population
 and fish population of first time step.}
 
 \item{n_body, want_reserves}{Numeric with parameters to calculate reserves.}
@@ -26,7 +26,7 @@ individuals.}
 \item{reason}{Character specifying reason of death ('consumption' or 'background').}
 }
 \value{
-data.frame
+matrix
 }
 \description{
 Internal function to create new fish individual

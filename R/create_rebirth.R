@@ -2,7 +2,7 @@
 #'
 #' @description Internal function to create new fish individual
 #'
-#' @param fish_population,fish_population_track Data.frame with current fish population
+#' @param fishpop_values,fishpop_track Matrix with current fish population
 #' and fish population of first time step.
 #' @param n_body,want_reserves Numeric with parameters to calculate reserves.
 #' @param detritus_pool,detritus_dead Vector with detritus values at location of
@@ -13,69 +13,77 @@
 #' Internal function to create new individual with same starting values as at timestep=0
 #' if an individual dies.
 #'
-#' @return data.frame
+#' @return matrix
 #'
 #' @aliases create_rebirth
 #' @rdname create_rebirth
 #'
 #' @export
-create_rebirth <- function(fish_population, fish_population_track, n_body,
+create_rebirth <- function(fishpop_values, fishpop_track, n_body,
                            want_reserves, detritus_pool, detritus_dead, reason) {
 
   # extract values that could not be overwritten
-  fish_population_coords <- fish_population[, c("x", "y")]
+  fishpop_values_coords <- fishpop_values[, c("x", "y"), drop = FALSE]
 
-  counter_died <- fish_population[, c("died_consumption", "died_background")]
+  counter_died <- fishpop_values[, c("died_consumption", "died_background"), drop = FALSE]
 
   # get starting values of individual
-  fish_population_start <- fish_population_track[fish_population_track$id ==
-                                                   fish_population$id, ]
+  starting_id <- fishpop_track[, "id"] %in% fishpop_values[, "id"]
+
+  fishpop_start <- fishpop_track[starting_id, , drop = FALSE]
 
   # calculate mass difference + reserves
-  mass_diff <- (fish_population$weight - fish_population_start$weight) *
-    n_body + fish_population$reserves
+  mass_diff <- ((fishpop_values[, "weight"] - fishpop_start[, "weight"]) * n_body) +
+    fishpop_values[, "reserves"]
 
   # add to dead detritus pool
   detritus_dead <- detritus_dead + mass_diff
 
   # create new individual
-  fish_population <- fish_population_start
+  fishpop_values <- fishpop_start
 
   # keep old coordinates
-  fish_population[, c("x", "y")] <- fish_population_coords
+  fishpop_values[, c("x", "y")] <- fishpop_values_coords
 
   # calculate wanted reserves
-  reserves_wanted <- n_body * fish_population$weight * want_reserves
+  reserves_wanted <- n_body * fishpop_values[, "weight"] * want_reserves
 
-  # if more reserves are wanted than available, all are used
-  if (reserves_wanted >= detritus_pool) {
+  # check if detritus pool is larger than reserves_wanted
+  id_reserves_part <- which(reserves_wanted >= detritus_pool)
 
-    fish_population$reserves <- detritus_pool
+  id_reserves_full <-  which(reserves_wanted < detritus_pool)
 
-    detritus_pool <- 0
+  # detritus pool is smaller than wanted reserves, detritus is fully used
+  if (length(id_reserves_part) > 0) {
 
-  # pool is larger than what is wanted, so only subset is used
-  } else {
+    fishpop_values[id_reserves_part, "reserves"] <- detritus_pool[id_reserves_part]
 
-    fish_population$reserves <- reserves_wanted
+    detritus_pool[id_reserves_part] <- 0
 
-    detritus_pool <- detritus_pool - reserves_wanted
+  }
+
+  # detritus pool is larger than what is wanted, reserves_wanted are used
+  if (length(id_reserves_full) > 0) {
+
+    fishpop_values[id_reserves_full, "reserves"] <- reserves_wanted[id_reserves_full]
+
+    detritus_pool[id_reserves_full] <- detritus_pool[id_reserves_full] -
+      reserves_wanted[id_reserves_full]
 
   }
 
   # increase counter died
   if (reason == "consumption") {
 
-    fish_population$died_consumption <- counter_died[[1]] + 1
+    fishpop_values[, "died_consumption"] <- counter_died[, "died_consumption"] + 1
 
-    fish_population$died_background <- counter_died[[2]]
+    fishpop_values[, "died_background"] <- counter_died[, "died_background"]
 
   } else if (reason == "background") {
 
-    fish_population$died_consumption <- counter_died[[1]]
+    fishpop_values[, "died_consumption"] <- counter_died[, "died_consumption"]
 
-    fish_population$died_background <- counter_died[[2]] + 1
-
+    fishpop_values[, "died_background"] <- counter_died[, "died_background"] + 1
   } else {
 
     stop("Please select either reason = 'consumption' or reason = 'background'.",
@@ -83,6 +91,6 @@ create_rebirth <- function(fish_population, fish_population_track, n_body,
 
   }
 
-  return(list(fish_population = fish_population,
+  return(list(fishpop_values = fishpop_values,
               detritus_pool = detritus_pool, detritus_dead = detritus_dead))
 }

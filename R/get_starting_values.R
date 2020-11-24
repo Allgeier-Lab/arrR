@@ -2,8 +2,8 @@
 #'
 #' @description Internal function get mean starting values
 #'
-#' @param seafloor_values Data.frame with seafloor values.
-#' @param fish_population Data.frame population created with \code{\link{setup_fish_population}}.
+#' @param seafloor_values Matrix with seafloor values.
+#' @param fishpop_values Matrix population created with \code{\link{setup_fishpop}}.
 #'
 #' @details
 #' Internal function to get mean starting values.
@@ -17,18 +17,18 @@
 #' @rdname get_starting_values
 #'
 #' @export
-get_starting_values <- function(seafloor_values, fish_population) {
+get_starting_values <- function(seafloor_values, fishpop_values) {
 
   # get mean values and # fish pop
-  bg_biomass <- mean(seafloor_values$bg_biomass, na.rm = TRUE)
+  bg_biomass <- mean(seafloor_values[, "bg_biomass"], na.rm = TRUE)
 
-  ag_biomass <- mean(seafloor_values$ag_biomass, na.rm = TRUE)
+  ag_biomass <- mean(seafloor_values[, "ag_biomass"], na.rm = TRUE)
 
-  nutrients_pool <- mean(seafloor_values$nutrients_pool, na.rm = TRUE)
+  nutrients_pool <- mean(seafloor_values[, "nutrients_pool"], na.rm = TRUE)
 
-  detritus_pool <- mean(seafloor_values$detritus_pool, na.rm = TRUE)
+  detritus_pool <- mean(seafloor_values[, "detritus_pool"], na.rm = TRUE)
 
-  pop_n <- nrow(fish_population)
+  pop_n <- nrow(fishpop_values)
 
   # combine to result list
   result <- list(bg_biomass = bg_biomass, ag_biomass = ag_biomass,
