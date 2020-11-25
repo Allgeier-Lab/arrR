@@ -65,6 +65,27 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mi
     invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_dead_decomp, detritus_mineralization))
 }
 
+#' rcpp_calc_respiration
+#'
+#' @description Rcpp calc growth
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param resp_intercept,resp_slope Numeric with parameters.
+#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with parameters.
+#' @param water_temp,min_per_i, Numeric with parameters.
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @name rcpp_calc_respiration
+#'
+#' @export
+rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
+}
+
 #' rcpp_convert_nutr
 #'
 #' @description Add describtion

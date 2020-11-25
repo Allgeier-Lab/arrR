@@ -129,10 +129,10 @@ run_simulation <- function(seafloor, fishpop,
                                          reef_attraction = reef_attraction)
 
     # simulate fish respiration (26°C is mean water temperature in the Bahamas)
-    fishpop_values <- simulate_respiration(fishpop_values = fishpop_values,
-                                           parameters = parameters,
-                                           water_temp = 26,
-                                           min_per_i = min_per_i)
+    simulate_respiration(fishpop_values = fishpop_values,
+                         parameters = parameters,
+                         water_temp = 26,
+                         min_per_i = min_per_i)
 
     # simulate fishpop growth and including change of seafloor pools
     simulate_fishpop_growth(fishpop_values = fishpop_values,
@@ -184,14 +184,14 @@ run_simulation <- function(seafloor, fishpop,
   }
 
   # combine seafloor to one dataframe
-  seafloor_track <- as.data.frame(do.call(what = "rbind", args = seafloor_track))
+  seafloor_track <- as.data.frame(do.call(what = rbind, args = seafloor_track))
 
   # add timestep counter
   seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
                                  each = raster::ncell(seafloor))
 
   # combine fish population to one dataframe
-  fishpop_track <- as.data.frame(do.call(what = "rbind", args = fishpop_track))
+  fishpop_track <- as.data.frame(do.call(what = rbind, args = fishpop_track))
 
   # add timestep counter
   if (starting_values$pop_n > 0) {

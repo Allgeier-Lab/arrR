@@ -91,7 +91,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     } else {
 
       //  increase age (60 min * 24 h = 1440 min/day)
-      fishpop(fish_id_temp, 1) += min_per_i / 1440;
+      fishpop(fish_id_temp, 1) += min_per_i / 1440.0;
 
       // increase fish dimensions length
       fishpop(fish_id_temp, 5) += growth_values(fish_id_temp, 1);

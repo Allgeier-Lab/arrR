@@ -50,6 +50,23 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_calc_respiration
+void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop, double resp_intercept, double resp_slope, double resp_temp_low, double resp_temp_max, double resp_temp_optm, double water_temp, double min_per_i);
+RcppExport SEXP _arrR_rcpp_calc_respiration(SEXP fishpopSEXP, SEXP resp_interceptSEXP, SEXP resp_slopeSEXP, SEXP resp_temp_lowSEXP, SEXP resp_temp_maxSEXP, SEXP resp_temp_optmSEXP, SEXP water_tempSEXP, SEXP min_per_iSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< double >::type resp_intercept(resp_interceptSEXP);
+    Rcpp::traits::input_parameter< double >::type resp_slope(resp_slopeSEXP);
+    Rcpp::traits::input_parameter< double >::type resp_temp_low(resp_temp_lowSEXP);
+    Rcpp::traits::input_parameter< double >::type resp_temp_max(resp_temp_maxSEXP);
+    Rcpp::traits::input_parameter< double >::type resp_temp_optm(resp_temp_optmSEXP);
+    Rcpp::traits::input_parameter< double >::type water_temp(water_tempSEXP);
+    Rcpp::traits::input_parameter< double >::type min_per_i(min_per_iSEXP);
+    rcpp_calc_respiration(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_convert_nutr
 double rcpp_convert_nutr(double x, String to);
 RcppExport SEXP _arrR_rcpp_convert_nutr(SEXP xSEXP, SEXP toSEXP) {
@@ -149,6 +166,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_dist_reef", (DL_FUNC) &_arrR_rcpp_calc_dist_reef, 4},
     {"_arrR_rcpp_calc_fishpop_growth", (DL_FUNC) &_arrR_rcpp_calc_fishpop_growth, 10},
     {"_arrR_rcpp_calc_mineralization", (DL_FUNC) &_arrR_rcpp_calc_mineralization, 3},
+    {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
     {"_arrR_rcpp_check_max_biomass", (DL_FUNC) &_arrR_rcpp_check_max_biomass, 5},

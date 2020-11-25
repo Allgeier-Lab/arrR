@@ -36,9 +36,9 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor,
   // get all seafloor values
   for(int i = 0; i < n_row_seafloor; i++) {
 
-    nutrients(i) = (seafloor(i, 4) * nutrients_diffusion) / 8;
-    detritus(i) = (seafloor(i, 5) * detritus_diffusion) / 8;
-    detritus_dead(i) = (seafloor(i, 6) * detritus_dead_diffusion) / 8;
+    nutrients(i) = (seafloor(i, 4) * nutrients_diffusion) / 8.0;
+    detritus(i) = (seafloor(i, 5) * detritus_diffusion) / 8.0;
+    detritus_dead(i) = (seafloor(i, 6) * detritus_dead_diffusion) / 8.0;
 
   }
 
