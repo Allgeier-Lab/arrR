@@ -15,7 +15,8 @@ using namespace Rcpp;
 //'
 //' @return Matrix
 //'
-//' @name rcpp_calc_respiration
+//' @aliases rcpp_calc_respiration
+//' @rdname rcpp_calc_respiration
 //'
 //' @export
 // [[Rcpp::export]]

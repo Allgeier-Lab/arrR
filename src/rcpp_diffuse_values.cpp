@@ -14,7 +14,8 @@ using namespace Rcpp;
 //'
 //' @return Matrix
 //'
-//' @name rcpp_diffuse_values
+//' @aliases rcpp_diffuse_values
+//' @rdname rcpp_diffuse_values
 //'
 //' @export
 // [[Rcpp::export]]

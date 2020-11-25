@@ -38,8 +38,9 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @return Matrix
 #'
-#' @name rcpp_calc_fishpop_growth
-#'
+#' @aliases rcpp_calc_fishpop_growth
+#' @rdname rcpp_calc_fishpop_growth
+#' //'
 #' @export
 rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
     invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
@@ -79,7 +80,8 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mi
 #'
 #' @return Matrix
 #'
-#' @name rcpp_calc_respiration
+#' @aliases rcpp_calc_respiration
+#' @rdname rcpp_calc_respiration
 #'
 #' @export
 rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
@@ -183,7 +185,8 @@ rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, ag
 #'
 #' @return Matrix
 #'
-#' @name rcpp_create_rebirth
+#' @aliases rcpp_create_rebirth
+#' @rdname rcpp_create_rebirth
 #'
 #' @export
 rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_n_body, pop_want_reserves) {
@@ -203,7 +206,8 @@ rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_
 #'
 #' @return Matrix
 #'
-#' @name rcpp_diffuse_values
+#' @aliases rcpp_diffuse_values
+#' @rdname rcpp_diffuse_values
 #'
 #' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {

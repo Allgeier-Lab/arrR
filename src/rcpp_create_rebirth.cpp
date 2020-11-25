@@ -15,7 +15,8 @@ using namespace Rcpp;
 //'
 //' @return Matrix
 //'
-//' @name rcpp_create_rebirth
+//' @aliases rcpp_create_rebirth
+//' @rdname rcpp_create_rebirth
 //'
 //' @export
 // [[Rcpp::export]]
