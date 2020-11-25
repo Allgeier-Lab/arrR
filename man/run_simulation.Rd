@@ -18,7 +18,7 @@ run_simulation(
 \arguments{
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
-\item{fishpop}{Data.frame population created with \code{\link{setup_fishpop}}.}
+\item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
 \item{parameters}{List with all model parameters.}
 

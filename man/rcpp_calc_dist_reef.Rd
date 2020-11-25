@@ -19,10 +19,9 @@ rcpp_calc_dist_reef(seafloor, coords_reef, extent, torus = FALSE)
 matrix
 }
 \description{
-Internal rcpp function
+Rcpp calc dist reef
 }
 \details{
-Internal function calculate distance to reef cells.
+Internal function to calculate distance to reef cells.
 }
 \keyword{export}
-\keyword{internal}

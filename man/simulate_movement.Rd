@@ -16,8 +16,7 @@ simulate_movement(
 )
 }
 \arguments{
-\item{fishpop_values}{Data frame population created
-with \code{\link{setup_fishpop_values}}.}
+\item{fishpop_values}{Matrix with fish population created.}
 
 \item{n_pop}{Numeric with number of individuals.}
 

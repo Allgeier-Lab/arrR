@@ -1,8 +1,8 @@
-#' simulate_growth
+#' simulate_fishpop_growth
 #'
 #' @description Simulate consumption of fish population.
 #'
-#' @param fishpop_values,fishpop_track Data frame population created with \code{\link{setup_fishpop_values}}.
+#' @param fishpop_values,fishpop_track Matrix with fish population.
 #' @param n_pop Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param parameters List with all model parameters.
@@ -14,12 +14,12 @@
 #'
 #' @return list
 #'
-#' @aliases simulate_growth
-#' @rdname simulate_growth
+#' @aliases simulate_fishpop_growth
+#' @rdname simulate_fishpop_growth
 #'
 #' @export
-simulate_growth <- function(fishpop_values, fishpop_track, n_pop,
-                                seafloor, seafloor_values, parameters, min_per_i) {
+simulate_fishpop_growth <- function(fishpop_values, fishpop_track, n_pop,
+                                    seafloor, seafloor_values, parameters, min_per_i) {
 
   # calculate growth in length and weight
   growth_length <- parameters$pop_k_grunt * (1 / 365) * (1 / 24) * (1 / 60) * min_per_i *
@@ -39,15 +39,18 @@ simulate_growth <- function(fishpop_values, fishpop_track, n_pop,
 
   growth_values <- cbind(consumption_req, growth_length, growth_weight)
 
-  rcpp_calc_growth(fishpop = fishpop_values,
-                   fishpop_track = fishpop_track[[1]],
-                   seafloor = seafloor_values,
-                   cell_id = cell_id,
-                   growth_values = growth_values,
-                   pop_n_body = parameters$pop_n_body,
-                   pop_max_reserves = parameters$pop_max_reserves,
-                   pop_want_reserves = parameters$pop_want_reserves,
-                   min_per_i = min_per_i)
+  # randomize order of loop because detritus pool can "run out"
+  fish_id <- sample(seq(from = 1, to = n_pop), size = n_pop)
 
-  return(list(seafloor = seafloor_values, fishpop_values = fishpop_values))
+  rcpp_calc_fishpop_growth(fishpop = fishpop_values,
+                            fishpop_track = fishpop_track[[1]],
+                            seafloor = seafloor_values,
+                            fish_id = fish_id,
+                            cell_id = cell_id,
+                            growth_values = growth_values,
+                            pop_n_body = parameters$pop_n_body,
+                            pop_max_reserves = parameters$pop_max_reserves,
+                            pop_want_reserves = parameters$pop_want_reserves,
+                            min_per_i = min_per_i)
+
 }

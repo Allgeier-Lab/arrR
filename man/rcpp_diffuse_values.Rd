@@ -5,7 +5,7 @@
 \title{rcpp_diffuse_values}
 \usage{
 rcpp_diffuse_values(
-  seafloor_values,
+  seafloor,
   cell_adj,
   nutrients_diffusion,
   detritus_diffusion,
@@ -13,7 +13,7 @@ rcpp_diffuse_values(
 )
 }
 \arguments{
-\item{seafloor_values}{Matrix with seafloor values.}
+\item{seafloor}{Matrix with seafloor values.}
 
 \item{cell_adj}{Matrix with cell adjacencies.}
 

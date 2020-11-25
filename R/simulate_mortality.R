@@ -29,33 +29,27 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
   random_prob <- stats::runif(n = n_pop, min = 0, max = 1)
 
   # identify who dies
-  id_mort <- which(random_prob < death_prob)
+  fish_id <- which(random_prob < death_prob)
 
   # check if mortality occurs
-  if (length(id_mort) > 0) {
+  if (length(fish_id) > 0) {
+
+    # randomize order of loop because detritus pool can "run out"
+    mort_id <- sample(fish_id, size = length(fish_id))
 
     # get detritus/nutrient pools at location and raster cells
     cell_id <- raster::cellFromXY(object = seafloor,
-                                  xy = fishpop_values[id_mort, c("x", "y"), drop = FALSE])
+                                  xy = fishpop_values[fish_id, c("x", "y"),
+                                                      drop = FALSE])
 
     # create new individual
-    mort_temp <- create_rebirth(fishpop_values = fishpop_values[id_mort, , drop = FALSE],
-                                fishpop_track = fishpop_track[[1]],
-                                n_body = parameters$pop_n_body,
-                                want_reserves = parameters$pop_want_reserves,
-                                detritus_pool = seafloor_values[cell_id, "detritus_pool"],
-                                detritus_dead = seafloor_values[cell_id, "detritus_dead"],
-                                reason = "background")
-
-    # update data frames
-    fishpop_values[id_mort, ] <- mort_temp$fishpop_values
-
-    # update the detritus pool values
-    seafloor_values[cell_id, "detritus_pool"] <- mort_temp$detritus_pool
-
-    seafloor_values[cell_id, "detritus_dead"] <- mort_temp$detritus_dead
+    rcpp_create_rebirth(fishpop = fishpop_values,
+                        fishpop_track = fishpop_track[[1]],
+                        seafloor = seafloor_values,
+                        fish_id = fish_id,
+                        cell_id = cell_id,
+                        pop_n_body = parameters$pop_n_body,
+                        pop_want_reserves = parameters$pop_want_reserves)
 
   }
-
-  return(list(seafloor = seafloor_values, fishpop_values = fishpop_values))
 }

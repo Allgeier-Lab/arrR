@@ -2,8 +2,7 @@
 #'
 #' @description Simulate movement of population.
 #'
-#' @param fishpop_values Data frame population created
-#' with \code{\link{setup_fishpop_values}}.
+#' @param fishpop_values Matrix with fish population created.
 #' @param n_pop Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param coords_reef 2-column matrix with coordinates of AR.

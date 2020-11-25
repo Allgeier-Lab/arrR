@@ -3,7 +3,7 @@
 #' @description Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param fishpop Data.frame population created with \code{\link{setup_fishpop}}.
+#' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -109,14 +109,14 @@ run_simulation <- function(seafloor, fishpop,
   for (i in 1:max_i) {
 
     # simulate seagrass growth
-    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
-                                         parameters = parameters,
-                                         cells_reef = cells_reef,
-                                         min_per_i = min_per_i)
+    simulate_seagrass(seafloor_values = seafloor_values,
+                      parameters = parameters,
+                      cells_reef = cells_reef,
+                      min_per_i = min_per_i)
 
     # redistribute detritus
-    seafloor_values <- simulate_mineralization(seafloor_values = seafloor_values,
-                                               parameters = parameters)
+    simulate_mineralization(seafloor_values = seafloor_values,
+                            parameters = parameters)
 
     # simulate fish movement
     fishpop_values <- simulate_movement(fishpop_values = fishpop_values,
@@ -135,37 +135,27 @@ run_simulation <- function(seafloor, fishpop,
                                            min_per_i = min_per_i)
 
     # simulate fishpop growth and including change of seafloor pools
-    growth_temp <- simulate_growth(fishpop_values = fishpop_values,
-                                   fishpop_track = fishpop_track,
-                                   n_pop = starting_values$pop_n,
-                                   seafloor = seafloor$reef,
-                                   seafloor_values = seafloor_values,
-                                   parameters = parameters,
-                                   min_per_i = min_per_i)
-
-    # update results
-    seafloor_values <- growth_temp$seafloor
-
-    fishpop_values <- growth_temp$fishpop_values
+    simulate_fishpop_growth(fishpop_values = fishpop_values,
+                            fishpop_track = fishpop_track,
+                            n_pop = starting_values$pop_n,
+                            seafloor = seafloor$reef,
+                            seafloor_values = seafloor_values,
+                            parameters = parameters,
+                            min_per_i = min_per_i)
 
     # simulate mortality
-    mortality_temp <- simulate_mortality(fishpop_values = fishpop_values,
-                                         fishpop_track = fishpop_track,
-                                         n_pop = starting_values$pop_n,
-                                         seafloor = seafloor$reef,
-                                         seafloor_values = seafloor_values,
-                                         parameters = parameters,
-                                         min_per_i = min_per_i)
-
-    # update results
-    seafloor_values <- mortality_temp$seafloor
-
-    fishpop_values <- mortality_temp$fishpop_values
+    simulate_mortality(fishpop_values = fishpop_values,
+                       fishpop_track = fishpop_track,
+                       n_pop = starting_values$pop_n,
+                       seafloor = seafloor$reef,
+                       seafloor_values = seafloor_values,
+                       parameters = parameters,
+                       min_per_i = min_per_i)
 
     # diffuse values between neighbors
-    seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
-                                          cell_adj = cell_adj,
-                                          parameters = parameters)
+    simulate_diffusion(seafloor_values = seafloor_values,
+                       cell_adj = cell_adj,
+                       parameters = parameters)
 
     # update tracking list
     if (i %% save_each == 0) {
