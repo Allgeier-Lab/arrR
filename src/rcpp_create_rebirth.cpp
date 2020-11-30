@@ -36,11 +36,12 @@ void rcpp_create_rebirth(Rcpp::NumericMatrix fishpop,
     // create counter for temp cell id
     int cell_id_temp = cell_id(i);
 
-    // extract original coordinates
+    // save current original coordinates
     double x_coord = fishpop(fish_id_temp, 2);
+
     double y_coord = fishpop(fish_id_temp, 3);
 
-    // extract mortality counter
+    // save current mortality counter
     int died_consumption = fishpop(fish_id_temp, 11);
 
     int died_background = fishpop(fish_id_temp, 12);
@@ -70,7 +71,7 @@ void rcpp_create_rebirth(Rcpp::NumericMatrix fishpop,
 
       seafloor(cell_id_temp, 5) = 0;
 
-      // detritus pool is larger than what is wanted, so only subset is used
+    // detritus pool is larger than what is wanted, so only subset is used
     } else {
 
       fishpop(fish_id_temp, 7) = reserves_wanted;

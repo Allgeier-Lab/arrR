@@ -40,11 +40,12 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // individual dies because consumption requirements can not be met
     if (growth_values(fish_id_temp, 0) > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7))) {
 
-      // extract original coordinates
+      // save current original coordinates
       double x_coord = fishpop(fish_id_temp, 2);
+
       double y_coord = fishpop(fish_id_temp, 3);
 
-      // extract mortality counter
+      // save current mortality counter
       int died_consumption = fishpop(fish_id_temp, 11);
 
       int died_background = fishpop(fish_id_temp, 12);
