@@ -32,36 +32,16 @@ result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     reef_attraction = FALSE,
                                     max_i = max_i, min_per_i = min_per_i)
 
-test_that("run_simulation returns rnd_mdl", {
+filter_time <- 50
 
-  expect_is(object = result_rand, class = "mdl_rn")
+result_fltr <- filter_result(result = result_rand, timestep = filter_time)
 
-})
+test_that("filter_result only return until timestep", {
 
-test_that("run_simulation contains seafloor and fishpop", {
+  expect_lt(object = result_fltr$max_i, expected = result_rand$max_i)
 
-  expect_equal(object = nrow(result_rand$seafloor),
-               expected = max_i * raster::ncell(input_seafloor) + raster::ncell(input_seafloor))
+  expect_equal(object = max(result_fltr$seafloor$timestep), expected = filter_time)
 
-  expect_equal(object = nrow(result_rand$fishpop),
-               expected = max_i * nrow(input_fishpop) + nrow(input_fishpop))
-
-  expect_equal(object = unique(result_rand$seafloor$timestep),
-               expected = 0:max_i)
-
-  expect_equal(object = unique(result_rand$fishpop$timestep),
-               expected = 0:max_i)
-
-})
-
-test_that("run_simulation contains model run information", {
-
-  expect_equal(object = result_rand$max_i, expected = max_i)
-
-  expect_equal(object = result_rand$min_per_i, expected = min_per_i)
-
-  expect_equal(object = result_rand$extent, expected = raster::extent(input_seafloor))
-
-  expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
+  expect_equal(object = max(result_fltr$fishpop$timestep), expected = filter_time)
 
 })

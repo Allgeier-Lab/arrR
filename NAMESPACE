@@ -2,11 +2,9 @@
 
 S3method(plot,mdl_rn)
 S3method(print,mdl_rn)
-export(calc_nutr_uptake)
 export(calc_size)
 export(check_max_biomass)
 export(check_parameters)
-export(convert_nutr)
 export(filter_result)
 export(get_density)
 export(get_limits)

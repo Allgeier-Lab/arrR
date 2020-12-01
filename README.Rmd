@@ -28,13 +28,21 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
+```{r coverage, echo = FALSE}
+library(covr)
+
+coverage_local <- covr::package_coverage(".")
+
+cat("Test coverage:", round(covr::percent_coverage(coverage_local), digits = 2), "%")
+```
+
 The goal of *arrR* is to simulate seagrass growth around artificial reefs.
 
 ## Installation
 
 You can install arrR from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. You will need the `auth_token` because the repository is currently set to private so only members of the Allgeier Lab can see it. **PLEASE DON'T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW FIRST**.
 
-``` {r install, eval = FALSE}
+```{r install, eval = FALSE}
 remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
                         auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
 ```
@@ -100,9 +108,7 @@ result
 To plot the results, pass the resulting object to the  `plot` function. This will automatically create a plot of the selected timestep (default: last timestep). It is possible to either plot a single `RasterLayer` or the whole `RasterBrick`
 
 ```{r plot, fig.align="center"}
-
 plot(result, what = "seafloor")
-
 ```
 
 <!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->
