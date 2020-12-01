@@ -32,19 +32,19 @@ filter_result <- function(result, timestep = max(result$max_i)) {
   seafloor_id <- which(result$seafloor$timestep %in% i)
 
   # get row id if timesteps that are selected
-  fish_population_id <- which(result$fish_population$timestep %in% i)
+  fishpop_id <- which(result$fishpop$timestep %in% i)
 
   # subset data.frame
   seafloor_track <- result$seafloor[seafloor_id, ]
 
   # subset data.frame
-  fish_population_track <- result$fish_population[fish_population_id, ]
+  fishpop_track <- result$fishpop[fishpop_id, ]
 
   # replace elements
   result$seafloor <- seafloor_track
 
   # replace elements
-  result$fish_population <- fish_population_track
+  result$fishpop <- fishpop_track
 
   # replace elements
   result$max_i <- max(i)

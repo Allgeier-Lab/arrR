@@ -4,7 +4,7 @@
 \alias{calc_nutr_uptake}
 \title{calc_nutr_uptake}
 \usage{
-calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_fac)
+calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_frac)
 }
 \arguments{
 \item{nutrients}{Vector with nutrients pool values.}
@@ -13,7 +13,7 @@ calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_fac)
 
 \item{v_max, k_m}{Parameters of Michaelis–Menten model.}
 
-\item{time_fac}{Numeric that specifies time period one iteration corresponds to.}
+\item{time_frac}{Numeric that specifies time period one iteration corresponds to.}
 }
 \value{
 vector

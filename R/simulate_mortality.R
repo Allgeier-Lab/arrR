@@ -2,74 +2,54 @@
 #'
 #' @description Simulate background mortality of population.
 #'
-#' @param fish_population,fish_population_track Data frame population created
-#' with \code{\link{setup_fish_population}}.
-#' @param n_pop Numeric with number of individuals.
-#' @param seafloor,seafloor_values RasterLayer and data.frame with seafloor values.
+#' @param fishpop_values,fishpop_track Data frame population created
+#' with \code{\link{setup_fishpop}}.
+#' @param pop_n Numeric with number of individuals.
+#' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
 #' Function to simulate background mortality of fish population individuals.
 #'
-#' @return data.frame
+#' @return list
 #'
 #' @aliases simulate_mortality
 #' @rdname simulate_mortality
 #'
 #' @export
-simulate_mortality <- function(fish_population, fish_population_track,
+simulate_mortality <- function(fishpop_values, fishpop_track,
                                seafloor, seafloor_values,
-                               n_pop, parameters, min_per_i) {
+                               pop_n, parameters, min_per_i) {
 
   # create death probability
-  death_prob <- exp(fish_population$length - parameters$pop_max_size)
+  death_prob <- exp(fishpop_values[, "length"] - parameters$pop_max_size)
 
   # create random number to test death prob against
-  random_prob <- stats::runif(n = n_pop, min = 0, max = 1)
+  random_prob <- stats::runif(n = pop_n, min = 0, max = 1)
 
   # identify who dies
-  mort_id <- which(random_prob < death_prob)
+  fish_id <- which(random_prob < death_prob)
 
   # check if mortality occurs
-  if (length(mort_id) > 0) {
+  if (length(fish_id) > 0) {
+
+    # randomize order of loop because detritus pool can "run out"
+    fish_id <- sample(fish_id, size = length(fish_id))
 
     # get detritus/nutrient pools at location and raster cells
     cell_id <- raster::cellFromXY(object = seafloor,
-                                  xy = fish_population[mort_id, c("x", "y")])
+                                  xy = fishpop_values[fish_id, c("x", "y"),
+                                                      drop = FALSE])
 
-    detritus_pool <- seafloor_values$detritus_pool[cell_id]
-
-    detritus_dead <- seafloor_values$detritus_dead[cell_id]
-
-    # loop through all dying individuals
-    for (i in 1:length(mort_id)) {
-
-      # create new individual
-      fish_pop_temp <- create_rebirth(fish_population = fish_population[mort_id[i], ],
-                                      fish_population_track = fish_population_track[[1]],
-                                      n_body = parameters$pop_n_body,
-                                      want_reserves = parameters$pop_want_reserves,
-                                      detritus_pool = detritus_pool[i],
-                                      detritus_dead = detritus_dead[i],
-                                      reason = "background")
-
-      # update data frames
-      fish_population[mort_id[i], ] <- fish_pop_temp$fish_population
-
-      # update detritus
-      detritus_pool[i] <- fish_pop_temp$detritus_pool
-
-      detritus_dead[i] <- fish_pop_temp$detritus_dead
-
-    }
-
-    # update the detritus pool values
-    seafloor_values$detritus_pool[cell_id] <- detritus_pool
-
-    seafloor_values$detritus_dead[cell_id] <- detritus_dead
+    # create new individual
+    rcpp_create_rebirth(fishpop = fishpop_values,
+                        fishpop_track = fishpop_track,
+                        seafloor = seafloor_values,
+                        fish_id = fish_id,
+                        cell_id = cell_id,
+                        pop_n_body = parameters$pop_n_body,
+                        pop_want_reserves = parameters$pop_want_reserves)
 
   }
-
-  return(list(seafloor = seafloor_values, fish_population = fish_population))
 }

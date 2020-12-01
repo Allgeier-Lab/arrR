@@ -32,13 +32,13 @@ get_density <- function(result, timestep = result$max_i) {
   # create empty raster
   ras_density <- raster::raster(ext = result$extent, resolution = result$grain)
 
-  if (nrow(result$fish_population > 0)) {
+  if (nrow(result$fishpop > 0)) {
 
-    fish_population <- subset(result$fish_population,
-                              timestep <= i, select = c("x", "y"))
+    # fishpop <- subset(result$fishpop,
+    #                   timestep <= i, select = c("x", "y"))
 
     # count fish within each cell
-    ras_density <- raster::rasterize(x = result$fish_population[, c("x", "y")],
+    ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")],
                                      y = ras_density,
                                      fun = "count", background = 0)
 
@@ -61,7 +61,6 @@ get_density <- function(result, timestep = result$max_i) {
 
     # rename
     names(ras_density) <- c("x", "y", "density")
-
 
   }
 

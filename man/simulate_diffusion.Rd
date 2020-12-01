@@ -7,14 +7,14 @@
 simulate_diffusion(seafloor_values, cell_adj, parameters)
 }
 \arguments{
-\item{seafloor_values}{Data.frame of seafloor values.}
+\item{seafloor_values}{Matrix with seafloor values.}
 
 \item{cell_adj}{2-column matrix with cell adjacencies.}
 
 \item{parameters}{List with all model parameters.}
 }
 \value{
-data.frame
+matrix
 }
 \description{
 Simulate diffusion.

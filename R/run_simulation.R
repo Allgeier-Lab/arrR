@@ -3,7 +3,7 @@
 #' @description Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
-#' @param fish_population Data.frame population created with \code{\link{setup_fish_population}}.
+#' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
@@ -25,7 +25,7 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fish_population,
+run_simulation <- function(seafloor, fishpop,
                            parameters, reef_attraction,
                            max_i, min_per_i, save_each = 1,
                            verbose = TRUE) {
@@ -55,17 +55,19 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-  # convert seafloor as data.frame
-  seafloor_values <- raster::as.data.frame(seafloor, xy = TRUE)
+  # convert seafloor and fishpop as matrix
+  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
+
+  fishpop_values <- as.matrix(fishpop)
 
   # get mean starting values
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
-                                         fish_population = fish_population)
+                                         fishpop_values = fishpop_values)
 
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
-  fish_population_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -81,20 +83,17 @@ run_simulation <- function(seafloor, fish_population,
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
-  # get number of individuals
-  n_pop <- nrow(fish_population)
+  # save input data in tracking data.frame
+  seafloor_track[[1]] <- rlang::duplicate(seafloor_values)
 
-  # save input_data as first list element
-  seafloor_track[[1]] <- seafloor_values
-
-  fish_population_track[[1]] <- fish_population
+  fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
   # print some basic information about model run
   if (verbose) {
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
-    message("> Population with ", n_pop, " individuals.")
+    message("> Population with ", starting_values$pop_n, " individuals.")
 
     message("> Simulating ", max_i, " simulation iterations; Saving every ", save_each, " iterations.")
 
@@ -109,78 +108,68 @@ run_simulation <- function(seafloor, fish_population,
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
-    if (verbose) {
-
-      message("\r> ...Progress: ", i, "/", max_i, " simulations runs... \t\t\t",
-              appendLF = FALSE)
-
-    }
-
     # simulate seagrass growth
-    seafloor_values <- simulate_seagrass(seafloor_values = seafloor_values,
-                                         parameters = parameters,
-                                         cells_reef = cells_reef,
-                                         min_per_i = min_per_i)
+    simulate_seagrass(seafloor_values = seafloor_values,
+                      parameters = parameters,
+                      cells_reef = cells_reef,
+                      min_per_i = min_per_i)
 
     # redistribute detritus
-    seafloor_values <- distribute_detritus(seafloor_values = seafloor_values,
-                                           parameters = parameters)
+    simulate_mineralization(seafloor_values = seafloor_values,
+                            parameters = parameters)
 
     # simulate fish movement
-    fish_population <- simulate_movement(fish_population = fish_population,
-                                         n_pop = n_pop,
-                                         seafloor = seafloor$reef,
-                                         seafloor_values = seafloor_values,
-                                         coords_reef = coords_reef,
-                                         extent = extent,
-                                         parameters = parameters,
-                                         reef_attraction = reef_attraction)
+    simulate_movement(fishpop_values = fishpop_values,
+                      pop_n = starting_values$pop_n,
+                      seafloor = seafloor$reef,
+                      seafloor_values = seafloor_values,
+                      coords_reef = coords_reef,
+                      extent = extent,
+                      parameters = parameters,
+                      reef_attraction = reef_attraction)
 
     # simulate fish respiration (26°C is mean water temperature in the Bahamas)
-    fish_population <- simulate_respiration(fish_population = fish_population,
-                                            parameters = parameters,
-                                            water_temp = 26,
-                                            min_per_i = min_per_i)
+    simulate_respiration(fishpop_values = fishpop_values,
+                         parameters = parameters,
+                         water_temp = 26,
+                         min_per_i = min_per_i)
 
-    # simulate growth and nutrient feedback (returns population data.frame and raster)
-    growth_temp <- simulate_growth(fish_population = fish_population,
-                                   fish_population_track = fish_population_track,
-                                   n_pop = n_pop,
-                                   seafloor = seafloor$reef,
-                                   seafloor_values = seafloor_values,
-                                   parameters = parameters,
-                                   min_per_i = min_per_i)
-
-    # update results
-    seafloor_values <- growth_temp$seafloor
-
-    fish_population <- growth_temp$fish_population
+    # simulate fishpop growth and including change of seafloor pools
+    simulate_fishpop_growth(fishpop_values = fishpop_values,
+                            fishpop_track = fishpop_track[[1]],
+                            pop_n = starting_values$pop_n,
+                            seafloor = seafloor$reef,
+                            seafloor_values = seafloor_values,
+                            parameters = parameters,
+                            min_per_i = min_per_i)
 
     # simulate mortality
-    mortality_temp <- simulate_mortality(fish_population = fish_population,
-                                         fish_population_track = fish_population_track,
-                                         n_pop = n_pop,
-                                         seafloor = seafloor$reef,
-                                         seafloor_values = seafloor_values,
-                                         parameters = parameters,
-                                         min_per_i = min_per_i)
-
-    # update results
-    seafloor_values <- mortality_temp$seafloor
-
-    fish_population <- mortality_temp$fish_population
+    simulate_mortality(fishpop_values = fishpop_values,
+                       fishpop_track = fishpop_track[[1]],
+                       pop_n = starting_values$pop_n,
+                       seafloor = seafloor$reef,
+                       seafloor_values = seafloor_values,
+                       parameters = parameters,
+                       min_per_i = min_per_i)
 
     # diffuse values between neighbors
-    seafloor_values <- simulate_diffusion(seafloor_values = seafloor_values,
-                                          cell_adj = cell_adj,
-                                          parameters = parameters)
+    simulate_diffusion(seafloor_values = seafloor_values,
+                       cell_adj = cell_adj,
+                       parameters = parameters)
 
-    # update tracking data.frames
+    # update tracking list
     if (i %% save_each == 0) {
 
-      seafloor_track[[i / save_each + 1]] <- seafloor_values
+      if (verbose) {
 
-      fish_population_track[[i / save_each + 1]] <- fish_population
+        message("\r> ...Progress: ", round(i / max_i * 100), "% simulations runs... \t\t\t",
+                appendLF = FALSE)
+
+      }
+
+      seafloor_track[[i / save_each + 1]] <- rlang::duplicate(seafloor_values)
+
+      fishpop_track[[i / save_each + 1]] <- rlang::duplicate(fishpop_values)
 
     }
   }
@@ -194,31 +183,32 @@ run_simulation <- function(seafloor, fish_population,
 
   }
 
-  # combine seafloor to one dataframe
-  seafloor_track <- do.call(what = "rbind", args = seafloor_track)
+  # combine seafloor/fishpop to one dataframe
+  seafloor_track <- data.frame(do.call(what = "rbind", args = seafloor_track))
 
-  # add timestep counter
+  fishpop_track <- data.frame(do.call(what = "rbind", args = fishpop_track))
+
+  # add timestep to  seafloor/fishpop counter
   seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
                                  each = raster::ncell(seafloor))
 
-  # combine fish population to one dataframe
-  fish_population_track <- do.call(what = "rbind", args = fish_population_track)
+  # fishpop is present
+  if (starting_values$pop_n > 0) {
 
-  # add timestep counter
-  if (n_pop > 0) {
+    fishpop_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                  each = starting_values$pop_n)
 
-    fish_population_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
-                                          each = n_pop)
-
+  # no fish are present
   } else {
 
-    fish_population_track$timestep <- numeric(0)
+    fishpop_track$timestep <- numeric(0)
 
   }
 
   # combine result to list
-  result <- list(seafloor = seafloor_track, fish_population = fish_population_track,
-                 starting_values = starting_values, parameters = parameters, max_i = max_i, min_per_i = min_per_i,
+  result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
+                 starting_values = starting_values, parameters = parameters,
+                 max_i = max_i, min_per_i = min_per_i,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor))
 
   # set class of result

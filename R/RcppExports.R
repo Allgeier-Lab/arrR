@@ -3,33 +3,201 @@
 
 #' rcpp_calc_dist_reef
 #'
-#' @description Internal rcpp function
+#' @description Rcpp calc dist reef
 #'
-#' @param fish_population 2-column matrix with coordinates of individual fish.
+#' @param seafloor Matrix.
 #' @param coords_reef 2-column matrix with coordinates of AR.
-#' @param torus If TRUE the distance will be calculated using a torus.
 #' @param extent Vector with dimension in x and y direction.
+#' @param torus If TRUE the distance will be calculated using a torus.
 #'
 #' @details
-#' Internal function calculate distance to reef cells.
+#' Internal function to calculate distance to reef cells.
 #'
 #' @return matrix
 #'
 #' @aliases rcpp_calc_dist_reef
 #' @rdname rcpp_calc_dist_reef
 #'
-#' @keywords internal
-#'
 #' @keywords export
 rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
     .Call(`_arrR_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
+#' rcpp_calc_fishpop_growth
+#'
+#' @description Rcpp calc growth
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param growth_values Matrix with growth values.
+#' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @aliases rcpp_calc_fishpop_growth
+#' @rdname rcpp_calc_fishpop_growth
+#'
+#' @export
+rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
+}
+
+#' rcpp_calc_mineralization
+#'
+#' @description Add describtion
+#'
+#' @param seafloor Add describtion
+#' @param detritus_dead_decomp,detritus_mineralization seafloor Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_calc_mineralization
+#' @rdname rcpp_calc_mineralization
+#'
+#' @keywords export
+rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mineralization) {
+    invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_dead_decomp, detritus_mineralization))
+}
+
+#' rcpp_calc_respiration
+#'
+#' @description Rcpp calc growth
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param resp_intercept,resp_slope Numeric with parameters.
+#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with parameters.
+#' @param water_temp,min_per_i, Numeric with parameters.
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @aliases rcpp_calc_respiration
+#' @rdname rcpp_calc_respiration
+#'
+#' @export
+rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
+}
+
+#' rcpp_convert_nutr
+#'
+#' @description Add describtion
+#'
+#' @param x Add describtion
+#' @param to Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_convert_nutr
+#' @rdname rcpp_convert_nutr
+#'
+#' @keywords export
+rcpp_convert_nutr <- function(x, to) {
+    .Call(`_arrR_rcpp_convert_nutr`, x, to)
+}
+
+#' rcpp_calc_nutr_uptake
+#'
+#' @description Add describtion
+#'
+#' @param nutrients,biomass Add describtion
+#' @param v_max,k_m,time_frac Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_calc_nutr_uptake
+#' @rdname rcpp_calc_nutr_uptake
+#'
+#' @keywords export
+rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
+    .Call(`_arrR_rcpp_calc_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
+}
+
+#' rcpp_check_max_biomass
+#'
+#' @description Add describtion
+#'
+#' @param bg_biomass,ag_biomass,detritus_pool Add describtion
+#' @param bg_biomass_max,ag_biomass_max Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_check_max_biomass
+#' @rdname rcpp_check_max_biomass
+#'
+#' @keywords export
+rcpp_check_max_biomass <- function(bg_biomass, ag_biomass, detritus_pool, bg_biomass_max, ag_biomass_max) {
+    .Call(`_arrR_rcpp_check_max_biomass`, bg_biomass, ag_biomass, detritus_pool, bg_biomass_max, ag_biomass_max)
+}
+
+#' rcpp_calc_seagrass_growth
+#'
+#' @description Rcpp calc seagrass growth
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param cells_reef Vector with id of reef cells Add describtion
+#' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Add describtion
+#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Add describtion
+#' @param detritus_ratio,bg_thres,min_per_i Add describtion
+#'
+#' @details
+#' Internal function to calculate seagrass growth
+#'
+#' @return matrix
+#'
+#' @aliases rcpp_calc_seagrass_growth
+#' @rdname rcpp_calc_seagrass_growth
+#'
+#' @keywords export
+rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
+}
+
+#' rcpp_create_rebirth
+#'
+#' @description Rcpp create new individual
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param pop_n_body,pop_want_reserves Numeric with parameters.
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @aliases rcpp_create_rebirth
+#' @rdname rcpp_create_rebirth
+#'
+#' @export
+rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_n_body, pop_want_reserves) {
+    invisible(.Call(`_arrR_rcpp_create_rebirth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_n_body, pop_want_reserves))
+}
+
 #' rcpp_diffuse_values
 #'
-#' @description Rcpp sample function
+#' @description Rcpp function to diffuse seafloor values
 #'
-#' @param seafloor_values Matrix with seafloor values.
+#' @param seafloor Matrix with seafloor values.
 #' @param cell_adj Matrix with cell adjacencies.
 #' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 #'
@@ -38,10 +206,93 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @return Matrix
 #'
-#' @name rcpp_diffuse_values
+#' @aliases rcpp_diffuse_values
+#' @rdname rcpp_diffuse_values
 #'
 #' @export
-rcpp_diffuse_values <- function(seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
-    .Call(`_arrR_rcpp_diffuse_values`, seafloor_values, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion)
+rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
+    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion))
+}
+
+#' rcpp_translate_torus
+#'
+#' @description Add describtion
+#'
+#' @param coords Add describtion
+#' @param extent Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_translate_torus
+#' @rdname rcpp_translate_torus
+#'
+#' @keywords export
+rcpp_translate_torus <- function(coords, extent) {
+    invisible(.Call(`_arrR_rcpp_translate_torus`, coords, extent))
+}
+
+#' add_degree
+#'
+#' @description Add describtion
+#'
+#' @param x Add describtion
+#' @param add Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases add_degree
+#' @rdname add_degree
+#'
+#' @keywords export
+add_degree <- function(x, add) {
+    .Call(`_arrR_add_degree`, x, add)
+}
+
+#' rcpp_turn_fish
+#'
+#' @description Add describtion
+#'
+#' @param fishpop Add describtion
+#' @param dist_values Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_turn_fish
+#' @rdname rcpp_turn_fish
+#'
+#' @keywords export
+rcpp_turn_fish <- function(fishpop, dist_values) {
+    invisible(.Call(`_arrR_rcpp_turn_fish`, fishpop, dist_values))
+}
+
+#' rcpp_move_fishpop
+#'
+#' @description Rcpp move fish population
+#'
+#' @param fishpop Add describtion
+#' @param move_dist Add describtion
+#' @param extent  Add describtion
+#' @param pop_mean_move Add describtion
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @aliases rcpp_move_fishpop
+#' @rdname rcpp_move_fishpop
+#'
+#' @export
+rcpp_move_fishpop <- function(fishpop, move_dist, extent, pop_mean_move) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, move_dist, extent, pop_mean_move))
 }
 

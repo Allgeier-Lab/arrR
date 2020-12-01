@@ -7,14 +7,14 @@
 check_max_biomass(seafloor_values, biomass_max, gamma)
 }
 \arguments{
-\item{seafloor_values}{Data.frame with seafloor values.}
+\item{seafloor_values}{Matrix with seafloor values.}
 
 \item{biomass_max}{Vector with maximum biomass.}
 
 \item{gamma}{Vector with conversion factor between biomass and nutrients.}
 }
 \value{
-data.frame
+Matrix
 }
 \description{
 Check if biomass is above maximum.
