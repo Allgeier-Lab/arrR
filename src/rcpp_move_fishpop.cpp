@@ -113,12 +113,12 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // left distance is smaller than straigth and rigth
-    if (dist_values(i, 0) < dist_values(i, 1) & dist_values(i, 0) < dist_values(i, 2)) {
+    if ((dist_values(i, 0) < dist_values(i, 1)) & (dist_values(i, 0) < dist_values(i, 2))) {
 
       fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
     // right distance is smaller than straigth and left
-    } else if (dist_values(i, 2) < dist_values(i, 1) & dist_values(i, 2) < dist_values(i, 0)) {
+    } else if ((dist_values(i, 2) < dist_values(i, 1)) & (dist_values(i, 2) < dist_values(i, 0))) {
 
       fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
 

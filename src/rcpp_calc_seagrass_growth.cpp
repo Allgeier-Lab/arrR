@@ -234,17 +234,17 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       detritus_pool_temp += total_detritus;
 
       // # i) bg biomass below threshold, but uptake not enough to keep bg/ag stable
-      if (bg_modf > (1 - bg_thres) & total_uptake_g <= total_detritus) {
+      if ((bg_modf > (1 - bg_thres)) & (total_uptake_g <= total_detritus)) {
 
         bg_biomass_temp += total_uptake_g / 0.0082;
 
       //ii) bg biomass above threshold, but uptake not enough to keep bg stable
-      } else if (bg_modf <= (1 - bg_thres) & total_uptake_g <= (bg_detritus * 0.0082)) {
+      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake_g <= (bg_detritus * 0.0082))) {
 
         bg_biomass_temp += total_uptake_g / 0.0082;
 
       // iii) bg biomass below threshold and uptake large enough to keep bg/ag stable
-      } else if (bg_modf > (1 - bg_thres) & total_uptake_g > total_detritus) {
+      } else if ((bg_modf > (1 - bg_thres)) & (total_uptake_g > total_detritus)) {
 
         // add detritus fraction for stable ag biomass
         ag_biomass_temp += ag_detritus;
@@ -256,7 +256,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         bg_biomass_temp += uptake_temp / 0.0082;
 
       // iv) bg biomass above threshold and uptake large enough to keep bg stable
-      } else if (bg_modf <= (1 - bg_thres) & total_uptake_g > (bg_detritus * 0.0082)) {
+      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake_g > (bg_detritus * 0.0082))) {
 
         // add detritus fraction for stable bg biomass
         bg_biomass_temp += bg_detritus;
