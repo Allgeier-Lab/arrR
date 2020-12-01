@@ -172,6 +172,18 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// add_degree
+double add_degree(double x, double add);
+RcppExport SEXP _arrR_add_degree(SEXP xSEXP, SEXP addSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type add(addSEXP);
+    rcpp_result_gen = Rcpp::wrap(add_degree(x, add));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_turn_fish
 void rcpp_turn_fish(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix dist_values);
 RcppExport SEXP _arrR_rcpp_turn_fish(SEXP fishpopSEXP, SEXP dist_valuesSEXP) {
@@ -209,6 +221,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_create_rebirth", (DL_FUNC) &_arrR_rcpp_create_rebirth, 7},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
+    {"_arrR_add_degree", (DL_FUNC) &_arrR_add_degree, 2},
     {"_arrR_rcpp_turn_fish", (DL_FUNC) &_arrR_rcpp_turn_fish, 2},
     {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 4},
     {NULL, NULL, 0}

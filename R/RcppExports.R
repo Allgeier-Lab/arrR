@@ -234,6 +234,26 @@ rcpp_translate_torus <- function(coords, extent) {
     invisible(.Call(`_arrR_rcpp_translate_torus`, coords, extent))
 }
 
+#' add_degree
+#'
+#' @description Add describtion
+#'
+#' @param x Add describtion
+#' @param add Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases add_degree
+#' @rdname add_degree
+#'
+#' @keywords export
+add_degree <- function(x, add) {
+    .Call(`_arrR_add_degree`, x, add)
+}
+
 #' rcpp_turn_fish
 #'
 #' @description Add describtion

@@ -53,6 +53,41 @@ void rcpp_translate_torus(Rcpp::NumericMatrix coords,
   }
 }
 
+//' add_degree
+//'
+//' @description Add describtion
+//'
+//' @param x Add describtion
+//' @param add Add describtion
+//'
+//' @details
+//' Add describtion
+//'
+//' @return Add describtion
+//'
+//' @aliases add_degree
+//' @rdname add_degree
+//'
+//' @keywords export
+// [[Rcpp::export]]
+double add_degree(double x, double add) {
+
+  // add value to degree
+  x += add;
+
+  // get reminder of division
+  x = std::fmod(x, 360);
+
+  // if x < 0, result will be negative
+  if (x < 0) {
+
+    x += 360;
+
+  }
+
+  return(x);
+}
+
 //' rcpp_turn_fish
 //'
 //' @description Add describtion
@@ -78,12 +113,12 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
     // left distance is smaller than straigth and rigth
     if (dist_values(i, 0) < dist_values(i, 1) & dist_values(i, 0) < dist_values(i, 2)) {
 
-      fishpop(i, 4) -= 45.0;
+      fishpop(i, 4) = add_degree(fishpop(i, 4), -45.0);
 
     // right distance is smaller than straigth and left
     } else if (dist_values(i, 2) < dist_values(i, 1) & dist_values(i, 2) < dist_values(i, 0)) {
 
-      fishpop(i, 4) += 45.0;
+      fishpop(i, 4) = add_degree(fishpop(i, 4), 45.0);
 
     // straight distance is shorther than left and right
     } else {
@@ -154,4 +189,7 @@ rcpp_turn_fish(fishpop = fishpop_values,
 rcpp_move_fishpop(fishpop = fishpop_values, extent = extent,
                   move_dist = move_dist,
                   pop_mean_move = parameters$pop_mean_move)
+
+add_degree(fishpop_values[22, "heading"], 45.0)
+((fishpop_values[22, "heading"] + 45) %% 360)
 */

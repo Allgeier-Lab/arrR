@@ -44,9 +44,9 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
 
     # get coordinates within visibility left, straight in right of individuals
     heading_l <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
-                                              cos((fishpop_values[, "heading"] + -45) * (pi / 180))),
+                                              cos(((fishpop_values[, "heading"] + -45) %% 360) * (pi / 180))),
                        fishpop_values[, "y"] + (parameters$pop_visibility *
-                                              sin((fishpop_values[, "heading"] + -45) * (pi / 180))))
+                                              sin(((fishpop_values[, "heading"] + -45) %% 360) * (pi / 180))))
 
     heading_s <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
                                               cos(fishpop_values[, "heading"] * (pi / 180))),
@@ -54,9 +54,9 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
                                               sin(fishpop_values[, "heading"] * (pi / 180))))
 
     heading_r <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
-                                              cos((fishpop_values[, "heading"] + 45) * (pi / 180))),
+                                              cos(((fishpop_values[, "heading"] + 45) %% 360) * (pi / 180))),
                        fishpop_values[, "y"] + (parameters$pop_visibility *
-                                              sin((fishpop_values[, "heading"] + 45) * (pi / 180))))
+                                              sin(((fishpop_values[, "heading"] + 45) %% 360) * (pi / 180))))
 
     # combine to one matrix
     heading_full <- rbind(heading_l, heading_s, heading_r)
