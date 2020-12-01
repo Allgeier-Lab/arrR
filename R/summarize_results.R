@@ -7,8 +7,7 @@
 #' @details
 #' Function to summarize results for each timestep.
 #'
-#'
-#' @return data.frame
+#' @return list
 #'
 #' @examples
 #' # Add example code
@@ -45,45 +44,44 @@ summarize_results <- function(result) {
   seafloor$summary <- rep(x = c("min", "mean", "max"),
                           each = nrow(seafloor) / 3)
 
-  if (nrow(result$fish_population > 0)) {
+  if (nrow(result$fishpop > 0)) {
 
     # get timesteps
-    timestep_fish <- result$fish_population$timestep
+    timestep_fish <- result$fishpop$timestep
 
     # get cols to summarise
-    fish_population <- subset(result$fish_population,
-                              select = c("length", "weight",
-                                         "died_consumption", "died_background"))
+    fishpop <- subset(result$fishpop,
+                      select = c("length", "weight",
+                                 "died_consumption", "died_background"))
 
     # calc summary fun
-    fish_population_min <- stats::aggregate(x = fish_population,
-                                            by = list(timestep = timestep_fish),
-                                            FUN = "min", na.rm = TRUE)
+    fishpop_min <- stats::aggregate(x = fishpop,
+                                    by = list(timestep = timestep_fish),
+                                    FUN = "min", na.rm = TRUE)
 
     # calc summary fun
-    fish_population_mean <- stats::aggregate(x = fish_population,
-                                             by = list(timestep = timestep_fish),
-                                             FUN = "mean", na.rm = TRUE)
+    fishpop_mean <- stats::aggregate(x = fishpop,
+                                     by = list(timestep = timestep_fish),
+                                     FUN = "mean", na.rm = TRUE)
 
     # calc summary fun
-    fish_population_max <- stats::aggregate(x = fish_population,
-                                            by = list(timestep = timestep_fish),
-                                            FUN = "max", na.rm = TRUE)
+    fishpop_max <- stats::aggregate(x = fishpop,
+                                    by = list(timestep = timestep_fish),
+                                    FUN = "max", na.rm = TRUE)
 
     # combine to one dataframe
-    fish_population <- rbind(fish_population_min, fish_population_mean, fish_population_max)
+    fishpop <- rbind(fishpop_min, fishpop_mean, fishpop_max)
 
-    fish_population$summary <- rep(x = c("min", "mean", "max"),
-                                   each = nrow(fish_population) / 3)
+    fishpop$summary <- rep(x = c("min", "mean", "max"), each = nrow(fishpop) / 3)
 
   # no fish present
   } else {
 
-    fish_population <- NA
+    fishpop <- NA
 
   }
 
-  result <- list(seafloor = seafloor, fish_population = fish_population)
+  result <- list(seafloor = seafloor, fishpop = fishpop)
 
   return(result)
 }

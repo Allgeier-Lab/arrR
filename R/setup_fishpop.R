@@ -1,4 +1,4 @@
-#' setup_fish_population
+#' setup_fishpop
 #'
 #' @description Initiate fish population.
 #'
@@ -17,11 +17,11 @@
 #' @examples
 #' # Add example code
 #'
-#' @aliases setup_fish_population
-#' @rdname setup_fish_population
+#' @aliases setup_fishpop
+#' @rdname setup_fishpop
 #'
 #' @export
-setup_fish_population <- function(seafloor, starting_values, parameters, use_log = TRUE,
+setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                                   verbose = TRUE) {
 
   n <- starting_values$pop_n
@@ -61,32 +61,25 @@ setup_fish_population <- function(seafloor, starting_values, parameters, use_log
       parameters$pop_want_reserves # reserves_max
 
     # combine to final data frame
-    fish_population <- data.frame(id = 1:n, age = 0,
-                                  x = x, y = y, heading = heading,
-                                  length = size$length, weight = size$weight,
-                                  reserves = reserves, reserves_max = reserves_max,
-                                  reserves_diff = reserves_max - reserves,
-                                  activity = numeric(n), respiration = numeric(n),
-                                  growth_length = numeric(n), growth_weight = numeric(n),
-                                  growth_nutrient = numeric(n), consumption_req = numeric(n),
-                                  died_consumption = numeric(n), died_background = numeric(n))
+    fishpop <- data.frame(id = 1:n, age = 0,
+                          x = x, y = y, heading = heading,
+                          length = size$length, weight = size$weight,
+                          reserves = reserves, reserves_max = reserves_max,
+                          activity = numeric(n), respiration = numeric(n),
+                          died_consumption = numeric(n), died_background = numeric(n))
 
   # No individuals need to be created
   } else {
 
     # combine to final data frame
-    fish_population <- data.frame(id = numeric(), age = numeric(),
-                                  x = numeric(), y = numeric(), heading = numeric(),
-                                  length = numeric(), weight = numeric(),
-                                  reserves = numeric(), reserves_max = numeric(),
-                                  reserves_diff = numeric(),
-                                  activity = numeric(), respiration = numeric(),
-                                  growth_length = numeric(), growth_weight = numeric(),
-                                  growth_nutrient = numeric(),
-                                  consumption_req = numeric(),
-                                  died_consumption = numeric(n), died_background = numeric(n))
+    fishpop <- data.frame(id = numeric(), age = numeric(),
+                          x = numeric(), y = numeric(), heading = numeric(),
+                          length = numeric(), weight = numeric(),
+                          reserves = numeric(), reserves_max = numeric(),
+                          activity = numeric(), respiration = numeric(),
+                          died_consumption = numeric(n), died_background = numeric(n))
 
   }
 
-  return(fish_population)
+  return(fishpop)
 }

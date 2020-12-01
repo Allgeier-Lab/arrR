@@ -46,34 +46,30 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
                         digits = digits)
 
   # no fish population present
-  if (nrow(x$fish_population > 0)) {
+  if (nrow(x$fishpop > 0)) {
 
     # get fish population values of selected timestep
-    fish_population_values <- subset(x$fish_population, timestep == i,
-                                     select = c(length, weight,
-                                                died_consumption, died_background))
+    fishpop_values <- subset(x$fishpop, timestep == i, select = c(length, weight,
+                                                                  died_consumption, died_background))
 
     # calculate min, median, max values
-    min_fish_population <- round(apply(X = fish_population_values,
-                                       MARGIN = 2, FUN = min, na.rm = TRUE),
-                                 digits = digits)
+    min_fishpop <- round(apply(X = fishpop_values, MARGIN = 2, FUN = min, na.rm = TRUE),
+                         digits = digits)
 
-    mean_fish_population <- round(apply(X = fish_population_values,
-                                        MARGIN = 2, FUN = mean, na.rm = TRUE),
-                                  digits = digits)
+    mean_fishpop <- round(apply(X = fishpop_values, MARGIN = 2, FUN = mean, na.rm = TRUE),
+                          digits = digits)
 
-    max_fish_population <- round(apply(X = fish_population_values,
-                                       MARGIN = 2, FUN = max, na.rm = TRUE),
-                                 digits = digits)
+    max_fishpop <- round(apply(X = fishpop_values, MARGIN = 2, FUN = max, na.rm = TRUE),
+                         digits = digits)
 
   # fish population present
   } else {
 
-    min_fish_population <- NA
+    min_fishpop <- NA
 
-    mean_fish_population <- NA
+    mean_fishpop <- NA
 
-    max_fish_population <- NA
+    max_fishpop <- NA
 
   }
 
@@ -88,8 +84,8 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
              "Maximum:\t", paste0(max_seafloor, collapse = ", "), "\n",
              "\n",
              "Fish population: (length, weight, died_consumption, died_background)\n",
-             "Minimum:\t", paste0(min_fish_population, collapse = ", "), "\n",
-             "Mean:\t\t", paste0(mean_fish_population, collapse = ", "), "\n",
-             "Maximum:\t", paste0(max_fish_population, collapse = ", "), "\n"))
+             "Minimum:\t", paste0(min_fishpop, collapse = ", "), "\n",
+             "Mean:\t\t", paste0(mean_fishpop, collapse = ", "), "\n",
+             "Maximum:\t", paste0(max_fishpop, collapse = ", "), "\n"))
 
 }

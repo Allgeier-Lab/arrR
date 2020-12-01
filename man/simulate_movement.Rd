@@ -5,8 +5,8 @@
 \title{simulate_movement}
 \usage{
 simulate_movement(
-  fish_population,
-  n_pop,
+  fishpop_values,
+  pop_n,
   seafloor,
   seafloor_values,
   coords_reef,
@@ -16,23 +16,22 @@ simulate_movement(
 )
 }
 \arguments{
-\item{fish_population}{Data frame population created
-with \code{\link{setup_fish_population}}.}
+\item{fishpop_values}{Matrix with fish population created.}
 
-\item{n_pop}{Numeric with number of individuals.}
+\item{pop_n}{Numeric with number of individuals.}
 
-\item{seafloor, seafloor_values}{RasterLayer and data.frame with seafloor values}
+\item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
 
 \item{coords_reef}{2-column matrix with coordinates of AR.}
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
-\item{extent}{Spatial extent object of the seafloor RasterBr.}
+\item{extent}{Spatial extent object of the seafloor raster}
 
 \item{parameters}{List with all model parameters.}
 }
 \value{
-data.frame
+matrix
 }
 \description{
 Simulate movement of population.

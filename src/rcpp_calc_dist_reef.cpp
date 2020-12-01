@@ -3,22 +3,20 @@ using namespace Rcpp;
 
 //' rcpp_calc_dist_reef
 //'
-//' @description Internal rcpp function
+//' @description Rcpp calc dist reef
 //'
-//' @param fish_population 2-column matrix with coordinates of individual fish.
+//' @param seafloor Matrix.
 //' @param coords_reef 2-column matrix with coordinates of AR.
-//' @param torus If TRUE the distance will be calculated using a torus.
 //' @param extent Vector with dimension in x and y direction.
+//' @param torus If TRUE the distance will be calculated using a torus.
 //'
 //' @details
-//' Internal function calculate distance to reef cells.
+//' Internal function to calculate distance to reef cells.
 //'
 //' @return matrix
 //'
 //' @aliases rcpp_calc_dist_reef
 //' @rdname rcpp_calc_dist_reef
-//'
-//' @keywords internal
 //'
 //' @keywords export
 // [[Rcpp::export]]
