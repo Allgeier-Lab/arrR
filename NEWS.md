@@ -1,5 +1,5 @@
 # arrR 0.2.4
-* Better memory usage
+* Better memory usage by using mainly Rcpp for core functions
 
 # arrR 0.2.3
 
