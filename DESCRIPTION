@@ -1,6 +1,6 @@
 Package: arrR
 Type: Package
-Title: Individual-based simulation model of artifical reefs in R
+Title: Individual-Based Simulation Model of Artifical Reefs in R
 Version: 0.2.4
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
