@@ -84,9 +84,9 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
 #> > Creating seafloor with extent(50, 50)...
 #> > Creating 5 artifical reef cells...
 
-input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
-                                               starting_values = starting_values, 
-                                               parameters = parameters)
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
+                               starting_values = starting_values, 
+                               parameters = parameters)
 #> > Creating 25 individuals within extent(-25, 25, -25, 25)...
 ```
 
@@ -102,7 +102,7 @@ min_per_i <- 120
 max_i <- (60 * 24 * 365 * 1) / min_per_i
 
 result <- run_simulation(seafloor = input_seafloor, 
-                         fish_population = input_fish_population,
+                         fishpop = input_fishpop,
                          parameters = parameters, 
                          reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i,
@@ -114,14 +114,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8336, 0.2919, 2.7759, 0
-#> Mean:        6.5465, 221.6718, 0.2947, 2.8474, 0
-#> Maximum: 7.5962, 228.3554, 0.3239, 2.8577, 0
+#> Minimum: 6.498, 220.8235, 0.2919, 2.7812, 0
+#> Mean:        6.5318, 221.638, 0.2947, 2.8487, 0
+#> Maximum: 7.5086, 229.0533, 0.3231, 2.8589, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 10.8264, 22.5315, 0, 0
-#> Mean:        14.8429, 67.2372, 0, 0
-#> Maximum: 23.7417, 269.6346, 0, 0
+#> Minimum: 10.9004, 23.0218, 0, 0
+#> Mean:        14.4428, 61.1745, 0, 0
+#> Maximum: 21.5822, 199.4624, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
