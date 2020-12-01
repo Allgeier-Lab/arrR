@@ -3,7 +3,7 @@
 #' @description Simulate movement of population.
 #'
 #' @param fishpop_values Matrix with fish population created.
-#' @param n_pop Numeric with number of individuals.
+#' @param pop_n Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param coords_reef 2-column matrix with coordinates of AR.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
@@ -19,7 +19,7 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fishpop_values, n_pop, seafloor, seafloor_values,
+simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
                               coords_reef, reef_attraction, extent, parameters) {
 
   # extent must be vector for rcpp
@@ -33,7 +33,7 @@ simulate_movement <- function(fishpop_values, n_pop, seafloor, seafloor_values,
   norm_sd <- sqrt(log(1 + (parameters$pop_var_move / (parameters$pop_mean_move ^ 2))))
 
   # get random numbers from log-norm distribution
-  norm_random <- stats::rnorm(n = n_pop,
+  norm_random <- stats::rnorm(n = pop_n,
                               mean = norm_mean, sd = norm_sd)
 
   # calculate body length based on random number
@@ -69,7 +69,7 @@ simulate_movement <- function(fishpop_values, n_pop, seafloor, seafloor_values,
 
     # create distance matrix with left, straight right distance to reef
     dist_values <- matrix(data = seafloor_values[cell_id, "reef_dist"],
-                          ncol = 3, nrow = n_pop)
+                          ncol = 3, nrow = pop_n)
 
     # turn fish
     rcpp_turn_fish(fishpop = fishpop_values,

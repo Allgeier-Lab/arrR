@@ -122,7 +122,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dis
     NumericMatrix xy_temp (1, 2);
 
     // create new x and y coordinates
-    xy_temp(0, 0) = fishpop(i, 2) + (move_dist(i) + cos(fishpop(i, 4) * (M_PI / 180.0)));
+    xy_temp(0, 0) = fishpop(i, 2) + (move_dist(i) * cos(fishpop(i, 4) * (M_PI / 180.0)));
 
     xy_temp(0, 1) = fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)));
 

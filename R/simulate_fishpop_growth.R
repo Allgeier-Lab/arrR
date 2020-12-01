@@ -3,7 +3,7 @@
 #' @description Simulate consumption of fish population.
 #'
 #' @param fishpop_values,fishpop_track Matrix with fish population.
-#' @param n_pop Numeric with number of individuals.
+#' @param pop_n Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
@@ -18,7 +18,7 @@
 #' @rdname simulate_fishpop_growth
 #'
 #' @export
-simulate_fishpop_growth <- function(fishpop_values, fishpop_track, n_pop,
+simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n,
                                     seafloor, seafloor_values, parameters, min_per_i) {
 
   # calculate growth in length and weight
@@ -40,7 +40,7 @@ simulate_fishpop_growth <- function(fishpop_values, fishpop_track, n_pop,
   growth_values <- cbind(consumption_req, growth_length, growth_weight)
 
   # randomize order of loop because detritus pool can "run out"
-  fish_id <- sample(seq(from = 1, to = n_pop), size = n_pop)
+  fish_id <- sample(seq(from = 1, to = pop_n), size = pop_n)
 
   rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                            fishpop_track = fishpop_track,

@@ -4,7 +4,7 @@
 #'
 #' @param fishpop_values,fishpop_track Data frame population created
 #' with \code{\link{setup_fishpop}}.
-#' @param n_pop Numeric with number of individuals.
+#' @param pop_n Numeric with number of individuals.
 #' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
 #' @param parameters List with all model parameters.
 #' @param min_per_i Integer to specify minutes per i.
@@ -20,13 +20,13 @@
 #' @export
 simulate_mortality <- function(fishpop_values, fishpop_track,
                                seafloor, seafloor_values,
-                               n_pop, parameters, min_per_i) {
+                               pop_n, parameters, min_per_i) {
 
   # create death probability
   death_prob <- exp(fishpop_values[, "length"] - parameters$pop_max_size)
 
   # create random number to test death prob against
-  random_prob <- stats::runif(n = n_pop, min = 0, max = 1)
+  random_prob <- stats::runif(n = pop_n, min = 0, max = 1)
 
   # identify who dies
   fish_id <- which(random_prob < death_prob)
