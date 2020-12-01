@@ -6,7 +6,7 @@
 \usage{
 simulate_movement(
   fishpop_values,
-  n_pop,
+  pop_n,
   seafloor,
   seafloor_values,
   coords_reef,
@@ -18,7 +18,7 @@ simulate_movement(
 \arguments{
 \item{fishpop_values}{Matrix with fish population created.}
 
-\item{n_pop}{Numeric with number of individuals.}
+\item{pop_n}{Numeric with number of individuals.}
 
 \item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
 

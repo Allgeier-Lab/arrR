@@ -24,6 +24,7 @@ Imports:
     ggplot2,
     raster,
     Rcpp,
+    rlang,
     stats,
     utils
 Encoding: UTF-8

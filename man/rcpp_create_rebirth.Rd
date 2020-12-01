@@ -6,7 +6,7 @@
 \usage{
 rcpp_create_rebirth(
   fishpop,
-  fishpop_start,
+  fishpop_track,
   seafloor,
   fish_id,
   cell_id,
@@ -15,7 +15,7 @@ rcpp_create_rebirth(
 )
 }
 \arguments{
-\item{fishpop, fishpop_start}{Matrix with fishpop values.}
+\item{fishpop, fishpop_track}{Matrix with fishpop values.}
 
 \item{seafloor}{Matrix with seafloor values.}
 

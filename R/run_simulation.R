@@ -64,16 +64,10 @@ run_simulation <- function(seafloor, fishpop,
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
                                          fishpop_values = fishpop_values)
 
-  # create data.frame to store results for each timestep
-  seafloor_track <- data.frame(matrix(nrow = (max_i / save_each) * nrow(seafloor_values) +
-                                        nrow(seafloor_values), ncol = ncol(seafloor_values)))
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
-  names(seafloor_track) <- c("x", "y", names(seafloor))
-
-  fishpop_track <- data.frame(matrix(nrow = (max_i / save_each) * nrow(fishpop_values) +
-                                       nrow(fishpop_values), ncol = ncol(fishpop_values)))
-
-  names(fishpop_track) <- names(fishpop)
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -90,9 +84,9 @@ run_simulation <- function(seafloor, fishpop,
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
   # save input data in tracking data.frame
-  seafloor_track[1:nrow(seafloor_values), ] <- seafloor_values
+  seafloor_track[[1]] <- rlang::duplicate(seafloor_values)
 
-  fishpop_track[1:nrow(fishpop_values), ] <- fishpop_values
+  fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
   # print some basic information about model run
   if (verbose) {
@@ -142,7 +136,7 @@ run_simulation <- function(seafloor, fishpop,
 
     # simulate fishpop growth and including change of seafloor pools
     simulate_fishpop_growth(fishpop_values = fishpop_values,
-                            fishpop_track = as.matrix(fishpop_track[1:starting_values$pop_n, ]),
+                            fishpop_track = fishpop_track[[1]],
                             pop_n = starting_values$pop_n,
                             seafloor = seafloor$reef,
                             seafloor_values = seafloor_values,
@@ -151,7 +145,7 @@ run_simulation <- function(seafloor, fishpop,
 
     # simulate mortality
     simulate_mortality(fishpop_values = fishpop_values,
-                       fishpop_track = as.matrix(fishpop_track[1:starting_values$pop_n, ]),
+                       fishpop_track = fishpop_track[[1]],
                        pop_n = starting_values$pop_n,
                        seafloor = seafloor$reef,
                        seafloor_values = seafloor_values,
@@ -173,20 +167,9 @@ run_simulation <- function(seafloor, fishpop,
 
       }
 
-      # get index where to store track data fish pop
-      id_seafloor_start <- (i / save_each * nrow(seafloor_values)) + 1
+      seafloor_track[[i / save_each + 1]] <- rlang::duplicate(seafloor_values)
 
-      id_seafloor_end <- id_seafloor_start + nrow(seafloor_values) - 1
-
-      # get index where to store track data fish pop
-      id_fishpop_start <- (i / save_each * nrow(fishpop_values)) + 1
-
-      id_fishpop_end <- id_fishpop_start + starting_values$pop_n - 1
-
-      # save tracking data
-      seafloor_track[id_seafloor_start:id_seafloor_end, ] <- seafloor_values
-
-      fishpop_track[id_fishpop_start:id_fishpop_end, ] <- fishpop_values
+      fishpop_track[[i / save_each + 1]] <- rlang::duplicate(fishpop_values)
 
     }
   }
@@ -200,16 +183,22 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
-  # add timestep counter
+  # combine seafloor/fishpop to one dataframe
+  seafloor_track <- data.frame(do.call(what = "rbind", args = seafloor_track))
+
+  fishpop_track <- data.frame(do.call(what = "rbind", args = fishpop_track))
+
+  # add timestep to  seafloor/fishpop counter
   seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
                                  each = raster::ncell(seafloor))
 
-  # add timestep counter
+  # fishpop is present
   if (starting_values$pop_n > 0) {
 
     fishpop_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
                                   each = starting_values$pop_n)
 
+  # no fish are present
   } else {
 
     fishpop_track$timestep <- numeric(0)

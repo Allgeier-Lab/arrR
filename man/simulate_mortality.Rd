@@ -6,21 +6,21 @@
 \usage{
 simulate_mortality(
   fishpop_values,
-  fishpop_start,
+  fishpop_track,
   seafloor,
   seafloor_values,
-  n_pop,
+  pop_n,
   parameters,
   min_per_i
 )
 }
 \arguments{
-\item{fishpop_values, fishpop_start}{Data frame population created
+\item{fishpop_values, fishpop_track}{Data frame population created
 with \code{\link{setup_fishpop}}.}
 
 \item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
 
-\item{n_pop}{Numeric with number of individuals.}
+\item{pop_n}{Numeric with number of individuals.}
 
 \item{parameters}{List with all model parameters.}
 
