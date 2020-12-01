@@ -12,9 +12,6 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-![Render
-README](https://github.com/Allgeier-Lab/arrR/workflows/Render%20README/badge.svg)
-![pkgdown](https://github.com/Allgeier-Lab/arrR/workflows/pkgdown/badge.svg)
 
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -87,9 +84,9 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
 #> > Creating seafloor with extent(50, 50)...
 #> > Creating 5 artifical reef cells...
 
-input_fish_population <- setup_fishpop(seafloor = input_seafloor, 
-                                       starting_values = starting_values, 
-                                       parameters = parameters)
+input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
+                                               starting_values = starting_values, 
+                                               parameters = parameters)
 #> > Creating 25 individuals within extent(-25, 25, -25, 25)...
 ```
 
@@ -105,7 +102,7 @@ min_per_i <- 120
 max_i <- (60 * 24 * 365 * 1) / min_per_i
 
 result <- run_simulation(seafloor = input_seafloor, 
-                         fishpop = input_fish_population,
+                         fish_population = input_fish_population,
                          parameters = parameters, 
                          reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i,
@@ -117,14 +114,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.7989, 0.2918, 2.7796, 0
-#> Mean:        6.5548, 221.6895, 0.2947, 2.8464, 0
-#> Maximum: 7.2356, 229.0217, 0.3201, 2.8576, 0
+#> Minimum: 6.498, 220.8336, 0.2919, 2.7759, 0
+#> Mean:        6.5465, 221.6718, 0.2947, 2.8474, 0
+#> Maximum: 7.5962, 228.3554, 0.3239, 2.8577, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 11.1354, 24.6278, 0, 0
-#> Mean:        15.0466, 68.7051, 0, 0
-#> Maximum: 20.6602, 173.7511, 0, 0
+#> Minimum: 10.8264, 22.5315, 0, 0
+#> Mean:        14.8429, 67.2372, 0, 0
+#> Maximum: 23.7417, 269.6346, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
