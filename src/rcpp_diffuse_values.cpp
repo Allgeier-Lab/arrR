@@ -3,16 +3,16 @@ using namespace Rcpp;
 
 //' rcpp_diffuse_values
 //'
-//' @description Rcpp function to diffuse seafloor values
+//' @description Rcpp diffuse values
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param cell_adj Matrix with cell adjacencies.
 //' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 //'
 //' @details
-//' \code{Rcpp} implementation of to diffuse nutrients.
+//' Rcpp implementation to diffuse seafloor values between neighbouring cells.
 //'
-//' @return Matrix
+//' @return void
 //'
 //' @aliases rcpp_diffuse_values
 //' @rdname rcpp_diffuse_values
@@ -70,5 +70,3 @@ rcpp_diffuse_values(seafloor = seafloor,
                     detritus_diffusion = parameters$detritus_diffusion,
                     detritus_dead_diffusion = parameters$detritus_dead_diffusion)
 */
-
-

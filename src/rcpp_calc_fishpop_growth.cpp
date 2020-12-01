@@ -5,16 +5,16 @@ using namespace Rcpp;
 //'
 //' @description Rcpp calc growth
 //'
-//' @param fishpop,fishpop_track Matrix with fishpop values.
+//' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 //' @param seafloor Matrix with seafloor values.
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param growth_values Matrix with growth values.
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
 //'
 //' @details
-//' \code{Rcpp} implementation of to calculate growth.
+//' Rcpp mplementation to calculate growth of fish individuals.
 //'
-//' @return Matrix
+//' @return void
 //'
 //' @aliases rcpp_calc_fishpop_growth
 //' @rdname rcpp_calc_fishpop_growth
@@ -29,6 +29,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               double pop_max_reserves, double pop_want_reserves,
                               double min_per_i) {
 
+  // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // create counter for temp fish id

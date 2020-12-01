@@ -3,15 +3,15 @@ using namespace Rcpp;
 
 //' rcpp_translate_torus
 //'
-//' @description Add describtion
+//' @description Rcpp translate torus
 //'
-//' @param coords Add describtion
-//' @param extent Add describtion
+//' @param coords Matrix with coordinates.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to translate coordinates if they exceed extent.
 //'
-//' @return Add describtion
+//' @return void
 //'
 //' @aliases rcpp_translate_torus
 //' @rdname rcpp_translate_torus
@@ -53,27 +53,28 @@ void rcpp_translate_torus(Rcpp::NumericMatrix coords,
   }
 }
 
-//' add_degree
+//' rcpp_modify_degree
 //'
-//' @description Add describtion
+//' @description Rcpp modify degree
 //'
-//' @param x Add describtion
-//' @param add Add describtion
+//' @param x Numeric with current angle in degree.
+//' @param y Numerich with change of degree (negative or positive).
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to substract or add degree to angle. Makes sure angles are
+//' between 0 <= x <= 360.
 //'
-//' @return Add describtion
+//' @return double
 //'
-//' @aliases add_degree
-//' @rdname add_degree
+//' @aliases rcpp_modify_degree
+//' @rdname rcpp_modify_degree
 //'
 //' @keywords export
 // [[Rcpp::export]]
-double add_degree(double x, double add) {
+double rcpp_modify_degree(double x, double y) {
 
   // add value to degree
-  x += add;
+  x += y;
 
   // get reminder of division
   x = std::fmod(x, 360);
@@ -90,15 +91,16 @@ double add_degree(double x, double add) {
 
 //' rcpp_turn_fish
 //'
-//' @description Add describtion
+//' @description Rcpp turn fish
 //'
-//' @param fishpop Add describtion
-//' @param dist_values Add describtion
+//' @param fishpop Matrix with fishpop values.
+//' @param dist_values Matrix with distance to reef values (left, straight, right).
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to turn fish individuals either left (-45°), straight (0°) or
+//' right (45°) depending on which directions minimizes distance to reef.
 //'
-//' @return Add describtion
+//' @return void
 //'
 //' @aliases rcpp_turn_fish
 //' @rdname rcpp_turn_fish
@@ -113,12 +115,12 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
     // left distance is smaller than straigth and rigth
     if (dist_values(i, 0) < dist_values(i, 1) & dist_values(i, 0) < dist_values(i, 2)) {
 
-      fishpop(i, 4) = add_degree(fishpop(i, 4), -45.0);
+      fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
     // right distance is smaller than straigth and left
     } else if (dist_values(i, 2) < dist_values(i, 1) & dist_values(i, 2) < dist_values(i, 0)) {
 
-      fishpop(i, 4) = add_degree(fishpop(i, 4), 45.0);
+      fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
 
     // straight distance is shorther than left and right
     } else {
@@ -133,15 +135,16 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
 //'
 //' @description Rcpp move fish population
 //'
-//' @param fishpop Add describtion
-//' @param move_dist Add describtion
-//' @param extent  Add describtion
-//' @param pop_mean_move Add describtion
+//' @param fishpop Matrix with fishpop values.
+//' @param move_dist Vector with move distance of fish individuals.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param pop_mean_move Numeric with parameter.
 //'
 //' @details
-//' \code{Rcpp} implementation of to calculate growth.
+//' Rcpp implementation to move fish individuals depending on move distance and
+//' heading value.
 //'
-//' @return Matrix
+//' @return void
 //'
 //' @aliases rcpp_move_fishpop
 //' @rdname rcpp_move_fishpop
@@ -151,6 +154,7 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dist,
                        Rcpp::NumericVector extent, double pop_mean_move) {
 
+  // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // init matrix for temp coords
@@ -183,13 +187,13 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dis
 rcpp_translate_torus(x_coord = 5.25, y_coord = -5.5,
                      extent = extent)
 
+add_degree(fishpop_values[22, "heading"], 45.0)
+((fishpop_values[22, "heading"] + 45) %% 360)
+
 rcpp_turn_fish(fishpop = fishpop_values,
                dist_values = dist_values)
 
 rcpp_move_fishpop(fishpop = fishpop_values, extent = extent,
                   move_dist = move_dist,
                   pop_mean_move = parameters$pop_mean_move)
-
-add_degree(fishpop_values[22, "heading"], 45.0)
-((fishpop_values[22, "heading"] + 45) %% 360)
 */

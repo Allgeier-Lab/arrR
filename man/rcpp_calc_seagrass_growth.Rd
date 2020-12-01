@@ -23,21 +23,21 @@ rcpp_calc_seagrass_growth(
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{cells_reef}{Vector with id of reef cells Add describtion}
+\item{cells_reef}{Vector with id of reef cells.}
 
-\item{bg_v_max, bg_k_m, ag_v_max, ag_k_m}{Add describtion}
+\item{bg_v_max, bg_k_m, ag_v_max, ag_k_m}{Numeric with uptake parameters.}
 
-\item{bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min}{Add describtion}
+\item{bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min}{Numerich with biomass values and parameters.}
 
-\item{detritus_ratio, bg_thres, min_per_i}{Add describtion}
+\item{detritus_ratio, bg_thres, min_per_i}{Numerich with various parameters.}
 }
 \value{
-matrix
+void
 }
 \description{
 Rcpp calc seagrass growth
 }
 \details{
-Internal function to calculate seagrass growth
+Rcpp implementation to calculate seagrass growth.
 }
 \keyword{export}

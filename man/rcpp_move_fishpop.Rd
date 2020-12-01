@@ -7,20 +7,21 @@
 rcpp_move_fishpop(fishpop, move_dist, extent, pop_mean_move)
 }
 \arguments{
-\item{fishpop}{Add describtion}
+\item{fishpop}{Matrix with fishpop values.}
 
-\item{move_dist}{Add describtion}
+\item{move_dist}{Vector with move distance of fish individuals.}
 
-\item{extent}{Add describtion}
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
-\item{pop_mean_move}{Add describtion}
+\item{pop_mean_move}{Numeric with parameter.}
 }
 \value{
-Matrix
+void
 }
 \description{
 Rcpp move fish population
 }
 \details{
-\code{Rcpp} implementation of to calculate growth.
+Rcpp implementation to move fish individuals depending on move distance and
+heading value.
 }

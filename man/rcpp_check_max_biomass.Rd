@@ -13,17 +13,18 @@ rcpp_check_max_biomass(
 )
 }
 \arguments{
-\item{bg_biomass, ag_biomass, detritus_pool}{Add describtion}
+\item{bg_biomass, ag_biomass, detritus_pool}{Numeric with values of cel..}
 
-\item{bg_biomass_max, ag_biomass_max}{Add describtion}
+\item{bg_biomass_max, ag_biomass_max}{Parameters with maximum values.}
 }
 \value{
-Add describtion
+vector
 }
 \description{
-Add describtion
+Rcpp check max biomass
 }
 \details{
-Add describtion
+Rcpp implementation to check if current biomass values are above its max. Returns
+vector with (1) bg biomass (2) ag biomass (3) detritus pool.
 }
 \keyword{export}

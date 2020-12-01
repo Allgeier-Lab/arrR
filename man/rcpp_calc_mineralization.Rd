@@ -11,17 +11,17 @@ rcpp_calc_mineralization(
 )
 }
 \arguments{
-\item{seafloor}{Add describtion}
+\item{seafloor}{Matrix with seafloor values.}
 
-\item{detritus_dead_decomp, detritus_mineralization}{seafloor Add describtion}
+\item{detritus_dead_decomp, detritus_mineralization}{seafloor Numeric with parameters.}
 }
 \value{
-Add describtion
+void
 }
 \description{
-Add describtion
+Rcpp calculate mineralization
 }
 \details{
-Add describtion
+Rcpp implementation to calculate detritus miniralization.
 }
 \keyword{export}

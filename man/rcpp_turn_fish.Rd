@@ -7,17 +7,18 @@
 rcpp_turn_fish(fishpop, dist_values)
 }
 \arguments{
-\item{fishpop}{Add describtion}
+\item{fishpop}{Matrix with fishpop values.}
 
-\item{dist_values}{Add describtion}
+\item{dist_values}{Matrix with distance to reef values (left, straight, right).}
 }
 \value{
-Add describtion
+void
 }
 \description{
-Add describtion
+Rcpp turn fish
 }
 \details{
-Add describtion
+Rcpp implementation to turn fish individuals either left (-45°), straight (0°) or
+right (45°) depending on which directions minimizes distance to reef.
 }
 \keyword{export}

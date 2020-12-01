@@ -15,7 +15,7 @@ rcpp_create_rebirth(
 )
 }
 \arguments{
-\item{fishpop, fishpop_track}{Matrix with fishpop values.}
+\item{fishpop, fishpop_track}{Matrix with fishpop and starting fishpop values.}
 
 \item{seafloor}{Matrix with seafloor values.}
 
@@ -24,11 +24,11 @@ rcpp_create_rebirth(
 \item{pop_n_body, pop_want_reserves}{Numeric with parameters.}
 }
 \value{
-Matrix
+void
 }
 \description{
-Rcpp create new individual
+Rcpp create rebirth
 }
 \details{
-\code{Rcpp} implementation of to calculate growth.
+Rcpp implementation to create new individual after mortality event.
 }

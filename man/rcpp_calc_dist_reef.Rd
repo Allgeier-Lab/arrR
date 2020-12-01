@@ -7,21 +7,22 @@
 rcpp_calc_dist_reef(seafloor, coords_reef, extent, torus = FALSE)
 }
 \arguments{
-\item{seafloor}{Matrix.}
+\item{seafloor}{Matrix with coordinates of cells.}
 
-\item{coords_reef}{2-column matrix with coordinates of AR.}
+\item{coords_reef}{2-column Matrix with coordinates of AR.}
 
 \item{extent}{Vector with dimension in x and y direction.}
 
 \item{torus}{If TRUE the distance will be calculated using a torus.}
 }
 \value{
-matrix
+vector
 }
 \description{
 Rcpp calc dist reef
 }
 \details{
-Internal function to calculate distance to reef cells.
+Rcpp implementation to calculate distance to reef cells. Returns vector with
+distance for each cell to reef
 }
 \keyword{export}

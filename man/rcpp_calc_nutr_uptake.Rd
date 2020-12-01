@@ -7,17 +7,17 @@
 rcpp_calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_frac)
 }
 \arguments{
-\item{nutrients, biomass}{Add describtion}
+\item{nutrients, biomass}{Numeric with nutrient and biomass amount of cell.}
 
-\item{v_max, k_m, time_frac}{Add describtion}
+\item{v_max, k_m, time_frac}{Numeric with parameters}
 }
 \value{
-Add describtion
+double
 }
 \description{
-Add describtion
+Rcpp calculate nutrient uptake
 }
 \details{
-Add describtion
+Rcpp implementation to calculate nutrient uptake of cell
 }
 \keyword{export}

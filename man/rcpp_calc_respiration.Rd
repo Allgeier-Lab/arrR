@@ -25,11 +25,11 @@ rcpp_calc_respiration(
 \item{water_temp, min_per_i, }{Numeric with parameters.}
 }
 \value{
-Matrix
+void
 }
 \description{
-Rcpp calc growth
+Rcpp calculate respration
 }
 \details{
-\code{Rcpp} implementation of to calculate growth.
+Rcpp implementation to calculate respiration of fish individuals.
 }

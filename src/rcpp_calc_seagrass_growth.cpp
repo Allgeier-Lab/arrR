@@ -3,15 +3,15 @@ using namespace Rcpp;
 
 //' rcpp_convert_nutr
 //'
-//' @description Add describtion
+//' @description Rcpp convert nutrients
 //'
-//' @param x Add describtion
-//' @param to Add describtion
+//' @param x Numeric with nutrient amount.
+//' @param to String to specify in which unit to convert.
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to convert nutrients between g and umol.
 //'
-//' @return Add describtion
+//' @return double
 //'
 //' @aliases rcpp_convert_nutr
 //' @rdname rcpp_convert_nutr
@@ -34,7 +34,7 @@ double rcpp_convert_nutr(double x, String to) {
 
     return(result);
 
-  // throw error if bad option is set
+  // throw error if to option is not present
   } else {
 
     throw std::range_error("Please select either to='g' or to='umol'.");
@@ -44,15 +44,15 @@ double rcpp_convert_nutr(double x, String to) {
 
 //' rcpp_calc_nutr_uptake
 //'
-//' @description Add describtion
+//' @description Rcpp calculate nutrient uptake
 //'
-//' @param nutrients,biomass Add describtion
-//' @param v_max,k_m,time_frac Add describtion
+//' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+//' @param v_max,k_m,time_frac Numeric with parameters
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to calculate nutrient uptake of cell
 //'
-//' @return Add describtion
+//' @return double
 //'
 //' @aliases rcpp_calc_nutr_uptake
 //' @rdname rcpp_calc_nutr_uptake
@@ -63,9 +63,9 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
                              double v_max, double k_m, double time_frac) {
 
   // convert water column nutrients to umol/l
-  // 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
   double nutrients_umol = rcpp_convert_nutr(nutrients, "umol");
 
+  // 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
   nutrients_umol = nutrients_umol / (1000 * 3);
 
   // calculate bg and ag uptake depending on nutrients and biomass
@@ -82,15 +82,16 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
 
 //' rcpp_check_max_biomass
 //'
-//' @description Add describtion
+//' @description Rcpp check max biomass
 //'
-//' @param bg_biomass,ag_biomass,detritus_pool Add describtion
-//' @param bg_biomass_max,ag_biomass_max Add describtion
+//' @param bg_biomass,ag_biomass,detritus_pool Numeric with values of cel..
+//' @param bg_biomass_max,ag_biomass_max Parameters with maximum values.
 //'
 //' @details
-//' Add describtion
+//' Rcpp implementation to check if current biomass values are above its max. Returns
+//' vector with (1) bg biomass (2) ag biomass (3) detritus pool.
 //'
-//' @return Add describtion
+//' @return vector
 //'
 //' @aliases rcpp_check_max_biomass
 //' @rdname rcpp_check_max_biomass
@@ -144,15 +145,15 @@ Rcpp::NumericVector rcpp_check_max_biomass(double bg_biomass, double ag_biomass,
 //' @description Rcpp calc seagrass growth
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param cells_reef Vector with id of reef cells Add describtion
-//' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Add describtion
-//' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Add describtion
-//' @param detritus_ratio,bg_thres,min_per_i Add describtion
+//' @param cells_reef Vector with id of reef cells.
+//' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Numeric with uptake parameters.
+//' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
+//' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
 //'
 //' @details
-//' Internal function to calculate seagrass growth
+//' Rcpp implementation to calculate seagrass growth.
 //'
-//' @return matrix
+//' @return void
 //'
 //' @aliases rcpp_calc_seagrass_growth
 //' @rdname rcpp_calc_seagrass_growth
@@ -171,6 +172,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
   // convert min per i to one hour
   min_per_i = min_per_i / 60;
 
+  // loop through all seafloor cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     int is_reef = std::count(cells_reef.begin(), cells_reef.end(), i + 1);

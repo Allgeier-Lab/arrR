@@ -5,15 +5,16 @@
 #'
 #' @description Rcpp calc dist reef
 #'
-#' @param seafloor Matrix.
-#' @param coords_reef 2-column matrix with coordinates of AR.
+#' @param seafloor Matrix with coordinates of cells.
+#' @param coords_reef 2-column Matrix with coordinates of AR.
 #' @param extent Vector with dimension in x and y direction.
 #' @param torus If TRUE the distance will be calculated using a torus.
 #'
 #' @details
-#' Internal function to calculate distance to reef cells.
+#' Rcpp implementation to calculate distance to reef cells. Returns vector with
+#' distance for each cell to reef
 #'
-#' @return matrix
+#' @return vector
 #'
 #' @aliases rcpp_calc_dist_reef
 #' @rdname rcpp_calc_dist_reef
@@ -27,16 +28,16 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @description Rcpp calc growth
 #'
-#' @param fishpop,fishpop_track Matrix with fishpop values.
+#' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 #' @param growth_values Matrix with growth values.
 #' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
 #'
 #' @details
-#' \code{Rcpp} implementation of to calculate growth.
+#' Rcpp mplementation to calculate growth of fish individuals.
 #'
-#' @return Matrix
+#' @return void
 #'
 #' @aliases rcpp_calc_fishpop_growth
 #' @rdname rcpp_calc_fishpop_growth
@@ -48,15 +49,15 @@ rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, 
 
 #' rcpp_calc_mineralization
 #'
-#' @description Add describtion
+#' @description Rcpp calculate mineralization
 #'
-#' @param seafloor Add describtion
-#' @param detritus_dead_decomp,detritus_mineralization seafloor Add describtion
+#' @param seafloor Matrix with seafloor values.
+#' @param detritus_dead_decomp,detritus_mineralization seafloor Numeric with parameters.
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to calculate detritus miniralization.
 #'
-#' @return Add describtion
+#' @return void
 #'
 #' @aliases rcpp_calc_mineralization
 #' @rdname rcpp_calc_mineralization
@@ -68,7 +69,7 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mi
 
 #' rcpp_calc_respiration
 #'
-#' @description Rcpp calc growth
+#' @description Rcpp calculate respration
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param resp_intercept,resp_slope Numeric with parameters.
@@ -76,9 +77,9 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mi
 #' @param water_temp,min_per_i, Numeric with parameters.
 #'
 #' @details
-#' \code{Rcpp} implementation of to calculate growth.
+#' Rcpp implementation to calculate respiration of fish individuals.
 #'
-#' @return Matrix
+#' @return void
 #'
 #' @aliases rcpp_calc_respiration
 #' @rdname rcpp_calc_respiration
@@ -90,15 +91,15 @@ rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp
 
 #' rcpp_convert_nutr
 #'
-#' @description Add describtion
+#' @description Rcpp convert nutrients
 #'
-#' @param x Add describtion
-#' @param to Add describtion
+#' @param x Numeric with nutrient amount.
+#' @param to String to specify in which unit to convert.
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to convert nutrients between g and umol.
 #'
-#' @return Add describtion
+#' @return double
 #'
 #' @aliases rcpp_convert_nutr
 #' @rdname rcpp_convert_nutr
@@ -110,15 +111,15 @@ rcpp_convert_nutr <- function(x, to) {
 
 #' rcpp_calc_nutr_uptake
 #'
-#' @description Add describtion
+#' @description Rcpp calculate nutrient uptake
 #'
-#' @param nutrients,biomass Add describtion
-#' @param v_max,k_m,time_frac Add describtion
+#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+#' @param v_max,k_m,time_frac Numeric with parameters
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to calculate nutrient uptake of cell
 #'
-#' @return Add describtion
+#' @return double
 #'
 #' @aliases rcpp_calc_nutr_uptake
 #' @rdname rcpp_calc_nutr_uptake
@@ -130,15 +131,16 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 
 #' rcpp_check_max_biomass
 #'
-#' @description Add describtion
+#' @description Rcpp check max biomass
 #'
-#' @param bg_biomass,ag_biomass,detritus_pool Add describtion
-#' @param bg_biomass_max,ag_biomass_max Add describtion
+#' @param bg_biomass,ag_biomass,detritus_pool Numeric with values of cel..
+#' @param bg_biomass_max,ag_biomass_max Parameters with maximum values.
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to check if current biomass values are above its max. Returns
+#' vector with (1) bg biomass (2) ag biomass (3) detritus pool.
 #'
-#' @return Add describtion
+#' @return vector
 #'
 #' @aliases rcpp_check_max_biomass
 #' @rdname rcpp_check_max_biomass
@@ -153,15 +155,15 @@ rcpp_check_max_biomass <- function(bg_biomass, ag_biomass, detritus_pool, bg_bio
 #' @description Rcpp calc seagrass growth
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param cells_reef Vector with id of reef cells Add describtion
-#' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Add describtion
-#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Add describtion
-#' @param detritus_ratio,bg_thres,min_per_i Add describtion
+#' @param cells_reef Vector with id of reef cells.
+#' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Numeric with uptake parameters.
+#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
+#' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
 #'
 #' @details
-#' Internal function to calculate seagrass growth
+#' Rcpp implementation to calculate seagrass growth.
 #'
-#' @return matrix
+#' @return void
 #'
 #' @aliases rcpp_calc_seagrass_growth
 #' @rdname rcpp_calc_seagrass_growth
@@ -173,17 +175,17 @@ rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, ag
 
 #' rcpp_create_rebirth
 #'
-#' @description Rcpp create new individual
+#' @description Rcpp create rebirth
 #'
-#' @param fishpop,fishpop_track Matrix with fishpop values.
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 #' @param pop_n_body,pop_want_reserves Numeric with parameters.
 #'
 #' @details
-#' \code{Rcpp} implementation of to calculate growth.
+#' Rcpp implementation to create new individual after mortality event.
 #'
-#' @return Matrix
+#' @return void
 #'
 #' @aliases rcpp_create_rebirth
 #' @rdname rcpp_create_rebirth
@@ -195,16 +197,16 @@ rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_
 
 #' rcpp_diffuse_values
 #'
-#' @description Rcpp function to diffuse seafloor values
+#' @description Rcpp diffuse values
 #'
 #' @param seafloor Matrix with seafloor values.
 #' @param cell_adj Matrix with cell adjacencies.
 #' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 #'
 #' @details
-#' \code{Rcpp} implementation of to diffuse nutrients.
+#' Rcpp implementation to diffuse seafloor values between neighbouring cells.
 #'
-#' @return Matrix
+#' @return void
 #'
 #' @aliases rcpp_diffuse_values
 #' @rdname rcpp_diffuse_values
@@ -216,15 +218,15 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 
 #' rcpp_translate_torus
 #'
-#' @description Add describtion
+#' @description Rcpp translate torus
 #'
-#' @param coords Add describtion
-#' @param extent Add describtion
+#' @param coords Matrix with coordinates.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to translate coordinates if they exceed extent.
 #'
-#' @return Add describtion
+#' @return void
 #'
 #' @aliases rcpp_translate_torus
 #' @rdname rcpp_translate_torus
@@ -234,37 +236,39 @@ rcpp_translate_torus <- function(coords, extent) {
     invisible(.Call(`_arrR_rcpp_translate_torus`, coords, extent))
 }
 
-#' add_degree
+#' rcpp_modify_degree
 #'
-#' @description Add describtion
+#' @description Rcpp modify degree
 #'
-#' @param x Add describtion
-#' @param add Add describtion
+#' @param x Numeric with current angle in degree.
+#' @param y Numerich with change of degree (negative or positive).
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to substract or add degree to angle. Makes sure angles are
+#' between 0 <= x <= 360.
 #'
-#' @return Add describtion
+#' @return double
 #'
-#' @aliases add_degree
-#' @rdname add_degree
+#' @aliases rcpp_modify_degree
+#' @rdname rcpp_modify_degree
 #'
 #' @keywords export
-add_degree <- function(x, add) {
-    .Call(`_arrR_add_degree`, x, add)
+rcpp_modify_degree <- function(x, y) {
+    .Call(`_arrR_rcpp_modify_degree`, x, y)
 }
 
 #' rcpp_turn_fish
 #'
-#' @description Add describtion
+#' @description Rcpp turn fish
 #'
-#' @param fishpop Add describtion
-#' @param dist_values Add describtion
+#' @param fishpop Matrix with fishpop values.
+#' @param dist_values Matrix with distance to reef values (left, straight, right).
 #'
 #' @details
-#' Add describtion
+#' Rcpp implementation to turn fish individuals either left (-45°), straight (0°) or
+#' right (45°) depending on which directions minimizes distance to reef.
 #'
-#' @return Add describtion
+#' @return void
 #'
 #' @aliases rcpp_turn_fish
 #' @rdname rcpp_turn_fish
@@ -278,15 +282,16 @@ rcpp_turn_fish <- function(fishpop, dist_values) {
 #'
 #' @description Rcpp move fish population
 #'
-#' @param fishpop Add describtion
-#' @param move_dist Add describtion
-#' @param extent  Add describtion
-#' @param pop_mean_move Add describtion
+#' @param fishpop Matrix with fishpop values.
+#' @param move_dist Vector with move distance of fish individuals.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param pop_mean_move Numeric with parameter.
 #'
 #' @details
-#' \code{Rcpp} implementation of to calculate growth.
+#' Rcpp implementation to move fish individuals depending on move distance and
+#' heading value.
 #'
-#' @return Matrix
+#' @return void
 #'
 #' @aliases rcpp_move_fishpop
 #' @rdname rcpp_move_fishpop

@@ -18,7 +18,7 @@ rcpp_calc_fishpop_growth(
 )
 }
 \arguments{
-\item{fishpop, fishpop_track}{Matrix with fishpop values.}
+\item{fishpop, fishpop_track}{Matrix with fishpop values and starting population.}
 
 \item{seafloor}{Matrix with seafloor values.}
 
@@ -29,11 +29,11 @@ rcpp_calc_fishpop_growth(
 \item{pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i}{Numeric with parameters.}
 }
 \value{
-Matrix
+void
 }
 \description{
 Rcpp calc growth
 }
 \details{
-\code{Rcpp} implementation of to calculate growth.
+Rcpp mplementation to calculate growth of fish individuals.
 }

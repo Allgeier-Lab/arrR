@@ -7,17 +7,17 @@
 rcpp_convert_nutr(x, to)
 }
 \arguments{
-\item{x}{Add describtion}
+\item{x}{Numeric with nutrient amount.}
 
-\item{to}{Add describtion}
+\item{to}{String to specify in which unit to convert.}
 }
 \value{
-Add describtion
+double
 }
 \description{
-Add describtion
+Rcpp convert nutrients
 }
 \details{
-Add describtion
+Rcpp implementation to convert nutrients between g and umol.
 }
 \keyword{export}

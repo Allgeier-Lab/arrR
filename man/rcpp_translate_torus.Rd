@@ -7,17 +7,17 @@
 rcpp_translate_torus(coords, extent)
 }
 \arguments{
-\item{coords}{Add describtion}
+\item{coords}{Matrix with coordinates.}
 
-\item{extent}{Add describtion}
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 }
 \value{
-Add describtion
+void
 }
 \description{
-Add describtion
+Rcpp translate torus
 }
 \details{
-Add describtion
+Rcpp implementation to translate coordinates if they exceed extent.
 }
 \keyword{export}

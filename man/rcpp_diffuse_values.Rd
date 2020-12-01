@@ -20,11 +20,11 @@ rcpp_diffuse_values(
 \item{nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion}{Numeric with parameters.}
 }
 \value{
-Matrix
+void
 }
 \description{
-Rcpp function to diffuse seafloor values
+Rcpp diffuse values
 }
 \details{
-\code{Rcpp} implementation of to diffuse nutrients.
+Rcpp implementation to diffuse seafloor values between neighbouring cells.
 }

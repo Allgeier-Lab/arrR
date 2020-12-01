@@ -3,7 +3,7 @@ using namespace Rcpp;
 
 //' rcpp_calc_respiration
 //'
-//' @description Rcpp calc growth
+//' @description Rcpp calculate respration
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param resp_intercept,resp_slope Numeric with parameters.
@@ -11,9 +11,9 @@ using namespace Rcpp;
 //' @param water_temp,min_per_i, Numeric with parameters.
 //'
 //' @details
-//' \code{Rcpp} implementation of to calculate growth.
+//' Rcpp implementation to calculate respiration of fish individuals.
 //'
-//' @return Matrix
+//' @return void
 //'
 //' @aliases rcpp_calc_respiration
 //' @rdname rcpp_calc_respiration
@@ -25,7 +25,7 @@ void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
                              double resp_temp_low, double resp_temp_max, double resp_temp_optm,
                              double water_temp, double min_per_i) {
 
-  // // MH: Why are none of these values parameters?
+  // scale intercept to correct tick scale
   resp_intercept = resp_intercept * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i;
 
   // for f(T) temperature dependence function for respiration
@@ -37,9 +37,10 @@ void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
 
   double x_resp = std::pow(z_resp, 2) * std::pow((1 + std::pow((1 + 40 / y_resp), 0.5)), 2) / 400.0;
 
-  // this is the f(t) equation 2 ()
+  // this is the f(t) equation 2
   double temp_dependence = std::pow(v_resp, x_resp) * exp(x_resp * (1 - v_resp));
 
+  // loop through all fish individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // calculate respiration
@@ -49,13 +50,15 @@ void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
                           temp_dependence * fishpop(i, 9)) * 13560 * (1.0 / 4800.0);
 
     // check if finite number
-    bool check_finite = isfinite(respiration);
+    bool check_finite = std::isfinite(respiration);
 
+    // respiration is finite number; keep value
     if (check_finite) {
 
       // update respiration col
       fishpop(i, 10) = respiration;
 
+    // respiration is infinite (divided by zero probably), use 1 instead
     } else {
 
       // update respiration col

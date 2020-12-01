@@ -3,17 +3,17 @@ using namespace Rcpp;
 
 //' rcpp_create_rebirth
 //'
-//' @description Rcpp create new individual
+//' @description Rcpp create rebirth
 //'
-//' @param fishpop,fishpop_track Matrix with fishpop values.
+//' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_n_body,pop_want_reserves Numeric with parameters.
 //'
 //' @details
-//' \code{Rcpp} implementation of to calculate growth.
+//' Rcpp implementation to create new individual after mortality event.
 //'
-//' @return Matrix
+//' @return void
 //'
 //' @aliases rcpp_create_rebirth
 //' @rdname rcpp_create_rebirth
@@ -87,3 +87,14 @@ void rcpp_create_rebirth(Rcpp::NumericMatrix fishpop,
 
   }
 }
+
+/*** R
+# create new individual
+rcpp_create_rebirth(fishpop = fishpop_values,
+                    fishpop_track = fishpop_track,
+                    seafloor = seafloor_values,
+                    fish_id = fish_id,
+                    cell_id = cell_id,
+                    pop_n_body = parameters$pop_n_body,
+                    pop_want_reserves = parameters$pop_want_reserves)
+*/
