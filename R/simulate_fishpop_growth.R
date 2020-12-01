@@ -43,14 +43,14 @@ simulate_fishpop_growth <- function(fishpop_values, fishpop_track, n_pop,
   fish_id <- sample(seq(from = 1, to = n_pop), size = n_pop)
 
   rcpp_calc_fishpop_growth(fishpop = fishpop_values,
-                            fishpop_track = fishpop_track[[1]],
-                            seafloor = seafloor_values,
-                            fish_id = fish_id,
-                            cell_id = cell_id,
-                            growth_values = growth_values,
-                            pop_n_body = parameters$pop_n_body,
-                            pop_max_reserves = parameters$pop_max_reserves,
-                            pop_want_reserves = parameters$pop_want_reserves,
-                            min_per_i = min_per_i)
+                           fishpop_track = fishpop_track,
+                           seafloor = seafloor_values,
+                           fish_id = fish_id,
+                           cell_id = cell_id,
+                           growth_values = growth_values,
+                           pop_n_body = parameters$pop_n_body,
+                           pop_max_reserves = parameters$pop_max_reserves,
+                           pop_want_reserves = parameters$pop_want_reserves,
+                           min_per_i = min_per_i)
 
 }

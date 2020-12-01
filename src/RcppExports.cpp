@@ -161,6 +161,41 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_translate_torus
+void rcpp_translate_torus(Rcpp::NumericMatrix coords, Rcpp::NumericVector extent);
+RcppExport SEXP _arrR_rcpp_translate_torus(SEXP coordsSEXP, SEXP extentSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords(coordsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    rcpp_translate_torus(coords, extent);
+    return R_NilValue;
+END_RCPP
+}
+// rcpp_turn_fish
+void rcpp_turn_fish(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix dist_values);
+RcppExport SEXP _arrR_rcpp_turn_fish(SEXP fishpopSEXP, SEXP dist_valuesSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type dist_values(dist_valuesSEXP);
+    rcpp_turn_fish(fishpop, dist_values);
+    return R_NilValue;
+END_RCPP
+}
+// rcpp_move_fishpop
+void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dist, Rcpp::NumericVector extent, double pop_mean_move);
+RcppExport SEXP _arrR_rcpp_move_fishpop(SEXP fishpopSEXP, SEXP move_distSEXP, SEXP extentSEXP, SEXP pop_mean_moveSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type move_dist(move_distSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_mean_move(pop_mean_moveSEXP);
+    rcpp_move_fishpop(fishpop, move_dist, extent, pop_mean_move);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_dist_reef", (DL_FUNC) &_arrR_rcpp_calc_dist_reef, 4},
@@ -173,6 +208,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 13},
     {"_arrR_rcpp_create_rebirth", (DL_FUNC) &_arrR_rcpp_create_rebirth, 7},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
+    {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
+    {"_arrR_rcpp_turn_fish", (DL_FUNC) &_arrR_rcpp_turn_fish, 2},
+    {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 4},
     {NULL, NULL, 0}
 };
 

@@ -40,7 +40,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @aliases rcpp_calc_fishpop_growth
 #' @rdname rcpp_calc_fishpop_growth
-#' //'
+#'
 #' @export
 rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
     invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, growth_values, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
@@ -212,5 +212,67 @@ rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_
 #' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion))
+}
+
+#' rcpp_translate_torus
+#'
+#' @description Add describtion
+#'
+#' @param coords Add describtion
+#' @param extent Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_translate_torus
+#' @rdname rcpp_translate_torus
+#'
+#' @keywords export
+rcpp_translate_torus <- function(coords, extent) {
+    invisible(.Call(`_arrR_rcpp_translate_torus`, coords, extent))
+}
+
+#' rcpp_turn_fish
+#'
+#' @description Add describtion
+#'
+#' @param fishpop Add describtion
+#' @param dist_values Add describtion
+#'
+#' @details
+#' Add describtion
+#'
+#' @return Add describtion
+#'
+#' @aliases rcpp_turn_fish
+#' @rdname rcpp_turn_fish
+#'
+#' @keywords export
+rcpp_turn_fish <- function(fishpop, dist_values) {
+    invisible(.Call(`_arrR_rcpp_turn_fish`, fishpop, dist_values))
+}
+
+#' rcpp_move_fishpop
+#'
+#' @description Rcpp move fish population
+#'
+#' @param fishpop Add describtion
+#' @param move_dist Add describtion
+#' @param extent  Add describtion
+#' @param pop_mean_move Add describtion
+#'
+#' @details
+#' \code{Rcpp} implementation of to calculate growth.
+#'
+#' @return Matrix
+#'
+#' @aliases rcpp_move_fishpop
+#' @rdname rcpp_move_fishpop
+#'
+#' @export
+rcpp_move_fishpop <- function(fishpop, move_dist, extent, pop_mean_move) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, move_dist, extent, pop_mean_move))
 }
 

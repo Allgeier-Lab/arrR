@@ -22,6 +22,9 @@
 simulate_movement <- function(fishpop_values, n_pop, seafloor, seafloor_values,
                               coords_reef, reef_attraction, extent, parameters) {
 
+  # extent must be vector for rcpp
+  extent <- as.vector(extent, mode = "numeric")
+
   # calc mean of log-norm distribution
   norm_mean <- log((parameters$pop_mean_move ^ 2) /
                      sqrt(parameters$pop_mean_move ^ 2 + parameters$pop_var_move))
@@ -55,56 +58,29 @@ simulate_movement <- function(fishpop_values, n_pop, seafloor, seafloor_values,
                        fishpop_values[, "y"] + (parameters$pop_visibility *
                                               sin((fishpop_values[, "heading"] + 45) * (pi / 180))))
 
-    # torus translation if coords are outside plot and add id col
-    heading_l <- translate_torus(coords = heading_l, extent = extent)
-
-    heading_s <- translate_torus(coords = heading_s, extent = extent)
-
-    heading_r <- translate_torus(coords = heading_r, extent = extent)
-
-    # create id for direction
-    direction_id <- rep(c("s", "l", "r"), each = n_pop)
-
     # combine to one matrix
-    heading_full <- rbind(heading_s, heading_l, heading_r)
+    heading_full <- rbind(heading_l, heading_s, heading_r)
 
-    # get distance values in directions
+    # torus translation if coords are outside plot
+    rcpp_translate_torus(coords = heading_full, extent = extent)
+
+    # get cell id in directions
     cell_id <- raster::cellFromXY(object = seafloor, xy = heading_full)
 
-    dist_values <- seafloor_values[cell_id, "reef_dist"]
+    # create distance matrix with left, straight right distance to reef
+    dist_values <- matrix(data = seafloor_values[cell_id, "reef_dist"],
+                          ncol = 3, nrow = n_pop)
 
-    # get ids of fish that turn one direction
-    id_l <- which(dist_values[direction_id == "l"] <
-                    dist_values[direction_id == "s"])
-
-    id_r <- which(dist_values[direction_id == "r"] <
-                    dist_values[direction_id == "s"])
-
-    # turn fish heading towards reef
-    fishpop_values[id_l, "heading"] <- fishpop_values[id_l, "heading"] - 45
-
-    fishpop_values[id_r, "heading"] <- fishpop_values[id_r, "heading"] + 45
+    # turn fish
+    rcpp_turn_fish(fishpop = fishpop_values,
+                   dist_values = dist_values)
 
   }
 
-  # move individuals
-  fishpop_values[, "x"] <- fishpop_values[, "x"] +
-    (move_dist * cos(fishpop_values[, "heading"] * (pi / 180)))
+  # calculate new coordinates and activity
+  rcpp_move_fishpop(fishpop = fishpop_values,
+                    move_dist = move_dist,
+                    extent = extent,
+                    pop_mean_move = parameters$pop_mean_move)
 
-  fishpop_values[, "y"] <- fishpop_values[, "y"] +
-    (move_dist * sin(fishpop_values[, "heading"] * (pi / 180)))
-
-  # torus edge correction at boundaries
-  fishpop_values[, c("x", "y")] <-
-    translate_torus(coords = fishpop_values[, c("x", "y")], extent = extent)
-
-  # turn fish randomly after moving
-  # MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-  fishpop_values[, "heading"] <- stats::runif(n = n_pop,
-                                          min = 0, max = 360)
-
-  # update activity
-  fishpop_values[, "activity"] <- (1 / (parameters$pop_mean_move + 1)) * move_dist + 1
-
-  return(fishpop_values)
 }

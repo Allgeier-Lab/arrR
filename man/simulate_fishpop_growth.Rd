@@ -6,7 +6,7 @@
 \usage{
 simulate_fishpop_growth(
   fishpop_values,
-  fishpop_track,
+  fishpop_start,
   n_pop,
   seafloor,
   seafloor_values,
@@ -15,7 +15,7 @@ simulate_fishpop_growth(
 )
 }
 \arguments{
-\item{fishpop_values, fishpop_track}{Matrix with fish population.}
+\item{fishpop_values, fishpop_start}{Matrix with fish population.}
 
 \item{n_pop}{Numeric with number of individuals.}
 

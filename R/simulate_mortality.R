@@ -35,7 +35,7 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
   if (length(fish_id) > 0) {
 
     # randomize order of loop because detritus pool can "run out"
-    mort_id <- sample(fish_id, size = length(fish_id))
+    fish_id <- sample(fish_id, size = length(fish_id))
 
     # get detritus/nutrient pools at location and raster cells
     cell_id <- raster::cellFromXY(object = seafloor,
@@ -44,7 +44,7 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
 
     # create new individual
     rcpp_create_rebirth(fishpop = fishpop_values,
-                        fishpop_track = fishpop_track[[1]],
+                        fishpop_track = fishpop_track,
                         seafloor = seafloor_values,
                         fish_id = fish_id,
                         cell_id = cell_id,

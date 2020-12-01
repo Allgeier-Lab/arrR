@@ -64,10 +64,16 @@ run_simulation <- function(seafloor, fishpop,
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
                                          fishpop_values = fishpop_values)
 
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+  # create data.frame to store results for each timestep
+  seafloor_track <- data.frame(matrix(nrow = (max_i / save_each) * nrow(seafloor_values) +
+                                        nrow(seafloor_values), ncol = ncol(seafloor_values)))
 
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+  names(seafloor_track) <- c("x", "y", names(seafloor))
+
+  fishpop_track <- data.frame(matrix(nrow = (max_i / save_each) * nrow(fishpop_values) +
+                                       nrow(fishpop_values), ncol = ncol(fishpop_values)))
+
+  names(fishpop_track) <- names(fishpop)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -83,10 +89,10 @@ run_simulation <- function(seafloor, fishpop,
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
-  # save input_data as first list element
-  seafloor_track[[1]] <- seafloor_values
+  # save input data in tracking data.frame
+  seafloor_track[1:nrow(seafloor_values), ] <- seafloor_values
 
-  fishpop_track[[1]] <- fishpop_values
+  fishpop_track[1:nrow(fishpop_values), ] <- fishpop_values
 
   # print some basic information about model run
   if (verbose) {
@@ -119,14 +125,14 @@ run_simulation <- function(seafloor, fishpop,
                             parameters = parameters)
 
     # simulate fish movement
-    fishpop_values <- simulate_movement(fishpop_values = fishpop_values,
-                                         n_pop = starting_values$pop_n,
-                                         seafloor = seafloor$reef,
-                                         seafloor_values = seafloor_values,
-                                         coords_reef = coords_reef,
-                                         extent = extent,
-                                         parameters = parameters,
-                                         reef_attraction = reef_attraction)
+    simulate_movement(fishpop_values = fishpop_values,
+                      n_pop = starting_values$pop_n,
+                      seafloor = seafloor$reef,
+                      seafloor_values = seafloor_values,
+                      coords_reef = coords_reef,
+                      extent = extent,
+                      parameters = parameters,
+                      reef_attraction = reef_attraction)
 
     # simulate fish respiration (26°C is mean water temperature in the Bahamas)
     simulate_respiration(fishpop_values = fishpop_values,
@@ -136,7 +142,7 @@ run_simulation <- function(seafloor, fishpop,
 
     # simulate fishpop growth and including change of seafloor pools
     simulate_fishpop_growth(fishpop_values = fishpop_values,
-                            fishpop_track = fishpop_track,
+                            fishpop_track = as.matrix(fishpop_track[1:starting_values$pop_n, ]),
                             n_pop = starting_values$pop_n,
                             seafloor = seafloor$reef,
                             seafloor_values = seafloor_values,
@@ -145,7 +151,7 @@ run_simulation <- function(seafloor, fishpop,
 
     # simulate mortality
     simulate_mortality(fishpop_values = fishpop_values,
-                       fishpop_track = fishpop_track,
+                       fishpop_track = as.matrix(fishpop_track[1:starting_values$pop_n, ]),
                        n_pop = starting_values$pop_n,
                        seafloor = seafloor$reef,
                        seafloor_values = seafloor_values,
@@ -162,14 +168,25 @@ run_simulation <- function(seafloor, fishpop,
 
       if (verbose) {
 
-        message("\r> ...Progress: ", round(i / max_i * 100, digits = 1), "% simulations runs... \t\t\t",
+        message("\r> ...Progress: ", round(i / max_i * 100), "% simulations runs... \t\t\t",
                 appendLF = FALSE)
 
       }
 
-      seafloor_track[[i / save_each + 1]] <- seafloor_values
+      # get index where to store track data fish pop
+      id_seafloor_start <- (i / save_each * nrow(seafloor_values)) + 1
 
-      fishpop_track[[i / save_each + 1]] <- fishpop_values
+      id_seafloor_end <- id_seafloor_start + nrow(seafloor_values) - 1
+
+      # get index where to store track data fish pop
+      id_fishpop_start <- (i / save_each * nrow(fishpop_values)) + 1
+
+      id_fishpop_end <- id_fishpop_start + starting_values$pop_n - 1
+
+      # save tracking data
+      seafloor_track[id_seafloor_start:id_seafloor_end, ] <- seafloor_values
+
+      fishpop_track[id_fishpop_start:id_fishpop_end, ] <- fishpop_values
 
     }
   }
@@ -183,15 +200,9 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
-  # combine seafloor to one dataframe
-  seafloor_track <- as.data.frame(do.call(what = rbind, args = seafloor_track))
-
   # add timestep counter
   seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
                                  each = raster::ncell(seafloor))
-
-  # combine fish population to one dataframe
-  fishpop_track <- as.data.frame(do.call(what = rbind, args = fishpop_track))
 
   # add timestep counter
   if (starting_values$pop_n > 0) {
@@ -207,7 +218,8 @@ run_simulation <- function(seafloor, fishpop,
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
-                 starting_values = starting_values, parameters = parameters, max_i = max_i, min_per_i = min_per_i,
+                 starting_values = starting_values, parameters = parameters,
+                 max_i = max_i, min_per_i = min_per_i,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor))
 
   # set class of result

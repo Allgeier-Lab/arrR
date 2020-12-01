@@ -18,7 +18,7 @@ using namespace Rcpp;
 //'
 //' @aliases rcpp_calc_fishpop_growth
 //' @rdname rcpp_calc_fishpop_growth
-//' //'
+//'
 //' @export
 // [[Rcpp::export]]
 void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
@@ -167,7 +167,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
 /*** R
 rcpp_calc_fishpop_growth(fishpop = fishpop_values,
-                         fishpop_track = fishpop_track[[1]],
+                         fishpop_track = fishpop_track,
                          seafloor = seafloor_values,
                          cell_id = cell_id,
                          growth_values = growth_values,

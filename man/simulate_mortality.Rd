@@ -6,7 +6,7 @@
 \usage{
 simulate_mortality(
   fishpop_values,
-  fishpop_track,
+  fishpop_start,
   seafloor,
   seafloor_values,
   n_pop,
@@ -15,7 +15,7 @@ simulate_mortality(
 )
 }
 \arguments{
-\item{fishpop_values, fishpop_track}{Data frame population created
+\item{fishpop_values, fishpop_start}{Data frame population created
 with \code{\link{setup_fishpop}}.}
 
 \item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
