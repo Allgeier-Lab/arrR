@@ -74,9 +74,9 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
                                  reefs = reef_matrix, 
                                  starting_values = starting_values)
 
-input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
-                                               starting_values = starting_values, 
-                                               parameters = parameters)
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
+                               starting_values = starting_values, 
+                               parameters = parameters)
 ```
 
 To rum a simulation, simply provide the previously created seafloor and population as well as all parameters and starting values the `run_simulation` function. Additionally, you need to specify the number of time steps that are simulated.
@@ -88,7 +88,7 @@ min_per_i <- 120
 max_i <- (60 * 24 * 365 * 1) / min_per_i
 
 result <- run_simulation(seafloor = input_seafloor, 
-                         fish_population = input_fish_population,
+                         fishpop = input_fishpop,
                          parameters = parameters, 
                          reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i,
