@@ -18,6 +18,8 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
+    #> Test coverage (local): 83.3 %
+
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
 
@@ -114,14 +116,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8235, 0.2919, 2.7812, 0
-#> Mean:        6.5318, 221.638, 0.2947, 2.8487, 0
-#> Maximum: 7.5086, 229.0533, 0.3231, 2.8589, 0
+#> Minimum: 6.498, 220.8379, 0.292, 2.7832, 0
+#> Mean:        6.546, 221.639, 0.2946, 2.8485, 0
+#> Maximum: 7.6011, 228.7236, 0.3198, 2.8584, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 10.9004, 23.0218, 0, 0
-#> Mean:        14.4428, 61.1745, 0, 0
-#> Maximum: 21.5822, 199.4624, 0, 0
+#> Minimum: 10.9618, 23.4342, 0, 0
+#> Mean:        14.4704, 61.843, 0, 0
+#> Maximum: 20.7095, 175.0635, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
@@ -130,7 +132,6 @@ last timestep). It is possible to either plot a single `RasterLayer` or
 the whole `RasterBrick`
 
 ``` r
-
 plot(result, what = "seafloor")
 ```
 
