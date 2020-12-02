@@ -33,7 +33,7 @@ library(covr)
 
 coverage_local <- covr::package_coverage(".")
 
-cat("Test coverage:", round(covr::percent_coverage(coverage_local), digits = 2), "%")
+cat("Test coverage (local):", round(covr::percent_coverage(coverage_local), digits = 2), "%")
 ```
 
 The goal of *arrR* is to simulate seagrass growth around artificial reefs.
