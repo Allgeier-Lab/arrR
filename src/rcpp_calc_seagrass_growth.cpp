@@ -181,11 +181,15 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
     if (is_reef == 0) {
 
       // extract all values of current cell
-      double nutrients_temp = seafloor(i, 4);
-      double bg_biomass_temp = seafloor(i, 3);
       double ag_biomass_temp = seafloor(i, 2);
-      double slough_temp = seafloor(i, 7);
+
+      double bg_biomass_temp = seafloor(i, 3);
+
+      double nutrients_temp = seafloor(i, 4);
+
       double detritus_pool_temp = seafloor(i, 5);
+
+      double slough_temp = seafloor(i, 7);
 
       // calculate total possible nutrient uptake bg
       double bg_uptake = rcpp_calc_nutr_uptake(nutrients_temp, bg_biomass_temp,
