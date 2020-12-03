@@ -277,7 +277,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       // throw error if no case is true
       } else {
 
-        Rcpp::stop("Error: For current cell %i no allocation rule was TRUE.", i + 1);
+        Rcpp::stop("Error: No allocation rule was TRUE for cell %i.", i + 1);
 
       }
 
@@ -289,15 +289,21 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       // update values
       bg_biomass_temp = seafloor_checked(0);
+
       ag_biomass_temp = seafloor_checked(1);
+
       detritus_pool_temp = seafloor_checked(2);
 
       // update seafloor values of cell
-      seafloor(i, 4) = nutrients_temp;
-      seafloor(i, 3) = bg_biomass_temp;
       seafloor(i, 2) = ag_biomass_temp;
-      seafloor(i, 7) = slough_temp;
+
+      seafloor(i, 3) = bg_biomass_temp;
+
+      seafloor(i, 4) = nutrients_temp;
+
       seafloor(i, 5) = detritus_pool_temp;
+
+      seafloor(i, 7) = slough_temp;
 
     // reef cell; do nothing
     } else {
