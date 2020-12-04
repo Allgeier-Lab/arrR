@@ -10,7 +10,10 @@ rcpp_calc_fishpop_growth(
   seafloor,
   fish_id,
   cell_id,
-  growth_values,
+  pop_k_grunt,
+  pop_linf_grunt,
+  pop_a_grunt,
+  pop_b_grunt,
   pop_n_body,
   pop_max_reserves,
   pop_want_reserves,
@@ -24,7 +27,7 @@ rcpp_calc_fishpop_growth(
 
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
-\item{growth_values}{Matrix with growth values.}
+\item{pop_k_grunt, pop_linf_grunt, pop_a_grunt, pop_b_grunt}{Numeric with parameters.}
 
 \item{pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i}{Numeric with parameters.}
 }

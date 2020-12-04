@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-//' @param pop_max_size, pop_n_body,pop_want_reserves Numeric with parameters.
+//' @param pop_max_size,pop_n_body,pop_want_reserves Numeric with parameters.
 //'
 //' @details
 //' Rcpp implementation to create new individual after mortality event.
