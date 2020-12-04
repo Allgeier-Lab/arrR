@@ -22,34 +22,21 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
                                seafloor, seafloor_values,
                                pop_n, parameters, min_per_i) {
 
-  # create death probability
-  death_prob <- exp(fishpop_values[, "length"] - parameters$pop_max_size)
+  # get detritus/nutrient pools at location and raster cells
+  cell_id <- raster::cellFromXY(object = seafloor,
+                                xy = fishpop_values[, c("x", "y"), drop = FALSE])
 
-  # create random number to test death prob against
-  random_prob <- stats::runif(n = pop_n, min = 0, max = 1)
+  # randomize order of loop because detritus pool can "run out"
+  fish_id <- sample(x = seq(from = 1, to = pop_n), size = pop_n)
 
-  # identify who dies
-  fish_id <- which(random_prob < death_prob)
+  # create new individual
+  rcpp_calc_mortality(fishpop = fishpop_values,
+                      fishpop_track = fishpop_track,
+                      seafloor = seafloor_values,
+                      fish_id = fish_id,
+                      cell_id = cell_id,
+                      pop_max_size = parameters$pop_max_size,
+                      pop_n_body = parameters$pop_n_body,
+                      pop_want_reserves = parameters$pop_want_reserves)
 
-  # check if mortality occurs
-  if (length(fish_id) > 0) {
-
-    # randomize order of loop because detritus pool can "run out"
-    fish_id <- sample(fish_id, size = length(fish_id))
-
-    # get detritus/nutrient pools at location and raster cells
-    cell_id <- raster::cellFromXY(object = seafloor,
-                                  xy = fishpop_values[fish_id, c("x", "y"),
-                                                      drop = FALSE])
-
-    # create new individual
-    rcpp_create_rebirth(fishpop = fishpop_values,
-                        fishpop_track = fishpop_track,
-                        seafloor = seafloor_values,
-                        fish_id = fish_id,
-                        cell_id = cell_id,
-                        pop_n_body = parameters$pop_n_body,
-                        pop_want_reserves = parameters$pop_want_reserves)
-
-  }
 }

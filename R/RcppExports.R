@@ -67,6 +67,28 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_decomp, detritus_mi
     invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_dead_decomp, detritus_mineralization))
 }
 
+#' rcpp_calc_mortality
+#'
+#' @description Rcpp create rebirth
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param pop_max_size, pop_n_body,pop_want_reserves Numeric with parameters.
+#'
+#' @details
+#' Rcpp implementation to create new individual after mortality event.
+#'
+#' @return void
+#'
+#' @aliases rcpp_calc_mortality
+#' @rdname rcpp_calc_mortality
+#'
+#' @export
+rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_max_size, pop_n_body, pop_want_reserves) {
+    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_max_size, pop_n_body, pop_want_reserves))
+}
+
 #' rcpp_calc_respiration
 #'
 #' @description Rcpp calculate respration
@@ -171,28 +193,6 @@ rcpp_check_max_biomass <- function(bg_biomass, ag_biomass, detritus_pool, bg_bio
 #' @keywords export
 rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i) {
     invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
-}
-
-#' rcpp_create_rebirth
-#'
-#' @description Rcpp create rebirth
-#'
-#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
-#' @param seafloor Matrix with seafloor values.
-#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_n_body,pop_want_reserves Numeric with parameters.
-#'
-#' @details
-#' Rcpp implementation to create new individual after mortality event.
-#'
-#' @return void
-#'
-#' @aliases rcpp_create_rebirth
-#' @rdname rcpp_create_rebirth
-#'
-#' @export
-rcpp_create_rebirth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_n_body, pop_want_reserves) {
-    invisible(.Call(`_arrR_rcpp_create_rebirth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_n_body, pop_want_reserves))
 }
 
 #' rcpp_diffuse_values

@@ -36,7 +36,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     int fish_id_temp = fish_id(i) - 1;
 
     // create counter for temp cell id
-    int cell_id_temp = cell_id(fish_id_temp);
+    int cell_id_temp = cell_id(fish_id_temp) - 1;
 
     // individual dies because consumption requirements can not be met
     if (growth_values(fish_id_temp, 0) > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7))) {
