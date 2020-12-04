@@ -22,12 +22,12 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
                                seafloor, seafloor_values,
                                pop_n, parameters, min_per_i) {
 
-  # get detritus/nutrient pools at location and raster cells
-  cell_id <- raster::cellFromXY(object = seafloor,
-                                xy = fishpop_values[, c("x", "y"), drop = FALSE])
-
   # randomize order of loop because detritus pool can "run out"
   fish_id <- sample(x = seq(from = 1, to = pop_n), size = pop_n)
+
+  # get detritus/nutrient pools at location and raster cells
+  cell_id <- raster::cellFromXY(object = seafloor,
+                                xy = fishpop_values[fish_id, c("x", "y"), drop = FALSE])
 
   # create new individual
   rcpp_calc_mortality(fishpop = fishpop_values,

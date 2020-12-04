@@ -35,7 +35,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
     int fish_id_temp = fish_id(i) - 1;
 
     // create counter for temp cell id
-    int cell_id_temp = cell_id(fish_id_temp) - 1;
+    int cell_id_temp = cell_id(i) - 1;
 
     // create death probability
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_max_size);
