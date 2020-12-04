@@ -124,7 +124,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
           fishpop(fish_id_temp, 7) = fishpop(fish_id_temp, 8);
 
           // reduce detritus pool
-          seafloor(cell_id_temp, 5) = nutrients_left - reserves_diff;
+          seafloor(cell_id_temp, 5) -= growth_values(fish_id_temp, 0) + reserves_diff;
 
         // reserves cannot be filled completely by nutrient pool
         } else {

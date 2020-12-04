@@ -37,7 +37,7 @@ simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n,
   cell_id <- raster::cellFromXY(object = seafloor,
                                 xy = fishpop_values[, c("x", "y")])
 
-  # combine gwoth related values to matrix for Rcpp fun
+  # combine growth related values to matrix for Rcpp fun
   growth_values <- cbind(consumption_req, growth_length, growth_weight)
 
   # randomize order of loop because detritus pool can "run out"
