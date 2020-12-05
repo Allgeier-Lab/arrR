@@ -65,7 +65,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       int died_background = fishpop(fish_id_temp, 12);
 
       // calculate increase in fish mass including reserves
-      double mass_diff = ((fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body) +
+      double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 
       // add to dead detritus pool
@@ -150,6 +150,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
           // set detritus pool to zero
           seafloor(cell_id_temp, 5) = 0;
+
         }
 
       // reserves are needed to meet consumption requirement
