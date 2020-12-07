@@ -38,7 +38,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // create counter for temp cell id
     int cell_id_temp = cell_id(i) - 1;
 
-     // # calculate growth in length and weight
+    // calculate growth in length and weight
     double growth_length = pop_k_grunt *
       (1.0 / 365.0) * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i *
       (pop_linf_grunt - fishpop(fish_id_temp, 5));
@@ -184,7 +184,11 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                          fishpop_track = fishpop_track,
                          seafloor = seafloor_values,
-                         cell_id = cell_id,
+                         fish_id = fish_id, cell_id = cell_id,
+                         pop_k_grunt = parameters$pop_k_grunt,
+                         pop_linf_grunt = parameters$pop_linf_grunt,
+                         pop_a_grunt = parameters$pop_a_grunt,
+                         pop_b_grunt = parameters$pop_b_grunt,
                          pop_n_body = parameters$pop_n_body,
                          pop_max_reserves = parameters$pop_max_reserves,
                          pop_want_reserves = parameters$pop_want_reserves,
