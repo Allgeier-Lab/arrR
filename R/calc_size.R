@@ -3,7 +3,7 @@
 #' @description Internal function to calculate size
 #'
 #' @param pop_n Numeric with starting values for number of individuals.
-#' @param pop_mean_size,pop_max_size,pop_var_size Numeric with parameters for mean size
+#' @param pop_mean_size,pop_linf_grunt,pop_var_size Numeric with parameters for mean size
 #' and variance.
 #' @param pop_a_grunt,pop_b_grunt Numeric with parameters for weight calculation.
 #' @param use_log Logical if TRUE, random log distribution is used.
@@ -17,7 +17,7 @@
 #' @rdname calc_size
 #'
 #' @export
-calc_size <- function(pop_n, pop_mean_size, pop_max_size, pop_var_size,
+calc_size <- function(pop_n, pop_mean_size, pop_linf_grunt, pop_var_size,
                       pop_a_grunt, pop_b_grunt, use_log) {
 
   # use log distribution for starting size
@@ -41,7 +41,7 @@ calc_size <- function(pop_n, pop_mean_size, pop_max_size, pop_var_size,
   } else {
 
     body_length <- stats::runif(n = pop_n,
-                                min = pop_max_size * 0.1, max = pop_max_size * 0.9)
+                                min = pop_linf_grunt * 0.1, max = pop_linf_grunt * 0.9)
 
   }
 

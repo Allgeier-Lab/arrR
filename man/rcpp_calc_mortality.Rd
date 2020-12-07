@@ -10,7 +10,7 @@ rcpp_calc_mortality(
   seafloor,
   fish_id,
   cell_id,
-  pop_max_size,
+  pop_linf_grunt,
   pop_n_body,
   pop_want_reserves
 )
@@ -22,7 +22,7 @@ rcpp_calc_mortality(
 
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
-\item{pop_max_size, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+\item{pop_linf_grunt, pop_n_body, pop_want_reserves}{Numeric with parameters.}
 }
 \value{
 void

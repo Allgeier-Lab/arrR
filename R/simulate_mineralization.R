@@ -21,7 +21,7 @@
 simulate_mineralization <- function(seafloor_values, parameters) {
 
   rcpp_calc_mineralization(seafloor = seafloor_values,
-                           detritus_dead_decomp = parameters$detritus_dead_decomp,
+                           detritus_dead_ratio = parameters$detritus_dead_ratio,
                            detritus_mineralization = parameters$detritus_mineralization)
 
 }

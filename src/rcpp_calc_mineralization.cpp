@@ -6,7 +6,7 @@ using namespace Rcpp;
 //' @description Rcpp calculate mineralization
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param detritus_dead_decomp,detritus_mineralization seafloor Numeric with parameters.
+//' @param detritus_dead_ratio,detritus_mineralization seafloor Numeric with parameters.
 //'
 //' @details
 //' Rcpp implementation to calculate detritus miniralization.
@@ -19,14 +19,14 @@ using namespace Rcpp;
 //' @keywords export
 // [[Rcpp::export]]
 void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor,
-                              double detritus_dead_decomp,
+                              double detritus_dead_ratio,
                               double detritus_mineralization) {
 
   // loop through all seafloor values
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     // calculate decomposition amount
-    double dead_decompostion = seafloor(i, 6) * detritus_dead_decomp;
+    double dead_decompostion = seafloor(i, 6) * detritus_dead_ratio;
 
     // redistribute dead detritus to active detritus
     seafloor(i, 5) += dead_decompostion;

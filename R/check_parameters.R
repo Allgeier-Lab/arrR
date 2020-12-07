@@ -22,6 +22,9 @@
 #' @export
 check_parameters <- function(starting_values = NULL, parameters = NULL, verbose = TRUE) {
 
+  # logical for final ok
+  final_flag <- TRUE
+
   # specify all required starting values
   required_starting <- c("ag_biomass",
                          "bg_biomass",
@@ -45,10 +48,9 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "detritus_mineralization",
                            "detritus_diffusion",
                            "detritus_dead_diffusion",
-                           "detritus_dead_decomp",
+                           "detritus_dead_ratio",
                            "pop_mean_size",
                            "pop_var_size",
-                           "pop_max_size",
                            "pop_max_reserves",
                            "pop_want_reserves",
                            "pop_visibility",
@@ -76,6 +78,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       message("\n")
 
       message("> Required parameters:\n", paste(required_parameters, collapse = "\n"))
+
     }
   }
 
@@ -94,33 +97,15 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if any additional parameters are present
     add_starting <- which(!names(starting_values) %in% required_starting)
 
-    # check if any values are missing
-    if (length(check_starting) > 0) {
+  }
 
-      # combine missing values with separator
-      missing_starting <- paste(required_starting[check_starting], collapse = " ")
+  # no starting values present, add NULL so later TRUE/FALSE is working
+  else {
 
-      warning("The following starting values are missing: ", missing_starting,
-              call. = FALSE)
+    check_starting <- NULL
 
-    }
+    add_starting <- NULL
 
-    # check if additional values are present
-    if (length(add_starting) > 0 ) {
-
-      # combine additional values with separator
-      additional_starting <- paste(names(starting_values)[add_starting],
-                                   collapse = " ")
-
-      # return additional starting values
-      # return additional parameter
-      if (verbose) {
-
-        message("> The following starting values are not needed: ",
-                additional_starting, "\n")
-
-      }
-    }
   }
 
   # check parameters only
@@ -138,42 +123,27 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if additional parameters are present
     add_parameters <- which(!names(parameters) %in% required_parameters)
 
-    # check if parameters are missing
-    if (length(check_parameters) > 0) {
+  }
 
-      # combine missing values with separator
-      missing_parameters <- paste(required_parameters[check_parameters],
-                                  collapse = " ")
+  # no parameter values present, add NULL so later TRUE/FALSE is working
+  else {
 
-      warning("The following parameter values are missing: ", missing_parameters,
-              call. = FALSE)
+    check_parameters <- NULL
 
-    }
+    add_parameters <- NULL
 
-    # check if additional values are present
-    if (length(add_parameters) > 0 ) {
+  }
 
-      # combine additional values with separator
-      additional_parameters <- paste(names(parameters)[add_parameters],
-                                     collapse = " ")
+  # check if respiration temp is above max
+  if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >=
+          parameters$resp_temp_max)) {
 
-      # return additional parameter
-      if (verbose) {
+    # set final flag to false
+    final_flag <- FALSE
 
-        message("> The following parameter values are not needed: ",
-                additional_parameters, "\n")
+    warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
+            call. = FALSE)
 
-      }
-    }
-
-    # check if respiration temp is above max
-    if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >=
-            parameters$resp_temp_max)) {
-
-      warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
-              call. = FALSE)
-
-    }
   }
 
   # check if some parameters make sense
@@ -181,7 +151,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     if (verbose) {
 
-      message("> ...Checking if starting values are within parameter boundaries...")
+      message("> ...Checking if starting values are within parameter boundaries...\n")
 
     }
 
@@ -189,12 +159,19 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) >
             c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
 
+      # set final flag to false
+      final_flag <- FALSE
+
       warning("Starting biomasses are larger than maximum biomasses.", call. = FALSE)
+
     }
 
     # check if biomass starting is below min
     if (any(c(starting_values$bg_biomass, starting_values$ag_biomass) <
             c(parameters$bg_biomass_min, parameters$ag_biomass_min))) {
+
+      # set final flag to false
+      final_flag <- FALSE
 
       warning("Starting biomasses are smaller than minimum biomasses.",
               call. = FALSE)
@@ -205,14 +182,87 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
             c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
 
+      # set final flag to false
+      final_flag <- FALSE
+
       warning("Minimum biomasses are larger than maximum biomasses.",
               call. = FALSE)
+
     }
   }
 
-  if (verbose) {
+  # check if additional values are present
+  if (length(add_starting) > 0) {
 
-    message("\n> All checking done.")
+    # combine additional values with separator
+    additional_starting <- paste(names(starting_values)[add_starting],
+                                 collapse = " ")
+
+    # return additional starting values
+    # return additional parameter
+    if (verbose) {
+
+      message("> Not needed starting values: ",
+              additional_starting, "\n")
+
+    }
+  }
+
+  # check if additional values are present
+  if (length(add_parameters) > 0 ) {
+
+    # combine additional values with separator
+    additional_parameters <- paste(names(parameters)[add_parameters],
+                                   collapse = " ")
+
+    # return additional parameter
+    if (verbose) {
+
+      message("> Not needed parameter values: ",
+              additional_parameters)
+
+    }
+  }
+
+  # check if any values are missing
+  if (length(check_starting) > 0) {
+
+    # combine missing values with separator
+    missing_starting <- paste(required_starting[check_starting], collapse = " ")
+
+    # set final flag to false
+    final_flag <- FALSE
+
+    warning("Missing starting values: ", missing_starting,
+            call. = FALSE)
+
+  }
+
+  # check if parameters are missing
+  if (length(check_parameters) > 0) {
+
+    # combine missing values with separator
+    missing_parameters <- paste(required_parameters[check_parameters],
+                                collapse = " ")
+
+    # set final flag to false
+    final_flag <- FALSE
+
+    warning("Missing parameter values: ", missing_parameters,
+            call. = FALSE)
+
+  }
+
+  # print final message
+  if (verbose & final_flag) {
+
+    message("\n> All checking done!")
+
+  }
+
+  else if (verbose & !final_flag) {
+
+    message("\n> Make sure to check critical warnings!")
 
   }
 }
