@@ -51,8 +51,11 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
+    // calculate amount of available resources
+    double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
+
     // individual dies because consumption requirements can not be met
-    if (consumption_req > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7))) {
+    if (consumption_req > available_resources) {
 
       // save current original coordinates
       double x_coord = fishpop(fish_id_temp, 2);
