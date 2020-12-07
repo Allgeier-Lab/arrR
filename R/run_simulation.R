@@ -209,7 +209,8 @@ run_simulation <- function(seafloor, fishpop,
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
                  max_i = max_i, min_per_i = min_per_i,
-                 save_each = save_each, extent = extent, grain = raster::res(seafloor))
+                 save_each = save_each, extent = extent, grain = raster::res(seafloor),
+                 coords_reef = coords_reef)
 
   # set class of result
   class(result) <- "mdl_rn"

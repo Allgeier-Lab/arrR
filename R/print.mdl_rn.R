@@ -17,7 +17,7 @@
 #' @rdname print.mdl_rn
 #'
 #' @export
-print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
+print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
 
   i <- timestep
 
@@ -74,18 +74,19 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 4, ...) {
   }
 
   # print result
-  cat(paste0("Total simulated time: ", x$max_i * x$min_per_i / 60 / 24, " days\n",
-             "Saved each: ", x$save_each, " timesteps\n",
-             "Results printed: ", i, " timestep\n",
+  cat(paste0("Total time : ", x$max_i * x$min_per_i / 60 / 24, " days (Result printed: ", i, " timestep)\n",
+             "Saved each : ", x$save_each, " timesteps\n",
+             "Seafloor   : ", x$extent, ", ", nrow(x$coords_reef), " reef cells\n",
+             "Fishpop    : ", x$starting_values$pop_n, " individuals\n",
              "\n",
-             "Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
-             "Minimum:\t", paste0(min_seafloor, collapse = ", "), "\n",
-             "Mean:\t\t", paste0(mean_seafloor, collapse = ", "), "\n",
-             "Maximum:\t", paste0(max_seafloor, collapse = ", "), "\n",
+             "Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
+             "Minimum  : ", paste0(min_seafloor, collapse = ", "), "\n",
+             "Mean     : ", paste0(mean_seafloor, collapse = ", "), "\n",
+             "Maximum  : ", paste0(max_seafloor, collapse = ", "), "\n",
              "\n",
-             "Fish population: (length, weight, died_consumption, died_background)\n",
-             "Minimum:\t", paste0(min_fishpop, collapse = ", "), "\n",
-             "Mean:\t\t", paste0(mean_fishpop, collapse = ", "), "\n",
-             "Maximum:\t", paste0(max_fishpop, collapse = ", "), "\n"))
+             "Fishpop  : (length, weight, died_consumption, died_background)\n",
+             "Minimum  : ", paste0(min_fishpop, collapse = ", "), "\n",
+             "Mean     : ", paste0(mean_fishpop, collapse = ", "), "\n",
+             "Maximum  : ", paste0(max_fishpop, collapse = ", "), "\n"))
 
 }
