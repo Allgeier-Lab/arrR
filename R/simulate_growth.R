@@ -22,7 +22,15 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
                             seafloor, seafloor_values, parameters, min_per_i) {
 
   # sample random ordering of individuals
-  fish_id <- sample(x = fish_population$id, size = n_pop)
+  if (n_pop > 1) {
+
+    fish_id <- sample(x = fish_population$id, size = n_pop)
+
+  } else {
+
+    fish_id <- fish_population$id
+
+  }
 
   # get detritus/nutrient pools at location and raster cells
   cell_id <- raster::cellFromXY(object = seafloor,
@@ -35,7 +43,7 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
     fish_id_temp <- fish_id[i]
 
     # create counter for temp cell id
-    cell_id_temp <- cell_id[i];
+    cell_id_temp <- cell_id[i]
 
     # calculate growth in length and weight
     fish_population$growth_length[fish_id_temp] <- parameters$pop_k_grunt *
@@ -53,7 +61,7 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
 
     # Individuals die if the required consumption can not be met by reserves + pool
     if (fish_population$consumption_req[fish_id_temp] >
-        (fish_population$reserves[fish_id_temp] + seafloor_values[cell_id_temp, "detritus_pool"])) {
+        (fish_population$reserves[fish_id_temp] + seafloor_values$detritus_pool[cell_id_temp])) {
 
       # create new individual
       fish_pop_temp <- create_rebirth(fish_population = fish_population[fish_id_temp, ],
