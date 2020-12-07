@@ -18,7 +18,7 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
-    #> Test coverage (local): 83.3 %
+    #> Test coverage (local): 82.75 %
 
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
@@ -116,14 +116,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8379, 0.292, 2.7832, 0
-#> Mean:        6.546, 221.639, 0.2946, 2.8485, 0
-#> Maximum: 7.6011, 228.7236, 0.3198, 2.8584, 0
+#> Minimum: 6.498, 220.7841, 0.2917, 2.7695, 0
+#> Mean:        6.5634, 221.8342, 0.2952, 2.842, 0
+#> Maximum: 7.1234, 229.2413, 0.3233, 2.8545, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 10.9618, 23.4342, 0, 0
-#> Mean:        14.4704, 61.843, 0, 0
-#> Maximum: 20.7095, 175.0635, 0, 0
+#> Minimum: 11.2673, 25.5618, 0, 0
+#> Mean:        16.0816, 89.5783, 0, 0
+#> Maximum: 24.479, 297.0056, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
