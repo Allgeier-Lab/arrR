@@ -22,16 +22,8 @@ simulate_mortality <- function(fish_population, fish_population_track,
                                seafloor, seafloor_values,
                                n_pop, parameters, min_per_i) {
 
-  # sample random ordering of individuals
-  if (n_pop > 1) {
-
-    fish_id <- sample(x = fish_population$id, size = n_pop)
-
-  } else {
-
-    fish_id <- fish_population$id
-
-  }
+  # randomly shuffle fish id
+  fish_id <- sample(x = seq(from = 1, to = n_pop), size = n_pop)
 
   # get detritus/nutrient pools at location and raster cells
   cell_id <- raster::cellFromXY(object = seafloor,

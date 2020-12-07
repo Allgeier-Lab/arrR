@@ -21,18 +21,10 @@
 simulate_growth <- function(fish_population, fish_population_track, n_pop,
                             seafloor, seafloor_values, parameters, min_per_i) {
 
-  # sample random ordering of individuals
-  if (n_pop > 1) {
+  # randomly shuffle fish id
+  fish_id <- sample(x = seq(from = 1, to = n_pop), size = n_pop)
 
-    fish_id <- sample(x = fish_population$id, size = n_pop)
-
-  } else {
-
-    fish_id <- fish_population$id
-
-  }
-
-  # get detritus/nutrient pools at location and raster cells
+  # get cell id of fish
   cell_id <- raster::cellFromXY(object = seafloor,
                                 xy = fish_population[fish_id, c("x", "y")])
 
