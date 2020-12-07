@@ -1,5 +1,6 @@
 # arrR 0.2.4
 * Better memory usage by using mainly Rcpp for core functions
+* Removed pop_max_size and replace with pop_linf_grunt
 
 # arrR 0.2.3
 
