@@ -5,29 +5,29 @@
 \title{simulate_mortality}
 \usage{
 simulate_mortality(
-  fish_population,
-  fish_population_track,
+  fishpop_values,
+  fishpop_track,
   seafloor,
   seafloor_values,
-  n_pop,
+  pop_n,
   parameters,
   min_per_i
 )
 }
 \arguments{
-\item{fish_population, fish_population_track}{Data frame population created
-with \code{\link{setup_fish_population}}.}
+\item{fishpop_values, fishpop_track}{Data frame population created
+with \code{\link{setup_fishpop}}.}
 
-\item{seafloor, seafloor_values}{RasterLayer and data.frame with seafloor values.}
+\item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
 
-\item{n_pop}{Numeric with number of individuals.}
+\item{pop_n}{Numeric with number of individuals.}
 
 \item{parameters}{List with all model parameters.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
-data.frame
+list
 }
 \description{
 Simulate background mortality of population.

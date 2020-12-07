@@ -18,6 +18,8 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
+    #> Test coverage (local): 83.3 %
+
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
 
@@ -84,9 +86,9 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
 #> > Creating seafloor with extent(50, 50)...
 #> > Creating 5 artifical reef cells...
 
-input_fish_population <- setup_fish_population(seafloor = input_seafloor, 
-                                               starting_values = starting_values, 
-                                               parameters = parameters)
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
+                               starting_values = starting_values, 
+                               parameters = parameters)
 #> > Creating 25 individuals within extent(-25, 25, -25, 25)...
 ```
 
@@ -102,7 +104,7 @@ min_per_i <- 120
 max_i <- (60 * 24 * 365 * 1) / min_per_i
 
 result <- run_simulation(seafloor = input_seafloor, 
-                         fish_population = input_fish_population,
+                         fishpop = input_fishpop,
                          parameters = parameters, 
                          reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i,
@@ -114,14 +116,14 @@ result
 #> Results printed: 4380 timestep
 #> 
 #> Seafloor: (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum: 6.498, 220.8665, 0.292, 2.7829, 0
-#> Mean:        6.5438, 221.6974, 0.2948, 2.8467, 0
-#> Maximum: 7.3303, 228.8202, 0.3209, 2.8568, 0
+#> Minimum: 6.498, 220.8379, 0.292, 2.7832, 0
+#> Mean:        6.546, 221.639, 0.2946, 2.8485, 0
+#> Maximum: 7.6011, 228.7236, 0.3198, 2.8584, 0
 #> 
 #> Fish population: (length, weight, died_consumption, died_background)
-#> Minimum: 11.9824, 31.0502, 0, 0
-#> Mean:        14.9722, 70.8525, 0, 0
-#> Maximum: 22.7966, 237.145, 0, 0
+#> Minimum: 10.9618, 23.4342, 0, 0
+#> Mean:        14.4704, 61.843, 0, 0
+#> Maximum: 20.7095, 175.0635, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
@@ -130,7 +132,6 @@ last timestep). It is possible to either plot a single `RasterLayer` or
 the whole `RasterBrick`
 
 ``` r
-
 plot(result, what = "seafloor")
 ```
 

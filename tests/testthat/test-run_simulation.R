@@ -1,3 +1,67 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+parameters <- arrR::read_parameters("parameters.csv", sep = ";")
+
+starting_values <- arrR::read_parameters("starting_values.csv", sep = ";")
+
+# create reef
+reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+                      ncol = 2, byrow = TRUE)
+
+# create input seafloor
+input_seafloor <- arrR::setup_seafloor(extent = c(50, 50), grain =  c(1, 1),
+                                       reefs = reef_matrix,
+                                       starting_values = starting_values,
+                                       random = 0.0)
+
+input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
+                                     starting_values = starting_values,
+                                     parameters = parameters,
+                                     use_log = FALSE)
+
+input_fishpop_log <- arrR::setup_fishpop(seafloor = input_seafloor,
+                                         starting_values = starting_values,
+                                         parameters = parameters,
+                                         use_log = TRUE)
+
+max_i <- 100
+
+min_per_i <- 120
+
+result_rand <- arrR::run_simulation(seafloor = input_seafloor,
+                                    fishpop  = input_fishpop,
+                                    parameters = parameters,
+                                    reef_attraction = FALSE,
+                                    max_i = max_i, min_per_i = min_per_i)
+
+test_that("run_simulation returns rnd_mdl", {
+
+  expect_is(object = result_rand, class = "mdl_rn")
+
+})
+
+test_that("run_simulation contains seafloor and fishpop", {
+
+  expect_equal(object = nrow(result_rand$seafloor),
+               expected = max_i * raster::ncell(input_seafloor) + raster::ncell(input_seafloor))
+
+  expect_equal(object = nrow(result_rand$fishpop),
+               expected = max_i * nrow(input_fishpop) + nrow(input_fishpop))
+
+  expect_equal(object = unique(result_rand$seafloor$timestep),
+               expected = 0:max_i)
+
+  expect_equal(object = unique(result_rand$fishpop$timestep),
+               expected = 0:max_i)
+
+})
+
+test_that("run_simulation contains model run information", {
+
+  expect_equal(object = result_rand$max_i, expected = max_i)
+
+  expect_equal(object = result_rand$min_per_i, expected = min_per_i)
+
+  expect_equal(object = result_rand$extent, expected = raster::extent(input_seafloor))
+
+  expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
+
 })

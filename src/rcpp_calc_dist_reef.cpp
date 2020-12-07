@@ -3,22 +3,21 @@ using namespace Rcpp;
 
 //' rcpp_calc_dist_reef
 //'
-//' @description Internal rcpp function
+//' @description Rcpp calc dist reef
 //'
-//' @param fish_population 2-column matrix with coordinates of individual fish.
-//' @param coords_reef 2-column matrix with coordinates of AR.
-//' @param torus If TRUE the distance will be calculated using a torus.
+//' @param seafloor Matrix with coordinates of cells.
+//' @param coords_reef 2-column Matrix with coordinates of AR.
 //' @param extent Vector with dimension in x and y direction.
+//' @param torus If TRUE the distance will be calculated using a torus.
 //'
 //' @details
-//' Internal function calculate distance to reef cells.
+//' Rcpp implementation to calculate distance to reef cells. Returns vector with
+//' distance for each cell to reef
 //'
-//' @return matrix
+//' @return vector
 //'
 //' @aliases rcpp_calc_dist_reef
 //' @rdname rcpp_calc_dist_reef
-//'
-//' @keywords internal
 //'
 //' @keywords export
 // [[Rcpp::export]]
@@ -27,36 +26,47 @@ Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor,
                                         Rcpp::NumericVector extent,
                                         bool torus = false) {
 
-  int n_cells = seafloor.nrow();
-  int n_reef = coords_reef.nrow();
-  double dist_xy;
 
+  // get dimension of seafloor and reef cells
+  int n_cells = seafloor.nrow();
+
+  int n_reef = coords_reef.nrow();
+
+  // init distance double
+  double dist_xy = 0.0;
+
+  // init vector for distances filled with Inf to make sure first value is smaller
   Rcpp::NumericVector result(n_cells, R_PosInf);
 
+  // loop through all cells
   for (int i = 0; i < n_cells; i++) {
 
+    // loop through all reef cells
     for (int j = 0; j < n_reef; j++) {
 
+      // calculate distance in x direction
       double dist_x = seafloor(i, 0) - coords_reef(j, 0);
 
+      // calculate distance in y direction
       double dist_y = seafloor(i, 1) - coords_reef(j, 1);
 
+      // don't use torus for distance
       if (torus == false) {
 
         dist_xy = std::sqrt(std::pow(dist_x, 2.0) + std::pow(dist_y, 2.0));
 
+      // distance is calculated on torus
       } else {
 
-        dist_x = std::pow(std::min(std::abs(dist_x),
-                                   extent(0) - std::abs(dist_x)), 2.0);
+        dist_x = std::pow(std::min(std::abs(dist_x), extent(0) - std::abs(dist_x)), 2.0);
 
-        dist_y = std::pow(std::min(std::abs(dist_y),
-                                   extent(1) - std::abs(dist_y)), 2.0);
+        dist_y = std::pow(std::min(std::abs(dist_y), extent(1) - std::abs(dist_y)), 2.0);
 
         dist_xy = std::sqrt(dist_x + dist_y);
 
       }
 
+      // check if current distance is smaller than previous smallest distance
       if (dist_xy < result(i)) {
 
         result(i) = dist_xy;

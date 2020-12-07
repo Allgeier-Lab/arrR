@@ -62,7 +62,14 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
     }
 
     # check if matrix with coords is provided
-    if (!inherits(x = reefs, what = "matrix") | ncol(reefs) != 2) {
+    if (!inherits(x = reefs, what = "matrix")) {
+
+      stop("Please provide a 2-column with x,y coordinates of reef cells.",
+           call. = FALSE)
+
+    }
+
+    if (inherits(x = reefs, what = "matrix") & ncol(reefs) != 2) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)

@@ -7,7 +7,7 @@
 simulate_seagrass(seafloor_values, parameters, cells_reef, min_per_i)
 }
 \arguments{
-\item{seafloor_values}{Data.frame with seafloor values.}
+\item{seafloor_values}{Matrix with seafloor values.}
 
 \item{parameters}{List with all model parameters.}
 
@@ -16,7 +16,7 @@ simulate_seagrass(seafloor_values, parameters, cells_reef, min_per_i)
 \item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
-data.frame
+Matrix
 }
 \description{
 Simulate seagrass.

@@ -4,10 +4,10 @@
 \alias{simulate_respiration}
 \title{simulate_respiration}
 \usage{
-simulate_respiration(fish_population, parameters, water_temp, min_per_i)
+simulate_respiration(fishpop_values, parameters, water_temp, min_per_i)
 }
 \arguments{
-\item{fish_population}{Data frame population created with \code{\link{setup_fish_population}}.}
+\item{fishpop_values}{Matrix with population created with \code{\link{setup_fishpop}}.}
 
 \item{parameters}{List with all model parameters.}
 
@@ -16,7 +16,7 @@ simulate_respiration(fish_population, parameters, water_temp, min_per_i)
 \item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
-data.frame
+matrix
 }
 \description{
 Simulate respiration of population.

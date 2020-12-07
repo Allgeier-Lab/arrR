@@ -10,7 +10,7 @@ summarize_results(result)
 \item{result}{mdl_rn object of simulation run.}
 }
 \value{
-data.frame
+list
 }
 \description{
 Summarize results.
