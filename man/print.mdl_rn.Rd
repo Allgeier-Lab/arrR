@@ -4,7 +4,7 @@
 \alias{print.mdl_rn}
 \title{print.mdl_rn}
 \usage{
-\method{print}{mdl_rn}(x, timestep = x$max_i, digits = 4, ...)
+\method{print}{mdl_rn}(x, timestep = x$max_i, digits = 3, ...)
 }
 \arguments{
 \item{x}{mdl_rn object.}

@@ -42,20 +42,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_calc_mineralization
-void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor, double detritus_dead_decomp, double detritus_mineralization);
-RcppExport SEXP _arrR_rcpp_calc_mineralization(SEXP seafloorSEXP, SEXP detritus_dead_decompSEXP, SEXP detritus_mineralizationSEXP) {
+void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor, double detritus_dead_ratio, double detritus_mineralization);
+RcppExport SEXP _arrR_rcpp_calc_mineralization(SEXP seafloorSEXP, SEXP detritus_dead_ratioSEXP, SEXP detritus_mineralizationSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_dead_decomp(detritus_dead_decompSEXP);
+    Rcpp::traits::input_parameter< double >::type detritus_dead_ratio(detritus_dead_ratioSEXP);
     Rcpp::traits::input_parameter< double >::type detritus_mineralization(detritus_mineralizationSEXP);
-    rcpp_calc_mineralization(seafloor, detritus_dead_decomp, detritus_mineralization);
+    rcpp_calc_mineralization(seafloor, detritus_dead_ratio, detritus_mineralization);
     return R_NilValue;
 END_RCPP
 }
 // rcpp_calc_mortality
-void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, double pop_max_size, double pop_n_body, double pop_want_reserves);
-RcppExport SEXP _arrR_rcpp_calc_mortality(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_max_sizeSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP) {
+void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, double pop_linf_grunt, double pop_n_body, double pop_want_reserves);
+RcppExport SEXP _arrR_rcpp_calc_mortality(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linf_gruntSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
@@ -63,10 +63,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type fish_id(fish_idSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type cell_id(cell_idSEXP);
-    Rcpp::traits::input_parameter< double >::type pop_max_size(pop_max_sizeSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_linf_grunt(pop_linf_gruntSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
-    rcpp_calc_mortality(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_max_size, pop_n_body, pop_want_reserves);
+    rcpp_calc_mortality(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf_grunt, pop_n_body, pop_want_reserves);
     return R_NilValue;
 END_RCPP
 }

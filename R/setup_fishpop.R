@@ -47,7 +47,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
     # calculate length and weight
     size <- calc_size(pop_n = n,
                       pop_mean_size = parameters$pop_mean_size,
-                      pop_max_size = parameters$pop_max_size,
+                      pop_linf_grunt = parameters$pop_linf_grunt,
                       pop_var_size = parameters$pop_var_size,
                       pop_a_grunt = parameters$pop_a_grunt,
                       pop_b_grunt = parameters$pop_b_grunt,

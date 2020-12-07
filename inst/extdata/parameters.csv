@@ -11,9 +11,9 @@
 "nutrients_diffusion";0.6
 "detritus_ratio";0.01
 "detritus_mineralization";0.001
+"detritus_dead_ratio";0.6
 "detritus_diffusion";0.3
 "detritus_dead_diffusion";0.3
-"detritus_dead_decomp";0.6
 "pop_mean_size";9
 "pop_var_size";10
 "pop_max_reserves";0.05
@@ -26,7 +26,6 @@
 "pop_k_grunt";0.2
 "pop_linf_grunt";41.6
 "pop_n_body";0.02999
-"pop_max_size";45
 "resp_intercept";0.0108
 "resp_slope";-0.2
 "resp_temp_low";2.1
