@@ -59,9 +59,11 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
       ((fish_population$growth_weight[fish_id_temp] + fish_population$respiration[fish_id_temp] * fish_population$weight[fish_id_temp]) /
          0.55) * parameters$pop_n_body
 
+    # // calculate amount of available resources
+    available_resources <-  (seafloor_values$detritus_pool[cell_id_temp] + fish_population$reserves[fish_id_temp])
+
     # Individuals die if the required consumption can not be met by reserves + pool
-    if (fish_population$consumption_req[fish_id_temp] >
-        (fish_population$reserves[fish_id_temp] + seafloor_values$detritus_pool[cell_id_temp])) {
+    if (fish_population$consumption_req[fish_id_temp] > available_resources) {
 
       # create new individual
       fish_pop_temp <- create_rebirth(fish_population = fish_population[fish_id_temp, ],
