@@ -34,41 +34,48 @@ simulate_mortality <- function(fish_population, fish_population_track,
   # check if mortality occurs
   if (length(mort_id) > 0) {
 
+    # reshuffle values if more than one
+    if (length(mort_id) > 1) {
+
+      mort_id <- sample(x = mort_id, size = length(mort_id))
+
+    }
+
     # get detritus/nutrient pools at location and raster cells
     cell_id <- raster::cellFromXY(object = seafloor,
                                   xy = fish_population[mort_id, c("x", "y")])
 
-    detritus_pool <- seafloor_values$detritus_pool[cell_id]
-
-    detritus_dead <- seafloor_values$detritus_dead[cell_id]
-
     # loop through all dying individuals
-    for (i in 1:length(mort_id)) {
+    for (i in seq_along(mort_id)) {
+
+      # get current IDs
+      mort_id_temp <- mort_id[i]
+
+      cell_id_temp <- cell_id[i]
+
+      # get current seafloor values
+      detritus_pool <- seafloor_values$detritus_pool[cell_id_temp]
+
+      detritus_dead <- seafloor_values$detritus_dead[cell_id_temp]
 
       # create new individual
-      fish_pop_temp <- create_rebirth(fish_population = fish_population[mort_id[i], ],
+      fish_pop_temp <- create_rebirth(fish_population = fish_population[mort_id_temp, ],
                                       fish_population_track = fish_population_track[[1]],
                                       n_body = parameters$pop_n_body,
                                       want_reserves = parameters$pop_want_reserves,
-                                      detritus_pool = detritus_pool[i],
-                                      detritus_dead = detritus_dead[i],
+                                      detritus_pool = detritus_pool,
+                                      detritus_dead = detritus_dead,
                                       reason = "background")
 
       # update data frames
-      fish_population[mort_id[i], ] <- fish_pop_temp$fish_population
+      fish_population[mort_id_temp, ] <- fish_pop_temp$fish_population
 
-      # update detritus
-      detritus_pool[i] <- fish_pop_temp$detritus_pool
+      # update the detritus pool values
+      seafloor_values$detritus_pool[cell_id_temp] <- fish_pop_temp$detritus_pool
 
-      detritus_dead[i] <- fish_pop_temp$detritus_dead
+      seafloor_values$detritus_dead[cell_id_temp] <- fish_pop_temp$detritus_dead
 
     }
-
-    # update the detritus pool values
-    seafloor_values$detritus_pool[cell_id] <- detritus_pool
-
-    seafloor_values$detritus_dead[cell_id] <- detritus_dead
-
   }
 
   return(list(seafloor = seafloor_values, fish_population = fish_population))

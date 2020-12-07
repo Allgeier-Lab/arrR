@@ -29,7 +29,7 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
                                 xy = fish_population[fish_id, c("x", "y")])
 
   # loop through all individuals, because one individual might use all nutrients
-  for (i in 1:length(fish_id)) {
+  for (i in seq_along(fish_id)) {
 
     # create counter for temp fish id
     fish_id_temp <- fish_id[i]
@@ -56,7 +56,7 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
         (fish_population$reserves[fish_id_temp] + seafloor_values[cell_id_temp, "detritus_pool"])) {
 
       # create new individual
-      fish_pop_temp <- create_rebirth(fish_population = fish_population[i, ],
+      fish_pop_temp <- create_rebirth(fish_population = fish_population[fish_id_temp, ],
                                       fish_population_track = fish_population_track[[1]],
                                       n_body = parameters$pop_n_body,
                                       want_reserves = parameters$pop_want_reserves,
@@ -65,7 +65,7 @@ simulate_growth <- function(fish_population, fish_population_track, n_pop,
                                       reason = "consumption")
 
       # update data frames
-      fish_population[i, ] <- fish_pop_temp$fish_population
+      fish_population[fish_id_temp, ] <- fish_pop_temp$fish_population
 
       # update detritus
       seafloor_values$detritus_pool[cell_id_temp] <- fish_pop_temp$detritus_pool
