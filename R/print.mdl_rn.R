@@ -73,9 +73,14 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
 
   }
 
+  # calculate timestep in days rounded
+  total_time <- round(x$max_i * x$min_per_i / 60 / 24, digits = 2)
+
+  save_time <- round(x$save_each * x$min_per_i / 60 / 24, digits = 2)
+
   # print result
-  cat(paste0("Total time : ", i, " timesteps (", x$max_i * x$min_per_i / 60 / 24, " days)\n",
-             "Saved each : ", x$save_each, " timesteps (", x$save_each * x$min_per_i / 60 / 24, " days)\n",
+  cat(paste0("Total time : ", i, " timesteps (", total_time, " days)\n",
+             "Saved each : ", x$save_each, " timesteps (", save_time, " days)\n",
              "Seafloor   : ", x$extent, ", ", nrow(x$coords_reef), " reef cells\n",
              "Fishpop    : ", x$starting_values$pop_n, " individuals\n",
              "\n",
