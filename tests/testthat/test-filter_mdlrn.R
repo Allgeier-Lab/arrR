@@ -34,9 +34,9 @@ result_rand <- arrR::run_simulation(seafloor = input_seafloor,
 
 filter_time <- 50
 
-result_fltr <- filter_result(result = result_rand, timestep = filter_time)
+result_fltr <- filter_mdlrn(result = result_rand, timestep = filter_time)
 
-test_that("filter_result only return until timestep", {
+test_that("filter_mdlrn only return until timestep", {
 
   expect_lt(object = result_fltr$max_i, expected = result_rand$max_i)
 

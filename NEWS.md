@@ -1,3 +1,6 @@
+# arrR 0.2.5
+* Renamed filter_result to filter_mdlrn
+
 # arrR 0.2.4
 * Better memory usage by using mainly Rcpp for core functions
 

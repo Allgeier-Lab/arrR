@@ -1,6 +1,6 @@
-#' filter_result
+#' filter_mdlrn
 #'
-#' @description Filter result.
+#' @description Filter model run results
 #'
 #' @param result mdl_rn object of simulation run.
 #' @param timestep Vector with timesteps to select
@@ -13,11 +13,11 @@
 #' @examples
 #' # Add example code
 #'
-#' @aliases filter_result
-#' @rdname filter_result
+#' @aliases filter_mdlrn
+#' @rdname filter_mdlrn
 #'
 #' @export
-filter_result <- function(result, timestep = max(result$max_i)) {
+filter_mdlrn <- function(result, timestep = max(result$max_i)) {
 
   i <- timestep
 
