@@ -123,6 +123,41 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if additional parameters are present
     add_parameters <- which(!names(parameters) %in% required_parameters)
 
+    # check if respiration temp is above max
+    if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >=
+            parameters$resp_temp_max)) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
+              call. = FALSE)
+
+    }
+
+    # check if min parameter is above maximum parameter
+    if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
+            c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("Minimum biomasses are larger than maximum biomasses.",
+              call. = FALSE)
+
+    }
+
+    # pop_a_grunt must be positive
+    if (parameters$pop_a_grunt < 0) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("'pop_a_grunt' must be positive number.",
+              call. = FALSE)
+
+
+    }
   }
 
   # no parameter values present, add NULL so later TRUE/FALSE is working
@@ -131,18 +166,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     check_parameters <- NULL
 
     add_parameters <- NULL
-
-  }
-
-  # check if respiration temp is above max
-  if (any(c(parameters$resp_temp_low, parameters$resp_temp_optm) >=
-          parameters$resp_temp_max)) {
-
-    # set final flag to false
-    final_flag <- FALSE
-
-    warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
-            call. = FALSE)
 
   }
 
@@ -174,18 +197,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       final_flag <- FALSE
 
       warning("Starting biomasses are smaller than minimum biomasses.",
-              call. = FALSE)
-
-    }
-
-    # check if min parameter is above maximum parameter
-    if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
-            c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
-
-      # set final flag to false
-      final_flag <- FALSE
-
-      warning("Minimum biomasses are larger than maximum biomasses.",
               call. = FALSE)
 
     }

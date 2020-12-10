@@ -175,6 +175,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
   // loop through all seafloor cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
+    // counts how often current i is present in vector with reef cells
     int is_reef = std::count(cells_reef.begin(), cells_reef.end(), i + 1);
 
     // check if current cell is not a reef cell, i.e. count() will be 0
