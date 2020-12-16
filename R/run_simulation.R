@@ -55,6 +55,18 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
+  # check if fishpop is NULL
+  if (is.null(fishpop)) {
+
+    fishpop <- data.frame(id = numeric(), age = numeric(),
+                          x = numeric(), y = numeric(), heading = numeric(),
+                          length = numeric(), weight = numeric(),
+                          reserves = numeric(), reserves_max = numeric(),
+                          activity = numeric(), respiration = numeric(),
+                          died_consumption = numeric(), died_background = numeric())
+
+  }
+
   # convert seafloor and fishpop as matrix
   seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
 
