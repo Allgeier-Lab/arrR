@@ -1,6 +1,7 @@
 # arrR 0.2.5
 * Renamed filter_result to filter_mdlrn
 * Slight changes to print.mdl_rn
+* Rename summarize_result to summarize_mdlrn and allow to select summary fun
 
 # arrR 0.2.4
 * Better memory usage by using mainly Rcpp for core functions

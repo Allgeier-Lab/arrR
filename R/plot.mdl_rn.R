@@ -36,7 +36,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
   if (summarize) {
 
     # summarize results
-    summarised_result <- summarize_results(result = x)
+    summarised_result <- summarize_mdlrn(result = x)
 
     # plot seafloor
     if (what == "seafloor") {
