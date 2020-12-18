@@ -14,8 +14,6 @@
 "detritus_dead_ratio";0.6
 "detritus_diffusion";0.3
 "detritus_dead_diffusion";0.3
-"pop_mean_size";9
-"pop_var_size";10
 "pop_max_reserves";0.05
 "pop_want_reserves";0.01
 "pop_visibility";1

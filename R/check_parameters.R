@@ -31,6 +31,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                          "nutrients_pool",
                          "detritus_pool",
                          "pop_n",
+                         "pop_mean_size",
+                         "pop_var_size",
                          "water_temp")
 
   # specify all required parameters
@@ -49,8 +51,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "detritus_diffusion",
                            "detritus_dead_diffusion",
                            "detritus_dead_ratio",
-                           "pop_mean_size",
-                           "pop_var_size",
                            "pop_max_reserves",
                            "pop_want_reserves",
                            "pop_visibility",
