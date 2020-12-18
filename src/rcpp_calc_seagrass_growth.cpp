@@ -241,12 +241,12 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       // add nutrients to detritus pool
       detritus_pool_temp += total_detritus;
 
-      // # i) bg biomass below threshold, but uptake not enough to keep bg/ag stable
+      // i) bg biomass below threshold, but uptake not enough to keep bg/ag stable
       if ((bg_modf > (1 - bg_thres)) & (total_uptake_g <= total_detritus)) {
 
         bg_biomass_temp += total_uptake_g / 0.0082;
 
-      //ii) bg biomass above threshold, but uptake not enough to keep bg stable
+      // ii) bg biomass above threshold, but uptake not enough to keep bg stable
       } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake_g <= (bg_detritus * 0.0082))) {
 
         bg_biomass_temp += total_uptake_g / 0.0082;
