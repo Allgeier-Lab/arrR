@@ -102,6 +102,7 @@ Rcpp::NumericVector rcpp_check_max_biomass(double bg_biomass, double ag_biomass,
                                            double detritus_pool,
                                            double bg_biomass_max, double ag_biomass_max) {
 
+  // init vector for results
   Rcpp::NumericVector result (3);
 
   // check belowground biomass
@@ -134,7 +135,9 @@ Rcpp::NumericVector rcpp_check_max_biomass(double bg_biomass, double ag_biomass,
 
   // save results to vector
   result(0) = bg_biomass;
+
   result(1) = ag_biomass;
+
   result(2) = detritus_pool;
 
   return(result);
@@ -288,21 +291,14 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
                                                                     detritus_pool_temp,
                                                                     bg_biomass_max, ag_biomass_max);
 
-      // update values
-      bg_biomass_temp = seafloor_checked(0);
-
-      ag_biomass_temp = seafloor_checked(1);
-
-      detritus_pool_temp = seafloor_checked(2);
-
       // update seafloor values of cell
-      seafloor(i, 2) = ag_biomass_temp;
+      seafloor(i, 2) =  seafloor_checked(1);
 
-      seafloor(i, 3) = bg_biomass_temp;
+      seafloor(i, 3) = seafloor_checked(0);
 
       seafloor(i, 4) = nutrients_temp;
 
-      seafloor(i, 5) = detritus_pool_temp;
+      seafloor(i, 5) = seafloor_checked(2);
 
       seafloor(i, 7) = slough_temp;
 
