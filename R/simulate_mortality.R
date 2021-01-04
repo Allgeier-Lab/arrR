@@ -34,7 +34,7 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
                       fishpop_track = fishpop_track,
                       seafloor = seafloor_values,
                       fish_id = fish_id, cell_id = cell_id,
-                      pop_linf_grunt = parameters$pop_linf_grunt,
+                      pop_linf = parameters$pop_linf,
                       pop_n_body = parameters$pop_n_body,
                       pop_want_reserves = parameters$pop_want_reserves)
 

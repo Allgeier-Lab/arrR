@@ -31,7 +31,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_k_grunt,pop_linf_grunt,pop_a_grunt,pop_b_grunt Numeric with parameters.
+#' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 #' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
 #'
 #' @details
@@ -43,8 +43,8 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @rdname rcpp_calc_fishpop_growth
 #'
 #' @export
-rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k_grunt, pop_linf_grunt, pop_a_grunt, pop_b_grunt, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k_grunt, pop_linf_grunt, pop_a_grunt, pop_b_grunt, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
+rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
 }
 
 #' rcpp_calc_mineralization
@@ -74,7 +74,7 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_min
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_linf_grunt,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
 #'
 #' @details
 #' Rcpp implementation to create new individual after mortality event.
@@ -85,8 +85,8 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_min
 #' @rdname rcpp_calc_mortality
 #'
 #' @export
-rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf_grunt, pop_n_body, pop_want_reserves) {
-    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf_grunt, pop_n_body, pop_want_reserves))
+rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves) {
+    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
 }
 
 #' rcpp_calc_respiration

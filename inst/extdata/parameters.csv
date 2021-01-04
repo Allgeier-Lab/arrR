@@ -19,10 +19,10 @@
 "pop_visibility";1
 "pop_mean_move";8
 "pop_var_move";5
-"pop_a_grunt";0.0121
-"pop_b_grunt";3.161
-"pop_k_grunt";0.2
-"pop_linf_grunt";41.6
+"pop_a";0.0121
+"pop_b";3.161
+"pop_k";0.2
+"pop_linf";41.6
 "pop_n_body";0.02999
 "resp_intercept";0.0108
 "resp_slope";-0.2

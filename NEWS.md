@@ -1,3 +1,6 @@
+# arrR 0.2.5.1
+* Renamed all pop_\*_grunt parameters to only pop_\*
+
 # arrR 0.2.5
 * Renamed filter_result to filter_mdlrn
 * Slight changes to print.mdl_rn

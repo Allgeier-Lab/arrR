@@ -56,10 +56,10 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "pop_visibility",
                            "pop_mean_move",
                            "pop_var_move",
-                           "pop_a_grunt",
-                           "pop_b_grunt",
-                           "pop_k_grunt",
-                           "pop_linf_grunt",
+                           "pop_a",
+                           "pop_b",
+                           "pop_k",
+                           "pop_linf",
                            "pop_n_body",
                            "resp_intercept",
                            "resp_slope",
@@ -147,13 +147,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
-    # pop_a_grunt must be positive
-    if (parameters$pop_a_grunt < 0) {
+    # pop_a must be positive
+    if (parameters$pop_a < 0) {
 
       # set final flag to false
       final_flag <- FALSE
 
-      warning("'pop_a_grunt' must be positive number.",
+      warning("'pop_a' must be positive number.",
               call. = FALSE)
 
 
