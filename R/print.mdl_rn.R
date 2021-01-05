@@ -79,10 +79,10 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
   save_time <- round(x$save_each * x$min_per_i / 60 / 24, digits = 2)
 
   # print result
-  cat(paste0("Total time : ", i, " timesteps (", total_time, " days)\n",
-             "Saved each : ", x$save_each, " timesteps (", save_time, " days)\n",
+  cat(paste0("Total time : ", i, " iterations (", total_time, " days) [Burn-in: ", x$burn_in * 100, "%]\n",
+             "Saved each : ", x$save_each, " iterations (", save_time, " days)\n",
              "Seafloor   : ", x$extent, ", ", nrow(x$coords_reef), " reef cells\n",
-             "Fishpop    : ", x$starting_values$pop_n, " individuals\n",
+             "Fishpop    : ", x$starting_values$pop_n, " individuals (reef_attraction: ", x$reef_attraction, ")\n",
              "\n",
              "Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
              "Minimum  : ", paste0(min_seafloor, collapse = ", "), "\n",

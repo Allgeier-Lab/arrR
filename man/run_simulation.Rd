@@ -12,6 +12,7 @@ run_simulation(
   max_i,
   min_per_i,
   save_each = 1,
+  burn_in = 0,
   verbose = TRUE
 )
 }
@@ -29,6 +30,8 @@ run_simulation(
 \item{min_per_i}{Integer to specify minutes per i.}
 
 \item{save_each}{Numeric how often data should be saved to return.}
+
+\item{burn_in}{Numeric with fraction of max_i used to burn in.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

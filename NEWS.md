@@ -1,5 +1,6 @@
 # arrR 0.2.5.1
 * Renamed all pop_\*_grunt parameters to only pop_\*
+* Adding burn-in option for run_simulation
 
 # arrR 0.2.5
 * Renamed filter_result to filter_mdlrn

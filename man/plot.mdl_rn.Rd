@@ -10,6 +10,7 @@
   summarize = FALSE,
   timestep = x$max_i,
   limits = NULL,
+  burn_in = TRUE,
   base_size = 10,
   ...
 )
@@ -24,6 +25,8 @@
 \item{timestep}{Integer to specify which timestep is plotted.}
 
 \item{limits}{Named list with vectors with min and maximum value of values.}
+
+\item{burn_in}{If TRUE, line to indicate burn-in time is plotted.}
 
 \item{base_size}{Numeric to specify base font size.}
 

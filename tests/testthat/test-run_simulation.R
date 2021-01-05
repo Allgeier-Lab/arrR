@@ -30,7 +30,8 @@ result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     fishpop  = input_fishpop,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
-                                    max_i = max_i, min_per_i = min_per_i)
+                                    max_i = max_i, min_per_i = min_per_i,
+                                    burn_in = 0.1)
 
 test_that("run_simulation returns rnd_mdl", {
 
@@ -63,5 +64,35 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand$extent, expected = raster::extent(input_seafloor))
 
   expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
+
+  expect_equal(object = result_rand$reef_attraction, expected = FALSE)
+
+  expect_equal(object = result_rand$burn_in, expected = 0.1)
+
+})
+
+test_that("run_simulation stops if burn_in is out of limits", {
+
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+                                    parameters = parameters,
+                                    reef_attraction = FALSE,
+                                    max_i = max_i, min_per_i = min_per_i, burn_in = 1.1),
+               regexp = "'burn_in' must be 0 < burn_in < 1.")
+
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+                                    parameters = parameters,
+                                    reef_attraction = FALSE,
+                                    max_i = max_i, min_per_i = min_per_i, burn_in = -0.1),
+               regexp = "'burn_in' must be 0 < burn_in < 1.")
+
+})
+
+test_that("run_simulation stops max_i cannot be divided by save_each", {
+
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+                                    parameters = parameters,
+                                    reef_attraction = FALSE,
+                                    max_i = max_i, save_each = 3),
+               regexp = "'max_i' cannot be divided by 'save_each' without rest.")
 
 })

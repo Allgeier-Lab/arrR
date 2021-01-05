@@ -8,6 +8,7 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param burn_in Numeric with fraction of max_i used to burn in.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param verbose If TRUE, progress reports are printed.
 #'
@@ -27,7 +28,7 @@
 #' @export
 run_simulation <- function(seafloor, fishpop,
                            parameters, reef_attraction,
-                           max_i, min_per_i, save_each = 1,
+                           max_i, min_per_i, save_each = 1, burn_in = 0,
                            verbose = TRUE) {
 
   # check parameters
@@ -52,6 +53,12 @@ run_simulation <- function(seafloor, fishpop,
   if (save_each %% 1 != 0) {
 
     stop("'save_each' must be a whole number.", call. = FALSE)
+
+  }
+
+  if (burn_in < 0 | burn_in > 1) {
+
+    stop("'burn_in' must be 0 < burn_in < 1.", call. = FALSE)
 
   }
 
@@ -100,14 +107,19 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
+  # calculate iteration of burn_in
+  burn_in_itr <- max_i * burn_in
+
   # print some basic information about model run
   if (verbose) {
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
-    message("> Population with ", starting_values$pop_n, " individuals.")
+    message("> Population with ", starting_values$pop_n, " individuals [reef_attraction: ", reef_attraction, "].")
 
-    message("> Simulating ", max_i, " simulation iterations; Saving every ", save_each, " iterations.")
+    message("> Simulating ", max_i, " simulation iterations [Burn-in: ", burn_in * 100, "%].")
+
+    message("> Saving each ", save_each, " iterations.")
 
     message("> One simulation iteration equals ", min_per_i, " minutes.")
 
@@ -130,39 +142,43 @@ run_simulation <- function(seafloor, fishpop,
     simulate_mineralization(seafloor_values = seafloor_values,
                             parameters = parameters)
 
-    # simulate fish movement
-    simulate_movement(fishpop_values = fishpop_values,
-                      pop_n = starting_values$pop_n,
-                      seafloor = seafloor$reef,
-                      seafloor_values = seafloor_values,
-                      coords_reef = coords_reef,
-                      extent = extent,
-                      parameters = parameters,
-                      reef_attraction = reef_attraction)
+    if (i > burn_in_itr) {
 
-    # simulate fish respiration (26°C is mean water temperature in the Bahamas)
-    simulate_respiration(fishpop_values = fishpop_values,
+      # simulate fish movement
+      simulate_movement(fishpop_values = fishpop_values,
+                        pop_n = starting_values$pop_n,
+                        seafloor = seafloor$reef,
+                        seafloor_values = seafloor_values,
+                        coords_reef = coords_reef,
+                        extent = extent,
+                        parameters = parameters,
+                        reef_attraction = reef_attraction)
+
+      # simulate fish respiration (26°C is mean water temperature in the Bahamas)
+      simulate_respiration(fishpop_values = fishpop_values,
+                           parameters = parameters,
+                           water_temp = 26,
+                           min_per_i = min_per_i)
+
+      # simulate fishpop growth and including change of seafloor pools
+      simulate_fishpop_growth(fishpop_values = fishpop_values,
+                              fishpop_track = fishpop_track[[1]],
+                              pop_n = starting_values$pop_n,
+                              seafloor = seafloor$reef,
+                              seafloor_values = seafloor_values,
+                              parameters = parameters,
+                              min_per_i = min_per_i)
+
+      # simulate mortality
+      simulate_mortality(fishpop_values = fishpop_values,
+                         fishpop_track = fishpop_track[[1]],
+                         pop_n = starting_values$pop_n,
+                         seafloor = seafloor$reef,
+                         seafloor_values = seafloor_values,
                          parameters = parameters,
-                         water_temp = 26,
                          min_per_i = min_per_i)
 
-    # simulate fishpop growth and including change of seafloor pools
-    simulate_fishpop_growth(fishpop_values = fishpop_values,
-                            fishpop_track = fishpop_track[[1]],
-                            pop_n = starting_values$pop_n,
-                            seafloor = seafloor$reef,
-                            seafloor_values = seafloor_values,
-                            parameters = parameters,
-                            min_per_i = min_per_i)
-
-    # simulate mortality
-    simulate_mortality(fishpop_values = fishpop_values,
-                       fishpop_track = fishpop_track[[1]],
-                       pop_n = starting_values$pop_n,
-                       seafloor = seafloor$reef,
-                       seafloor_values = seafloor_values,
-                       parameters = parameters,
-                       min_per_i = min_per_i)
+    }
 
     # diffuse values between neighbors
     simulate_diffusion(seafloor_values = seafloor_values,
@@ -217,10 +233,18 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
+  # add burn_in col
+  seafloor_track$burn_in <- ifelse(test = seafloor_track$timestep < burn_in_itr,
+                                   yes = "yes", no = "no")
+
+  fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep < burn_in_itr,
+                                  yes = "yes", no = "no")
+
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
-                 max_i = max_i, min_per_i = min_per_i,
+                 reef_attraction = reef_attraction,
+                 max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor),
                  coords_reef = coords_reef)
 

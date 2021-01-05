@@ -7,6 +7,7 @@
 #' @param summarize Character to specify which values of environmental data is used as fill.
 #' @param timestep Integer to specify which timestep is plotted.
 #' @param limits Named list with vectors with min and maximum value of values.
+#' @param burn_in If TRUE, line to indicate burn-in time is plotted.
 #' @param base_size Numeric to specify base font size.
 #' @param ... Not used.
 #'
@@ -20,7 +21,8 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$max_i, limits = NULL,
+plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
+                        timestep = x$max_i, limits = NULL, burn_in = TRUE,
                         base_size = 10, ...) {
 
   i <- timestep
@@ -34,6 +36,12 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
   # plot summarized results
   if (summarize) {
+
+    # calculate iteration of burn_in
+    burn_in_itr <- x$max_i * x$burn_in
+
+    # set color for burn in threshold
+    col_burn <- ifelse(test = burn_in, yes = "grey", no = NA)
 
     # summarize results
     summarised_result <- summarize_mdlrn(result = x)
@@ -49,6 +57,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = ag_biomass,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
@@ -61,6 +70,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = bg_biomass,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
@@ -73,6 +83,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = nutrients_pool,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
@@ -85,6 +96,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = detritus_pool,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
@@ -98,6 +110,12 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
     # plot fish population
     } else if (what == "fishpop") {
 
+      if (!inherits(summarised_result$fishpop, what = "data.frame")) {
+
+        stop("No fishpop was simulated.", call. = FALSE)
+
+      }
+
       # get fish  data
       fishpop <- subset(summarised_result$fishpop,
                         select = c("timestep" ,"summary", "length", "weight",
@@ -105,6 +123,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = fishpop) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = length,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -116,6 +135,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = fishpop) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = weight,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -127,6 +147,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_bottom_left <- ggplot2::ggplot(data = fishpop) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = died_consumption,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -138,6 +159,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
       # create plot
       gg_bottom_right <- ggplot2::ggplot(data = fishpop) +
+        ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
         ggplot2::geom_line(ggplot2::aes(x = timestep, y = died_background,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
@@ -212,6 +234,12 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, timestep = x$ma
 
     # plot fishpopulation
     } else if (what == "fishpop") {
+
+      if (nrow(x$fishpop) == 0) {
+
+        stop("No fishpop was simulated.", call. = FALSE)
+
+      }
 
       # get seafloor data
       fishpop <- get_density(x, timestep = i)
