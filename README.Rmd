@@ -87,9 +87,9 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
                                parameters = parameters)
 ```
 
-To rum a simulation, simply provide the previously created seafloor and population as well as all parameters and starting values the `run_simulation` function. Additionally, you need to specify the number of time steps that are simulated.
+To rum a simulation, simply provide the previously created seafloor and population as well as all parameters to the `run_simulation` function. Additionally, you need to specify the number of time steps that are simulated.
 
-```{r run_sim}
+```{r run_sim, message = FALSE}
 min_per_i <- 120
 
 # run the model for three years
@@ -99,26 +99,17 @@ result <- run_simulation(seafloor = input_seafloor,
                          fishpop = input_fishpop,
                          parameters = parameters, 
                          reef_attraction = TRUE,
-                         max_i = max_i, min_per_i = min_per_i,
-                         verbose = FALSE)
+                         max_i = max_i, min_per_i = min_per_i)
 
 result
 ```
 
-To plot the results, pass the resulting object to the  `plot` function. This will automatically create a plot of the selected timestep (default: last timestep). It is possible to either plot a single `RasterLayer` or the whole `RasterBrick`
+To plot the results, pass the resulting object to the `plot` function. This will automatically create a plot of the selected timestep (default: last timestep). Plotting methods are available for both the seafloor and the fish population using the `what` argument.
 
 ```{r plot, fig.align="center"}
 plot(result, what = "seafloor")
 ```
 
-<!-- The animate the results, pass the resulting object to `animate_result`. This will produce a GIF, but you need the packages `ggplot2`, `gganimate` and `gifski`. -->
-
-<!-- ```{r animate_sim, fig.align="center"} -->
-
-<!-- animate_result(result, fill = "detritus_pool", end_pause = 10) -->
-
-<!-- ```  -->
-
 ### Code of Conduct
 
-Please note that the arrR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the `arrR` project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

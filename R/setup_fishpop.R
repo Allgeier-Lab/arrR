@@ -28,7 +28,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
 
   if (verbose) {
 
-    message("> Creating ", n, " individuals within ", raster::extent(seafloor), "...")
+    message("> ...Creating ", n, " individuals within ", raster::extent(seafloor), "...")
 
   }
 
