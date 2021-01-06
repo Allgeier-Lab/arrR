@@ -142,7 +142,7 @@ run_simulation <- function(seafloor, fishpop,
     simulate_mineralization(seafloor_values = seafloor_values,
                             parameters = parameters)
 
-    if (i > burn_in_itr) {
+    if (i > burn_in_itr & starting_values$pop_n != 0) {
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
