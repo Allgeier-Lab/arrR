@@ -114,21 +114,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_check_max_biomass
-Rcpp::NumericVector rcpp_check_max_biomass(double ag_biomass, double bg_biomass, double detritus_pool, double ag_biomass_max, double bg_biomass_max);
-RcppExport SEXP _arrR_rcpp_check_max_biomass(SEXP ag_biomassSEXP, SEXP bg_biomassSEXP, SEXP detritus_poolSEXP, SEXP ag_biomass_maxSEXP, SEXP bg_biomass_maxSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type ag_biomass(ag_biomassSEXP);
-    Rcpp::traits::input_parameter< double >::type bg_biomass(bg_biomassSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_pool(detritus_poolSEXP);
-    Rcpp::traits::input_parameter< double >::type ag_biomass_max(ag_biomass_maxSEXP);
-    Rcpp::traits::input_parameter< double >::type bg_biomass_max(bg_biomass_maxSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_check_max_biomass(ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_calc_seagrass_growth
 void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef, double bg_v_max, double bg_k_m, double ag_v_max, double ag_k_m, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double detritus_ratio, double bg_thres, double min_per_i);
 RcppExport SEXP _arrR_rcpp_calc_seagrass_growth(SEXP seafloorSEXP, SEXP cells_reefSEXP, SEXP bg_v_maxSEXP, SEXP bg_k_mSEXP, SEXP ag_v_maxSEXP, SEXP ag_k_mSEXP, SEXP bg_biomass_maxSEXP, SEXP bg_biomass_minSEXP, SEXP ag_biomass_maxSEXP, SEXP ag_biomass_minSEXP, SEXP detritus_ratioSEXP, SEXP bg_thresSEXP, SEXP min_per_iSEXP) {
@@ -221,7 +206,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
-    {"_arrR_rcpp_check_max_biomass", (DL_FUNC) &_arrR_rcpp_check_max_biomass, 5},
     {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 13},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},

@@ -77,15 +77,19 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
       // detritus pool is smaller than wanted reserves, detritus pool is fully used
       if (reserves_wanted >= seafloor(cell_id_temp, 5)) {
 
+        // detritus pool is completly used by fish
         fishpop(fish_id_temp, 7) = seafloor(cell_id_temp, 5);
 
+        // set detritus pool to zero
         seafloor(cell_id_temp, 5) = 0;
 
       // detritus pool is larger than what is wanted, so only subset is used
       } else {
 
+        // reserves can be filled completely
         fishpop(fish_id_temp, 7) = reserves_wanted;
 
+        // remove wanted reserves
         seafloor(cell_id_temp, 5) -= reserves_wanted;
 
       }

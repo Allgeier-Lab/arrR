@@ -151,27 +151,6 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
     .Call(`_arrR_rcpp_calc_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
 }
 
-#' rcpp_check_max_biomass
-#'
-#' @description Rcpp check max biomass
-#'
-#' @param bg_biomass,ag_biomass,detritus_pool Numeric with values of cel..
-#' @param bg_biomass_max,ag_biomass_max Parameters with maximum values.
-#'
-#' @details
-#' Rcpp implementation to check if current biomass values are above its max. Returns
-#' vector with (1) bg biomass (2) ag biomass (3) detritus pool.
-#'
-#' @return vector
-#'
-#' @aliases rcpp_check_max_biomass
-#' @rdname rcpp_check_max_biomass
-#'
-#' @keywords export
-rcpp_check_max_biomass <- function(ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max) {
-    .Call(`_arrR_rcpp_check_max_biomass`, ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max)
-}
-
 #' rcpp_calc_seagrass_growth
 #'
 #' @description Rcpp calc seagrass growth
