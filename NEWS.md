@@ -1,6 +1,7 @@
-# arrR 0.2.5.1
+# arrR 0.2.6
 * Renamed all pop_\*_grunt parameters to only pop_\*
 * Adding burn-in option for run_simulation
+* Track production, slough, nutrient uptake cumulative for each cell
 
 # arrR 0.2.5
 * Renamed filter_result to filter_mdlrn

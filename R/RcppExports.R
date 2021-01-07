@@ -168,8 +168,8 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @rdname rcpp_check_max_biomass
 #'
 #' @keywords export
-rcpp_check_max_biomass <- function(bg_biomass, ag_biomass, detritus_pool, bg_biomass_max, ag_biomass_max) {
-    .Call(`_arrR_rcpp_check_max_biomass`, bg_biomass, ag_biomass, detritus_pool, bg_biomass_max, ag_biomass_max)
+rcpp_check_max_biomass <- function(ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max) {
+    .Call(`_arrR_rcpp_check_max_biomass`, ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max)
 }
 
 #' rcpp_calc_seagrass_growth

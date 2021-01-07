@@ -115,17 +115,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_check_max_biomass
-Rcpp::NumericVector rcpp_check_max_biomass(double bg_biomass, double ag_biomass, double detritus_pool, double bg_biomass_max, double ag_biomass_max);
-RcppExport SEXP _arrR_rcpp_check_max_biomass(SEXP bg_biomassSEXP, SEXP ag_biomassSEXP, SEXP detritus_poolSEXP, SEXP bg_biomass_maxSEXP, SEXP ag_biomass_maxSEXP) {
+Rcpp::NumericVector rcpp_check_max_biomass(double ag_biomass, double bg_biomass, double detritus_pool, double ag_biomass_max, double bg_biomass_max);
+RcppExport SEXP _arrR_rcpp_check_max_biomass(SEXP ag_biomassSEXP, SEXP bg_biomassSEXP, SEXP detritus_poolSEXP, SEXP ag_biomass_maxSEXP, SEXP bg_biomass_maxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type bg_biomass(bg_biomassSEXP);
     Rcpp::traits::input_parameter< double >::type ag_biomass(ag_biomassSEXP);
+    Rcpp::traits::input_parameter< double >::type bg_biomass(bg_biomassSEXP);
     Rcpp::traits::input_parameter< double >::type detritus_pool(detritus_poolSEXP);
-    Rcpp::traits::input_parameter< double >::type bg_biomass_max(bg_biomass_maxSEXP);
     Rcpp::traits::input_parameter< double >::type ag_biomass_max(ag_biomass_maxSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_check_max_biomass(bg_biomass, ag_biomass, detritus_pool, bg_biomass_max, ag_biomass_max));
+    Rcpp::traits::input_parameter< double >::type bg_biomass_max(bg_biomass_maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_check_max_biomass(ag_biomass, bg_biomass, detritus_pool, ag_biomass_max, bg_biomass_max));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -5,11 +5,11 @@
 \title{rcpp_check_max_biomass}
 \usage{
 rcpp_check_max_biomass(
-  bg_biomass,
   ag_biomass,
+  bg_biomass,
   detritus_pool,
-  bg_biomass_max,
-  ag_biomass_max
+  ag_biomass_max,
+  bg_biomass_max
 )
 }
 \arguments{
