@@ -92,8 +92,7 @@ run_simulation <- function(seafloor, fishpop,
   extent <- raster::extent(seafloor)
 
   # get cell id of reef cells
-  cells_reef <- raster::Which(seafloor$reef == 1,
-                              cells = TRUE)
+  cells_reef <- which(seafloor_values[, 16] == 1)
 
   # get coordinates of reef cells
   coords_reef <- raster::xyFromCell(object = seafloor$reef,

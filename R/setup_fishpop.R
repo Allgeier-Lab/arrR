@@ -22,7 +22,7 @@
 #'
 #' @export
 setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
-                                  verbose = TRUE) {
+                          verbose = TRUE) {
 
   n <- starting_values$pop_n
 

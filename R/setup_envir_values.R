@@ -45,23 +45,35 @@ setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
 
   detritus_dead <- raster::setValues(x = seafloor, values = 0)
 
-  slough <- raster::setValues(x = seafloor, values = 0)
+  ag_production <- raster::setValues(x = seafloor, values = 0)
+
+  bg_production <- raster::setValues(x = seafloor, values = 0)
+
+  ag_slough <- raster::setValues(x = seafloor, values = 0)
+
+  bg_slough <- raster::setValues(x = seafloor, values = 0)
+
+  ag_uptake <- raster::setValues(x = seafloor, values = 0)
+
+  bg_uptake <- raster::setValues(x = seafloor, values = 0)
 
   consumption <- raster::setValues(x = seafloor, values = 0)
 
   excretion <- raster::setValues(x = seafloor, values = 0)
 
   # combine to one RasterBrick
-  seafloor <- raster::brick(ag_biomass, bg_biomass,
-                            nutrients_pool,
+  seafloor <- raster::brick(ag_biomass, bg_biomass, nutrients_pool,
                             detritus_pool, detritus_dead,
-                            slough, consumption, excretion)
+                            ag_production, bg_production, ag_slough, bg_slough,
+                            ag_uptake, bg_uptake,
+                            consumption, excretion)
 
   # set names
-  names(seafloor) <- c("ag_biomass", "bg_biomass",
-                       "nutrients_pool",
+  names(seafloor) <- c("ag_biomass", "bg_biomass", "nutrients_pool",
                        "detritus_pool", "detritus_dead",
-                       "slough", "consumption", "excretion")
+                       "ag_production", "bg_production", "ag_slough", "bg_slough",
+                       "ag_uptake", "bg_uptake",
+                       "consumption", "excretion")
 
   return(seafloor)
 }

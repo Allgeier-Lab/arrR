@@ -134,7 +134,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         if (reserves_diff <= nutrients_left) {
 
           // save consumption
-          seafloor(cell_id_temp, 8) += (consumption_req + reserves_diff);
+          seafloor(cell_id_temp, 13) += (consumption_req + reserves_diff);
 
           // set reserves to max
           fishpop(fish_id_temp, 7) = fishpop(fish_id_temp, 8);
@@ -146,7 +146,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         } else {
 
           // save consumption
-          seafloor(cell_id_temp, 8) += (consumption_req + nutrients_left);
+          seafloor(cell_id_temp, 13) += (consumption_req + nutrients_left);
 
           // add all nutrients that are left
           fishpop(fish_id_temp, 7) += nutrients_left;
@@ -160,7 +160,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       } else {
 
         // save consumption
-        seafloor(cell_id_temp, 8) += seafloor(cell_id_temp, 8);
+        seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 13);
 
         // reduced reserves
         fishpop(fish_id_temp, 7) -= (consumption_req - seafloor(cell_id_temp, 5));
@@ -174,7 +174,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       double excretion_temp = consumption_req - (growth_weight * pop_n_body);
 
       // save excretion
-      seafloor(cell_id_temp, 9) += excretion_temp;
+      seafloor(cell_id_temp, 14) += excretion_temp;
 
       // add non-used consumption to nutrient pool (excretion)
       seafloor(cell_id_temp, 4) += excretion_temp;
