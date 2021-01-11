@@ -27,7 +27,8 @@ simulate_mortality <- function(fishpop_values, fishpop_track,
 
   # get detritus/nutrient pools at location and raster cells
   cell_id <- raster::cellFromXY(object = seafloor,
-                                xy = fishpop_values[fish_id, c("x", "y"), drop = FALSE])
+                                xy = fishpop_values[fish_id, c("x", "y"),
+                                                    drop = FALSE])
 
   # create new individual
   rcpp_calc_mortality(fishpop = fishpop_values,
