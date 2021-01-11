@@ -244,16 +244,20 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       # get seafloor data
       fishpop <- get_density(x, timestep = i)
 
+      # create title
+      plot_title <- paste0("Total time : ", i, " iterations (",
+                           round(i * x$min_per_i / 60 / 24, 1), " days)",
+                           "\nFishpop    : ", x$starting_values$pop_n,
+                           " indiv (Reef attraction: ", x$reef_attraction, ")")
+
       # create plot
       gg_density <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = density)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
-                                      na.value = "#9B964A", name = "Density [#/cell]") +
+                                      na.value = "#9B964A", name = "Density [#/cell/total time]") +
         ggplot2::coord_equal() +
         ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::labs(title = paste0("Simulation time: ",
-                                     round(i * x$min_per_i / 60 / 24, 1),
-                                     " days\n(Timesteps: ", i, ")")) +
+        ggplot2::labs(title = plot_title) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
       return(gg_density)
@@ -267,11 +271,15 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
     }
   }
 
+  # create title
+  plot_title <- paste0("Total time : ", i, " iterations (",
+                       round(i * x$min_per_i / 60 / 24, 1), " days)",
+                       "\nFishpop    : ", x$starting_values$pop_n,
+                       " indiv (Reef attraction: ", x$reef_attraction, ")")
+
   # now add the title
   title <- cowplot::ggdraw() +
-    cowplot::draw_label(label = paste0("Simulation time: ",
-                                       round(i * x$min_per_i / 60 / 24, 1),
-                                       " days\n(Timesteps: ", i, ")"),
+    cowplot::draw_label(label = plot_title,
                         x = 0, hjust = 0, size = base_size) +
     ggplot2::theme(plot.margin = ggplot2::margin(t = 0, r = 0,
                                                  b = 0, l = 1, "cm"))

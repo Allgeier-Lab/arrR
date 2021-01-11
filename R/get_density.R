@@ -34,9 +34,6 @@ get_density <- function(result, timestep = result$max_i) {
 
   if (nrow(result$fishpop > 0)) {
 
-    # fishpop <- subset(result$fishpop,
-    #                   timestep <= i, select = c("x", "y"))
-
     # count fish within each cell
     ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")],
                                      y = ras_density,
