@@ -1,16 +1,17 @@
 # arrR 0.2.6
 * Renamed all pop_\*_grunt parameters to only pop_\*
-* Adding burn-in option for run_simulation
+* Adding burn-in option to run_simulation
 * Track production, slough, nutrient uptake cumulative for each cell
+* `summarize_mdlrn` returns `burn_in` column
 
 # arrR 0.2.5
-* Renamed filter_result to filter_mdlrn
-* Slight changes to print.mdl_rn
-* Rename summarize_result to summarize_mdlrn and allow to select summary fun
+* Renamed filter_result to `filter_mdlrn`
+* Slight changes to `print.mdl_rn`
+* Rename `summarize_result` to `summarize_mdlrn` and allow to select summary fun
 
 # arrR 0.2.4
 * Better memory usage by using mainly Rcpp for core functions
-* Removed pop_max_size and replace with pop_linf_grunt
+* Removed `pop_max_size` and replace with `pop_linf_grunt`
 
 # arrR 0.2.3
 

@@ -23,6 +23,9 @@ summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
   # get timesteps
   timestep_seafloor <- result$seafloor$timestep
 
+  # calculate iteration of burn_in
+  burn_in_itr <- result$max_i * result$burn_in
+
   # get cols to summarise
   seafloor <- subset(result$seafloor, select = c("ag_biomass", "bg_biomass",
                                                  "nutrients_pool", "detritus_pool",
@@ -32,12 +35,17 @@ summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
 
     stats::aggregate(x = seafloor, by = list(timestep = timestep_seafloor),
                      FUN = i, na.rm = TRUE)
+
   })
 
   seafloor <- do.call(what = "rbind", args = seafloor)
 
   seafloor$summary <- rep(x = summary,
                           each = nrow(seafloor) / length(summary))
+
+  # add burn_in col
+  seafloor$burn_in <- ifelse(test = seafloor$timestep < burn_in_itr,
+                             yes = "yes", no = "no")
 
   if (nrow(result$fishpop > 0)) {
 
@@ -59,6 +67,10 @@ summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
 
     fishpop$summary <- rep(x = summary,
                            each = nrow(fishpop) / length(summary))
+
+    # add burn_in col
+    fishpop$burn_in <- ifelse(test = fishpop$timestep < burn_in_itr,
+                              yes = "yes", no = "no")
 
   # no fish present
   } else {
