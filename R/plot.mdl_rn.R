@@ -25,15 +25,6 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                         timestep = x$max_i, limits = NULL, burn_in = TRUE,
                         base_size = 10, ...) {
 
-  i <- timestep
-
-  # check if i can be divided by save_each without reminder
-  if (i %% x$save_each != 0) {
-
-    stop("'timestep' was not saved during model run.",
-         call. = FALSE)
-  }
-
   # plot summarized results
   if (summarize) {
 
@@ -48,6 +39,9 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
 
     # plot seafloor
     if (what == "seafloor") {
+
+      # get max_i of summarized
+      i <- max(summarised_result$seafloor$timestep)
 
       # get seafloor data
       seafloor <- subset(summarised_result$seafloor,
@@ -121,6 +115,9 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                         select = c("timestep" ,"summary", "length", "weight",
                                    "died_consumption", "died_background"))
 
+      # get max_i of summarized
+      i <- max(summarised_result$seafloor$timestep)
+
       # create plot
       gg_top_left <- ggplot2::ggplot(data = fishpop) +
         ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
@@ -179,6 +176,15 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
 
   # plot map
   } else {
+
+    i <- timestep
+
+    # check if i can be divided by save_each without reminder
+    if (i %% x$save_each != 0) {
+
+      stop("'timestep' was not saved during model run.",
+           call. = FALSE)
+    }
 
     if (what == "seafloor") {
 
