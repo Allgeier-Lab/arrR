@@ -40,7 +40,7 @@ The goal of *arrR* is to simulate seagrass growth around artificial reefs.
 
 ## Installation
 
-You can install arrR from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. You will need the `auth_token` because the repository is currently set to private so only members of the Allgeier Lab can see it. **PLEASE DON'T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW FIRST**.
+You can install *arrR* from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. You will need the `auth_token` because the repository is currently set to private so only members of the Allgeier Lab can see it. **PLEASE DON'T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW FIRST**.
 
 ```{r install, eval = FALSE}
 remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
@@ -112,4 +112,4 @@ plot(result, what = "seafloor")
 
 ### Code of Conduct
 
-Please note that the `arrR` project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the *arrR* project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
