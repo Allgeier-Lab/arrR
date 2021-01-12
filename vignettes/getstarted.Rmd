@@ -1,8 +1,8 @@
 ---
-title: "Get started"
+title: "2. Get started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get started}
+  %\VignetteIndexEntry{2. Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,3 +17,8 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(arrR)
 ```
+
+- Parameters and starting values
+- Setup everything
+- Run model 
+- Look at results

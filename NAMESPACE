@@ -3,7 +3,6 @@
 S3method(plot,mdl_rn)
 S3method(print,mdl_rn)
 export(calc_size)
-export(check_max_biomass)
 export(check_parameters)
 export(filter_mdlrn)
 export(get_density)
