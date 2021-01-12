@@ -1,3 +1,7 @@
+# arrR 0.2.7
+* add default parameters and starting values as data
+* add structure for vignettes
+
 # arrR 0.2.6
 * Renamed all pop_\*_grunt parameters to only pop_\*
 * Adding burn-in option to run_simulation

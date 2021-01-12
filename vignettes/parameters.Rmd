@@ -1,0 +1,21 @@
+---
+title: "Starting values and parameters"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Starting values and parameters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(arrR)
+```
+
+Information about parameters.
