@@ -18,7 +18,7 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
-    #> Test coverage (local): 81.33 %
+    #> Test coverage (local): 82.49 %
 
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
@@ -58,11 +58,9 @@ the actual values.
 To check if all parameters are available, use `check_parameters`.
 
 ``` r
-starting_values <- system.file("extdata", "starting_values.csv", package = "arrR")
-parameters <- system.file("extdata", "parameters.csv", package = "arrR")
+starting_values <- arrR::default_starting_values
 
-starting_values <- read_parameters(file = starting_values, sep = ";")
-parameters <- read_parameters(file = parameters, sep = ";")
+parameters <- arrR::default_parameters
 
 check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
@@ -117,14 +115,14 @@ result
 #> Fishpop    : 25 indiv (reef_attraction: TRUE)
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum  : 6.498, 220.815, 0.292, 2.778, 0
-#> Mean     : 6.562, 221.69, 0.295, 2.847, 0
-#> Maximum  : 7.627, 228.992, 0.323, 2.858, 0
+#> Minimum  : 6.644, 233.472, 0.005, 0.376, 0
+#> Mean     : 6.644, 246.281, 0.008, 0.463, 0
+#> Maximum  : 6.644, 302.918, 0.028, 0.497, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 10.83, 22.556, 0, 0
-#> Mean     : 14.751, 70.134, 0, 0
-#> Maximum  : 23.988, 278.569, 0, 0
+#> Minimum  : 10.822, 22.502, 0, 0
+#> Mean     : 14.899, 71.792, 0, 0
+#> Maximum  : 22.583, 230.189, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
