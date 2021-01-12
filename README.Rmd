@@ -63,8 +63,8 @@ To check if all parameters are available, use `check_parameters`.
 
 
 ```{r check_parameters}
-starting_values <- system.file("extdata", "starting_values.csv", package = "arrR")
-parameters <- system.file("extdata", "parameters.csv", package = "arrR")
+starting_values <- arrR::default_starting_values
+parameters <- arrR::default_parameters
 
 starting_values <- read_parameters(file = starting_values, sep = ";")
 parameters <- read_parameters(file = parameters, sep = ";")
