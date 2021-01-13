@@ -17,7 +17,7 @@ Description: The goal of arrR is to simulate seagrass growth around artificial r
 License: MIT + file LICENSE
 URL: https://github.com/Allgeier-Lab/arrR
 BugReports: https://github.com/Allgeier-Lab/arrR/issues
-Depends: R (>= 3.1)
+Depends: R (>= 3.5.0)
 Imports:
     cowplot,
     ggplot2,
@@ -30,7 +30,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Suggests: 
+    dplyr,
     testthat,
+    kableExtra,
     knitr,
     rmarkdown
 LinkingTo: 

@@ -3,8 +3,10 @@ title: "2. Get started"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{2. Get started}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -14,11 +16,118 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+Please see the [General background](background.html) vignette for a general overview of `arrR`.
+
+## How to use `arrR`
+
+```{r setup, message = FALSE, warning = FALSE}
 library(arrR)
+library(dplyr)
+library(ggplot2)
 ```
 
-- Parameters and starting values
-- Setup everything
-- Run model 
-- Look at results
+You can always use `?` in front of a function to see the help page. For many functions, there are additionally options you can specify which are not necessarily explained here.
+
+### 1. Import and change starting values and parameters
+
+After you installed and loaded the package, you can access default/exemplary starting values and parameters of the model. Since both objects are simply named lists, you can easily change certain parameters. If you pass the objects to `check_parameters`, the function will check if all required values are available.
+
+```{r check_parameters}
+# get starting values
+starting_values <- arrR::default_starting_values
+
+# get paramters
+parameters <- arrR::default_parameters
+
+# change some starting values and parameters
+starting_values$pop_n <- 50
+
+parameters$detritus_dead_ratio <- 0.75
+
+# check if all parameters are present and meaningful (to a degree...)
+check_parameters(starting_values = starting_values, parameters = parameters)
+```
+
+Of course, you can import or create the starting values and parameter list completely from scratch as long as they are two named lists containing all required values.
+
+### 2. Setup seafloor and fish population
+
+Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs, simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate (0,0).
+
+```{r setup_inputs}
+# create 5 reef cells in center of seafloor
+reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
+                      ncol = 2, byrow = TRUE)
+
+# create seafloor
+input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, 
+                                 reefs = reef_matrix, 
+                                 starting_values = starting_values)
+
+# create fishpop
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
+                               starting_values = starting_values, 
+                               parameters = parameters)
+```
+
+### 3. Run the model
+
+The `run_simulation` functions starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations, called timesteps here).
+
+```{r run_simulation, message = FALSE}
+# set time per iterations
+min_per_i <- 120
+
+# run the model for three years
+years <- 3
+
+max_i <- (60 * 24 * 365 * years) / min_per_i
+
+# save results only every 15 days
+days <- 15
+
+save_each <- (24 / (min_per_i / 60)) * days
+
+result <- run_simulation(seafloor = input_seafloor, 
+                         fishpop = input_fishpop,
+                         parameters = parameters, 
+                         reef_attraction = TRUE,
+                         max_i = max_i, min_per_i = min_per_i, 
+                         save_each = save_each)
+```
+
+### 4. Look at model results
+
+You can get a first glance and the results simply printing the model output. This gives you some summary statistics at the last timesteps of the model.
+
+```{r print_result}
+# print model results
+result
+```
+
+The returning object is simply a list, so analyzing the results yourself should be pretty straightforward. Simply access the data you need. 
+
+```{r access_result, fig.align = "center"}
+# show all elements of result list
+names(result)
+
+# show e.g. result for fish population
+head(result$fishpop)
+
+# get results of fish population of the final timestep and plot weight ~ length
+(final_fishpop <- dplyr::filter(result$fishpop, timestep == max_i) %>% 
+  ggplot2::ggplot(ggplot2::aes(x = length, y = weight)) + 
+    ggplot2::geom_point(shape = 1) + 
+    ggplot2::geom_smooth(method = "lm", formula =  "y ~ x", size = 0.5) +
+    ggplot2::labs(x = "Length [cm]", y = "Weight [g]") +
+    ggplot2::theme_classic())
+
+```
+
+Lastly, you can plot the results. Make also sure to check out the `summarize` argument of the plot function. 
+
+```{r plot_result, eval = FALSE}
+# plot map of seafloor
+plot(result, what = "seafloor")
+```
+
