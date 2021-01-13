@@ -18,7 +18,7 @@ MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.or
 
 <!-- badges: end -->
 
-    #> Test coverage (local): 82.49 %
+    #> Test coverage (local): 82.78 %
 
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
@@ -91,7 +91,7 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
 #> > ...Creating 25 individuals within extent(-25, 25, -25, 25)...
 ```
 
-To rum a simulation, simply provide the previously created seafloor and
+To run a simulation, simply provide the previously created seafloor and
 population as well as all parameters to the `run_simulation` function.
 Additionally, you need to specify the number of time steps that are
 simulated.
@@ -115,14 +115,14 @@ result
 #> Fishpop    : 25 indiv (reef_attraction: TRUE)
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum  : 6.644, 233.472, 0.005, 0.376, 0
-#> Mean     : 6.644, 246.281, 0.008, 0.463, 0
-#> Maximum  : 6.644, 302.918, 0.028, 0.497, 0
+#> Minimum  : 6.644, 233.603, 0.005, 0.352, 0
+#> Mean     : 6.644, 248.382, 0.008, 0.443, 0
+#> Maximum  : 6.644, 313.514, 0.026, 0.482, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 10.822, 22.502, 0, 0
-#> Mean     : 14.899, 71.792, 0, 0
-#> Maximum  : 22.583, 230.189, 0, 0
+#> Minimum  : 10.6, 21.074, 0, 0
+#> Mean     : 15.589, 83.562, 0, 0
+#> Maximum  : 23.916, 275.926, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
