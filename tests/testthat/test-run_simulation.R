@@ -1,6 +1,7 @@
-parameters <- arrR::read_parameters("parameters.csv", sep = ";")
+# get parameters
+parameters <- arrR::default_parameters
 
-starting_values <- arrR::read_parameters("starting_values.csv", sep = ";")
+starting_values <- arrR::default_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -31,7 +32,7 @@ result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
                                     max_i = max_i, min_per_i = min_per_i,
-                                    burn_in = 0.1)
+                                    burn_in = 10)
 
 test_that("run_simulation returns rnd_mdl", {
 
@@ -67,23 +68,18 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = result_rand$reef_attraction, expected = FALSE)
 
-  expect_equal(object = result_rand$burn_in, expected = 0.1)
+  expect_equal(object = result_rand$burn_in, expected = 10)
 
 })
 
 test_that("run_simulation stops if burn_in is out of limits", {
 
-  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+  expect_warning(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
-                                    max_i = max_i, min_per_i = min_per_i, burn_in = 1.1),
-               regexp = "'burn_in' must be 0 < burn_in < 1.")
-
-  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
-                                    parameters = parameters,
-                                    reef_attraction = FALSE,
-                                    max_i = max_i, min_per_i = min_per_i, burn_in = -0.1),
-               regexp = "'burn_in' must be 0 < burn_in < 1.")
+                                    max_i = max_i, min_per_i = min_per_i,
+                                    burn_in = max_i + 1),
+                 regexp = "'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.")
 
 })
 

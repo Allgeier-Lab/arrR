@@ -28,11 +28,10 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   # plot summarized results
   if (summarize) {
 
-    # calculate iteration of burn_in
-    burn_in_itr <- x$max_i * x$burn_in
-
     # set color for burn in threshold
     col_burn <- ifelse(test = burn_in, yes = "grey", no = NA)
+
+    burn_in_itr <- x$burn_in
 
     # summarize results
     summarised_result <- summarize_mdlrn(result = x)

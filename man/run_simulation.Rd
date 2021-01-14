@@ -25,13 +25,13 @@ run_simulation(
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
-\item{max_i}{Integer with maximum number of simulation time steps.}
+\item{max_i}{Integer with maximum number of simulation timesteps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 
 \item{save_each}{Numeric how often data should be saved to return.}
 
-\item{burn_in}{Numeric with fraction of max_i used to burn in.}
+\item{burn_in}{Numeric with timesteps used to burn in.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

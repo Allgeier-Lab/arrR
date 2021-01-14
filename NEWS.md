@@ -1,6 +1,7 @@
 # arrR 0.2.7
 * add default parameters and starting values as data
 * add structure for vignettes
+* Use absolute iterations for burn-in
 
 # arrR 0.2.6
 * Renamed all pop_\*_grunt parameters to only pop_\*

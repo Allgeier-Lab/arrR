@@ -6,9 +6,9 @@
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
-#' @param max_i Integer with maximum number of simulation time steps.
+#' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
-#' @param burn_in Numeric with fraction of max_i used to burn in.
+#' @param burn_in Numeric with timesteps used to burn in.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param verbose If TRUE, progress reports are printed.
 #'
@@ -56,9 +56,9 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
-  if (burn_in < 0 | burn_in > 1) {
+  if (burn_in >= max_i | burn_in < 0) {
 
-    stop("'burn_in' must be 0 < burn_in < 1.", call. = FALSE)
+    warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.", call. = FALSE)
 
   }
 
@@ -106,9 +106,6 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
-  # calculate iteration of burn_in
-  burn_in_itr <- max_i * burn_in
-
   # print some basic information about model run
   if (verbose) {
 
@@ -116,7 +113,7 @@ run_simulation <- function(seafloor, fishpop,
 
     message("> Population with ", starting_values$pop_n, " individuals [reef_attraction: ", reef_attraction, "].")
 
-    message("> Simulating ", max_i, " simulation iterations [Burn-in: ", burn_in * 100, "%].")
+    message("> Simulating ", max_i, " simulation iterations [Burn-in: ", burn_in, " iter.].")
 
     message("> Saving each ", save_each, " iterations.")
 
@@ -141,7 +138,7 @@ run_simulation <- function(seafloor, fishpop,
     simulate_mineralization(seafloor_values = seafloor_values,
                             parameters = parameters)
 
-    if (i > burn_in_itr & starting_values$pop_n != 0) {
+    if (i > burn_in & starting_values$pop_n != 0) {
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
@@ -233,10 +230,10 @@ run_simulation <- function(seafloor, fishpop,
   }
 
   # add burn_in col
-  seafloor_track$burn_in <- ifelse(test = seafloor_track$timestep < burn_in_itr,
+  seafloor_track$burn_in <- ifelse(test = seafloor_track$timestep < burn_in,
                                    yes = "yes", no = "no")
 
-  fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep < burn_in_itr,
+  fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep < burn_in,
                                   yes = "yes", no = "no")
 
   # combine result to list
