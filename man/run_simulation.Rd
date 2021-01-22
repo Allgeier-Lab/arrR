@@ -13,6 +13,7 @@ run_simulation(
   min_per_i,
   save_each = 1,
   burn_in = 0,
+  return_burnin = TRUE,
   verbose = TRUE
 )
 }
@@ -32,6 +33,8 @@ run_simulation(
 \item{save_each}{Numeric how often data should be saved to return.}
 
 \item{burn_in}{Numeric with timesteps used to burn in.}
+
+\item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

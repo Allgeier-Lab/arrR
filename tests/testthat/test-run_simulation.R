@@ -72,9 +72,23 @@ test_that("run_simulation contains model run information", {
 
 })
 
+test_that("run_simulation does not return burn_in", {
+
+  result <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                 parameters = parameters,
+                                 reef_attraction = FALSE,
+                                 max_i = max_i, min_per_i = min_per_i,
+                                 burn_in = 20, return_burnin = FALSE)
+
+  expect_true(object = min(result$seafloor$timestep) == result$burn_in)
+
+  expect_true(object = min(result$fishpop$timestep) == result$burn_in)
+
+})
+
 test_that("run_simulation stops if burn_in is out of limits", {
 
-  expect_warning(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+  expect_warning(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
                                     max_i = max_i, min_per_i = min_per_i,
@@ -85,7 +99,7 @@ test_that("run_simulation stops if burn_in is out of limits", {
 
 test_that("run_simulation stops max_i cannot be divided by save_each", {
 
-  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
                                     max_i = max_i, save_each = 3),

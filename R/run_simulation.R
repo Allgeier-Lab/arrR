@@ -9,6 +9,7 @@
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param burn_in Numeric with timesteps used to burn in.
+#' @param return_burnin If FALSE all timesteps < burn_in are not returned.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param verbose If TRUE, progress reports are printed.
 #'
@@ -28,7 +29,7 @@
 #' @export
 run_simulation <- function(seafloor, fishpop,
                            parameters, reef_attraction,
-                           max_i, min_per_i, save_each = 1, burn_in = 0,
+                           max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
                            verbose = TRUE) {
 
   # check parameters
@@ -235,6 +236,15 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep < burn_in,
                                   yes = "yes", no = "no")
+
+  # remove all burn_in values
+  if (!return_burnin) {
+
+    seafloor_track <- seafloor_track[seafloor_track$burn_in == "no", ]
+
+    fishpop_track <- fishpop_track[fishpop_track$burn_in == "no", ]
+
+  }
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
