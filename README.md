@@ -9,16 +9,14 @@
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- badges: end -->
 
-    #> Test coverage (local): 81.78 %
+<img src="man/figures/logo.png" align="right" width="150" />
 
 The goal of *arrR* is to simulate seagrass growth around artificial
 reefs.
@@ -115,14 +113,14 @@ result
 #> Fishpop    : 25 indiv (reef_attraction: TRUE)
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum  : 6.644, 238.891, 0.005, 0.341, 0
-#> Mean     : 6.644, 254.575, 0.009, 0.439, 0
-#> Maximum  : 6.644, 323.486, 0.027, 0.48, 0
+#> Minimum  : 6.644, 238.471, 0.005, 0.382, 0
+#> Mean     : 6.644, 251.955, 0.008, 0.463, 0
+#> Maximum  : 6.644, 312.164, 0.022, 0.499, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 12.112, 32.121, 0, 0
-#> Mean     : 16.283, 90.523, 0, 0
-#> Maximum  : 21.81, 206.191, 0, 0
+#> Minimum  : 10.815, 22.459, 0, 0
+#> Mean     : 15.184, 76.474, 0, 0
+#> Maximum  : 23.148, 248.909, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
