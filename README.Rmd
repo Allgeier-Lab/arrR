@@ -21,20 +21,12 @@ knitr::opts_chunk$set(
 
 [![Project Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-
 [![R build status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <!-- badges: end -->
 
-```{r coverage, echo = FALSE}
-library(covr)
-
-coverage_local <- covr::package_coverage(".")
-
-cat("Test coverage (local):", round(covr::percent_coverage(coverage_local), digits = 2), "%")
-```
+<img src="man/figures/logo.png" align="right" width="150" />
 
 The goal of *arrR* is to simulate seagrass growth around artificial reefs.
 
