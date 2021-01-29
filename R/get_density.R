@@ -50,7 +50,7 @@ get_density <- function(result, timestep = result$max_i) {
 
   } else {
 
-    # conver to dataframe
+    # convert to dataframe
     ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
 
     # set density to 0
