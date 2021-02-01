@@ -14,6 +14,7 @@ run_simulation(
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
+  extract = NULL,
   verbose = TRUE
 )
 }
@@ -35,6 +36,8 @@ run_simulation(
 \item{burn_in}{Numeric with timesteps used to burn in.}
 
 \item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
+
+\item{extract}{Character to specify if only seafloor or fishpop should be returned as data.frame}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

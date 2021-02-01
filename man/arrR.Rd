@@ -29,6 +29,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Samantha Iliff \email{siliff@umich.edu} [illustrator]
   \item Jacob E. Allgeier \email{jeallg@umich.edu} [research team head]
 }
 
