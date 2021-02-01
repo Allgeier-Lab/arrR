@@ -8,9 +8,10 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param save_each Numeric how often data should be saved to return.
 #' @param burn_in Numeric with timesteps used to burn in.
 #' @param return_burnin If FALSE all timesteps < burn_in are not returned.
-#' @param save_each Numeric how often data should be saved to return.
+#' @param extract Character to specify if only seafloor or fishpop should be returned as data.frame
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
@@ -30,7 +31,7 @@
 run_simulation <- function(seafloor, fishpop,
                            parameters, reef_attraction,
                            max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           verbose = TRUE) {
+                           extract = NULL, verbose = TRUE) {
 
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
@@ -256,6 +257,19 @@ run_simulation <- function(seafloor, fishpop,
 
   # set class of result
   class(result) <- "mdl_rn"
+
+  # return only extract if != NULL
+  if (!is.null(extract)) {
+
+    if (verbose) {
+
+      message("> ...Extract ", extract, " only...")
+
+    }
+
+    result <- extract_result(result = result, extract = extract)
+
+  }
 
   # new line after last progress message
   if (verbose) {

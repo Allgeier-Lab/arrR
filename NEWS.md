@@ -1,6 +1,10 @@
+# arrR 0.2.8
+* Add hexlogo
+* Add `extract_result` function and `extract` argument to `run_simulation`
+
 # arrR 0.2.7
-* add default parameters and starting values as data
-* add structure for vignettes
+* Add default parameters and starting values as data
+* Add structure for vignettes
 * Use absolute iterations for burn-in
 * Add `return_burnin` argument to `run_simulation`
 
@@ -20,28 +24,23 @@
 * Removed `pop_max_size` and replace with `pop_linf_grunt`
 
 # arrR 0.2.3
-
 * Add GitHub actions
 * Resulting object contains parameters and starting values
 * `get_limits` can return limits over time period
 * `plot.mdl_rn` also takes limits if `summarize = TRUE` for seafloor
 
 # arrR 0.2.2
-
 * Better plotting labels
 * Renamed `parameters$detritus_decomposition` to `parameter$detritus_mineralization`
 
 # arrR 0.2.1
-
 * Reworked seagrass growth
 * Rename package to `arrR`
 * Add `pkgdown` homepage
 
 # arrR 0.2.0
-
 * Speed and RAM improvements of many function
-* Including Rcpp
+* Including `Rcpp`
 
 # arrR 0.1.0
-
 * First re-implementation of model code
