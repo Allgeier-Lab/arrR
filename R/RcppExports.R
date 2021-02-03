@@ -157,7 +157,7 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #'
 #' @param seafloor Matrix with seafloor values.
 #' @param cells_reef Vector with id of reef cells.
-#' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Numeric with uptake parameters.
+#' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 #' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
 #' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
 #'
@@ -170,8 +170,8 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @rdname rcpp_calc_seagrass_growth
 #'
 #' @keywords export
-rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
+rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
 }
 
 #' rcpp_diffuse_values

@@ -62,3 +62,10 @@ test_that("get_limits returns min and max", {
              expected = limits_list$detritus_pool[2])
 
 })
+
+test_that("get_limits returns error", {
+
+  expect_error(object = get_limits(result = list(c(1:5), c(5:10))),
+               regexp = "Please prove mdl_rn object createt with run_simulation.")
+
+})

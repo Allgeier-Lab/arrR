@@ -115,16 +115,18 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_calc_seagrass_growth
-void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef, double bg_v_max, double bg_k_m, double ag_v_max, double ag_k_m, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double detritus_ratio, double bg_thres, double min_per_i);
-RcppExport SEXP _arrR_rcpp_calc_seagrass_growth(SEXP seafloorSEXP, SEXP cells_reefSEXP, SEXP bg_v_maxSEXP, SEXP bg_k_mSEXP, SEXP ag_v_maxSEXP, SEXP ag_k_mSEXP, SEXP bg_biomass_maxSEXP, SEXP bg_biomass_minSEXP, SEXP ag_biomass_maxSEXP, SEXP ag_biomass_minSEXP, SEXP detritus_ratioSEXP, SEXP bg_thresSEXP, SEXP min_per_iSEXP) {
+void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double detritus_ratio, double bg_thres, double min_per_i);
+RcppExport SEXP _arrR_rcpp_calc_seagrass_growth(SEXP seafloorSEXP, SEXP cells_reefSEXP, SEXP bg_v_maxSEXP, SEXP bg_k_mSEXP, SEXP bg_gammaSEXP, SEXP ag_v_maxSEXP, SEXP ag_k_mSEXP, SEXP ag_gammaSEXP, SEXP bg_biomass_maxSEXP, SEXP bg_biomass_minSEXP, SEXP ag_biomass_maxSEXP, SEXP ag_biomass_minSEXP, SEXP detritus_ratioSEXP, SEXP bg_thresSEXP, SEXP min_per_iSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type cells_reef(cells_reefSEXP);
     Rcpp::traits::input_parameter< double >::type bg_v_max(bg_v_maxSEXP);
     Rcpp::traits::input_parameter< double >::type bg_k_m(bg_k_mSEXP);
+    Rcpp::traits::input_parameter< double >::type bg_gamma(bg_gammaSEXP);
     Rcpp::traits::input_parameter< double >::type ag_v_max(ag_v_maxSEXP);
     Rcpp::traits::input_parameter< double >::type ag_k_m(ag_k_mSEXP);
+    Rcpp::traits::input_parameter< double >::type ag_gamma(ag_gammaSEXP);
     Rcpp::traits::input_parameter< double >::type bg_biomass_max(bg_biomass_maxSEXP);
     Rcpp::traits::input_parameter< double >::type bg_biomass_min(bg_biomass_minSEXP);
     Rcpp::traits::input_parameter< double >::type ag_biomass_max(ag_biomass_maxSEXP);
@@ -132,7 +134,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type detritus_ratio(detritus_ratioSEXP);
     Rcpp::traits::input_parameter< double >::type bg_thres(bg_thresSEXP);
     Rcpp::traits::input_parameter< double >::type min_per_i(min_per_iSEXP);
-    rcpp_calc_seagrass_growth(seafloor, cells_reef, bg_v_max, bg_k_m, ag_v_max, ag_k_m, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i);
+    rcpp_calc_seagrass_growth(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i);
     return R_NilValue;
 END_RCPP
 }
@@ -206,7 +208,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
-    {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 13},
+    {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 15},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},

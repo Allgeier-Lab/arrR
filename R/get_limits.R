@@ -21,6 +21,16 @@
 #' @export
 get_limits <- function(result, timestep = result[[1]]$max_i) {
 
+  # check if mdl_rn is provided
+  check_class <- vapply(X = result, FUN = function(x) inherits(x = x, what = "mdl_rn"),
+                        FUN.VALUE = logical(1))
+
+  if (!any(check_class)) {
+
+    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+
+  }
+
   # get timestep
   i <- timestep
 

@@ -27,12 +27,14 @@ max_i <- 100
 
 min_per_i <- 120
 
+burn_in <- 5
+
 result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     fishpop  = input_fishpop,
                                     parameters = parameters,
                                     reef_attraction = FALSE,
                                     max_i = max_i, min_per_i = min_per_i,
-                                    burn_in = 10)
+                                    burn_in = burn_in)
 
 test_that("run_simulation returns rnd_mdl", {
 
@@ -68,7 +70,7 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = result_rand$reef_attraction, expected = FALSE)
 
-  expect_equal(object = result_rand$burn_in, expected = 10)
+  expect_equal(object = result_rand$burn_in, expected = burn_in)
 
 })
 
@@ -78,11 +80,33 @@ test_that("run_simulation does not return burn_in", {
                                  parameters = parameters,
                                  reef_attraction = FALSE,
                                  max_i = max_i, min_per_i = min_per_i,
-                                 burn_in = 20, return_burnin = FALSE)
+                                 burn_in = 10, return_burnin = FALSE)
 
   expect_true(object = min(result$seafloor$timestep) == result$burn_in)
 
   expect_true(object = min(result$fishpop$timestep) == result$burn_in)
+
+})
+
+test_that("run_simulation returns only data.frame", {
+
+  fishpop <- arrR::run_simulation(seafloor = input_seafloor,
+                                  fishpop  = input_fishpop,
+                                  parameters = parameters,
+                                  reef_attraction = FALSE,
+                                  max_i = max_i, min_per_i = min_per_i,
+                                  extract = "fishpop")
+
+  seafloor <- arrR::run_simulation(seafloor = input_seafloor,
+                                  fishpop  = input_fishpop,
+                                  parameters = parameters,
+                                  reef_attraction = FALSE,
+                                  max_i = max_i, min_per_i = min_per_i,
+                                  extract = "seafloor")
+
+  expect_is(object = fishpop, class = "data.frame")
+
+  expect_is(object = seafloor, class = "data.frame")
 
 })
 

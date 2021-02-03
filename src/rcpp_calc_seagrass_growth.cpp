@@ -86,7 +86,7 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param cells_reef Vector with id of reef cells.
-//' @param bg_v_max,bg_k_m,ag_v_max,ag_k_m Numeric with uptake parameters.
+//' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 //' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
 //' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
 //'
@@ -102,8 +102,8 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
 // [[Rcpp::export]]
 void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
                                Rcpp::NumericVector cells_reef,
-                               double bg_v_max, double bg_k_m,
-                               double ag_v_max, double ag_k_m,
+                               double bg_v_max, double bg_k_m, double bg_gamma,
+                               double ag_v_max, double ag_k_m, double ag_gamma,
                                double bg_biomass_max, double bg_biomass_min,
                                double ag_biomass_max, double ag_biomass_min,
                                double detritus_ratio, double bg_thres,
@@ -171,7 +171,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       seafloor(i, 9) += ag_detritus;
 
       // calculate nutrients of total detritus
-      double detritus_nutr = (bg_detritus * 0.0082) + (ag_detritus * 0.0144);
+      double detritus_nutr = (bg_detritus * bg_gamma) + (ag_detritus * ag_gamma);
 
       // add nutrients to detritus pool
       seafloor(i, 5) += detritus_nutr;
@@ -180,7 +180,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       if ((bg_modf > (1 - bg_thres)) & (total_uptake <= detritus_nutr)) {
 
         // calculate bg growth
-        double bg_growth = total_uptake / 0.0082;
+        double bg_growth = total_uptake / bg_gamma;
 
         // add growth to biomass
         seafloor(i, 3) += bg_growth;
@@ -189,10 +189,10 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 8) += bg_growth;
 
       // ii) bg biomass above threshold, but uptake not enough to keep bg stable
-      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake <= (bg_detritus * 0.0082))) {
+      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake <= (bg_detritus * bg_gamma))) {
 
         // calculate bg growth
-        double bg_growth = total_uptake / 0.0082;
+        double bg_growth = total_uptake / bg_gamma;
 
         // add growth to biomass
         seafloor(i, 3) += bg_growth;
@@ -210,7 +210,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 7) += ag_detritus;
 
         // calculate remaining nutrients and growth of bg
-        double bg_growth = (total_uptake - (ag_detritus * 0.0144)) / 0.0082;
+        double bg_growth = (total_uptake - (ag_detritus * ag_gamma)) / bg_gamma;
 
         // add growth to bg biomass
         seafloor(i, 3) += bg_growth;
@@ -219,7 +219,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 8) += bg_growth;
 
       // iv) bg biomass above threshold and uptake large enough to keep bg stable
-      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake > (bg_detritus * 0.0082))) {
+      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake > (bg_detritus * bg_gamma))) {
 
         // add detritus fraction for stable bg biomass
         seafloor(i, 3) += bg_detritus;
@@ -228,10 +228,10 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 8) += bg_detritus;
 
         // calculate remaining nutrients
-        double uptake_temp = total_uptake - (bg_detritus * 0.0082);
+        double uptake_temp = total_uptake - (bg_detritus * bg_gamma);
 
         // calculate bg growth
-        double bg_growth = (uptake_temp * bg_modf) / 0.0082;
+        double bg_growth = (uptake_temp * bg_modf) / bg_gamma;
 
         // add bg growth to biomass
         seafloor(i, 3) += bg_growth;
@@ -240,7 +240,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 8) += bg_growth;
 
         // calculate ag growth
-        double ag_growth = (uptake_temp * (1 - bg_modf)) / 0.0144;
+        double ag_growth = (uptake_temp * (1 - bg_modf)) / ag_gamma;
 
         // add ag growth to biomass
         seafloor(i, 2) += ag_growth;
@@ -265,7 +265,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 2) -= ag_detritus;
 
         // add nutrients of biomass to detritus pool
-        seafloor(i, 5) += (ag_detritus * 0.0144);
+        seafloor(i, 5) += (ag_detritus * ag_gamma);
 
         // track ag slough
         seafloor(i, 9) += ag_detritus;
@@ -282,7 +282,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 3) -= bg_detritus;
 
         // add nutrients of biomass to detritus pool
-        seafloor(i, 5) += (bg_detritus * 0.0082);
+        seafloor(i, 5) += (bg_detritus * bg_gamma);
 
         // track ag slough
         seafloor(i, 10) += bg_detritus;

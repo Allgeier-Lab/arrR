@@ -19,6 +19,13 @@
 #' @export
 extract_result <- function(result, extract) {
 
+  # check if mdl_rn is provided
+  if (!inherits(x = result, what = "mdl_rn")) {
+
+    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+
+  }
+
   # extract seafloor only
   if (extract == "seafloor") {
 
