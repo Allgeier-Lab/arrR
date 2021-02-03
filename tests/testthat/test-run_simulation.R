@@ -104,9 +104,22 @@ test_that("run_simulation returns only data.frame", {
                                   max_i = max_i, min_per_i = min_per_i,
                                   extract = "seafloor")
 
+  both <- arrR::run_simulation(seafloor = input_seafloor,
+                               fishpop  = input_fishpop,
+                               parameters = parameters,
+                               reef_attraction = FALSE,
+                               max_i = max_i, min_per_i = min_per_i,
+                               extract = "both")
+
+
+
   expect_is(object = fishpop, class = "data.frame")
 
   expect_is(object = seafloor, class = "data.frame")
+
+  expect_is(object = both, class = "list")
+
+  expect_length(both, n = 2)
 
 })
 

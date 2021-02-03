@@ -36,10 +36,15 @@ extract_result <- function(result, extract) {
 
     result <- result$fishpop
 
+  # extract seafloor and fishpop
+  } else if (extract == "both") {
+
+    result <- list(seafloor = result$seafloor, fishpop = result$fishpop)
+
   # Throw error because wrong selection
   } else {
 
-    stop("Please select either extract = 'seafloor' or extract = 'fishpop'.",
+    stop("Please select either extract = 'seafloor', extract = 'fishpop', or extract = 'both'.",
          call. = FALSE)
   }
 
