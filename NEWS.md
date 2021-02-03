@@ -1,6 +1,9 @@
 # arrR 0.2.8
 * Add hexlogo
 * Add `extract_result` function and `extract` argument to `run_simulation`
+* Add `bg_gamma` and `ag_gamma` to parameters. Was hard-coded previously
+* Better checking if object is `mdl_rn`
+* Renamed master branch to main
 
 # arrR 0.2.7
 * Add default parameters and starting values as data

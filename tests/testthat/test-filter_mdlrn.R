@@ -46,3 +46,10 @@ test_that("filter_mdlrn only return until timestep", {
   expect_equal(object = max(result_fltr$fishpop$timestep), expected = filter_time)
 
 })
+
+test_that("filter_mdlrn returns error", {
+
+  expect_error(object = filter_mdlrn(result = c(1:5), timestep = filter_time),
+               regexp = "Please prove mdl_rn object createt with run_simulation.")
+
+})

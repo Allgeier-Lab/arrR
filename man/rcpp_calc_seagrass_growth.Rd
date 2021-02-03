@@ -9,8 +9,10 @@ rcpp_calc_seagrass_growth(
   cells_reef,
   bg_v_max,
   bg_k_m,
+  bg_gamma,
   ag_v_max,
   ag_k_m,
+  ag_gamma,
   bg_biomass_max,
   bg_biomass_min,
   ag_biomass_max,
@@ -25,7 +27,7 @@ rcpp_calc_seagrass_growth(
 
 \item{cells_reef}{Vector with id of reef cells.}
 
-\item{bg_v_max, bg_k_m, ag_v_max, ag_k_m}{Numeric with uptake parameters.}
+\item{bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma}{Numeric with uptake parameters.}
 
 \item{bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min}{Numerich with biomass values and parameters.}
 

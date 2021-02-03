@@ -19,6 +19,13 @@
 #' @export
 extract_result <- function(result, extract) {
 
+  # check if mdl_rn is provided
+  if (!inherits(x = result, what = "mdl_rn")) {
+
+    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+
+  }
+
   # extract seafloor only
   if (extract == "seafloor") {
 
@@ -29,10 +36,15 @@ extract_result <- function(result, extract) {
 
     result <- result$fishpop
 
+  # extract seafloor and fishpop
+  } else if (extract == "both") {
+
+    result <- list(seafloor = result$seafloor, fishpop = result$fishpop)
+
   # Throw error because wrong selection
   } else {
 
-    stop("Please select either extract = 'seafloor' or extract = 'fishpop'.",
+    stop("Please select either extract = 'seafloor', extract = 'fishpop', or extract = 'both'.",
          call. = FALSE)
   }
 
