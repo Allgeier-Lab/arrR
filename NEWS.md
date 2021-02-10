@@ -1,3 +1,6 @@
+# arrR 0.2.9
+* Fix bug that not all starting values are included in `mdl_rn` object
+
 # arrR 0.2.8
 * Add hexlogo
 * Add `extract_result` function and `extract` argument to `run_simulation`
