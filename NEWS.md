@@ -1,5 +1,7 @@
 # arrR 0.2.9
 * Fix bug that not all starting values are included in `mdl_rn` object
+* Print progress each timestep because why not?
+* Change to GPL3 license
 
 # arrR 0.2.8
 * Add hexlogo
