@@ -53,6 +53,8 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                       pop_b = parameters$pop_b,
                       use_log = use_log)
 
+    #KSM: this is where I will change the reserves to increase the doggy bag size
+
     # calculate maximum reserves
     reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves
 
