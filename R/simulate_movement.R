@@ -20,6 +20,11 @@
 #' @rdname simulate_movement
 #'
 #' @export
+#'
+#' KSM: this is where I will add in the kurtosis function
+#' KSM: need to annotate code and undertand what each step is doing
+#'
+#'
 simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
                               coords_reef, reef_attraction, extent, parameters) {
 
@@ -41,6 +46,9 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
   move_dist <- exp(norm_random)
 
   # move towards reef
+  ## change this if statement to be if the doggy bag is at the max or not
+  ## reef attraction is more based on consumption
+
   if (reef_attraction & nrow(coords_reef) > 0) {
 
     # get coordinates within visibility left, straight in right of individuals
