@@ -12,7 +12,7 @@ using namespace Rcpp;
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
 //'
 //' @details
-//' Rcpp mplementation to calculate growth of fish individuals.
+//' Rcpp implementation to calculate growth of fish individuals.
 //'
 //' @return void
 //'
@@ -32,6 +32,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
+    // KSM: sets up a temporary order of fish ID, so that Fish 1 does not get all of the resources in each patch
     // create counter for temp fish id
     int fish_id_temp = fish_id(i) - 1;
 
@@ -39,22 +40,38 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     int cell_id_temp = cell_id(i) - 1;
 
     // calculate growth in length and weight
+    //KSM: calc per minute
+    //KSM: access fish_id_temp row, column 6 (5+1) - how do we know what this is? I think this is current length - how to see matrix?
     double growth_length = pop_k *
       (1.0 / 365.0) * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i *
       (pop_linf - fishpop(fish_id_temp, 5));
 
+    //KSM:length intial + change in length ^ b
+    //KSM: length initial^b
     double growth_weight = pop_a *
       (std::pow((fishpop(fish_id_temp, 5) + growth_length), pop_b) -
       (std::pow(fishpop(fish_id_temp, 5), pop_b)));
 
     // calculate consumption requirements
+    //KSM: consumption requirements = growth in weight + _?(look at matrix)*_/0.55 (?ask Jake) * n requirements
+    //KSM: consumption based on how much you weigh + something + how much n required
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
     // calculate amount of available resources
+    //KSM: available resources = resources (detritus) per cell + _ fish pop resources?
     double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
+    //KSM: EDIT THERE HERE
+
+    //KSM: if doggy bag full, if not, run before
+
+    //KSM within the first if, check if die, because empty doggy bag
+
+    //KSM: excrete and reduce doggy bag
+
     // individual dies because consumption requirements can not be met
+    //KSM: if consumption requirements, are greater than available resources per cell, fish dies - that doesn't seem right. they should then move?
     if (consumption_req > available_resources) {
 
       // save current original coordinates
@@ -68,6 +85,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       int died_background = fishpop(fish_id_temp, 12);
 
       // calculate increase in fish mass including reserves
+      //KSM: puts nutrients from dead fish into detrital pool
       double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 
@@ -75,26 +93,35 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       seafloor(cell_id_temp, 6) += mass_diff;
 
       // create new individual
+      //KSM: what is fishpop_track?
+      //KSM: where is the code to pull from distribution pop_mean_size and pop_var_size?
+      //KSM: access all columns of fish_id_temp DF
       fishpop(fish_id_temp, _) = fishpop_track(fish_id_temp, _);
 
       // keep old coordinates
+      //KSM: put new fish back in place of dead fish
       fishpop(fish_id_temp, 2) = x_coord;
 
       fishpop(fish_id_temp, 3) = y_coord;
 
       // calculate wanted reserves
+      //KSM: calculate new reserves for new fish of new size
       double reserves_wanted = pop_n_body * fishpop(fish_id_temp, 6) * pop_want_reserves;
 
       // detritus pool is smaller than wanted reserves, detritus pool is fully used
+      //KSM: is this if, else statement within the other if, else statement for fish death? I don't see where it ends.
       if (reserves_wanted >= seafloor(cell_id_temp, 5)) {
 
         // use pool completely
+        //KSM: fish fully consumes detritus in cell
         fishpop(fish_id_temp, 7) = seafloor(cell_id_temp, 5);
 
-        // set pool to zero
+        // set pool to zero\
+        //KSM: cell goes to 0
         seafloor(cell_id_temp, 5) = 0;
 
       // detritus pool is larger than what is wanted, so only subset is used
+      //KSM: otherwise, if detritus pool is large enough, only a subset is used by fish - this may need to be altered since we are increasing reserves?
       } else {
 
         // wanted reserves can be filled completely
@@ -114,12 +141,15 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     } else {
 
       //  increase age (60 min * 24 h = 1440 min/day)
+      //KSM: current age + time past
       fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
 
       // increase fish dimensions length
+      //KSM: current length + growth in length
       fishpop(fish_id_temp, 5) += growth_length;
 
       // increase fish dimensions weight
+      //KSM: current length + growth in weight
       fishpop(fish_id_temp, 6) += growth_weight;
 
       // update max reserves based on weight
@@ -128,7 +158,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       // calculate reserves difference
       double reserves_diff = fishpop(fish_id_temp, 8) - fishpop(fish_id_temp, 7);
 
-      // consumption requirement can be meet by detritus_pool
+      // consumption requirement can be met by detritus_pool
       if (consumption_req <= seafloor(cell_id_temp, 5)) {
 
         // calculate remaining nutrients in pool
@@ -174,6 +204,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
       }
 
+      //KSM: this seems around where we need to add in argument, if max_reserves = reserves or something to indicate that doggy bag is full, then stop eating, only excrete - will this kill the fish?
       // calc non-used consumption (excretion)
       double excretion_temp = consumption_req - (growth_weight * pop_n_body);
 
