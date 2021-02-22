@@ -38,5 +38,5 @@ void
 Rcpp calc growth
 }
 \details{
-Rcpp mplementation to calculate growth of fish individuals.
+Rcpp implementation to calculate growth of fish individuals.
 }

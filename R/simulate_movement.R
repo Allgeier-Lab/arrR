@@ -1,5 +1,4 @@
 #' simulate_movement
-#' #KSM changing things here
 #'
 #' @description Simulate movement of population.
 #'
