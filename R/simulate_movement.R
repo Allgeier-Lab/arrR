@@ -20,8 +20,6 @@
 #'
 #' @export
 #'
-#' KSM: this is where I will add in the kurtosis function
-#' KSM: need to annotate code and undertand what each step is doing
 #'
 #'
 simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
