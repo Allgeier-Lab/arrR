@@ -35,7 +35,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
 #'
 #' @details
-#' Rcpp mplementation to calculate growth of fish individuals.
+#' Rcpp implementation to calculate growth of fish individuals.
 #'
 #' @return void
 #'
