@@ -12,6 +12,7 @@ using namespace Rcpp;
 //'
 //' @details
 //' Rcpp implementation to create new individual after mortality event.
+//' "KSM" notes from Katrina to help understand code
 //'
 //' @return void
 //'
@@ -28,16 +29,18 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
                          double pop_linf,
                          double pop_n_body,
                          double pop_want_reserves) {
-
+  // KSM: loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // create counter for fish track id
+    // KSM: sets up a temporary order of fish ID
     int fish_id_temp = fish_id(i) - 1;
 
     // create counter for temp cell id
     int cell_id_temp = cell_id(i) - 1;
 
     // create death probability
+    // KSM: death probability = log(length - max length of pop)
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against

@@ -19,9 +19,6 @@
 #' @rdname simulate_movement
 #'
 #' @export
-#'
-#'
-#'
 simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
                               coords_reef, reef_attraction, extent, parameters) {
 
@@ -39,12 +36,10 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
   norm_random <- stats::rnorm(n = pop_n,
                               mean = norm_mean, sd = norm_sd)
 
-  # calculate body length based on random number
+  # calculate movement distance based on random number
   move_dist <- exp(norm_random)
 
   # move towards reef
-  ## change this if statement to be if the doggy bag is at the max or not
-  ## reef attraction is more based on consumption
 
   if (reef_attraction & nrow(coords_reef) > 0) {
 

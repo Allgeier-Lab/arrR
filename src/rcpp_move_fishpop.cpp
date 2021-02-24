@@ -10,7 +10,9 @@ using namespace Rcpp;
 //'
 //' @details
 //' Rcpp implementation to translate coordinates if they exceed extent.
-//'
+//' "KSM" notes from Katrina to help understand code
+//' "Q" questions Katrina has for Max
+//' "C" code to add
 //' @return void
 //'
 //' @aliases rcpp_translate_torus
@@ -21,8 +23,10 @@ using namespace Rcpp;
 void rcpp_translate_torus(Rcpp::NumericMatrix coords,
                           Rcpp::NumericVector extent) {
 
+  // KSM: loop through all cells?
   for (int i = 0; i < coords.nrow(); i++) {
 
+    // Q: what is this doing exactly? idenitfying x,y coord for each cell?
     // translate x coords left side
     while (coords(i, 0) < extent(0)) {
 
@@ -77,6 +81,7 @@ double rcpp_modify_degree(double x, double y) {
   x += y;
 
   // get reminder of division
+  // KSM: divide 360 from x coord
   x = std::fmod(x, 360);
 
   // if x < 0, result will be negative
@@ -110,14 +115,16 @@ double rcpp_modify_degree(double x, double y) {
 void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
                     Rcpp::NumericMatrix dist_values) {
 
+  // KSM: loop through fishpop individuals
+  // Q: why is this different from fishpop_growth: fish_id.length?
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // left distance is smaller than straigth and rigth
+    // left distance is smaller than straight and right
     if ((dist_values(i, 0) < dist_values(i, 1)) & (dist_values(i, 0) < dist_values(i, 2))) {
 
       fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
-    // right distance is smaller than straigth and left
+    // right distance is smaller than straight and left
     } else if ((dist_values(i, 2) < dist_values(i, 1)) & (dist_values(i, 2) < dist_values(i, 0))) {
 
       fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
@@ -166,18 +173,25 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dis
     xy_temp(0, 1) = fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)));
 
     // make sure coords are within study area
+    // KSM: checks extent from first rcpp implementation (top of script)
     rcpp_translate_torus(xy_temp, extent);
 
     // update values
+    // KSM: x coord values
     fishpop(i, 2) = xy_temp(0, 0);
 
+    // KSM: y coord values
     fishpop(i, 3) = xy_temp(0, 1);
 
     // turn fish randomly after moving (returns vector)
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
+    // Q: what do you mean in that comment ^^?
+    // KSM: create random number (vector) for heading between 1-360
     fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
     // update activity
+    // KSM: activity = 1/mean_movement value +1) * move_dist(i) + 1
+    // Q: how did you come up with this equation to calculate activity?
     fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
 
   }
