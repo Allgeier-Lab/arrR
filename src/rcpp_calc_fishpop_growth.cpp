@@ -105,9 +105,6 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       // calculate increase in fish mass including reserves
       // KSM: puts nutrients from dead fish into detrital pool
       // KSM: mass_difference = weight - weight specific nutrient content + fish reserves
-      // Q: what is 'fishpop_track'?
-      // MH: Thats basically just the fishpop values from iteration 0 to store fish values
-      // for rebirth
       double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 

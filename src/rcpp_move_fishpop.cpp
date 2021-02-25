@@ -118,9 +118,6 @@ void rcpp_turn_fish(Rcpp::NumericMatrix fishpop,
                     Rcpp::NumericMatrix dist_values) {
 
   // KSM: loop through fishpop individuals
-  // Q: why is this different from fishpop_growth: fish_id.length?
-  // MH: Because for the movement which fish moves first doesnt make a difference since
-  // they don't interact/influence each other
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // left distance is smaller than straight and right
@@ -189,16 +186,11 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_dis
 
     // turn fish randomly after moving (returns vector)
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-    // Q: what do you mean in that comment ^^?
-    // MH: So that the angle the fish turn is not complelty random each iteration,
-    // but that the angle in iteratin i+1 is correlated to iteration i
     // KSM: create random number (vector) for heading between 1-360
     fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
     // update activity
     // KSM: activity = 1/mean_movement value +1) * move_dist(i) + 1
-    // Q: how did you come up with this equation to calculate activity?
-    // MH: ..Jake...
     fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
 
   }
