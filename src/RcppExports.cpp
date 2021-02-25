@@ -138,6 +138,20 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_cell_from_xy
+int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
+RcppExport SEXP _arrR_rcpp_cell_from_xy(SEXP xSEXP, SEXP ySEXP, SEXP dimensionsSEXP, SEXP extentSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_cell_from_xy(x, y, dimensions, extent));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_diffuse_values
 void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_dead_diffusion);
 RcppExport SEXP _arrR_rcpp_diffuse_values(SEXP seafloorSEXP, SEXP cell_adjSEXP, SEXP nutrients_diffusionSEXP, SEXP detritus_diffusionSEXP, SEXP detritus_dead_diffusionSEXP) {
@@ -209,6 +223,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
     {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 15},
+    {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 4},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},

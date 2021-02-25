@@ -36,6 +36,9 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @details
 #' Rcpp implementation to calculate growth of fish individuals.
+#' "KSM" notes from Katrina to help understand code
+#' "Q" questions Katrina has for Max
+#' "C" code to add
 #'
 #' @return void
 #'
@@ -78,6 +81,7 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_min
 #'
 #' @details
 #' Rcpp implementation to create new individual after mortality event.
+#' "KSM" notes from Katrina to help understand code
 #'
 #' @return void
 #'
@@ -174,6 +178,33 @@ rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg
     invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
 }
 
+#' rcpp_cell_from_xy
+#'
+#' @description Rcpp get cell id from xy
+#'
+#' @param x Double with x coord
+#' @param y Double with y coord
+#' @param dimensions Vector with number or rows and cols
+#' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+#'
+#' @details
+#' Rcpp implementation to get cell id from xy coordinate. Allows only one coordinate
+#' pair at a time.
+#'
+#' @references
+#' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+#' and Modeling. R package version 3.4-5. https://CRAN.R-project.org/package=raster
+#'
+#' @return int
+#'
+#' @aliases rcpp_cell_from_xy
+#' @rdname rcpp_cell_from_xy
+#'
+#' @keywords export
+rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
+    .Call(`_arrR_rcpp_cell_from_xy`, x, y, dimensions, extent)
+}
+
 #' rcpp_diffuse_values
 #'
 #' @description Rcpp diffuse values
@@ -204,7 +235,9 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #'
 #' @details
 #' Rcpp implementation to translate coordinates if they exceed extent.
-#'
+#' "KSM" notes from Katrina to help understand code
+#' "Q" questions Katrina has for Max
+#' "C" code to add
 #' @return void
 #'
 #' @aliases rcpp_translate_torus

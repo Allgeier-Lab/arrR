@@ -39,4 +39,7 @@ Rcpp calc growth
 }
 \details{
 Rcpp implementation to calculate growth of fish individuals.
+"KSM" notes from Katrina to help understand code
+"Q" questions Katrina has for Max
+"C" code to add
 }

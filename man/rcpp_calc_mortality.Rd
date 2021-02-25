@@ -32,4 +32,5 @@ Rcpp create rebirth
 }
 \details{
 Rcpp implementation to create new individual after mortality event.
+"KSM" notes from Katrina to help understand code
 }

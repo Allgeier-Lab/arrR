@@ -19,5 +19,8 @@ Rcpp translate torus
 }
 \details{
 Rcpp implementation to translate coordinates if they exceed extent.
+"KSM" notes from Katrina to help understand code
+"Q" questions Katrina has for Max
+"C" code to add
 }
 \keyword{export}
