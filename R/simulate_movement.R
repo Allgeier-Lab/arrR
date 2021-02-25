@@ -40,7 +40,6 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
   move_dist <- exp(norm_random)
 
   # move towards reef
-
   if (reef_attraction & nrow(coords_reef) > 0) {
 
     # get coordinates within visibility left, straight in right of individuals

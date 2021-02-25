@@ -74,6 +74,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // C: fishpop(fish_id_temp, 7) -= consumption_req;
 
     // Q: do I need add in excretion argument here or does excretion argument in line 233 work?
+    // MH: I would say the one in l233 works, you just need to make sure with all the
+    // if-else statement now it can be actually reached
 
     // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
     // C: } else {
@@ -82,6 +84,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // C: fishpop(fish_id_temp, 7) < 0.75 * fish_pop(fish_id_temp, 8);
 
     // Q: can this go directly into all other if, else statements?
+    // MH: Not sure what you mean by this? Maybe it helps to draw a flow chart with
+    // all if-else?
 
     // individual dies because consumption requirements cannot be met
     // KSM: if consumption requirements are greater than available resources per cell, fish dies
@@ -102,6 +106,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       // KSM: puts nutrients from dead fish into detrital pool
       // KSM: mass_difference = weight - weight specific nutrient content + fish reserves
       // Q: what is 'fishpop_track'?
+      // MH: Thats basically just the fishpop values from iteration 0 to store fish values
+      // for rebirth
       double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 
@@ -228,7 +234,6 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         seafloor(cell_id_temp, 5) = 0;
 
       }
-
 
       // calc non-used consumption (excretion)
       double excretion_temp = consumption_req - (growth_weight * pop_n_body);
