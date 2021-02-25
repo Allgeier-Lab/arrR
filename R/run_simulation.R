@@ -115,11 +115,11 @@ run_simulation <- function(seafloor, fishpop,
 
     message("> Population with ", starting_values$pop_n, " individuals [reef_attraction: ", reef_attraction, "].")
 
-    message("> Simulating ", max_i, " simulation iterations [Burn-in: ", burn_in, " iter.].")
+    message("> Simulating ", max_i, " iterations [Burn-in: ", burn_in, " iter.].")
 
     message("> Saving each ", save_each, " iterations.")
 
-    message("> One simulation iteration equals ", min_per_i, " minutes.")
+    message("> One iteration equals ", min_per_i, " minutes.")
 
     message("")
 
@@ -186,16 +186,17 @@ run_simulation <- function(seafloor, fishpop,
     # update tracking list
     if (i %% save_each == 0) {
 
-      if (verbose) {
-
-        message("\r> ...Progress: ", round(i / max_i * 100), "% simulations runs... \t\t\t",
-                appendLF = FALSE)
-
-      }
-
       seafloor_track[[i / save_each + 1]] <- rlang::duplicate(seafloor_values)
 
       fishpop_track[[i / save_each + 1]] <- rlang::duplicate(fishpop_values)
+
+    }
+
+    # print progress
+    if (verbose) {
+
+      message("\r> ...Progress: ", floor(i / max_i * 100), "% of total iterations... \t\t\t",
+              appendLF = FALSE)
 
     }
   }

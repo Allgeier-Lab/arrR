@@ -11,8 +11,8 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL
+v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 <!-- badges: end -->
 
@@ -113,14 +113,14 @@ result
 #> Fishpop    : 25 indiv (reef_attraction: TRUE)
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum  : 6.644, 238.471, 0.005, 0.382, 0
-#> Mean     : 6.644, 251.955, 0.008, 0.463, 0
-#> Maximum  : 6.644, 312.164, 0.022, 0.499, 0
+#> Minimum  : 6.644, 238.4, 0.005, 0.417, 0
+#> Mean     : 6.644, 249.413, 0.008, 0.486, 0
+#> Maximum  : 6.644, 299.259, 0.019, 0.517, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 10.815, 22.459, 0, 0
-#> Mean     : 15.184, 76.474, 0, 0
-#> Maximum  : 23.148, 248.909, 0, 0
+#> Minimum  : 9.531, 15.062, 0, 0
+#> Mean     : 14.413, 61.799, 0, 0
+#> Maximum  : 20.412, 167.231, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.

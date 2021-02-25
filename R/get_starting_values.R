@@ -30,10 +30,12 @@ get_starting_values <- function(seafloor_values, fishpop_values) {
 
   pop_n <- nrow(fishpop_values)
 
+  pop_mean_size <- mean(fishpop_values[, "length"])
+
   # combine to result list
   result <- list(bg_biomass = bg_biomass, ag_biomass = ag_biomass,
                  nutrients_pool = nutrients_pool, detritus_pool = detritus_pool,
-                 pop_n = pop_n)
+                 pop_n = pop_n, pop_mean_size = pop_mean_size)
 
   return(result)
 }
