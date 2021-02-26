@@ -283,10 +283,8 @@ rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_
 #'
 #' @details
 #' Rcpp implementation to translate coordinates if they exceed extent.
-#' "KSM" notes from Katrina to help understand code
-#' "Q" questions Katrina has for Max
-#' "C" code to add
-#' @return void
+#'
+#' @return vector
 #'
 #' @aliases rcpp_translate_torus
 #' @rdname rcpp_translate_torus

@@ -1,5 +1,6 @@
 # arrR 0.3.0
-* Update fish movement to allow movement behaviour based on "doggy bag"
+* Update authors list
+* Re-implement movement of fish individuals in Rcpp mainly
 
 # arrR 0.2.9
 * Fix bug that not all starting values are included in `mdl_rn` object

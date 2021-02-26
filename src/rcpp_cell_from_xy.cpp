@@ -27,7 +27,7 @@ int rcpp_cell_from_xy(Rcpp::NumericVector coords,
                       Rcpp::NumericVector dimensions,
                       Rcpp::NumericVector extent) {
 
-  // coords outside extent
+  // coords outside extent; return NA
   if (coords(0) < extent(0) || coords(0) > extent(1) ||
       coords(1) < extent(2) || coords(1) > extent(3)) {
 
@@ -35,11 +35,10 @@ int rcpp_cell_from_xy(Rcpp::NumericVector coords,
 
     return cell_id;
 
-    // coords within extent
+  // coords within extent
   } else {
 
     // calculates resolution
-    // MH: Just use grain argument?
     double grain_x = dimensions(1) / (extent(1) - extent(0));
 
     double grain_y = dimensions(0) / (extent(3) - extent(2));

@@ -36,9 +36,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // init vector for temp coords
-    Rcpp::NumericVector xy_temp(2);
-
     // move towards reef
     if (reef_attraction) {
 
@@ -97,10 +94,10 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     }
 
     // calculate new x coord
-    xy_temp(0) = fishpop(i, 2) + (move_dist(i) * cos(fishpop(i, 4) * (M_PI / 180.0)));
-
-    // calculate new y coord
-    xy_temp(1) = fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)));
+    NumericVector xy_temp = NumericVector::create(
+      fishpop(i, 2) + (move_dist(i) * cos(fishpop(i, 4) * (M_PI / 180.0))),
+      fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)))
+    );
 
     // make sure coords are within study area
     xy_temp = rcpp_translate_torus(xy_temp, extent);
@@ -111,20 +108,25 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // update y coord
     fishpop(i, 3) = xy_temp(1);
 
+    // update activity
+    fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
+
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
     fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
-
-    // update activity
-    fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
 
   }
 }
 
 /*** R
 
-# rcpp_move_fishpop
-rcpp_move_fishpop(fishpop = fishpop_values, extent = extent,
+# calculate new coordinates and activity
+rcpp_move_fishpop(fishpop = fishpop_values,
+                  reef_dist = seafloor_values[, "reef_dist"],
                   move_dist = move_dist,
-                  pop_mean_move = parameters$pop_mean_move)
+                  pop_mean_move = parameters$pop_mean_move,
+                  pop_visibility = parameters$pop_visibility,
+                  extent = extent,
+                  dimensions = dimensions,
+                  reef_attraction = reef_attraction)
 */
