@@ -7,7 +7,7 @@
 rcpp_translate_torus(coords, extent)
 }
 \arguments{
-\item{coords}{Matrix with coordinates.}
+\item{coords}{Vector with coordinates.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 }

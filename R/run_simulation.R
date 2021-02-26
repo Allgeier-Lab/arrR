@@ -93,6 +93,9 @@ run_simulation <- function(seafloor, fishpop,
   # get extent of environment
   extent <- raster::extent(seafloor)
 
+  # get dimensions of environment (nrow, ncol)
+  dimensions <- dim(seafloor)[1:2]
+
   # get cell id of reef cells
   cells_reef <- which(seafloor_values[, 16] == 1)
 
@@ -145,10 +148,9 @@ run_simulation <- function(seafloor, fishpop,
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
                         pop_n = starting_values$pop_n,
-                        seafloor = seafloor$reef,
                         seafloor_values = seafloor_values,
-                        coords_reef = coords_reef,
                         extent = extent,
+                        dimensions = dimensions,
                         parameters = parameters,
                         reef_attraction = reef_attraction)
 

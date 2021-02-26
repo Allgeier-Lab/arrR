@@ -182,8 +182,7 @@ rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg
 #'
 #' @description Rcpp get cell id from xy
 #'
-#' @param x Double with x coord
-#' @param y Double with y coord
+#' @param coords Vector with coordinates.
 #' @param dimensions Vector with number or rows and cols
 #' @param extent Vector with extent (xmin, xmax, ymin, ymax).
 #'
@@ -201,8 +200,8 @@ rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg
 #' @rdname rcpp_cell_from_xy
 #'
 #' @keywords export
-rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
-    .Call(`_arrR_rcpp_cell_from_xy`, x, y, dimensions, extent)
+rcpp_cell_from_xy <- function(coords, dimensions, extent) {
+    .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
 }
 
 #' rcpp_diffuse_values
@@ -226,28 +225,6 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion))
 }
 
-#' rcpp_translate_torus
-#'
-#' @description Rcpp translate torus
-#'
-#' @param coords Matrix with coordinates.
-#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
-#'
-#' @details
-#' Rcpp implementation to translate coordinates if they exceed extent.
-#' "KSM" notes from Katrina to help understand code
-#' "Q" questions Katrina has for Max
-#' "C" code to add
-#' @return void
-#'
-#' @aliases rcpp_translate_torus
-#' @rdname rcpp_translate_torus
-#'
-#' @keywords export
-rcpp_translate_torus <- function(coords, extent) {
-    invisible(.Call(`_arrR_rcpp_translate_torus`, coords, extent))
-}
-
 #' rcpp_modify_degree
 #'
 #' @description Rcpp modify degree
@@ -269,34 +246,18 @@ rcpp_modify_degree <- function(x, y) {
     .Call(`_arrR_rcpp_modify_degree`, x, y)
 }
 
-#' rcpp_turn_fish
-#'
-#' @description Rcpp turn fish
-#'
-#' @param fishpop Matrix with fishpop values.
-#' @param dist_values Matrix with distance to reef values (left, straight, right).
-#'
-#' @details
-#' Rcpp implementation to turn fish individuals either left (-45°), straight (0°) or
-#' right (45°) depending on which directions minimizes distance to reef.
-#'
-#' @return void
-#'
-#' @aliases rcpp_turn_fish
-#' @rdname rcpp_turn_fish
-#'
-#' @keywords export
-rcpp_turn_fish <- function(fishpop, dist_values) {
-    invisible(.Call(`_arrR_rcpp_turn_fish`, fishpop, dist_values))
-}
-
 #' rcpp_move_fishpop
 #'
 #' @description Rcpp move fish population
 #'
 #' @param fishpop Matrix with fishpop values.
+#' @param reef_dist Vector with distance to reef of each cell.
 #' @param move_dist Vector with move distance of fish individuals.
+#' @param pop_mean_move Double with mean movement parameter.
+#' @param pop_visibility Double with "sight" distance of fish.
+#' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
 #' @param pop_mean_move Numeric with parameter.
 #'
 #' @details
@@ -309,7 +270,29 @@ rcpp_turn_fish <- function(fishpop, dist_values) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, move_dist, extent, pop_mean_move) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, move_dist, extent, pop_mean_move))
+rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions))
+}
+
+#' rcpp_translate_torus
+#'
+#' @description Rcpp translate torus
+#'
+#' @param coords Vector with coordinates.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#'
+#' @details
+#' Rcpp implementation to translate coordinates if they exceed extent.
+#' "KSM" notes from Katrina to help understand code
+#' "Q" questions Katrina has for Max
+#' "C" code to add
+#' @return void
+#'
+#' @aliases rcpp_translate_torus
+#' @rdname rcpp_translate_torus
+#'
+#' @keywords export
+rcpp_translate_torus <- function(coords, extent) {
+    .Call(`_arrR_rcpp_translate_torus`, coords, extent)
 }
 
