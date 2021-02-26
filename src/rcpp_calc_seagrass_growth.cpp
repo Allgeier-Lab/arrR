@@ -173,7 +173,8 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       // add nutrients to detritus pool
       seafloor(i, 5) += (bg_detritus * bg_gamma) + (ag_detritus * ag_gamma);
 
-      // seagrass growth
+      // seagrass growth //
+
       // uptake not enough to keep bg stable
       if (total_uptake <= (bg_detritus * bg_gamma)) {
 

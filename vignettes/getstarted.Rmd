@@ -40,7 +40,7 @@ starting_values <- arrR::default_starting_values
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 50
+starting_values$pop_n <- 10
 
 parameters$detritus_dead_ratio <- 0.75
 
