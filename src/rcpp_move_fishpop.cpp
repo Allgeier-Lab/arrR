@@ -26,9 +26,6 @@ void rcpp_translate_torus(Rcpp::NumericMatrix coords,
   // KSM: loop through all cells?
   for (int i = 0; i < coords.nrow(); i++) {
 
-    // Q: what is this doing exactly? idenitfying x,y coord for each cell?
-    // MH: It calculates the torus translation for all 4 direction, i.e. if fish
-    // moves outside study area on left side, how far moves it in again from right side
     // translate x coords left side
     while (coords(i, 0) < extent(0)) {
 
