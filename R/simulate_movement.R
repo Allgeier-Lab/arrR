@@ -4,10 +4,9 @@
 #'
 #' @param fishpop_values Matrix with fish population created.
 #' @param pop_n Numeric with number of individuals.
-#' @param seafloor,seafloor_values RasterBrick and matrix with seafloor values.
-#' @param coords_reef 2-column matrix with coordinates of AR.
+#' @param seafloor_values RasterBrick and matrix with seafloor values.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
-#' @param extent Spatial extent object of the seafloor raster
+#' @param extent,dimensions Spatial extent and dimensions of the seafloor raster
 #' @param parameters List with all model parameters.
 #'
 #' @details
@@ -19,8 +18,9 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
-                              coords_reef, reef_attraction, extent, parameters) {
+simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
+                              reef_attraction, extent, dimensions,
+                              parameters) {
 
   # extent must be vector for rcpp
   extent <- as.vector(extent, mode = "numeric")
@@ -39,48 +39,13 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor, seafloor_values,
   # calculate movement distance based on random number
   move_dist <- exp(norm_random)
 
-  # move towards reef
-  if (reef_attraction & nrow(coords_reef) > 0) {
-
-    # get coordinates within visibility left, straight in right of individuals
-    heading_l <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
-                                              cos(((fishpop_values[, "heading"] + -45) %% 360) * (pi / 180))),
-                       fishpop_values[, "y"] + (parameters$pop_visibility *
-                                              sin(((fishpop_values[, "heading"] + -45) %% 360) * (pi / 180))))
-
-    heading_s <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
-                                              cos(fishpop_values[, "heading"] * (pi / 180))),
-                       fishpop_values[, "y"] + (parameters$pop_visibility *
-                                              sin(fishpop_values[, "heading"] * (pi / 180))))
-
-    heading_r <- cbind(fishpop_values[, "x"] + (parameters$pop_visibility *
-                                              cos(((fishpop_values[, "heading"] + 45) %% 360) * (pi / 180))),
-                       fishpop_values[, "y"] + (parameters$pop_visibility *
-                                              sin(((fishpop_values[, "heading"] + 45) %% 360) * (pi / 180))))
-
-    # combine to one matrix
-    heading_full <- rbind(heading_l, heading_s, heading_r)
-
-    # torus translation if coords are outside plot
-    rcpp_translate_torus(coords = heading_full, extent = extent)
-
-    # get cell id in directions
-    cell_id <- raster::cellFromXY(object = seafloor, xy = heading_full)
-
-    # create distance matrix with left, straight right distance to reef
-    dist_values <- matrix(data = seafloor_values[cell_id, "reef_dist"],
-                          ncol = 3, nrow = pop_n)
-
-    # turn fish
-    rcpp_turn_fish(fishpop = fishpop_values,
-                   dist_values = dist_values)
-
-  }
-
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
+                    reef_dist = seafloor_values[, "reef_dist"],
                     move_dist = move_dist,
+                    pop_mean_move = parameters$pop_mean_move,
+                    pop_visibility = parameters$pop_visibility,
                     extent = extent,
-                    pop_mean_move = parameters$pop_mean_move)
-
+                    dimensions = dimensions,
+                    reef_attraction = reef_attraction)
 }

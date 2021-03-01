@@ -4,12 +4,10 @@
 \alias{rcpp_cell_from_xy}
 \title{rcpp_cell_from_xy}
 \usage{
-rcpp_cell_from_xy(x, y, dimensions, extent)
+rcpp_cell_from_xy(coords, dimensions, extent)
 }
 \arguments{
-\item{x}{Double with x coord}
-
-\item{y}{Double with y coord}
+\item{coords}{Vector with coordinates.}
 
 \item{dimensions}{Vector with number or rows and cols}
 

@@ -7,11 +7,10 @@
 simulate_movement(
   fishpop_values,
   pop_n,
-  seafloor,
   seafloor_values,
-  coords_reef,
   reef_attraction,
   extent,
+  dimensions,
   parameters
 )
 }
@@ -20,13 +19,11 @@ simulate_movement(
 
 \item{pop_n}{Numeric with number of individuals.}
 
-\item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
-
-\item{coords_reef}{2-column matrix with coordinates of AR.}
+\item{seafloor_values}{RasterBrick and matrix with seafloor values.}
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
-\item{extent}{Spatial extent object of the seafloor raster}
+\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 
 \item{parameters}{List with all model parameters.}
 }

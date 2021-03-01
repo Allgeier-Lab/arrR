@@ -4,16 +4,33 @@
 \alias{rcpp_move_fishpop}
 \title{rcpp_move_fishpop}
 \usage{
-rcpp_move_fishpop(fishpop, move_dist, extent, pop_mean_move)
+rcpp_move_fishpop(
+  fishpop,
+  reef_dist,
+  move_dist,
+  pop_mean_move,
+  pop_visibility,
+  reef_attraction,
+  extent,
+  dimensions
+)
 }
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
+\item{reef_dist}{Vector with distance to reef of each cell.}
+
 \item{move_dist}{Vector with move distance of fish individuals.}
+
+\item{pop_mean_move}{Numeric with parameter.}
+
+\item{pop_visibility}{Double with "sight" distance of fish.}
+
+\item{reef_attraction}{Bool if attracted towards reef.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
-\item{pop_mean_move}{Numeric with parameter.}
+\item{dimensions}{Vector with dimensions (nrow, ncol).}
 }
 \value{
 void

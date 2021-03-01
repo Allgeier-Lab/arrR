@@ -91,6 +91,8 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
     # add reef layer
     seafloor$reef <- 0
 
+    seafloor$reef_dist <- NA
+
   }
 
   return(seafloor)
