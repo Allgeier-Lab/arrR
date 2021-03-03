@@ -1,3 +1,7 @@
+# arrR 0.3.0
+* Update authors list
+* Re-implement movement of fish individuals in Rcpp mainly
+
 # arrR 0.2.9
 * Fix bug that not all starting values are included in `mdl_rn` object
 * Print progress each timestep because why not?

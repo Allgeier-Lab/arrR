@@ -12,15 +12,12 @@ rcpp_translate_torus(coords, extent)
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 }
 \value{
-void
+vector
 }
 \description{
 Rcpp translate torus
 }
 \details{
 Rcpp implementation to translate coordinates if they exceed extent.
-"KSM" notes from Katrina to help understand code
-"Q" questions Katrina has for Max
-"C" code to add
 }
 \keyword{export}
