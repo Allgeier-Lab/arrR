@@ -25,12 +25,13 @@ Useful links:
 Authors:
 \itemize{
   \item Kenzo Esquivel \email{kesquivel@berkeley.edu}
+  \item Katrina S. Munsterman \email{kmunster@umich.edu} (\href{https://orcid.org/0000-0002-9303-2049}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item Samantha Iliff \email{siliff@umich.edu} [illustrator]
-  \item Jacob E. Allgeier \email{jeallg@umich.edu} [research team head]
+  \item Samantha Iliff \email{siliff@umich.edu} (\href{https://orcid.org/0000-0002-3070-4565}{ORCID}) [illustrator]
+  \item Jacob E. Allgeier \email{jeallg@umich.edu} (\href{https://orcid.org/0000-0002-9005-6432}{ORCID}) [research team head]
 }
 
 }

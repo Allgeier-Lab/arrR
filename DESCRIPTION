@@ -1,7 +1,7 @@
 Package: arrR
 Type: Package
 Title: Individual-Based Simulation Model of Artifical Reefs in R
-Version: 0.2.9
+Version: 0.3.0
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
@@ -9,12 +9,18 @@ Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              person("Kenzo", "Esquivel", 
              role = "aut", 
              email = "kesquivel@berkeley.edu"),
+             person("Katrina S.", "Munsterman", 
+             role = "aut", 
+             email = "kmunster@umich.edu", 
+             comment = c(ORCID = "0000-0002-9303-2049")),
              person("Samantha", "Iliff", 
              role = "ill", 
-             email = "siliff@umich.edu"),
+             email = "siliff@umich.edu", 
+             comment = c(ORCID = "0000-0002-3070-4565")),
              person("Jacob E.", "Allgeier", 
              role = "rth", 
-             email = "jeallg@umich.edu"))
+             email = "jeallg@umich.edu", 
+             comment = c(ORCID = "0000-0002-9005-6432")))
 Maintainer: Maximillian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
 Description: The goal of arrR is to simulate seagrass growth around artificial reefs.
 License: GPL (>= 3)
