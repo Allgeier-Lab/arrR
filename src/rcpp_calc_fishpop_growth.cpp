@@ -14,8 +14,6 @@ using namespace Rcpp;
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
 //' "KSM" notes from Katrina to help understand code
-//' "Q" questions Katrina has for Max
-//' "C" code to add
 //'
 //' @return void
 //'
@@ -62,34 +60,17 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
     double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
-    // KSM: ADDING IF,ELSE STATEMENTS HERE
-
     // KSM: if reserves match max_reserves,
-    // C: if fish_pop(fish_id_temp, 8) = fishpop(fish_id_temp, 7) {
+    if fish_pop(fish_id_temp, 8) = fishpop(fish_id_temp, 7) {
 
-    // KSM: set consumption to zero
-    // C:  seafloor(cell_id_temp, 13) = 0;
-
-    // KSM: reduce reserves to meet consumption_req
-    // C: fishpop(fish_id_temp, 7) -= consumption_req;
-
-    // Q: do I need add in excretion argument here or does excretion argument in line 233 work?
-    // MH: I would say the one in l233 works, you just need to make sure with all the
-    // if-else statement now it can be actually reached
+       // KSM: reduce reserves to meet consumption_req
+        fishpop(fish_id_temp, 7) -= consumption_req;
 
     // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
-    // C: } else {
-
-    // KSM: reserves < 3/4 of max_reserves, fish needs to eat (or dies)
-    // C: fishpop(fish_id_temp, 7) < 0.75 * fish_pop(fish_id_temp, 8);
-
-    // Q: can this go directly into all other if, else statements?
-    // MH: Not sure what you mean by this? Maybe it helps to draw a flow chart with
-    // all if-else?
+    } else {
 
     // individual dies because consumption requirements cannot be met
     // KSM: if consumption requirements are greater than available resources per cell, fish dies
-
     if (consumption_req > available_resources) {
 
       // save current original coordinates
