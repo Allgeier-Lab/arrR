@@ -36,13 +36,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-<<<<<<< HEAD
-    // translate x coords left side
-    while (coords(i, 0) < extent(0)) {
-=======
     // move towards reef
     if (reef_attraction) {
->>>>>>> 315c51a8fa0b783b9eaadba96f04d2f8bd745fbf
 
       // create matrix with 3 rows (left, straight, right) and 2 cols (x,y)
       Rcpp::NumericMatrix headings(3, 2);
