@@ -30,11 +30,14 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               double pop_n_body, double pop_max_reserves, double pop_want_reserves,
                               double min_per_i) {
 
+  // KSM: will need to add in new parameters (prop_reserves)
+
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // create counter for temp fish id
-    // KSM: sets up a temporary order of fish ID, so that Fish 1 does not get all of the resources in each patch
+    // KSM: sets up a temporary order of fish ID,
+    // so Fish 1 does not get all of the resources in each patch
     int fish_id_temp = fish_id(i) - 1;
 
     // create counter for temp cell id
@@ -60,8 +63,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
     double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
-    // KSM: if reserves match max_reserves,
-    if fish_pop(fish_id_temp, 8) = fishpop(fish_id_temp, 7) {
+    // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
+    if fish_pop(fish_id_temp, 7) >= 0.10 * fishpop(fish_id_temp, 8) {
 
        // KSM: reduce reserves to meet consumption_req
         fishpop(fish_id_temp, 7) -= consumption_req;
