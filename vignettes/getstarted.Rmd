@@ -42,7 +42,7 @@ parameters <- arrR::default_parameters
 # change some starting values and parameters
 starting_values$pop_n <- 10
 
-parameters$detritus_dead_ratio <- 0.75
+parameters$detritus_fish_ratio <- 0.75
 
 # check if all parameters are present and meaningful (to a degree...)
 check_parameters(starting_values = starting_values, parameters = parameters)

@@ -43,7 +43,7 @@ setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
                                                            min = detritus_pool * (1 - random),
                                                            max = detritus_pool * (1 + random)))
 
-  detritus_dead <- raster::setValues(x = seafloor, values = 0)
+  detritus_fish <- raster::setValues(x = seafloor, values = 0)
 
   ag_production <- raster::setValues(x = seafloor, values = 0)
 
@@ -63,14 +63,14 @@ setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
 
   # combine to one RasterBrick
   seafloor <- raster::brick(ag_biomass, bg_biomass, nutrients_pool,
-                            detritus_pool, detritus_dead,
+                            detritus_pool, detritus_fish,
                             ag_production, bg_production, ag_slough, bg_slough,
                             ag_uptake, bg_uptake,
                             consumption, excretion)
 
   # set names
   names(seafloor) <- c("ag_biomass", "bg_biomass", "nutrients_pool",
-                       "detritus_pool", "detritus_dead",
+                       "detritus_pool", "detritus_fish",
                        "ag_production", "bg_production", "ag_slough", "bg_slough",
                        "ag_uptake", "bg_uptake",
                        "consumption", "excretion")

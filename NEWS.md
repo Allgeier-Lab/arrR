@@ -1,6 +1,7 @@
 # arrR 0.3.0
 * Update authors list
 * Re-implement movement of fish individuals in Rcpp mainly
+* Rename dead detritus to fish detritus (and all corresponding parameters)
 
 # arrR 0.2.9
 * Fix bug that not all starting values are included in `mdl_rn` object

@@ -7,7 +7,7 @@ using namespace Rcpp;
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param cell_adj Matrix with cell adjacencies.
-//' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
+//' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 //'
 //' @details
 //' Rcpp implementation to diffuse seafloor values between neighbouring cells.
@@ -23,7 +23,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor,
                          Rcpp::NumericMatrix cell_adj,
                          double nutrients_diffusion,
                          double detritus_diffusion,
-                         double detritus_dead_diffusion) {
+                         double detritus_fish_diffusion) {
 
   // get number of rows for cell adj and seafloor
   int n_row_cell_adj = cell_adj.nrow();
@@ -35,7 +35,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor,
 
   Rcpp::NumericVector detritus (n_row_seafloor);
 
-  Rcpp::NumericVector detritus_dead (n_row_seafloor);
+  Rcpp::NumericVector detritus_fish (n_row_seafloor);
 
   // get all seafloor values
   for (int i = 0; i < n_row_seafloor; i++) {
@@ -44,7 +44,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor,
 
     detritus(i) = (seafloor(i, 5) * detritus_diffusion) / 8.0;
 
-    detritus_dead(i) = (seafloor(i, 6) * detritus_dead_diffusion) / 8.0;
+    detritus_fish(i) = (seafloor(i, 6) * detritus_fish_diffusion) / 8.0;
 
   }
 
@@ -61,14 +61,14 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor,
 
     seafloor(neighbor, 5) += detritus(focal);
 
-    seafloor(neighbor, 6) += detritus_dead(focal);
+    seafloor(neighbor, 6) += detritus_fish(focal);
 
     // remove value from focal cell
     seafloor(focal, 4) -= nutrients(focal);
 
     seafloor(focal, 5) -= detritus(focal);
 
-    seafloor(focal, 6) -= detritus_dead(focal);
+    seafloor(focal, 6) -= detritus_fish(focal);
 
   }
 }
@@ -78,5 +78,5 @@ rcpp_diffuse_values(seafloor = seafloor,
                     cell_adj = cell_adj,
                     nutrients_diffusion = parameters$nutrients_diffusion,
                     detritus_diffusion = parameters$detritus_diffusion,
-                    detritus_dead_diffusion = parameters$detritus_dead_diffusion)
+                    detritus_fish_diffusion = parameters$detritus_fish_diffusion)
 */

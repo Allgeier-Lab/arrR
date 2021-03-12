@@ -42,14 +42,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_calc_mineralization
-void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor, double detritus_dead_ratio, double detritus_mineralization);
-RcppExport SEXP _arrR_rcpp_calc_mineralization(SEXP seafloorSEXP, SEXP detritus_dead_ratioSEXP, SEXP detritus_mineralizationSEXP) {
+void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor, double detritus_fish_ratio, double detritus_mineralization);
+RcppExport SEXP _arrR_rcpp_calc_mineralization(SEXP seafloorSEXP, SEXP detritus_fish_ratioSEXP, SEXP detritus_mineralizationSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_dead_ratio(detritus_dead_ratioSEXP);
+    Rcpp::traits::input_parameter< double >::type detritus_fish_ratio(detritus_fish_ratioSEXP);
     Rcpp::traits::input_parameter< double >::type detritus_mineralization(detritus_mineralizationSEXP);
-    rcpp_calc_mineralization(seafloor, detritus_dead_ratio, detritus_mineralization);
+    rcpp_calc_mineralization(seafloor, detritus_fish_ratio, detritus_mineralization);
     return R_NilValue;
 END_RCPP
 }
@@ -152,16 +152,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_diffuse_values
-void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_dead_diffusion);
-RcppExport SEXP _arrR_rcpp_diffuse_values(SEXP seafloorSEXP, SEXP cell_adjSEXP, SEXP nutrients_diffusionSEXP, SEXP detritus_diffusionSEXP, SEXP detritus_dead_diffusionSEXP) {
+void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_fish_diffusion);
+RcppExport SEXP _arrR_rcpp_diffuse_values(SEXP seafloorSEXP, SEXP cell_adjSEXP, SEXP nutrients_diffusionSEXP, SEXP detritus_diffusionSEXP, SEXP detritus_fish_diffusionSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type cell_adj(cell_adjSEXP);
     Rcpp::traits::input_parameter< double >::type nutrients_diffusion(nutrients_diffusionSEXP);
     Rcpp::traits::input_parameter< double >::type detritus_diffusion(detritus_diffusionSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_dead_diffusion(detritus_dead_diffusionSEXP);
-    rcpp_diffuse_values(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion);
+    Rcpp::traits::input_parameter< double >::type detritus_fish_diffusion(detritus_fish_diffusionSEXP);
+    rcpp_diffuse_values(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion);
     return R_NilValue;
 END_RCPP
 }

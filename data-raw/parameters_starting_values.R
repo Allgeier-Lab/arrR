@@ -21,9 +21,9 @@ default_parameters <- list(
 
   detritus_ratio = 0.0001,
   detritus_mineralization = 0.0001,
-  detritus_dead_ratio = 0.6,
+  detritus_fish_ratio = 0.6,
   detritus_diffusion = 0.3,
-  detritus_dead_diffusion = 0.3,
+  detritus_fish_diffusion = 0.3,
 
   pop_max_reserves = 0.05,
   pop_want_reserves = 0.01,

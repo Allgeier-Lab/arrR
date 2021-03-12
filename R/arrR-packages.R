@@ -17,7 +17,7 @@ globalVariables(names = c(
   "ag_biomass",
   "bg_biomass",
   "density",
-  "detritus_dead",
+  "detritus_fish",
   "detritus_pool",
   "died_background",
   "died_consumption",

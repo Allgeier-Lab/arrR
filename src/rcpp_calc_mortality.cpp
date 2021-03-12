@@ -60,7 +60,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
       double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 
-      // add to dead detritus pool
+      // add to fish detritus pool
       seafloor(cell_id_temp, 6) += mass_diff;
 
       // create new individual

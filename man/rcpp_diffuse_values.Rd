@@ -9,7 +9,7 @@ rcpp_diffuse_values(
   cell_adj,
   nutrients_diffusion,
   detritus_diffusion,
-  detritus_dead_diffusion
+  detritus_fish_diffusion
 )
 }
 \arguments{
@@ -17,7 +17,7 @@ rcpp_diffuse_values(
 
 \item{cell_adj}{Matrix with cell adjacencies.}
 
-\item{nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion}{Numeric with parameters.}
+\item{nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion}{Numeric with parameters.}
 }
 \value{
 void

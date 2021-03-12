@@ -52,7 +52,7 @@ rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, 
 #' @description Rcpp calculate mineralization
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param detritus_dead_ratio,detritus_mineralization seafloor Numeric with parameters.
+#' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
 #'
 #' @details
 #' Rcpp implementation to calculate detritus miniralization.
@@ -63,8 +63,8 @@ rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, 
 #' @rdname rcpp_calc_mineralization
 #'
 #' @keywords export
-rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_mineralization) {
-    invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_dead_ratio, detritus_mineralization))
+rcpp_calc_mineralization <- function(seafloor, detritus_fish_ratio, detritus_mineralization) {
+    invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
 }
 
 #' rcpp_calc_mortality
@@ -206,7 +206,7 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #'
 #' @param seafloor Matrix with seafloor values.
 #' @param cell_adj Matrix with cell adjacencies.
-#' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
+#' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 #'
 #' @details
 #' Rcpp implementation to diffuse seafloor values between neighbouring cells.
@@ -217,8 +217,8 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @rdname rcpp_diffuse_values
 #'
 #' @export
-rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
-    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion))
+rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
+    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
 }
 
 #' rcpp_modify_degree
