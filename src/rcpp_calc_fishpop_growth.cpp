@@ -32,6 +32,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
   // KSM: will need to add in new parameters (prop_reserves)
 
+  // MH: Why? Oh...is that the 10% thing?
+
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
@@ -61,6 +63,10 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
     // calculate amount of available resources
     // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
+
+    // MH: This actually needs to moved somewhere else since we only need check if fish
+    // is foraging
+
     double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
     // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),

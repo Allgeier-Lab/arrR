@@ -45,11 +45,29 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
   // Q: in what R file do I write parameters?
   // Q: fish_id_temp does not seem to be in this C++ file - how do I write this in this .cpp file?
 
+  // MH: You need to add parameters at a few places: 1) in the function definition here
+  // 2) in the function definition in the header file (rcpp_move_fishpop.h) 3) in
+  // the R script that calls this function (simulate_movement.R) in the function
+  // definition as well as when the rcpp function is actually called 4) for convienience
+  // in check_parameters.R and lastly in 5) it data-raw/parameters-starting.R
+  // (The last two are not really needed but nice for usage)
+
+  // MH: You don't need fish_id_temp here imo because the order of fish doesn't matter.
+  // You can just just the for-loop counter i
+
   if fish_pop(fish_id_temp, 7) >= 0.10 * fishpop(fish_id_temp, 8) {
 
     // KSM: check if fish is at reef
     // KSM: check x and y coords between fish and reef
     // Q: these coords need to only be coords with reef - do I need to add (seafloor(cell_id_temp, 2) = 1)?
+
+    // MH: This wont work I think. fishpop_id_temp are coordianates in infintive space
+    // So the chance that x == x is really small. You need to use cell_id_from_xy
+    // and then check if this cell is reef, i.e. reef column == 1
+    // However, I would suggest to rather check if reef_dist of that cell is below e.g. 2m
+
+    // MH: also, i think you need to use == (but not 100% sure)
+
     if fish_pop(fish_id_temp, 3) = seafloor(cell_id_temp, 0) &
       fish_pop(fish_id_temp, 4) = seafloor(cell_id_temp, 2)
 
@@ -58,14 +76,19 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // Q: should I create a parameter similar to pop_mean_move that is reef_mean_move with some mean (2m) and SD?
     // Q: can you help me write a log-normal distribution in C++? I am not sure how to do this
 
+    // MH: I think yes considering the parameter
 
-
+    // MH: HAHAHA...I am not a wizard, no idea how to program a log-norm dist. I will google it
+    // Maybe Rcpp::rlnorm( n, meanlog = 0.0, sdlog = 1.0 ) could work
+    // https://teuder.github.io/rcpp4everyone_en/220_dpqr_functions.html#log-normal-distribution
 
     // KSM: Behavior 2 - return to reef
     // KSM: fish need to have knowledge of distance to reef
     } else {
 
     // Q: here I took your code from below to check surroundings/find reef. is this what we want to do?
+
+    // MH: For the moment yes. We might give them a bit "more knowledge" at one point
 
       // create matrix with 3 rows (left, straight, right) and 2 cols (x,y)
       Rcpp::NumericMatrix headings(3, 2);
@@ -108,6 +131,14 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // KSM: check if pop_mean_move is less than distance to reef
       // Q: should these be written as the column #, not the parameter?
+
+      // MH: Okay, I think here is a big mess and you are in the wrong loop.
+      // The loop starting in l121 just gets the distance to reef for all three
+      // directions. I think we need to first run the loop without any changes.
+      // Then, starting in line 160 (if distance(0) etc.) we need to check which
+      // direction is the shortest towards the reef and then use this distance to
+      // check againgst pop_mean_move
+
       if pop_mean_move <= reef_dist {
 
       // KSM: move based on pop_mean_move
@@ -128,12 +159,20 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // Q: do we need this code here? since fish is foraging randomly on landscape
       // left distance is smaller than straight and right
+
+      // MH: See comment l135
+
       if ((distance(0) < distance(1)) & (distance(0) < distance(2))) {
 
         fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
       // right distance is smaller than straight and left
       // Q: what does "else if" do?
+
+      // MH: so if (x==y) {A} else {B} checks if x equals y and if yes does A and
+      // if not does B. Use else if, allows in case the first if was false to
+      // acutally check another conidtion
+
       } else if ((distance(2) < distance(1)) & (distance(2) < distance(0))) {
 
         fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
