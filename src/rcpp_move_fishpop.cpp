@@ -16,6 +16,8 @@
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //' @param pop_mean_move Numeric with parameter.
+//' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
+//' @param reef_mean_move Double with limited movement at reef
 //'
 //' @details
 //' Rcpp implementation to move fish individuals depending on move distance and
@@ -32,63 +34,39 @@
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
                        Rcpp::NumericVector move_dist, double pop_mean_move,
-                       double pop_visibility, bool reef_attraction,
+                       double pop_visibility,
+                       double reef_mean_move, double prop_reserves,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
-
-  // KSM: will need to add in all new parameters (prop_reserves, reef_mean_move)
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
   // KSM: check if reserves are greater than or equal to 10% of max_reserves
-  // KSM: here is where we will need to add a parameter instead of constant 10%
-  // Q: in what R file do I write parameters?
-  // Q: fish_id_temp does not seem to be in this C++ file - how do I write this in this .cpp file?
+  // Q: OK is this how I would write it?
 
-  // MH: You need to add parameters at a few places: 1) in the function definition here
-  // 2) in the function definition in the header file (rcpp_move_fishpop.h) 3) in
-  // the R script that calls this function (simulate_movement.R) in the function
-  // definition as well as when the rcpp function is actually called 4) for convienience
-  // in check_parameters.R and lastly in 5) it data-raw/parameters-starting.R
-  // (The last two are not really needed but nice for usage)
+  double prop_reserves = Rcpp::rlnorm( n, meanlog = 0.1, sdlog = 1.0 );
 
-  // MH: You don't need fish_id_temp here imo because the order of fish doesn't matter.
-  // You can just just the for-loop counter i
+  if fish_pop(i, 7) >= prop_reserves * fishpop(i, 8) {
 
-  if fish_pop(fish_id_temp, 7) >= 0.10 * fishpop(fish_id_temp, 8) {
+    // KSM: check if reef_dist of current cell is < 2m
+    // MH: I would suggest to rather check if reef_dist of that cell is below e.g. 2m
 
-    // KSM: check if fish is at reef
-    // KSM: check x and y coords between fish and reef
-    // Q: these coords need to only be coords with reef - do I need to add (seafloor(cell_id_temp, 2) = 1)?
-
-    // MH: This wont work I think. fishpop_id_temp are coordianates in infintive space
-    // So the chance that x == x is really small. You need to use cell_id_from_xy
-    // and then check if this cell is reef, i.e. reef column == 1
-    // However, I would suggest to rather check if reef_dist of that cell is below e.g. 2m
-
-    // MH: also, i think you need to use == (but not 100% sure)
-
-    if fish_pop(fish_id_temp, 3) = seafloor(cell_id_temp, 0) &
-      fish_pop(fish_id_temp, 4) = seafloor(cell_id_temp, 2)
+    if reef_dist <= int 2
 
     // KSM: Behavior 1 - shelter on reef
-    // KSM: this is where I will add in a log-normal distribution within 2m (or some distance) of reef
-    // Q: should I create a parameter similar to pop_mean_move that is reef_mean_move with some mean (2m) and SD?
-    // Q: can you help me write a log-normal distribution in C++? I am not sure how to do this
+    // KSM: Create log-normal distribution within 2m (or some distance) of reef to move
+    // Q: what is "n"? do I need to identify this?
 
-    // MH: I think yes considering the parameter
+    double reef_mean_move = Rcpp::rlnorm( n, meanlog = 2.0, sdlog = 1.0 )
 
-    // MH: HAHAHA...I am not a wizard, no idea how to program a log-norm dist. I will google it
-    // Maybe Rcpp::rlnorm( n, meanlog = 0.0, sdlog = 1.0 ) could work
-    // https://teuder.github.io/rcpp4everyone_en/220_dpqr_functions.html#log-normal-distribution
+      // Q: now how would I make their movement be this?
+
+      move_dist == reef_mean_move
 
     // KSM: Behavior 2 - return to reef
-    // KSM: fish need to have knowledge of distance to reef
     } else {
 
-    // Q: here I took your code from below to check surroundings/find reef. is this what we want to do?
-
-    // MH: For the moment yes. We might give them a bit "more knowledge" at one point
+    // KSM: fish checks surroundings. we might give them a bit "more knowledge" at one point
 
       // create matrix with 3 rows (left, straight, right) and 2 cols (x,y)
       Rcpp::NumericMatrix headings(3, 2);
@@ -131,6 +109,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // KSM: check if pop_mean_move is less than distance to reef
       // Q: should these be written as the column #, not the parameter?
+      // Q: need help starting from here
 
       // MH: Okay, I think here is a big mess and you are in the wrong loop.
       // The loop starting in l121 just gets the distance to reef for all three
@@ -214,6 +193,7 @@ rcpp_move_fishpop(fishpop = fishpop_values,
                   pop_mean_move = parameters$pop_mean_move,
                   pop_visibility = parameters$pop_visibility,
                   extent = extent,
-                  dimensions = dimensions,
-                  reef_attraction = reef_attraction)
+                  pop_reserves = pop_reserves,
+                  reef_mean_move = reef_mean_move,
+                  dimensions = dimensions)
 */

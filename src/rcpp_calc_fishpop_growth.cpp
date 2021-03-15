@@ -10,10 +10,12 @@ using namespace Rcpp;
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
+//' //' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
 //' "KSM" notes from Katrina to help understand code
+//' "Q": questions for Max
 //'
 //' @return void
 //'
@@ -28,11 +30,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               double pop_k, double pop_linf,
                               double pop_a, double pop_b,
                               double pop_n_body, double pop_max_reserves, double pop_want_reserves,
-                              double min_per_i) {
-
-  // KSM: will need to add in new parameters (prop_reserves)
-
-  // MH: Why? Oh...is that the 10% thing?
+                              double min_per_i, double prop_reserves) {
 
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
@@ -61,22 +59,26 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
-    // calculate amount of available resources
-    // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
-
-    // MH: This actually needs to moved somewhere else since we only need check if fish
-    // is foraging
-
-    double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
+    // Q: same parameter as in rcpp_move_fishpop.cpp - is this correct? do we need this both places?
+    double prop_reserves = Rcpp::rlnorm( n, meanlog = 0.1, sdlog = 1.0 );
 
     // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
-    if fish_pop(fish_id_temp, 7) >= 0.10 * fishpop(fish_id_temp, 8) {
+    if fish_pop(fish_id_temp, 7) >= prop_reserves * fishpop(fish_id_temp, 8) {
 
        // KSM: reduce reserves to meet consumption_req
         fishpop(fish_id_temp, 7) -= consumption_req;
 
     // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
     } else {
+
+      // calculate amount of available resources
+      // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
+
+      // MH: This actually needs to moved somewhere else since we only need check if fish
+      // is foraging
+      // KSM: would here work? we need this for line 85
+
+      double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
     // individual dies because consumption requirements cannot be met
     // KSM: if consumption requirements are greater than available resources per cell, fish dies
@@ -247,5 +249,6 @@ rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                          pop_n_body = parameters$pop_n_body,
                          pop_max_reserves = parameters$pop_max_reserves,
                          pop_want_reserves = parameters$pop_want_reserves,
+                         pop_reserves = pop_reserves,
                          min_per_i = min_per_i)
 */

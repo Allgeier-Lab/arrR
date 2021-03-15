@@ -7,7 +7,8 @@ using namespace Rcpp;
 
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop,
                        Rcpp::NumericVector move_dist, double pop_mean_move,
+                       double reef_mean_move, double prop_reserves,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
-                       double pop_visibility, bool reef_attraction);
+                       double pop_visibility);
 
 //#endif // RCPP_MOVE_FISHPOP

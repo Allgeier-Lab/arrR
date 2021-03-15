@@ -39,6 +39,10 @@ default_parameters <- list(
 
   pop_n_body = 0.02999,
 
+  prop_reserves = 0.10,
+
+  reef_mean_move = 2,
+
   resp_intercept = 0.0108,
   resp_slope = -0.2,
   resp_temp_low = 2.1,
