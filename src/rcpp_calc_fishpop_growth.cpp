@@ -10,7 +10,7 @@ using namespace Rcpp;
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-//' //' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
+//' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
@@ -60,15 +60,23 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
     // Q: same parameter as in rcpp_move_fishpop.cpp - is this correct? do we need this both places?
-    double prop_reserves = Rcpp::rlnorm( n, meanlog = 0.1, sdlog = 1.0 );
+    // MH: I am a little bit confused. Do you want to calculate prop_reserves or should this
+    // be a parameter ?
+    // MH: Also, we probably need to wrap this in std::exp(), right?
+    // MH: Watch out, rlnorm returns a vector even if only one number is needed
+
+    double prop_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
 
     // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
-    if fish_pop(fish_id_temp, 7) >= prop_reserves * fishpop(fish_id_temp, 8) {
+    if (fishpop(fish_id_temp, 7) >= prop_reserves * fishpop(fish_id_temp, 8)) {
 
-       // KSM: reduce reserves to meet consumption_req
-        fishpop(fish_id_temp, 7) -= consumption_req;
 
-    // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
+      // MH: This would be where Issue #53 comes into play
+
+      // KSM: reduce reserves to meet consumption_req
+      fishpop(fish_id_temp, 7) -= consumption_req;
+
+      // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
     } else {
 
       // calculate amount of available resources
@@ -77,162 +85,164 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       // MH: This actually needs to moved somewhere else since we only need check if fish
       // is foraging
       // KSM: would here work? we need this for line 85
+      // MH: I think yes
 
       double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
-    // individual dies because consumption requirements cannot be met
-    // KSM: if consumption requirements are greater than available resources per cell, fish dies
-    if (consumption_req > available_resources) {
+      // individual dies because consumption requirements cannot be met
+      // KSM: if consumption requirements are greater than available resources per cell, fish dies
+      if (consumption_req > available_resources) {
 
-      // save current original coordinates
-      double x_coord = fishpop(fish_id_temp, 2);
+        // save current original coordinates
+        double x_coord = fishpop(fish_id_temp, 2);
 
-      double y_coord = fishpop(fish_id_temp, 3);
+        double y_coord = fishpop(fish_id_temp, 3);
 
-      // save current mortality counter
-      int died_consumption = fishpop(fish_id_temp, 11);
+        // save current mortality counter
+        int died_consumption = fishpop(fish_id_temp, 11);
 
-      int died_background = fishpop(fish_id_temp, 12);
+        int died_background = fishpop(fish_id_temp, 12);
 
-      // calculate increase in fish mass including reserves
-      // KSM: puts nutrients from dead fish into detrital pool
-      // KSM: mass_difference = weight - weight specific nutrient content + fish reserves
-      double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
-        fishpop(fish_id_temp, 7);
+        // calculate increase in fish mass including reserves
+        // KSM: puts nutrients from dead fish into detrital pool
+        // KSM: mass_difference = weight - weight specific nutrient content + fish reserves
+        double mass_diff = (fishpop(fish_id_temp, 6) -
+                            fishpop_track(fish_id_temp, 6)) * pop_n_body + fishpop(fish_id_temp, 7);
 
-      // add to dead detritus pool
-      seafloor(cell_id_temp, 6) += mass_diff;
+        // add to dead detritus pool
+        seafloor(cell_id_temp, 6) += mass_diff;
 
-      // create new individual
-      // KSM: access all columns of fish_id_temp DF
-      fishpop(fish_id_temp, _) = fishpop_track(fish_id_temp, _);
+        // create new individual
+        // KSM: access all columns of fish_id_temp DF
+        fishpop(fish_id_temp, _) = fishpop_track(fish_id_temp, _);
 
-      // keep old coordinates
-      // KSM: put new fish back in place of dead fish
-      fishpop(fish_id_temp, 2) = x_coord;
+        // keep old coordinates
+        // KSM: put new fish back in place of dead fish
+        fishpop(fish_id_temp, 2) = x_coord;
 
-      fishpop(fish_id_temp, 3) = y_coord;
+        fishpop(fish_id_temp, 3) = y_coord;
 
-      // calculate wanted reserves
-      // KSM: calculate new reserves for new fish of new size
-      double reserves_wanted = pop_n_body * fishpop(fish_id_temp, 6) * pop_want_reserves;
+        // calculate wanted reserves
+        // KSM: calculate new reserves for new fish of new size
+        double reserves_wanted = pop_n_body * fishpop(fish_id_temp, 6) * pop_want_reserves;
 
-      // detritus pool is smaller than wanted reserves, detritus pool is fully used
-      if (reserves_wanted >= seafloor(cell_id_temp, 5)) {
+        // detritus pool is smaller than wanted reserves, detritus pool is fully used
+        if (reserves_wanted >= seafloor(cell_id_temp, 5)) {
 
-        // use pool completely
-        // KSM: fish fully consumes detritus pool in cell
-        fishpop(fish_id_temp, 7) = seafloor(cell_id_temp, 5);
+          // use pool completely
+          // KSM: fish fully consumes detritus pool in cell
+          fishpop(fish_id_temp, 7) = seafloor(cell_id_temp, 5);
 
-        // set pool to zero
-        // KSM: cell goes to 0
-        seafloor(cell_id_temp, 5) = 0;
-
-      // detritus pool is larger than what is wanted, so only subset is used
-      // KSM: otherwise, if detritus pool is large enough, only a subset is used by fish
-      } else {
-
-        // wanted reserves can be filled completely
-        fishpop(fish_id_temp, 7) = reserves_wanted;
-
-        // reduced detritus pool by wanted reserves
-        // KSM: remove consumed detritus from cell to match reserve needs
-        seafloor(cell_id_temp, 5) -= reserves_wanted;
-
-      }
-
-      // update mortality counter
-      // KSM: add to died_consumption when fish dies because consumption needs not met
-      fishpop(fish_id_temp, 11) = died_consumption + 1;
-
-      fishpop(fish_id_temp, 12) = died_background;
-
-    // individual grows because consumption requirements can be met
-    // KSM: end of 'if' statement (fish dies), otherwise fish grows
-    } else {
-
-      //  increase age (60 min * 24 h = 1440 min/day)
-      // KSM: current age + time past
-      fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
-
-      // increase fish dimensions length
-      // KSM: current length + growth in length
-      fishpop(fish_id_temp, 5) += growth_length;
-
-      // increase fish dimensions weight
-      //KSM: current weight + growth in weight
-      fishpop(fish_id_temp, 6) += growth_weight;
-
-      // update max reserves based on weight
-      //KSM: reserves_max = weight * size-specific n requirements * max amt of reserves in relation to body size
-      fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
-
-      // calculate reserves difference
-      // KSM: difference in reserves = reserves_max - current reserves
-      // KSM: essentially how much reserves are needed to have full reserves
-      double reserves_diff = fishpop(fish_id_temp, 8) - fishpop(fish_id_temp, 7);
-
-      // consumption requirement can be met by detritus_pool
-      if (consumption_req <= seafloor(cell_id_temp, 5)) {
-
-        // calculate remaining nutrients in pool
-        double nutrients_left = seafloor(cell_id_temp, 5) - consumption_req;
-
-        // reserves can be filled completely in cell
-        if (reserves_diff <= nutrients_left) {
-
-          // set reserves to max
-          fishpop(fish_id_temp, 7) = fishpop(fish_id_temp, 8);
-
-          // reduce detritus pool
-          // KSM: detritus pool in cell = current detritus pool - (current requirements based on size + how much fish needs to fill reserves)
-          seafloor(cell_id_temp, 5) -= (consumption_req + reserves_diff);
-
-          // track consumption
-          // KSM: how much detritus is being consumed in a cell based on consumption requirements and reserves needed
-          seafloor(cell_id_temp, 13) += consumption_req + reserves_diff;
-
-        // reserves cannot be filled completely by nutrient pool
-        } else {
-
-          // add all nutrients that are left
-          // KSM: reserves still needed
-          fishpop(fish_id_temp, 7) += nutrients_left;
-
-          // set detritus pool to zero
-          // KSM completely drained detritus pool in cell
+          // set pool to zero
+          // KSM: cell goes to 0
           seafloor(cell_id_temp, 5) = 0;
 
-          // track consumption
-          seafloor(cell_id_temp, 13) += consumption_req + nutrients_left;
+          // detritus pool is larger than what is wanted, so only subset is used
+          // KSM: otherwise, if detritus pool is large enough, only a subset is used by fish
+        } else {
+
+          // wanted reserves can be filled completely
+          fishpop(fish_id_temp, 7) = reserves_wanted;
+
+          // reduced detritus pool by wanted reserves
+          // KSM: remove consumed detritus from cell to match reserve needs
+          seafloor(cell_id_temp, 5) -= reserves_wanted;
 
         }
 
-      // reserves are needed to meet consumption requirement
+        // update mortality counter
+        // KSM: add to died_consumption when fish dies because consumption needs not met
+        fishpop(fish_id_temp, 11) = died_consumption + 1;
+
+        fishpop(fish_id_temp, 12) = died_background;
+
+        // individual grows because consumption requirements can be met
+        // KSM: end of 'if' statement (fish dies), otherwise fish grows
       } else {
 
-        // reduced reserves
-        // KSM: because there was not enough detritus in cell, reserves are reduced (after consuming detritus that was available)
-        fishpop(fish_id_temp, 7) -= (consumption_req - seafloor(cell_id_temp, 5));
+        //  increase age (60 min * 24 h = 1440 min/day)
+        // KSM: current age + time past
+        fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
 
-        // track consumption
-        // KSM: all of that detritus pool is added to consumption in each cell
-        seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
+        // increase fish dimensions length
+        // KSM: current length + growth in length
+        fishpop(fish_id_temp, 5) += growth_length;
 
-        // set detritus pool to zero
-        seafloor(cell_id_temp, 5) = 0;
+        // increase fish dimensions weight
+        //KSM: current weight + growth in weight
+        fishpop(fish_id_temp, 6) += growth_weight;
+
+        // update max reserves based on weight
+        //KSM: reserves_max = weight * size-specific n requirements * max amt of reserves in relation to body size
+        fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
+
+        // calculate reserves difference
+        // KSM: difference in reserves = reserves_max - current reserves
+        // KSM: essentially how much reserves are needed to have full reserves
+        double reserves_diff = fishpop(fish_id_temp, 8) - fishpop(fish_id_temp, 7);
+
+        // consumption requirement can be met by detritus_pool
+        if (consumption_req <= seafloor(cell_id_temp, 5)) {
+
+          // calculate remaining nutrients in pool
+          double nutrients_left = seafloor(cell_id_temp, 5) - consumption_req;
+
+          // reserves can be filled completely in cell
+          if (reserves_diff <= nutrients_left) {
+
+            // set reserves to max
+            fishpop(fish_id_temp, 7) = fishpop(fish_id_temp, 8);
+
+            // reduce detritus pool
+            // KSM: detritus pool in cell = current detritus pool - (current requirements based on size + how much fish needs to fill reserves)
+            seafloor(cell_id_temp, 5) -= (consumption_req + reserves_diff);
+
+            // track consumption
+            // KSM: how much detritus is being consumed in a cell based on consumption requirements and reserves needed
+            seafloor(cell_id_temp, 13) += consumption_req + reserves_diff;
+
+            // reserves cannot be filled completely by nutrient pool
+          } else {
+
+            // add all nutrients that are left
+            // KSM: reserves still needed
+            fishpop(fish_id_temp, 7) += nutrients_left;
+
+            // set detritus pool to zero
+            // KSM completely drained detritus pool in cell
+            seafloor(cell_id_temp, 5) = 0;
+
+            // track consumption
+            seafloor(cell_id_temp, 13) += consumption_req + nutrients_left;
+
+          }
+
+          // reserves are needed to meet consumption requirement
+        } else {
+
+          // reduced reserves
+          // KSM: because there was not enough detritus in cell, reserves are reduced (after consuming detritus that was available)
+          fishpop(fish_id_temp, 7) -= (consumption_req - seafloor(cell_id_temp, 5));
+
+          // track consumption
+          // KSM: all of that detritus pool is added to consumption in each cell
+          seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
+
+          // set detritus pool to zero
+          seafloor(cell_id_temp, 5) = 0;
+
+        }
+
+        // calc non-used consumption (excretion)
+        double excretion_temp = consumption_req - (growth_weight * pop_n_body);
+
+        // track excretion
+        seafloor(cell_id_temp, 14) += excretion_temp;
+
+        // add non-used consumption to nutrient pool
+        seafloor(cell_id_temp, 4) += excretion_temp;
 
       }
-
-      // calc non-used consumption (excretion)
-      double excretion_temp = consumption_req - (growth_weight * pop_n_body);
-
-      // track excretion
-      seafloor(cell_id_temp, 14) += excretion_temp;
-
-      // add non-used consumption to nutrient pool
-      seafloor(cell_id_temp, 4) += excretion_temp;
-
     }
   }
 }
@@ -249,6 +259,6 @@ rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                          pop_n_body = parameters$pop_n_body,
                          pop_max_reserves = parameters$pop_max_reserves,
                          pop_want_reserves = parameters$pop_want_reserves,
-                         pop_reserves = pop_reserves,
+                         pop_reserves = parameters$pop_reserves,
                          min_per_i = min_per_i)
 */
