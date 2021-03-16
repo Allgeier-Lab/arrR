@@ -111,6 +111,8 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
+  pop_reserves_thres <- runif(n = nrow(fishpop_values), min = 1, max = parameters$prop_reservers)
+
   # print some basic information about model run
   if (verbose) {
 
@@ -167,7 +169,8 @@ run_simulation <- function(seafloor, fishpop,
                               seafloor = seafloor$reef,
                               seafloor_values = seafloor_values,
                               parameters = parameters,
-                              min_per_i = min_per_i)
+                              min_per_i = min_per_i,
+                              pop_reserves_thres = pop_reserves_thres)
 
       # simulate mortality
       simulate_mortality(fishpop_values = fishpop_values,
