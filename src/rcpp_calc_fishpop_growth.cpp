@@ -65,10 +65,10 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // MH: Also, we probably need to wrap this in std::exp(), right?
     // MH: Watch out, rlnorm returns a vector even if only one number is needed
 
-    double prop_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
+    double prop_reserves_temp = Rcpp::rlnorm(1, prop_reserves, 1.0)(0);
 
     // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
-    if (fishpop(fish_id_temp, 7) >= prop_reserves * fishpop(fish_id_temp, 8)) {
+    if (fishpop(fish_id_temp, 7) >= prop_reserves_temp * fishpop(fish_id_temp, 8)) {
 
 
       // MH: This would be where Issue #53 comes into play

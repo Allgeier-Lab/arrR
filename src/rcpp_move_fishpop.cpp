@@ -66,7 +66,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // Q: what is "n"? do I need to identify this?
         // MH: Its the number of random number and we just need 1
 
-        double reef_mean_move = Rcpp::rlnorm(n = 1, meanlog = 2.0, sdlog = 1.0);
+        double move_dist = Rcpp::rlnorm(1, reef_mean_move, 1.0)(0);
 
           // Q: now how would I make their movement be this?
           // MH: See line 171 but only use reef_mean_move, we will get rid of move dist
@@ -164,7 +164,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           if (pop_mean_move <= reef_dist_temp) {
 
           // KSM: move based on pop_mean_move
-          move_dist = pop_mean_move
+          // MH: Pull move dist from pop_mean log norm
+          // double move_dist =
 
           // KSM: if pop_mean_move is greater than distance to reef, pull from limited distance distribution (less than pop_mean_move)
           // Q: how should we write this? Do you have any ideas? So we want pop_mean_move to be shorter to not overshoot reef
@@ -172,27 +173,27 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           } else {
 
 
+            // pull move_dist from log norm where mean < reef_dist_temp
+            // double move_dist =
 
           }
         }
       }
 
-        // KSM: Behavior 3 - foraging
-        // KSM: we want fish to move randomly, based on pop_mean_move
-        } else {
+      // KSM: Behavior 3 - foraging
+      // KSM: we want fish to move randomly, based on pop_mean_move
+      } else {
 
-        // Q: do we need this code here? since fish is foraging randomly on landscape
-        // left distance is smaller than straight and right
-
-        // MH: See comment l135
+        // pull move_dist from log norm with mean_moce
+        // double move_dist =
 
 
       }
 
       // calculate new x coord
       NumericVector xy_temp = NumericVector::create(
-        fishpop(i, 2) + (move_dist(i) * cos(fishpop(i, 4) * (M_PI / 180.0))),
-        fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)))
+        fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
+        fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
       );
 
       // make sure coords are within study area
@@ -205,7 +206,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       fishpop(i, 3) = xy_temp(1);
 
       // update activity
-      fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
+      fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist + 1;
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
       // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
