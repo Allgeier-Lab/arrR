@@ -60,18 +60,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
-    // Q: same parameter as in rcpp_move_fishpop.cpp - is this correct? do we need this both places?
-    // MH: I am a little bit confused. Do you want to calculate prop_reserves or should this
-    // be a parameter ?
-    // MH: Also, we probably need to wrap this in std::exp(), right?
-    // MH: Watch out, rlnorm returns a vector even if only one number is needed
-
-    // double prop_reserves_temp = std::exp(Rcpp::rlnorm(1, prop_reserves, 1.0)(0));
-    //
-
-    // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
+    // KSM: if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     if (fishpop(fish_id_temp, 7) >= pop_thres_reserves(i) * fishpop(fish_id_temp, 8)) {
-
 
       // MH: This would be where Issue #53 comes into play
 
@@ -83,11 +73,6 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
       // calculate amount of available resources
       // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
-
-      // MH: This actually needs to moved somewhere else since we only need check if fish
-      // is foraging
-      // KSM: would here work? we need this for line 85
-      // MH: I think yes
 
       double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 

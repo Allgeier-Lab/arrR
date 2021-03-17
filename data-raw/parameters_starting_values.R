@@ -26,10 +26,13 @@ default_parameters <- list(
 
   pop_max_reserves = 0.05,
   pop_want_reserves = 0.01,
+  pop_thres_reserves = 0.10,
 
   pop_visibility = 1,
-  pop_mean_move =  8,
-  pop_var_move = 5,
+
+  move_mean =  8,
+  move_var = 5,
+  move_reef = 2,
 
   pop_a = 0.0121,
   pop_b = 3.161,
@@ -37,10 +40,6 @@ default_parameters <- list(
   pop_linf = 41.6,
 
   pop_n_body = 0.02999,
-
-  prop_reserves = 0.10,
-
-  reef_mean_move = 2,
 
   resp_intercept = 0.0108,
   resp_slope = -0.2,
