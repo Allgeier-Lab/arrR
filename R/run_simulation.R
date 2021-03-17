@@ -111,6 +111,7 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
+  ##KSM WORK HERE
   pop_reserves_thres <- runif(n = nrow(fishpop_values), min = 1, max = parameters$prop_reservers)
 
   # print some basic information about model run

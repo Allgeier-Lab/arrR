@@ -10,14 +10,13 @@
 //' @param fishpop Matrix with fishpop values.
 //' @param reef_dist Vector with distance to reef of each cell.
 //' @param move_dist Vector with move distance of fish individuals.
-//' @param pop_mean_move Double with mean movement parameter.
+//' @param move_mean Double with mean movement parameter.
 //' @param pop_visibility Double with "sight" distance of fish.
-//' @param reef_attraction Bool if attracted towards reef.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param pop_mean_move Numeric with parameter.
-//' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
-//' @param reef_mean_move Double with limited movement at reef
+//' @param move_mean Numeric with parameter.
+//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
+//' @param move_reef Double with mean movement distance when sheltering at reef
 //'
 //' @details
 //' Rcpp implementation to move fish individuals depending on move distance and
@@ -33,27 +32,26 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
-                       Rcpp::NumericVector move_dist, double pop_mean_move,
+                       Rcpp::NumericVector move_dist, Rcpp::NumericVector pop_thres_reserves,
+                       double move_mean, double move_reef,
                        double pop_visibility,
-                       double reef_mean_move, double prop_reserves,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
     // loop through fishpop individuals
     for (int i = 0; i < fishpop.nrow(); i++) {
 
-      // KSM: check if reserves are greater than or equal to 10% of max_reserves
+      // KSM: check if reserves are greater than or equal to 10% of max_reserves (pop_thres_reserves)
       // Q: OK is this how I would write it?
       // MH: I am a little bit confused. Do you want to calculate prop_reserves or should this
       // be a parameter ?
       // MH: Also, we probably need to wrap this in std::exp(), right?
       // MH: Watch out, rlnorm returns a vector even if only one number is needed
+      // KSM: MOVE THIS TO RUN_SIMULATION
+      double pop_thresh_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
 
-      double prop_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
+      // behaviour 1 and 2: reserves above doggy bag
+      if fish_pop(i, 7) >= pop_thresh_reserves * fishpop(i, 8) {
 
-      // behaviour 1/2: reserves above doggy bag
-      if fish_pop(i, 7) >= prop_reserves * fishpop(i, 8) {
-
-        // KSM: check if reef_dist of current cell is < 2m
         // MH: I would suggest to rather check if reef_dist of that cell is below e.g. 2m
 
         // MH: get cell id of current location (make sure this acutally works :D)
@@ -63,14 +61,12 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         if (reef_dist(cell_id) <= 2.0) {
 
         // KSM: Create log-normal distribution within 2m (or some distance) of reef to move
-        // Q: what is "n"? do I need to identify this?
-        // MH: Its the number of random number and we just need 1
 
-        double move_dist = Rcpp::rlnorm(1, reef_mean_move, 1.0)(0);
+        double move_dist = Rcpp::rlnorm(1, move_reef, 1.0)(0);
 
           // Q: now how would I make their movement be this?
-          // MH: See line 171 but only use reef_mean_move, we will get rid of move dist
-          // move_dist == reef_mean_move
+          // MH: See line 171 but only use move_reef, we will get rid of move dist
+          // move_dist == move_reef
 
         // behaviour 2: fish return towards reef
         } else {
@@ -124,7 +120,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
             fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
-            // save distance to check with pop_mean_move
+            // save distance to check with move_mean
             double reef_dist_temp = distance(0);
 
             // right distance is smaller than straight and left
@@ -138,18 +134,18 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
             fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
 
-            // save distance to check with pop_mean_move
+            // save distance to check with move_mean
             double reef_dist_temp = distance(2);
 
           // straight direction is shortest
           } else {
 
-            // save distance to check with pop_mean_move
+            // save distance to check with move_mean
             double reef_dist_temp = distance(2);
 
           }
 
-          // KSM: check if pop_mean_move is less than distance to reef
+          // KSM: check if mean_move is less than distance to reef
           // Q: should these be written as the column #, not the parameter?
           // Q: need help starting from here
 
@@ -158,22 +154,22 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           // directions. I think we need to first run the loop without any changes.
           // Then, starting in line 160 (if distance(0) etc.) we need to check which
           // direction is the shortest towards the reef and then use this distance to
-          // check againgst pop_mean_move
+          // check againgst move_mean
 
-          // fish are further away from reef than pop_mean_move
-          if (pop_mean_move <= reef_dist_temp) {
+          // fish are further away from reef than move_mean
+          // KSM: HELP HERE
+          if (move_mean <= reef_dist_temp) {
 
-          // KSM: move based on pop_mean_move
-          // MH: Pull move dist from pop_mean log norm
+          // KSM: move based on move_mean
+          // MH: Pull move dist from move_mean log norm
           // double move_dist =
 
-          // KSM: if pop_mean_move is greater than distance to reef, pull from limited distance distribution (less than pop_mean_move)
-          // Q: how should we write this? Do you have any ideas? So we want pop_mean_move to be shorter to not overshoot reef
-          // Q: should it be pop_mean_move minus some constant or some proportion of pop_mean_move?
+          // KSM: if move_mean is greater than distance to reef, pull from limited distance distribution (less than pop_mean_move)
+          // Q: how should we write this? Do you have any ideas? So we want move_mean to be shorter to not overshoot reef
           } else {
 
 
-            // pull move_dist from log norm where mean < reef_dist_temp
+            // pull move_dist from log norm where move_mean < reef_dist_temp
             // double move_dist =
 
           }
@@ -181,7 +177,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       }
 
       // KSM: Behavior 3 - foraging
-      // KSM: we want fish to move randomly, based on pop_mean_move
+      // KSM: we want fish to move randomly, based on move_mean
       } else {
 
         // pull move_dist from log norm with mean_moce
@@ -206,7 +202,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       fishpop(i, 3) = xy_temp(1);
 
       // update activity
-      fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist + 1;
+      fishpop(i, 9) = (1 / (move_mean + 1)) * move_dist + 1;
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
       // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
@@ -220,10 +216,10 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 rcpp_move_fishpop(fishpop = fishpop_values,
                   reef_dist = seafloor_values[, "reef_dist"],
                   move_dist = move_dist,
-                  pop_mean_move = parameters$pop_mean_move,
+                  move_mean = parameters$move_mean,
                   pop_visibility = parameters$pop_visibility,
-                  pop_reserves = parameters$pop_reserves,
-                  reef_mean_move = parameters$reef_mean_move,
+                  pop_thres_reserves = parameters$pop_thres_reserves,
+                  move_reef = parameters$move_reef,
                   extent = extent,
                   dimensions = dimensions)
 */

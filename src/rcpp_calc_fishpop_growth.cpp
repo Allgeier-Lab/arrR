@@ -10,7 +10,7 @@ using namespace Rcpp;
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-//' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
+//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
@@ -27,10 +27,11 @@ using namespace Rcpp;
 void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                               Rcpp::NumericMatrix seafloor,
                               Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
+                              Rcpp::NumericVector pop_thres_reserves,
                               double pop_k, double pop_linf,
                               double pop_a, double pop_b,
                               double pop_n_body, double pop_max_reserves, double pop_want_reserves,
-                              double min_per_i, Rcpp::NumericVector prop_reserves) {
+                              double min_per_i) {
 
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
@@ -69,7 +70,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     //
 
     // KSM: if reserves are greater than 10% of reserves_max (doggy bag > 10% full),
-    if (fishpop(fish_id_temp, 7) >= prop_reserves(i) * fishpop(fish_id_temp, 8)) {
+    if (fishpop(fish_id_temp, 7) >= pop_thres_reserves(i) * fishpop(fish_id_temp, 8)) {
 
 
       // MH: This would be where Issue #53 comes into play
@@ -260,6 +261,6 @@ rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                          pop_n_body = parameters$pop_n_body,
                          pop_max_reserves = parameters$pop_max_reserves,
                          pop_want_reserves = parameters$pop_want_reserves,
-                         pop_reserves = parameters$pop_reserves,
+                         pop_thres_reserves = parameters$pop_thres_reserves,
                          min_per_i = min_per_i)
 */

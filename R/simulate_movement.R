@@ -28,11 +28,11 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
   extent <- as.vector(extent, mode = "numeric")
 
   # calc mean of log-norm distribution
-  norm_mean <- log((parameters$pop_mean_move ^ 2) /
-                     sqrt(parameters$pop_mean_move ^ 2 + parameters$pop_var_move))
+  norm_mean <- log((parameters$move_mean ^ 2) /
+                     sqrt(parameters$move_mean ^ 2 + parameters$move_var))
 
   # calc sd of log-norm distribution
-  norm_sd <- sqrt(log(1 + (parameters$pop_var_move / (parameters$pop_mean_move ^ 2))))
+  norm_sd <- sqrt(log(1 + (parameters$move_var / (parameters$move_mean ^ 2))))
 
   # get random numbers from log-norm distribution
   norm_random <- stats::rnorm(n = pop_n,
@@ -45,10 +45,10 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
   rcpp_move_fishpop(fishpop = fishpop_values,
                     reef_dist = seafloor_values[, "reef_dist"],
                     move_dist = move_dist,
-                    pop_mean_move = parameters$pop_mean_move,
+                    move_mean = parameters$move_mean,
                     pop_visibility = parameters$pop_visibility,
                     pop_reserves = parameters$pop_reserves,
-                    reef_mean_move = parameters$reef_mean_move,
+                    move_reef = parameters$move_reef,
                     extent = extent,
                     dimensions = dimensions)
 }

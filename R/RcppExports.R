@@ -33,7 +33,7 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 #' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 #' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-#' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
 #'
 #' @details
 #' Rcpp implementation to calculate growth of fish individuals.
@@ -46,8 +46,8 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @rdname rcpp_calc_fishpop_growth
 #'
 #' @export
-rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i, prop_reserves) {
-    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i, prop_reserves))
+rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
 }
 
 #' rcpp_calc_mineralization
@@ -253,14 +253,13 @@ rcpp_modify_degree <- function(x, y) {
 #' @param fishpop Matrix with fishpop values.
 #' @param reef_dist Vector with distance to reef of each cell.
 #' @param move_dist Vector with move distance of fish individuals.
-#' @param pop_mean_move Double with mean movement parameter.
+#' @param move_mean Double with mean movement parameter.
 #' @param pop_visibility Double with "sight" distance of fish.
-#' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param pop_mean_move Numeric with parameter.
-#' @param prop_reserves Double with proportion of max_reserves to drain prior to movement
-#' @param reef_mean_move Double with limited movement at reef
+#' @param move_mean Numeric with parameter.
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
+#' @param move_reef Double with mean movement distance when sheltering at reef
 #'
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
@@ -274,8 +273,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_mean_move, prop_reserves, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_mean_move, prop_reserves, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions))
 }
 
 #' rcpp_translate_torus
