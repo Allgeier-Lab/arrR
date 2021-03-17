@@ -42,15 +42,15 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // KSM: check if reserves are greater than or equal to 10% of max_reserves (pop_thres_reserves)
       // Q: OK is this how I would write it?
-      // MH: I am a little bit confused. Do you want to calculate prop_reserves or should this
+      // MH: I am a little bit confused. Do you want to calculate proportion of reserves or should this
       // be a parameter ?
       // MH: Also, we probably need to wrap this in std::exp(), right?
       // MH: Watch out, rlnorm returns a vector even if only one number is needed
       // KSM: MOVE THIS TO RUN_SIMULATION
-      double pop_thresh_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
+      double pop_thres_reserves = Rcpp::rlnorm(1, 0.1, 1.0)(0);
 
       // behaviour 1 and 2: reserves above doggy bag
-      if fish_pop(i, 7) >= pop_thresh_reserves * fishpop(i, 8) {
+      if fish_pop(i, 7) >= pop_thres_reserves * fishpop(i, 8) {
 
         // MH: I would suggest to rather check if reef_dist of that cell is below e.g. 2m
 

@@ -18,7 +18,7 @@
 #' @rdname simulate_fishpop_growth
 #'
 #' @export
-simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n, pop_reserves_thres,
+simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n, pop_thres_reserves,
                                     seafloor, seafloor_values, parameters, min_per_i) {
 
   # randomize order of loop because detritus pool can "run out"

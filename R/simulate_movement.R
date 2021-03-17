@@ -8,8 +8,8 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param extent,dimensions Spatial extent and dimensions of the seafloor raster
 #' @param parameters List with all model parameters.
-#' @param prop_reserves Double with proportion of max_reserves to drain prior to movement.
-#' @param reef_mean_move Double with limited movement at reef.
+#' @param pop_thres_reserves Double with proportion of max_reserves to drain prior to movement.
+#' @param move_reef move_reef Double with mean movement distance when sheltering at reef
 #'
 #' @details
 #' Function to simulate movement of fish population individuals.
@@ -47,7 +47,7 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     move_dist = move_dist,
                     move_mean = parameters$move_mean,
                     pop_visibility = parameters$pop_visibility,
-                    pop_reserves = parameters$pop_reserves,
+                    pop_thres_reserves = parameters$pop_thres_reserves,
                     move_reef = parameters$move_reef,
                     extent = extent,
                     dimensions = dimensions)
