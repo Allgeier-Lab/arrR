@@ -42,7 +42,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
       // behaviour 1 and 2: reserves above doggy bag
-      if fish_pop(i, 7) >= pop_thres_reserves(i) * fishpop(i, 8) {
+      if (fish_pop(i, 7) >= pop_thres_reserves(i) * fishpop(i, 8)) {
 
         // KSM: fish checks surroundings. we might give them a bit "more knowledge" at one point
         // KSM: fish needs to know where it is (even when sheltering on reef) to stay close to reef
@@ -114,7 +114,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         }
 
         // MH: get cell id of current location (need to make sure this acutally works :D)
-        // Q: how do I check this if code not running?
+        // Q: doesn't seem like R likes this - how do I check if the code does not run?
         int cell_id = rcpp_cell_from_xy(fishpop(i, Range(1, 2)), dimensions, extent) - 1;
 
         // behaviour 1: fish already at reef so they stay there
