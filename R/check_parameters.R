@@ -65,7 +65,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "pop_k",
                            "pop_linf",
                            "pop_n_body",
-                           "reef_mean_move",
                            "resp_intercept",
                            "resp_slope",
                            "resp_temp_low",

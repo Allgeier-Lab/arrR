@@ -8,6 +8,7 @@ simulate_fishpop_growth(
   fishpop_values,
   fishpop_track,
   pop_n,
+  pop_thres_reserves,
   seafloor,
   seafloor_values,
   parameters,

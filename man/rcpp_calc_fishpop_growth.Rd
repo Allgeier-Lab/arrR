@@ -10,6 +10,7 @@ rcpp_calc_fishpop_growth(
   seafloor,
   fish_id,
   cell_id,
+  pop_thres_reserves,
   pop_k,
   pop_linf,
   pop_a,
@@ -27,6 +28,8 @@ rcpp_calc_fishpop_growth(
 
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
+\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging}
+
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
 \item{pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i}{Numeric with parameters.}
@@ -40,6 +43,5 @@ Rcpp calc growth
 \details{
 Rcpp implementation to calculate growth of fish individuals.
 "KSM" notes from Katrina to help understand code
-"Q" questions Katrina has for Max
-"C" code to add
+"Q": questions for Max
 }

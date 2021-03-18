@@ -26,6 +26,10 @@ simulate_movement(
 \item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 
 \item{parameters}{List with all model parameters.}
+
+\item{pop_thres_reserves}{Double with proportion of max_reserves to drain prior to movement.}
+
+\item{move_reef}{move_reef Double with mean movement distance when sheltering at reef}
 }
 \value{
 matrix
