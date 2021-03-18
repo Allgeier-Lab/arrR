@@ -252,7 +252,6 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param reef_dist Vector with distance to reef of each cell.
-#' @param move_dist Vector with move distance of fish individuals.
 #' @param move_mean Double with mean movement parameter.
 #' @param pop_visibility Double with "sight" distance of fish.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -273,8 +272,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions))
 }
 
 #' rcpp_translate_torus
