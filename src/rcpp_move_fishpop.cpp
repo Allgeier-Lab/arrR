@@ -31,7 +31,7 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
-                       Rcpp::NumericVector pop_thres_reserves,
+                       double pop_thres_reserves,
                        double move_mean, double move_reef,
                        double pop_visibility,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
@@ -39,12 +39,16 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
+    Rcout << "i: " << i << std::endl;
+
     // init move_dist
-   double move_dist = 0.0;
+    double move_dist = 0.0;
 
     // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 7) >= pop_thres_reserves(i) * fishpop(i, 8)) {
+    if (fishpop(i, 7) >= (pop_thres_reserves * fishpop(i, 8))) {
+
+      Rcout << "Behaviour 1 or 2 " << std::endl;
 
       // init reef_dist_temp
       double reef_dist_temp = -1.0;
@@ -105,7 +109,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // save distance to check with move_mean
         reef_dist_temp = distance(0);
 
-        // right distance is smaller than straight and left
+      // right distance is smaller than straight and left
       } else if ((distance(2) < distance(1)) & (distance(2) < distance(0))) {
 
         fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
@@ -113,7 +117,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // save distance to check with move_mean
         reef_dist_temp = distance(2);
 
-        // straight direction is shortest
+      // straight direction is shortest
       } else {
 
         // save distance to check with move_mean
@@ -140,7 +144,10 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       // behaviour 1: fish already at reef so they stay there
       // KSM: check if reef_dist of that cell is below e.g. 2m
       // Q: should this instead be reef_dist_temp?
+
       if (reef_dist(cell_id) <= 2.0) {
+
+        Rcout << "Behaviour 1" << std::endl;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
 
@@ -149,11 +156,15 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       // behaviour 2: fish return towards reef
       } else {
 
+        Rcout << "Behaviour 2" << std::endl;
+
         // KSM: check if mean_move is less than distance to reef
         // fish are further away from reef than move_mean
         if (move_mean <= reef_dist_temp) {
 
           move_dist = std::exp(Rcpp::rlnorm(1, move_mean, 1.0)(0));
+
+          Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
         // KSM: move_mean is greater than distance to reef, travel a distance less than reef_dist_temp
         } else {
@@ -163,12 +174,16 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           // MH: So my idea would basically to pull from a distribution with distance to reef as mean
           move_dist = std::exp(Rcpp::rlnorm(1, reef_dist(cell_id), 1.0)(0));
 
+          Rcout << "Behaviour 2: Fish are close" << std::endl;
+
         }
       }
 
     // KSM: behavior 3 - foraging
     // KSM: we want fish to move randomly, based on move_mean
     } else {
+
+      Rcout << "Behaviour 3" << std::endl;
 
       // pull move_dist from log norm with mean_moce
       // double move_dist = move_mean
@@ -182,14 +197,25 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     }
 
+    Rcout << "Start to move fish" << std::endl;
+
     // calculate new x coord
     NumericVector xy_temp = NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
       fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
     );
 
+    Rcout << "Start final torus" << std::endl;
+
+    // MH: STUCK HERE in torus?
+
+    Rcout << "xy_temp: " << xy_temp << std::endl;
+    Rcout << "extent: " << extent << std::endl;
+
     // make sure coords are within study area
-    xy_temp = rcpp_translate_torus(xy_temp, extent);
+    // xy_temp = rcpp_translate_torus(xy_temp, extent);
+
+    Rcout << "Update xy" << std::endl;
 
     // update x coord
     fishpop(i, 2) = xy_temp(0);
@@ -197,12 +223,18 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // update y coord
     fishpop(i, 3) = xy_temp(1);
 
+    Rcout << "Update ACT" << std::endl;
+
     // update activity
     fishpop(i, 9) = (1 / (move_mean + 1)) * move_dist + 1;
+
+    Rcout << "Update heading" << std::endl;
 
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
     fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
+
+    Rcout << "DONE!" << std::endl;
 
   }
 }
