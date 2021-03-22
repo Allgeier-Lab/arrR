@@ -61,7 +61,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
     // KSM: if reserves are greater than x% (pop_thres_reserves) of reserves_max,
-    if (fishpop(fish_id_temp, 7) >= pop_thres_reserves(i) * fishpop(fish_id_temp, 8)) {
+    if (fishpop(fish_id_temp, 7) >= (pop_thres_reserves(i) * fishpop(fish_id_temp, 8))) {
 
       // MH: This would be where Issue #53 comes into play
 

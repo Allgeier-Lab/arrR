@@ -21,6 +21,7 @@
 #'
 #' @export
 simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
+                              pop_thres_reserves,
                               reef_attraction, extent, dimensions,
                               parameters) {
 
@@ -46,7 +47,7 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     reef_dist = seafloor_values[, "reef_dist"],
                     move_mean = parameters$move_mean,
                     pop_visibility = parameters$pop_visibility,
-                    pop_thres_reserves = parameters$pop_thres_reserves,
+                    pop_thres_reserves = pop_thres_reserves,
                     move_reef = parameters$move_reef,
                     extent = extent,
                     dimensions = dimensions)

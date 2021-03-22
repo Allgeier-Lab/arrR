@@ -113,7 +113,9 @@ run_simulation <- function(seafloor, fishpop,
 
   # KSM: adding pop_thres_reserves parameter here as a vector
   # KSM: depending on talk with Jake - will this change by species/individual or within each timestep (C++)?
-  # pop_thres_reserves <- runif(n = nrow(fishpop_values), min = 0.01, max = parameters$pop_thres_reserves)
+  pop_thres_reserves <- runif(n = nrow(fishpop_values),
+                              min = parameters$pop_thres_reserves_min,
+                              max = parameters$pop_thres_reserves_max)
 
   # print some basic information about model run
   if (verbose) {
@@ -155,6 +157,7 @@ run_simulation <- function(seafloor, fishpop,
                         seafloor_values = seafloor_values,
                         extent = extent,
                         dimensions = dimensions,
+                        pop_thres_reserves = pop_thres_reserves,
                         parameters = parameters,
                         reef_attraction = reef_attraction)
 

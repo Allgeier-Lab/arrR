@@ -26,7 +26,8 @@ default_parameters <- list(
 
   pop_max_reserves = 0.05,
   pop_want_reserves = 0.01,
-  pop_thres_reserves = 0.10,
+  pop_thres_reserves_min = 0.10,
+  pop_thres_reserves_max = 0.10,
 
   pop_visibility = 1,
 

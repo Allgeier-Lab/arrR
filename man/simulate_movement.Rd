@@ -8,6 +8,7 @@ simulate_movement(
   fishpop_values,
   pop_n,
   seafloor_values,
+  pop_thres_reserves,
   reef_attraction,
   extent,
   dimensions,
@@ -21,13 +22,13 @@ simulate_movement(
 
 \item{seafloor_values}{RasterBrick and matrix with seafloor values.}
 
+\item{pop_thres_reserves}{Double with proportion of max_reserves to drain prior to movement.}
+
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
 \item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 
 \item{parameters}{List with all model parameters.}
-
-\item{pop_thres_reserves}{Double with proportion of max_reserves to drain prior to movement.}
 
 \item{move_reef}{move_reef Double with mean movement distance when sheltering at reef}
 }

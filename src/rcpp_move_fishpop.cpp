@@ -31,7 +31,7 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
-                       double pop_thres_reserves,
+                       Rcpp::NumericVector pop_thres_reserves,
                        double move_mean, double move_reef,
                        double pop_visibility,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
@@ -46,7 +46,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 7) >= (pop_thres_reserves * fishpop(i, 8))) {
+    if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
 
       Rcout << "Behaviour 1 or 2 " << std::endl;
 
@@ -186,7 +186,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       Rcout << "Behaviour 3" << std::endl;
 
       // pull move_dist from log norm with mean_moce
-      // double move_dist = move_mean
+      double move_dist = std::exp(Rcpp::rlnorm(1, move_mean, 1.0)(0));
 
     }
 
