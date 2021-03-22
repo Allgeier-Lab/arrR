@@ -199,6 +199,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     Rcout << "Start to move fish" << std::endl;
 
+    Rcout << "move_dist:" <<  move_dist << std::endl;
+
     // calculate new x coord
     NumericVector xy_temp = NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
@@ -213,6 +215,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     Rcout << "extent: " << extent << std::endl;
 
     // make sure coords are within study area
+    // MH: THIS NEEDS TO BE SWTICHED ON AGAIN!
     // xy_temp = rcpp_translate_torus(xy_temp, extent);
 
     Rcout << "Update xy" << std::endl;
