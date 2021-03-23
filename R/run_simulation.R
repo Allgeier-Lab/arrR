@@ -5,7 +5,6 @@
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
-#' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param save_each Numeric how often data should be saved to return.
@@ -29,7 +28,7 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop,
-                           parameters, reef_attraction,
+                           parameters,
                            max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
                            extract = NULL, verbose = TRUE) {
 
@@ -111,8 +110,7 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
-  # KSM: adding pop_thres_reserves parameter here as a vector
-  # KSM: depending on talk with Jake - will this change by species/individual or within each timestep (C++)?
+  # KSM: adding pop_thres_reserves parameter here as a vector from pop_thres_reserves_min and _max
   pop_thres_reserves <- runif(n = nrow(fishpop_values),
                               min = parameters$pop_thres_reserves_min,
                               max = parameters$pop_thres_reserves_max)
@@ -122,7 +120,7 @@ run_simulation <- function(seafloor, fishpop,
 
     message("> Seafloor with ", extent, "; ", nrow(coords_reef), " reef cells.")
 
-    message("> Population with ", starting_values$pop_n, " individuals [reef_attraction: ", reef_attraction, "].")
+    message("> Population with ", starting_values$pop_n, " individuals.")
 
     message("> Simulating ", max_i, " iterations [Burn-in: ", burn_in, " iter.].")
 
@@ -158,8 +156,7 @@ run_simulation <- function(seafloor, fishpop,
                         extent = extent,
                         dimensions = dimensions,
                         pop_thres_reserves = pop_thres_reserves,
-                        parameters = parameters,
-                        reef_attraction = reef_attraction)
+                        parameters = parameters)
 
       # simulate fish respiration (26°C is mean water temperature in the Bahamas)
       simulate_respiration(fishpop_values = fishpop_values,
@@ -261,7 +258,6 @@ run_simulation <- function(seafloor, fishpop,
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
-                 reef_attraction = reef_attraction,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor),
                  coords_reef = coords_reef)

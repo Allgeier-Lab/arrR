@@ -8,7 +8,7 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param extent,dimensions Spatial extent and dimensions of the seafloor raster
 #' @param parameters List with all model parameters.
-#' @param pop_thres_reserves Double with proportion of max_reserves to drain prior to movement.
+#' @param pop_thres_reserves Vector with proportion of max_reserves to drain prior to movement.
 #' @param move_reef move_reef Double with mean movement distance when sheltering at reef
 #'
 #' @details

@@ -143,15 +143,14 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // behaviour 1: fish already at reef so they stay there
       // KSM: check if reef_dist of that cell is below e.g. 2m
-      // Q: should this instead be reef_dist_temp?
 
       if (reef_dist(cell_id) <= 2.0) {
 
         Rcout << "Behaviour 1" << std::endl;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
-
-        move_dist = std::exp(Rcpp::rlnorm(1, move_reef, 1.0)(0));
+        // KSM: this code not working
+      double  move_dist = Rcpp::rlnorm(1, move_reef, 1.0)(0);
 
       // behaviour 2: fish return towards reef
       } else {
@@ -161,8 +160,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // KSM: check if mean_move is less than distance to reef
         // fish are further away from reef than move_mean
         if (move_mean <= reef_dist_temp) {
-
-          move_dist = std::exp(Rcpp::rlnorm(1, move_mean, 1.0)(0));
+          // KSM: this code not working
+         double move_dist = Rcpp::rlnorm(1, move_mean, 1.0)(0);
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
@@ -172,7 +171,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           // pull move_dist from log norm where move_mean < reef_dist_temp
           // Q: this is not write obviously. I am not sure how to implement "move_mean < reef_dist_temp"
           // MH: So my idea would basically to pull from a distribution with distance to reef as mean
-          move_dist = std::exp(Rcpp::rlnorm(1, reef_dist(cell_id), 1.0)(0));
+          //KSM: this code not working
+         double move_dist = Rcpp::rlnorm(1, reef_dist(cell_id), 1.0)(0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
 
@@ -185,8 +185,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       Rcout << "Behaviour 3" << std::endl;
 
-      // pull move_dist from log norm with mean_moce
-      double move_dist = std::exp(Rcpp::rlnorm(1, move_mean, 1.0)(0));
+      // pull move_dist from log norm with mean_move
+      // KSM: this code not working
+      double move_dist = Rcpp::rlnorm(1, move_mean, 1.0)(0);
 
     }
 
@@ -216,7 +217,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     // make sure coords are within study area
     // MH: THIS NEEDS TO BE SWTICHED ON AGAIN!
-    // xy_temp = rcpp_translate_torus(xy_temp, extent);
+    // Q: do you mean this? issue was with move_dist
+    xy_temp = rcpp_translate_torus(xy_temp, extent);
 
     Rcout << "Update xy" << std::endl;
 
@@ -249,7 +251,7 @@ rcpp_move_fishpop(fishpop = fishpop_values,
                   reef_dist = seafloor_values[, "reef_dist"],
                   move_mean = parameters$move_mean,
                   pop_visibility = parameters$pop_visibility,
-                  pop_thres_reserves = parameters$pop_thres_reserves,
+                  pop_thres_reserves = pop_thres_reserves,
                   move_reef = parameters$move_reef,
                   extent = extent,
                   dimensions = dimensions)
