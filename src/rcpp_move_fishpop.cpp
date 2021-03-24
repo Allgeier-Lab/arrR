@@ -2,6 +2,7 @@
 #include "rcpp_translate_torus.h"
 #include "rcpp_cell_from_xy.h"
 #include "rcpp_modify_degree.h"
+#include "rcpp_rlognorm.h"
 
 //' rcpp_move_fishpop
 //'
@@ -187,7 +188,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // pull move_dist from log norm with mean_move
       // KSM: this code not working
-      double move_dist = Rcpp::rlnorm(1, move_mean, 1.0)(0);
+      double move_dist = rcpp_rlognorm(move_mean, 1.0);
 
     }
 

@@ -9,7 +9,6 @@ simulate_movement(
   pop_n,
   seafloor_values,
   pop_thres_reserves,
-  reef_attraction,
   extent,
   dimensions,
   parameters
@@ -22,9 +21,7 @@ simulate_movement(
 
 \item{seafloor_values}{RasterBrick and matrix with seafloor values.}
 
-\item{pop_thres_reserves}{Double with proportion of max_reserves to drain prior to movement.}
-
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
+\item{pop_thres_reserves}{Vector with proportion of max_reserves to drain prior to movement.}
 
 \item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 

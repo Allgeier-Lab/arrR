@@ -8,7 +8,6 @@ run_simulation(
   seafloor,
   fishpop,
   parameters,
-  reef_attraction,
   max_i,
   min_per_i,
   save_each = 1,
@@ -24,8 +23,6 @@ run_simulation(
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
 \item{parameters}{List with all model parameters.}
-
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 
