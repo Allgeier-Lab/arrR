@@ -213,7 +213,7 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 #'
 #' @details
-#' Rcpp implementation to diffuse seafloor values between neighbouring cells.
+#' Rcpp implementation to diffuse seafloor values between (queen case) neighbouring cells.
 #'
 #' @return void
 #'

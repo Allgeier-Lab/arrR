@@ -10,7 +10,7 @@ using namespace Rcpp;
 //' @param nutrients_diffusion,detritus_diffusion,detritus_dead_diffusion Numeric with parameters.
 //'
 //' @details
-//' Rcpp implementation to diffuse seafloor values between neighbouring cells.
+//' Rcpp implementation to diffuse seafloor values between (queen case) neighbouring cells.
 //'
 //' @return void
 //'
