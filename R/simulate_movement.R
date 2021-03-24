@@ -5,10 +5,9 @@
 #' @param fishpop_values Matrix with fish population created.
 #' @param pop_n Numeric with number of individuals.
 #' @param seafloor_values RasterBrick and matrix with seafloor values.
-#' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param extent,dimensions Spatial extent and dimensions of the seafloor raster
 #' @param parameters List with all model parameters.
-#' @param pop_thres_reserves Double with proportion of max_reserves to drain prior to movement.
+#' @param pop_thres_reserves Vector with proportion of max_reserves to drain prior to movement.
 #' @param move_reef move_reef Double with mean movement distance when sheltering at reef
 #'
 #' @details
@@ -22,7 +21,7 @@
 #' @export
 simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                               pop_thres_reserves,
-                              reef_attraction, extent, dimensions,
+                              extent, dimensions,
                               parameters) {
 
   # extent must be vector for rcpp

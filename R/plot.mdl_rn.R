@@ -252,8 +252,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       # create title
       plot_title <- paste0("Total time : ", i, " iterations (",
                            round(i * x$min_per_i / 60 / 24, 1), " days)",
-                           "\nFishpop    : ", x$starting_values$pop_n,
-                           " indiv (Reef attraction: ", x$reef_attraction, ")")
+                           "\nFishpop    : ", x$starting_values$pop_n,")")
 
       # create plot
       gg_density <- ggplot2::ggplot(data = fishpop) +
@@ -279,8 +278,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   # create title
   plot_title <- paste0("Total time : ", i, " iterations (",
                        round(i * x$min_per_i / 60 / 24, 1), " days)",
-                       "\nFishpop    : ", x$starting_values$pop_n,
-                       " indiv (Reef attraction: ", x$reef_attraction, ")")
+                       "\nFishpop    : ", x$starting_values$pop_n, ")")
 
   # now add the title
   title <- cowplot::ggdraw() +
