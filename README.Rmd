@@ -88,7 +88,6 @@ max_i <- (60 * 24 * 365 * 1) / min_per_i
 result <- run_simulation(seafloor = input_seafloor, 
                          fishpop = input_fishpop,
                          parameters = parameters, 
-                         reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i)
 
 result
