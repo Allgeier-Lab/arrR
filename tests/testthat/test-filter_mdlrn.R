@@ -1,6 +1,7 @@
-parameters <- arrR::read_parameters("parameters.csv", sep = ";")
+# get parameters
+parameters <- arrR::default_parameters
 
-starting_values <- arrR::read_parameters("starting_values.csv", sep = ";")
+starting_values <- arrR::default_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -34,14 +35,21 @@ result_rand <- arrR::run_simulation(seafloor = input_seafloor,
 
 filter_time <- 50
 
-result_fltr <- filter_result(result = result_rand, timestep = filter_time)
+result_fltr <- filter_mdlrn(result = result_rand, timestep = filter_time)
 
-test_that("filter_result only return until timestep", {
+test_that("filter_mdlrn only return until timestep", {
 
   expect_lt(object = result_fltr$max_i, expected = result_rand$max_i)
 
   expect_equal(object = max(result_fltr$seafloor$timestep), expected = filter_time)
 
   expect_equal(object = max(result_fltr$fishpop$timestep), expected = filter_time)
+
+})
+
+test_that("filter_mdlrn returns error", {
+
+  expect_error(object = filter_mdlrn(result = c(1:5), timestep = filter_time),
+               regexp = "Please prove mdl_rn object createt with run_simulation.")
 
 })

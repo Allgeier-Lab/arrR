@@ -29,7 +29,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
   # print progress
   if (verbose) {
 
-    message("> Creating seafloor with extent(", extent[1], ", ", extent[2], ")...")
+    message("> ...Creating seafloor with extent(", extent[1], ", ", extent[2], ")...")
 
   }
 
@@ -57,7 +57,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
     # print progress
     if (verbose) {
 
-      message("> Creating ", nrow(reefs), " artifical reef cells...")
+      message("> ...Creating ", nrow(reefs), " artifical reef cells...")
 
     }
 
@@ -84,12 +84,14 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
 
     if (verbose) {
 
-      message("> No artifical reefs present...")
+      message("> ...No artifical reefs present...")
 
     }
 
     # add reef layer
     seafloor$reef <- 0
+
+    seafloor$reef_dist <- NA
 
   }
 

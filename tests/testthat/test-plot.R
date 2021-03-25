@@ -1,6 +1,7 @@
-parameters <- arrR::read_parameters("parameters.csv", sep = ";")
+# get parameters
+parameters <- arrR::default_parameters
 
-starting_values <- arrR::read_parameters("starting_values.csv", sep = ";")
+starting_values <- arrR::default_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),

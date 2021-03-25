@@ -6,7 +6,7 @@
 #' @param parameters List with all model parameters.
 #'
 #' @details
-#' Function to redistribute dead detritus pool to overall detritus pool and decomposition.
+#' Function to redistribute fish detritus pool to overall detritus pool and decomposition.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
@@ -21,7 +21,7 @@
 simulate_mineralization <- function(seafloor_values, parameters) {
 
   rcpp_calc_mineralization(seafloor = seafloor_values,
-                           detritus_dead_ratio = parameters$detritus_dead_ratio,
+                           detritus_fish_ratio = parameters$detritus_fish_ratio,
                            detritus_mineralization = parameters$detritus_mineralization)
 
 }

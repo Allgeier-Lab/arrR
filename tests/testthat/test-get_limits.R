@@ -1,6 +1,7 @@
-parameters <- arrR::read_parameters("parameters.csv", sep = ";")
+# get parameters
+parameters <- arrR::default_parameters
 
-starting_values <- arrR::read_parameters("starting_values.csv", sep = ";")
+starting_values <- arrR::default_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -59,5 +60,12 @@ test_that("get_limits returns min and max", {
 
   expect_lte(object = limits_list$detritus_pool[1],
              expected = limits_list$detritus_pool[2])
+
+})
+
+test_that("get_limits returns error", {
+
+  expect_error(object = get_limits(result = list(c(1:5), c(5:10))),
+               regexp = "Please prove mdl_rn object createt with run_simulation.")
 
 })

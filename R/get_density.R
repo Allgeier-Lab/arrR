@@ -20,6 +20,13 @@
 #' @export
 get_density <- function(result, timestep = result$max_i) {
 
+  # check if mdl_rn is provided
+  if (!inherits(x = result, what = "mdl_rn")) {
+
+    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+
+  }
+
   i <- timestep
 
   # check if i can be divided by save_each without reminder
@@ -33,9 +40,6 @@ get_density <- function(result, timestep = result$max_i) {
   ras_density <- raster::raster(ext = result$extent, resolution = result$grain)
 
   if (nrow(result$fishpop > 0)) {
-
-    # fishpop <- subset(result$fishpop,
-    #                   timestep <= i, select = c("x", "y"))
 
     # count fish within each cell
     ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")],

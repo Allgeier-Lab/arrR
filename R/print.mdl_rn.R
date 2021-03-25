@@ -31,7 +31,7 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
   # get seafloor values of selected timestep
   seafloor_values <- subset(x$seafloor, timestep == i,
                             select = c(ag_biomass, bg_biomass, nutrients_pool,
-                                       detritus_pool, detritus_dead))
+                                       detritus_pool, detritus_fish))
 
   min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
                               FUN = min, na.rm = TRUE),
@@ -73,13 +73,18 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
 
   }
 
+  # calculate timestep in days rounded
+  total_time <- round(x$max_i * x$min_per_i / 60 / 24, digits = 2)
+
+  save_time <- round(x$save_each * x$min_per_i / 60 / 24, digits = 2)
+
   # print result
-  cat(paste0("Total time : ", x$max_i * x$min_per_i / 60 / 24, " days (Result printed: ", i, " timestep)\n",
-             "Saved each : ", x$save_each, " timesteps\n",
+  cat(paste0("Total time : ", i, " iterations (", total_time, " days) [Burn-in: ", x$burn_in, " iter.]\n",
+             "Saved each : ", x$save_each, " iterations (", save_time, " days)\n",
              "Seafloor   : ", x$extent, ", ", nrow(x$coords_reef), " reef cells\n",
-             "Fishpop    : ", x$starting_values$pop_n, " individuals\n",
+             "Fishpop    : ", x$starting_values$pop_n, " indiv (reef_attraction: ", x$reef_attraction, ")\n",
              "\n",
-             "Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)\n",
+             "Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)\n",
              "Minimum  : ", paste0(min_seafloor, collapse = ", "), "\n",
              "Mean     : ", paste0(mean_seafloor, collapse = ", "), "\n",
              "Maximum  : ", paste0(max_seafloor, collapse = ", "), "\n",

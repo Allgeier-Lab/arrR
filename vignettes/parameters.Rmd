@@ -1,0 +1,157 @@
+---
+title: "3. Starting values and parameters"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{3. Starting values and parameters}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
+library(knitr)
+library(kableExtra)
+```
+
+Please see the [Get started](getstarted.html) vignette for a quick tutorial how to use `arrR`.
+
+To see a full list all needed starting values and parameters, simply run `check_parameters()`. Both starting values and parameters must be provided as named lists. The package contains a set of default values you can easily access (`default_parameters`, `default_starting_values`).
+
+## Starting values
+
+```{r, sarting_values, echo = FALSE}
+starting_values_df <- data.frame(name = c("ag_biomass", 
+                                          "bg_biomass", 
+                                          "nutrients_pool", 
+                                          "detritus_pool", 
+                                          "pop_n", 
+                                          "pop_mean_size", 
+                                          "pop_var_size", 
+                                          "water_temp"), 
+                                 fun = c("setup_seafloor()", 
+                                         "setup_seafloor()", 
+                                         "setup_seafloor()",
+                                         "detritus_pool()", 
+                                         "setup_fishpop()", 
+                                         "setup_fishpop()", 
+                                         "setup_fishpop()", 
+                                         "Not used"), 
+                                 descr = c("Starting aboveground biomass", 
+                                           "Starting belowground biomass", 
+                                           "Starting nutrients pool", 
+                                           "Starting detritus biomass", 
+                                           "Number of fish individuals", 
+                                           "Mean fish individual size", 
+                                           "Variation fish individual size", 
+                                           "Water temperature"))
+                
+knitr::kable(starting_values_df, col.names = c("Name", "Function", "Describtion"), align = "lrr") %>% 
+  kableExtra::kable_styling(full_width = TRUE, position = "center", font_size = 12, )
+```
+
+## Parameters
+
+```{r, parameters, echo = FALSE}
+parameter_df <- data.frame(name = c("ag_biomass_max", 
+                                    "ag_biomass_min", 
+                                    "ag_v_max", 
+                                    "ag_k_m", 
+                                    "bg_biomass_max", 
+                                    "bg_biomass_min", 
+                                    "bg_v_max", 
+                                    "bg_k_m", 
+                                    "bg_thres", 
+                                    "nutrients_diffusion", 
+                                    "detritus_ratio", 
+                                    "detritus_mineralization", 
+                                    "detritus_diffusion",
+                                    "detritus_fish_diffusion",
+                                    "detritus_fish_ratio", 
+                                    "pop_max_reserves", 
+                                    "pop_want_reserves", 
+                                    "pop_visibility",
+                                    "pop_mean_move", 
+                                    "pop_var_move", 
+                                    "pop_a", 
+                                    "pop_b", 
+                                    "pop_k",
+                                    "pop_linf", 
+                                    "pop_n_body", 
+                                    "resp_intercept", 
+                                    "resp_slope", 
+                                    "resp_temp_low", 
+                                    "resp_temp_optm", 
+                                    "resp_temp_max"), 
+                                 fun = c("simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()",
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_seagrass()", 
+                                         "simulate_diffusion()",
+                                         "simulate_seagrass()", 
+                                         "simulate_mineralization()", 
+                                         "simulate_diffusion()",
+                                         "simulate_diffusion()",
+                                         "simulate_mineralization()", 
+                                         "setup_fishpop() simulate_fishpop_growth()", 
+                                         "setup_fishpop() simulate_fishpop_growth(); simulate_mortality()", 
+                                         "simulate_movement()", 
+                                         "simulate_movement()", 
+                                         "simulate_movement()", 
+                                         "setup_fishpop() simulate_fishpop_growth()", 
+                                         "setup_fishpop() simulate_fishpop_growth()", 
+                                         "setup_fishpop() simulate_fishpop_growth()", 
+                                         "setup_fishpop() simulate_fishpop_growth() simulate_mortality()", 
+                                         "setup_fishpop() simulate_fishpop_growth() simulate_mortality()", 
+                                         "simulate_respiration()", 
+                                         "simulate_respiration()",
+                                         "simulate_respiration()",
+                                         "simulate_respiration()",
+                                         "simulate_respiration()"), 
+                                 descr = c("Maximum aboveground biomass", 
+                                           "Minimum aboveground biomass",
+                                           "Maximum nutrient uptake rate (aboveground)", 
+                                           "Half-saturation nutrient uptake (aboveground)",
+                                           "Maximum belowground biomass", 
+                                           "Minimum belowground biomass",
+                                           "Maximum nutrient uptake rate (belowground)", 
+                                           "Half-saturation nutrient uptake (belowground)", 
+                                           "Threshold of belowground biomass at aboveground biomass starts to grow",
+                                           "Share of nutrients pool that is diffused to neighboring grid cell", 
+                                           "Share of aboveground/belowground biomass that is sloughed to detritus biomass",
+                                           "Share of detritus biomass that is mineralized to nutrients pool", 
+                                           "Share of detritus biomass that is diffused to neighboring grid cell", 
+                                           "Share of fish detritus biomass that is diffused to neighboring grid cell", 
+                                           "Share of fish detritus biomass thas is mineralized to detritus biomass", 
+                                           "Maximum amount of reserves in relation to body size", 
+                                           "Starting reserves in relation to body size", 
+                                           "Distance at which individuals have information about distance to reef", 
+                                           "Mean movement distance", 
+                                           "Variation movement distance", 
+                                           "Length-Weight conversion", 
+                                           "Length-Weight conversion", 
+                                           "Bertalanffy growth curve", 
+                                           "Bertalanffy growth curve", 
+                                           "Share of nutrients in relation to body size", 
+                                           "Intercept of allometric mass function", 
+                                           "Slope of allometric mass function", 
+                                           "Rate at which resp increases over low water temp", 
+                                           "Optimum water temperature", 
+                                           "Maximum water temperature"))
+                
+knitr::kable(parameter_df, col.names = c("Name", "Function", "Describtion"), align = "lrr") %>% 
+  kableExtra::kable_styling(full_width = TRUE, position = "center", font_size = 12, )
+```
+

@@ -1,9 +1,9 @@
 ---
-title: "Publication record"
+title: "4. Publication record"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Publication record}
+  %\VignetteIndexEntry{4. Publication record}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

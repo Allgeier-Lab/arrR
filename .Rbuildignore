@@ -7,3 +7,7 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^doc$
+^Meta$
+^data-raw$
+^codemeta\.json$

@@ -8,7 +8,7 @@ using namespace Rcpp;
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-//' @param pop_linf_grunt,pop_n_body,pop_want_reserves Numeric with parameters.
+//' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
 //'
 //' @details
 //' Rcpp implementation to create new individual after mortality event.
@@ -25,7 +25,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
                          Rcpp::NumericMatrix seafloor,
                          Rcpp::NumericVector fish_id,
                          Rcpp::NumericVector cell_id,
-                         double pop_linf_grunt,
+                         double pop_linf,
                          double pop_n_body,
                          double pop_want_reserves) {
 
@@ -38,7 +38,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
     int cell_id_temp = cell_id(i) - 1;
 
     // create death probability
-    double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf_grunt);
+    double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against
     double random_prob = Rcpp::runif(1, 0.0, 1.0)(0);
@@ -60,7 +60,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
       double mass_diff = (fishpop(fish_id_temp, 6) - fishpop_track(fish_id_temp, 6)) * pop_n_body +
         fishpop(fish_id_temp, 7);
 
-      // add to dead detritus pool
+      // add to fish detritus pool
       seafloor(cell_id_temp, 6) += mass_diff;
 
       // create new individual
@@ -77,15 +77,19 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
       // detritus pool is smaller than wanted reserves, detritus pool is fully used
       if (reserves_wanted >= seafloor(cell_id_temp, 5)) {
 
+        // detritus pool is completly used by fish
         fishpop(fish_id_temp, 7) = seafloor(cell_id_temp, 5);
 
+        // set detritus pool to zero
         seafloor(cell_id_temp, 5) = 0;
 
       // detritus pool is larger than what is wanted, so only subset is used
       } else {
 
+        // reserves can be filled completely
         fishpop(fish_id_temp, 7) = reserves_wanted;
 
+        // remove wanted reserves
         seafloor(cell_id_temp, 5) -= reserves_wanted;
 
       }

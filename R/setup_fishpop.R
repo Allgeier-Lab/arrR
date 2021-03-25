@@ -22,13 +22,13 @@
 #'
 #' @export
 setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
-                                  verbose = TRUE) {
+                          verbose = TRUE) {
 
   n <- starting_values$pop_n
 
   if (verbose) {
 
-    message("> Creating ", n, " individuals within ", raster::extent(seafloor), "...")
+    message("> ...Creating ", n, " individuals within ", raster::extent(seafloor), "...")
 
   }
 
@@ -46,11 +46,11 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
 
     # calculate length and weight
     size <- calc_size(pop_n = n,
-                      pop_mean_size = parameters$pop_mean_size,
-                      pop_linf_grunt = parameters$pop_linf_grunt,
-                      pop_var_size = parameters$pop_var_size,
-                      pop_a_grunt = parameters$pop_a_grunt,
-                      pop_b_grunt = parameters$pop_b_grunt,
+                      pop_mean_size = starting_values$pop_mean_size,
+                      pop_linf = parameters$pop_linf,
+                      pop_var_size = starting_values$pop_var_size,
+                      pop_a = parameters$pop_a,
+                      pop_b = parameters$pop_b,
                       use_log = use_log)
 
     # calculate maximum reserves
@@ -77,7 +77,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                           length = numeric(), weight = numeric(),
                           reserves = numeric(), reserves_max = numeric(),
                           activity = numeric(), respiration = numeric(),
-                          died_consumption = numeric(n), died_background = numeric(n))
+                          died_consumption = numeric(), died_background = numeric())
 
   }
 
