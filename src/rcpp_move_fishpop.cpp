@@ -134,7 +134,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       }
 
       // MH: get cell id of current location (need to make sure this acutally works :D)
-      // Q: doesn't seem like R likes this - how do I check if the code does not run?
       // MH: Not very elegant ...
       coords_temp(0, 0) = fishpop(i, 2);
 
