@@ -112,21 +112,21 @@ result
 #> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
 #> Fishpop    : 25 indiv (reef_attraction: TRUE)
 #> 
-#> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_dead)
-#> Minimum  : 6.644, 238.4, 0.005, 0.417, 0
-#> Mean     : 6.644, 249.413, 0.008, 0.486, 0
-#> Maximum  : 6.644, 299.259, 0.019, 0.517, 0
+#> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
+#> Minimum  : 6.644, 238.354, 0.005, 0.385, 0
+#> Mean     : 6.644, 251.393, 0.008, 0.468, 0
+#> Maximum  : 6.644, 308.66, 0.023, 0.504, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 9.531, 15.062, 0, 0
-#> Mean     : 14.413, 61.799, 0, 0
-#> Maximum  : 20.412, 167.231, 0, 0
+#> Minimum  : 11.212, 25.167, 0, 0
+#> Mean     : 15.176, 72.955, 0, 0
+#> Maximum  : 21.851, 207.421, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
 This will automatically create a plot of the selected timestep (default:
-last timestep). Plotting methods are available for both the seafloor and
-the fish population using the `what` argument.
+final timestep). Plotting methods are available for both the seafloor
+and the fish population using the `what` argument.
 
 ``` r
 plot(result, what = "seafloor")

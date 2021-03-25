@@ -3,6 +3,8 @@
 
 #include "Rcpp.h"
 
+using namespace Rcpp;
+
 int rcpp_cell_from_xy(Rcpp::NumericVector coords,
                       Rcpp::NumericVector dimensions,
                       Rcpp::NumericVector extent);

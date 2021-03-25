@@ -25,19 +25,9 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
   # extent must be vector for rcpp
   extent <- as.vector(extent, mode = "numeric")
 
-  # calc mean of log-norm distribution
-  norm_mean <- log((parameters$pop_mean_move ^ 2) /
-                     sqrt(parameters$pop_mean_move ^ 2 + parameters$pop_var_move))
-
-  # calc sd of log-norm distribution
-  norm_sd <- sqrt(log(1 + (parameters$pop_var_move / (parameters$pop_mean_move ^ 2))))
-
-  # get random numbers from log-norm distribution
-  norm_random <- stats::rnorm(n = pop_n,
-                              mean = norm_mean, sd = norm_sd)
-
-  # calculate body length based on random number
-  move_dist <- exp(norm_random)
+  # get random move distance based on lognorm distribution
+  move_dist <- rlognorm(n = pop_n, mean = parameters$pop_mean_move,
+                        sd = sqrt(parameters$pop_var_move))
 
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
