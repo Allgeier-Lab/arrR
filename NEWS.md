@@ -1,3 +1,6 @@
+# arrR 0.3.1
+* Add `rlognorm` for better code structure
+
 # arrR 0.3.0
 * Update authors list
 * Re-implement movement of fish individuals in Rcpp mainly
