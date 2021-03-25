@@ -150,8 +150,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         Rcout << "Behaviour 1" << std::endl;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
-        // KSM: this code not working
-      double  move_dist = Rcpp::rlnorm(1, move_reef, 1.0)(0);
+        double move_dist = rcpp_rlognorm(move_reef, 1.0);
 
       // behaviour 2: fish return towards reef
       } else {
@@ -161,8 +160,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // KSM: check if mean_move is less than distance to reef
         // fish are further away from reef than move_mean
         if (move_mean <= reef_dist_temp) {
-          // KSM: this code not working
-         double move_dist = Rcpp::rlnorm(1, move_mean, 1.0)(0);
+
+          double move_dist = rcpp_rlognorm(move_mean, 1.0);
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
@@ -172,8 +171,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           // pull move_dist from log norm where move_mean < reef_dist_temp
           // Q: this is not write obviously. I am not sure how to implement "move_mean < reef_dist_temp"
           // MH: So my idea would basically to pull from a distribution with distance to reef as mean
-          //KSM: this code not working
-         double move_dist = Rcpp::rlnorm(1, reef_dist(cell_id), 1.0)(0);
+          // KSM: let's see if this works
+          double move_dist = rcpp_rlognorm(reef_dist(cell_id), 1.0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
 
@@ -187,7 +186,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       Rcout << "Behaviour 3" << std::endl;
 
       // pull move_dist from log norm with mean_move
-      // KSM: this code not working
       double move_dist = rcpp_rlognorm(move_mean, 1.0);
 
     }
@@ -217,8 +215,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     Rcout << "extent: " << extent << std::endl;
 
     // make sure coords are within study area
-    // MH: THIS NEEDS TO BE SWTICHED ON AGAIN!
-    // Q: do you mean this? issue was with move_dist
     xy_temp = rcpp_translate_torus(xy_temp, extent);
 
     Rcout << "Update xy" << std::endl;
