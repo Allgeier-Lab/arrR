@@ -8,6 +8,7 @@ run_simulation(
   seafloor,
   fishpop,
   parameters,
+  nutr_input = rep(x = 0, times = max_i),
   reef_attraction,
   max_i,
   min_per_i,
@@ -24,6 +25,8 @@ run_simulation(
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{nutr_input}{Vector with amount of nutrient input each timestep.}
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
