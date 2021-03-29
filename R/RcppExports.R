@@ -259,6 +259,7 @@ rcpp_modify_degree <- function(x, y) {
 #' @param move_mean Numeric with parameter.
 #' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
 #' @param move_reef Double with mean movement distance when sheltering at reef
+#' @param move_return Double with mean movement distance when returning to reef
 #'
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
@@ -272,8 +273,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, pop_visibility, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions))
 }
 
 #' rcpp_rlognorm

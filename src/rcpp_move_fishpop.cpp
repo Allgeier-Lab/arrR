@@ -17,6 +17,7 @@
 //' @param move_mean Numeric with parameter.
 //' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
 //' @param move_reef Double with mean movement distance when sheltering at reef
+//' @param move_return Double with mean movement distance when returning to reef
 //'
 //' @details
 //' Rcpp implementation to move fish individuals depending on move distance and
@@ -33,7 +34,7 @@
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
                        Rcpp::NumericVector pop_thres_reserves,
-                       double move_mean, double move_reef,
+                       double move_mean, double move_reef, double move_return,
                        double pop_visibility,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
@@ -156,23 +157,20 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
         Rcout << "Behaviour 2" << std::endl;
 
-        // KSM: check if mean_move is less than distance to reef
+        // KSM: check if mean_return is less than distance to reef
         // fish are further away from reef than move_mean
-        if (move_mean <= reef_dist_temp) {
+        if (move_return <= reef_dist_temp) {
 
-          move_dist = rcpp_rlognorm(move_mean, 1.0);
+          move_dist = rcpp_rlognorm(move_return, 1.0);
 
           Rcout << "move_dist: Line 163" << move_dist << std::endl;
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
-        // KSM: move_mean is greater than distance to reef, travel a distance less than reef_dist_temp
+        // KSM: move_return is greater than distance to reef, travel a distance less than reef_dist_temp
         } else {
 
-          // pull move_dist from log norm where move_mean < reef_dist_temp
-          // Q: this is not write obviously. I am not sure how to implement "move_mean < reef_dist_temp"
-          // MH: So my idea would basically to pull from a distribution with distance to reef as mean
-          // KSM: let's see if this works
+          // pull move_dist from log norm of distance to reef
           move_dist = rcpp_rlognorm(reef_dist(cell_id), 1.0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
@@ -215,8 +213,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     Rcout << "Start final torus" << std::endl;
 
-    // MH: STUCK HERE in torus?
-
     Rcout << "xy_temp: " << xy_temp << std::endl;
     Rcout << "extent: " << extent << std::endl;
 
@@ -256,6 +252,7 @@ rcpp_move_fishpop(fishpop = fishpop_values,
                   pop_visibility = parameters$pop_visibility,
                   pop_thres_reserves = pop_thres_reserves,
                   move_reef = parameters$move_reef,
+                  move_return = parameters$move_return,
                   extent = extent,
                   dimensions = dimensions)
 */

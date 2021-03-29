@@ -9,6 +9,7 @@
 #' @param parameters List with all model parameters.
 #' @param pop_thres_reserves Vector with proportion of max_reserves to drain prior to movement.
 #' @param move_reef move_reef Double with mean movement distance when sheltering at reef
+#' @param move_return move_reef Double with mean movement distance when returning to reef
 #'
 #' @details
 #' Function to simulate movement of fish population individuals.
@@ -48,6 +49,7 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     pop_visibility = parameters$pop_visibility,
                     pop_thres_reserves = pop_thres_reserves,
                     move_reef = parameters$move_reef,
+                    move_return = parameters$move_return,
                     extent = extent,
                     dimensions = dimensions)
 }
