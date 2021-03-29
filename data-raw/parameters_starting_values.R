@@ -26,14 +26,14 @@ default_parameters <- list(
 
   pop_max_reserves = 0.2,
   pop_want_reserves = 0.01,
-  pop_thres_reserves_min = 0.10,
-  pop_thres_reserves_max = 0.10,
+  pop_thres_reserves_min = 0.50,
+  pop_thres_reserves_max = 0.50,
 
   pop_visibility = 1,
 
-  move_mean = 8,
+  move_mean = 20,
   move_var = 5,
-  move_reef = 2,
+  move_reef = 0.5,
   move_return = 100,
 
   pop_a = 0.0121,

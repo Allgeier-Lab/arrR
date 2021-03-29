@@ -50,7 +50,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
 
-      Rcout << "Behaviour 1 or 2 " << std::endl;
+      Rcout << "Behaviour 1 or 2" << std::endl;
 
       // init reef_dist_temp
       double reef_dist_temp = -1.0;
@@ -58,8 +58,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       // init matrix for temp coords
       Rcpp::NumericMatrix coords_temp(1, 2);
 
-      // KSM: fish checks surroundings. we might give them a bit "more knowledge" at one point
-      // KSM: fish needs to know where it is (even when sheltering on reef) to stay close to reef
+      // KSM: fish checks surroundings
 
       // create matrix with 3 rows (left, straight, right) and 2 cols (x,y)
       Rcpp::NumericMatrix headings(3, 2);
@@ -134,8 +133,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       }
 
-      // MH: get cell id of current location (need to make sure this acutally works :D)
-      // MH: Not very elegant ...
+      // MH: get cell id of current location
       coords_temp(0, 0) = fishpop(i, 2);
 
       coords_temp(0, 1) = fishpop(i, 3);
@@ -143,14 +141,18 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       int cell_id = rcpp_cell_from_xy(coords_temp, dimensions, extent) - 1;
 
       // behaviour 1: fish already at reef so they stay there
-      // KSM: check if reef_dist of that cell is below e.g. 2m
+      // KSM: check if reef_dist of that cell is below e.g. 4m
 
-      if (reef_dist(cell_id) <= 2.0) {
+      if (reef_dist(cell_id) <= 4.0) {
 
-        Rcout << "Behaviour 1" << std::endl;
+        Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0);
+
+        Rcout << "move_dist L151: " << move_dist << std::endl;
+
+        Rcout << "reef_dist L146: " << reef_dist_temp << std::endl;
 
       // behaviour 2: fish return towards reef
       } else {
@@ -163,9 +165,11 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
           move_dist = rcpp_rlognorm(move_return, 1.0);
 
-          Rcout << "move_dist: Line 163" << move_dist << std::endl;
-
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
+
+          Rcout << "move_dist L162:  " << move_dist << std::endl;
+
+          Rcout << "reef_dist L164: " << reef_dist_temp << std::endl;
 
         // KSM: move_return is greater than distance to reef, travel a distance less than reef_dist_temp
         } else {
@@ -175,7 +179,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
 
-          Rcout << "move_dist:" << move_dist << std::endl;
+          Rcout << "move_dist L172: " << move_dist << std::endl;
+
+          Rcout << "reef_dist L178: " << reef_dist_temp << std::endl;
 
         }
       }
@@ -185,14 +191,14 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // KSM: we want fish to move randomly, based on move_mean
     } else {
 
-      Rcout << "Behaviour 3" << std::endl;
+      Rcout << "Behaviour 3: Forage randomly" << std::endl;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, 1.0);
 
-    }
+      Rcout << "move_dist L191: " << move_dist << std::endl;
 
-    Rcout << "move_dist:" << move_dist << std::endl;
+    }
 
     // MH: this can be deleted later, just safety check
     if (move_dist == -1.0) {
@@ -200,10 +206,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       stop("move_dist is zero...which it shouldn't!");
 
     }
-
-    Rcout << "Start to move fish" << std::endl;
-
-    Rcout << "move_dist:" <<  move_dist << std::endl;
 
     // calculate new x coord
     NumericVector xy_temp = NumericVector::create(
