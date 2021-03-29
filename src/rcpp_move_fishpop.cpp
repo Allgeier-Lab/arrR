@@ -43,7 +43,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     Rcout << "i: " << i << std::endl;
 
     // init move_dist
-    double move_dist = 0.0;
+    double move_dist = -1.0;
 
     // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     // behaviour 1 and 2: reserves above doggy bag
@@ -149,7 +149,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         Rcout << "Behaviour 1" << std::endl;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
-        double move_dist = rcpp_rlognorm(move_reef, 1.0);
+        move_dist = rcpp_rlognorm(move_reef, 1.0);
 
       // behaviour 2: fish return towards reef
       } else {
@@ -160,7 +160,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // fish are further away from reef than move_mean
         if (move_mean <= reef_dist_temp) {
 
-          double move_dist = rcpp_rlognorm(move_mean, 1.0);
+          move_dist = rcpp_rlognorm(move_mean, 1.0);
+
+          Rcout << "move_dist: Line 163" << move_dist << std::endl;
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
@@ -171,12 +173,15 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
           // Q: this is not write obviously. I am not sure how to implement "move_mean < reef_dist_temp"
           // MH: So my idea would basically to pull from a distribution with distance to reef as mean
           // KSM: let's see if this works
-          double move_dist = rcpp_rlognorm(reef_dist(cell_id), 1.0);
+          move_dist = rcpp_rlognorm(reef_dist(cell_id), 1.0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
 
+          Rcout << "move_dist:" << move_dist << std::endl;
+
         }
       }
+
 
     // KSM: behavior 3 - foraging
     // KSM: we want fish to move randomly, based on move_mean
@@ -185,12 +190,14 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       Rcout << "Behaviour 3" << std::endl;
 
       // pull move_dist from log norm with mean_move
-      double move_dist = rcpp_rlognorm(move_mean, 1.0);
+      move_dist = rcpp_rlognorm(move_mean, 1.0);
 
     }
 
+    Rcout << "move_dist:" << move_dist << std::endl;
+
     // MH: this can be deleted later, just safety check
-    if (move_dist == 0) {
+    if (move_dist == -1.0) {
 
       stop("move_dist is zero...which it shouldn't!");
 
