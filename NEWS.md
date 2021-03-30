@@ -1,3 +1,7 @@
+# arrR 0.4.0
+* Add `simulate_input` and `simulate_output`
+* Rename `simulate_fishpop_growth` to `simulate_growth`
+
 # arrR 0.3.1
 * Add `rlognorm` for better code structure
 

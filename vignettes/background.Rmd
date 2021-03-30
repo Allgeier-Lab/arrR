@@ -32,7 +32,7 @@ A simulation is started using the `run_simulation` function. This includes the s
 
 **4. simulate_respiration()**: Simulates respiration of fish individuals based on their body size and their movement activity.
 
-**5. simulate_fishpop_growth()**: Simulates growth of fish individuals based on their current body size For this, individuals consume detritus biomass of the grid cell they are located in. If the detritus biomass is smaller than the required amount of individuals (based on growth and respiration), mortality takes place. Lastly, fish individuals excrete non-required consumption to the nutrients pool.
+**5. simulate_growth()**: Simulates growth of fish individuals based on their current body size For this, individuals consume detritus biomass of the grid cell they are located in. If the detritus biomass is smaller than the required amount of individuals (based on growth and respiration), mortality takes place. Lastly, fish individuals excrete non-required consumption to the nutrients pool.
 
 **6. simulate_mortality()**: Simulates a background mortality of fish individuals based on their body size. The mortality probability increases with increasing body size. All mortality events increase the detritus biomass.
 

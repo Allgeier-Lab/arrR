@@ -1,4 +1,4 @@
-#' simulate_fishpop_growth
+#' simulate_growth
 #'
 #' @description Simulate consumption of fish population.
 #'
@@ -14,12 +14,12 @@
 #'
 #' @return list
 #'
-#' @aliases simulate_fishpop_growth
-#' @rdname simulate_fishpop_growth
+#' @aliases simulate_growth
+#' @rdname simulate_growth
 #'
 #' @export
-simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n,
-                                    seafloor, seafloor_values, parameters, min_per_i) {
+simulate_growth <- function(fishpop_values, fishpop_track, pop_n,
+                            seafloor, seafloor_values, parameters, min_per_i) {
 
   # randomize order of loop because detritus pool can "run out"
   fish_id <- sample(x = seq(from = 1, to = pop_n), size = pop_n)
