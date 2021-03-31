@@ -175,6 +175,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         } else {
 
           // pull move_dist from log norm of distance to reef
+          // this line does not seem to be working - fish not ending on reef
           move_dist = rcpp_rlognorm(reef_dist(cell_id), 1.0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
