@@ -100,7 +100,6 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   stop("'reason must be 'consumption' or 'background'");
 
   }
-
 }
 
 /*** R

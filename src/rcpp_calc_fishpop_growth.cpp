@@ -64,7 +64,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
       Rcout << "Behaviour 1 and 2" << std::endl;
 
-      Rcout << "thres_reserves: " << pop_thres_reserves << std::endl;
+      Rcout << "thres_reserves: " << pop_thres_reserves(i) << std::endl;
 
       Rcout << "reserves: " << fishpop(fish_id_temp, 7) << std::endl;
       Rcout << "max reserves: " << fishpop(fish_id_temp, 8) << std::endl;
