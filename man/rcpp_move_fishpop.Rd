@@ -10,6 +10,7 @@ rcpp_move_fishpop(
   pop_thres_reserves,
   move_mean,
   move_reef,
+  move_return,
   pop_visibility,
   extent,
   dimensions
@@ -25,6 +26,8 @@ rcpp_move_fishpop(
 \item{move_mean}{Numeric with parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef}
+
+\item{move_return}{Double with mean movement distance when returning to reef}
 
 \item{pop_visibility}{Double with "sight" distance of fish.}
 

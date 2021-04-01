@@ -54,9 +54,9 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// rcpp_calc_mortality
-void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, double pop_linf, double pop_n_body, double pop_want_reserves);
-RcppExport SEXP _arrR_rcpp_calc_mortality(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP) {
+// rcpp_calc_mortality_background
+void rcpp_calc_mortality_background(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, double pop_linf, double pop_n_body, double pop_want_reserves);
+RcppExport SEXP _arrR_rcpp_calc_mortality_background(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
@@ -67,7 +67,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
-    rcpp_calc_mortality(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves);
+    rcpp_calc_mortality_background(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves);
     return R_NilValue;
 END_RCPP
 }
@@ -196,6 +196,24 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_reincarnate
+void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, int fish_id, int cell_id, double pop_linf, double pop_n_body, double pop_want_reserves, String reason);
+RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP, SEXP reasonSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_track(fishpop_trackSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< int >::type fish_id(fish_idSEXP);
+    Rcpp::traits::input_parameter< int >::type cell_id(cell_idSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
+    Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
+    Rcpp::traits::input_parameter< String >::type reason(reasonSEXP);
+    rcpp_reincarnate(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_rlognorm
 double rcpp_rlognorm(double mean, double sd);
 RcppExport SEXP _arrR_rcpp_rlognorm(SEXP meanSEXP, SEXP sdSEXP) {
@@ -225,7 +243,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_dist_reef", (DL_FUNC) &_arrR_rcpp_calc_dist_reef, 4},
     {"_arrR_rcpp_calc_fishpop_growth", (DL_FUNC) &_arrR_rcpp_calc_fishpop_growth, 14},
     {"_arrR_rcpp_calc_mineralization", (DL_FUNC) &_arrR_rcpp_calc_mineralization, 3},
-    {"_arrR_rcpp_calc_mortality", (DL_FUNC) &_arrR_rcpp_calc_mortality, 8},
+    {"_arrR_rcpp_calc_mortality_background", (DL_FUNC) &_arrR_rcpp_calc_mortality_background, 8},
     {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
@@ -234,6 +252,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
     {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 9},
+    {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 9},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 2},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
     {NULL, NULL, 0}

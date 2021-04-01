@@ -41,7 +41,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    Rcout << "i: " << i << std::endl;
+    Rcout << std::endl << "i: " << i << std::endl;
 
     // init move_dist
     double move_dist = -1.0;
