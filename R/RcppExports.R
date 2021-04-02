@@ -70,9 +70,9 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_min
     invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_dead_ratio, detritus_mineralization))
 }
 
-#' rcpp_calc_mortality
+#' rcpp_calc_mortality_background
 #'
-#' @description Rcpp create rebirth
+#' @description Rcpp background mortality
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
@@ -80,17 +80,16 @@ rcpp_calc_mineralization <- function(seafloor, detritus_dead_ratio, detritus_min
 #' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
 #'
 #' @details
-#' Rcpp implementation to create new individual after mortality event.
-#' "KSM" notes from Katrina to help understand code
+#' Rcpp implementation to create new individual after background mortality event.
 #'
 #' @return void
 #'
-#' @aliases rcpp_calc_mortality
-#' @rdname rcpp_calc_mortality
+#' @aliases rcpp_calc_mortality_background
+#' @rdname rcpp_calc_mortality_background
 #'
 #' @export
-rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves) {
-    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
+rcpp_calc_mortality_background <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves) {
+    invisible(.Call(`_arrR_rcpp_calc_mortality_background`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
 }
 
 #' rcpp_calc_respiration
@@ -275,6 +274,28 @@ rcpp_modify_degree <- function(x, y) {
 #' @export
 rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions) {
     invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions))
+}
+
+#' rcpp_reincarnate
+#'
+#' @description Rcpp reincarnate
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#'
+#' @details
+#' Rcpp implementation to create new individual after mortality event.
+#'
+#' @return void
+#'
+#' @aliases rcpp_calc_mortality_consump
+#' @rdname rcpp_calc_mortality_consump
+#'
+#' @export
+rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason))
 }
 
 #' rcpp_rlognorm

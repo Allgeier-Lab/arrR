@@ -40,7 +40,7 @@ starting_values <- arrR::default_starting_values
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 1
+starting_values$pop_n <- 16
 
 parameters$detritus_dead_ratio <- 0.75
 
@@ -91,7 +91,6 @@ save_each <- (24 / (min_per_i / 60)) * days
 result <- run_simulation(seafloor = input_seafloor, 
                          fishpop = input_fishpop,
                          parameters = parameters, 
-                         reef_attraction = TRUE,
                          max_i = max_i, min_per_i = min_per_i, 
                          save_each = save_each)
 ```

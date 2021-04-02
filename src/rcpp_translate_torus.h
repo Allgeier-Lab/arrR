@@ -3,6 +3,8 @@
 
 #include "Rcpp.h"
 
+using namespace Rcpp;
+
 Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
                                          Rcpp::NumericVector extent);
 

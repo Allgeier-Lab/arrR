@@ -28,6 +28,8 @@ simulate_movement(
 \item{parameters}{List with all model parameters.}
 
 \item{move_reef}{move_reef Double with mean movement distance when sheltering at reef}
+
+\item{move_return}{move_reef Double with mean movement distance when returning to reef}
 }
 \value{
 matrix
