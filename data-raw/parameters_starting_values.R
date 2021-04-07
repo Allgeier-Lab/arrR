@@ -25,7 +25,7 @@ default_parameters <- list(
   detritus_dead_diffusion = 0.3,
 
   pop_max_reserves = 0.2,
-  pop_want_reserves = 0.01,
+  pop_want_reserves = 0.2,
   pop_thres_reserves_min = 0.50,
   pop_thres_reserves_max = 0.50,
 

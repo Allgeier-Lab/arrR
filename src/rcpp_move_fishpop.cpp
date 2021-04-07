@@ -147,6 +147,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
         Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
 
+        // behavior 1 to column
+        fishpop(i, 14) = 1.0;
+
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0);
 
@@ -158,6 +161,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       } else {
 
         Rcout << "Behaviour 2" << std::endl;
+
+        // behavior 2 to column
+        fishpop(i, 14) = 2.0;
 
         // KSM: check if mean_return is less than distance to reef
         // fish are further away from reef than move_mean
@@ -193,6 +199,10 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     } else {
 
       Rcout << "Behaviour 3: Forage randomly" << std::endl;
+
+      //add behavior column = 3
+
+      fishpop(i, 14) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, 1.0);

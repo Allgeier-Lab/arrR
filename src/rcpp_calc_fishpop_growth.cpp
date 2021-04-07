@@ -59,6 +59,14 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
+    Rcout << "initial length:" << fishpop(fish_id_temp, 5) << std::endl;
+
+    // check if they die, or if they can meet consumption_rew from detritus or other reserves
+
+    // if they don't die, check how much fish would grow, let them grow
+
+    // then check behavior 1,2,3 (where they pull nutrients from)
+
     // KSM: if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     if (fishpop(fish_id_temp, 7) >= (pop_thres_reserves(i) * fishpop(fish_id_temp, 8))) {
 
@@ -73,6 +81,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
       // KSM: reduce reserves to meet consumption_req
       fishpop(fish_id_temp, 7) -= consumption_req;
+
+      Rcout << "consumption L83:" << seafloor(cell_id_temp, 13) << std::endl;
 
       // KSM: else, check if individual feeds or dies (based on reserves, detritus, and consumption_req)
     } else {
@@ -140,6 +150,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
             // KSM: how much detritus is being consumed in a cell based on consumption requirements and reserves needed
             seafloor(cell_id_temp, 13) += consumption_req + reserves_diff;
 
+            Rcout << "consumption L151:" << seafloor(cell_id_temp, 13) << std::endl;
+
             // reserves cannot be filled completely by nutrient pool
           } else {
 
@@ -180,6 +192,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
         // add non-used consumption to nutrient pool
         seafloor(cell_id_temp, 4) += excretion_temp;
+
+        Rcout << "final length:" << fishpop(fish_id_temp, 5) << std::endl;
 
       }
     }

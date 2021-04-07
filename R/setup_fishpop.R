@@ -66,7 +66,8 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                           length = size$length, weight = size$weight,
                           reserves = reserves, reserves_max = reserves_max,
                           activity = numeric(n), respiration = numeric(n),
-                          died_consumption = numeric(n), died_background = numeric(n))
+                          died_consumption = numeric(n), died_background = numeric(n),
+                          behavior = numeric(n))
 
   # No individuals need to be created
   } else {
@@ -77,7 +78,8 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                           length = numeric(), weight = numeric(),
                           reserves = numeric(), reserves_max = numeric(),
                           activity = numeric(), respiration = numeric(),
-                          died_consumption = numeric(), died_background = numeric())
+                          died_consumption = numeric(), died_background = numeric(),
+                          behavior = numeric())
 
   }
 
