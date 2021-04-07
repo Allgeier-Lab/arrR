@@ -213,5 +213,6 @@ rcpp_calc_fishpop_growth(fishpop = fishpop_values,
                          pop_max_reserves = parameters$pop_max_reserves,
                          pop_want_reserves = parameters$pop_want_reserves,
                          pop_thres_reserves = pop_thres_reserves,
-                         min_per_i = min_per_i)
+                         min_per_i = min_per_i,
+                         behavior = behavior)
 */

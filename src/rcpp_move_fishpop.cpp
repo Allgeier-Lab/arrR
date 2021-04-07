@@ -35,7 +35,7 @@
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
                        Rcpp::NumericVector pop_thres_reserves,
                        double move_mean, double move_reef, double move_return,
-                       double pop_visibility,
+                       double pop_visibility, double bearing,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
@@ -45,6 +45,10 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     // init move_dist
     double move_dist = -1.0;
+
+    // init behavior
+    // Q: do we need to do this here?
+    double fishpop(i, 14) = 0.0;
 
     // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     // behaviour 1 and 2: reserves above doggy bag
@@ -90,7 +94,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
       // loop through all possible headings
       for (int j = 0; j < headings.nrow(); j++) {
 
-        // use torus translation to make sure within enviornment
+        // use torus translation to make sure within environment
         headings(j, _) = rcpp_translate_torus(headings(j, _), extent);
 
         // get cell id of heading (remove one because c++ indexing)
@@ -147,33 +151,62 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
         Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
 
-        // behavior 1 to column
+        //Behavior column = 1
         fishpop(i, 14) = 1.0;
 
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0);
 
-        Rcout << "move_dist L151: " << move_dist << std::endl;
+        Rcout << "move_dist L158: " << move_dist << std::endl;
 
-        Rcout << "reef_dist L146: " << reef_dist_temp << std::endl;
+        Rcout << "reef_dist L150: " << reef_dist_temp << std::endl;
+
+        Rcout << "Update heading" << std::endl;
+
+        // turn fish randomly after moving (runif always returns vector, thus (0))
+        fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
       // behaviour 2: fish return towards reef
       } else {
 
         Rcout << "Behaviour 2" << std::endl;
 
-        // behavior 2 to column
+        //Behavior column = 2
         fishpop(i, 14) = 2.0;
 
-        // KSM: check if mean_return is less than distance to reef
+        //KSM: Here is where I need to calculatue reef_dist_temp based on most direct line to reef
+
+        // Compute bearing between fish in degrees and reef cell in degrees
+        // these are given in screen coordinates (?)
+        // Q: this is from stackexchange. this creates a 'bearing' function - is line 183 necessary?
+
+        //double bearing(fishpop(i,3), fishpop(i,2), coords_reef(i,1), coords_reef(i,0)); {
+
+          static const double two_pi = 6.2831853071795865;
+
+          double theta = atan2(coords_reef(i,1) - fishpop(i,3), fishpop(i,2) - coords_reef(i,0));
+
+        // correct for 4 quadrants of coordinate system
+          if (theta < 0.0) {
+
+          return theta += two_pi; }
+
+        //}
+
+        // now this needs to be the heading to calculate reef_dist_temp before the next if,else statement
+        // Q: I am not sure how to do this
+
+        // KSM: check if move_return is less than distance to reef
         // fish are further away from reef than move_mean
+        // KSM: need to update line numbers
+
         if (move_return <= reef_dist_temp) {
 
           move_dist = rcpp_rlognorm(move_return, 1.0);
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
-          Rcout << "move_dist L162:  " << move_dist << std::endl;
+          Rcout << "move_dist L162: " << move_dist << std::endl;
 
           Rcout << "reef_dist L164: " << reef_dist_temp << std::endl;
 
@@ -193,21 +226,25 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         }
       }
 
-
     // KSM: behavior 3 - foraging
     // KSM: we want fish to move randomly, based on move_mean
     } else {
 
       Rcout << "Behaviour 3: Forage randomly" << std::endl;
 
-      //add behavior column = 3
-
+      //Behavior column = 3
       fishpop(i, 14) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, 1.0);
 
-      Rcout << "move_dist L191: " << move_dist << std::endl;
+      Rcout << "move_dist L210: " << move_dist << std::endl;
+
+      Rcout << "Update heading" << std::endl;
+
+      // turn fish randomly after moving (runif always returns vector, thus (0))
+      // KSM: this needs to be moved within only behavior 1 and 3
+      fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
     }
 
@@ -216,8 +253,9 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       stop("move_dist is zero...which it shouldn't!");
 
-    }
 
+    }
+    // Q: does this need to be moved to be only
     // calculate new x coord
     NumericVector xy_temp = NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
@@ -245,12 +283,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // update activity
     fishpop(i, 9) = (1 / (move_mean + 1)) * move_dist + 1;
 
-    Rcout << "Update heading" << std::endl;
-
-    // turn fish randomly after moving (runif always returns vector, thus (0))
-    // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-    fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
-
     Rcout << "DONE!" << std::endl;
 
   }
@@ -267,5 +299,6 @@ rcpp_move_fishpop(fishpop = fishpop_values,
                   move_reef = parameters$move_reef,
                   move_return = parameters$move_return,
                   extent = extent,
-                  dimensions = dimensions)
+                  dimensions = dimensions,
+                  behavior = behavior)
 */

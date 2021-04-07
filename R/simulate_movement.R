@@ -50,6 +50,7 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     pop_thres_reserves = pop_thres_reserves,
                     move_reef = parameters$move_reef,
                     move_return = parameters$move_return,
+                    behavior = behavior,
                     extent = extent,
                     dimensions = dimensions)
 }

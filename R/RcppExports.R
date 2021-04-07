@@ -272,8 +272,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, bearing, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, bearing, extent, dimensions))
 }
 
 #' rcpp_reincarnate
