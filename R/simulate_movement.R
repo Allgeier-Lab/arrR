@@ -42,6 +42,8 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
   # calculate movement distance based on random number
   move_dist <- exp(norm_random)
 
+  # MH: No need to add behaviour as function argument. But we will need coords_reef (matrix) as argument
+
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
                     reef_dist = seafloor_values[, "reef_dist"],

@@ -38,6 +38,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
                        double pop_visibility, double bearing,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
+  // MH: No need to add double bearing as function argument. But we will need coords_reef (matrix) as argument
+
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
@@ -48,6 +50,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     // init behavior
     // Q: do we need to do this here?
+    // MH: No, i don't think so. The coloumn should be already there. Does this even compile?
     double fishpop(i, 14) = 0.0;
 
     // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
@@ -69,6 +72,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
       // create vector for distances
       Rcpp::NumericVector distance(3);
+
+      // MH: I think we can delete all this? We dont need to check these four headings anymore
 
       // get coordinates within visibility left
       headings(0, 0) = fishpop(i, 2) +
@@ -179,9 +184,15 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // Compute bearing between fish in degrees and reef cell in degrees
         // these are given in screen coordinates (?)
         // Q: this is from stackexchange. this creates a 'bearing' function - is line 183 necessary?
+        // MH: Not sure what line 183 but here are many problems I think. Do you try to
+        // define a function within a function? That wont work. Either create a complete new
+        // function in a new script to calculate bearing and call this here or use only
+        // "body" (so the code) of the function here.
 
         //double bearing(fishpop(i,3), fishpop(i,2), coords_reef(i,1), coords_reef(i,0)); {
 
+        // MH: We could define this at the top of the script since no need to do this each
+        // iteration of the loop
           static const double two_pi = 6.2831853071795865;
 
           double theta = atan2(coords_reef(i,1) - fishpop(i,3), fishpop(i,2) - coords_reef(i,0));
@@ -195,6 +206,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
         // now this needs to be the heading to calculate reef_dist_temp before the next if,else statement
         // Q: I am not sure how to do this
+        // MH: Not sure what you are asking here?
 
         // KSM: check if move_return is less than distance to reef
         // fish are further away from reef than move_mean
