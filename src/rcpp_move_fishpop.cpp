@@ -56,46 +56,50 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     coords_temp(0, 1) = fishpop(i, 3);
 
-    // get cell id of current x,y coords
-    int cell_id = rcpp_cell_from_xy(coords_temp, dimensions, extent) - 1;
-
-    // init reef_dist_temp which is shortest distance to reef
-    double reef_dist_temp = R_PosInf;
-
-    // init id of closest reef cell
-    int reef_dist_id = -1;
-
-    // calculate distance between current coords and closest reef cell
-    for (int i = 0; i < coords_reef.nrow(); i++) {
-
-      // calculate distance in x direction
-      double dist_x = coords_temp(0, 0) - coords_reef(i, 0);
-
-      // calculate distance in y direction
-      double dist_y = coords_temp(0, 1) - coords_reef(i, 1);
-
-      // calculate final distance
-      double dist_xy = std::sqrt(std::pow(dist_x, 2.0) + std::pow(dist_y, 2.0));
-
-      // check if current distance is smaller
-      if (dist_xy < reef_dist_temp) {
-
-        // update shortest distance
-        reef_dist_temp = dist_xy;
-
-        // update id
-        reef_dist_id = i;
-
-      }
-    }
-
-    // KSM: check if reserves are greater than x% (pop_thres_reserves) of reserves_max,
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
 
       Rcout << "Behaviour 1 or 2" << std::endl;
 
+      // init reef_dist_temp which is shortest distance to reef
+      double reef_dist_temp = R_PosInf;
+
+      // init id of closest reef cell
+      int reef_dist_id = -1;
+
+      // calculate distance between current coords and closest reef cell
+      for (int j = 0; i < coords_reef.nrow(); i++) {
+
+        // calculate distance in x direction
+        double dist_x = coords_temp(0, 0) - coords_reef(j, 0);
+
+        // calculate distance in y direction
+        double dist_y = coords_temp(0, 1) - coords_reef(j, 1);
+
+        // calculate final distance
+        double dist_xy = std::sqrt(std::pow(dist_x, 2.0) + std::pow(dist_y, 2.0));
+
+        // check if current distance is smaller
+        if (dist_xy < reef_dist_temp) {
+
+          // update shortest distance
+          reef_dist_temp = dist_xy;
+
+          // update id
+          reef_dist_id = j;
+
+        }
+      }
+
+      // check; can be deleted later on
+      if (reef_dist_id == -1) {
+
+        stop("No shortest distance found?");
+
+      }
+
       // behaviour 1: fish already at reef so they stay there
+      // MH: make this parameter and add to function arguments
       if (reef_dist_temp <= 4.0) {
 
         Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
@@ -106,11 +110,11 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0);
 
-        Rcout << "move_dist L82: " << move_dist << std::endl;
+        Rcout << "move_dist B1: " << move_dist << std::endl;
 
-        Rcout << "reef_dist L84: " << reef_dist_temp << std::endl;
+        Rcout << "reef_dist B1: " << reef_dist_temp << std::endl;
 
-        // turn fish randomly after moving (runif always returns vector, thus (0))
+        // turn fish randomly (runif always returns vector, thus (0))
         fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
       // behaviour 2: fish return towards reef
@@ -121,89 +125,67 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
         //Behavior column = 2
         fishpop(i, 13) = 2.0;
 
-        //KSM: Here is where I need to calculatue reef_dist_temp based on most direct line to reef
+        // calculate bearing between fish coords and shortest reef cell
+        double theta = atan2(coords_reef(reef_dist_id, 1) - fishpop(i, 3),
+                             fishpop(i, 2) - coords_reef(reef_dist_id, 0));
 
-        // MH: YES!
-        // bearing between fish xy (coords_temp(0,0) coords_temp(0,1)) and
-        // reef xy (coords_reef(reef_dist_id, 0), coords_reef(reef_dist_id, 1))
+        if (theta < 0.0) {
 
-        // save bearing into heading fishpop(i, 4)
+          theta += 2 * M_PI;
 
-        // MH: old code which could be useful
+        }
 
-        // Compute bearing between fish in degrees and reef cell in degrees
-        // these are given in screen coordinates (?)
-        // Q: this is from stackexchange. this creates a 'bearing' function - is line 183 necessary?
-        // MH: Not sure what line 183 but here are many problems I think. Do you try to
-        // define a function within a function? That wont work. Either create a complete new
-        // function in a new script to calculate bearing and call this here or use only
-        // "body" (so the code) of the function here.
+        // convert to degree?
+        theta = theta * (180.0 / M_PI);
 
-        //double bearing(fishpop(i,3), fishpop(i,2), coords_reef(i,1), coords_reef(i,0)); {
+        // MH: Something is slighlty wrong here I think
+        Rcout << "theta" << theta << std::endl;
 
-        // MH: We could define this at the top of the script since no need to do this each
-        // iteration of the loop
-          // static const double two_pi = 6.2831853071795865;
+        // update heading
+        fishpop(i, 4) = theta;
 
-          // double theta = atan2(coords_reef(i,1) - fishpop(i,3), fishpop(i,2) - coords_reef(i,0));
-
-        // correct for 4 quadrants of coordinate system
-          // if (theta < 0.0) {
-
-          // return theta += two_pi; }
-
-        //}
-
-        // now this needs to be the heading to calculate reef_dist_temp before the next if,else statement
-        // Q: I am not sure how to do this
-        // MH: Not sure what you are asking here?
-
-        // KSM: check if move_return is less than distance to reef
-        // fish are further away from reef than move_mean
-        // KSM: need to update line numbers
-
+        // check if reef is further away then move return distance
+        // MH: Didn't we say this should be move_mean as well to not make it too complicate?
         if (move_return <= reef_dist_temp) {
 
+          // sample move distance from lognorm
           move_dist = rcpp_rlognorm(move_return, 1.0);
 
           Rcout << "Behaviour 2: Fish are far away" << std::endl;
 
-          Rcout << "move_dist L162: " << move_dist << std::endl;
+          Rcout << "move_dist B2a: " << move_dist << std::endl;
 
-          Rcout << "reef_dist L164: " << reef_dist_temp << std::endl;
+          Rcout << "reef_dist B2a: " << reef_dist_temp << std::endl;
 
-        // KSM: move_return is greater than distance to reef, travel a distance less than reef_dist_temp
+        // reef is closer than move_return, so make sure fish don't overshoot
         } else {
 
-          // pull move_dist from log norm of distance to reef
-          // this line does not seem to be working - fish not ending on reef
+          // sample move distance from around distance to reef
           move_dist = rcpp_rlognorm(reef_dist_temp, 1.0);
 
           Rcout << "Behaviour 2: Fish are close" << std::endl;
 
-          Rcout << "move_dist L172: " << move_dist << std::endl;
+          Rcout << "move_dist B2b: " << move_dist << std::endl;
 
-          Rcout << "reef_dist L178: " << reef_dist_temp << std::endl;
+          Rcout << "reef_dist B2b: " << reef_dist_temp << std::endl;
 
         }
       }
 
-    // KSM: behavior 3 - foraging
-    // KSM: we want fish to move randomly, based on move_mean
+    // behavior 3: foraging
     } else {
 
       Rcout << "Behaviour 3: Forage randomly" << std::endl;
 
-      //Behavior column = 3
+      // Behavior column = 3
       fishpop(i, 13) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, 1.0);
 
-      Rcout << "move_dist L210: " << move_dist << std::endl;
+      Rcout << "move_dist B3: " << move_dist << std::endl;
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
-      // KSM: this needs to be moved within only behavior 1 and 3
       fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
     }
@@ -215,8 +197,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
 
     }
-    // Q: does this need to be moved to be only
-    // calculate new x coord
+
+    // calculate new xy coords using different distance and heading based on behvior
     NumericVector xy_temp = NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
       fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
