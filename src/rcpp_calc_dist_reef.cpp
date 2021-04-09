@@ -26,7 +26,6 @@ Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor,
                                         Rcpp::NumericVector extent,
                                         bool torus = false) {
 
-
   // get dimension of seafloor and reef cells
   int n_cells = seafloor.nrow();
 

@@ -5,11 +5,10 @@
 #' @param fishpop_values Matrix with fish population created.
 #' @param pop_n Numeric with number of individuals.
 #' @param seafloor_values RasterBrick and matrix with seafloor values.
+#' @param coords_reef Matrix with coords of reef cells
 #' @param extent,dimensions Spatial extent and dimensions of the seafloor raster
 #' @param parameters List with all model parameters.
 #' @param pop_thres_reserves Vector with proportion of max_reserves to drain prior to movement.
-#' @param move_reef move_reef Double with mean movement distance when sheltering at reef
-#' @param move_return move_reef Double with mean movement distance when returning to reef
 #'
 #' @details
 #' Function to simulate movement of fish population individuals.
@@ -20,7 +19,8 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
+simulate_movement <- function(fishpop_values, pop_n,
+                              seafloor_values, coords_reef,
                               pop_thres_reserves,
                               extent, dimensions,
                               parameters) {
@@ -47,12 +47,11 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
                     reef_dist = seafloor_values[, "reef_dist"],
+                    coords_reef = coords_reef,
                     move_mean = parameters$move_mean,
-                    pop_visibility = parameters$pop_visibility,
                     pop_thres_reserves = pop_thres_reserves,
                     move_reef = parameters$move_reef,
                     move_return = parameters$move_return,
-                    behavior = behavior,
                     extent = extent,
                     dimensions = dimensions)
 }
