@@ -63,7 +63,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
     // check mortality Behavior 3
 
-    if (fishpop(fish_id_temp, 14) == 3.0) {
+    if (fishpop(fish_id_temp, 13) == 3.0) {
 
       // calculate amount of available resources
       // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
@@ -164,6 +164,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         // individual grows because consumption requirements can be met
       } else {
 
+        // safety check of double pool = detritus from seafloor
+
         //  increase age (60 min * 24 h = 1440 min/day)
         fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
 
@@ -180,14 +182,11 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         // KSM: reduce reserves to meet consumption_req
         fishpop(fish_id_temp, 7) -= consumption_req;
 
-        // safety check
-        if (fishpop(fish_id_temp, 7) > 0) {
-
-          stop("consumption is non-zero...which it shouldn't!");
-
-        }
+        // safety check if pool != detritus from seafloor cell, then STOP. value must be the same.
 
       }
+
+        // FIGURE OUT WHERE THIS NEEDS TO GO
 
         // calc non-used consumption (excretion)
         double excretion_temp = consumption_req - (growth_weight * pop_n_body);
