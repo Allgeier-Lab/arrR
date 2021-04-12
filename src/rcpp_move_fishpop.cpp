@@ -83,6 +83,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       } else {
 
         // Rcout << "Behaviour 2" << std::endl;
+        // set behavior column
+        fishpop(i, 13) = 2.0;
 
         double theta = rcpp_get_bearing(coords_temp(0, 0),
                                         coords_temp(0, 1),
