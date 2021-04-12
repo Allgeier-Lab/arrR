@@ -8,6 +8,7 @@
 //' @param seafloor Matrix with seafloor values.
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+//' @param reason String with reason of reincarnation.
 //'
 //' @details
 //' Rcpp implementation to create new individual after mortality event.

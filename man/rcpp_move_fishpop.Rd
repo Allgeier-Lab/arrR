@@ -6,12 +6,11 @@
 \usage{
 rcpp_move_fishpop(
   fishpop,
-  reef_dist,
+  coords_reef,
   pop_thres_reserves,
   move_mean,
   move_reef,
   move_return,
-  pop_visibility,
   extent,
   dimensions
 )
@@ -19,17 +18,15 @@ rcpp_move_fishpop(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{reef_dist}{Vector with distance to reef of each cell.}
+\item{coords_reef}{Matrix with coords of reef cells.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging}
+\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
 
-\item{move_mean}{Numeric with parameter.}
+\item{move_mean}{Double with mean movement parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef}
 
 \item{move_return}{Double with mean movement distance when returning to reef}
-
-\item{pop_visibility}{Double with "sight" distance of fish.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -44,6 +41,6 @@ Rcpp move fish population
 \details{
 Rcpp implementation to move fish individuals depending on move distance and
 heading value.
-"KSM": notes on code added
+"KSM": notes on code added, "MH" Some comments/ideas Max
 "Q": questions for Max
 }

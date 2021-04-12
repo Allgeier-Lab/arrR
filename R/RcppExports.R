@@ -203,6 +203,27 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
     .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
 }
 
+#' rcpp_closest_reef
+#'
+#' @description Rcpp get distance to closest reef
+#'
+#' @param coords_temp Matrix with coords of current individual.
+#' @param coords_reef Matrix coords of reef cells.
+#'
+#' @details
+#' Rcpp implementation to get id and distance to closet reef cell. The first element
+#' of the returning vector is the id, the second the distance in m.
+#'
+#' @return vector
+#'
+#' @aliases rcpp_closest_reef
+#' @rdname rcpp_closest_reef
+#'
+#' @keywords export
+rcpp_closest_reef <- function(coords_temp, coords_reef) {
+    .Call(`_arrR_rcpp_closest_reef`, coords_temp, coords_reef)
+}
+
 #' rcpp_diffuse_values
 #'
 #' @description Rcpp diffuse values
@@ -222,6 +243,28 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion) {
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion))
+}
+
+#' rcpp_get_bearing
+#'
+#' @description Rcpp get bearing between two coordinates
+#'
+#' @param x_fish Double with xy coords of fish individual.
+#' @param y_fish Double with xy coords of fish individual.
+#' @param x_reef Double with xy coords of closest reef.
+#' @param y_fish Double with xy coords of closest reef.
+#'
+#' @details
+#' Rcpp implementation to get bearing between fish individual and closest reef cell.
+#'
+#' @return double
+#'
+#' @aliases rcpp_get_bearing
+#' @rdname rcpp_get_bearing
+#'
+#' @keywords export
+rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
+    .Call(`_arrR_rcpp_get_bearing`, x_fish, y_fish, x_reef, y_reef)
 }
 
 #' rcpp_modify_degree
@@ -250,20 +293,18 @@ rcpp_modify_degree <- function(x, y) {
 #' @description Rcpp move fish population
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param reef_dist Vector with distance to reef of each cell.
+#' @param coords_reef Matrix with coords of reef cells.
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
 #' @param move_mean Double with mean movement parameter.
-#' @param pop_visibility Double with "sight" distance of fish.
-#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
-#' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param move_mean Numeric with parameter.
-#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
 #' @param move_reef Double with mean movement distance when sheltering at reef
 #' @param move_return Double with mean movement distance when returning to reef
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
 #'
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
 #' heading value.
-#' "KSM": notes on code added
+#' "KSM": notes on code added, "MH" Some comments/ideas Max
 #' "Q": questions for Max
 #'
 #' @return void
@@ -272,8 +313,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions))
 }
 
 #' rcpp_reincarnate
@@ -284,6 +325,7 @@ rcpp_move_fishpop <- function(fishpop, reef_dist, coords_reef, pop_thres_reserve
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 #' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param reason String with reason of reincarnation.
 #'
 #' @details
 #' Rcpp implementation to create new individual after mortality event.
