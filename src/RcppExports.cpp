@@ -152,6 +152,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_closest_reef
+Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericMatrix coords_temp, Rcpp::NumericMatrix coords_reef);
+RcppExport SEXP _arrR_rcpp_closest_reef(SEXP coords_tempSEXP, SEXP coords_reefSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_temp(coords_tempSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_closest_reef(coords_temp, coords_reef));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_diffuse_values
 void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_dead_diffusion);
 RcppExport SEXP _arrR_rcpp_diffuse_values(SEXP seafloorSEXP, SEXP cell_adjSEXP, SEXP nutrients_diffusionSEXP, SEXP detritus_diffusionSEXP, SEXP detritus_dead_diffusionSEXP) {
@@ -164,6 +176,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type detritus_dead_diffusion(detritus_dead_diffusionSEXP);
     rcpp_diffuse_values(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_dead_diffusion);
     return R_NilValue;
+END_RCPP
+}
+// rcpp_get_bearing
+double rcpp_get_bearing(double x_fish, double y_fish, double x_reef, double y_reef);
+RcppExport SEXP _arrR_rcpp_get_bearing(SEXP x_fishSEXP, SEXP y_fishSEXP, SEXP x_reefSEXP, SEXP y_reefSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x_fish(x_fishSEXP);
+    Rcpp::traits::input_parameter< double >::type y_fish(y_fishSEXP);
+    Rcpp::traits::input_parameter< double >::type x_reef(x_reefSEXP);
+    Rcpp::traits::input_parameter< double >::type y_reef(y_reefSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_bearing(x_fish, y_fish, x_reef, y_reef));
+    return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_modify_degree
@@ -179,21 +205,19 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_move_fishpop
-void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist, Rcpp::NumericVector pop_thres_reserves, double move_mean, double move_reef, double move_return, double pop_visibility, double bearing, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
-RcppExport SEXP _arrR_rcpp_move_fishpop(SEXP fishpopSEXP, SEXP reef_distSEXP, SEXP pop_thres_reservesSEXP, SEXP move_meanSEXP, SEXP move_reefSEXP, SEXP move_returnSEXP, SEXP pop_visibilitySEXP, SEXP bearingSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector pop_thres_reserves, double move_mean, double move_reef, double move_return, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+RcppExport SEXP _arrR_rcpp_move_fishpop(SEXP fishpopSEXP, SEXP coords_reefSEXP, SEXP pop_thres_reservesSEXP, SEXP move_meanSEXP, SEXP move_reefSEXP, SEXP move_returnSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type reef_dist(reef_distSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_thres_reserves(pop_thres_reservesSEXP);
     Rcpp::traits::input_parameter< double >::type move_mean(move_meanSEXP);
     Rcpp::traits::input_parameter< double >::type move_reef(move_reefSEXP);
     Rcpp::traits::input_parameter< double >::type move_return(move_returnSEXP);
-    Rcpp::traits::input_parameter< double >::type pop_visibility(pop_visibilitySEXP);
-    Rcpp::traits::input_parameter< double >::type bearing(bearingSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_fishpop(fishpop, reef_dist, pop_thres_reserves, move_mean, move_reef, move_return, pop_visibility, bearing, extent, dimensions);
+    rcpp_move_fishpop(fishpop, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions);
     return R_NilValue;
 END_RCPP
 }
@@ -250,9 +274,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
     {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 15},
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
+    {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
+    {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
-    {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 10},
+    {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 8},
     {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 9},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 2},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},

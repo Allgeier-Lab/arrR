@@ -111,9 +111,9 @@ run_simulation <- function(seafloor, fishpop,
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
   # KSM: adding pop_thres_reserves parameter here as a vector from pop_thres_reserves_min and _max
-  pop_thres_reserves <- runif(n = nrow(fishpop_values),
-                              min = parameters$pop_thres_reserves_min,
-                              max = parameters$pop_thres_reserves_max)
+  pop_thres_reserves <- stats::runif(n = nrow(fishpop_values),
+                                     min = parameters$pop_thres_reserves_min,
+                                     max = parameters$pop_thres_reserves_max)
 
   # print some basic information about model run
   if (verbose) {
@@ -152,7 +152,7 @@ run_simulation <- function(seafloor, fishpop,
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
                         pop_n = starting_values$pop_n,
-                        seafloor_values = seafloor_values,
+                        coords_reef = coords_reef,
                         extent = extent,
                         dimensions = dimensions,
                         pop_thres_reserves = pop_thres_reserves,
