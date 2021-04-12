@@ -25,6 +25,8 @@ rcpp_reincarnate(
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
 \item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+
+\item{reason}{String with reason of reincarnation.}
 }
 \value{
 void

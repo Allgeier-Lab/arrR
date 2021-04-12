@@ -40,7 +40,7 @@ starting_values <- arrR::default_starting_values
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 16
+starting_values$pop_n <- 8
 
 parameters$detritus_dead_ratio <- 0.75
 
@@ -79,12 +79,12 @@ The `run_simulation` functions starts a simulation run. You only need to provide
 min_per_i <- 120
 
 # run the model for three years
-years <- 3
+years <- 1
 
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # save results only every 15 days
-days <- 15
+days <- 5
 
 save_each <- (24 / (min_per_i / 60)) * days
 
