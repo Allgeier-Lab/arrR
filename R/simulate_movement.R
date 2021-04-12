@@ -22,22 +22,6 @@ simulate_movement <- function(fishpop_values, pop_n, coords_reef,
                               pop_thres_reserves, parameters,
                               extent, dimensions) {
 
-  # calc mean of log-norm distribution
-  norm_mean <- log((parameters$move_mean ^ 2) /
-                     sqrt(parameters$move_mean ^ 2 + parameters$move_var))
-
-  # calc sd of log-norm distribution
-  norm_sd <- sqrt(log(1 + (parameters$move_var / (parameters$move_mean ^ 2))))
-
-  # get random numbers from log-norm distribution
-  norm_random <- stats::rnorm(n = pop_n,
-                              mean = norm_mean, sd = norm_sd)
-
-  # calculate movement distance based on random number
-  move_dist <- exp(norm_random)
-
-  # MH: No need to add behaviour as function argument. But we will need coords_reef (matrix) as argument
-
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
                     coords_reef = coords_reef,
