@@ -31,9 +31,10 @@ default_parameters <- list(
 
   pop_visibility = 1,
 
+  move_border = 2,
   move_mean = 20,
   move_var = 5,
-  move_reef = 2,
+  move_reef = 0.5,
   move_return = 50,
 
   pop_a = 0.0121,

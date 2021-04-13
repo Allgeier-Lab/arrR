@@ -295,9 +295,10 @@ rcpp_modify_degree <- function(x, y) {
 #' @param fishpop Matrix with fishpop values.
 #' @param coords_reef Matrix with coords of reef cells.
 #' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+#' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_mean Double with mean movement parameter.
-#' @param move_reef Double with mean movement distance when sheltering at reef
-#' @param move_return Double with mean movement distance when returning to reef
+#' @param move_reef Double with mean movement distance when sheltering at reef.
+#' @param move_return Double with mean movement distance when returning to reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -313,8 +314,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_mean, move_reef, move_return, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, extent, dimensions))
 }
 
 #' rcpp_reincarnate

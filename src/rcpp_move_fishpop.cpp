@@ -11,9 +11,10 @@
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with coords of reef cells.
 //' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param move_border Double with movement distance that surrounds reef cell border.
 //' @param move_mean Double with mean movement parameter.
-//' @param move_reef Double with mean movement distance when sheltering at reef
-//' @param move_return Double with mean movement distance when returning to reef
+//' @param move_reef Double with mean movement distance when sheltering at reef.
+//' @param move_return Double with mean movement distance when returning to reef.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -32,7 +33,7 @@
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                        Rcpp::NumericVector pop_thres_reserves,
-                       double move_mean, double move_reef, double move_return,
+                       double move_border, double move_mean, double move_reef, double move_return,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
@@ -60,13 +61,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       Rcout << "closest_reef B1 or 2: " << closest_reef << std::endl;
 
       // behaviour 1: fish already at reef so they stay there
-      // MH: make this parameter and add to function arguments
       // MH: What about to set this distance threshold to move_reef?
-      // KSM: OR change here to reef_border (reef_border = 4 m)
-      // KSM: this might need to be bigger than move_reef so that they stay in behavior 1
-      if (closest_reef(1) <= move_reef) {
-
-        // Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
+      if (closest_reef(1) <= move_border) {
 
         //Behavior column = 1
         fishpop(i, 13) = 1.0;
@@ -94,12 +90,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
         fishpop(i, 4) = theta;
 
         // check if reef is further away then move return distance
-        // MH: Didn't we say this should be move_mean and not move_return
-        // as well to not make it too complicate?
-        // KSM: this creates faster swimming speed/more movement per time step
-        // when fish needs to return to the reef (behavior 2).
-        // but maybe this should only be when fish are far away and need to return? ASK JAKE
-
+        // MH: Didn't we say this should be move_mean and not move_return?
         if (move_return <= closest_reef(1)) {
 
           // sample move distance from lognorm
@@ -166,6 +157,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
 # calculate new coordinates and activity
 rcpp_move_fishpop(fishpop = fishpop_values,
                   coords_reef = coords_reef,
+                  move_border = parameters$move_border,
                   move_mean = parameters$move_mean,
                   pop_thres_reserves = pop_thres_reserves,
                   move_reef = parameters$move_reef,
