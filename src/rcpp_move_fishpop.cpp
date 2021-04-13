@@ -38,7 +38,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // Rcout << std::endl << "i: " << i << std::endl;
+    Rcout << std::endl << "i: " << i << std::endl;
 
     // init move_dist
     double move_dist = -1.0;
@@ -54,27 +54,27 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
 
-      // Rcout << "Behaviour 1 or 2" << std::endl;
-
-      // get id and distance to clostest reef
+      // get id and distance to closest reef
       Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
 
-      // Rcout << "closest_reef B12: " << closest_reef << std::endl;
+      Rcout << "closest_reef B1 or 2: " << closest_reef << std::endl;
 
       // behaviour 1: fish already at reef so they stay there
       // MH: make this parameter and add to function arguments
       // MH: What about to set this distance threshold to move_reef?
-      if (closest_reef(1) <= 4.0) {
+      // KSM: OR change here to reef_border (reef_border = 4 m)
+      // KSM: this might need to be bigger than move_reef so that they stay in behavior 1
+      if (closest_reef(1) <= move_reef) {
 
         // Rcout << "Behaviour 1: Fish shelter at reef" << std::endl;
 
         //Behavior column = 1
         fishpop(i, 13) = 1.0;
 
-        // KSM: move_dist is now from a log-normal distribution within 2m of reef to move
+        // KSM: move_dist is now from a log-normal distribution within Xm of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0);
 
-        // Rcout << "move_dist B1: " << move_dist << std::endl;
+        Rcout << "move_dist B1: " << move_dist << std::endl;
 
         // turn fish randomly (runif always returns vector, thus (0))
         fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
@@ -82,7 +82,6 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       // behaviour 2: fish return towards reef
       } else {
 
-        // Rcout << "Behaviour 2" << std::endl;
         // set behavior column
         fishpop(i, 13) = 2.0;
 
@@ -91,22 +90,22 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
                                         coords_reef(closest_reef(0), 0),
                                         coords_reef(closest_reef(0), 1));
 
-        // Rcout << "theta: " << theta << std::endl;
-
         // update heading
         fishpop(i, 4) = theta;
 
         // check if reef is further away then move return distance
         // MH: Didn't we say this should be move_mean and not move_return
         // as well to not make it too complicate?
+        // KSM: this creates faster swimming speed/more movement per time step
+        // when fish needs to return to the reef (behavior 2).
+        // but maybe this should only be when fish are far away and need to return? ASK JAKE
+
         if (move_return <= closest_reef(1)) {
 
           // sample move distance from lognorm
           move_dist = rcpp_rlognorm(move_return, 1.0);
 
-          // Rcout << "Behaviour 2: Fish are far away" << std::endl;
-
-          // Rcout << "move_dist B2a: " << move_dist << std::endl;
+          Rcout << "move_dist B2far: " << move_dist << std::endl;
 
         // reef is closer than move_return, so make sure fish don't overshoot
         } else {
@@ -114,9 +113,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
           // sample move distance from around distance to reef
           move_dist = rcpp_rlognorm(closest_reef(1), 1.0);
 
-          // Rcout << "Behaviour 2: Fish are close" << std::endl;
-
-          // Rcout << "move_dist B2b: " << move_dist << std::endl;
+          Rcout << "move_dist B2close: " << move_dist << std::endl;
 
         }
       }
@@ -124,15 +121,13 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     // behavior 3: foraging
     } else {
 
-      // Rcout << "Behaviour 3: Forage randomly" << std::endl;
-
       // Behavior column = 3
       fishpop(i, 13) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, 1.0);
 
-      // Rcout << "move_dist B3: " << move_dist << std::endl;
+      Rcout << "move_dist B3: " << move_dist << std::endl;
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
       fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
@@ -152,15 +147,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
     );
 
-    // Rcout << "Start final torus" << std::endl;
-
-    // Rcout << "xy_temp: " << xy_temp << std::endl;
-    // Rcout << "extent: " << extent << std::endl;
-
     // make sure coords are within study area
     xy_temp = rcpp_translate_torus(xy_temp, extent);
-
-    // Rcout << "Update xy" << std::endl;
 
     // update x coord
     fishpop(i, 2) = xy_temp(0);
@@ -168,12 +156,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     // update y coord
     fishpop(i, 3) = xy_temp(1);
 
-    // Rcout << "Update ACT" << std::endl;
-
     // update activity
     fishpop(i, 9) = (1 / (move_mean + 1)) * move_dist + 1;
-
-    // Rcout << "DONE!" << std::endl;
 
   }
 }
