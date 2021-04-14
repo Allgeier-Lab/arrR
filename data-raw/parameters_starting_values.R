@@ -24,8 +24,8 @@ default_parameters <- list(
   detritus_diffusion = 0.3,
   detritus_dead_diffusion = 0.3,
 
-  pop_max_reserves = 0.2,
-  pop_want_reserves = 0.2,
+  pop_max_reserves = 0.8,
+  pop_want_reserves = 0.8,
   pop_thres_reserves_min = 0.50,
   pop_thres_reserves_max = 0.50,
 
@@ -35,7 +35,7 @@ default_parameters <- list(
   move_mean = 20,
   move_var = 5,
   move_reef = 0.5,
-  move_return = 50,
+  move_return = 40,
 
   pop_a = 0.0121,
   pop_b = 3.161,

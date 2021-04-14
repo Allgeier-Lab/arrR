@@ -59,7 +59,9 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
-    Rcout << "initial length:" << fishpop(fish_id_temp, 5) << std::endl;
+    Rcout << "length_initial ; " << fishpop(fish_id_temp, 5) << std::endl;
+
+    Rcout << "reserves_initial ; " << fishpop(fish_id_temp, 7) << std::endl;
 
     // check mortality Behavior 3
 
@@ -146,6 +148,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
         }
 
+        Rcout << "reserves_final ; " << fishpop(fish_id_temp, 7) << std::endl;
+
       }
 
       // check mortality Behavior 1 and 2
@@ -183,6 +187,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         // KSM: reduce reserves to meet consumption_req
         fishpop(fish_id_temp, 7) -= consumption_req;
 
+        Rcout << "reserves_final ; " << fishpop(fish_id_temp, 7) << std::endl;
+
         // KSM: this can be deleted later, just safety check
         if (detritus_pool != seafloor(cell_id_temp, 5)) {
 
@@ -202,7 +208,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     // add non-used consumption to nutrient pool
     seafloor(cell_id_temp, 4) += excretion_temp;
 
-    Rcout << "final length:" << fishpop(fish_id_temp, 5) << std::endl;
+    Rcout << "length_final ; " << fishpop(fish_id_temp, 5) << std::endl;
 
   }
 
