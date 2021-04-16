@@ -199,6 +199,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
       }
 
     }
+
     // calc non-used consumption (excretion)
     double excretion_temp = consumption_req - (growth_weight * pop_n_body);
 
