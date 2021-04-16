@@ -8,7 +8,7 @@ run_simulation(
   seafloor,
   fishpop,
   parameters,
-  nutr_input = rep(x = 0, times = max_i),
+  nutr_input = NULL,
   reef_attraction,
   max_i,
   min_per_i,

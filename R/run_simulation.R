@@ -30,7 +30,7 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop,
-                           parameters, nutr_input = rep(x = 0, times = max_i), reef_attraction,
+                           parameters, nutr_input = NULL, reef_attraction,
                            max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
                            extract = NULL, verbose = TRUE) {
 
@@ -59,7 +59,7 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
-  if (length(nutr_input) != max_i) {
+  if (!is.null(nutr_input) && length(nutr_input) != max_i) {
 
     stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
 
@@ -141,9 +141,12 @@ run_simulation <- function(seafloor, fishpop,
   for (i in 1:max_i) {
 
     # simulate nutrient input
-    simulate_input(seafloor_values = seafloor_values,
-                   nutr_input = nutr_input,
-                   timestep = i)
+    if (!is.null(nutr_input)) {
+
+      simulate_input(seafloor_values = seafloor_values,
+                     nutr_input = nutr_input,
+                     timestep = i)
+    }
 
     # simulate seagrass growth
     simulate_seagrass(seafloor_values = seafloor_values,
@@ -270,6 +273,7 @@ run_simulation <- function(seafloor, fishpop,
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
                  reef_attraction = reef_attraction,
+                 nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor),
                  coords_reef = coords_reef)
