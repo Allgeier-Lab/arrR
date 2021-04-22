@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// rcpp_add_input
+void rcpp_add_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input, int timestep);
+RcppExport SEXP _arrR_rcpp_add_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP, SEXP timestepSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
+    Rcpp::traits::input_parameter< int >::type timestep(timestepSEXP);
+    rcpp_add_input(seafloor, nutr_input, timestep);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_calc_dist_reef
 Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, bool torus);
 RcppExport SEXP _arrR_rcpp_calc_dist_reef(SEXP seafloorSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP torusSEXP) {
@@ -194,6 +206,17 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_remove_output
+void rcpp_remove_output(Rcpp::NumericMatrix seafloor, double nutrients_output);
+RcppExport SEXP _arrR_rcpp_remove_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< double >::type nutrients_output(nutrients_outputSEXP);
+    rcpp_remove_output(seafloor, nutrients_output);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_translate_torus
 Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords, Rcpp::NumericVector extent);
 RcppExport SEXP _arrR_rcpp_translate_torus(SEXP coordsSEXP, SEXP extentSEXP) {
@@ -208,6 +231,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_arrR_rcpp_add_input", (DL_FUNC) &_arrR_rcpp_add_input, 3},
     {"_arrR_rcpp_calc_dist_reef", (DL_FUNC) &_arrR_rcpp_calc_dist_reef, 4},
     {"_arrR_rcpp_calc_fishpop_growth", (DL_FUNC) &_arrR_rcpp_calc_fishpop_growth, 13},
     {"_arrR_rcpp_calc_mineralization", (DL_FUNC) &_arrR_rcpp_calc_mineralization, 3},
@@ -220,6 +244,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
     {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 8},
+    {"_arrR_rcpp_remove_output", (DL_FUNC) &_arrR_rcpp_remove_output, 2},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
     {NULL, NULL, 0}
 };

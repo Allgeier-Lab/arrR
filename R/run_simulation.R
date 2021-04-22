@@ -5,6 +5,7 @@
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
+#' @param nutr_input Vector with amount of nutrient input each timestep.
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
@@ -29,7 +30,7 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop,
-                           parameters, reef_attraction,
+                           parameters, nutr_input = NULL, reef_attraction,
                            max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
                            extract = NULL, verbose = TRUE) {
 
@@ -55,6 +56,12 @@ run_simulation <- function(seafloor, fishpop,
   if (save_each %% 1 != 0) {
 
     stop("'save_each' must be a whole number.", call. = FALSE)
+
+  }
+
+  if (!is.null(nutr_input) && length(nutr_input) != max_i) {
+
+    stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
 
   }
 
@@ -133,6 +140,15 @@ run_simulation <- function(seafloor, fishpop,
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
+    # simulate nutrient input
+    if (!is.null(nutr_input)) {
+
+      simulate_input(seafloor_values = seafloor_values,
+                     nutr_input = nutr_input,
+                     timestep = i)
+
+    }
+
     # simulate seagrass growth
     simulate_seagrass(seafloor_values = seafloor_values,
                       parameters = parameters,
@@ -161,13 +177,13 @@ run_simulation <- function(seafloor, fishpop,
                            min_per_i = min_per_i)
 
       # simulate fishpop growth and including change of seafloor pools
-      simulate_fishpop_growth(fishpop_values = fishpop_values,
-                              fishpop_track = fishpop_track[[1]],
-                              pop_n = starting_values$pop_n,
-                              seafloor = seafloor$reef,
-                              seafloor_values = seafloor_values,
-                              parameters = parameters,
-                              min_per_i = min_per_i)
+      simulate_growth(fishpop_values = fishpop_values,
+                      fishpop_track = fishpop_track[[1]],
+                      pop_n = starting_values$pop_n,
+                      seafloor = seafloor$reef,
+                      seafloor_values = seafloor_values,
+                      parameters = parameters,
+                      min_per_i = min_per_i)
 
       # simulate mortality
       simulate_mortality(fishpop_values = fishpop_values,
@@ -184,6 +200,10 @@ run_simulation <- function(seafloor, fishpop,
     simulate_diffusion(seafloor_values = seafloor_values,
                        cell_adj = cell_adj,
                        parameters = parameters)
+
+    # remove nutrients from cells
+    simulate_output(seafloor_values = seafloor_values,
+                    parameters = parameters)
 
     # update tracking list
     if (i %% save_each == 0) {
@@ -254,6 +274,7 @@ run_simulation <- function(seafloor, fishpop,
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
                  reef_attraction = reef_attraction,
+                 nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor),
                  coords_reef = coords_reef)

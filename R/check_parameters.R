@@ -48,6 +48,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "bg_thres",
                            "bg_gamma",
                            "nutrients_diffusion",
+                           "nutrients_output",
                            "detritus_ratio",
                            "detritus_mineralization",
                            "detritus_diffusion",
@@ -158,6 +159,46 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       warning("'pop_a' must be positive number.",
               call. = FALSE)
 
+
+    }
+
+
+    # check if all ratios are betwenn 0 and 1
+    check_ratios <- any(c(c(parameters$bg_thres,
+
+                            parameters$nutrients_diffusion,
+                            parameters$nutrients_output,
+
+                            parameters$detritus_ratio,
+                            parameters$detritus_mineralization,
+                            parameters$detritus_fish_ratio,
+                            parameters$detritus_diffusion,
+                            parameters$detritus_fish_diffusion,
+
+                            parameters$pop_max_reserves,
+                            parameters$pop_want_reserves) > 1,
+
+                          c(parameters$bg_thres,
+
+                            parameters$nutrients_diffusion,
+                            parameters$nutrients_output,
+
+                            parameters$detritus_ratio,
+                            parameters$detritus_mineralization,
+                            parameters$detritus_fish_ratio,
+                            parameters$detritus_diffusion,
+                            parameters$detritus_fish_diffusion,
+
+                            parameters$pop_max_reserves,
+                            parameters$pop_want_reserves) < 0))
+
+    # check if all fraction are between 0 and 1
+    if (check_ratios) {
+
+      final_flag <- FALSE
+
+      warning("Some parameters that must be 0 <= x <= 1 are outside range.",
+              call. = FALSE)
 
     }
   }

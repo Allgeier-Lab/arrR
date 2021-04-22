@@ -18,6 +18,7 @@ default_parameters <- list(
   bg_thres = 2/3,
 
   nutrients_diffusion = 0.6,
+  nutrients_output = 0.0,
 
   detritus_ratio = 0.0001,
   detritus_mineralization = 0.0001,

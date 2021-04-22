@@ -143,3 +143,14 @@ test_that("run_simulation stops max_i cannot be divided by save_each", {
                regexp = "'max_i' cannot be divided by 'save_each' without rest.")
 
 })
+
+test_that("run_simulation stops if nutr_input is not equal to max_i", {
+
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                    parameters = parameters,
+                                    nutr_input = 0.1,
+                                    reef_attraction = FALSE,
+                                    max_i = max_i),
+               regexp = "'nutr_input' must have input amount for each iteration.")
+
+})
