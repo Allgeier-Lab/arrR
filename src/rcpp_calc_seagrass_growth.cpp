@@ -121,28 +121,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
     // check if current cell is not a reef cell, i.e. count() will be 0
     if (is_reef == 0) {
 
-      // calculate total possible nutrient uptake bg
-      double bg_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
-                                               bg_v_max, bg_k_m, min_per_i);
-
-      // remove bg nutrients uptake
-      seafloor(i, 4) -= bg_uptake;
-
-      // track bg nutrients uptake
-      seafloor(i, 12) += bg_uptake;
-
-      // calculate total possible nutrient uptake bg
-      double ag_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
-                                               ag_v_max, ag_k_m, min_per_i);
-
-      // remove ag nutrients uptake
-      seafloor(i, 4) -= ag_uptake;
-
-      // track bg nutrients uptake
-      seafloor(i, 11) += ag_uptake;
-
-      // calculate total nutrient uptake
-      double total_uptake = ag_uptake + bg_uptake;
+      // calculate detritus //
 
       // calculate bg detritus modifier
       double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
@@ -172,6 +151,31 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       // add nutrients to detritus pool
       seafloor(i, 5) += (bg_detritus * bg_gamma) + (ag_detritus * ag_gamma);
+
+      // calculate uptake //
+
+      // calculate total possible nutrient uptake bg
+      double bg_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
+                                               bg_v_max, bg_k_m, min_per_i);
+
+      // remove bg nutrients uptake
+      seafloor(i, 4) -= bg_uptake;
+
+      // track bg nutrients uptake
+      seafloor(i, 12) += bg_uptake;
+
+      // calculate total possible nutrient uptake bg
+      double ag_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
+                                               ag_v_max, ag_k_m, min_per_i);
+
+      // remove ag nutrients uptake
+      seafloor(i, 4) -= ag_uptake;
+
+      // track bg nutrients uptake
+      seafloor(i, 11) += ag_uptake;
+
+      // calculate total nutrient uptake
+      double total_uptake = ag_uptake + bg_uptake;
 
       // seagrass growth //
 
