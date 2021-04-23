@@ -15,7 +15,8 @@ default_parameters <- list(
   bg_k_m = 178.1,
   bg_gamma = 0.0082,
 
-  bg_thres = 2/3,
+  seagrass_thres = 1/2,
+  seagrass_slope = 3,
 
   nutrients_diffusion = 0.6,
   nutrients_output = 0.0,

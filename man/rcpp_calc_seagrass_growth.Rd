@@ -17,8 +17,9 @@ rcpp_calc_seagrass_growth(
   bg_biomass_min,
   ag_biomass_max,
   ag_biomass_min,
+  seagrass_thres,
+  seagrass_slope,
   detritus_ratio,
-  bg_thres,
   min_per_i
 )
 }
@@ -31,7 +32,7 @@ rcpp_calc_seagrass_growth(
 
 \item{bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min}{Numerich with biomass values and parameters.}
 
-\item{detritus_ratio, bg_thres, min_per_i}{Numerich with various parameters.}
+\item{detritus_ratio, seagrass_thres, min_per_i}{Numerich with various parameters.}
 }
 \value{
 void

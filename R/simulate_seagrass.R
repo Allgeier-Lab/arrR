@@ -29,7 +29,8 @@ simulate_seagrass <- function(seafloor_values, parameters, cells_reef, min_per_i
                             ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m, ag_gamma = parameters$ag_gamma,
                             bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
                             ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
-                            detritus_ratio = parameters$detritus_ratio, bg_thres = parameters$bg_thres,
+                            seagrass_thres = parameters$seagrass_thres, seagrass_slope = parameters$seagrass_slope,
+                            detritus_ratio = parameters$detritus_ratio,
                             min_per_i = min_per_i)
 
 }

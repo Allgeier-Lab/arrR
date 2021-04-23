@@ -45,8 +45,9 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "bg_biomass_min",
                            "bg_v_max",
                            "bg_k_m",
-                           "bg_thres",
                            "bg_gamma",
+                           "seagrass_thres",
+                           "seagrass_slope",
                            "nutrients_diffusion",
                            "nutrients_output",
                            "detritus_ratio",
@@ -164,7 +165,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
 
     # check if all ratios are betwenn 0 and 1
-    check_ratios <- any(c(c(parameters$bg_thres,
+    check_ratios <- any(c(c(parameters$seagrass_thres,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,
@@ -178,7 +179,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$pop_max_reserves,
                             parameters$pop_want_reserves) > 1,
 
-                          c(parameters$bg_thres,
+                          c(parameters$seagrass_thres,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,
