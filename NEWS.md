@@ -1,3 +1,6 @@
+# arrR 0.5.0
+* Simpler allocation rule based on curves.
+
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`
 * Rename `simulate_fishpop_growth` to `simulate_growth`
