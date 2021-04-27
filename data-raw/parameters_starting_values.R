@@ -16,7 +16,7 @@ default_parameters <- list(
   bg_gamma = 0.0082,
 
   seagrass_thres = 1/2,
-  seagrass_slope = 3,
+  seagrass_slope = 2,
 
   nutrients_diffusion = 0.6,
   nutrients_output = 0.0,
@@ -31,7 +31,7 @@ default_parameters <- list(
   pop_want_reserves = 0.01,
 
   pop_visibility = 1,
-  pop_mean_move =  8,
+  pop_mean_move = 8,
   pop_var_move = 5,
 
   pop_a = 0.0121,
@@ -48,15 +48,21 @@ default_parameters <- list(
   resp_temp_max = 40
 )
 
+ag <- default_parameters$ag_biomass_min +
+  (default_parameters$ag_biomass_max - default_parameters$ag_biomass_min) * 0.01
+
+bg <- default_parameters$bg_biomass_min +
+  (default_parameters$bg_biomass_max - default_parameters$bg_biomass_min) * 0.01
+
 default_starting_values <- list(
 
-  ag_biomass = 6.644,
-  bg_biomass =  128.348,
+  ag_biomass = ag, # 5.1,
+  bg_biomass = bg, # 122.1,
 
   nutrients_pool = 0.75,
   detritus_pool = 0.75,
 
-  pop_n = 25,
+  pop_n = 8,
   pop_mean_size = 9,
   pop_var_size = 10,
 
