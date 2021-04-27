@@ -4,6 +4,7 @@
 #'
 #' @param result mdl_rn object of simulation run.
 #' @param timestep Integer to specify maximum timestep.
+#' @param normalize Logical if TRUE count is divided by timesteps.
 #'
 #' @details
 #' Calculates the fish density for each cells. This means the total count of
@@ -18,7 +19,9 @@
 #' @rdname get_density
 #'
 #' @export
-get_density <- function(result, timestep = result$max_i) {
+get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
+
+  # MH: raster::cellFromXY(object  = seafloor, xy = result_attr$fishpop[, c(3,4)])
 
   # check if mdl_rn is provided
   if (!inherits(x = result, what = "mdl_rn")) {
@@ -41,6 +44,13 @@ get_density <- function(result, timestep = result$max_i) {
 
   if (nrow(result$fishpop > 0)) {
 
+    # remove burn_in
+    if (result$burn_in > 0) {
+
+      result$fishpop <- result$fishpop[result$fishpop$burn_in == "no", ]
+
+    }
+
     # count fish within each cell
     ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")],
                                      y = ras_density,
@@ -53,11 +63,15 @@ get_density <- function(result, timestep = result$max_i) {
     names(ras_density) <- c("x", "y", "density")
 
     # normalize by max_i
-    ras_density$density <- ras_density$density / i
+    if (normalize) {
+
+      ras_density$density <- ras_density$density / i
+
+    }
 
   } else {
 
-    # conver to dataframe
+    # convert to dataframe
     ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
 
     # set density to 0
