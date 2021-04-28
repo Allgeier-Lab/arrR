@@ -105,17 +105,20 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
           // calculate remaining nutrients in pool
           double nutrients_left = seafloor(cell_id_temp, 5) - consumption_req;
 
-          // reserves can be filled completely in cell
+          // calculate amount that fish can eat per cell to fill reserves
+          double consumption_prop = 0.5 * fishpop(fish_id_temp, 8);
+
+          // reserves can be filled in cell
           if (reserves_diff <= nutrients_left) {
 
-            // set reserves to max
-            fishpop(fish_id_temp, 7) = fishpop(fish_id_temp, 8);
+            // increase reserves based on consumption_prop and nutrients left
+            fishpop(fish_id_temp, 7) += (nutrients_left * consumption_prop);
 
             // reduce detritus pool
-            seafloor(cell_id_temp, 5) -= (consumption_req + reserves_diff);
+            seafloor(cell_id_temp, 5) -= (consumption_req + (nutrients_left * consumption_prop));
 
             // track consumption
-            seafloor(cell_id_temp, 13) += consumption_req + reserves_diff;
+            seafloor(cell_id_temp, 13) += consumption_req + (nutrients_left * consumption_prop);
 
             // reserves cannot be filled completely by nutrient pool
           } else {

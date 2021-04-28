@@ -35,7 +35,7 @@ default_parameters <- list(
   move_mean = 20,
   move_var = 5,
   move_reef = 0.5,
-  move_return = 40,
+  move_return = 100,
 
   pop_a = 0.0121,
   pop_b = 3.161,
