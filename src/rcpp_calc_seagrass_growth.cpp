@@ -191,7 +191,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         (1 - std::pow(bg_biomass_norm, midpoint))), -seagrass_slope));
 
       // below threshold and uptake large enough to keep ag stable
-      if (bg_biomass_norm <= seagrass_thres &
+      if (bg_biomass_norm < seagrass_thres &
           total_uptake > (ag_detritus * ag_gamma)) {
 
         // add growth to biomass
@@ -201,7 +201,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 7) += ag_detritus;
 
         // update uptake_temp
-        total_uptake -= (ag_detritus * ag_gamma);
+        total_uptake -= ag_detritus * ag_gamma;
 
         // calculate bg growth
         double bg_growth = total_uptake / bg_gamma;
