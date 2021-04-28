@@ -49,10 +49,10 @@ default_parameters <- list(
 )
 
 ag <- default_parameters$ag_biomass_min +
-  (default_parameters$ag_biomass_max - default_parameters$ag_biomass_min) * 0.01
+  (default_parameters$ag_biomass_max - default_parameters$ag_biomass_min) * 0.5
 
 bg <- default_parameters$bg_biomass_min +
-  (default_parameters$bg_biomass_max - default_parameters$bg_biomass_min) * 0.01
+  (default_parameters$bg_biomass_max - default_parameters$bg_biomass_min) * 0.5
 
 default_starting_values <- list(
 
