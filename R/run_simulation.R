@@ -9,6 +9,7 @@
 #' @param reef_attraction If TRUE, individuals are attracted to AR.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param burn_in Numeric with timesteps used to burn in.
 #' @param return_burnin If FALSE all timesteps < burn_in are not returned.
@@ -31,7 +32,8 @@
 #' @export
 run_simulation <- function(seafloor, fishpop,
                            parameters, nutr_input = NULL, reef_attraction,
-                           max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
+                           max_i, min_per_i, seagrass_each = 1,
+                           save_each = 1, burn_in = 0, return_burnin = TRUE,
                            extract = NULL, verbose = TRUE) {
 
   # check parameters
@@ -149,15 +151,20 @@ run_simulation <- function(seafloor, fishpop,
 
     }
 
-    # simulate seagrass growth
-    simulate_seagrass(seafloor_values = seafloor_values,
-                      parameters = parameters,
-                      cells_reef = cells_reef,
-                      min_per_i = min_per_i)
+    # simulate seagrass only each seagrass_each_i iteration
+    if ((i * min_per_i) %% (min_per_i * seagrass_each) == 0) {
 
-    # redistribute detritus
-    simulate_mineralization(seafloor_values = seafloor_values,
-                            parameters = parameters)
+      # simulate seagrass growth
+      simulate_seagrass(seafloor_values = seafloor_values,
+                        parameters = parameters,
+                        cells_reef = cells_reef,
+                        min_per_i = min_per_i)
+
+      # redistribute detritus
+      simulate_mineralization(seafloor_values = seafloor_values,
+                              parameters = parameters)
+
+    }
 
     if (i > burn_in & starting_values$pop_n != 0) {
 
