@@ -3,14 +3,14 @@
 
 default_parameters <- list(
 
-  ag_biomass_max = 159.5,
-  ag_biomass_min = 5.1,
+  ag_biomass_max = 193.01,
+  ag_biomass_min = 8.87,
   ag_v_max = 8.1,
   ag_k_m = 12.6,
   ag_gamma = 0.0144,
 
-  bg_biomass_max = 746.9,
-  bg_biomass_min = 122.1,
+  bg_biomass_max = 933.03,
+  bg_biomass_min = 275.89,
   bg_v_max = 9.8,
   bg_k_m = 178.1,
   bg_gamma = 0.0082,
@@ -56,8 +56,8 @@ bg <- default_parameters$bg_biomass_min +
 
 default_starting_values <- list(
 
-  ag_biomass = ag, # 5.1,
-  bg_biomass = bg, # 122.1,
+  ag_biomass = ag,
+  bg_biomass = bg,
 
   nutrients_pool = 0.75,
   detritus_pool = 0.75,
