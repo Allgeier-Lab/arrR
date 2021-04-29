@@ -33,7 +33,8 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 #' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 #' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+#' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 #'
 #' @details
 #' Rcpp implementation to calculate growth of fish individuals.
@@ -46,8 +47,8 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #' @rdname rcpp_calc_fishpop_growth
 #'
 #' @export
-rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
+rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, pop_consumption_prop, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, pop_consumption_prop, min_per_i))
 }
 
 #' rcpp_calc_mineralization

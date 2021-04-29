@@ -9,7 +9,8 @@
 //' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging
+//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
@@ -30,6 +31,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                               double pop_k, double pop_linf,
                               double pop_a, double pop_b,
                               double pop_n_body, double pop_max_reserves, double pop_want_reserves,
+                              double pop_consumption_prop,
                               double min_per_i) {
 
   // loop through all fish ids
@@ -95,10 +97,6 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
         // update max reserves based on weight
         fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
 
-        // calculate reserves difference
-        // KSM: difference in reserves = reserves_max - current reserves
-        double reserves_diff = fishpop(fish_id_temp, 8) - fishpop(fish_id_temp, 7);
-
         // consumption requirement can be met by detritus_pool
         if (consumption_req <= seafloor(cell_id_temp, 5)) {
 
@@ -106,21 +104,21 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
           double nutrients_left = seafloor(cell_id_temp, 5) - consumption_req;
 
           // calculate amount that fish can eat per cell to fill reserves
-          double consumption_prop = 0.005 * fishpop(fish_id_temp, 8);
+          double consumption_limit = pop_consumption_prop * fishpop(fish_id_temp, 8);
 
           // reserves (limit based on consumption_prop) can be filled in cell
-          if (nutrients_left >= consumption_prop) {
+          if (nutrients_left >= consumption_limit) {
 
             // increase reserves based on consumption_prop
-            fishpop(fish_id_temp, 7) += consumption_prop;
+            fishpop(fish_id_temp, 7) += consumption_limit;
 
             // reduce detritus pool
-            seafloor(cell_id_temp, 5) -= (consumption_req + consumption_prop);
+            seafloor(cell_id_temp, 5) -= (consumption_req + consumption_limit);
 
             // track consumption
-            seafloor(cell_id_temp, 13) += (consumption_req + consumption_prop);
+            seafloor(cell_id_temp, 13) += (consumption_req + consumption_limit);
 
-            Rcout << "consumption_prop ; " << consumption_prop << std::endl;
+            Rcout << "consumption_limit ; " << consumption_limit << std::endl;
 
             // reserves (limit based on consumption_prop) cannot be filled completely by nutrient pool
           } else {
