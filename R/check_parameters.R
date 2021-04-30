@@ -59,6 +59,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "move_return",
                            "pop_max_reserves",
                            "pop_want_reserves",
+                           "pop_consumption_prop",
                            "pop_thres_reserves_min",
                            "pop_thres_reserves_max",
                            "pop_visibility",
