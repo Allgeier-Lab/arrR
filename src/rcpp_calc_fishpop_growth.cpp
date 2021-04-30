@@ -65,8 +65,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
     Rcout << "reserves_initial ; " << fishpop(fish_id_temp, 7) << std::endl;
 
-    // check mortality Behavior 3
-
+    // check mortality behavior 3 (foraging, reserves + detritus available)
     if (fishpop(fish_id_temp, 13) == 3.0) {
 
       // calculate amount of available resources
@@ -82,7 +81,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                          pop_linf, pop_n_body, pop_want_reserves,
                          "consumption");
 
-        // individual grows because consumption requirements can be met
+      // individual grows because consumption requirements can be met
       } else {
 
         //  increase age (60 min * 24 h = 1440 min/day)
@@ -120,7 +119,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
             Rcout << "consumption_limit ; " << consumption_limit << std::endl;
 
-            // reserves (limit based on consumption_prop) cannot be filled completely by nutrient pool
+          // reserves (limit based on consumption_prop) cannot be filled completely by nutrient pool
           } else {
 
             // add all nutrients that are left
@@ -134,7 +133,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
           }
 
-          // reserves are needed to meet consumption requirement
+        // reserves are needed to meet consumption requirement
         } else {
 
           // reduced reserves
@@ -155,7 +154,7 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 
       }
 
-      // check mortality Behavior 1 and 2
+    // check mortality behavior 1 (@reef) and 2 (returning) (only reserves avail)
     } else {
 
       // MH: This would be where Issue #53 comes into play
@@ -167,9 +166,8 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
                          pop_linf, pop_n_body, pop_want_reserves,
                          "consumption");
 
-        // individual grows because consumption requirements can be met
+      // individual grows because consumption requirements can be met
       } else {
-
 
         // save detritus pool for safety check
         double detritus_pool = seafloor(cell_id_temp, 5);
