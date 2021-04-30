@@ -40,7 +40,7 @@ simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n, pop_th
                            pop_max_reserves = parameters$pop_max_reserves,
                            pop_want_reserves = parameters$pop_want_reserves,
                            pop_thres_reserves = pop_thres_reserves,
-                           pop_consumption_prop = parameters$pop_want_reserves,
+                           pop_consumption_prop = parameters$pop_consumption_prop,
                            min_per_i = min_per_i)
 
 }
