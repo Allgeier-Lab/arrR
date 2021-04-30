@@ -18,6 +18,7 @@ rcpp_calc_fishpop_growth(
   pop_n_body,
   pop_max_reserves,
   pop_want_reserves,
+  pop_consumption_prop,
   min_per_i
 )
 }
@@ -28,11 +29,13 @@ rcpp_calc_fishpop_growth(
 
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging}
+\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
 \item{pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i}{Numeric with parameters.}
+
+\item{pop_consumption_prop}{Double with consumption limit to fill reserves each timestep.}
 }
 \value{
 void

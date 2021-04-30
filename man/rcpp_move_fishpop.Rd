@@ -8,6 +8,7 @@ rcpp_move_fishpop(
   fishpop,
   coords_reef,
   pop_thres_reserves,
+  move_border,
   move_mean,
   move_reef,
   move_return,
@@ -22,11 +23,13 @@ rcpp_move_fishpop(
 
 \item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
 
+\item{move_border}{Double with movement distance that surrounds reef cell border.}
+
 \item{move_mean}{Double with mean movement parameter.}
 
-\item{move_reef}{Double with mean movement distance when sheltering at reef}
+\item{move_reef}{Double with mean movement distance when sheltering at reef.}
 
-\item{move_return}{Double with mean movement distance when returning to reef}
+\item{move_return}{Double with mean movement distance when returning to reef.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
