@@ -158,7 +158,7 @@ run_simulation <- function(seafloor, fishpop,
       simulate_seagrass(seafloor_values = seafloor_values,
                         parameters = parameters,
                         cells_reef = cells_reef,
-                        min_per_i = min_per_i)
+                        time_frac = (min_per_i / 60) * seagrass_each)
 
       # redistribute detritus
       simulate_mineralization(seafloor_values = seafloor_values,
