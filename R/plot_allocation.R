@@ -42,11 +42,14 @@ plot_allocation <- function(parameters) {
     ggplot2::geom_vline(xintercept = x_intercept, linetype = 2, col = "grey85") +
     ggplot2::geom_line(ggplot2::aes(x = x, y = y,  col = "Aboveground")) +
     ggplot2::geom_line(ggplot2::aes(x = x, y = 1 - y, col = "Belowground")) +
-    ggplot2::labs(x = "Belowground biomass (min to max)", y = "Ratio of nutrient uptake allocation") +
+    ggplot2::labs(x = "Belowground biomass (min to max)", y = "Ratio of nutrient uptake allocation",
+                  subtitle = paste0("Threshold: ", round(parameters$seagrass_thres, 2),
+                                    "; Slope ", round(parameters$seagrass_slope, 2))) +
     ggplot2::scale_color_viridis_d(name = "Biomass") +
     ggplot2::scale_x_continuous(limits = c(parameters$bg_biomass_min, parameters$bg_biomass_max),
                                 breaks = breaks) +
-    ggplot2::theme_classic()
+    ggplot2::theme_classic() +
+    ggplot2::theme(legend.position = "bottom")
 
     return(gg)
 }
