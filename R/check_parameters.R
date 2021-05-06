@@ -32,8 +32,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                          "detritus_pool",
                          "pop_n",
                          "pop_mean_size",
-                         "pop_var_size",
-                         "water_temp")
+                         "pop_var_size")
 
   # specify all required parameters
   required_parameters <- c("ag_biomass_max",

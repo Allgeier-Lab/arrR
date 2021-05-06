@@ -1,6 +1,5 @@
 ## code to prepare `DATASET` dataset goes here
 
-
 default_parameters <- list(
 
   ag_biomass_max = 193.01,
@@ -64,9 +63,7 @@ default_starting_values <- list(
 
   pop_n = 8,
   pop_mean_size = 9,
-  pop_var_size = 10,
-
-  water_temp = 26
+  pop_var_size = 10
 )
 
 usethis::use_data(default_parameters, default_starting_values, overwrite = TRUE)
