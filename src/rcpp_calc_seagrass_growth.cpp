@@ -121,22 +121,9 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       // calculate detritus //
 
-      // calculate bg detritus modifier
-      double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
-        (bg_biomass_max - bg_biomass_min);
-
       // calculate ag detritus modifier
       double ag_modf = (ag_biomass_max - seafloor(i, 2)) /
         (ag_biomass_max - ag_biomass_min);
-
-      // calculate detritus fraction from bg biomass
-      double bg_detritus = seafloor(i, 3) * (detritus_ratio * (1 - bg_modf));
-
-      // remove detritus from bg biomass
-      seafloor(i, 3) -= bg_detritus;
-
-      // track bg slough
-      seafloor(i, 10) += bg_detritus;
 
       // calculate detritus fraction from ag biomass
       double ag_detritus = seafloor(i, 2) * (detritus_ratio * (1 - ag_modf));
@@ -147,8 +134,21 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       // track ag slough
       seafloor(i, 9) += ag_detritus;
 
+      // calculate bg detritus modifier
+      double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
+        (bg_biomass_max - bg_biomass_min);
+
+      // calculate detritus fraction from bg biomass
+      double bg_detritus = seafloor(i, 3) * (detritus_ratio * (1 - bg_modf));
+
+      // remove detritus from bg biomass
+      seafloor(i, 3) -= bg_detritus;
+
+      // track bg slough
+      seafloor(i, 10) += bg_detritus;
+
       // add nutrients to detritus pool
-      seafloor(i, 5) += (bg_detritus * bg_gamma) + (ag_detritus * ag_gamma);
+      seafloor(i, 5) += (ag_detritus * ag_gamma) + (bg_detritus * bg_gamma);
 
       // calculate uptake //
 
@@ -199,7 +199,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         // track ag biomass production
         seafloor(i, 7) += ag_growth;
 
-      // below threshold and uptake large enough to keep ag stable
+      // below threshold
       } else if (bg_biomass_norm < seagrass_thres) {
 
         // add ag detritus to biomass
@@ -220,7 +220,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         // track bg biomass production
         seafloor(i, 8) += bg_growth;
 
-      // above threshold or uptake not large enough to keep ag stable
+      // above threshold
       } else if (bg_biomass_norm > seagrass_thres) {
 
         // calculate bg growth
