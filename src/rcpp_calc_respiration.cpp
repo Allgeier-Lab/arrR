@@ -21,9 +21,9 @@ using namespace Rcpp;
 //' @export
 // [[Rcpp::export]]
 void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
-                             double resp_intercept, double resp_slope,
-                             double resp_temp_low, double resp_temp_max, double resp_temp_optm,
-                             double water_temp, double min_per_i) {
+                           double resp_intercept, double resp_slope,
+                           double resp_temp_low, double resp_temp_max, double resp_temp_optm,
+                           double water_temp, double min_per_i) {
 
   // scale intercept to correct tick scale
   resp_intercept = resp_intercept * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i;

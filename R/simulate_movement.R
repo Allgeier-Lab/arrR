@@ -22,12 +22,10 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                               reef_attraction, extent, dimensions,
                               parameters) {
 
-  # extent must be vector for rcpp
-  extent <- as.vector(extent, mode = "numeric")
-
-  # get random move distance based on lognorm distribution
-  move_dist <- rlognorm(n = pop_n, mean = parameters$pop_mean_move,
-                        sd = sqrt(parameters$pop_var_move))
+  move_dist <- arrR::rcpp_rlognorm(n = pop_n,
+                                   mean = parameters$pop_mean_move,
+                                   sd = sqrt(parameters$pop_var_move),
+                                   min = 0, max = 12.5)
 
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
@@ -35,7 +33,7 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     move_dist = move_dist,
                     pop_mean_move = parameters$pop_mean_move,
                     pop_visibility = parameters$pop_visibility,
-                    extent = extent,
+                    extent = as.vector(extent, mode = "numeric"),
                     dimensions = dimensions,
                     reef_attraction = reef_attraction)
 }
