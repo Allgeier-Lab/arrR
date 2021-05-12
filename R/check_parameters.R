@@ -159,6 +159,17 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       warning("'pop_a' must be positive number.",
               call. = FALSE)
 
+    }
+
+    # check if reserves parameter makes sense
+    if (parameters$pop_max_reserves < parameters$pop_want_reserves) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("'pop_max_reserves' must be bigger than 'pop_want_reserves'",
+              call. = FALSE)
+
 
     }
 
