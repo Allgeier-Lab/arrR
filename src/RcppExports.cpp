@@ -218,6 +218,21 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_rlognorm
+Rcpp::NumericVector rcpp_rlognorm(int n, double mean, double sd, double min, double max);
+RcppExport SEXP _arrR_rcpp_rlognorm(SEXP nSEXP, SEXP meanSEXP, SEXP sdSEXP, SEXP minSEXP, SEXP maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type mean(meanSEXP);
+    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
+    Rcpp::traits::input_parameter< double >::type min(minSEXP);
+    Rcpp::traits::input_parameter< double >::type max(maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_rlognorm(n, mean, sd, min, max));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_translate_torus
 Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords, Rcpp::NumericVector extent);
 RcppExport SEXP _arrR_rcpp_translate_torus(SEXP coordsSEXP, SEXP extentSEXP) {
@@ -246,6 +261,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
     {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 8},
     {"_arrR_rcpp_remove_output", (DL_FUNC) &_arrR_rcpp_remove_output, 2},
+    {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
     {NULL, NULL, 0}
 };

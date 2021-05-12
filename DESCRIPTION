@@ -45,5 +45,6 @@ Suggests:
     knitr,
     rmarkdown
 LinkingTo: 
-    Rcpp
+    Rcpp,
+    RcppDist
 VignetteBuilder: knitr

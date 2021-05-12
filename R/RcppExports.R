@@ -311,6 +311,34 @@ rcpp_remove_output <- function(seafloor, nutrients_output) {
     invisible(.Call(`_arrR_rcpp_remove_output`, seafloor, nutrients_output))
 }
 
+#' rcpp_rlognorm
+#'
+#' @description Create random number from log distribution
+#'
+#' @param n Integer with amount of numbers.
+#' @param mean Double with mean.
+#' @param sd Double with sd
+#' @param min,max Double boundaries.
+#'
+#' @details
+#' Get random number from log-norm distribution. Function uses log-transformed
+#' values and a normal distribution internally.
+#'
+#' @references
+#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+#' Integration of Additional Probability Distributions. R package version 0.1.1.
+#' https://CRAN.R-project.org/package=RcppDist
+#'
+#' @return double
+#'
+#' @aliases rcpp_rlognorm
+#' @rdname rcpp_rlognorm
+#'
+#' @keywords export
+rcpp_rlognorm <- function(n, mean, sd, min, max) {
+    .Call(`_arrR_rcpp_rlognorm`, n, mean, sd, min, max)
+}
+
 #' rcpp_translate_torus
 #'
 #' @description Rcpp translate torus

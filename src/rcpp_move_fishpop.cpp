@@ -108,8 +108,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // update y coord
     fishpop(i, 3) = xy_temp(1);
 
-    // update activity
-    fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
+    // update activity -> 12.5 is maximum distance
+    fishpop(i, 9) = (1 / 12.5) * move_dist(i) + 1;
 
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
