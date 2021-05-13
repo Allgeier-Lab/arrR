@@ -23,18 +23,13 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                               reef_attraction, parameters, max_dist,
                               extent, dimensions) {
 
-  move_dist <- rcpp_rlognorm(n = pop_n,
-                             mean = parameters$pop_mean_move,
-                             sd = sqrt(parameters$pop_var_move),
-                             min = 0, max = max_dist)
-
   # calculate new coordinates and activity
   rcpp_move_fishpop(fishpop = fishpop_values,
                     reef_dist = seafloor_values[, "reef_dist"],
-                    move_dist = move_dist,
-                    max_dist = max_dist,
                     pop_mean_move = parameters$pop_mean_move,
+                    pop_var_move = parameters$pop_var_move,
                     pop_visibility = parameters$pop_visibility,
+                    max_dist = max_dist,
                     extent = as.vector(extent, mode = "numeric"),
                     dimensions = dimensions,
                     reef_attraction = reef_attraction)

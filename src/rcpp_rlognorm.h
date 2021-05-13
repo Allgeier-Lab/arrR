@@ -7,7 +7,6 @@
 
 using namespace Rcpp;
 
-Rcpp::NumericVector rcpp_rlognorm(int n, double mean, double sd,
-                                  double min, double max);
+double rcpp_rlognorm(double mean, double sd, double min, double max);
 
 //#endif // RCPP_RLOGNORM

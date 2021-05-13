@@ -4,11 +4,9 @@
 \alias{rcpp_rlognorm}
 \title{rcpp_rlognorm}
 \usage{
-rcpp_rlognorm(n, mean, sd, min, max)
+rcpp_rlognorm(mean, sd, min, max)
 }
 \arguments{
-\item{n}{Integer with amount of numbers.}
-
 \item{mean}{Double with mean.}
 
 \item{sd}{Double with sd}

@@ -269,14 +269,12 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param reef_dist Vector with distance to reef of each cell.
-#' @param move_dist Vector with move distance of fish individuals.
-#' @param max_dist Numeric with maximum movement distance
-#' @param pop_mean_move Double with mean movement parameter.
+#' @param pop_mean_move,pop_var_move Double with mean and variance movement parameter.
 #' @param pop_visibility Double with "sight" distance of fish.
+#' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param pop_mean_move Numeric with parameter.
 #'
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
@@ -288,8 +286,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, max_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, max_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_remove_output
@@ -316,7 +314,6 @@ rcpp_remove_output <- function(seafloor, nutrients_output) {
 #'
 #' @description Create random number from log distribution
 #'
-#' @param n Integer with amount of numbers.
 #' @param mean Double with mean.
 #' @param sd Double with sd
 #' @param min,max Double boundaries.
@@ -336,8 +333,8 @@ rcpp_remove_output <- function(seafloor, nutrients_output) {
 #' @rdname rcpp_rlognorm
 #'
 #' @keywords export
-rcpp_rlognorm <- function(n, mean, sd, min, max) {
-    .Call(`_arrR_rcpp_rlognorm`, n, mean, sd, min, max)
+rcpp_rlognorm <- function(mean, sd, min, max) {
+    .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
 
 #' rcpp_translate_torus
