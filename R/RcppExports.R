@@ -270,6 +270,7 @@ rcpp_modify_degree <- function(x, y) {
 #' @param fishpop Matrix with fishpop values.
 #' @param reef_dist Vector with distance to reef of each cell.
 #' @param move_dist Vector with move distance of fish individuals.
+#' @param max_dist Numeric with maximum movement distance
 #' @param pop_mean_move Double with mean movement parameter.
 #' @param pop_visibility Double with "sight" distance of fish.
 #' @param reef_attraction Bool if attracted towards reef.
@@ -287,8 +288,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, max_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, max_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_remove_output

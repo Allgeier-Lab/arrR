@@ -191,19 +191,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_move_fishpop
-void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist, Rcpp::NumericVector move_dist, double pop_mean_move, double pop_visibility, bool reef_attraction, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
-RcppExport SEXP _arrR_rcpp_move_fishpop(SEXP fishpopSEXP, SEXP reef_distSEXP, SEXP move_distSEXP, SEXP pop_mean_moveSEXP, SEXP pop_visibilitySEXP, SEXP reef_attractionSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist, Rcpp::NumericVector move_dist, double max_dist, double pop_mean_move, double pop_visibility, bool reef_attraction, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+RcppExport SEXP _arrR_rcpp_move_fishpop(SEXP fishpopSEXP, SEXP reef_distSEXP, SEXP move_distSEXP, SEXP max_distSEXP, SEXP pop_mean_moveSEXP, SEXP pop_visibilitySEXP, SEXP reef_attractionSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type reef_dist(reef_distSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type move_dist(move_distSEXP);
+    Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
     Rcpp::traits::input_parameter< double >::type pop_mean_move(pop_mean_moveSEXP);
     Rcpp::traits::input_parameter< double >::type pop_visibility(pop_visibilitySEXP);
     Rcpp::traits::input_parameter< bool >::type reef_attraction(reef_attractionSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_fishpop(fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions);
+    rcpp_move_fishpop(fishpop, reef_dist, move_dist, max_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions);
     return R_NilValue;
 END_RCPP
 }
@@ -259,7 +260,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
-    {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 8},
+    {"_arrR_rcpp_move_fishpop", (DL_FUNC) &_arrR_rcpp_move_fishpop, 9},
     {"_arrR_rcpp_remove_output", (DL_FUNC) &_arrR_rcpp_remove_output, 2},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 5},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},

@@ -83,6 +83,15 @@ run_simulation <- function(seafloor, fishpop,
                           activity = numeric(), respiration = numeric(),
                           died_consumption = numeric(), died_background = numeric())
 
+  # get 95% of movement distances
+  } else {
+
+    max_dist <- rcpp_rlognorm(n = 1000000, mean = parameters$pop_mean_move,
+                              sd = sqrt(parameters$pop_var_move),
+                              min = 0, max = Inf)
+
+    max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
+
   }
 
   # convert seafloor and fishpop as matrix
@@ -172,10 +181,11 @@ run_simulation <- function(seafloor, fishpop,
       simulate_movement(fishpop_values = fishpop_values,
                         pop_n = starting_values$pop_n,
                         seafloor_values = seafloor_values,
-                        extent = extent,
-                        dimensions = dimensions,
                         parameters = parameters,
-                        reef_attraction = reef_attraction)
+                        max_dist = max_dist,
+                        reef_attraction = reef_attraction,
+                        extent = extent,
+                        dimensions = dimensions)
 
       # simulate fish respiration (26°C is mean water temperature in the Bahamas)
       simulate_respiration(fishpop_values = fishpop_values,

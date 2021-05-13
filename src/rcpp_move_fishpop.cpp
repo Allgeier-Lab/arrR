@@ -10,6 +10,7 @@
 //' @param fishpop Matrix with fishpop values.
 //' @param reef_dist Vector with distance to reef of each cell.
 //' @param move_dist Vector with move distance of fish individuals.
+//' @param max_dist Numeric with maximum movement distance
 //' @param pop_mean_move Double with mean movement parameter.
 //' @param pop_visibility Double with "sight" distance of fish.
 //' @param reef_attraction Bool if attracted towards reef.
@@ -29,7 +30,7 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
-                       Rcpp::NumericVector move_dist, double pop_mean_move,
+                       Rcpp::NumericVector move_dist, double max_dist, double pop_mean_move,
                        double pop_visibility, bool reef_attraction,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
@@ -109,7 +110,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     fishpop(i, 3) = xy_temp(1);
 
     // update activity -> 12.5 is maximum distance
-    fishpop(i, 9) = (1 / 12.5) * move_dist(i) + 1;
+    fishpop(i, 9) = (1 / max_dist) * move_dist(i) + 1;
 
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
