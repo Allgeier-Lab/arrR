@@ -30,7 +30,8 @@ simulate_movement <- function(fishpop_values, pop_n, seafloor_values,
                     pop_var_move = parameters$pop_var_move,
                     pop_visibility = parameters$pop_visibility,
                     max_dist = max_dist,
+                    reef_attraction = reef_attraction,
                     extent = as.vector(extent, mode = "numeric"),
-                    dimensions = dimensions,
-                    reef_attraction = reef_attraction)
+                    dimensions = dimensions)
+
 }

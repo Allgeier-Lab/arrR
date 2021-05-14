@@ -56,26 +56,21 @@ rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rlognorm(mean = mean, sd = sd,
 
 rand_b <- purrr::map_dbl(1:n, function(i) foo(n = 1, m = mean, s = sd))
 
-rand_c <- arrR::rlognorm(n = n, mean = mean, sd = sd)
-
-max_value <- ceiling(max(c(rand_a, rand_b, rand_c)))
+max_value <- ceiling(max(c(rand_a, rand_b)))
 
 mean(rand_a)
 mean(rand_b)
-mean(rand_c)
 
 plot(density(rand_a), col = "#3C9BED", main = "Density", xlim = c(0, max_value))
 lines(density(rand_b), col = "#EC579A")
-lines(density(rand_c), col = "#A1C721")
 
 abline(v = mean, lty = 2, col = "grey")
 abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
-abline(v = max, lty = 2, col = "grey")
 
 bench::mark(
   rcpp_rlognorm(mean = mean, sd = sd, min = -Inf, max = Inf),
-  arrR::rlognorm(n = 1, mean = mean, sd = sd),
+  foo(n = 1, m = mean, s = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )
 */

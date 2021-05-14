@@ -86,9 +86,10 @@ run_simulation <- function(seafloor, fishpop,
   # get 95% of movement distances
   } else {
 
-    max_dist <- vapply(1:1000000, function(i) rcpp_rlognorm(mean = parameters$pop_mean_move,
-                                                            sd = sqrt(parameters$pop_var_move),
-                                                            min = 0, max = Inf), FUN.VALUE = numeric(1))
+    max_dist <- vapply(1:1000000, function(i) {
+      rcpp_rlognorm(mean = parameters$pop_mean_move,
+                    sd = sqrt(parameters$pop_var_move),
+                    min = 0, max = Inf)}, FUN.VALUE = numeric(1))
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
