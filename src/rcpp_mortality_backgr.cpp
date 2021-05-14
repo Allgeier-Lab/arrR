@@ -1,7 +1,7 @@
-#include "rcpp_calc_mortality_background.h"
+#include "rcpp_mortality_backgr.h"
 #include "rcpp_reincarnate.h"
 
-//' rcpp_calc_mortality_background
+//' rcpp_mortality_backgr
 //'
 //' @description Rcpp background mortality
 //'
@@ -15,19 +15,20 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_mortality_background
-//' @rdname rcpp_calc_mortality_background
+//' @aliases rcpp_mortality_backgr
+//' @rdname rcpp_mortality_backgr
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_calc_mortality_background(Rcpp::NumericMatrix fishpop,
-                                    Rcpp::NumericMatrix fishpop_track,
-                                    Rcpp::NumericMatrix seafloor,
-                                    Rcpp::NumericVector fish_id,
-                                    Rcpp::NumericVector cell_id,
-                                    double pop_linf,
-                                    double pop_n_body,
-                                    double pop_want_reserves) {
+void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop,
+                           Rcpp::NumericMatrix fishpop_track,
+                           Rcpp::NumericMatrix seafloor,
+                           Rcpp::NumericVector fish_id,
+                           Rcpp::NumericVector cell_id,
+                           double pop_linf,
+                           double pop_n_body,
+                           double pop_want_reserves) {
+
   // KSM: loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
@@ -63,12 +64,12 @@ void rcpp_calc_mortality_background(Rcpp::NumericMatrix fishpop,
 }
 
 /*** R
-rcpp_calc_mortality_background(fishpop = fishpop_values,
-                               fishpop_track = fishpop_track,
-                               seafloor = seafloor_values,
-                               fish_id = fish_id,
-                               cell_id = cell_id,
-                               pop_linf = parameters$pop_linf,
-                               pop_n_body = parameters$pop_n_body,
-                               pop_want_reserves = parameters$pop_want_reserves)
+rcpp_mortality_backgr(fishpop = fishpop_values,
+                      fishpop_track = fishpop_track,
+                      seafloor = seafloor_values,
+                      fish_id = fish_id,
+                      cell_id = cell_id,
+                      pop_linf = parameters$pop_linf,
+                      pop_n_body = parameters$pop_n_body,
+                      pop_want_reserves = parameters$pop_want_reserves)
 */

@@ -1,7 +1,7 @@
-#include "rcpp_calc_nutr_uptake.h"
+#include "rcpp_nutr_uptake.h"
 #include "rcpp_convert_nutr.h"
 
-//' rcpp_calc_nutr_uptake
+//' rcpp_nutr_uptake
 //'
 //' @description Rcpp calculate nutrient uptake
 //'
@@ -13,13 +13,13 @@
 //'
 //' @return double
 //'
-//' @aliases rcpp_calc_nutr_uptake
-//' @rdname rcpp_calc_nutr_uptake
+//' @aliases rcpp_nutr_uptake
+//' @rdname rcpp_nutr_uptake
 //'
 //' @keywords export
 // [[Rcpp::export]]
-double rcpp_calc_nutr_uptake(double nutrients, double biomass,
-                             double v_max, double k_m, double time_frac) {
+double rcpp_nutr_uptake(double nutrients, double biomass,
+                        double v_max, double k_m, double time_frac) {
 
   // convert water column nutrients to umol/l
   double nutrients_umol = rcpp_convert_nutr(nutrients, "umol");

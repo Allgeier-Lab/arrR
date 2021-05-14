@@ -1,7 +1,7 @@
-#include "rcpp_calc_fishpop_growth.h"
+#include "rcpp_fishpop_growth.h"
 #include "rcpp_reincarnate.h"
 
-//' rcpp_calc_fishpop_growth
+//' rcpp_fishpop_growth
 //'
 //' @description Rcpp calc growth
 //'
@@ -18,20 +18,20 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_fishpop_growth
-//' @rdname rcpp_calc_fishpop_growth
+//' @aliases rcpp_fishpop_growth
+//' @rdname rcpp_fishpop_growth
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
-                              Rcpp::NumericMatrix seafloor,
-                              Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
-                              Rcpp::NumericVector pop_thres_reserves,
-                              double pop_k, double pop_linf,
-                              double pop_a, double pop_b,
-                              double pop_n_body, double pop_max_reserves, double pop_want_reserves,
-                              double pop_consumption_prop,
-                              double min_per_i) {
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+                         Rcpp::NumericMatrix seafloor,
+                         Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
+                         Rcpp::NumericVector pop_thres_reserves,
+                         double pop_k, double pop_linf,
+                         double pop_a, double pop_b,
+                         double pop_n_body, double pop_max_reserves, double pop_want_reserves,
+                         double pop_consumption_prop,
+                         double min_per_i) {
 
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
@@ -45,7 +45,6 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
     int cell_id_temp = cell_id(i) - 1;
 
     // calculate growth in length and weight
-    // KSM: calculate growth per minute
     double growth_length = pop_k *
       (1.0 / 365.0) * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i *
       (pop_linf - fishpop(fish_id_temp, 5));
@@ -192,18 +191,18 @@ void rcpp_calc_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix f
 }
 
 /*** R
-rcpp_calc_fishpop_growth(fishpop = fishpop_values,
-                         fishpop_track = fishpop_track,
-                         seafloor = seafloor_values,
-                         fish_id = fish_id, cell_id = cell_id,
-                         pop_k = parameters$pop_k,
-                         pop_linf = parameters$pop_linf,
-                         pop_a = parameters$pop_a,
-                         pop_b = parameters$pop_b,
-                         pop_n_body = parameters$pop_n_body,
-                         pop_max_reserves = parameters$pop_max_reserves,
-                         pop_want_reserves = parameters$pop_want_reserves,
-                         pop_thres_reserves = pop_thres_reserves,
-                         min_per_i = min_per_i,
-                         behavior = behavior)
+rcpp_fishpop_growth(fishpop = fishpop_values,
+                    fishpop_track = fishpop_track,
+                    seafloor = seafloor_values,
+                    fish_id = fish_id, cell_id = cell_id,
+                    pop_k = parameters$pop_k,
+                    pop_linf = parameters$pop_linf,
+                    pop_a = parameters$pop_a,
+                    pop_b = parameters$pop_b,
+                    pop_n_body = parameters$pop_n_body,
+                    pop_max_reserves = parameters$pop_max_reserves,
+                    pop_want_reserves = parameters$pop_want_reserves,
+                    pop_thres_reserves = pop_thres_reserves,
+                    min_per_i = min_per_i,
+                    behavior = behavior)
 */

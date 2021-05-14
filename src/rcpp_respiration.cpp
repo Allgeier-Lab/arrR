@@ -1,6 +1,6 @@
-#include "rcpp_calc_respiration.h"
+#include "rcpp_respiration.h"
 
-//' rcpp_calc_respiration
+//' rcpp_respiration
 //'
 //' @description Rcpp calculate respration
 //'
@@ -14,15 +14,15 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_respiration
-//' @rdname rcpp_calc_respiration
+//' @aliases rcpp_respiration
+//' @rdname rcpp_respiration
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
-                           double resp_intercept, double resp_slope,
-                           double resp_temp_low, double resp_temp_max, double resp_temp_optm,
-                           double water_temp, double min_per_i) {
+void rcpp_respiration(Rcpp::NumericMatrix fishpop,
+                      double resp_intercept, double resp_slope,
+                      double resp_temp_low, double resp_temp_max, double resp_temp_optm,
+                      double water_temp, double min_per_i) {
 
   // scale intercept to correct tick scale
   resp_intercept = resp_intercept * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i;
@@ -70,11 +70,11 @@ void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
 /*** R
 resp_intercept <- parameters$resp_intercept * (1 / 24) * (1 / 60) * min_per_i
 
-rcpp_calc_respiration(fishpop = fishpop_values,
-                      resp_intercept = parameters$resp_intercept,
-                      resp_slope = parameters$resp_slope,
-                      resp_temp_low = parameters$resp_temp_low,
-                      resp_temp_optm = parameters$resp_temp_optm,
-                      resp_temp_max = parameters$resp_temp_max,
-                      water_temp = water_temp, min_per_i = min_per_i)
+rcpp_respiration(fishpop = fishpop_values,
+                 resp_intercept = parameters$resp_intercept,
+                 resp_slope = parameters$resp_slope,
+                 resp_temp_low = parameters$resp_temp_low,
+                 resp_temp_optm = parameters$resp_temp_optm,
+                 resp_temp_max = parameters$resp_temp_max,
+                 water_temp = water_temp, min_per_i = min_per_i)
 */

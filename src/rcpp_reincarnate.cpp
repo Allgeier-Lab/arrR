@@ -15,8 +15,8 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_mortality_consump
-//' @rdname rcpp_calc_mortality_consump
+//' @aliases rcpp_reincarnate
+//' @rdname rcpp_reincarnate
 //'
 //' @export
 // [[Rcpp::export]]
@@ -55,8 +55,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   fishpop(fish_id, 3) = y_coord;
 
-  // calculate wanted reserves
-  // KSM: calculate new reserves for new fish of new size
+  // calculate new reserves for new fish of new size
   double reserves_wanted = pop_n_body * fishpop(fish_id, 6) * pop_want_reserves;
 
   // detritus pool is smaller than wanted reserves, detritus pool is fully used

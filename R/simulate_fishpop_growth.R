@@ -28,19 +28,19 @@ simulate_fishpop_growth <- function(fishpop_values, fishpop_track, pop_n, pop_th
   cell_id <- raster::cellFromXY(object = seafloor,
                                 xy = fishpop_values[fish_id, c("x", "y"), drop = FALSE])
 
-  rcpp_calc_fishpop_growth(fishpop = fishpop_values,
-                           fishpop_track = fishpop_track,
-                           seafloor = seafloor_values,
-                           fish_id = fish_id, cell_id = cell_id,
-                           pop_k = parameters$pop_k,
-                           pop_linf = parameters$pop_linf,
-                           pop_a = parameters$pop_a,
-                           pop_b = parameters$pop_b,
-                           pop_n_body = parameters$pop_n_body,
-                           pop_max_reserves = parameters$pop_max_reserves,
-                           pop_want_reserves = parameters$pop_want_reserves,
-                           pop_thres_reserves = pop_thres_reserves,
-                           pop_consumption_prop = parameters$pop_consumption_prop,
-                           min_per_i = min_per_i)
+  rcpp_fishpop_growth(fishpop = fishpop_values,
+                      fishpop_track = fishpop_track,
+                      seafloor = seafloor_values,
+                      fish_id = fish_id, cell_id = cell_id,
+                      pop_k = parameters$pop_k,
+                      pop_linf = parameters$pop_linf,
+                      pop_a = parameters$pop_a,
+                      pop_b = parameters$pop_b,
+                      pop_n_body = parameters$pop_n_body,
+                      pop_max_reserves = parameters$pop_max_reserves,
+                      pop_want_reserves = parameters$pop_want_reserves,
+                      pop_thres_reserves = pop_thres_reserves,
+                      pop_consumption_prop = parameters$pop_consumption_prop,
+                      min_per_i = min_per_i)
 
 }

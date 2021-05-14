@@ -1,7 +1,7 @@
-#include "rcpp_calc_seagrass_growth.h"
-#include "rcpp_calc_nutr_uptake.h"
+#include "rcpp_seagrass_growth.h"
+#include "rcpp_nutr_uptake.h"
 
-//' rcpp_calc_seagrass_growth
+//' rcpp_seagrass_growth
 //'
 //' @description Rcpp calc seagrass growth
 //'
@@ -16,19 +16,19 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_seagrass_growth
-//' @rdname rcpp_calc_seagrass_growth
+//' @aliases rcpp_seagrass_growth
+//' @rdname rcpp_seagrass_growth
 //'
 //' @keywords export
 // [[Rcpp::export]]
-void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
-                               double bg_v_max, double bg_k_m, double bg_gamma,
-                               double ag_v_max, double ag_k_m, double ag_gamma,
-                               double bg_biomass_max, double bg_biomass_min,
-                               double ag_biomass_max, double ag_biomass_min,
-                               double seagrass_thres, double seagrass_slope,
-                               double detritus_ratio,
-                               double time_frac) {
+void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
+                          double bg_v_max, double bg_k_m, double bg_gamma,
+                          double ag_v_max, double ag_k_m, double ag_gamma,
+                          double bg_biomass_max, double bg_biomass_min,
+                          double ag_biomass_max, double ag_biomass_min,
+                          double seagrass_thres, double seagrass_slope,
+                          double detritus_ratio,
+                          double time_frac) {
 
   // loop through all seafloor cells
   for (int i = 0; i < seafloor.nrow(); i++) {
@@ -73,8 +73,8 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector
       // calculate uptake //
 
       // calculate total possible nutrient uptake bg
-      double ag_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
-                                               ag_v_max, ag_k_m, time_frac);
+      double ag_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
+                                          ag_v_max, ag_k_m, time_frac);
 
       // remove ag nutrients uptake
       seafloor(i, 4) -= ag_uptake;
@@ -83,8 +83,8 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector
       seafloor(i, 11) += ag_uptake;
 
       // calculate total possible nutrient uptake bg
-      double bg_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
-                                               bg_v_max, bg_k_m, time_frac);
+      double bg_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
+                                          bg_v_max, bg_k_m, time_frac);
 
       // remove bg nutrients uptake
       seafloor(i, 4) -= bg_uptake;
@@ -209,17 +209,17 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector
 }
 
 /*** R
-rcpp_calc_seagrass_growth(seafloor = seafloor_values,
-                          cells_reef = cells_reef,
-                          bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
-                          bg_gamma = parameters$bg_gamma,
-                          ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
-                          ag_gamma = parameters$ag_gamma,
-                          bg_biomass_max = parameters$bg_biomass_max,
-                          bg_biomass_min = parameters$bg_biomass_min,
-                          ag_biomass_max = parameters$ag_biomass_max,
-                          ag_biomass_min = parameters$ag_biomass_min,
-                          detritus_ratio = parameters$detritus_ratio,
-                          seagrass_thres = parameters$seagrass_thres,
-                          min_per_i = min_per_i)
+rcpp_seagrass_growth(seafloor = seafloor_values,
+                     cells_reef = cells_reef,
+                     bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
+                     bg_gamma = parameters$bg_gamma,
+                     ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
+                     ag_gamma = parameters$ag_gamma,
+                     bg_biomass_max = parameters$bg_biomass_max,
+                     bg_biomass_min = parameters$bg_biomass_min,
+                     ag_biomass_max = parameters$ag_biomass_max,
+                     ag_biomass_min = parameters$ag_biomass_min,
+                     detritus_ratio = parameters$detritus_ratio,
+                     seagrass_thres = parameters$seagrass_thres,
+                     min_per_i = min_per_i)
 */

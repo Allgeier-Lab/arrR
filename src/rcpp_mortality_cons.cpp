@@ -1,6 +1,6 @@
-#include "rcpp_calc_mortality.h"
+#include "rcpp_mortality_cons.h"
 
-//' rcpp_calc_mortality
+//' rcpp_mortality_cons
 //'
 //' @description Rcpp create rebirth
 //'
@@ -14,12 +14,12 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_mortality
-//' @rdname rcpp_calc_mortality
+//' @aliases rcpp_mortality_cons
+//' @rdname rcpp_mortality_cons
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+void rcpp_mortality_cons(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
                          Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
                          double pop_linf, double pop_n_body,
@@ -106,7 +106,7 @@ void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
 /*** R
 # create new individual
-rcpp_calc_mortality(fishpop = fishpop_values,
+rcpp_mortality_cons(fishpop = fishpop_values,
                     fishpop_track = fishpop_track,
                     seafloor = seafloor_values,
                     fish_id = fish_id,
