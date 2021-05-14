@@ -2,6 +2,8 @@
 * Simpler allocation rule based on curves.
 * New `plot_threshold` function. 
 * Fix bug in movement and specify maximum movement distance based on 95% of distribution
+* Remove `rlognorm again`...lol
+* Adding new movement behaviors code based on reserve
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

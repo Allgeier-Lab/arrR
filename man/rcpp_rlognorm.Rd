@@ -4,12 +4,14 @@
 \alias{rcpp_rlognorm}
 \title{rcpp_rlognorm}
 \usage{
-rcpp_rlognorm(mean, sd)
+rcpp_rlognorm(mean, sd, min, max)
 }
 \arguments{
 \item{mean}{Double with mean.}
 
 \item{sd}{Double with sd}
+
+\item{min, max}{Double boundaries.}
 }
 \value{
 double
@@ -20,5 +22,10 @@ Create random number from log distribution
 \details{
 Get random number from log-norm distribution. Function uses log-transformed
 values and a normal distribution internally.
+}
+\references{
+Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+Integration of Additional Probability Distributions. R package version 0.1.1.
+https://CRAN.R-project.org/package=RcppDist
 }
 \keyword{export}

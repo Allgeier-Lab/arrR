@@ -51,6 +51,7 @@ run_simulation <- function(seafloor, fishpop,
 
     stop("'max_i' cannot be divided by 'save_each' without rest.",
             call. = FALSE)
+
   }
 
   # check if save_each is whole number
@@ -86,8 +87,8 @@ run_simulation <- function(seafloor, fishpop,
   } else {
 
     max_dist <- vapply(1:1000000, function(i) {
-      rcpp_rlognorm(mean = parameters$pop_mean_move,
-                    sd = sqrt(parameters$pop_var_move),
+      rcpp_rlognorm(mean = parameters$move_mean,
+                    sd = sqrt(parameters$move_var),
                     min = 0, max = Inf)}, FUN.VALUE = numeric(1))
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
@@ -129,7 +130,7 @@ run_simulation <- function(seafloor, fishpop,
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
-  # KSM: adding pop_thres_reserves parameter here as a vector from pop_thres_reserves_min and _max
+  # getting thres_reserves parameter for each individual
   pop_thres_reserves <- stats::runif(n = nrow(fishpop_values),
                                      min = parameters$pop_thres_reserves_min,
                                      max = parameters$pop_thres_reserves_max)
@@ -165,7 +166,7 @@ run_simulation <- function(seafloor, fishpop,
 
     }
 
-    # simulate seagrass only each seagrass_each_i iteration
+    # simulate seagrass only each seagrass_each iterations
     if ((i * min_per_i) %% (min_per_i * seagrass_each) == 0) {
 
       # simulate seagrass growth

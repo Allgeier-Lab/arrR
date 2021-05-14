@@ -59,8 +59,6 @@ rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
 #'
 #' @details
 #' Rcpp implementation to calculate growth of fish individuals.
-#' "KSM" notes from Katrina to help understand code
-#' "Q": questions for Max
 #'
 #' @return void
 #'
@@ -350,8 +348,6 @@ rcpp_modify_degree <- function(x, y) {
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
 #' heading value.
-#' "KSM": notes on code added, "MH" Some comments/ideas Max
-#' "Q": questions for Max
 #'
 #' @return void
 #'

@@ -23,8 +23,8 @@ calc_size <- function(pop_n, pop_mean_size, pop_linf, pop_var_size,
   # use log distribution for starting size
   if (use_log) {
 
-    body_length <- rlognorm(n = pop_n, mean = pop_mean_size,
-                            sd = sqrt(pop_var_size))
+    body_length <- rcpp_rlognorm(mean = pop_mean_size, sd = sqrt(pop_var_size),
+                                 min = 0, max = Inf)
 
   # use uniform distribution for starting size
   } else {

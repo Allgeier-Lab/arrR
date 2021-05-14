@@ -12,6 +12,7 @@ rcpp_move_fishpop(
   move_mean,
   move_reef,
   move_return,
+  max_dist,
   extent,
   dimensions
 )
@@ -31,6 +32,8 @@ rcpp_move_fishpop(
 
 \item{move_return}{Double with mean movement distance when returning to reef.}
 
+\item{max_dist}{Maximum distance an individual can move.}
+
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
@@ -44,6 +47,4 @@ Rcpp move fish population
 \details{
 Rcpp implementation to move fish individuals depending on move distance and
 heading value.
-"KSM": notes on code added, "MH" Some comments/ideas Max
-"Q": questions for Max
 }

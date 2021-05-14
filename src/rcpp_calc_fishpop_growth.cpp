@@ -14,8 +14,6 @@
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
-//' "KSM" notes from Katrina to help understand code
-//' "Q": questions for Max
 //'
 //' @return void
 //'

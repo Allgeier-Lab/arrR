@@ -22,8 +22,6 @@
 //' @details
 //' Rcpp implementation to move fish individuals depending on move distance and
 //' heading value.
-//' "KSM": notes on code added, "MH" Some comments/ideas Max
-//' "Q": questions for Max
 //'
 //' @return void
 //'
@@ -42,7 +40,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // init move_dist
-    double move_dist = -1.0;
+    double move_dist = 0.0;
 
     // init matrix for temp coords
     Rcpp::NumericMatrix coords_temp(1, 2);
