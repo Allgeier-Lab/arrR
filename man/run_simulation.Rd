@@ -7,16 +7,16 @@
 run_simulation(
   seafloor,
   fishpop,
+  movement = "random",
+  parameters,
   max_i,
   min_per_i,
   seagrass_each = 1,
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
-  parameters,
   nutr_input = NULL,
   reef_attraction,
-  extract = NULL,
   verbose = TRUE
 )
 }
@@ -24,6 +24,10 @@ run_simulation(
 \item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
 
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
+
+\item{movement}{String specifing movement algorithm. Either 'random', 'attracted' or 'reserves'.}
+
+\item{parameters}{List with all model parameters.}
 
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 
@@ -37,11 +41,7 @@ run_simulation(
 
 \item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
 
-\item{parameters}{List with all model parameters.}
-
 \item{nutr_input}{Vector with amount of nutrient input each timestep.}
-
-\item{extract}{Character to specify if only seafloor or fishpop should be returned as data.frame}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

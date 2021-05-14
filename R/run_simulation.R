@@ -4,6 +4,7 @@
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
+#' @param movement String specifing movement algorithm. Either 'random', 'attracted' or 'reserves'.
 #' @param parameters List with all model parameters.
 #' @param nutr_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
@@ -12,7 +13,6 @@
 #' @param save_each Numeric how often data should be saved to return.
 #' @param burn_in Numeric with timesteps used to burn in.
 #' @param return_burnin If FALSE all timesteps < burn_in are not returned.
-#' @param extract Character to specify if only seafloor or fishpop should be returned as data.frame
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
@@ -29,11 +29,10 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fishpop,
+run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           parameters, nutr_input = NULL, reef_attraction,
-                           extract = NULL, verbose = TRUE) {
+                           nutr_input = NULL, reef_attraction, verbose = TRUE) {
 
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
@@ -303,19 +302,6 @@ run_simulation <- function(seafloor, fishpop,
 
   # set class of result
   class(result) <- "mdl_rn"
-
-  # return only extract if != NULL
-  if (!is.null(extract)) {
-
-    if (verbose) {
-
-      message("> ...Extract ", extract, " only...")
-
-    }
-
-    result <- extract_result(result = result, extract = extract)
-
-  }
 
   # new line after last progress message
   if (verbose) {
