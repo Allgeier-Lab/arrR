@@ -9,9 +9,10 @@ simulate_movement(
   pop_n,
   seafloor_values,
   reef_attraction,
+  parameters,
+  max_dist,
   extent,
-  dimensions,
-  parameters
+  dimensions
 )
 }
 \arguments{
@@ -23,9 +24,11 @@ simulate_movement(
 
 \item{reef_attraction}{If TRUE, individuals are attracted to AR.}
 
-\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
-
 \item{parameters}{List with all model parameters.}
+
+\item{max_dist}{Numeric with maximum movement distance}
+
+\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 }
 \value{
 matrix

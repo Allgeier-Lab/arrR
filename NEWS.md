@@ -1,3 +1,8 @@
+# arrR 0.5.0
+* Simpler allocation rule based on curves.
+* New `plot_threshold` function. 
+* Fix bug in movement and specify maximum movement distance based on 95% of distribution
+
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`
 * Rename `simulate_fishpop_growth` to `simulate_growth`

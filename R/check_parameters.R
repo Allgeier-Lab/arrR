@@ -32,8 +32,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                          "detritus_pool",
                          "pop_n",
                          "pop_mean_size",
-                         "pop_var_size",
-                         "water_temp")
+                         "pop_var_size")
 
   # specify all required parameters
   required_parameters <- c("ag_biomass_max",
@@ -45,8 +44,9 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "bg_biomass_min",
                            "bg_v_max",
                            "bg_k_m",
-                           "bg_thres",
                            "bg_gamma",
+                           "seagrass_thres",
+                           "seagrass_slope",
                            "nutrients_diffusion",
                            "nutrients_output",
                            "detritus_ratio",
@@ -159,12 +159,23 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       warning("'pop_a' must be positive number.",
               call. = FALSE)
 
+    }
+
+    # check if reserves parameter makes sense
+    if (parameters$pop_max_reserves < parameters$pop_want_reserves) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("'pop_max_reserves' must be bigger than 'pop_want_reserves'",
+              call. = FALSE)
+
 
     }
 
 
     # check if all ratios are betwenn 0 and 1
-    check_ratios <- any(c(c(parameters$bg_thres,
+    check_ratios <- any(c(c(parameters$seagrass_thres,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,
@@ -178,7 +189,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$pop_max_reserves,
                             parameters$pop_want_reserves) > 1,
 
-                          c(parameters$bg_thres,
+                          c(parameters$seagrass_thres,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,

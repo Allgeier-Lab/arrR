@@ -4,7 +4,7 @@
 \alias{simulate_seagrass}
 \title{simulate_seagrass}
 \usage{
-simulate_seagrass(seafloor_values, parameters, cells_reef, min_per_i)
+simulate_seagrass(seafloor_values, parameters, cells_reef, time_frac)
 }
 \arguments{
 \item{seafloor_values}{Matrix with seafloor values.}
@@ -13,7 +13,7 @@ simulate_seagrass(seafloor_values, parameters, cells_reef, min_per_i)
 
 \item{cells_reef}{Vector with cell ids of AR.}
 
-\item{min_per_i}{Integer to specify minutes per i.}
+\item{time_frac}{Integer to scale uptake from hour to min_per_i times seagrass_each.}
 }
 \value{
 Matrix

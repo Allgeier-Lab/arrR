@@ -1,4 +1,5 @@
 #include "rcpp_move_fishpop.h"
+#include "rcpp_rlognorm.h"
 #include "rcpp_translate_torus.h"
 #include "rcpp_cell_from_xy.h"
 #include "rcpp_modify_degree.h"
@@ -9,13 +10,12 @@
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param reef_dist Vector with distance to reef of each cell.
-//' @param move_dist Vector with move distance of fish individuals.
-//' @param pop_mean_move Double with mean movement parameter.
+//' @param pop_mean_move,pop_var_move Double with mean and variance movement parameter.
 //' @param pop_visibility Double with "sight" distance of fish.
+//' @param max_dist Numeric with maximum movement distance
 //' @param reef_attraction Bool if attracted towards reef.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param pop_mean_move Numeric with parameter.
 //'
 //' @details
 //' Rcpp implementation to move fish individuals depending on move distance and
@@ -29,12 +29,17 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dist,
-                       Rcpp::NumericVector move_dist, double pop_mean_move,
-                       double pop_visibility, bool reef_attraction,
+                       double pop_mean_move, double pop_var_move, double pop_visibility,
+                       double max_dist, bool reef_attraction,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
+
+    // sample move dist
+    double move_dist = rcpp_rlognorm(pop_mean_move,
+                                     std::sqrt(pop_var_move),
+                                     0, max_dist);
 
     // move towards reef
     if (reef_attraction) {
@@ -95,8 +100,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 
     // calculate new x coord
     NumericVector xy_temp = NumericVector::create(
-      fishpop(i, 2) + (move_dist(i) * cos(fishpop(i, 4) * (M_PI / 180.0))),
-      fishpop(i, 3) + (move_dist(i) * sin(fishpop(i, 4) * (M_PI / 180.0)))
+      fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
+      fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
     );
 
     // make sure coords are within study area
@@ -108,8 +113,8 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
     // update y coord
     fishpop(i, 3) = xy_temp(1);
 
-    // update activity
-    fishpop(i, 9) = (1 / (pop_mean_move + 1)) * move_dist(i) + 1;
+    // update activity -> 12.5 is maximum distance
+    fishpop(i, 9) = (1 / max_dist) * move_dist + 1;
 
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
@@ -119,14 +124,14 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector reef_dis
 }
 
 /*** R
-
 # calculate new coordinates and activity
 rcpp_move_fishpop(fishpop = fishpop_values,
                   reef_dist = seafloor_values[, "reef_dist"],
-                  move_dist = move_dist,
                   pop_mean_move = parameters$pop_mean_move,
+                  pop_var_move = parameters$pop_var_move,
                   pop_visibility = parameters$pop_visibility,
-                  extent = extent,
+                  max_dist = max_dist,
+                  extent = as.vector(extent, mode = "numeric"),
                   dimensions = dimensions,
                   reef_attraction = reef_attraction)
 */

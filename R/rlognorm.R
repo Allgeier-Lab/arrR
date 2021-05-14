@@ -27,5 +27,6 @@ rlognorm <- function(n = 1, mean, sd) {
   norm_random <- exp(stats::rnorm(n = n, mean = norm_mean, sd = norm_sd))
 
   return(norm_random)
-
 }
+
+

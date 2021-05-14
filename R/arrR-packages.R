@@ -28,6 +28,7 @@ globalVariables(names = c(
   "reef",
   "save_each",
   "summary_function",
+  "thres",
   "timestep",
   "value",
   "weight",

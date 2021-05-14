@@ -7,9 +7,10 @@
 rcpp_move_fishpop(
   fishpop,
   reef_dist,
-  move_dist,
   pop_mean_move,
+  pop_var_move,
   pop_visibility,
+  max_dist,
   reef_attraction,
   extent,
   dimensions
@@ -20,11 +21,11 @@ rcpp_move_fishpop(
 
 \item{reef_dist}{Vector with distance to reef of each cell.}
 
-\item{move_dist}{Vector with move distance of fish individuals.}
-
-\item{pop_mean_move}{Numeric with parameter.}
+\item{pop_mean_move, pop_var_move}{Double with mean and variance movement parameter.}
 
 \item{pop_visibility}{Double with "sight" distance of fish.}
+
+\item{max_dist}{Numeric with maximum movement distance}
 
 \item{reef_attraction}{Bool if attracted towards reef.}
 

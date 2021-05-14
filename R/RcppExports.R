@@ -180,7 +180,7 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @param cells_reef Vector with id of reef cells.
 #' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 #' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-#' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
+#' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
 #'
 #' @details
 #' Rcpp implementation to calculate seagrass growth.
@@ -191,8 +191,8 @@ rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @rdname rcpp_calc_seagrass_growth
 #'
 #' @keywords export
-rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, detritus_ratio, bg_thres, min_per_i))
+rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac) {
+    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac))
 }
 
 #' rcpp_cell_from_xy
@@ -269,13 +269,12 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param reef_dist Vector with distance to reef of each cell.
-#' @param move_dist Vector with move distance of fish individuals.
-#' @param pop_mean_move Double with mean movement parameter.
+#' @param pop_mean_move,pop_var_move Double with mean and variance movement parameter.
 #' @param pop_visibility Double with "sight" distance of fish.
+#' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param pop_mean_move Numeric with parameter.
 #'
 #' @details
 #' Rcpp implementation to move fish individuals depending on move distance and
@@ -287,8 +286,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, move_dist, pop_mean_move, pop_visibility, reef_attraction, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_remove_output
@@ -309,6 +308,33 @@ rcpp_move_fishpop <- function(fishpop, reef_dist, move_dist, pop_mean_move, pop_
 #' @export
 rcpp_remove_output <- function(seafloor, nutrients_output) {
     invisible(.Call(`_arrR_rcpp_remove_output`, seafloor, nutrients_output))
+}
+
+#' rcpp_rlognorm
+#'
+#' @description Create random number from log distribution
+#'
+#' @param mean Double with mean.
+#' @param sd Double with sd
+#' @param min,max Double boundaries.
+#'
+#' @details
+#' Get random number from log-norm distribution. Function uses log-transformed
+#' values and a normal distribution internally.
+#'
+#' @references
+#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+#' Integration of Additional Probability Distributions. R package version 0.1.1.
+#' https://CRAN.R-project.org/package=RcppDist
+#'
+#' @return double
+#'
+#' @aliases rcpp_rlognorm
+#' @rdname rcpp_rlognorm
+#'
+#' @keywords export
+rcpp_rlognorm <- function(mean, sd, min, max) {
+    .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
 
 #' rcpp_translate_torus
