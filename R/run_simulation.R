@@ -5,8 +5,10 @@
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param parameters List with all model parameters.
+#' @param nutr_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param burn_in Numeric with timesteps used to burn in.
 #' @param return_burnin If FALSE all timesteps < burn_in are not returned.
@@ -28,8 +30,9 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop,
-                           parameters,
-                           max_i, min_per_i, save_each = 1, burn_in = 0, return_burnin = TRUE,
+                           max_i, min_per_i, seagrass_each = 1,
+                           save_each = 1, burn_in = 0, return_burnin = TRUE,
+                           parameters, nutr_input = NULL, reef_attraction,
                            extract = NULL, verbose = TRUE) {
 
   # check parameters
@@ -57,6 +60,12 @@ run_simulation <- function(seafloor, fishpop,
 
   }
 
+  if (!is.null(nutr_input) && length(nutr_input) != max_i) {
+
+    stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
+
+  }
+
   if (burn_in >= max_i | burn_in < 0) {
 
     warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.", call. = FALSE)
@@ -72,6 +81,16 @@ run_simulation <- function(seafloor, fishpop,
                           reserves = numeric(), reserves_max = numeric(),
                           activity = numeric(), respiration = numeric(),
                           died_consumption = numeric(), died_background = numeric())
+
+  # get 95% of movement distances
+  } else {
+
+    max_dist <- vapply(1:1000000, function(i) {
+      rcpp_rlognorm(mean = parameters$pop_mean_move,
+                    sd = sqrt(parameters$pop_var_move),
+                    min = 0, max = Inf)}, FUN.VALUE = numeric(1))
+
+    max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
   }
 
@@ -137,15 +156,29 @@ run_simulation <- function(seafloor, fishpop,
   # simulate until max_i is reached
   for (i in 1:max_i) {
 
-    # simulate seagrass growth
-    simulate_seagrass(seafloor_values = seafloor_values,
-                      parameters = parameters,
-                      cells_reef = cells_reef,
-                      min_per_i = min_per_i)
+    # simulate nutrient input
+    if (!is.null(nutr_input)) {
 
-    # redistribute detritus
-    simulate_mineralization(seafloor_values = seafloor_values,
-                            parameters = parameters)
+      simulate_input(seafloor_values = seafloor_values,
+                     nutr_input = nutr_input,
+                     timestep = i)
+
+    }
+
+    # simulate seagrass only each seagrass_each_i iteration
+    if ((i * min_per_i) %% (min_per_i * seagrass_each) == 0) {
+
+      # simulate seagrass growth
+      simulate_seagrass(seafloor_values = seafloor_values,
+                        parameters = parameters,
+                        cells_reef = cells_reef,
+                        time_frac = (min_per_i / 60) * seagrass_each)
+
+      # redistribute detritus
+      simulate_mineralization(seafloor_values = seafloor_values,
+                              parameters = parameters)
+
+    }
 
     if (i > burn_in & starting_values$pop_n != 0) {
 
@@ -189,6 +222,10 @@ run_simulation <- function(seafloor, fishpop,
     simulate_diffusion(seafloor_values = seafloor_values,
                        cell_adj = cell_adj,
                        parameters = parameters)
+
+    # remove nutrients from cells
+    simulate_output(seafloor_values = seafloor_values,
+                    parameters = parameters)
 
     # update tracking list
     if (i %% save_each == 0) {
@@ -258,6 +295,7 @@ run_simulation <- function(seafloor, fishpop,
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  starting_values = starting_values, parameters = parameters,
+                 nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, extent = extent, grain = raster::res(seafloor),
                  coords_reef = coords_reef)

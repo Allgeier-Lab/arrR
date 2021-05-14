@@ -66,12 +66,13 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
   double nutrients_umol = rcpp_convert_nutr(nutrients, "umol");
 
   // 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
-  nutrients_umol = nutrients_umol / (1000 * 3);
+  // nutrients_umol = nutrients_umol / (1000 * 3);
 
   // calculate bg and ag uptake depending on nutrients and biomass
-  // convert uptake parameters to correct tick scale (from per h to day)
-  double uptake_umol = biomass * (((v_max * time_frac) * nutrients_umol) /
-                                  (k_m + nutrients_umol));
+  double v_amb =  v_max * nutrients_umol / (k_m + nutrients_umol);
+
+  // daily uptake
+  double uptake_umol = v_amb * biomass * time_frac / 1000;
 
   // convert back to g
   double uptake_g = rcpp_convert_nutr(uptake_umol, "g");
@@ -88,7 +89,7 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
 //' @param cells_reef Vector with id of reef cells.
 //' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 //' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-//' @param detritus_ratio,bg_thres,min_per_i Numerich with various parameters.
+//' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
 //'
 //' @details
 //' Rcpp implementation to calculate seagrass growth.
@@ -106,11 +107,9 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
                                double ag_v_max, double ag_k_m, double ag_gamma,
                                double bg_biomass_max, double bg_biomass_min,
                                double ag_biomass_max, double ag_biomass_min,
-                               double detritus_ratio, double bg_thres,
-                               double min_per_i) {
-
-  // convert min per i to one hour
-  min_per_i = min_per_i / 60;
+                               double seagrass_thres, double seagrass_slope,
+                               double detritus_ratio,
+                               double time_frac) {
 
   // loop through all seafloor cells
   for (int i = 0; i < seafloor.nrow(); i++) {
@@ -121,45 +120,11 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
     // check if current cell is not a reef cell, i.e. count() will be 0
     if (is_reef == 0) {
 
-      // calculate total possible nutrient uptake bg
-      double bg_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
-                                               bg_v_max, bg_k_m, min_per_i);
-
-      // remove bg nutrients uptake
-      seafloor(i, 4) -= bg_uptake;
-
-      // track bg nutrients uptake
-      seafloor(i, 12) += bg_uptake;
-
-      // calculate total possible nutrient uptake bg
-      double ag_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
-                                               ag_v_max, ag_k_m, min_per_i);
-
-      // remove ag nutrients uptake
-      seafloor(i, 4) -= ag_uptake;
-
-      // track bg nutrients uptake
-      seafloor(i, 11) += ag_uptake;
-
-      // calculate total nutrient uptake
-      double total_uptake = ag_uptake + bg_uptake;
-
-      // calculate bg detritus modifier
-      double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
-        (bg_biomass_max - bg_biomass_min);
+      // calculate detritus //
 
       // calculate ag detritus modifier
       double ag_modf = (ag_biomass_max - seafloor(i, 2)) /
         (ag_biomass_max - ag_biomass_min);
-
-      // calculate detritus fraction from bg biomass
-      double bg_detritus = seafloor(i, 3) * (detritus_ratio * (1 - bg_modf));
-
-      // remove detritus from bg biomass
-      seafloor(i, 3) -= bg_detritus;
-
-      // track bg slough
-      seafloor(i, 10) += bg_detritus;
 
       // calculate detritus fraction from ag biomass
       double ag_detritus = seafloor(i, 2) * (detritus_ratio * (1 - ag_modf));
@@ -170,68 +135,97 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
       // track ag slough
       seafloor(i, 9) += ag_detritus;
 
-      // calculate nutrients of total detritus
-      double detritus_nutr = (bg_detritus * bg_gamma) + (ag_detritus * ag_gamma);
+      // calculate bg detritus modifier
+      double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
+        (bg_biomass_max - bg_biomass_min);
+
+      // calculate detritus fraction from bg biomass
+      double bg_detritus = seafloor(i, 3) * (detritus_ratio * (1 - bg_modf));
+
+      // remove detritus from bg biomass
+      seafloor(i, 3) -= bg_detritus;
+
+      // track bg slough
+      seafloor(i, 10) += bg_detritus;
 
       // add nutrients to detritus pool
-      seafloor(i, 5) += detritus_nutr;
+      seafloor(i, 5) += (ag_detritus * ag_gamma) + (bg_detritus * bg_gamma);
 
-      // i) bg biomass below threshold, but uptake not enough to keep bg/ag stable
-      if ((bg_modf > (1 - bg_thres)) & (total_uptake <= detritus_nutr)) {
+      // calculate uptake //
 
-        // calculate bg growth
-        double bg_growth = total_uptake / bg_gamma;
+      // calculate total possible nutrient uptake bg
+      double ag_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
+                                               ag_v_max, ag_k_m, time_frac);
 
-        // add growth to biomass
-        seafloor(i, 3) += bg_growth;
+      // remove ag nutrients uptake
+      seafloor(i, 4) -= ag_uptake;
 
-        // track bg biomass production
-        seafloor(i, 8) += bg_growth;
+      // track bg nutrients uptake
+      seafloor(i, 11) += ag_uptake;
 
-      // ii) bg biomass above threshold, but uptake not enough to keep bg stable
-      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake <= (bg_detritus * bg_gamma))) {
+      // calculate total possible nutrient uptake bg
+      double bg_uptake = rcpp_calc_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
+                                               bg_v_max, bg_k_m, time_frac);
 
-        // calculate bg growth
-        double bg_growth = total_uptake / bg_gamma;
+      // remove bg nutrients uptake
+      seafloor(i, 4) -= bg_uptake;
 
-        // add growth to biomass
-        seafloor(i, 3) += bg_growth;
+      // track bg nutrients uptake
+      seafloor(i, 12) += bg_uptake;
 
-        // track bg biomass production
-        seafloor(i, 8) += bg_growth;
+      // calculate total nutrient uptake
+      double total_uptake = ag_uptake + bg_uptake;
 
-      // iii) bg biomass below threshold and uptake large enough to keep bg/ag stable
-      } else if ((bg_modf > (1 - bg_thres)) & (total_uptake > detritus_nutr)) {
+      // seagrass growth //
 
-        // add detritus fraction for stable ag biomass
+      // calc turning point of allocation function
+      double midpoint = -log(2.0) / log(seagrass_thres);
+
+      // normalize current cell to 0 - 1
+      double bg_biomass_norm = (seafloor(i, 3) - bg_biomass_min) /
+        (bg_biomass_max - bg_biomass_min);
+
+      double seagrass_modf = 1 / (1 + std::pow((std::pow(bg_biomass_norm, midpoint) /
+        (1 - std::pow(bg_biomass_norm, midpoint))), -seagrass_slope));
+
+      // below threshold and uptake not large enough to keep ag stable
+      if (total_uptake <= (ag_detritus * ag_gamma)) {
+
+        // calculate ag growth
+        double ag_growth = total_uptake / ag_gamma;
+
+        // add ag growth to biomass
+        seafloor(i, 2) += ag_growth;
+
+        // track ag biomass production
+        seafloor(i, 7) += ag_growth;
+
+      // below threshold
+      } else if (bg_biomass_norm < seagrass_thres) {
+
+        // add ag detritus to biomass
         seafloor(i, 2) += ag_detritus;
 
         // track ag biomass production
         seafloor(i, 7) += ag_detritus;
 
-        // calculate remaining nutrients and growth of bg
-        double bg_growth = (total_uptake - (ag_detritus * ag_gamma)) / bg_gamma;
+        // update uptake_temp
+        total_uptake -= ag_detritus * ag_gamma;
 
-        // add growth to bg biomass
+        // calculate bg growth
+        double bg_growth = total_uptake / bg_gamma;
+
+        // add bg growth to biomass
         seafloor(i, 3) += bg_growth;
 
         // track bg biomass production
         seafloor(i, 8) += bg_growth;
 
-      // iv) bg biomass above threshold and uptake large enough to keep bg stable
-      } else if ((bg_modf <= (1 - bg_thres)) & (total_uptake > (bg_detritus * bg_gamma))) {
-
-        // add detritus fraction for stable bg biomass
-        seafloor(i, 3) += bg_detritus;
-
-        // track bg biomass production
-        seafloor(i, 8) += bg_detritus;
-
-        // calculate remaining nutrients
-        double uptake_temp = total_uptake - (bg_detritus * bg_gamma);
+      // above threshold
+      } else if (bg_biomass_norm > seagrass_thres) {
 
         // calculate bg growth
-        double bg_growth = (uptake_temp * bg_modf) / bg_gamma;
+        double bg_growth = (total_uptake * (1 - seagrass_modf)) / bg_gamma;
 
         // add bg growth to biomass
         seafloor(i, 3) += bg_growth;
@@ -240,7 +234,7 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         seafloor(i, 8) += bg_growth;
 
         // calculate ag growth
-        double ag_growth = (uptake_temp * (1 - bg_modf)) / ag_gamma;
+        double ag_growth = (total_uptake * seagrass_modf) / ag_gamma;
 
         // add ag growth to biomass
         seafloor(i, 2) += ag_growth;
@@ -248,12 +242,9 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
         // track ag biomass production
         seafloor(i, 7) += ag_growth;
 
-      // throw error if no case is true
-      } else {
-
-        Rcpp::stop("Error: No allocation rule was TRUE for cell %i.", i + 1);
-
       }
+
+      // check if biomass is within min/max values //
 
       // check if ag biomass is above max
       if (seafloor(i, 2) > ag_biomass_max) {
@@ -302,9 +293,14 @@ void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
 rcpp_calc_seagrass_growth(seafloor = seafloor_values,
                           cells_reef = cells_reef,
                           bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
+                          bg_gamma = parameters$bg_gamma,
                           ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
-                          bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
-                          ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
-                          detritus_ratio = parameters$detritus_ratio, bg_thres = parameters$bg_thres,
+                          ag_gamma = parameters$ag_gamma,
+                          bg_biomass_max = parameters$bg_biomass_max,
+                          bg_biomass_min = parameters$bg_biomass_min,
+                          ag_biomass_max = parameters$ag_biomass_max,
+                          ag_biomass_min = parameters$ag_biomass_min,
+                          detritus_ratio = parameters$detritus_ratio,
+                          seagrass_thres = parameters$seagrass_thres,
                           min_per_i = min_per_i)
 */

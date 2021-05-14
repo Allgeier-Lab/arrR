@@ -1,11 +1,25 @@
+# arrR 0.5.0
+* Simpler allocation rule based on curves.
+* New `plot_threshold` function. 
+* Fix bug in movement and specify maximum movement distance based on 95% of distribution
+
+# arrR 0.4.0
+* Add `simulate_input` and `simulate_output`
+* Rename `simulate_fishpop_growth` to `simulate_growth`
+
+# arrR 0.3.1
+* Add `rlognorm` for better code structure
+
 # arrR 0.3.0
 * Update authors list
 * Re-implement movement of fish individuals in Rcpp mainly
+* Rename dead detritus to fish detritus (and all corresponding parameters)
 
 # arrR 0.2.9
 * Fix bug that not all starting values are included in `mdl_rn` object
 * Print progress each timestep because why not?
-* Change to GPL3 license
+  * Change to GPL3 license
+* Fix bug in `rcpp_calc_seagrass_growth.cpp` with allocation rules
 
 # arrR 0.2.8
 * Add hexlogo
@@ -22,7 +36,7 @@
 
 # arrR 0.2.6
 * Renamed all pop_\*_grunt parameters to only pop_\*
-* Adding burn-in option to run_simulation
+  * Adding burn-in option to run_simulation
 * Track production, slough, nutrient uptake cumulative for each cell
 * `summarize_mdlrn` returns `burn_in` column
 

@@ -32,8 +32,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                          "detritus_pool",
                          "pop_n",
                          "pop_mean_size",
-                         "pop_var_size",
-                         "water_temp")
+                         "pop_var_size")
 
   # specify all required parameters
   required_parameters <- c("ag_biomass_max",
@@ -45,18 +44,20 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "bg_biomass_min",
                            "bg_v_max",
                            "bg_k_m",
-                           "bg_thres",
                            "bg_gamma",
+                           "seagrass_thres",
+                           "seagrass_slope",
                            "nutrients_diffusion",
+                           "nutrients_output",
                            "detritus_ratio",
                            "detritus_mineralization",
                            "detritus_diffusion",
-                           "detritus_dead_diffusion",
-                           "detritus_dead_ratio",
                            "move_mean",
                            "move_var",
                            "move_reef",
                            "move_return",
+                           "detritus_fish_diffusion",
+                           "detritus_fish_ratio",
                            "pop_max_reserves",
                            "pop_want_reserves",
                            "pop_consumption_prop",
@@ -163,6 +164,57 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       warning("'pop_a' must be positive number.",
               call. = FALSE)
 
+    }
+
+    # check if reserves parameter makes sense
+    if (parameters$pop_max_reserves < parameters$pop_want_reserves) {
+
+      # set final flag to false
+      final_flag <- FALSE
+
+      warning("'pop_max_reserves' must be bigger than 'pop_want_reserves'",
+              call. = FALSE)
+
+
+    }
+
+
+    # check if all ratios are betwenn 0 and 1
+    check_ratios <- any(c(c(parameters$seagrass_thres,
+
+                            parameters$nutrients_diffusion,
+                            parameters$nutrients_output,
+
+                            parameters$detritus_ratio,
+                            parameters$detritus_mineralization,
+                            parameters$detritus_fish_ratio,
+                            parameters$detritus_diffusion,
+                            parameters$detritus_fish_diffusion,
+
+                            parameters$pop_max_reserves,
+                            parameters$pop_want_reserves) > 1,
+
+                          c(parameters$seagrass_thres,
+
+                            parameters$nutrients_diffusion,
+                            parameters$nutrients_output,
+
+                            parameters$detritus_ratio,
+                            parameters$detritus_mineralization,
+                            parameters$detritus_fish_ratio,
+                            parameters$detritus_diffusion,
+                            parameters$detritus_fish_diffusion,
+
+                            parameters$pop_max_reserves,
+                            parameters$pop_want_reserves) < 0))
+
+    # check if all fraction are between 0 and 1
+    if (check_ratios) {
+
+      final_flag <- FALSE
+
+      warning("Some parameters that must be 0 <= x <= 1 are outside range.",
+              call. = FALSE)
 
     }
   }

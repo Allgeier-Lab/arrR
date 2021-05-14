@@ -8,8 +8,10 @@ run_simulation(
   seafloor,
   fishpop,
   parameters,
+  nutr_input = NULL,
   max_i,
   min_per_i,
+  seagrass_each = 1,
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
@@ -24,9 +26,13 @@ run_simulation(
 
 \item{parameters}{List with all model parameters.}
 
+\item{nutr_input}{Vector with amount of nutrient input each timestep.}
+
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
+
+\item{seagrass_each}{Integer how often (each i * x) seagrass dynamics will be simulated.}
 
 \item{save_each}{Numeric how often data should be saved to return.}
 

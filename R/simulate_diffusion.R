@@ -23,6 +23,6 @@ simulate_diffusion <- function(seafloor_values, cell_adj, parameters) {
                       cell_adj = cell_adj,
                       nutrients_diffusion = parameters$nutrients_diffusion,
                       detritus_diffusion = parameters$detritus_diffusion,
-                      detritus_dead_diffusion = parameters$detritus_dead_diffusion)
+                      detritus_fish_diffusion = parameters$detritus_fish_diffusion)
 
 }

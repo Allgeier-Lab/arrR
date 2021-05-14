@@ -26,7 +26,7 @@ summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
   # get cols to summarise
   seafloor <- subset(result$seafloor, select = c("ag_biomass", "bg_biomass",
                                                  "nutrients_pool", "detritus_pool",
-                                                 "detritus_dead"))
+                                                 "detritus_fish"))
 
   seafloor <- lapply(X = summary, function(i) {
 

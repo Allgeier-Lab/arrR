@@ -6,14 +6,14 @@
 \usage{
 rcpp_calc_mineralization(
   seafloor,
-  detritus_dead_ratio,
+  detritus_fish_ratio,
   detritus_mineralization
 )
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{detritus_dead_ratio, detritus_mineralization}{seafloor Numeric with parameters.}
+\item{detritus_fish_ratio, detritus_mineralization}{seafloor Numeric with parameters.}
 }
 \value{
 void

@@ -18,7 +18,7 @@ Matrix
 Redistribute detritus pools
 }
 \details{
-Function to redistribute dead detritus pool to overall detritus pool and decomposition.
+Function to redistribute fish detritus pool to overall detritus pool and decomposition.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
