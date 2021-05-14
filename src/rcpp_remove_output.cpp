@@ -1,5 +1,4 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_remove_output.h"
 
 //' rcpp_remove_output
 //'
@@ -18,8 +17,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_remove_output(Rcpp::NumericMatrix seafloor,
-                        double nutrients_output) {
+void rcpp_remove_output(Rcpp::NumericMatrix seafloor, double nutrients_output) {
 
   // loop through all raster cells
   for (int i = 0; i < seafloor.nrow(); i++) {

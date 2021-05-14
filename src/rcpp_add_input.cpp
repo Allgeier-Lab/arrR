@@ -1,5 +1,4 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_add_input.h"
 
 //' rcpp_add_input
 //'
@@ -19,8 +18,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_add_input(Rcpp::NumericMatrix seafloor,
-                    Rcpp::NumericVector nutr_input,
+void rcpp_add_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input,
                     int timestep) {
 
   // use C++ indexing

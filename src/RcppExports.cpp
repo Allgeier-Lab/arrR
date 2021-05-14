@@ -101,6 +101,21 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_calc_nutr_uptake
+double rcpp_calc_nutr_uptake(double nutrients, double biomass, double v_max, double k_m, double time_frac);
+RcppExport SEXP _arrR_rcpp_calc_nutr_uptake(SEXP nutrientsSEXP, SEXP biomassSEXP, SEXP v_maxSEXP, SEXP k_mSEXP, SEXP time_fracSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type nutrients(nutrientsSEXP);
+    Rcpp::traits::input_parameter< double >::type biomass(biomassSEXP);
+    Rcpp::traits::input_parameter< double >::type v_max(v_maxSEXP);
+    Rcpp::traits::input_parameter< double >::type k_m(k_mSEXP);
+    Rcpp::traits::input_parameter< double >::type time_frac(time_fracSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_frac));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_calc_respiration
 void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop, double resp_intercept, double resp_slope, double resp_temp_low, double resp_temp_max, double resp_temp_optm, double water_temp, double min_per_i);
 RcppExport SEXP _arrR_rcpp_calc_respiration(SEXP fishpopSEXP, SEXP resp_interceptSEXP, SEXP resp_slopeSEXP, SEXP resp_temp_lowSEXP, SEXP resp_temp_maxSEXP, SEXP resp_temp_optmSEXP, SEXP water_tempSEXP, SEXP min_per_iSEXP) {
@@ -116,33 +131,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type min_per_i(min_per_iSEXP);
     rcpp_calc_respiration(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i);
     return R_NilValue;
-END_RCPP
-}
-// rcpp_convert_nutr
-double rcpp_convert_nutr(double x, String to);
-RcppExport SEXP _arrR_rcpp_convert_nutr(SEXP xSEXP, SEXP toSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< String >::type to(toSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_convert_nutr(x, to));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpp_calc_nutr_uptake
-double rcpp_calc_nutr_uptake(double nutrients, double biomass, double v_max, double k_m, double time_frac);
-RcppExport SEXP _arrR_rcpp_calc_nutr_uptake(SEXP nutrientsSEXP, SEXP biomassSEXP, SEXP v_maxSEXP, SEXP k_mSEXP, SEXP time_fracSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type nutrients(nutrientsSEXP);
-    Rcpp::traits::input_parameter< double >::type biomass(biomassSEXP);
-    Rcpp::traits::input_parameter< double >::type v_max(v_maxSEXP);
-    Rcpp::traits::input_parameter< double >::type k_m(k_mSEXP);
-    Rcpp::traits::input_parameter< double >::type time_frac(time_fracSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_calc_nutr_uptake(nutrients, biomass, v_max, k_m, time_frac));
-    return rcpp_result_gen;
 END_RCPP
 }
 // rcpp_calc_seagrass_growth
@@ -192,6 +180,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_temp(coords_tempSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_closest_reef(coords_temp, coords_reef));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_convert_nutr
+double rcpp_convert_nutr(double x, String to);
+RcppExport SEXP _arrR_rcpp_convert_nutr(SEXP xSEXP, SEXP toSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< String >::type to(toSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_convert_nutr(x, to));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -317,12 +317,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_calc_mineralization", (DL_FUNC) &_arrR_rcpp_calc_mineralization, 3},
     {"_arrR_rcpp_calc_mortality", (DL_FUNC) &_arrR_rcpp_calc_mortality, 8},
     {"_arrR_rcpp_calc_mortality_background", (DL_FUNC) &_arrR_rcpp_calc_mortality_background, 8},
-    {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
-    {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_calc_nutr_uptake", (DL_FUNC) &_arrR_rcpp_calc_nutr_uptake, 5},
+    {"_arrR_rcpp_calc_respiration", (DL_FUNC) &_arrR_rcpp_calc_respiration, 8},
     {"_arrR_rcpp_calc_seagrass_growth", (DL_FUNC) &_arrR_rcpp_calc_seagrass_growth, 16},
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
     {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
+    {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},

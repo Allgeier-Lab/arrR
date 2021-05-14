@@ -1,85 +1,5 @@
-#include <Rcpp.h>
-using namespace Rcpp;
-
-//' rcpp_convert_nutr
-//'
-//' @description Rcpp convert nutrients
-//'
-//' @param x Numeric with nutrient amount.
-//' @param to String to specify in which unit to convert.
-//'
-//' @details
-//' Rcpp implementation to convert nutrients between g and umol.
-//'
-//' @return double
-//'
-//' @aliases rcpp_convert_nutr
-//' @rdname rcpp_convert_nutr
-//'
-//' @keywords export
-// [[Rcpp::export]]
-double rcpp_convert_nutr(double x, String to) {
-
-  // convert to gram by multiplying factor
-  if (to == "g") {
-
-    double result = x * 18.039 / std::pow(10, 6);
-
-    return(result);
-
-  // convert to umol by multiplying factor
-  } else if (to == "umol") {
-
-    double result = x * std::pow(10, 6) / 18.039;
-
-    return(result);
-
-  // throw error if to option is not present
-  } else {
-
-    throw std::range_error("Please select either to='g' or to='umol'.");
-
-  }
-}
-
-//' rcpp_calc_nutr_uptake
-//'
-//' @description Rcpp calculate nutrient uptake
-//'
-//' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
-//' @param v_max,k_m,time_frac Numeric with parameters
-//'
-//' @details
-//' Rcpp implementation to calculate nutrient uptake of cell
-//'
-//' @return double
-//'
-//' @aliases rcpp_calc_nutr_uptake
-//' @rdname rcpp_calc_nutr_uptake
-//'
-//' @keywords export
-// [[Rcpp::export]]
-double rcpp_calc_nutr_uptake(double nutrients, double biomass,
-                             double v_max, double k_m, double time_frac) {
-
-  // convert water column nutrients to umol/l
-  double nutrients_umol = rcpp_convert_nutr(nutrients, "umol");
-
-  // 1 x 1 x m = 1 cubic m = 1000l * 3m water depth
-  // nutrients_umol = nutrients_umol / (1000 * 3);
-
-  // calculate bg and ag uptake depending on nutrients and biomass
-  double v_amb =  v_max * nutrients_umol / (k_m + nutrients_umol);
-
-  // daily uptake
-  double uptake_umol = v_amb * biomass * time_frac / 1000;
-
-  // convert back to g
-  double uptake_g = rcpp_convert_nutr(uptake_umol, "g");
-
-  return(uptake_g);
-
-}
+#include "rcpp_calc_seagrass_growth.h"
+#include "rcpp_calc_nutr_uptake.h"
 
 //' rcpp_calc_seagrass_growth
 //'
@@ -101,8 +21,7 @@ double rcpp_calc_nutr_uptake(double nutrients, double biomass,
 //'
 //' @keywords export
 // [[Rcpp::export]]
-void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor,
-                               Rcpp::NumericVector cells_reef,
+void rcpp_calc_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
                                double bg_v_max, double bg_k_m, double bg_gamma,
                                double ag_v_max, double ag_k_m, double ag_gamma,
                                double bg_biomass_max, double bg_biomass_min,

@@ -1,0 +1,11 @@
+//#ifndef RCPP_CALC_NUTR_UPTAKE
+//#define RCPP_CALC_NUTR_UPTAKE
+
+#include "Rcpp.h"
+
+using namespace Rcpp;
+
+double rcpp_calc_nutr_uptake(double nutrients, double biomass,
+                             double v_max, double k_m, double time_frac) ;
+
+//#endif // RCPP_CALC_NUTR_UPTAKE

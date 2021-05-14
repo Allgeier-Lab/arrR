@@ -134,6 +134,26 @@ rcpp_calc_mortality_background <- function(fishpop, fishpop_track, seafloor, fis
     invisible(.Call(`_arrR_rcpp_calc_mortality_background`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
 }
 
+#' rcpp_calc_nutr_uptake
+#'
+#' @description Rcpp calculate nutrient uptake
+#'
+#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+#' @param v_max,k_m,time_frac Numeric with parameters
+#'
+#' @details
+#' Rcpp implementation to calculate nutrient uptake of cell
+#'
+#' @return double
+#'
+#' @aliases rcpp_calc_nutr_uptake
+#' @rdname rcpp_calc_nutr_uptake
+#'
+#' @keywords export
+rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
+    .Call(`_arrR_rcpp_calc_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
+}
+
 #' rcpp_calc_respiration
 #'
 #' @description Rcpp calculate respration
@@ -154,46 +174,6 @@ rcpp_calc_mortality_background <- function(fishpop, fishpop_track, seafloor, fis
 #' @export
 rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
     invisible(.Call(`_arrR_rcpp_calc_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
-}
-
-#' rcpp_convert_nutr
-#'
-#' @description Rcpp convert nutrients
-#'
-#' @param x Numeric with nutrient amount.
-#' @param to String to specify in which unit to convert.
-#'
-#' @details
-#' Rcpp implementation to convert nutrients between g and umol.
-#'
-#' @return double
-#'
-#' @aliases rcpp_convert_nutr
-#' @rdname rcpp_convert_nutr
-#'
-#' @keywords export
-rcpp_convert_nutr <- function(x, to) {
-    .Call(`_arrR_rcpp_convert_nutr`, x, to)
-}
-
-#' rcpp_calc_nutr_uptake
-#'
-#' @description Rcpp calculate nutrient uptake
-#'
-#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
-#' @param v_max,k_m,time_frac Numeric with parameters
-#'
-#' @details
-#' Rcpp implementation to calculate nutrient uptake of cell
-#'
-#' @return double
-#'
-#' @aliases rcpp_calc_nutr_uptake
-#' @rdname rcpp_calc_nutr_uptake
-#'
-#' @keywords export
-rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
-    .Call(`_arrR_rcpp_calc_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
 }
 
 #' rcpp_calc_seagrass_growth
@@ -264,6 +244,26 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @keywords export
 rcpp_closest_reef <- function(coords_temp, coords_reef) {
     .Call(`_arrR_rcpp_closest_reef`, coords_temp, coords_reef)
+}
+
+#' rcpp_convert_nutr
+#'
+#' @description Rcpp convert nutrients
+#'
+#' @param x Numeric with nutrient amount.
+#' @param to String to specify in which unit to convert.
+#'
+#' @details
+#' Rcpp implementation to convert nutrients between g and umol.
+#'
+#' @return double
+#'
+#' @aliases rcpp_convert_nutr
+#' @rdname rcpp_convert_nutr
+#'
+#' @keywords export
+rcpp_convert_nutr <- function(x, to) {
+    .Call(`_arrR_rcpp_convert_nutr`, x, to)
 }
 
 #' rcpp_diffuse_values
