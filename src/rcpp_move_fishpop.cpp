@@ -15,6 +15,7 @@
 //' @param move_mean Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_return Double with mean movement distance when returning to reef.
+//' @param max_dist Maximum distance an individual can move.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -34,6 +35,7 @@
 void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                        Rcpp::NumericVector pop_thres_reserves,
                        double move_border, double move_mean, double move_reef, double move_return,
+                       double max_dist,
                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
@@ -63,7 +65,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
         fishpop(i, 13) = 1.0;
 
         // KSM: move_dist is now from a log-normal distribution within Xm of reef to move
-        move_dist = rcpp_rlognorm(move_reef, 1.0);
+        move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
 
         // turn fish randomly (runif always returns vector, thus (0))
         fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
@@ -86,13 +88,13 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
         if (move_return <= closest_reef(1)) {
 
           // sample move distance from lognorm of move_return (swim faster/move further)
-          move_dist = rcpp_rlognorm(move_return, 1.0);
+          move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
 
         // reef is closer than move_return, so make sure fish don't overshoot
         } else {
 
           // sample move distance from around distance to reef
-          move_dist = rcpp_rlognorm(closest_reef(1), 1.0);
+          move_dist = rcpp_rlognorm(closest_reef(1), 1.0, 0.0, max_dist);
 
         }
       }
@@ -104,7 +106,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       fishpop(i, 13) = 3.0;
 
       // pull move_dist from log norm with mean_move
-      move_dist = rcpp_rlognorm(move_mean, 1.0);
+      move_dist = rcpp_rlognorm(move_mean, 1.0, 0.0, max_dist);
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
       fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);

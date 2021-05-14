@@ -92,6 +92,28 @@ rcpp_calc_mineralization <- function(seafloor, detritus_fish_ratio, detritus_min
     invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
 }
 
+#' rcpp_calc_mortality
+#'
+#' @description Rcpp create rebirth
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#'
+#' @details
+#' Rcpp implementation to create new individual after mortality event.
+#'
+#' @return void
+#'
+#' @aliases rcpp_calc_mortality
+#' @rdname rcpp_calc_mortality
+#'
+#' @export
+rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves) {
+    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
+}
+
 #' rcpp_calc_mortality_background
 #'
 #' @description Rcpp background mortality
@@ -248,27 +270,23 @@ rcpp_closest_reef <- function(coords_temp, coords_reef) {
 
 #' rcpp_diffuse_values
 #'
-#' @description Rcpp get cell id from xy
+#' @description Rcpp diffuse values
 #'
-#' @param coords Vector with coordinates.
-#' @param dimensions Vector with number or rows and cols
-#' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+#' @param seafloor Matrix with seafloor values.
+#' @param cell_adj Matrix with cell adjacencies.
+#' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 #'
 #' @details
 #' Rcpp implementation to diffuse seafloor values between (queen case) neighbouring cells.
 #'
-#' @references
-#' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
-#' and Modeling. R package version 3.4-5. https://CRAN.R-project.org/package=raster
+#' @return void
 #'
-#' @return int
+#' @aliases rcpp_diffuse_values
+#' @rdname rcpp_diffuse_values
 #'
-#' @aliases rcpp_cell_from_xy
-#' @rdname rcpp_cell_from_xy
-#'
-#' @keywords export
-rcpp_cell_from_xy <- function(coords, dimensions, extent) {
-    .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
+#' @export
+rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
+    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
 }
 
 #' rcpp_get_bearing
@@ -325,6 +343,7 @@ rcpp_modify_degree <- function(x, y) {
 #' @param move_mean Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_return Double with mean movement distance when returning to reef.
+#' @param max_dist Maximum distance an individual can move.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -340,8 +359,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_move_fishpop
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, extent, dimensions))
+rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, max_dist, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, max_dist, extent, dimensions))
 }
 
 #' rcpp_reincarnate
@@ -367,16 +386,42 @@ rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id,
     invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason))
 }
 
+#' rcpp_remove_output
+#'
+#' @description Rcpp remove nutrients
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param nutrients_output Double with fraction removed from each cell.
+#'
+#' @details
+#' Rcpp implementation to remove nutrient from raster cells.
+#'
+#' @return void
+#'
+#' @aliases rcpp_remove_output
+#' @rdname rcpp_remove_output
+#'
+#' @export
+rcpp_remove_output <- function(seafloor, nutrients_output) {
+    invisible(.Call(`_arrR_rcpp_remove_output`, seafloor, nutrients_output))
+}
+
 #' rcpp_rlognorm
 #'
 #' @description Create random number from log distribution
 #'
 #' @param mean Double with mean.
 #' @param sd Double with sd
+#' @param min,max Double boundaries.
 #'
 #' @details
 #' Get random number from log-norm distribution. Function uses log-transformed
 #' values and a normal distribution internally.
+#'
+#' @references
+#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+#' Integration of Additional Probability Distributions. R package version 0.1.1.
+#' https://CRAN.R-project.org/package=RcppDist
 #'
 #' @return double
 #'
@@ -384,8 +429,8 @@ rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id,
 #' @rdname rcpp_rlognorm
 #'
 #' @keywords export
-rcpp_rlognorm <- function(mean, sd) {
-    .Call(`_arrR_rcpp_rlognorm`, mean, sd)
+rcpp_rlognorm <- function(mean, sd, min, max) {
+    .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
 
 #' rcpp_translate_torus

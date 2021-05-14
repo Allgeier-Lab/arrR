@@ -184,12 +184,12 @@ run_simulation <- function(seafloor, fishpop,
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
-                        pop_n = starting_values$pop_n,
+                        parameters = parameters,
+                        max_dist = max_dist,
+                        pop_thres_reserves = pop_thres_reserves,
                         coords_reef = coords_reef,
                         extent = extent,
-                        dimensions = dimensions,
-                        pop_thres_reserves = pop_thres_reserves,
-                        parameters = parameters)
+                        dimensions = dimensions)
 
       # simulate fish respiration (26°C is mean water temperature in the Bahamas)
       simulate_respiration(fishpop_values = fishpop_values,
