@@ -41,7 +41,7 @@ rcpp_add_input <- function(seafloor, nutr_input, timestep) {
 #' @rdname rcpp_calc_dist_reef
 #'
 #' @keywords export
-rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
+rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus) {
     .Call(`_arrR_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 

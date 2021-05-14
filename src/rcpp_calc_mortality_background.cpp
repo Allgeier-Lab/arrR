@@ -1,3 +1,4 @@
+#include "rcpp_calc_mortality_background.h"
 #include "rcpp_reincarnate.h"
 
 //' rcpp_calc_mortality_background

@@ -1,5 +1,4 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_calc_mortality.h"
 
 //' rcpp_calc_mortality
 //'
@@ -20,13 +19,10 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop,
-                         Rcpp::NumericMatrix fishpop_track,
+void rcpp_calc_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
-                         Rcpp::NumericVector fish_id,
-                         Rcpp::NumericVector cell_id,
-                         double pop_linf,
-                         double pop_n_body,
+                         Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
+                         double pop_linf, double pop_n_body,
                          double pop_want_reserves) {
 
   for (int i = 0; i < fish_id.length(); i++) {

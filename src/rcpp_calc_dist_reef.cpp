@@ -1,5 +1,4 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_calc_dist_reef.h"
 
 //' rcpp_calc_dist_reef
 //'
@@ -24,7 +23,7 @@ using namespace Rcpp;
 Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor,
                                         Rcpp::NumericMatrix coords_reef,
                                         Rcpp::NumericVector extent,
-                                        bool torus = false) {
+                                        bool torus) {
 
   // get dimension of seafloor and reef cells
   int n_cells = seafloor.nrow();

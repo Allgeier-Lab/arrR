@@ -1,3 +1,4 @@
+#include "rcpp_calc_fishpop_growth.h"
 #include "rcpp_reincarnate.h"
 
 //' rcpp_calc_fishpop_growth

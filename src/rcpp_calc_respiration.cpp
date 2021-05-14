@@ -1,5 +1,4 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_calc_respiration.h"
 
 //' rcpp_calc_respiration
 //'
@@ -47,7 +46,7 @@ void rcpp_calc_respiration(Rcpp::NumericMatrix fishpop,
     // Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
     // to result in unit of tick^-1
     double respiration = (resp_intercept * std::pow(fishpop(i, 6), resp_slope) *
-                          temp_dependence * fishpop(i, 9)) * 13560 * (1.0 / 4800.0);
+                          temp_dependence * fishpop(i, 9)) * 13560.0 * (1.0 / 4800.0);
 
     // check if finite number
     bool check_finite = std::isfinite(respiration);

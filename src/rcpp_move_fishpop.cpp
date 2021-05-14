@@ -1,7 +1,7 @@
 #include "rcpp_move_fishpop.h"
 #include "rcpp_closest_reef.h"
-#include "rcpp_rlognorm.h"
 #include "rcpp_get_bearing.h"
+#include "rcpp_rlognorm.h"
 #include "rcpp_translate_torus.h"
 
 //' rcpp_move_fishpop
@@ -127,7 +127,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     fishpop(i, 3) = xy_temp(1);
 
     // update activity
-    fishpop(i, 9) = (1 / (move_return + 1)) * move_dist + 1;
+    fishpop(i, 9) = (1 / max_dist) * move_dist + 1;
 
   }
 }
