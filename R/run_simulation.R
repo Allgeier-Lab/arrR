@@ -75,7 +75,7 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
   }
 
   # check if move is valid
-  if (!move %in% c("rand", "attr", "behav")) {
+  if (!movement %in% c("rand", "attr", "behav")) {
 
     stop("Please select either 'rand', 'attr' or 'behav' as movement type.",
          call. = FALSE)
@@ -90,14 +90,15 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
                           length = numeric(), weight = numeric(),
                           reserves = numeric(), reserves_max = numeric(),
                           activity = numeric(), respiration = numeric(),
-                          died_consumption = numeric(), died_background = numeric())
+                          died_consumption = numeric(), died_background = numeric(),
+                          behavior = numeric())
 
   # get 95% of movement distances
   } else {
 
     max_dist <- vapply(X = 1:1000000, FUN = function(i) {
-      rcpp_rlognorm(mean = parameters$pop_mean_move,
-                    sd = sqrt(parameters$pop_var_move),
+      rcpp_rlognorm(mean = parameters$move_mean,
+                    sd = sqrt(parameters$move_var),
                     min = 0, max = Inf)}, FUN.VALUE = numeric(1))
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
@@ -108,7 +109,7 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
                                        max = parameters$pop_thres_reserves_max)
 
     # set behavior to foraging
-    if (move %in% c("rand", "attr")) {
+    if (movement %in% c("rand", "attr")) {
 
       fishpop$behavior <- 3
 
@@ -200,11 +201,10 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
-                        seafloor_values = seafloor_values,
                         movement = movement,
                         parameters = parameters,
-                        max_dist = max_dist,
                         pop_thres_reserves = pop_thres_reserves,
+                        max_dist = max_dist,
                         coords_reef = coords_reef,
                         extent = extent,
                         dimensions = dimensions)

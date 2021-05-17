@@ -52,6 +52,7 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
       // loop through all distances
       for (int j = 0; j < distance.length(); j++) {
 
+        // MH: This could be move_dist instead of move_visibility
         double x_temp = fishpop(i, 2) +
           (move_visibility * cos(std::fmod((fishpop(i, 4) + angles(j)), 360) * (PI / 180)));
 

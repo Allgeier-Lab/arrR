@@ -19,8 +19,8 @@
 #' @rdname simulate_movement
 #'
 #' @export
-simulate_movement <- function(fishpop_values, seafloor_values, movement = "rand", parameters, max_dist,
-                              pop_thres_reserves,
+simulate_movement <- function(fishpop_values, movement = "rand",
+                              parameters, pop_thres_reserves, max_dist,
                               coords_reef, extent, dimensions) {
 
 
