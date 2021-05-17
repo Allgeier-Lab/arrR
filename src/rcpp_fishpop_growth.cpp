@@ -36,9 +36,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
-    // create counter for temp fish id
-    // KSM: sets up a temporary order of fish ID,
-    // so Fish 1 does not get all of the resources in each patch
+    // create counter for temp fish id because randomized in simulate_fishpop_growth
     int fish_id_temp = fish_id(i) - 1;
 
     // create counter for temp cell id

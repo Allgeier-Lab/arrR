@@ -25,7 +25,7 @@ run_simulation(
 
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
-\item{movement}{String specifing movement algorithm. Either 'random', 'attracted' or 'reserves'.}
+\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
 \item{parameters}{List with all model parameters.}
 

@@ -5,7 +5,7 @@
 
 using namespace Rcpp;
 
-Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericMatrix coords_temp,
+Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericVector coords_temp,
                                       Rcpp::NumericMatrix coords_reef);
 
 //#endif // RCPP_CLOSEST_REEF

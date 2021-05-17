@@ -4,7 +4,7 @@
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
-#' @param movement String specifing movement algorithm. Either 'random', 'attracted' or 'reserves'.
+#' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param parameters List with all model parameters.
 #' @param nutr_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
@@ -60,15 +60,25 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
   }
 
+  # check if each i has input
   if (!is.null(nutr_input) && length(nutr_input) != max_i) {
 
     stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
 
   }
 
+  # check if burn in makes sense
   if (burn_in >= max_i | burn_in < 0) {
 
     warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.", call. = FALSE)
+
+  }
+
+  # check if move is valid
+  if (!move %in% c("rand", "attr", "behav")) {
+
+    stop("Please select either 'rand', 'attr' or 'behav' as movement type.",
+         call. = FALSE)
 
   }
 
@@ -92,6 +102,17 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
+    # getting thres_reserves parameter for each individual
+    pop_thres_reserves <- stats::runif(n = nrow(fishpop),
+                                       min = parameters$pop_thres_reserves_min,
+                                       max = parameters$pop_thres_reserves_max)
+
+    # set behavior to foraging
+    if (move %in% c("rand", "attr")) {
+
+      fishpop$behavior <- 3
+
+    }
   }
 
   # convert seafloor and fishpop as matrix
@@ -102,11 +123,6 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
   # get mean starting values
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
                                          fishpop_values = fishpop_values)
-
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   # get extent of environment
   extent <- raster::extent(seafloor)
@@ -124,15 +140,15 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
   # save input data in tracking data.frame
   seafloor_track[[1]] <- rlang::duplicate(seafloor_values)
 
   fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
-
-  # getting thres_reserves parameter for each individual
-  pop_thres_reserves <- stats::runif(n = nrow(fishpop_values),
-                                     min = parameters$pop_thres_reserves_min,
-                                     max = parameters$pop_thres_reserves_max)
 
   # print some basic information about model run
   if (verbose) {
@@ -184,6 +200,8 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
+                        seafloor_values = seafloor_values,
+                        movement = movement,
                         parameters = parameters,
                         max_dist = max_dist,
                         pop_thres_reserves = pop_thres_reserves,

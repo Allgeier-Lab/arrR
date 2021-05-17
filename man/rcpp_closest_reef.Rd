@@ -7,7 +7,7 @@
 rcpp_closest_reef(coords_temp, coords_reef)
 }
 \arguments{
-\item{coords_temp}{Matrix with coords of current individual.}
+\item{coords_temp}{Vector with xy coords of current individual.}
 
 \item{coords_reef}{Matrix coords of reef cells.}
 }

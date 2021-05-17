@@ -6,6 +6,8 @@
 \usage{
 simulate_movement(
   fishpop_values,
+  seafloor_values,
+  movement = "rand",
   parameters,
   max_dist,
   pop_thres_reserves,
@@ -16,6 +18,8 @@ simulate_movement(
 }
 \arguments{
 \item{fishpop_values}{Matrix with fish population created.}
+
+\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
 \item{parameters}{List with all model parameters.}
 

@@ -52,7 +52,7 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #'
 #' @description Rcpp get distance to closest reef
 #'
-#' @param coords_temp Matrix with coords of current individual.
+#' @param coords_temp Vector with xy coords of current individual.
 #' @param coords_reef Matrix coords of reef cells.
 #'
 #' @details
@@ -265,16 +265,16 @@ rcpp_mortality_cons <- function(fishpop, fishpop_track, seafloor, fish_id, cell_
     invisible(.Call(`_arrR_rcpp_mortality_cons`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
 }
 
-#' rcpp_move_fishpop
+#' rcpp_move_behav
 #'
 #' @description Rcpp move fish population
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param coords_reef Matrix with coords of reef cells.
 #' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
-#' @param move_border Double with movement distance that surrounds reef cell border.
-#' @param move_mean Double with mean movement parameter.
+#' @param move_mean,move_var Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
+#' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
 #' @param max_dist Maximum distance an individual can move.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -286,12 +286,39 @@ rcpp_mortality_cons <- function(fishpop, fishpop_track, seafloor, fish_id, cell_
 #'
 #' @return void
 #'
-#' @aliases rcpp_move_fishpop
-#' @rdname rcpp_move_fishpop
+#' @aliases rcpp_move_behav
+#' @rdname rcpp_move_behav
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, max_dist, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, coords_reef, pop_thres_reserves, move_border, move_mean, move_reef, move_return, max_dist, extent, dimensions))
+rcpp_move_behav <- function(fishpop, coords_reef, pop_thres_reserves, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, coords_reef, pop_thres_reserves, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions))
+}
+
+#' rcpp_move_rand
+#'
+#' @description Rcpp move fish population
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param coords_reef Matrix with coords of reef cells.
+#' @param move_mean,move_var Double with mean and variance movement parameter.
+#' @param move_visibility Double with "sight" distance of fish.
+#' @param max_dist Numeric with maximum movement distance
+#' @param reef_attraction Bool if attracted towards reef.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Rcpp implementation to move fish individuals depending on move distance and
+#' heading value.
+#'
+#' @return void
+#'
+#' @aliases rcpp_move_rand
+#' @rdname rcpp_move_rand
+#'
+#' @export
+rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_nutr_uptake

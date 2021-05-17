@@ -1,19 +1,19 @@
-#include "rcpp_move_fishpop.h"
+#include "rcpp_move_behav.h"
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_translate_torus.h"
 
-//' rcpp_move_fishpop
+//' rcpp_move_behav
 //'
 //' @description Rcpp move fish population
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with coords of reef cells.
 //' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
-//' @param move_border Double with movement distance that surrounds reef cell border.
-//' @param move_mean Double with mean movement parameter.
+//' @param move_mean,move_var Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
+//' @param move_border Double with movement distance that surrounds reef cell border.
 //' @param move_return Double with mean movement distance when returning to reef.
 //' @param max_dist Maximum distance an individual can move.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -25,16 +25,17 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_move_fishpop
-//' @rdname rcpp_move_fishpop
+//' @aliases rcpp_move_behav
+//' @rdname rcpp_move_behav
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                       Rcpp::NumericVector pop_thres_reserves,
-                       double move_border, double move_mean, double move_reef, double move_return,
-                       double max_dist,
-                       Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
+                     Rcpp::NumericVector pop_thres_reserves,
+                     double move_mean, double move_var,
+                     double move_reef, double move_border,
+                     double move_return, double max_dist,
+                     Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
@@ -42,13 +43,13 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     // init move_dist
     double move_dist = 0.0;
 
-    // init matrix for temp coords
-    Rcpp::NumericMatrix coords_temp(1, 2);
+    // init vector for temp coords
+    Rcpp::NumericVector coords_temp(2, 0.0);
 
     // get current x,y coords
-    coords_temp(0, 0) = fishpop(i, 2);
+    coords_temp(0) = fishpop(i, 2);
 
-    coords_temp(0, 1) = fishpop(i, 3);
+    coords_temp(1) = fishpop(i, 3);
 
     // get id and distance to closest reef
     Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
@@ -74,8 +75,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
         // set behavior column
         fishpop(i, 13) = 2.0;
 
-        double theta = rcpp_get_bearing(coords_temp(0, 0),
-                                        coords_temp(0, 1),
+        double theta = rcpp_get_bearing(coords_temp(0), coords_temp(1),
                                         coords_reef(closest_reef(0), 0),
                                         coords_reef(closest_reef(0), 1));
 
@@ -104,7 +104,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
       fishpop(i, 13) = 3.0;
 
       // pull move_dist from log norm with mean_move
-      move_dist = rcpp_rlognorm(move_mean, 1.0, 0.0, max_dist);
+      move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
 
       // turn fish randomly after moving (runif always returns vector, thus (0))
       fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
@@ -114,8 +114,7 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
     // calculate new xy coords using different distance and heading based on behavior
     Rcpp::NumericVector xy_temp = NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
-      fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
-    );
+      fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0))));
 
     // make sure coords are within study area
     xy_temp = rcpp_translate_torus(xy_temp, extent);
@@ -133,14 +132,15 @@ void rcpp_move_fishpop(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_r
 }
 
 /*** R
-# calculate new coordinates and activity
-rcpp_move_fishpop(fishpop = fishpop_values,
-                  coords_reef = coords_reef,
-                  move_border = parameters$move_border,
-                  move_mean = parameters$move_mean,
-                  pop_thres_reserves = pop_thres_reserves,
-                  move_reef = parameters$move_reef,
-                  move_return = parameters$move_return,
-                  extent = as.vector(extent, mode = "numeric"),
-                  dimensions = dimensions)
+rcpp_move_behav(fishpop = fishpop_values,
+                coords_reef = coords_reef,
+                pop_thres_reserves = pop_thres_reserves,
+                move_mean = parameters$move_mean,
+                move_var = parameters$move_var,
+                move_reef = parameters$move_reef,
+                move_border = parameters$move_border,
+                move_return = parameters$move_return,
+                max_dist = max_dist,
+                extent = as.vector(extent, mode = "numeric"),
+                dimensions = dimensions)
 */

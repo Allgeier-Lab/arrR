@@ -28,8 +28,10 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   # specify all required starting values
   required_starting <- c("ag_biomass",
                          "bg_biomass",
+
                          "nutrients_pool",
                          "detritus_pool",
+
                          "pop_n",
                          "pop_mean_size",
                          "pop_var_size")
@@ -40,35 +42,43 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "ag_v_max",
                            "ag_k_m",
                            "ag_gamma",
+
                            "bg_biomass_max",
                            "bg_biomass_min",
                            "bg_v_max",
                            "bg_k_m",
                            "bg_gamma",
+
                            "seagrass_thres",
                            "seagrass_slope",
+
                            "nutrients_diffusion",
                            "nutrients_output",
+
                            "detritus_ratio",
                            "detritus_mineralization",
                            "detritus_diffusion",
+                           "detritus_fish_diffusion",
+                           "detritus_fish_ratio",
+
                            "move_mean",
                            "move_var",
                            "move_reef",
                            "move_return",
-                           "detritus_fish_diffusion",
-                           "detritus_fish_ratio",
+                           "move_visibility",
+
                            "pop_max_reserves",
                            "pop_want_reserves",
                            "pop_consumption_prop",
                            "pop_thres_reserves_min",
                            "pop_thres_reserves_max",
-                           "pop_visibility",
+
                            "pop_a",
                            "pop_b",
                            "pop_k",
                            "pop_linf",
                            "pop_n_body",
+
                            "resp_intercept",
                            "resp_slope",
                            "resp_temp_low",
