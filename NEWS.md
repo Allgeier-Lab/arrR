@@ -7,6 +7,7 @@
 * Remove `rlognorm` again...lol
 * Remove `extract_result` again
 * Adding `rcpp_shuffle`
+* Remove `reef_dist`
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

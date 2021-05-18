@@ -31,15 +31,7 @@ setup_reefs <- function(object, xy, extent) {
   object$reef[cell_ids] <- 1
 
   # convert to matrix
-  object_mat <- as.matrix(raster::as.data.frame(object$reef,
-                                                xy = TRUE), ncol = 3)
-
-  # calculate distance value
-  object$reef_dist <- rcpp_dist_reef(seafloor = object_mat, coords_reef = xy,
-                                     extent = extent, torus = TRUE)
-
-  # set distance to 0 at reef cells
-  object$reef_dist[cell_ids] <- 0
+  object_mat <- as.matrix(raster::as.data.frame(object$reef, xy = TRUE), ncol = 3)
 
   # set environmental values of AR cells to NA and 0
   raster::values(object)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)

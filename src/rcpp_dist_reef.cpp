@@ -84,5 +84,5 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = c(1, 1),
                                  starting_values = starting_values,
                                  parameters = parameters)
 
-plot(input_seafloor$reef_dist)
+plot(input_seafloor)
 */
