@@ -7,7 +7,6 @@
 simulate_growth(
   fishpop_values,
   fishpop_track,
-  pop_n,
   seafloor_values,
   parameters,
   extent,
@@ -17,8 +16,6 @@ simulate_growth(
 }
 \arguments{
 \item{fishpop_values, fishpop_track}{Matrix with fish population.}
-
-\item{pop_n}{Numeric with number of individuals.}
 
 \item{seafloor_values}{RasterBrick and matrix with seafloor values.}
 

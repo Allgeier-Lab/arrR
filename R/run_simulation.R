@@ -211,7 +211,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
       # simulate fishpop growth and including change of seafloor pools
       simulate_growth(fishpop_values = fishpop_values,
                       fishpop_track = fishpop_track[[1]],
-                      pop_n = starting_values$pop_n,
                       seafloor_values = seafloor_values,
                       parameters = parameters,
                       extent = extent, dimensions = dimensions,

@@ -1,13 +1,13 @@
 #include "rcpp_fishpop_growth.h"
 #include "rcpp_cell_from_xy.h"
 #include "rcpp_reincarnate.h"
+#include "rcpp_shuffle.h"
 
 //' rcpp_fishpop_growth
 //'
 //' @description Rcpp calc growth
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
-//' @param fish_id Vector with id of fish and corresponding cell ids.
 //' @param seafloor Matrix with seafloor values.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_want_reserves,pop_max_reserves,min_per_i Numeric with parameters.
@@ -26,19 +26,22 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector fish_id,
-                         Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor,
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+                         Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
                          double pop_n_body, double pop_want_reserves, double pop_max_reserves,
                          double pop_consumption_prop,
                          Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          double min_per_i) {
 
+  // create random order if fish id because detritus can run out
+  Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
+
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // create counter for temp fish id because randomized in simulate_fishpop_growth
-    int fish_id_temp = fish_id(i) - 1;
+    int fish_id_temp = fish_id(i);
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(NumericVector::create(fishpop(fish_id_temp, 2),
@@ -185,7 +188,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector fish_i
 }
 
 /*** R
-rcpp_fishpop_growth(fishpop = fishpop_values, fish_id = fish_id, cell_id = cell_id,
+rcpp_fishpop_growth(fishpop = fishpop_values,
                     fishpop_track = fishpop_track, seafloor = seafloor_values,
                     pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
                     pop_a = parameters$pop_a, pop_b = parameters$pop_b,

@@ -6,7 +6,6 @@
 \usage{
 rcpp_fishpop_growth(
   fishpop,
-  fish_id,
   fishpop_track,
   seafloor,
   pop_k,
@@ -24,8 +23,6 @@ rcpp_fishpop_growth(
 }
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop values and starting population.}
-
-\item{fish_id}{Vector with id of fish and corresponding cell ids.}
 
 \item{seafloor}{Matrix with seafloor values.}
 

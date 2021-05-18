@@ -1,5 +1,6 @@
-#include "rcpp_mortality_backgr.h"
+#include "rcpp_mortality.h"
 #include "rcpp_cell_from_xy.h"
+#include "rcpp_shuffle.h"
 #include "rcpp_reincarnate.h"
 
 //' rcpp_mortality_backgr
@@ -8,7 +9,6 @@
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
-//' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
 //'
 //' @details
@@ -21,16 +21,19 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
-                           Rcpp::NumericVector fish_id, Rcpp::NumericMatrix seafloor,
-                           double pop_linf, double pop_n_body, double pop_want_reserves,
-                           Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+                    Rcpp::NumericMatrix seafloor,
+                    double pop_linf, double pop_n_body, double pop_want_reserves,
+                    Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+
+  // create random order if fish id because detritus can run out
+  Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
 
   // KSM: loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // get current id of individual
-    int fish_id_temp = fish_id(i) - 1;
+    int fish_id_temp = fish_id(i);
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(NumericVector::create(fishpop(fish_id_temp, 2),
@@ -61,8 +64,9 @@ void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fish
 }
 
 /*** R
+# create new individual
 rcpp_mortality_backgr(fishpop = fishpop_values, fishpop_track = fishpop_track,
-                      fish_id = fish_id, seafloor = seafloor_values,
+                      seafloor = seafloor_values,
                       pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
                       pop_want_reserves = parameters$pop_want_reserves,
                       extent = as.vector(extent, mode = "numeric"), dimensions = dimensions)
