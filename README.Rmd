@@ -77,7 +77,7 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
                                parameters = parameters)
 ```
 
-To run a simulation, simply provide the previously created seafloor and population as well as all parameters to the `run_simulation` function. Additionally, you need to specify the number of timesteps that are simulated.
+To run a simulation, simply provide the previously created seafloor and population as well as all parameters to the `run_simulation` function. Additionally, you need to specify the number of timesteps that are simulated. Check out `?run_simulation` to see further possible specifications of the model run.
 
 ```{r run_sim, message = FALSE}
 min_per_i <- 120
