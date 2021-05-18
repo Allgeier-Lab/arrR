@@ -22,179 +22,6 @@ rcpp_add_input <- function(seafloor, nutr_input, timestep) {
     invisible(.Call(`_arrR_rcpp_add_input`, seafloor, nutr_input, timestep))
 }
 
-#' rcpp_calc_dist_reef
-#'
-#' @description Rcpp calc dist reef
-#'
-#' @param seafloor Matrix with coordinates of cells.
-#' @param coords_reef 2-column Matrix with coordinates of AR.
-#' @param extent Vector with dimension in x and y direction.
-#' @param torus If TRUE the distance will be calculated using a torus.
-#'
-#' @details
-#' Rcpp implementation to calculate distance to reef cells. Returns vector with
-#' distance for each cell to reef
-#'
-#' @return vector
-#'
-#' @aliases rcpp_calc_dist_reef
-#' @rdname rcpp_calc_dist_reef
-#'
-#' @keywords export
-rcpp_calc_dist_reef <- function(seafloor, coords_reef, extent, torus = FALSE) {
-    .Call(`_arrR_rcpp_calc_dist_reef`, seafloor, coords_reef, extent, torus)
-}
-
-#' rcpp_calc_fishpop_growth
-#'
-#' @description Rcpp calc growth
-#'
-#' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
-#' @param seafloor Matrix with seafloor values.
-#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-#' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-#'
-#' @details
-#' Rcpp mplementation to calculate growth of fish individuals.
-#'
-#' @return void
-#'
-#' @aliases rcpp_calc_fishpop_growth
-#' @rdname rcpp_calc_fishpop_growth
-#'
-#' @export
-rcpp_calc_fishpop_growth <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_fishpop_growth`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i))
-}
-
-#' rcpp_calc_mineralization
-#'
-#' @description Rcpp calculate mineralization
-#'
-#' @param seafloor Matrix with seafloor values.
-#' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
-#'
-#' @details
-#' Rcpp implementation to calculate detritus miniralization.
-#'
-#' @return void
-#'
-#' @aliases rcpp_calc_mineralization
-#' @rdname rcpp_calc_mineralization
-#'
-#' @keywords export
-rcpp_calc_mineralization <- function(seafloor, detritus_fish_ratio, detritus_mineralization) {
-    invisible(.Call(`_arrR_rcpp_calc_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
-}
-
-#' rcpp_calc_mortality
-#'
-#' @description Rcpp create rebirth
-#'
-#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
-#' @param seafloor Matrix with seafloor values.
-#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
-#'
-#' @details
-#' Rcpp implementation to create new individual after mortality event.
-#'
-#' @return void
-#'
-#' @aliases rcpp_calc_mortality
-#' @rdname rcpp_calc_mortality
-#'
-#' @export
-rcpp_calc_mortality <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves) {
-    invisible(.Call(`_arrR_rcpp_calc_mortality`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves))
-}
-
-#' rcpp_calc_respiration
-#'
-#' @description Rcpp calculate respration
-#'
-#' @param fishpop Matrix with fishpop values.
-#' @param resp_intercept,resp_slope Numeric with parameters.
-#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with parameters.
-#' @param water_temp,min_per_i, Numeric with parameters.
-#'
-#' @details
-#' Rcpp implementation to calculate respiration of fish individuals.
-#'
-#' @return void
-#'
-#' @aliases rcpp_calc_respiration
-#' @rdname rcpp_calc_respiration
-#'
-#' @export
-rcpp_calc_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_calc_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
-}
-
-#' rcpp_convert_nutr
-#'
-#' @description Rcpp convert nutrients
-#'
-#' @param x Numeric with nutrient amount.
-#' @param to String to specify in which unit to convert.
-#'
-#' @details
-#' Rcpp implementation to convert nutrients between g and umol.
-#'
-#' @return double
-#'
-#' @aliases rcpp_convert_nutr
-#' @rdname rcpp_convert_nutr
-#'
-#' @keywords export
-rcpp_convert_nutr <- function(x, to) {
-    .Call(`_arrR_rcpp_convert_nutr`, x, to)
-}
-
-#' rcpp_calc_nutr_uptake
-#'
-#' @description Rcpp calculate nutrient uptake
-#'
-#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
-#' @param v_max,k_m,time_frac Numeric with parameters
-#'
-#' @details
-#' Rcpp implementation to calculate nutrient uptake of cell
-#'
-#' @return double
-#'
-#' @aliases rcpp_calc_nutr_uptake
-#' @rdname rcpp_calc_nutr_uptake
-#'
-#' @keywords export
-rcpp_calc_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
-    .Call(`_arrR_rcpp_calc_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
-}
-
-#' rcpp_calc_seagrass_growth
-#'
-#' @description Rcpp calc seagrass growth
-#'
-#' @param seafloor Matrix with seafloor values.
-#' @param cells_reef Vector with id of reef cells.
-#' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
-#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-#' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
-#'
-#' @details
-#' Rcpp implementation to calculate seagrass growth.
-#'
-#' @return void
-#'
-#' @aliases rcpp_calc_seagrass_growth
-#' @rdname rcpp_calc_seagrass_growth
-#'
-#' @keywords export
-rcpp_calc_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac) {
-    invisible(.Call(`_arrR_rcpp_calc_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac))
-}
-
 #' rcpp_cell_from_xy
 #'
 #' @description Rcpp get cell id from xy
@@ -221,6 +48,47 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
     .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
 }
 
+#' rcpp_closest_reef
+#'
+#' @description Rcpp get distance to closest reef
+#'
+#' @param coords_temp Vector with xy coords of current individual.
+#' @param coords_reef Matrix coords of reef cells.
+#'
+#' @details
+#' Rcpp implementation to get id and distance to closet reef cell. The first element
+#' of the returning vector is the id, the second the distance in m.
+#'
+#' @return vector
+#'
+#' @aliases rcpp_closest_reef
+#' @rdname rcpp_closest_reef
+#'
+#' @keywords export
+rcpp_closest_reef <- function(coords_temp, coords_reef) {
+    .Call(`_arrR_rcpp_closest_reef`, coords_temp, coords_reef)
+}
+
+#' rcpp_convert_nutr
+#'
+#' @description Rcpp convert nutrients
+#'
+#' @param x Numeric with nutrient amount.
+#' @param to String to specify in which unit to convert.
+#'
+#' @details
+#' Rcpp implementation to convert nutrients between g and umol.
+#'
+#' @return double
+#'
+#' @aliases rcpp_convert_nutr
+#' @rdname rcpp_convert_nutr
+#'
+#' @keywords export
+rcpp_convert_nutr <- function(x, to) {
+    .Call(`_arrR_rcpp_convert_nutr`, x, to)
+}
+
 #' rcpp_diffuse_values
 #'
 #' @description Rcpp diffuse values
@@ -230,7 +98,7 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 #'
 #' @details
-#' Rcpp implementation to diffuse seafloor values between neighbouring cells.
+#' Rcpp implementation to diffuse seafloor values between (queen case) neighbouring cells.
 #'
 #' @return void
 #'
@@ -240,6 +108,94 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
+}
+
+#' rcpp_dist_reef
+#'
+#' @description Rcpp calc dist reef
+#'
+#' @param seafloor Matrix with coordinates of cells.
+#' @param coords_reef 2-column Matrix with coordinates of AR.
+#' @param extent Vector with dimension in x and y direction.
+#' @param torus If TRUE the distance will be calculated using a torus.
+#'
+#' @details
+#' Rcpp implementation to calculate distance to reef cells. Returns vector with
+#' distance for each cell to reef
+#'
+#' @return vector
+#'
+#' @aliases rcpp_dist_reef
+#' @rdname rcpp_dist_reef
+#'
+#' @keywords export
+rcpp_dist_reef <- function(seafloor, coords_reef, extent, torus) {
+    .Call(`_arrR_rcpp_dist_reef`, seafloor, coords_reef, extent, torus)
+}
+
+#' rcpp_fishpop_growth
+#'
+#' @description Rcpp calc growth
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+#' @param seafloor Matrix with seafloor values.
+#' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
+#' @param pop_n_body,pop_want_reserves,pop_max_reserves,min_per_i Numeric with parameters.
+#' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Rcpp implementation to calculate growth of fish individuals.
+#'
+#' @return void
+#'
+#' @aliases rcpp_fishpop_growth
+#' @rdname rcpp_fishpop_growth
+#'
+#' @export
+rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_want_reserves, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_want_reserves, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i))
+}
+
+#' rcpp_get_bearing
+#'
+#' @description Rcpp get bearing between two coordinates
+#'
+#' @param x_fish,y_fish Double with xy coords of fish individual.
+#' @param x_reef,y_reef Double with xy coords of closest reef.
+#'
+#' @details
+#' Rcpp implementation to get bearing between fish individual and closest reef cell.
+#'
+#' @return double
+#'
+#' @aliases rcpp_get_bearing
+#' @rdname rcpp_get_bearing
+#'
+#' @keywords export
+rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
+    .Call(`_arrR_rcpp_get_bearing`, x_fish, y_fish, x_reef, y_reef)
+}
+
+#' rcpp_mineralization
+#'
+#' @description Rcpp calculate mineralization
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
+#'
+#' @details
+#' Rcpp implementation to calculate detritus miniralization.
+#'
+#' @return void
+#'
+#' @aliases rcpp_mineralization
+#' @rdname rcpp_mineralization
+#'
+#' @keywords export
+rcpp_mineralization <- function(seafloor, detritus_fish_ratio, detritus_mineralization) {
+    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
 }
 
 #' rcpp_modify_degree
@@ -263,14 +219,66 @@ rcpp_modify_degree <- function(x, y) {
     .Call(`_arrR_rcpp_modify_degree`, x, y)
 }
 
-#' rcpp_move_fishpop
+#' rcpp_mortality_backgr
+#'
+#' @description Rcpp background mortality
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Rcpp implementation to create new individual after background mortality event.
+#'
+#' @return void
+#'
+#' @aliases rcpp_mortality_backgr
+#' @rdname rcpp_mortality_backgr
+#'
+#' @export
+rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_want_reserves, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_want_reserves, extent, dimensions))
+}
+
+#' rcpp_move_behav
 #'
 #' @description Rcpp move fish population
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param reef_dist Vector with distance to reef of each cell.
-#' @param pop_mean_move,pop_var_move Double with mean and variance movement parameter.
-#' @param pop_visibility Double with "sight" distance of fish.
+#' @param coords_reef Matrix with coords of reef cells.
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_reef Double with mean movement distance when sheltering at reef.
+#' @param move_border Double with movement distance that surrounds reef cell border.
+#' @param move_return Double with mean movement distance when returning to reef.
+#' @param max_dist Maximum distance an individual can move.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Rcpp implementation to move fish individuals depending on move distance and
+#' heading value.
+#'
+#' @return void
+#'
+#' @aliases rcpp_move_behav
+#' @rdname rcpp_move_behav
+#'
+#' @export
+rcpp_move_behav <- function(fishpop, coords_reef, pop_thres_reserves, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, coords_reef, pop_thres_reserves, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions))
+}
+
+#' rcpp_move_rand
+#'
+#' @description Rcpp move fish population
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param coords_reef Matrix with coords of reef cells.
+#' @param move_mean,move_var Double with mean and variance movement parameter.
+#' @param move_visibility Double with "sight" distance of fish.
 #' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -282,12 +290,55 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @return void
 #'
-#' @aliases rcpp_move_fishpop
-#' @rdname rcpp_move_fishpop
+#' @aliases rcpp_move_rand
+#' @rdname rcpp_move_rand
 #'
 #' @export
-rcpp_move_fishpop <- function(fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_fishpop`, fishpop, reef_dist, pop_mean_move, pop_var_move, pop_visibility, max_dist, reef_attraction, extent, dimensions))
+rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions))
+}
+
+#' rcpp_nutr_uptake
+#'
+#' @description Rcpp calculate nutrient uptake
+#'
+#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+#' @param v_max,k_m,time_frac Numeric with parameters
+#'
+#' @details
+#' Rcpp implementation to calculate nutrient uptake of cell
+#'
+#' @return double
+#'
+#' @aliases rcpp_nutr_uptake
+#' @rdname rcpp_nutr_uptake
+#'
+#' @keywords export
+rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
+    .Call(`_arrR_rcpp_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
+}
+
+#' rcpp_reincarnate
+#'
+#' @description Rcpp reincarnate
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param reason String with reason of reincarnation.
+#'
+#' @details
+#' Rcpp implementation to create new individual after mortality event.
+#'
+#' @return void
+#'
+#' @aliases rcpp_reincarnate
+#' @rdname rcpp_reincarnate
+#'
+#' @export
+rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason))
 }
 
 #' rcpp_remove_output
@@ -308,6 +359,28 @@ rcpp_move_fishpop <- function(fishpop, reef_dist, pop_mean_move, pop_var_move, p
 #' @export
 rcpp_remove_output <- function(seafloor, nutrients_output) {
     invisible(.Call(`_arrR_rcpp_remove_output`, seafloor, nutrients_output))
+}
+
+#' rcpp_respiration
+#'
+#' @description Rcpp calculate respration
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param resp_intercept,resp_slope Numeric with parameters.
+#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with parameters.
+#' @param water_temp,min_per_i, Numeric with parameters.
+#'
+#' @details
+#' Rcpp implementation to calculate respiration of fish individuals.
+#'
+#' @return void
+#'
+#' @aliases rcpp_respiration
+#' @rdname rcpp_respiration
+#'
+#' @export
+rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
 }
 
 #' rcpp_rlognorm
@@ -335,6 +408,33 @@ rcpp_remove_output <- function(seafloor, nutrients_output) {
 #' @keywords export
 rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
+}
+
+#' rcpp_seagrass_growth
+#'
+#' @description Rcpp calc seagrass growth
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param cells_reef Vector with id of reef cells.
+#' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
+#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
+#' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
+#'
+#' @details
+#' Rcpp implementation to calculate seagrass growth.
+#'
+#' @return void
+#'
+#' @aliases rcpp_seagrass_growth
+#' @rdname rcpp_seagrass_growth
+#'
+#' @keywords export
+rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac) {
+    invisible(.Call(`_arrR_rcpp_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac))
+}
+
+rcpp_shuffle <- function(min, max) {
+    .Call(`_arrR_rcpp_shuffle`, min, max)
 }
 
 #' rcpp_translate_torus

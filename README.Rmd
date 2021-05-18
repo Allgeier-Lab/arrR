@@ -83,13 +83,20 @@ To run a simulation, simply provide the previously created seafloor and populati
 min_per_i <- 120
 
 # run the model for three years
-max_i <- (60 * 24 * 365 * 1) / min_per_i
+years <- 1
+
+max_i <- (60 * 24 * 365 * years) / min_per_i
+
+# save results only every 15 days
+days <- 5
+
+save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 
                          fishpop = input_fishpop,
                          parameters = parameters, 
-                         reef_attraction = TRUE,
-                         max_i = max_i, min_per_i = min_per_i)
+                         max_i = max_i, min_per_i = min_per_i, 
+                         save_each = save_each)
 
 result
 ```

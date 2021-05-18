@@ -26,18 +26,23 @@ default_parameters <- list(
   detritus_diffusion = 0.3,
   detritus_fish_diffusion = 0.3,
 
-  pop_max_reserves = 0.05,
-  pop_want_reserves = 0.01,
+  move_border = 2.0,
+  move_mean = 20.0,
+  move_var = 5.0,
+  move_reef = 0.5,
+  move_return = 100.0,
+  move_visibility = 1.0,
 
-  pop_visibility = 1,
-  pop_mean_move = 8,
-  pop_var_move = 5,
+  pop_max_reserves = 0.8,
+  pop_want_reserves = 0.8,
+  pop_thres_reserves_min = 0.50,
+  pop_thres_reserves_max = 0.50,
+  pop_consumption_prop = 0.005,
 
   pop_a = 0.0121,
   pop_b = 3.161,
   pop_k = 0.2,
   pop_linf = 41.6,
-
   pop_n_body = 0.02999,
 
   resp_intercept = 0.0108,

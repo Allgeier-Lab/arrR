@@ -1,7 +1,6 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_dist_reef.h"
 
-//' rcpp_calc_dist_reef
+//' rcpp_dist_reef
 //'
 //' @description Rcpp calc dist reef
 //'
@@ -16,16 +15,15 @@ using namespace Rcpp;
 //'
 //' @return vector
 //'
-//' @aliases rcpp_calc_dist_reef
-//' @rdname rcpp_calc_dist_reef
+//' @aliases rcpp_dist_reef
+//' @rdname rcpp_dist_reef
 //'
 //' @keywords export
 // [[Rcpp::export]]
-Rcpp::NumericVector rcpp_calc_dist_reef(Rcpp::NumericMatrix seafloor,
-                                        Rcpp::NumericMatrix coords_reef,
-                                        Rcpp::NumericVector extent,
-                                        bool torus = false) {
-
+Rcpp::NumericVector rcpp_dist_reef(Rcpp::NumericMatrix seafloor,
+                                   Rcpp::NumericMatrix coords_reef,
+                                   Rcpp::NumericVector extent,
+                                   bool torus) {
 
   // get dimension of seafloor and reef cells
   int n_cells = seafloor.nrow();
@@ -86,5 +84,5 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = c(1, 1),
                                  starting_values = starting_values,
                                  parameters = parameters)
 
-plot(input_seafloor$reef_dist)
+plot(input_seafloor)
 */

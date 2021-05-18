@@ -1,7 +1,6 @@
-#include <Rcpp.h>
-using namespace Rcpp;
+#include "rcpp_mineralization.h"
 
-//' rcpp_calc_mineralization
+//' rcpp_mineralization
 //'
 //' @description Rcpp calculate mineralization
 //'
@@ -13,14 +12,13 @@ using namespace Rcpp;
 //'
 //' @return void
 //'
-//' @aliases rcpp_calc_mineralization
-//' @rdname rcpp_calc_mineralization
+//' @aliases rcpp_mineralization
+//' @rdname rcpp_mineralization
 //'
 //' @keywords export
 // [[Rcpp::export]]
-void rcpp_calc_mineralization(Rcpp::NumericMatrix seafloor,
-                              double detritus_fish_ratio,
-                              double detritus_mineralization) {
+void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
+                              double detritus_fish_ratio, double detritus_mineralization) {
 
   // loop through all seafloor values
   for (int i = 0; i < seafloor.nrow(); i++) {

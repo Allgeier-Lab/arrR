@@ -24,8 +24,7 @@
 //' @keywords export
 // [[Rcpp::export]]
 int rcpp_cell_from_xy(Rcpp::NumericVector coords,
-                      Rcpp::NumericVector dimensions,
-                      Rcpp::NumericVector extent) {
+                      Rcpp::NumericVector dimensions, Rcpp::NumericVector extent) {
 
   // coords outside extent; return NA
   if (coords(0) < extent(0) || coords(0) > extent(1) ||
@@ -85,5 +84,4 @@ raster::cellFromXY(object = raster::raster(nrows = 100, ncols = 100,
                                            xmn = -50, xmx = 50,
                                            ymn = -50, ymx = 50),
                    xy = cbind(x = x, y = y))
-
 */
