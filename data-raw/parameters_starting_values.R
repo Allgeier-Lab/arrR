@@ -15,7 +15,7 @@ default_parameters <- list(
   bg_gamma = 0.0082,
 
   seagrass_thres = 1/2,
-  seagrass_slope = 2,
+  seagrass_slope = 2.0,
 
   nutrients_diffusion = 0.6,
   nutrients_output = 0.0,
@@ -27,17 +27,17 @@ default_parameters <- list(
   detritus_fish_diffusion = 0.3,
 
   move_border = 2.0,
-  move_mean = 20.0,
+  move_mean = 10.0,
   move_var = 5.0,
   move_reef = 0.5,
-  move_return = 100.0,
+  move_return = 50.0,
   move_visibility = 1.0,
 
   pop_max_reserves = 0.8,
   pop_want_reserves = 0.8,
-  pop_thres_reserves_min = 0.50,
-  pop_thres_reserves_max = 0.50,
-  pop_consumption_prop = 0.005,
+  pop_thres_reserves_min = 0.5,
+  pop_thres_reserves_max = 0.5,
+  pop_consumption_prop = 1.0,
 
   pop_a = 0.0121,
   pop_b = 3.161,
@@ -67,8 +67,8 @@ default_starting_values <- list(
   detritus_pool = 0.75,
 
   pop_n = 8,
-  pop_mean_size = 9,
-  pop_var_size = 10
+  pop_mean_size = 9.0,
+  pop_var_size = 10.0
 )
 
 usethis::use_data(default_parameters, default_starting_values, overwrite = TRUE)
