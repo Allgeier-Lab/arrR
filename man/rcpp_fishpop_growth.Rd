@@ -35,8 +35,6 @@ rcpp_fishpop_growth(
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
-
-\item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
 void

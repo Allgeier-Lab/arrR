@@ -7,11 +7,9 @@
 rcpp_get_bearing(x_fish, y_fish, x_reef, y_reef)
 }
 \arguments{
-\item{x_fish}{Double with xy coords of fish individual.}
+\item{x_fish, y_fish}{Double with xy coords of fish individual.}
 
-\item{y_fish}{Double with xy coords of closest reef.}
-
-\item{x_reef}{Double with xy coords of closest reef.}
+\item{x_reef, y_reef}{Double with xy coords of closest reef.}
 }
 \value{
 double

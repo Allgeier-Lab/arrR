@@ -22,6 +22,10 @@ rcpp_mortality(
 \item{seafloor}{Matrix with seafloor values.}
 
 \item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
+
+\item{dimensions}{Vector with dimensions (nrow, ncol).}
 }
 \value{
 void

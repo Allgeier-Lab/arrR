@@ -14,7 +14,6 @@
 //' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param min_per_i Integer to specify minutes per i.
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.

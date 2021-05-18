@@ -144,7 +144,6 @@ rcpp_dist_reef <- function(seafloor, coords_reef, extent, torus) {
 #' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
 #' Rcpp implementation to calculate growth of fish individuals.
@@ -163,10 +162,8 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #'
 #' @description Rcpp get bearing between two coordinates
 #'
-#' @param x_fish Double with xy coords of fish individual.
-#' @param y_fish Double with xy coords of fish individual.
-#' @param x_reef Double with xy coords of closest reef.
-#' @param y_fish Double with xy coords of closest reef.
+#' @param x_fish,y_fish Double with xy coords of fish individual.
+#' @param x_reef,y_reef Double with xy coords of closest reef.
 #'
 #' @details
 #' Rcpp implementation to get bearing between fish individual and closest reef cell.
@@ -229,6 +226,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
 #' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
 #'
 #' @details
 #' Rcpp implementation to create new individual after background mortality event.

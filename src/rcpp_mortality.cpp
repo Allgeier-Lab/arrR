@@ -10,6 +10,8 @@
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
 //' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
 //' Rcpp implementation to create new individual after background mortality event.

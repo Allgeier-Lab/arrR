@@ -16,7 +16,6 @@ run_simulation(
   burn_in = 0,
   return_burnin = TRUE,
   nutr_input = NULL,
-  reef_attraction,
   verbose = TRUE
 )
 }

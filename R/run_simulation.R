@@ -32,7 +32,7 @@
 run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           nutr_input = NULL, reef_attraction, verbose = TRUE) {
+                           nutr_input = NULL, verbose = TRUE) {
 
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
@@ -299,7 +299,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # combine result to list
-  result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
+  result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
                  starting_values = starting_values, parameters = parameters,
                  nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
