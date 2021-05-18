@@ -67,12 +67,12 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
       }
 
       // left distance is smaller than straight and right
-      if ((distance(0) < distance(1)) & (distance(0) < distance(2))) {
+      if ((distance(0) < distance(1)) && (distance(0) < distance(2))) {
 
         fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
 
         // right distance is smaller than straight and left
-      } else if ((distance(2) < distance(1)) & (distance(2) < distance(0))) {
+      } else if ((distance(2) < distance(1)) && (distance(2) < distance(0))) {
 
         fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
 

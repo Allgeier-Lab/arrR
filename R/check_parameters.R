@@ -86,7 +86,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "resp_temp_max")
 
   # just print list with required parameters
-  if (is.null(starting_values) & is.null(parameters)) {
+  if (is.null(starting_values) && is.null(parameters)) {
 
     if (verbose) {
 
@@ -239,7 +239,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # check if some parameters make sense
-  if (!is.null(starting_values) & !is.null(parameters)) {
+  if (!is.null(starting_values) && !is.null(parameters)) {
 
     if (verbose) {
 
@@ -334,13 +334,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose & final_flag) {
+  if (verbose && final_flag) {
 
     message("\n> All checking done!")
 
   }
 
-  else if (verbose & !final_flag) {
+  else if (verbose && !final_flag) {
 
     message("\n> Make sure to check critical warnings!")
 
