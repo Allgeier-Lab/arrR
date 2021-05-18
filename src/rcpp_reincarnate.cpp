@@ -97,7 +97,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   } else {
 
-  stop("'reason must be 'consumption' or 'background'");
+    throw std::range_error("'reason must be 'consumption' or 'background'");
 
   }
 }

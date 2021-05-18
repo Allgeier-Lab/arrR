@@ -6,36 +6,40 @@
 \usage{
 rcpp_fishpop_growth(
   fishpop,
+  fish_id,
   fishpop_track,
   seafloor,
-  fish_id,
-  cell_id,
-  pop_thres_reserves,
   pop_k,
   pop_linf,
   pop_a,
   pop_b,
   pop_n_body,
-  pop_max_reserves,
   pop_want_reserves,
+  pop_max_reserves,
   pop_consumption_prop,
+  extent,
+  dimensions,
   min_per_i
 )
 }
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop values and starting population.}
 
+\item{fish_id}{Vector with id of fish and corresponding cell ids.}
+
 \item{seafloor}{Matrix with seafloor values.}
-
-\item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
-
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
-\item{pop_n_body, pop_max_reserves, pop_want_reserves, min_per_i}{Numeric with parameters.}
+\item{pop_n_body, pop_want_reserves, pop_max_reserves, min_per_i}{Numeric with parameters.}
 
 \item{pop_consumption_prop}{Double with consumption limit to fill reserves each timestep.}
+
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
+
+\item{dimensions}{Vector with dimensions (nrow, ncol).}
+
+\item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
 void

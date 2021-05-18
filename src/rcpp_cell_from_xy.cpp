@@ -84,5 +84,4 @@ raster::cellFromXY(object = raster::raster(nrows = 100, ncols = 100,
                                            xmn = -50, xmx = 50,
                                            ymn = -50, ymx = 50),
                    xy = cbind(x = x, y = y))
-
 */

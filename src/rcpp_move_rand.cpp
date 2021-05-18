@@ -2,7 +2,6 @@
 #include "rcpp_closest_reef.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_translate_torus.h"
-#include "rcpp_cell_from_xy.h"
 #include "rcpp_modify_degree.h"
 
 //' rcpp_move_rand

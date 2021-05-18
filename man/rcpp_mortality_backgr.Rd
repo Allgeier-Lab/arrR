@@ -7,20 +7,21 @@
 rcpp_mortality_backgr(
   fishpop,
   fishpop_track,
-  seafloor,
   fish_id,
-  cell_id,
+  seafloor,
   pop_linf,
   pop_n_body,
-  pop_want_reserves
+  pop_want_reserves,
+  extent,
+  dimensions
 )
 }
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop and starting fishpop values.}
 
-\item{seafloor}{Matrix with seafloor values.}
-
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
+
+\item{seafloor}{Matrix with seafloor values.}
 
 \item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
 }

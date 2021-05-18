@@ -29,7 +29,7 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
+run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            nutr_input = NULL, reef_attraction, verbose = TRUE) {
@@ -135,8 +135,7 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
   cells_reef <- which(seafloor_values[, 16] == 1)
 
   # get coordinates of reef cells
-  coords_reef <- raster::xyFromCell(object = seafloor$reef,
-                                    cell = cells_reef)
+  coords_reef <- seafloor_values[cells_reef, c(1,2)]
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
@@ -176,8 +175,7 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
     # simulate nutrient input
     if (!is.null(nutr_input)) {
 
-      simulate_input(seafloor_values = seafloor_values,
-                     nutr_input = nutr_input,
+      simulate_input(seafloor_values = seafloor_values, nutr_input = nutr_input,
                      timestep = i)
 
     }
@@ -187,8 +185,7 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
       # simulate seagrass growth
       simulate_seagrass(seafloor_values = seafloor_values,
-                        parameters = parameters,
-                        cells_reef = cells_reef,
+                        parameters = parameters, cells_reef = cells_reef,
                         time_frac = (min_per_i / 60) * seagrass_each)
 
       # redistribute detritus
@@ -201,49 +198,41 @@ run_simulation <- function(seafloor, fishpop, movement = "random", parameters,
 
       # simulate fish movement
       simulate_movement(fishpop_values = fishpop_values,
-                        movement = movement,
-                        parameters = parameters,
+                        movement = movement, parameters = parameters,
                         pop_thres_reserves = pop_thres_reserves,
-                        max_dist = max_dist,
-                        coords_reef = coords_reef,
-                        extent = extent,
-                        dimensions = dimensions)
+                        max_dist = max_dist, coords_reef = coords_reef,
+                        extent = extent, dimensions = dimensions)
 
       # simulate fish respiration (26°C is mean water temperature in the Bahamas)
       simulate_respiration(fishpop_values = fishpop_values,
-                           parameters = parameters,
-                           water_temp = 26,
+                           parameters = parameters, water_temp = 26,
                            min_per_i = min_per_i)
 
       # simulate fishpop growth and including change of seafloor pools
-      simulate_fishpop_growth(fishpop_values = fishpop_values,
-                              fishpop_track = fishpop_track[[1]],
-                              pop_n = starting_values$pop_n,
-                              seafloor = seafloor$reef,
-                              seafloor_values = seafloor_values,
-                              parameters = parameters,
-                              min_per_i = min_per_i,
-                              pop_thres_reserves = pop_thres_reserves)
+      simulate_growth(fishpop_values = fishpop_values,
+                      fishpop_track = fishpop_track[[1]],
+                      pop_n = starting_values$pop_n,
+                      seafloor_values = seafloor_values,
+                      parameters = parameters,
+                      extent = extent, dimensions = dimensions,
+                      min_per_i = min_per_i)
 
       # simulate mortality
       simulate_mortality(fishpop_values = fishpop_values,
                          fishpop_track = fishpop_track[[1]],
                          pop_n = starting_values$pop_n,
-                         seafloor = seafloor$reef,
                          seafloor_values = seafloor_values,
                          parameters = parameters,
-                         min_per_i = min_per_i)
+                         extent = extent, dimensions = dimensions)
 
     }
 
     # diffuse values between neighbors
     simulate_diffusion(seafloor_values = seafloor_values,
-                       cell_adj = cell_adj,
-                       parameters = parameters)
+                       cell_adj = cell_adj, parameters = parameters)
 
     # remove nutrients from cells
-    simulate_output(seafloor_values = seafloor_values,
-                    parameters = parameters)
+    simulate_output(seafloor_values = seafloor_values, parameters = parameters)
 
     # update tracking list
     if (i %% save_each == 0) {

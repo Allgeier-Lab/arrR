@@ -6,11 +6,10 @@
 \usage{
 simulate_movement(
   fishpop_values,
-  seafloor_values,
   movement = "rand",
   parameters,
-  max_dist,
   pop_thres_reserves,
+  max_dist,
   coords_reef,
   extent,
   dimensions
@@ -23,9 +22,9 @@ simulate_movement(
 
 \item{parameters}{List with all model parameters.}
 
-\item{max_dist}{Maximum distance an individual can move..}
-
 \item{pop_thres_reserves}{Vector with proportion of max_reserves to drain prior to movement.}
+
+\item{max_dist}{Maximum distance an individual can move..}
 
 \item{coords_reef}{Matrix with coords of reef cells.}
 

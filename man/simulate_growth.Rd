@@ -8,9 +8,10 @@ simulate_growth(
   fishpop_values,
   fishpop_track,
   pop_n,
-  seafloor,
   seafloor_values,
   parameters,
+  extent,
+  dimensions,
   min_per_i
 )
 }
@@ -19,9 +20,11 @@ simulate_growth(
 
 \item{pop_n}{Numeric with number of individuals.}
 
-\item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
+\item{seafloor_values}{RasterBrick and matrix with seafloor values.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 }

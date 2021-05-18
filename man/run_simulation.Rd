@@ -7,7 +7,7 @@
 run_simulation(
   seafloor,
   fishpop,
-  movement = "random",
+  movement = "rand",
   parameters,
   max_i,
   min_per_i,

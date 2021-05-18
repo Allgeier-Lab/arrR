@@ -7,24 +7,23 @@
 simulate_mortality(
   fishpop_values,
   fishpop_track,
-  seafloor,
-  seafloor_values,
   pop_n,
+  seafloor_values,
   parameters,
-  min_per_i
+  extent,
+  dimensions
 )
 }
 \arguments{
-\item{fishpop_values, fishpop_track}{Data frame population created
-with \code{\link{setup_fishpop}}.}
-
-\item{seafloor, seafloor_values}{RasterBrick and matrix with seafloor values.}
+\item{fishpop_values, fishpop_track}{Matrix with fish population.}
 
 \item{pop_n}{Numeric with number of individuals.}
 
+\item{seafloor_values}{RasterBrick and matrix with seafloor values.}
+
 \item{parameters}{List with all model parameters.}
 
-\item{min_per_i}{Integer to specify minutes per i.}
+\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 }
 \value{
 list

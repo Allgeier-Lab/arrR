@@ -83,26 +83,26 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_fishpop_growth
-void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, Rcpp::NumericVector pop_thres_reserves, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_max_reserves, double pop_want_reserves, double pop_consumption_prop, double min_per_i);
-RcppExport SEXP _arrR_rcpp_fishpop_growth(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_thres_reservesSEXP, SEXP pop_kSEXP, SEXP pop_linfSEXP, SEXP pop_aSEXP, SEXP pop_bSEXP, SEXP pop_n_bodySEXP, SEXP pop_max_reservesSEXP, SEXP pop_want_reservesSEXP, SEXP pop_consumption_propSEXP, SEXP min_per_iSEXP) {
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector fish_id, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_want_reserves, double pop_max_reserves, double pop_consumption_prop, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double min_per_i);
+RcppExport SEXP _arrR_rcpp_fishpop_growth(SEXP fishpopSEXP, SEXP fish_idSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP pop_kSEXP, SEXP pop_linfSEXP, SEXP pop_aSEXP, SEXP pop_bSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP, SEXP pop_max_reservesSEXP, SEXP pop_consumption_propSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP min_per_iSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type fish_id(fish_idSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_track(fishpop_trackSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type fish_id(fish_idSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type cell_id(cell_idSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_thres_reserves(pop_thres_reservesSEXP);
     Rcpp::traits::input_parameter< double >::type pop_k(pop_kSEXP);
     Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
     Rcpp::traits::input_parameter< double >::type pop_a(pop_aSEXP);
     Rcpp::traits::input_parameter< double >::type pop_b(pop_bSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
-    Rcpp::traits::input_parameter< double >::type pop_max_reserves(pop_max_reservesSEXP);
     Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_max_reserves(pop_max_reservesSEXP);
     Rcpp::traits::input_parameter< double >::type pop_consumption_prop(pop_consumption_propSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
     Rcpp::traits::input_parameter< double >::type min_per_i(min_per_iSEXP);
-    rcpp_fishpop_growth(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_thres_reserves, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_want_reserves, pop_consumption_prop, min_per_i);
+    rcpp_fishpop_growth(fishpop, fish_id, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_want_reserves, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i);
     return R_NilValue;
 END_RCPP
 }
@@ -145,19 +145,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_mortality_backgr
-void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id, double pop_linf, double pop_n_body, double pop_want_reserves);
-RcppExport SEXP _arrR_rcpp_mortality_backgr(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP) {
+void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericVector fish_id, Rcpp::NumericMatrix seafloor, double pop_linf, double pop_n_body, double pop_want_reserves, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+RcppExport SEXP _arrR_rcpp_mortality_backgr(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP fish_idSEXP, SEXP seafloorSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_track(fishpop_trackSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type fish_id(fish_idSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type cell_id(cell_idSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
-    rcpp_mortality_backgr(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
+    rcpp_mortality_backgr(fishpop, fishpop_track, fish_id, seafloor, pop_linf, pop_n_body, pop_want_reserves, extent, dimensions);
     return R_NilValue;
 END_RCPP
 }
@@ -340,7 +341,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
     {"_arrR_rcpp_mineralization", (DL_FUNC) &_arrR_rcpp_mineralization, 3},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
-    {"_arrR_rcpp_mortality_backgr", (DL_FUNC) &_arrR_rcpp_mortality_backgr, 8},
+    {"_arrR_rcpp_mortality_backgr", (DL_FUNC) &_arrR_rcpp_mortality_backgr, 9},
     {"_arrR_rcpp_mortality_cons", (DL_FUNC) &_arrR_rcpp_mortality_cons, 8},
     {"_arrR_rcpp_move_behav", (DL_FUNC) &_arrR_rcpp_move_behav, 11},
     {"_arrR_rcpp_move_rand", (DL_FUNC) &_arrR_rcpp_move_rand, 9},

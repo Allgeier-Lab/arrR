@@ -1,4 +1,5 @@
 #include "rcpp_mortality_backgr.h"
+#include "rcpp_cell_from_xy.h"
 #include "rcpp_reincarnate.h"
 
 //' rcpp_mortality_backgr
@@ -20,27 +21,23 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop,
-                           Rcpp::NumericMatrix fishpop_track,
-                           Rcpp::NumericMatrix seafloor,
-                           Rcpp::NumericVector fish_id,
-                           Rcpp::NumericVector cell_id,
-                           double pop_linf,
-                           double pop_n_body,
-                           double pop_want_reserves) {
+void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+                           Rcpp::NumericVector fish_id, Rcpp::NumericMatrix seafloor,
+                           double pop_linf, double pop_n_body, double pop_want_reserves,
+                           Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // KSM: loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
-    // create counter for fish track id
-    // KSM: sets up a temporary order of fish ID
+    // get current id of individual
     int fish_id_temp = fish_id(i) - 1;
 
-    // create counter for temp cell id
-    int cell_id_temp = cell_id(i) - 1;
+    // get cell id of current individual
+    int cell_id_temp = rcpp_cell_from_xy(NumericVector::create(fishpop(fish_id_temp, 2),
+                                                               fishpop(fish_id_temp, 3)),
+                                                               dimensions, extent) - 1;
 
     // create death probability
-    // KSM: death probability = log(length - max length of pop)
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against
@@ -64,12 +61,9 @@ void rcpp_mortality_backgr(Rcpp::NumericMatrix fishpop,
 }
 
 /*** R
-rcpp_mortality_backgr(fishpop = fishpop_values,
-                      fishpop_track = fishpop_track,
-                      seafloor = seafloor_values,
-                      fish_id = fish_id,
-                      cell_id = cell_id,
-                      pop_linf = parameters$pop_linf,
-                      pop_n_body = parameters$pop_n_body,
-                      pop_want_reserves = parameters$pop_want_reserves)
+rcpp_mortality_backgr(fishpop = fishpop_values, fishpop_track = fishpop_track,
+                      fish_id = fish_id, seafloor = seafloor_values,
+                      pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
+                      pop_want_reserves = parameters$pop_want_reserves,
+                      extent = as.vector(extent, mode = "numeric"), dimensions = dimensions)
 */

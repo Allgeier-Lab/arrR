@@ -1,4 +1,5 @@
 #include "rcpp_fishpop_growth.h"
+#include "rcpp_cell_from_xy.h"
 #include "rcpp_reincarnate.h"
 
 //' rcpp_fishpop_growth
@@ -6,12 +7,14 @@
 //' @description Rcpp calc growth
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+//' @param fish_id Vector with id of fish and corresponding cell ids.
 //' @param seafloor Matrix with seafloor values.
-//' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-//' @param pop_n_body,pop_max_reserves,pop_want_reserves,min_per_i Numeric with parameters.
-//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param pop_n_body,pop_want_reserves,pop_max_reserves,min_per_i Numeric with parameters.
 //' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
+//' @param min_per_i Integer to specify minutes per i.
 //'
 //' @details
 //' Rcpp implementation to calculate growth of fish individuals.
@@ -23,14 +26,12 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
-                         Rcpp::NumericMatrix seafloor,
-                         Rcpp::NumericVector fish_id, Rcpp::NumericVector cell_id,
-                         Rcpp::NumericVector pop_thres_reserves,
-                         double pop_k, double pop_linf,
-                         double pop_a, double pop_b,
-                         double pop_n_body, double pop_max_reserves, double pop_want_reserves,
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector fish_id,
+                         Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor,
+                         double pop_k, double pop_linf, double pop_a, double pop_b,
+                         double pop_n_body, double pop_want_reserves, double pop_max_reserves,
                          double pop_consumption_prop,
+                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          double min_per_i) {
 
   // loop through all fish ids
@@ -39,8 +40,10 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // create counter for temp fish id because randomized in simulate_fishpop_growth
     int fish_id_temp = fish_id(i) - 1;
 
-    // create counter for temp cell id
-    int cell_id_temp = cell_id(i) - 1;
+    // get cell id of current individual
+    int cell_id_temp = rcpp_cell_from_xy(NumericVector::create(fishpop(fish_id_temp, 2),
+                                                               fishpop(fish_id_temp, 3)),
+                                                               dimensions, extent) - 1;
 
     // calculate growth in length and weight
     double growth_length = pop_k *
@@ -60,9 +63,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // check mortality behavior 3 (foraging, reserves + detritus available)
     if (fishpop(fish_id_temp, 13) == 3.0) {
 
-      // calculate amount of available resources
-      // KSM: available resources = resources (detritus pool) per cell + fish reserves (per cell)
-
+      // calculate amount of available resources (detritus + reserves)
       double available_resources = seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7);
 
       // individual dies because consumption requirements cannot be met
@@ -126,13 +127,10 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // reserves are needed to meet consumption requirement
         } else {
 
-          // reduced reserves
-          // KSM: because there was not enough detritus in cell, reserves are reduced
-          // KSM: after consuming detritus that was available
+          // reduced reserves because there was not enough detritus in cell,
           fishpop(fish_id_temp, 7) -= (consumption_req - seafloor(cell_id_temp, 5));
 
           // track consumption
-          // KSM: all of that detritus pool is added to consumption in each cell
           seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
 
           // set detritus pool to zero
@@ -156,7 +154,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // individual grows because consumption requirements can be met
       } else {
 
-        //  increase age (60 min * 24 h = 1440 min/day)
+        // increase age (60 min * 24 h = 1440 min/day)
         fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
 
         // increase fish dimensions length
@@ -169,7 +167,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
 
         // fish uses reserves to meet consumption requirements
-        // KSM: reduce reserves to meet consumption_req
         fishpop(fish_id_temp, 7) -= consumption_req;
 
       }
@@ -185,22 +182,15 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     seafloor(cell_id_temp, 4) += excretion_temp;
 
   }
-
 }
 
 /*** R
-rcpp_fishpop_growth(fishpop = fishpop_values,
-                    fishpop_track = fishpop_track,
-                    seafloor = seafloor_values,
-                    fish_id = fish_id, cell_id = cell_id,
-                    pop_k = parameters$pop_k,
-                    pop_linf = parameters$pop_linf,
-                    pop_a = parameters$pop_a,
-                    pop_b = parameters$pop_b,
+rcpp_fishpop_growth(fishpop = fishpop_values, fish_id = fish_id, cell_id = cell_id,
+                    fishpop_track = fishpop_track, seafloor = seafloor_values,
+                    pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
+                    pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                     pop_n_body = parameters$pop_n_body,
-                    pop_max_reserves = parameters$pop_max_reserves,
                     pop_want_reserves = parameters$pop_want_reserves,
-                    pop_thres_reserves = pop_thres_reserves,
-                    min_per_i = min_per_i,
-                    behavior = behavior)
+                    pop_max_reserves = parameters$pop_max_reserves,
+                    min_per_i = min_per_i
 */
