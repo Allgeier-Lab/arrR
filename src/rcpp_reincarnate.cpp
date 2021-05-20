@@ -37,20 +37,17 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   int died_background = fishpop(fish_id, 12);
 
   // calculate increase in fish mass including reserves
-  // KSM: puts nutrients from dead fish into detrital pool
-  // KSM: mass_difference = weight - weight specific nutrient content + fish reserves
+  // mass_difference = weight - weight specific nutrient content + fish reserves
   double mass_diff = (fishpop(fish_id, 6) -
                       fishpop_track(fish_id, 6)) * pop_n_body + fishpop(fish_id, 7);
 
   // add to dead detritus pool
   seafloor(cell_id, 6) += mass_diff;
 
-  // create new individual
-  // KSM: access all columns of fish_id DF
+  // create new individual, access all columns of fish_id matrix
   fishpop(fish_id, _) = fishpop_track(fish_id, _);
 
-  // keep old coordinates
-  // KSM: put new fish back in place of dead fish
+  // put new fish back in place of dead fish
   fishpop(fish_id, 2) = x_coord;
 
   fishpop(fish_id, 3) = y_coord;
@@ -61,23 +58,19 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   // detritus pool is smaller than wanted reserves, detritus pool is fully used
   if (reserves_wanted >= seafloor(cell_id, 5)) {
 
-    // use pool completely
-    // KSM: fish fully consumes detritus pool in cell
+    // fish fully consumes detritus pool in cell
     fishpop(fish_id, 7) = seafloor(cell_id, 5);
 
     // set pool to zero
-    // KSM: cell goes to 0
     seafloor(cell_id, 5) = 0;
 
-    // detritus pool is larger than what is wanted, so only subset is used
-    // KSM: otherwise, if detritus pool is large enough, only a subset is used by fish
+  // detritus pool is larger than what is wanted, so only subset is used
   } else {
 
     // wanted reserves can be filled completely
     fishpop(fish_id, 7) = reserves_wanted;
 
     // reduced detritus pool by wanted reserves
-    // KSM: remove consumed detritus from cell to match reserve needs
     seafloor(cell_id, 5) -= reserves_wanted;
 
   }

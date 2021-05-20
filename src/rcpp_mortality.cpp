@@ -31,7 +31,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
   // create random order if fish id because detritus can run out
   Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
 
-  // KSM: loop through all fish ids
+  // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
     // get current id of individual

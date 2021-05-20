@@ -64,7 +64,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
         //Behavior column = 1
         fishpop(i, 13) = 1.0;
 
-        // KSM: move_dist is now from a log-normal distribution within Xm of reef to move
+        // move_dist is now from a log-normal distribution within Xm of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
 
       // behaviour 2: fish return towards reef

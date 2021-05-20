@@ -52,13 +52,12 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       (1.0 / 365.0) * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i *
       (pop_linf - fishpop(fish_id_temp, 5));
 
-    // KSM: length intial + change in length^b
+    // length intial + change in length^b
     double growth_weight = pop_a *
       (std::pow((fishpop(fish_id_temp, 5) + growth_length), pop_b) -
       (std::pow(fishpop(fish_id_temp, 5), pop_b)));
 
-    // calculate consumption requirements
-    // KSM: consumption req based on growth in weight + metabolic costs based on weight + n required
+    // consumption req based on growth in weight + metabolic costs based on weight + n required
     double consumption_req = ((growth_weight + fishpop(fish_id_temp, 10) *
                               fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
