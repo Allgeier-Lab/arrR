@@ -322,6 +322,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_update_coords
+void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i, double move_dist, double max_dist, Rcpp::NumericVector extent);
+RcppExport SEXP _arrR_rcpp_update_coords(SEXP fishpopSEXP, SEXP iSEXP, SEXP move_distSEXP, SEXP max_distSEXP, SEXP extentSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< double >::type move_dist(move_distSEXP);
+    Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    rcpp_update_coords(fishpop, i, move_dist, max_dist, extent);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_add_input", (DL_FUNC) &_arrR_rcpp_add_input, 3},
@@ -345,6 +359,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 16},
     {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
+    {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
     {NULL, NULL, 0}
 };
 

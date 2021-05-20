@@ -3,6 +3,7 @@
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_translate_torus.h"
+#include "rcpp_update_coords.h"
 
 //' rcpp_move_behav
 //'
@@ -43,19 +44,19 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     // init move_dist
     double move_dist = 0.0;
 
-    // init vector for temp coords
-    Rcpp::NumericVector coords_temp(2, 0.0);
-
-    // get current x,y coords
-    coords_temp(0) = fishpop(i, 2);
-
-    coords_temp(1) = fishpop(i, 3);
-
-    // get id and distance to closest reef
-    Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
-
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
+
+      // init vector for temp coords
+      Rcpp::NumericVector coords_temp(2, 0.0);
+
+      // get current x,y coords
+      coords_temp(0) = fishpop(i, 2);
+
+      coords_temp(1) = fishpop(i, 3);
+
+      // get id and distance to closest reef
+      Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
 
       // behaviour 1: fish already at reef so they stay there
       if (closest_reef(1) <= move_border) {
@@ -65,9 +66,6 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
 
         // KSM: move_dist is now from a log-normal distribution within Xm of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
-
-        // turn fish randomly (runif always returns vector, thus (0))
-        fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
 
       // behaviour 2: fish return towards reef
       } else {
@@ -106,27 +104,10 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
 
-      // turn fish randomly after moving (runif always returns vector, thus (0))
-      fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)(0);
-
     }
 
-    // calculate new xy coords using different distance and heading based on behavior
-    Rcpp::NumericVector xy_temp = NumericVector::create(
-      fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
-      fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0))));
-
-    // make sure coords are within study area
-    xy_temp = rcpp_translate_torus(xy_temp, extent);
-
-    // update x coord
-    fishpop(i, 2) = xy_temp(0);
-
-    // update y coord
-    fishpop(i, 3) = xy_temp(1);
-
-    // update activity
-    fishpop(i, 9) = (1 / max_dist) * move_dist + 1;
+    // update fish coordinates and activtity
+    rcpp_update_coords(fishpop, i, move_dist, max_dist, extent);
 
   }
 }

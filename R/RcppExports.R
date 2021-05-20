@@ -457,3 +457,24 @@ rcpp_translate_torus <- function(coords, extent) {
     .Call(`_arrR_rcpp_translate_torus`, coords, extent)
 }
 
+#' rcpp_update_coords
+#'
+#' @description Rcpp move fish population
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param i Integer with row id.
+#' @param move_dist,max_dist Numeric with (maximum) movement distance.
+#'
+#' @details
+#' Update xy coordinates and activity of fish individuals depending move_dist.
+#'
+#' @return void
+#'
+#' @aliases rcpp_update_coords
+#' @rdname rcpp_update_coords
+#'
+#' @export
+rcpp_update_coords <- function(fishpop, i, move_dist, max_dist, extent) {
+    invisible(.Call(`_arrR_rcpp_update_coords`, fishpop, i, move_dist, max_dist, extent))
+}
+
