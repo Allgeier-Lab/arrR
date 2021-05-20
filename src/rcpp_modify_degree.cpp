@@ -16,7 +16,7 @@
 //' @aliases rcpp_modify_degree
 //' @rdname rcpp_modify_degree
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 double rcpp_modify_degree(double x, double y) {
 

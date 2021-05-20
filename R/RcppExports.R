@@ -43,7 +43,7 @@ rcpp_add_input <- function(seafloor, nutr_input, timestep) {
 #' @aliases rcpp_cell_from_xy
 #' @rdname rcpp_cell_from_xy
 #'
-#' @keywords export
+#' @export
 rcpp_cell_from_xy <- function(coords, dimensions, extent) {
     .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
 }
@@ -64,7 +64,7 @@ rcpp_cell_from_xy <- function(coords, dimensions, extent) {
 #' @aliases rcpp_closest_reef
 #' @rdname rcpp_closest_reef
 #'
-#' @keywords export
+#' @export
 rcpp_closest_reef <- function(coords_temp, coords_reef) {
     .Call(`_arrR_rcpp_closest_reef`, coords_temp, coords_reef)
 }
@@ -84,7 +84,7 @@ rcpp_closest_reef <- function(coords_temp, coords_reef) {
 #' @aliases rcpp_convert_nutr
 #' @rdname rcpp_convert_nutr
 #'
-#' @keywords export
+#' @export
 rcpp_convert_nutr <- function(x, to) {
     .Call(`_arrR_rcpp_convert_nutr`, x, to)
 }
@@ -108,29 +108,6 @@ rcpp_convert_nutr <- function(x, to) {
 #' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
-}
-
-#' rcpp_dist_reef
-#'
-#' @description Rcpp calc dist reef
-#'
-#' @param seafloor Matrix with coordinates of cells.
-#' @param coords_reef 2-column Matrix with coordinates of AR.
-#' @param extent Vector with dimension in x and y direction.
-#' @param torus If TRUE the distance will be calculated using a torus.
-#'
-#' @details
-#' Rcpp implementation to calculate distance to reef cells. Returns vector with
-#' distance for each cell to reef
-#'
-#' @return vector
-#'
-#' @aliases rcpp_dist_reef
-#' @rdname rcpp_dist_reef
-#'
-#' @keywords export
-rcpp_dist_reef <- function(seafloor, coords_reef, extent, torus) {
-    .Call(`_arrR_rcpp_dist_reef`, seafloor, coords_reef, extent, torus)
 }
 
 #' rcpp_fishpop_growth
@@ -173,7 +150,7 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' @aliases rcpp_get_bearing
 #' @rdname rcpp_get_bearing
 #'
-#' @keywords export
+#' @export
 rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
     .Call(`_arrR_rcpp_get_bearing`, x_fish, y_fish, x_reef, y_reef)
 }
@@ -193,7 +170,7 @@ rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
 #' @aliases rcpp_mineralization
 #' @rdname rcpp_mineralization
 #'
-#' @keywords export
+#' @export
 rcpp_mineralization <- function(seafloor, detritus_fish_ratio, detritus_mineralization) {
     invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
 }
@@ -214,7 +191,7 @@ rcpp_mineralization <- function(seafloor, detritus_fish_ratio, detritus_minerali
 #' @aliases rcpp_modify_degree
 #' @rdname rcpp_modify_degree
 #'
-#' @keywords export
+#' @export
 rcpp_modify_degree <- function(x, y) {
     .Call(`_arrR_rcpp_modify_degree`, x, y)
 }
@@ -313,7 +290,7 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @aliases rcpp_nutr_uptake
 #' @rdname rcpp_nutr_uptake
 #'
-#' @keywords export
+#' @export
 rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
     .Call(`_arrR_rcpp_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
 }
@@ -405,7 +382,7 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @aliases rcpp_rlognorm
 #' @rdname rcpp_rlognorm
 #'
-#' @keywords export
+#' @export
 rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
@@ -428,11 +405,26 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @aliases rcpp_seagrass_growth
 #' @rdname rcpp_seagrass_growth
 #'
-#' @keywords export
+#' @export
 rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac) {
     invisible(.Call(`_arrR_rcpp_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac))
 }
 
+#' rcpp_shuffle
+#'
+#' @description Create random id vector
+#'
+#' @param min,max Integer with minum and maximum value of vector.
+#'
+#' @details
+#' Rcpp implementation to get vector with random ids.
+#'
+#' @return vector
+#'
+#' @aliases rcpp_shuffle
+#' @rdname rcpp_shuffle
+#'
+#' @export
 rcpp_shuffle <- function(min, max) {
     .Call(`_arrR_rcpp_shuffle`, min, max)
 }
@@ -452,7 +444,7 @@ rcpp_shuffle <- function(min, max) {
 #' @aliases rcpp_translate_torus
 #' @rdname rcpp_translate_torus
 #'
-#' @keywords export
+#' @export
 rcpp_translate_torus <- function(coords, extent) {
     .Call(`_arrR_rcpp_translate_torus`, coords, extent)
 }

@@ -15,7 +15,7 @@
 //' @aliases rcpp_get_bearing
 //' @rdname rcpp_get_bearing
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 double rcpp_get_bearing(double x_fish, double y_fish,
                         double x_reef, double y_reef) {

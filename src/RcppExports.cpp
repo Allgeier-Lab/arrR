@@ -68,20 +68,6 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// rcpp_dist_reef
-Rcpp::NumericVector rcpp_dist_reef(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, bool torus);
-RcppExport SEXP _arrR_rcpp_dist_reef(SEXP seafloorSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP torusSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
-    Rcpp::traits::input_parameter< bool >::type torus(torusSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_dist_reef(seafloor, coords_reef, extent, torus));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_fishpop_growth
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_want_reserves, double pop_max_reserves, double pop_consumption_prop, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double min_per_i);
 RcppExport SEXP _arrR_rcpp_fishpop_growth(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP pop_kSEXP, SEXP pop_linfSEXP, SEXP pop_aSEXP, SEXP pop_bSEXP, SEXP pop_n_bodySEXP, SEXP pop_want_reservesSEXP, SEXP pop_max_reservesSEXP, SEXP pop_consumption_propSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP min_per_iSEXP) {
@@ -343,7 +329,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
-    {"_arrR_rcpp_dist_reef", (DL_FUNC) &_arrR_rcpp_dist_reef, 4},
     {"_arrR_rcpp_fishpop_growth", (DL_FUNC) &_arrR_rcpp_fishpop_growth, 14},
     {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
     {"_arrR_rcpp_mineralization", (DL_FUNC) &_arrR_rcpp_mineralization, 3},

@@ -21,7 +21,7 @@
 //' @aliases rcpp_cell_from_xy
 //' @rdname rcpp_cell_from_xy
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 int rcpp_cell_from_xy(Rcpp::NumericVector coords,
                       Rcpp::NumericVector dimensions, Rcpp::NumericVector extent) {

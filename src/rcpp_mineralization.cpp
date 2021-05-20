@@ -15,7 +15,7 @@
 //' @aliases rcpp_mineralization
 //' @rdname rcpp_mineralization
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
                               double detritus_fish_ratio, double detritus_mineralization) {

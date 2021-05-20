@@ -15,7 +15,7 @@
 //' @aliases rcpp_convert_nutr
 //' @rdname rcpp_convert_nutr
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 double rcpp_convert_nutr(double x, String to) {
 

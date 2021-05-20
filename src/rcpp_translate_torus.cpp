@@ -15,7 +15,7 @@
 //' @aliases rcpp_translate_torus
 //' @rdname rcpp_translate_torus
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
                                          Rcpp::NumericVector extent) {

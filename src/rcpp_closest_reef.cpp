@@ -16,7 +16,7 @@
 //' @aliases rcpp_closest_reef
 //' @rdname rcpp_closest_reef
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericVector coords_temp,
                                       Rcpp::NumericMatrix coords_reef) {
