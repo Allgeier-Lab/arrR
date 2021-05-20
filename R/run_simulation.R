@@ -93,12 +93,18 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                           died_consumption = numeric(), died_background = numeric(),
                           behavior = numeric())
 
-  # get 95% of movement distances
+  # get 95% of maximum movement distances
   } else {
 
+    mean_temp <- ifelse(test = movement == "behav",
+                        yes = parameters$move_return, no = parameters$move_mean)
+
+    var_temp <- ifelse(test = movement == "behav",
+                       yes = 1.0, no = parameters$move_var)
+
     max_dist <- vapply(X = 1:1000000, FUN = function(i) {
-      rcpp_rlognorm(mean = parameters$move_mean,
-                    sd = sqrt(parameters$move_var),
+      rcpp_rlognorm(mean = mean_temp,
+                    sd = sqrt(var_temp),
                     min = 0, max = Inf)}, FUN.VALUE = numeric(1))
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
