@@ -20,4 +20,3 @@ Rcpp calculate nutrient uptake
 \details{
 Rcpp implementation to calculate nutrient uptake of cell
 }
-\keyword{export}

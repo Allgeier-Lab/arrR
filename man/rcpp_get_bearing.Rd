@@ -20,4 +20,3 @@ Rcpp get bearing between two coordinates
 \details{
 Rcpp implementation to get bearing between fish individual and closest reef cell.
 }
-\keyword{export}

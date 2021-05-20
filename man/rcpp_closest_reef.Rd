@@ -21,4 +21,3 @@ Rcpp get distance to closest reef
 Rcpp implementation to get id and distance to closet reef cell. The first element
 of the returning vector is the id, the second the distance in m.
 }
-\keyword{export}

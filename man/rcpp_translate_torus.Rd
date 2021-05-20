@@ -20,4 +20,3 @@ Rcpp translate torus
 \details{
 Rcpp implementation to translate coordinates if they exceed extent.
 }
-\keyword{export}

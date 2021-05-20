@@ -20,4 +20,3 @@ Rcpp calculate mineralization
 \details{
 Rcpp implementation to calculate detritus miniralization.
 }
-\keyword{export}

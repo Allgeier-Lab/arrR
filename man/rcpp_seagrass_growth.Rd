@@ -43,4 +43,3 @@ Rcpp calc seagrass growth
 \details{
 Rcpp implementation to calculate seagrass growth.
 }
-\keyword{export}

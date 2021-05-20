@@ -27,4 +27,3 @@ pair at a time.
 Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
 and Modeling. R package version 3.4-5. https://CRAN.R-project.org/package=raster
 }
-\keyword{export}

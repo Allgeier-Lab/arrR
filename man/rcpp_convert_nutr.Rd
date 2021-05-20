@@ -20,4 +20,3 @@ Rcpp convert nutrients
 \details{
 Rcpp implementation to convert nutrients between g and umol.
 }
-\keyword{export}
