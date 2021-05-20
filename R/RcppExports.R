@@ -464,6 +464,7 @@ rcpp_translate_torus <- function(coords, extent) {
 #' @param fishpop Matrix with fishpop values.
 #' @param i Integer with row id.
 #' @param move_dist,max_dist Numeric with (maximum) movement distance.
+#' @param extent Vector with extent of study area.
 #'
 #' @details
 #' Update xy coordinates and activity of fish individuals depending move_dist.

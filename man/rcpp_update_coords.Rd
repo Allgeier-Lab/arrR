@@ -12,6 +12,8 @@ rcpp_update_coords(fishpop, i, move_dist, max_dist, extent)
 \item{i}{Integer with row id.}
 
 \item{move_dist, max_dist}{Numeric with (maximum) movement distance.}
+
+\item{extent}{Vector with extent of study area.}
 }
 \value{
 void

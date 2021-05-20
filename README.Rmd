@@ -36,7 +36,7 @@ You can install *arrR* from [GitHub](https://github.com/Allgeier-Lab/arrR) with 
 
 ```{r install, eval = FALSE}
 remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
-                        auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
+                        auth_token = "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")
 ```
 
 <!-- Add CRAN link if applicable -->
