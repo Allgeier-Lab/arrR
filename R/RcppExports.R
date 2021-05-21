@@ -77,7 +77,7 @@ rcpp_closest_reef <- function(coords_temp, coords_reef) {
 #' @param to String to specify in which unit to convert.
 #'
 #' @details
-#' Rcpp implementation to convert nutrients between g and umol.
+#' Rcpp implementation to convert nutrients between g and umol (ammonium; NH4)
 #'
 #' @return double
 #'
