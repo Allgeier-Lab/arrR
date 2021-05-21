@@ -16,27 +16,21 @@
 #' @export
 plot_allocation <- function(parameters) {
 
-  # new "minimum" of sigmoid function
-  bg_biomass_min_temp <- parameters$bg_biomass_min +
-    (parameters$bg_biomass_max - parameters$bg_biomass_min) * parameters$seagrass_thres
-
   # create vector with bg values
-  x <- seq(from = bg_biomass_min_temp, to = parameters$bg_biomass_max, by = 0.1)
+  bg_biomass <- seq(from = parameters$bg_biomass_min,
+                    to = parameters$bg_biomass_max, by = 0.1)
 
-  # scale to 0 - 1
-  x_scl <- (x - bg_biomass_min_temp) / (parameters$bg_biomass_max - bg_biomass_min_temp)
+  # calc ratios
+  ratio <- vapply(bg_biomass, function(x)
+    rcpp_allocation_ratio(x, biomass_min = parameters$bg_biomass_min,
+                          biomass_max = parameters$bg_biomass_max,
+                          threshold = parameters$seagrass_thres,
+                          slope = parameters$seagrass_slope),
+    FUN.VALUE = numeric(1))
 
-  # calculate midpoint
-  midpoint <- -log(2) / log(parameters$seagrass_thres)
-
-  # calculate allocation ratio
-  y <- 1 / (1 + (x_scl ^ midpoint / (1 - x_scl ^ midpoint)) ^ -parameters$seagrass_slope)
-
-  # adding original minimum to x
-  x <- c(parameters$bg_biomass_min, x)
-
-  # adding ratio below threshold
-  y <- c(0, y)
+  # calc threshold
+  threshold_temp <-  parameters$bg_biomass_min +
+    (parameters$bg_biomass_max - parameters$bg_biomass_min) * parameters$seagrass_thres;
 
   # set x axis breaks
   breaks <- seq(from = parameters$bg_biomass_min, to = parameters$bg_biomass_max,
@@ -44,9 +38,9 @@ plot_allocation <- function(parameters) {
 
   # create plot
   gg <- ggplot2::ggplot() +
-    ggplot2::geom_line(ggplot2::aes(x = x, y = y,  col = "Aboveground")) +
-    ggplot2::geom_line(ggplot2::aes(x = x, y = 1 - y, col = "Belowground")) +
-    ggplot2::geom_vline(xintercept = bg_biomass_min_temp, linetype = 2, col = "grey85") +
+    ggplot2::geom_line(ggplot2::aes(x = bg_biomass, y = 1 - ratio,  col = "Aboveground")) +
+    ggplot2::geom_line(ggplot2::aes(x = bg_biomass, y = ratio, col = "Belowground")) +
+    ggplot2::geom_vline(xintercept = threshold_temp, linetype = 2, col = "grey85") +
     ggplot2::labs(x = "Belowground biomass (min to max)", y = "Ratio of nutrient uptake allocation",
                   subtitle = paste0("Threshold: ", round(parameters$seagrass_thres, 2),
                                     "; Slope: ", round(parameters$seagrass_slope, 2))) +
