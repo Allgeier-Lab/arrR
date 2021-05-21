@@ -17,6 +17,21 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_allocation_ratio
+double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max, double threshold, double slope);
+RcppExport SEXP _arrR_rcpp_allocation_ratio(SEXP biomassSEXP, SEXP biomass_minSEXP, SEXP biomass_maxSEXP, SEXP thresholdSEXP, SEXP slopeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type biomass(biomassSEXP);
+    Rcpp::traits::input_parameter< double >::type biomass_min(biomass_minSEXP);
+    Rcpp::traits::input_parameter< double >::type biomass_max(biomass_maxSEXP);
+    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
+    Rcpp::traits::input_parameter< double >::type slope(slopeSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_allocation_ratio(biomass, biomass_min, biomass_max, threshold, slope));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_cell_from_xy
 int rcpp_cell_from_xy(Rcpp::NumericVector coords, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
 RcppExport SEXP _arrR_rcpp_cell_from_xy(SEXP coordsSEXP, SEXP dimensionsSEXP, SEXP extentSEXP) {
@@ -325,6 +340,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_add_input", (DL_FUNC) &_arrR_rcpp_add_input, 3},
+    {"_arrR_rcpp_allocation_ratio", (DL_FUNC) &_arrR_rcpp_allocation_ratio, 5},
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
     {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},

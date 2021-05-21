@@ -16,12 +16,15 @@
 #' @export
 plot_allocation <- function(parameters) {
 
-  # create vector with bg valuues
-  x <- seq(from = parameters$bg_biomass_min, to = parameters$bg_biomass_max, by = 0.1)
+  # new "minimum" of sigmoid function
+  bg_biomass_min_temp <- parameters$bg_biomass_min +
+    (parameters$bg_biomass_max - parameters$bg_biomass_min) * parameters$seagrass_thres
+
+  # create vector with bg values
+  x <- seq(from = bg_biomass_min_temp, to = parameters$bg_biomass_max, by = 0.1)
 
   # scale to 0 - 1
-  x_scl <- (x - parameters$bg_biomass_min) /
-    (parameters$bg_biomass_max - parameters$bg_biomass_min)
+  x_scl <- (x - bg_biomass_min_temp) / (parameters$bg_biomass_max - bg_biomass_min_temp)
 
   # calculate midpoint
   midpoint <- -log(2) / log(parameters$seagrass_thres)
@@ -29,13 +32,13 @@ plot_allocation <- function(parameters) {
   # calculate allocation ratio
   y <- 1 / (1 + (x_scl ^ midpoint / (1 - x_scl ^ midpoint)) ^ -parameters$seagrass_slope)
 
-  # set y to 0 below threshold
-  y[x_scl <= parameters$seagrass_thres] <- 0
+  # adding original minimum to x
+  x <- c(parameters$bg_biomass_min, x)
 
-  x_intercept <- parameters$bg_biomass_min +
-    ((parameters$bg_biomass_max - parameters$bg_biomass_min) * parameters$seagrass_thres)
+  # adding ratio below threshold
+  y <- c(0, y)
 
-  # set x-axis breaks
+  # set x axis breaks
   breaks <- seq(from = parameters$bg_biomass_min, to = parameters$bg_biomass_max,
                 length.out = 5)
 
@@ -43,7 +46,7 @@ plot_allocation <- function(parameters) {
   gg <- ggplot2::ggplot() +
     ggplot2::geom_line(ggplot2::aes(x = x, y = y,  col = "Aboveground")) +
     ggplot2::geom_line(ggplot2::aes(x = x, y = 1 - y, col = "Belowground")) +
-    ggplot2::geom_vline(xintercept = x_intercept, linetype = 2, col = "grey85") +
+    ggplot2::geom_vline(xintercept = bg_biomass_min_temp, linetype = 2, col = "grey85") +
     ggplot2::labs(x = "Belowground biomass (min to max)", y = "Ratio of nutrient uptake allocation",
                   subtitle = paste0("Threshold: ", round(parameters$seagrass_thres, 2),
                                     "; Slope: ", round(parameters$seagrass_slope, 2))) +
@@ -53,5 +56,5 @@ plot_allocation <- function(parameters) {
     ggplot2::theme_classic() +
     ggplot2::theme(legend.position = "bottom")
 
-    return(gg)
+  return(gg)
 }

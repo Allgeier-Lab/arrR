@@ -22,6 +22,27 @@ rcpp_add_input <- function(seafloor, nutr_input, timestep) {
     invisible(.Call(`_arrR_rcpp_add_input`, seafloor, nutr_input, timestep))
 }
 
+#' rcpp_allocation_ratio
+#'
+#' @description Rcpp allocation ratio
+#'
+#' @param biomass Numeric with biomass.
+#' @param biomass_min,biomass_max Numeric with minum and maximum of biomass.
+#' @param threshold,slope Numeric with function parameters.
+#'
+#' @details
+#' Rcpp implementation of the allocation ratio
+#'
+#' @return void
+#'
+#' @aliases rcpp_allocation_ratio
+#' @rdname rcpp_allocation_ratio
+#'
+#' @export
+rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, slope) {
+    .Call(`_arrR_rcpp_allocation_ratio`, biomass, biomass_min, biomass_max, threshold, slope)
+}
+
 #' rcpp_cell_from_xy
 #'
 #' @description Rcpp get cell id from xy
