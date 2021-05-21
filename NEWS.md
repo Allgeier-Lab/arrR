@@ -9,6 +9,7 @@
 * Adding `rcpp_shuffle`
 * Remove `reef_dist`
 * Adding `rcpp_update_coords`
+* Adding `rcpp_allocation_ratio` and smoother sigmoid function
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

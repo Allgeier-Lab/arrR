@@ -98,24 +98,32 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
       // seagrass growth //
 
-      double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
-                                              bg_biomass_min, bg_biomass_max,
-                                              seagrass_thres, seagrass_slope);
-
       // uptake not big enough to keep bg stable
       if (total_uptake <= (bg_detritus * bg_gamma)) {
 
-        // add ag detritus to biomass
+        // calculate bg growth
+        double bg_growth = total_uptake / bg_gamma;
+
+        // add bg detritus to biomass
+        seafloor(i, 3) += bg_growth;
+
+        // track bg biomass production
+        seafloor(i, 8) += bg_growth;
+
+      // uptake big enough to keep bg stable
+      } else {
+
+        // add bg detritus to biomass
         seafloor(i, 3) += bg_detritus;
 
-        // track ag biomass production
+        // track bg biomass production
         seafloor(i, 8) += bg_detritus;
 
-      // below threshold, i.e. 100% goes to bg
-      } else if (bg_ratio == 1.0) {
+        // remove bg detritus from uptake
+        total_uptake -= bg_detritus * bg_gamma;
 
         // uptake large enough to keep ag stable
-        if (total_uptake > (ag_detritus * ag_gamma)) {
+        if (total_uptake >= (ag_detritus * ag_gamma)) {
 
           // add ag detritus to biomass
           seafloor(i, 2) += ag_detritus;
@@ -128,26 +136,10 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
         }
 
-        // calculate bg growth
-        double bg_growth = total_uptake / bg_gamma;
-
-        // add bg growth to biomass
-        seafloor(i, 3) += bg_growth;
-
-        // track bg biomass production
-        seafloor(i, 8) += bg_growth;
-
-      // above threshold
-      } else if (bg_ratio < 1.0) {
-
-        // add bg detritus to biomass
-        seafloor(i, 3) += bg_detritus;
-
-        // track bg biomass production
-        seafloor(i, 8) += bg_detritus;
-
-        // update uptake
-        total_uptake -= bg_detritus * bg_gamma;
+        // calculate potential allocation ratio
+        double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
+                                                bg_biomass_min, bg_biomass_max,
+                                                seagrass_thres, seagrass_slope);
 
         // calculate bg growth
         double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
