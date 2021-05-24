@@ -122,8 +122,20 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         // remove bg detritus from uptake
         total_uptake -= bg_detritus * bg_gamma;
 
-        // uptake large enough to keep ag stable
-        if (total_uptake >= (ag_detritus * ag_gamma)) {
+        // remaining uptake cannot keep ag stable, all uptake to ag
+        if (total_uptake <= (ag_detritus * ag_gamma)) {
+
+          // calculate bg growth
+          double ag_growth = total_uptake / ag_gamma;
+
+          // add bg detritus to biomass
+          seafloor(i, 2) += ag_growth;
+
+          // track bg biomass production
+          seafloor(i, 7) += ag_growth;
+
+        // keep ag stable and use remaining nutrients according to sigmoid
+        } else {
 
           // add ag detritus to biomass
           seafloor(i, 2) += ag_detritus;
@@ -134,31 +146,32 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
           // update uptake
           total_uptake -= ag_detritus * ag_gamma;
 
+          // additional growth
+
+          // calculate potential allocation ratio
+          double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
+                                                  bg_biomass_min, bg_biomass_max,
+                                                  seagrass_thres, seagrass_slope);
+
+          // calculate bg growth
+          double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
+
+          // add bg growth to biomass
+          seafloor(i, 3) += bg_growth;
+
+          // track bg biomass production
+          seafloor(i, 8) += bg_growth;
+
+          // calculate ag growth
+          double ag_growth = (total_uptake * (1 - bg_ratio)) / ag_gamma;
+
+          // add ag growth to biomass
+          seafloor(i, 2) += ag_growth;
+
+          // track ag biomass production
+          seafloor(i, 7) += ag_growth;
+
         }
-
-        // calculate potential allocation ratio
-        double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
-                                                bg_biomass_min, bg_biomass_max,
-                                                seagrass_thres, seagrass_slope);
-
-        // calculate bg growth
-        double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
-
-        // add bg growth to biomass
-        seafloor(i, 3) += bg_growth;
-
-        // track bg biomass production
-        seafloor(i, 8) += bg_growth;
-
-        // calculate ag growth
-        double ag_growth = (total_uptake * (1 - bg_ratio)) / ag_gamma;
-
-        // add ag growth to biomass
-        seafloor(i, 2) += ag_growth;
-
-        // track ag biomass production
-        seafloor(i, 7) += ag_growth;
-
       }
 
       // check if biomass is within min/max values //
