@@ -43,11 +43,11 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
       // calculate detritus //
 
       // calculate ag detritus modifier
-      double ag_modf = (ag_biomass_max - seafloor(i, 2)) /
+      double ag_modf = (seafloor(i, 2) - ag_biomass_min) /
         (ag_biomass_max - ag_biomass_min);
 
       // calculate detritus fraction from ag biomass
-      double ag_detritus = seafloor(i, 2) * (detritus_ratio * (1 - ag_modf));
+      double ag_detritus = seafloor(i, 2) * (detritus_ratio * ag_modf);
 
       // remove detritus from ag biomass
       seafloor(i, 2) -= ag_detritus;
@@ -56,11 +56,11 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
       seafloor(i, 9) += ag_detritus;
 
       // calculate bg detritus modifier
-      double bg_modf = (bg_biomass_max - seafloor(i, 3)) /
+      double bg_modf = (seafloor(i, 3) - bg_biomass_min) /
         (bg_biomass_max - bg_biomass_min);
 
       // calculate detritus fraction from bg biomass
-      double bg_detritus = seafloor(i, 3) * (detritus_ratio * (1 - bg_modf));
+      double bg_detritus = seafloor(i, 3) * (detritus_ratio * bg_modf);
 
       // remove detritus from bg biomass
       seafloor(i, 3) -= bg_detritus;
