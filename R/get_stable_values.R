@@ -39,8 +39,8 @@ get_stable_values <- function(starting_values, parameters) {
   nutrients_pool <- (bg_detritus * parameters$bg_gamma) +
     (ag_detritus * parameters$ag_gamma)
 
-  # calculate detriuts amount for stable nutrients
-  detritus_pool <- nutrients_pool / parameters$detritus_ratio
+  # calculate detritus  amount for stable nutrients
+  detritus_pool <- nutrients_pool / parameters$detritus_mineralization
 
   # combine to result list
   result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool)
