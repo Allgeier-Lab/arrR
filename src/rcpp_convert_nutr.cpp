@@ -26,14 +26,14 @@ double rcpp_convert_nutr(double x, String to) {
 
     return(result);
 
-    // convert to umol by multiplying factor
+  // convert to umol by multiplying factor
   } else if (to == "umol") {
 
     double result = x * std::pow(10, 6) / 18.039;
 
     return(result);
 
-    // throw error if to option is not present
+  // throw error if to option is not present
   } else {
 
     throw std::range_error("Please select either to='g' or to='umol'.");

@@ -43,3 +43,23 @@ double rcpp_nutr_uptake(double nutrients, double biomass,
   return(uptake_g);
 
 }
+
+/*** R
+
+nutrients <- 0.003  # g nutrients
+biomass <- 100 # g dry biomass
+v_max <- parameters$ag_v_max
+k_m <- parameters$ag_k_m
+
+(nutrients_umol <- rcpp_convert_nutr(nutrients, "umol"))
+
+(v_amb <- v_max * nutrients_umol / (k_m + nutrients_umol))
+
+(uptake_umol <- v_amb * biomass * 2)
+
+uptake_umol / 1000
+
+(uptake_g <- rcpp_convert_nutr(uptake_umol, "g"))
+
+uptake_g > nutrients
+*/
