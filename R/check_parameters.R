@@ -205,9 +205,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$pop_max_reserves,
                             parameters$pop_want_reserves) > 1,
 
-                          c(parameters$seagrass_thres,
-
-                            parameters$nutrients_diffusion,
+                          c(parameters$nutrients_diffusion,
                             parameters$nutrients_output,
 
                             parameters$detritus_ratio,
