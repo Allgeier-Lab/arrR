@@ -34,5 +34,5 @@ void
 Rcpp reincarnate
 }
 \details{
-Rcpp implementation to create new individual after mortality event.
+Create new individual after mortality event.
 }

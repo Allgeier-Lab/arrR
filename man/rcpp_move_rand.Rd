@@ -37,9 +37,12 @@ rcpp_move_rand(
 void
 }
 \description{
-Rcpp move fish population
+Rcpp move random
 }
 \details{
-Rcpp implementation to move fish individuals depending on move distance and
-heading value.
+Rcpp implementation to move fish individuals randomly or attracted depending
+on move distance and heading value.
+}
+\references{
+Add reference
 }

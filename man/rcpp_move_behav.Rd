@@ -43,9 +43,11 @@ rcpp_move_behav(
 void
 }
 \description{
-Rcpp move fish population
+Rcpp move behaviour
 }
 \details{
-Rcpp implementation to move fish individuals depending on move distance and
-heading value.
+Move fish individuals depending on their current stae.
+}
+\references{
+Add reference
 }

@@ -26,5 +26,6 @@ void
 Rcpp diffuse values
 }
 \details{
-Rcpp implementation to diffuse seafloor values between (queen case) neighbouring cells.
+A certain share of each cell value, specified by the diffusion parameters, is
+diffused to its 8 neighboring cells.
 }

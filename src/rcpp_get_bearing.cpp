@@ -2,13 +2,13 @@
 
 //' rcpp_get_bearing
 //'
-//' @description Rcpp get bearing between two coordinates
+//' @description Rcpp get bearing
 //'
 //' @param x_fish,y_fish Double with xy coords of fish individual.
 //' @param x_reef,y_reef Double with xy coords of closest reef.
 //'
 //' @details
-//' Rcpp implementation to get bearing between fish individual and closest reef cell.
+//' Get bearing between fish individual and closest reef cell.
 //'
 //' @return double
 //'

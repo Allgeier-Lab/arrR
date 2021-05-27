@@ -40,8 +40,12 @@ rcpp_fishpop_growth(
 void
 }
 \description{
-Rcpp calc growth
+Rcpp fishpop growth
 }
 \details{
-Rcpp implementation to calculate growth of fish individuals.
+Function to simulate consumption, possible mortality, growth and excretion of fish
+population.
+}
+\references{
+Add reference
 }

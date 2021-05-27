@@ -15,8 +15,8 @@ rcpp_get_bearing(x_fish, y_fish, x_reef, y_reef)
 double
 }
 \description{
-Rcpp get bearing between two coordinates
+Rcpp get bearing
 }
 \details{
-Rcpp implementation to get bearing between fish individual and closest reef cell.
+Get bearing between fish individual and closest reef cell.
 }

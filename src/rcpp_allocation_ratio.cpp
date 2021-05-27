@@ -13,6 +13,9 @@
 //' the ratio is 1 if biomass is below the threshold. If threshold is negative, the
 //' ratio will be 0.5 at the threshold.
 //'
+//' @references
+//' Add reference
+//'
 //' @return void
 //'
 //' @aliases rcpp_allocation_ratio

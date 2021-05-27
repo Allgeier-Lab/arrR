@@ -19,7 +19,7 @@ rcpp_update_coords(fishpop, i, move_dist, max_dist, extent)
 void
 }
 \description{
-Rcpp move fish population
+Rcpp update coords
 }
 \details{
 Update xy coordinates and activity of fish individuals depending move_dist.

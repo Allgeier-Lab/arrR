@@ -17,10 +17,10 @@ rcpp_rlognorm(mean, sd, min, max)
 double
 }
 \description{
-Create random number from log distribution
+Rcpp rlognorm
 }
 \details{
-Get random number from log-norm distribution. Function uses log-transformed
+Draws random number from log-norm distribution. Function uses log-transformed
 values and a normal distribution internally.
 }
 \references{

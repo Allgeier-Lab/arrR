@@ -13,8 +13,8 @@ rcpp_shuffle(min, max)
 vector
 }
 \description{
-Create random id vector
+Rcpp shuffle
 }
 \details{
-Rcpp implementation to get vector with random ids.
+Get vector with random sequence from min to max.
 }

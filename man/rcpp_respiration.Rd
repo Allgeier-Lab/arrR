@@ -18,18 +18,24 @@ rcpp_respiration(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{resp_intercept, resp_slope}{Numeric with parameters.}
+\item{resp_intercept, resp_slope}{Numeric with regression parameters.}
 
-\item{resp_temp_low, resp_temp_max, resp_temp_optm}{Numeric with parameters.}
+\item{resp_temp_low, resp_temp_max, resp_temp_optm}{Numeric with water temperature parameters.}
 
-\item{water_temp, min_per_i, }{Numeric with parameters.}
+\item{water_temp, min_per_i}{Numeric with various parameters.}
 }
 \value{
 void
 }
 \description{
-Rcpp calculate respration
+Rcpp respration
 }
 \details{
-Rcpp implementation to calculate respiration of fish individuals.
+Function to simulate respiration of fish population individuals based on movement,
+body size and water temperature.
+}
+\references{
+Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+Centre for Limnology, Madison,USA.
 }

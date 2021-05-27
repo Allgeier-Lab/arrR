@@ -3,7 +3,7 @@
 \name{rcpp_mortality}
 \alias{rcpp_mortality}
 \alias{rcpp_mortality_backgr}
-\title{rcpp_mortality_backgr}
+\title{rcpp_mortality}
 \usage{
 rcpp_mortality(
   fishpop,
@@ -31,8 +31,8 @@ rcpp_mortality(
 void
 }
 \description{
-Rcpp background mortality
+Rcpp mortality
 }
 \details{
-Rcpp implementation to create new individual after background mortality event.
+Function to simulate background mortality of fish population individuals.
 }

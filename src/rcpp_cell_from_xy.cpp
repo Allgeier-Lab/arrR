@@ -2,15 +2,14 @@
 
 //' rcpp_cell_from_xy
 //'
-//' @description Rcpp get cell id from xy
+//' @description Rcpp cell from xy
 //'
 //' @param coords Vector with coordinates.
 //' @param dimensions Vector with number or rows and cols
 //' @param extent Vector with extent (xmin, xmax, ymin, ymax).
 //'
 //' @details
-//' Rcpp implementation to get cell id from xy coordinate. Allows only one coordinate
-//' pair at a time.
+//' Get cell id from xy coordinate. Allows only one coordinate pair at a time.
 //'
 //' @references
 //' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis

@@ -2,13 +2,17 @@
 
 //' rcpp_mineralization
 //'
-//' @description Rcpp calculate mineralization
+//' @description Rcpp mineralization
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
 //'
 //' @details
-//' Rcpp implementation to calculate detritus miniralization.
+//' Function to redistribute fish detritus pool to overall detritus pool and decomposition.
+//'
+//' @references
+//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+//' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 //'
 //' @return void
 //'

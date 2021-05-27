@@ -4,7 +4,7 @@
 
 //' rcpp_seagrass_growth
 //'
-//' @description Rcpp calc seagrass growth
+//' @description Rcpp seagrass growth
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param cells_reef Vector with id of reef cells.
@@ -13,7 +13,11 @@
 //' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
 //'
 //' @details
-//' Rcpp implementation to calculate seagrass growth.
+//' Function to simulate processes of aboveground and belowground seagrass slough and growth.
+//'
+//' @references
+//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+//' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 //'
 //' @return void
 //'

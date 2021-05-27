@@ -3,9 +3,9 @@
 #include "rcpp_shuffle.h"
 #include "rcpp_reincarnate.h"
 
-//' rcpp_mortality_backgr
+//' rcpp_mortality
 //'
-//' @description Rcpp background mortality
+//' @description Rcpp mortality
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
@@ -14,7 +14,7 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Rcpp implementation to create new individual after background mortality event.
+//' Function to simulate background mortality of fish population individuals.
 //'
 //' @return void
 //'

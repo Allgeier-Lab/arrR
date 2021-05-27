@@ -7,7 +7,7 @@
 
 //' rcpp_move_rand
 //'
-//' @description Rcpp move fish population
+//' @description Rcpp move random
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with coords of reef cells.
@@ -19,8 +19,11 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Rcpp implementation to move fish individuals depending on move distance and
-//' heading value.
+//' Rcpp implementation to move fish individuals randomly or attracted depending
+//' on move distance and heading value.
+//'
+//' @references
+//' Add reference
 //'
 //' @return void
 //'

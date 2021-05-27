@@ -34,7 +34,7 @@ simulate_movement <- function(fishpop_values, movement = "rand",
                    move_visibility = parameters$move_visibility,
                    max_dist = max_dist,
                    reef_attraction = FALSE,
-                   extent = as.vector(extent, mode = "numeric"),
+                   extent = extent,
                    dimensions = dimensions)
 
   } else if (movement == "attr") {
@@ -47,7 +47,7 @@ simulate_movement <- function(fishpop_values, movement = "rand",
                    move_visibility = parameters$move_visibility,
                    max_dist = max_dist,
                    reef_attraction = TRUE,
-                   extent = as.vector(extent, mode = "numeric"),
+                   extent = extent,
                    dimensions = dimensions)
 
   } else if (movement == "behav") {
@@ -62,7 +62,7 @@ simulate_movement <- function(fishpop_values, movement = "rand",
                     move_border = parameters$move_border,
                     move_return = parameters$move_return,
                     max_dist = max_dist,
-                    extent = as.vector(extent, mode = "numeric"),
+                    extent = extent,
                     dimensions = dimensions)
 
   }

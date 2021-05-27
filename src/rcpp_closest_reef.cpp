@@ -2,14 +2,14 @@
 
 //' rcpp_closest_reef
 //'
-//' @description Rcpp get distance to closest reef
+//' @description Rcpp closest reef
 //'
 //' @param coords_temp Vector with xy coords of current individual.
 //' @param coords_reef Matrix coords of reef cells.
 //'
 //' @details
-//' Rcpp implementation to get id and distance to closet reef cell. The first element
-//' of the returning vector is the id, the second the distance in m.
+//' Get id and distance to closet reef cell. The first element of the returning
+//' vector is the id, the second the distance in meter.
 //'
 //' @return vector
 //'

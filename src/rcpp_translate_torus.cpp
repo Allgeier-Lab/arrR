@@ -8,7 +8,7 @@
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //'
 //' @details
-//' Rcpp implementation to translate coordinates if they exceed extent.
+//' Translate coordinates if they exceed extent.
 //'
 //' @return vector
 //'

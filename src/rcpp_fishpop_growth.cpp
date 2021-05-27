@@ -5,7 +5,7 @@
 
 //' rcpp_fishpop_growth
 //'
-//' @description Rcpp calc growth
+//' @description Rcpp fishpop growth
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 //' @param seafloor Matrix with seafloor values.
@@ -16,7 +16,11 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Rcpp implementation to calculate growth of fish individuals.
+//' Function to simulate consumption, possible mortality, growth and excretion of fish
+//' population.
+//'
+//' @references
+//' Add reference
 //'
 //' @return void
 //'

@@ -5,18 +5,6 @@
 
 using namespace Rcpp;
 
-// rcpp_add_input
-void rcpp_add_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input, int timestep);
-RcppExport SEXP _arrR_rcpp_add_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP, SEXP timestepSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
-    Rcpp::traits::input_parameter< int >::type timestep(timestepSEXP);
-    rcpp_add_input(seafloor, nutr_input, timestep);
-    return R_NilValue;
-END_RCPP
-}
 // rcpp_allocation_ratio
 double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max, double threshold, double slope);
 RcppExport SEXP _arrR_rcpp_allocation_ratio(SEXP biomassSEXP, SEXP biomass_minSEXP, SEXP biomass_maxSEXP, SEXP thresholdSEXP, SEXP slopeSEXP) {
@@ -199,6 +187,29 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_nutr_input
+void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input, int timestep);
+RcppExport SEXP _arrR_rcpp_nutr_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP, SEXP timestepSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
+    Rcpp::traits::input_parameter< int >::type timestep(timestepSEXP);
+    rcpp_nutr_input(seafloor, nutr_input, timestep);
+    return R_NilValue;
+END_RCPP
+}
+// rcpp_nutr_output
+void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output);
+RcppExport SEXP _arrR_rcpp_nutr_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< double >::type nutrients_output(nutrients_outputSEXP);
+    rcpp_nutr_output(seafloor, nutrients_output);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_nutr_uptake
 double rcpp_nutr_uptake(double nutrients, double biomass, double v_max, double k_m, double time_frac);
 RcppExport SEXP _arrR_rcpp_nutr_uptake(SEXP nutrientsSEXP, SEXP biomassSEXP, SEXP v_maxSEXP, SEXP k_mSEXP, SEXP time_fracSEXP) {
@@ -229,17 +240,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type pop_want_reserves(pop_want_reservesSEXP);
     Rcpp::traits::input_parameter< String >::type reason(reasonSEXP);
     rcpp_reincarnate(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason);
-    return R_NilValue;
-END_RCPP
-}
-// rcpp_remove_output
-void rcpp_remove_output(Rcpp::NumericMatrix seafloor, double nutrients_output);
-RcppExport SEXP _arrR_rcpp_remove_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type nutrients_output(nutrients_outputSEXP);
-    rcpp_remove_output(seafloor, nutrients_output);
     return R_NilValue;
 END_RCPP
 }
@@ -339,7 +339,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_arrR_rcpp_add_input", (DL_FUNC) &_arrR_rcpp_add_input, 3},
     {"_arrR_rcpp_allocation_ratio", (DL_FUNC) &_arrR_rcpp_allocation_ratio, 5},
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
     {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
@@ -352,9 +351,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_mortality", (DL_FUNC) &_arrR_rcpp_mortality, 8},
     {"_arrR_rcpp_move_behav", (DL_FUNC) &_arrR_rcpp_move_behav, 11},
     {"_arrR_rcpp_move_rand", (DL_FUNC) &_arrR_rcpp_move_rand, 9},
+    {"_arrR_rcpp_nutr_input", (DL_FUNC) &_arrR_rcpp_nutr_input, 3},
+    {"_arrR_rcpp_nutr_output", (DL_FUNC) &_arrR_rcpp_nutr_output, 2},
     {"_arrR_rcpp_nutr_uptake", (DL_FUNC) &_arrR_rcpp_nutr_uptake, 5},
     {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 9},
-    {"_arrR_rcpp_remove_output", (DL_FUNC) &_arrR_rcpp_remove_output, 2},
     {"_arrR_rcpp_respiration", (DL_FUNC) &_arrR_rcpp_respiration, 8},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 4},
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 16},

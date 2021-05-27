@@ -3,13 +3,18 @@
 
 //' rcpp_nutr_uptake
 //'
-//' @description Rcpp calculate nutrient uptake
+//' @description Rcpp nutrient uptake
 //'
 //' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
 //' @param v_max,k_m,time_frac Numeric with parameters
 //'
 //' @details
-//' Rcpp implementation to calculate nutrient uptake of cell
+//' Calculate nutrient uptake of cells.
+//'
+//' @references
+//' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
+//' Thalassia testudinum: Development of a whole-plant nitrogen budget.
+//' Limnol. Oceanogr. 44, 1204–1215.https://doi.org/10.4319/lo.1999.44.5.1204
 //'
 //' @return double
 //'

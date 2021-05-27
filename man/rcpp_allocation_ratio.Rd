@@ -20,5 +20,10 @@ void
 Rcpp allocation ratio
 }
 \details{
-Rcpp implementation of the allocation ratio
+Rcpp implementation of the allocation ratio. If the threshold is positive, all
+the ratio is 1 if biomass is below the threshold. If threshold is negative, the
+ratio will be 0.5 at the threshold.
+}
+\references{
+Add reference
 }

@@ -11,7 +11,7 @@
 //' @param reason String with reason of reincarnation.
 //'
 //' @details
-//' Rcpp implementation to create new individual after mortality event.
+//' Create new individual after mortality event.
 //'
 //' @return void
 //'

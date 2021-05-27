@@ -11,6 +11,7 @@
 * Adding `rcpp_update_coords`
 * Adding `rcpp_allocation_ratio` and smoother sigmoid function
 * Adding `get_stable_values` function
+* Calling all `rcpp_` functions directly if possible in `run_simulation`
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

@@ -2,12 +2,12 @@
 
 //' rcpp_shuffle
 //'
-//' @description Create random id vector
+//' @description Rcpp shuffle
 //'
 //' @param min,max Integer with minum and maximum value of vector.
 //'
 //' @details
-//' Rcpp implementation to get vector with random ids.
+//' Get vector with random sequence from min to max.
 //'
 //' @return vector
 //'

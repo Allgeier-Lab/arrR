@@ -38,8 +38,12 @@ rcpp_seagrass_growth(
 void
 }
 \description{
-Rcpp calc seagrass growth
+Rcpp seagrass growth
 }
 \details{
-Rcpp implementation to calculate seagrass growth.
+Function to simulate processes of aboveground and belowground seagrass slough and growth.
+}
+\references{
+DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
 }

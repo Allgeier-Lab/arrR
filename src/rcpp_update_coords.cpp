@@ -3,7 +3,7 @@
 
 //' rcpp_update_coords
 //'
-//' @description Rcpp move fish population
+//' @description Rcpp update coords
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param i Integer with row id.

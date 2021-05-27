@@ -2,14 +2,14 @@
 
 //' rcpp_rlognorm
 //'
-//' @description Create random number from log distribution
+//' @description Rcpp rlognorm
 //'
 //' @param mean Double with mean.
 //' @param sd Double with sd
 //' @param min,max Double boundaries.
 //'
 //' @details
-//' Get random number from log-norm distribution. Function uses log-transformed
+//' Draws random number from log-norm distribution. Function uses log-transformed
 //' values and a normal distribution internally.
 //'
 //' @references
