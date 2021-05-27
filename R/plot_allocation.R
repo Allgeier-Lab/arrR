@@ -29,8 +29,8 @@ plot_allocation <- function(parameters) {
     FUN.VALUE = numeric(1))
 
   # calc threshold
-  threshold_temp <-  parameters$bg_biomass_min +
-    (parameters$bg_biomass_max - parameters$bg_biomass_min) * parameters$seagrass_thres;
+  threshold_temp <- parameters$bg_biomass_min +
+    (parameters$bg_biomass_max - parameters$bg_biomass_min) * abs(parameters$seagrass_thres)
 
   # set x axis breaks
   breaks <- seq(from = parameters$bg_biomass_min, to = parameters$bg_biomass_max,
