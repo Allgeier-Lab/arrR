@@ -64,7 +64,6 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
 #> > ...Checking parameter values...
 #> > ...Checking if starting values are within parameter boundaries...
-#> > Not needed parameter values: move_border
 #> 
 #> > All checking done!
 ```
@@ -123,14 +122,14 @@ result
 #> Fishpop    : 8 indiv (movement: 'rand')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 97.802, 556.153, 0, 0.019, 0
-#> Mean     : 97.911, 556.421, 0, 0.082, 0
-#> Maximum  : 98.135, 556.953, 0.004, 0.1, 0
+#> Minimum  : 83.739, 562.266, 0, 0.021, 0
+#> Mean     : 83.837, 564.43, 0, 0.079, 0
+#> Maximum  : 87.554, 592.177, 0.006, 0.092, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 11.93, 30.624, 0, 0
-#> Mean     : 15.698, 78.557, 0, 0
-#> Maximum  : 19.898, 154.274, 0, 0
+#> Minimum  : 11.426, 26.719, 0, 0
+#> Mean     : 15.625, 89.147, 0, 0
+#> Maximum  : 24.556, 299.977, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
