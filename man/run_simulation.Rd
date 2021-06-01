@@ -7,14 +7,15 @@
 run_simulation(
   seafloor,
   fishpop,
+  movement = "rand",
   parameters,
-  reef_attraction,
   max_i,
   min_per_i,
+  seagrass_each = 1,
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
-  extract = NULL,
+  nutr_input = NULL,
   verbose = TRUE
 )
 }
@@ -23,13 +24,15 @@ run_simulation(
 
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
-\item{parameters}{List with all model parameters.}
+\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
+\item{parameters}{List with all model parameters.}
 
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
+
+\item{seagrass_each}{Integer how often (each i * x) seagrass dynamics will be simulated.}
 
 \item{save_each}{Numeric how often data should be saved to return.}
 
@@ -37,7 +40,7 @@ run_simulation(
 
 \item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
 
-\item{extract}{Character to specify if only seafloor or fishpop should be returned as data.frame}
+\item{nutr_input}{Vector with amount of nutrient input each timestep.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }

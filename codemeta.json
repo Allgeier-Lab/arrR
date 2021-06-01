@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "arrR",
   "description": "The goal of arrR is to simulate seagrass growth around artificial reefs.",
@@ -7,13 +10,13 @@
   "codeRepository": "https://github.com/Allgeier-Lab/arrR",
   "issueTracker": "https://github.com/Allgeier-Lab/arrR/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.2.9",
+  "version": "0.5.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "author": [
     {
       "@type": "Person",
@@ -27,6 +30,13 @@
       "givenName": "Kenzo",
       "familyName": "Esquivel",
       "email": "kesquivel@berkeley.edu"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Katrina S.",
+      "familyName": "Munsterman",
+      "email": "kmunster@umich.edu",
+      "@id": "https://orcid.org/0000-0002-9303-2049"
     }
   ],
   "contributor": {},
@@ -182,6 +192,6 @@
     }
   ],
   "releaseNotes": "https://github.com/Allgeier-Lab/arrR/blob/master/NEWS.md",
-  "fileSize": "6294.144KB",
+  "fileSize": "0KB",
   "developmentStatus": ["https://www.repostatus.org/#active", "https://www.tidyverse.org/lifecycle/#maturing"]
 }

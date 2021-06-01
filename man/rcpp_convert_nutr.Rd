@@ -18,6 +18,5 @@ double
 Rcpp convert nutrients
 }
 \details{
-Rcpp implementation to convert nutrients between g and umol.
+Rcpp implementation to convert nutrients between g and umol (ammonium; NH4)
 }
-\keyword{export}

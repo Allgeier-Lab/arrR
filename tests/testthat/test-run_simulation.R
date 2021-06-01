@@ -32,7 +32,7 @@ burn_in <- 5
 result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     fishpop  = input_fishpop,
                                     parameters = parameters,
-                                    reef_attraction = FALSE,
+                                    movement = "rand",
                                     max_i = max_i, min_per_i = min_per_i,
                                     burn_in = burn_in)
 
@@ -68,7 +68,7 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
 
-  expect_equal(object = result_rand$reef_attraction, expected = FALSE)
+  expect_equal(object = result_rand$movement, expected = "rand")
 
   expect_equal(object = result_rand$burn_in, expected = burn_in)
 
@@ -78,7 +78,7 @@ test_that("run_simulation does not return burn_in", {
 
   result <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                  parameters = parameters,
-                                 reef_attraction = FALSE,
+                                 movement = "rand",
                                  max_i = max_i, min_per_i = min_per_i,
                                  burn_in = 10, return_burnin = FALSE)
 
@@ -88,48 +88,13 @@ test_that("run_simulation does not return burn_in", {
 
 })
 
-test_that("run_simulation returns only data.frame", {
-
-  fishpop <- arrR::run_simulation(seafloor = input_seafloor,
-                                  fishpop  = input_fishpop,
-                                  parameters = parameters,
-                                  reef_attraction = FALSE,
-                                  max_i = max_i, min_per_i = min_per_i,
-                                  extract = "fishpop")
-
-  seafloor <- arrR::run_simulation(seafloor = input_seafloor,
-                                  fishpop  = input_fishpop,
-                                  parameters = parameters,
-                                  reef_attraction = FALSE,
-                                  max_i = max_i, min_per_i = min_per_i,
-                                  extract = "seafloor")
-
-  both <- arrR::run_simulation(seafloor = input_seafloor,
-                               fishpop  = input_fishpop,
-                               parameters = parameters,
-                               reef_attraction = FALSE,
-                               max_i = max_i, min_per_i = min_per_i,
-                               extract = "both")
-
-
-
-  expect_is(object = fishpop, class = "data.frame")
-
-  expect_is(object = seafloor, class = "data.frame")
-
-  expect_is(object = both, class = "list")
-
-  expect_length(both, n = 2)
-
-})
-
 test_that("run_simulation stops if burn_in is out of limits", {
 
   expect_warning(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                                    parameters = parameters,
-                                    reef_attraction = FALSE,
-                                    max_i = max_i, min_per_i = min_per_i,
-                                    burn_in = max_i + 1),
+                                      parameters = parameters,
+                                      movement = "rand",
+                                      max_i = max_i, min_per_i = min_per_i,
+                                      burn_in = max_i + 1),
                  regexp = "'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.")
 
 })
@@ -138,8 +103,19 @@ test_that("run_simulation stops max_i cannot be divided by save_each", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
-                                    reef_attraction = FALSE,
+                                    movement = "rand",
                                     max_i = max_i, save_each = 3),
                regexp = "'max_i' cannot be divided by 'save_each' without rest.")
+
+})
+
+test_that("run_simulation stops if nutr_input is not equal to max_i", {
+
+  expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                    parameters = parameters,
+                                    nutr_input = 0.1,
+                                    movement = "rand",
+                                    max_i = max_i),
+               regexp = "'nutr_input' must have input amount for each iteration.")
 
 })

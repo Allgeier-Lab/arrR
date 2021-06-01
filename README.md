@@ -32,7 +32,7 @@ FIRST**.
 
 ``` r
 remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
-                        auth_token = "e46c8683663fd7a14869c949a48582063e64b915")
+                        auth_token = "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")
 ```
 
 <!-- Add CRAN link if applicable -->
@@ -64,6 +64,7 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
 #> > ...Checking parameter values...
 #> > ...Checking if starting values are within parameter boundaries...
+#> > Not needed parameter values: move_border
 #> 
 #> > All checking done!
 ```
@@ -86,41 +87,50 @@ input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1,
 input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
                                starting_values = starting_values, 
                                parameters = parameters)
-#> > ...Creating 25 individuals within extent(-25, 25, -25, 25)...
+#> > ...Creating 8 individuals within extent(-25, 25, -25, 25)...
 ```
 
 To run a simulation, simply provide the previously created seafloor and
 population as well as all parameters to the `run_simulation` function.
 Additionally, you need to specify the number of timesteps that are
-simulated.
+simulated. Check out `?run_simulation` to see further possible
+specifications of the model run.
 
 ``` r
 min_per_i <- 120
 
 # run the model for three years
-max_i <- (60 * 24 * 365 * 1) / min_per_i
+years <- 1
+
+max_i <- (60 * 24 * 365 * years) / min_per_i
+
+# save results only every 15 days
+days <- 5
+
+save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 
                          fishpop = input_fishpop,
                          parameters = parameters, 
-                         reef_attraction = TRUE,
-                         max_i = max_i, min_per_i = min_per_i)
+                         movement = "rand",
+                         max_i = max_i, min_per_i = min_per_i, 
+                         save_each = save_each)
 
 result
 #> Total time : 4380 iterations (365 days) [Burn-in: 0 iter.]
-#> Saved each : 1 iterations (0.08 days)
+#> Saved each : 60 iterations (5 days)
 #> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
-#> Fishpop    : 25 indiv (reef_attraction: TRUE)
+#> Fishpop    : 8 indiv (movement: 'rand')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 6.644, 238.354, 0.005, 0.385, 0
-#> Mean     : 6.644, 251.393, 0.008, 0.468, 0
-#> Maximum  : 6.644, 308.66, 0.023, 0.504, 0
+#> Minimum  : 97.802, 556.153, 0, 0.019, 0
+#> Mean     : 97.911, 556.421, 0, 0.082, 0
+#> Maximum  : 98.135, 556.953, 0.004, 0.1, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 11.212, 25.167, 0, 0
-#> Mean     : 15.176, 72.955, 0, 0
-#> Maximum  : 21.851, 207.421, 0, 0
+#> Minimum  : 11.93, 30.624, 0, 0
+#> Mean     : 15.698, 78.557, 0, 0
+#> Maximum  : 19.898, 154.274, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.

@@ -18,7 +18,5 @@ double
 Rcpp modify degree
 }
 \details{
-Rcpp implementation to substract or add degree to angle. Makes sure angles are
-between 0 <= x <= 360.
+Substract or add degree to angle. Makes sure angles are between 0 <= x <= 360.
 }
-\keyword{export}

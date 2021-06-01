@@ -35,6 +35,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
 
   # calculate extent of environment with the center being (0,0)
   extent_x <- extent[1] / 2 * c(-1, 1)
+
   extent_y <- extent[2] / 2 * c(-1, 1)
 
   # setup template landscape
@@ -69,7 +70,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
 
     }
 
-    if (inherits(x = reefs, what = "matrix") & ncol(reefs) != 2) {
+    if (inherits(x = reefs, what = "matrix") && ncol(reefs) != 2) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
@@ -90,8 +91,6 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
 
     # add reef layer
     seafloor$reef <- 0
-
-    seafloor$reef_dist <- NA
 
   }
 

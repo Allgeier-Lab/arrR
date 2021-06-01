@@ -30,7 +30,7 @@ min_per_i <- 120
 result_rand <- arrR::run_simulation(seafloor = input_seafloor,
                                     fishpop  = input_fishpop,
                                     parameters = parameters,
-                                    reef_attraction = FALSE,
+                                    movement = "rand",
                                     max_i = max_i, min_per_i = min_per_i)
 
 test_that("plot.mdl_rn return ggplot", {

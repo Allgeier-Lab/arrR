@@ -8,15 +8,14 @@
 //' @param y Numerich with change of degree (negative or positive).
 //'
 //' @details
-//' Rcpp implementation to substract or add degree to angle. Makes sure angles are
-//' between 0 <= x <= 360.
+//' Substract or add degree to angle. Makes sure angles are between 0 <= x <= 360.
 //'
 //' @return double
 //'
 //' @aliases rcpp_modify_degree
 //' @rdname rcpp_modify_degree
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 double rcpp_modify_degree(double x, double y) {
 

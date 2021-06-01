@@ -8,14 +8,14 @@
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //'
 //' @details
-//' Rcpp implementation to translate coordinates if they exceed extent.
+//' Translate coordinates if they exceed extent.
 //'
 //' @return vector
 //'
 //' @aliases rcpp_translate_torus
 //' @rdname rcpp_translate_torus
 //'
-//' @keywords export
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
                                          Rcpp::NumericVector extent) {

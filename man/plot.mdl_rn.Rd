@@ -11,6 +11,7 @@
   timestep = x$max_i,
   limits = NULL,
   burn_in = TRUE,
+  normalize = FALSE,
   base_size = 10,
   ...
 )
@@ -27,6 +28,8 @@
 \item{limits}{Named list with vectors with min and maximum value of values.}
 
 \item{burn_in}{If TRUE, line to indicate burn-in time is plotted.}
+
+\item{normalize}{Logical if TRUE count is divided by timesteps.}
 
 \item{base_size}{Numeric to specify base font size.}
 

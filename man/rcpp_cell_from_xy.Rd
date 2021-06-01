@@ -17,14 +17,12 @@ rcpp_cell_from_xy(coords, dimensions, extent)
 int
 }
 \description{
-Rcpp get cell id from xy
+Rcpp cell from xy
 }
 \details{
-Rcpp implementation to get cell id from xy coordinate. Allows only one coordinate
-pair at a time.
+Get cell id from xy coordinate. Allows only one coordinate pair at a time.
 }
 \references{
 Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
 and Modeling. R package version 3.4-5. https://CRAN.R-project.org/package=raster
 }
-\keyword{export}

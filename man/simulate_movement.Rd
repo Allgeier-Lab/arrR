@@ -6,26 +6,29 @@
 \usage{
 simulate_movement(
   fishpop_values,
-  pop_n,
-  seafloor_values,
-  reef_attraction,
+  movement = "rand",
+  parameters,
+  pop_thres_reserves,
+  max_dist,
+  coords_reef,
   extent,
-  dimensions,
-  parameters
+  dimensions
 )
 }
 \arguments{
 \item{fishpop_values}{Matrix with fish population created.}
 
-\item{pop_n}{Numeric with number of individuals.}
-
-\item{seafloor_values}{RasterBrick and matrix with seafloor values.}
-
-\item{reef_attraction}{If TRUE, individuals are attracted to AR.}
-
-\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
+\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{pop_thres_reserves}{Vector with proportion of max_reserves to drain prior to movement.}
+
+\item{max_dist}{Maximum distance an individual can move..}
+
+\item{coords_reef}{Matrix with coords of reef cells.}
+
+\item{extent, dimensions}{Spatial extent and dimensions of the seafloor raster}
 }
 \value{
 matrix

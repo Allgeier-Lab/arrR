@@ -1,3 +1,25 @@
+# arrR 0.5.0
+* Simpler allocation rule based on curves.
+* Adding new movement behaviors code based on reserve
+* Minor bugfixing and rename of many functions
+* New `plot_threshold` function. 
+* Fix bug in movement and specify maximum movement distance based on 95% of distribution
+* Remove `rlognorm` again...lol
+* Remove `extract_result` again
+* Adding `rcpp_shuffle`
+* Remove `reef_dist`
+* Adding `rcpp_update_coords`
+* Adding `rcpp_allocation_ratio` and smoother sigmoid function
+* Adding `get_stable_values` function
+* Calling all `rcpp_` functions directly if possible in `run_simulation`
+
+# arrR 0.4.0
+* Add `simulate_input` and `simulate_output`
+* Rename `simulate_fishpop_growth` to `simulate_growth`
+
+# arrR 0.3.1
+* Add `rlognorm` for better code structure
+
 # arrR 0.3.0
 * Update authors list
 * Re-implement movement of fish individuals in Rcpp mainly
