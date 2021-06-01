@@ -15,7 +15,8 @@
 #' ratio will be 0.5 at the threshold.
 #'
 #' @references
-#' Add reference
+#' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
+#' domain and range [0,1]?" \link{https://stats.stackexchange.com/questions/214877/}
 #'
 #' @return void
 #'

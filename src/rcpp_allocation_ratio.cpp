@@ -14,7 +14,8 @@
 //' ratio will be 0.5 at the threshold.
 //'
 //' @references
-//' Add reference
+//' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
+//' domain and range [0,1]?" \link{https://stats.stackexchange.com/questions/214877/}
 //'
 //' @return void
 //'
@@ -76,6 +77,8 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 }
 
 /*** R
+parameters <- arrR::default_parameters
+
 parameters$seagrass_thres <- 1/4
 parameters$seagrass_slope <- 3
 
