@@ -2,6 +2,7 @@
 //#define RCPP_SHUFFLE
 
 #include "Rcpp.h"
+#include "random"
 
 using namespace Rcpp;
 
