@@ -238,6 +238,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
       rcpp_mortality(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
                      seafloor = seafloor_values,
                      pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
+                     pop_max_reserves = parameters$pop_max_reserves,
                      extent = extent, dimensions = dimensions)
 
     }
