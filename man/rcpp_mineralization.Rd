@@ -4,12 +4,12 @@
 \alias{rcpp_mineralization}
 \title{rcpp_mineralization}
 \usage{
-rcpp_mineralization(seafloor, detritus_fish_ratio, detritus_mineralization)
+rcpp_mineralization(seafloor, detritus_fish_decomp, detritus_mineralization)
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{detritus_fish_ratio, detritus_mineralization}{seafloor Numeric with parameters.}
+\item{detritus_fish_decomp, detritus_mineralization}{seafloor Numeric with parameters.}
 }
 \value{
 void

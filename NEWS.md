@@ -12,6 +12,8 @@
 * Adding `rcpp_allocation_ratio` and smoother sigmoid function
 * Adding `get_stable_values` function
 * Calling all `rcpp_` functions directly if possible in `run_simulation`
+* Renamed `detritus_ratio` to `seagrass_slough`
+* Renamed `detritus_fish_ratio` to `detritus_fish_decomp`
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

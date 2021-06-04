@@ -10,7 +10,7 @@
 //' @param cells_reef Vector with id of reef cells.
 //' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 //' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-//' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
+//' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
 //'
 //' @details
 //' Function to simulate processes of aboveground and belowground seagrass slough and growth.
@@ -32,7 +32,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
                           double bg_biomass_max, double bg_biomass_min,
                           double ag_biomass_max, double ag_biomass_min,
                           double seagrass_thres, double seagrass_slope,
-                          double detritus_ratio,
+                          double seagrass_slough,
                           double time_frac) {
 
   // loop through all seafloor cells
@@ -51,7 +51,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         (bg_biomass_max - bg_biomass_min);
 
       // calculate detritus fraction from bg biomass
-      double bg_detritus = seafloor(i, 3) * (detritus_ratio * bg_modf);
+      double bg_detritus = seafloor(i, 3) * (seagrass_slough * bg_modf);
 
       // remove detritus from bg biomass
       seafloor(i, 3) -= bg_detritus;
@@ -64,7 +64,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         (ag_biomass_max - ag_biomass_min);
 
       // calculate detritus fraction from ag biomass
-      double ag_detritus = seafloor(i, 2) * (detritus_ratio * ag_modf);
+      double ag_detritus = seafloor(i, 2) * (seagrass_slough * ag_modf);
 
       // remove detritus from ag biomass
       seafloor(i, 2) -= ag_detritus;
@@ -234,7 +234,7 @@ rcpp_seagrass_growth(seafloor = seafloor_values,
                      bg_biomass_min = parameters$bg_biomass_min,
                      ag_biomass_max = parameters$ag_biomass_max,
                      ag_biomass_min = parameters$ag_biomass_min,
-                     detritus_ratio = parameters$detritus_ratio,
                      seagrass_thres = parameters$seagrass_thres,
+                     seagrass_slough = parameters$seagrass_slough,
                      min_per_i = min_per_i)
 */

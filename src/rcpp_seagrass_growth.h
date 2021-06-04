@@ -11,7 +11,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
                           double bg_biomass_max, double bg_biomass_min,
                           double ag_biomass_max, double ag_biomass_min,
                           double seagrass_thres, double seagrass_slope,
-                          double detritus_ratio,
+                          double seagrass_slough,
                           double time_frac);
 
 //#endif // RCPP_SEAGRASS_GROWTH

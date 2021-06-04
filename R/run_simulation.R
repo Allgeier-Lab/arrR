@@ -196,12 +196,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
                            ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
                            seagrass_thres = parameters$seagrass_thres, seagrass_slope = parameters$seagrass_slope,
-                           detritus_ratio = parameters$detritus_ratio,
+                           seagrass_slough = parameters$seagrass_slough,
                            time_frac = (min_per_i / 60) * seagrass_each)
 
       # simulate mineralization (detritus to nutrients pool)
       rcpp_mineralization(seafloor = seafloor_values,
-                          detritus_fish_ratio = parameters$detritus_fish_ratio,
+                          detritus_fish_decomp = parameters$detritus_fish_decomp,
                           detritus_mineralization = parameters$detritus_mineralization)
 
     }

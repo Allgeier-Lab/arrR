@@ -30,10 +30,10 @@ get_stable_values <- function(starting_values, parameters) {
     (parameters$bg_biomass_max - parameters$bg_biomass_min)
 
   # calculate ag detritus
-  ag_detritus <- starting_values$ag_biomass * (parameters$detritus_ratio * ag_modf)
+  ag_detritus <- starting_values$ag_biomass * (parameters$seagrass_slough * ag_modf)
 
   # calculate ag detritus
-  bg_detritus <- starting_values$bg_biomass * (parameters$detritus_ratio * bg_modf)
+  bg_detritus <- starting_values$bg_biomass * (parameters$seagrass_slough * bg_modf)
 
   # calculate amount of nutrients to keep ag and bg stable
   nutrients_pool <- (bg_detritus * parameters$bg_gamma) +

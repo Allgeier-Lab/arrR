@@ -5,7 +5,7 @@
 //' @description Rcpp mineralization
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
+//' @param detritus_fish_decomp,detritus_mineralization seafloor Numeric with parameters.
 //'
 //' @details
 //' Function to redistribute fish detritus pool to overall detritus pool and decomposition.
@@ -22,13 +22,13 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
-                              double detritus_fish_ratio, double detritus_mineralization) {
+                              double detritus_fish_decomp, double detritus_mineralization) {
 
   // loop through all seafloor values
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     // calculate decomposition amount
-    double fish_decompostion = seafloor(i, 6) * detritus_fish_ratio;
+    double fish_decompostion = seafloor(i, 6) * detritus_fish_decomp;
 
     // redistribute fish detritus to active detritus
     seafloor(i, 5) += fish_decompostion;

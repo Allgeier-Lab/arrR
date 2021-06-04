@@ -170,7 +170,7 @@ rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
 #' @description Rcpp mineralization
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param detritus_fish_ratio,detritus_mineralization seafloor Numeric with parameters.
+#' @param detritus_fish_decomp,detritus_mineralization seafloor Numeric with parameters.
 #'
 #' @details
 #' Function to redistribute fish detritus pool to overall detritus pool and decomposition.
@@ -185,8 +185,8 @@ rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
 #' @rdname rcpp_mineralization
 #'
 #' @export
-rcpp_mineralization <- function(seafloor, detritus_fish_ratio, detritus_mineralization) {
-    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_fish_ratio, detritus_mineralization))
+rcpp_mineralization <- function(seafloor, detritus_fish_decomp, detritus_mineralization) {
+    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_fish_decomp, detritus_mineralization))
 }
 
 #' rcpp_modify_degree
@@ -454,7 +454,7 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @param cells_reef Vector with id of reef cells.
 #' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 #' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-#' @param detritus_ratio,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
+#' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
 #'
 #' @details
 #' Function to simulate processes of aboveground and belowground seagrass slough and growth.
@@ -469,8 +469,8 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @rdname rcpp_seagrass_growth
 #'
 #' @export
-rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac) {
-    invisible(.Call(`_arrR_rcpp_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, detritus_ratio, time_frac))
+rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, seagrass_slough, time_frac) {
+    invisible(.Call(`_arrR_rcpp_seagrass_growth`, seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, seagrass_slough, time_frac))
 }
 
 #' rcpp_shuffle

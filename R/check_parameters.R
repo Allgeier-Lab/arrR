@@ -51,28 +51,28 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
                            "seagrass_thres",
                            "seagrass_slope",
+                           "seagrass_slough",
 
                            "nutrients_diffusion",
                            "nutrients_output",
 
-                           "detritus_ratio",
                            "detritus_mineralization",
                            "detritus_diffusion",
+                           "detritus_fish_decomp",
                            "detritus_fish_diffusion",
-                           "detritus_fish_ratio",
 
                            "move_mean",
                            "move_var",
-                           "move_reef",
-                           "move_border",
-                           "move_return",
                            "move_visibility",
+                           "move_border",
+                           "move_reef",
+                           "move_return",
 
-                           "pop_max_reserves",
                            "pop_want_reserves",
-                           "pop_consumption_prop",
+                           "pop_max_reserves",
                            "pop_thres_reserves_min",
                            "pop_thres_reserves_max",
+                           "pop_consumption_prop",
 
                            "pop_a",
                            "pop_b",
@@ -189,28 +189,28 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
-
     # check if all ratios are betwenn 0 and 1
     check_ratios <- any(c(c(parameters$seagrass_thres,
+                            parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,
 
-                            parameters$detritus_ratio,
                             parameters$detritus_mineralization,
-                            parameters$detritus_fish_ratio,
+                            parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
                             parameters$pop_max_reserves,
                             parameters$pop_want_reserves) > 1,
 
-                          c(parameters$nutrients_diffusion,
+                          c(parameters$seagrass_slough,
+
+                            parameters$nutrients_diffusion,
                             parameters$nutrients_output,
 
-                            parameters$detritus_ratio,
                             parameters$detritus_mineralization,
-                            parameters$detritus_fish_ratio,
+                            parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 

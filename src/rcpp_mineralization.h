@@ -6,6 +6,6 @@
 using namespace Rcpp;
 
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
-                         double detritus_fish_ratio, double detritus_mineralization);
+                         double detritus_fish_decomp, double detritus_mineralization);
 
 //#endif // RCPP_MINERALIZATION
