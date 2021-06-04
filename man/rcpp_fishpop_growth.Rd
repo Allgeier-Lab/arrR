@@ -13,7 +13,6 @@ rcpp_fishpop_growth(
   pop_a,
   pop_b,
   pop_n_body,
-  pop_want_reserves,
   pop_max_reserves,
   pop_consumption_prop,
   extent,
@@ -28,7 +27,7 @@ rcpp_fishpop_growth(
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
-\item{pop_n_body, pop_want_reserves, pop_max_reserves, min_per_i}{Numeric with parameters.}
+\item{pop_n_body, pop_max_reserves, min_per_i}{Numeric with parameters.}
 
 \item{pop_consumption_prop}{Double with consumption limit to fill reserves each timestep.}
 

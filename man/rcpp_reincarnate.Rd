@@ -12,7 +12,7 @@ rcpp_reincarnate(
   cell_id,
   pop_linf,
   pop_n_body,
-  pop_want_reserves,
+  pop_max_reserves,
   reason
 )
 }
@@ -23,7 +23,7 @@ rcpp_reincarnate(
 
 \item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
 
-\item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+\item{pop_linf, pop_n_body, pop_max_reserves}{Numeric with parameters.}
 
 \item{reason}{String with reason of reincarnation.}
 }

@@ -10,7 +10,7 @@
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 //' @param seafloor Matrix with seafloor values.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-//' @param pop_n_body,pop_want_reserves,pop_max_reserves,min_per_i Numeric with parameters.
+//' @param pop_n_body,pop_max_reserves,min_per_i Numeric with parameters.
 //' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -32,7 +32,7 @@
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
-                         double pop_n_body, double pop_want_reserves, double pop_max_reserves,
+                         double pop_n_body, double pop_max_reserves,
                          double pop_consumption_prop,
                          Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          double min_per_i) {
@@ -76,7 +76,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         rcpp_reincarnate(fishpop, fishpop_track, seafloor,
                          fish_id_temp, cell_id_temp,
-                         pop_linf, pop_n_body, pop_want_reserves,
+                         pop_linf, pop_n_body, pop_max_reserves,
                          "consumption");
 
       // individual grows because consumption requirements can be met
@@ -153,7 +153,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         rcpp_reincarnate(fishpop, fishpop_track, seafloor,
                          fish_id_temp, cell_id_temp,
-                         pop_linf, pop_n_body, pop_want_reserves,
+                         pop_linf, pop_n_body, pop_max_reserves,
                          "consumption");
 
       // individual grows because consumption requirements can be met
@@ -195,7 +195,6 @@ rcpp_fishpop_growth(fishpop = fishpop_values,
                     pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
                     pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                     pop_n_body = parameters$pop_n_body,
-                    pop_want_reserves = parameters$pop_want_reserves,
                     pop_max_reserves = parameters$pop_max_reserves,
                     min_per_i = min_per_i
 */

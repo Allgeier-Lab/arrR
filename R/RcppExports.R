@@ -123,7 +123,7 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 #' @param seafloor Matrix with seafloor values.
 #' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-#' @param pop_n_body,pop_want_reserves,pop_max_reserves,min_per_i Numeric with parameters.
+#' @param pop_n_body,pop_max_reserves,min_per_i Numeric with parameters.
 #' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
@@ -141,8 +141,8 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' @rdname rcpp_fishpop_growth
 #'
 #' @export
-rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_want_reserves, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_want_reserves, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i))
+rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_max_reserves, pop_consumption_prop, extent, dimensions, min_per_i))
 }
 
 #' rcpp_get_bearing
@@ -215,7 +215,7 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param pop_linf,pop_n_body,pop_max_reserves Numeric with parameters.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -228,8 +228,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_mortality_backgr
 #'
 #' @export
-rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_want_reserves, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_want_reserves, extent, dimensions))
+rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_max_reserves, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_max_reserves, extent, dimensions))
 }
 
 #' rcpp_move_behav
@@ -375,7 +375,7 @@ rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
 #' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
-#' @param pop_linf,pop_n_body,pop_want_reserves Numeric with parameters.
+#' @param pop_linf,pop_n_body,pop_max_reserves Numeric with parameters.
 #' @param reason String with reason of reincarnation.
 #'
 #' @details
@@ -387,8 +387,8 @@ rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @rdname rcpp_reincarnate
 #'
 #' @export
-rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason) {
-    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_want_reserves, reason))
+rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_max_reserves, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_max_reserves, reason))
 }
 
 #' rcpp_respiration

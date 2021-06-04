@@ -68,7 +68,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "move_reef",
                            "move_return",
 
-                           "pop_want_reserves",
                            "pop_max_reserves",
                            "pop_thres_reserves_min",
                            "pop_thres_reserves_max",
@@ -177,18 +176,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
-    # check if reserves parameter makes sense
-    if (parameters$pop_max_reserves < parameters$pop_want_reserves) {
-
-      # set final flag to false
-      final_flag <- FALSE
-
-      warning("'pop_max_reserves' must be bigger than 'pop_want_reserves'",
-              call. = FALSE)
-
-
-    }
-
     # check if all ratios are betwenn 0 and 1
     check_ratios <- any(c(c(parameters$seagrass_thres,
                             parameters$seagrass_slough,
@@ -201,8 +188,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_max_reserves,
-                            parameters$pop_want_reserves) > 1,
+                            parameters$pop_max_reserves) > 1,
 
                           c(parameters$seagrass_slough,
 
@@ -214,8 +200,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_max_reserves,
-                            parameters$pop_want_reserves) < 0))
+                            parameters$pop_max_reserves) < 0))
 
     # check if all fraction are between 0 and 1
     if (check_ratios) {
