@@ -21,8 +21,6 @@
 #' @export
 get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
 
-  # MH: raster::cellFromXY(object  = seafloor, xy = result_attr$fishpop[, c(3,4)])
-
   # check if mdl_rn is provided
   if (!inherits(x = result, what = "mdl_rn")) {
 
