@@ -2,8 +2,6 @@
 //#define RCPP_SHUFFLE
 
 #include "Rcpp.h"
-#include "random"
-#include "chrono"
 
 using namespace Rcpp;
 

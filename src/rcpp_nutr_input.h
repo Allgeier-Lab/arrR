@@ -5,7 +5,6 @@
 
 using namespace Rcpp;
 
-void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input,
-                     int timestep);
+void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input);
 
 //#endif // RCPP_NUTR_INPUT

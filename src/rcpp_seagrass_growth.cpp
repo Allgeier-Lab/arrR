@@ -7,7 +7,7 @@
 //' @description Rcpp seagrass growth
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param cells_reef Vector with id of reef cells.
+//' @param cells_reef Vector with ID of reef cells.
 //' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 //' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
 //' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
@@ -225,7 +225,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
 /*** R
 rcpp_seagrass_growth(seafloor = seafloor_values,
-                     cells_reef = cells_reef,
+                     coords_reef = coords_reef,
                      bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
                      bg_gamma = parameters$bg_gamma,
                      ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,

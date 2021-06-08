@@ -320,13 +320,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   # print final message
   if (verbose && final_flag) {
 
-    message("\n> All checking done!")
+    message("> All checking done!")
 
   }
 
   else if (verbose && !final_flag) {
 
-    message("\n> Make sure to check critical warnings!")
+    message("> Make sure to check critical warnings!\n")
 
   }
 }

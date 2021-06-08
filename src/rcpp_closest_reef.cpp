@@ -5,7 +5,7 @@
 //' @description Rcpp closest reef
 //'
 //' @param coords_temp Vector with xy coords of current individual.
-//' @param coords_reef Matrix coords of reef cells.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //'
 //' @details
 //' Get id and distance to closet reef cell. The first element of the returning
@@ -31,10 +31,10 @@ Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericVector coords_temp,
   for (int i = 0; i < coords_reef.nrow(); i++) {
 
     // calculate distance in x direction
-    double dist_x = coords_temp(0) - coords_reef(i, 0);
+    double dist_x = coords_temp(0) - coords_reef(i, 1);
 
     // calculate distance in y direction
-    double dist_y = coords_temp(1) - coords_reef(i, 1);
+    double dist_y = coords_temp(1) - coords_reef(i, 2);
 
     // calculate final distance
     double dist_xy = std::sqrt(std::pow(dist_x, 2.0) + std::pow(dist_y, 2.0));

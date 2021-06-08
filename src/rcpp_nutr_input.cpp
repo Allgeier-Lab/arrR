@@ -6,7 +6,6 @@
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param nutr_input Vector with amount of nutrient input each timestep.
-//' @param timestep Integer with current timestep.
 //'
 //' @details
 //' Simulate external nutrient input to the each cell. The \code{nutr_input}
@@ -23,17 +22,13 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input,
-                     int timestep) {
-
-  // use C++ indexing
-  int timestep_temp = timestep - 1;
+void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input) {
 
   // loop through all raster cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     // add nutrient input of timestep
-    seafloor(i, 4) += nutr_input(timestep_temp);
+    seafloor(i, 4) += nutr_input;
 
   }
 }

@@ -1,3 +1,6 @@
+# arrR 0.5.1
+* Main simulation loop completely in Rcpp `rcpp_run_simulation`
+
 # arrR 0.5.0
 * Simpler allocation rule based on curves.
 * Adding new movement behaviors code based on reserve

@@ -22,7 +22,7 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
-                              double detritus_fish_decomp, double detritus_mineralization) {
+                         double detritus_fish_decomp, double detritus_mineralization) {
 
   // loop through all seafloor values
   for (int i = 0; i < seafloor.nrow(); i++) {

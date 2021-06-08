@@ -4,14 +4,12 @@
 \alias{rcpp_nutr_input}
 \title{rcpp_nutr_input}
 \usage{
-rcpp_nutr_input(seafloor, nutr_input, timestep)
+rcpp_nutr_input(seafloor, nutr_input)
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
 \item{nutr_input}{Vector with amount of nutrient input each timestep.}
-
-\item{timestep}{Integer with current timestep.}
 }
 \value{
 void

@@ -10,7 +10,7 @@
 //' @description Rcpp move behaviour
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with coords of reef cells.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
 //' @param move_mean,move_var Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
@@ -36,8 +36,7 @@
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                      Rcpp::NumericVector pop_thres_reserves,
                      double move_mean, double move_var,
-                     double move_reef, double move_border,
-                     double move_return, double max_dist,
+                     double move_reef, double move_border, double move_return, double max_dist,
                      Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
