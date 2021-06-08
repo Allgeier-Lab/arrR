@@ -315,8 +315,8 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @rdname rcpp_nutr_input
 #'
 #' @export
-rcpp_nutr_input <- function(seafloor, nutr_input, timestep) {
-    invisible(.Call(`_arrR_rcpp_nutr_input`, seafloor, nutr_input, timestep))
+rcpp_nutr_input <- function(seafloor, nutr_input) {
+    invisible(.Call(`_arrR_rcpp_nutr_input`, seafloor, nutr_input))
 }
 
 #' rcpp_nutr_output
@@ -444,6 +444,45 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @export
 rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
+}
+
+#' rcpp_run_simulation
+#'
+#' @description Rcpp run simulation
+#'
+#' @param seafloor,fishpop Matrix with seafloor and fishpop data.
+#' @param seafloor_track,fishpop_track List with entry for each saving timestep.
+#' @param parameters List with parameters.
+#' @param pop_n Integer with number of individuals.
+#' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+#' @param max_dist Double with maximum movement distance.
+#' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+#' @param cells_reef, coords_reef Vector and Matrix with ID and coords of reef cells.
+#' @param cell_adj Matrix with cell adjacencies.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#' @param nutr_input Vector with amount of nutrient input each timestep.
+#' @param max_i Integer with maximum number of simulation timesteps.
+#' @param min_per_i Integer to specify minutes per i.
+#' @param save_each Numeric how often data should be saved to return.
+#' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
+#' @param burn_in Numeric with timesteps used to burn in.
+#' @param verbose If TRUE, progress reports are printed.
+#'
+#' @details
+#' Run model
+#'
+#' @references
+#' Add reference
+#'
+#' @return void
+#'
+#' @aliases rcpp_run_simulation
+#' @rdname rcpp_run_simulation
+#'
+#' @export
+rcpp_run_simulation <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_thres_reserves, cells_reef, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
+    invisible(.Call(`_arrR_rcpp_run_simulation`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_thres_reserves, cells_reef, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
 }
 
 #' rcpp_seagrass_growth

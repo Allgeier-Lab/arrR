@@ -23,17 +23,13 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector nutr_input,
-                     int timestep) {
-
-  // use C++ indexing
-  int timestep_temp = timestep - 1;
+void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input) {
 
   // loop through all raster cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     // add nutrient input of timestep
-    seafloor(i, 4) += nutr_input(timestep_temp);
+    seafloor(i, 4) += nutr_input;
 
   }
 }

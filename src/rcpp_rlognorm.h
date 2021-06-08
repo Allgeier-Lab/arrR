@@ -3,7 +3,6 @@
 
 #include "Rcpp.h"
 #include "truncnorm.h"
-// [[Rcpp::depends(RcppDist)]]
 
 using namespace Rcpp;
 

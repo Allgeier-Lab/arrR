@@ -121,6 +121,13 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     }
   }
 
+  # create vector for nutr_input
+  if (is.null(nutr_input)) {
+
+    nutr_input <- rep(x = 0.0, times = max_i)
+
+  }
+
   # convert seafloor and fishpop as matrix
   seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
 
@@ -142,6 +149,10 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get coordinates of reef cells
   coords_reef <- seafloor_values[cells_reef, c(1,2)]
 
+  # # MH: cbind id to coords so only one matrix has to be passed on?
+  # coords_reef <- cbind(id = which(seafloor_values[, 16] == 1),
+  #                      seafloor_values[cells_reef, c(1,2)])
+
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
 
@@ -149,11 +160,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # save input data in tracking data.frame
-  seafloor_track[[1]] <- rlang::duplicate(seafloor_values)
-
-  fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
   # print some basic information about model run
   if (verbose) {
@@ -168,109 +174,22 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("> One iteration equals ", min_per_i, " minutes.")
 
-    message("")
-
     message("> ...Starting simulation...")
 
+    message("")
+
   }
 
-  # simulate until max_i is reached
-  for (i in 1:max_i) {
+  rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
+                      seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                      parameters = parameters, pop_n = starting_values$pop_n,
+                      movement = movement, max_dist = max_dist, pop_thres_reserves = pop_thres_reserves,
+                      cells_reef = cells_reef, coords_reef = coords_reef, cell_adj = cell_adj,
+                      extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                      seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 
-    # simulate nutrient input
-    if (!is.null(nutr_input)) {
-
-      # simulate nutrient input
-      rcpp_nutr_input(seafloor = seafloor_values, nutr_input = nutr_input, timestep = i)
-
-    }
-
-    # simulate seagrass only each seagrass_each iterations
-    if ((i * min_per_i) %% (min_per_i * seagrass_each) == 0) {
-
-      # simulate seagrass growth
-      rcpp_seagrass_growth(seafloor = seafloor_values, cells_reef = cells_reef,
-                           bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
-                           ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
-                           bg_gamma = parameters$bg_gamma, ag_gamma = parameters$ag_gamma,
-                           bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
-                           ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
-                           seagrass_thres = parameters$seagrass_thres, seagrass_slope = parameters$seagrass_slope,
-                           seagrass_slough = parameters$seagrass_slough,
-                           time_frac = (min_per_i / 60) * seagrass_each)
-
-      # simulate mineralization (detritus to nutrients pool)
-      rcpp_mineralization(seafloor = seafloor_values,
-                          detritus_fish_decomp = parameters$detritus_fish_decomp,
-                          detritus_mineralization = parameters$detritus_mineralization)
-
-    }
-
-    if (i > burn_in && starting_values$pop_n != 0) {
-
-      # simulate fish movement
-      simulate_movement(fishpop_values = fishpop_values,
-                        movement = movement, parameters = parameters,
-                        pop_thres_reserves = pop_thres_reserves,
-                        max_dist = max_dist, coords_reef = coords_reef,
-                        extent = extent, dimensions = dimensions)
-
-      # simulate fish respiration (26°C is mean water temperature in the Bahamas)
-      rcpp_respiration(fishpop = fishpop_values,
-                       resp_intercept = parameters$resp_intercept, resp_slope = parameters$resp_slope,
-                       resp_temp_low = parameters$resp_temp_low,
-                       resp_temp_optm = parameters$resp_temp_optm,
-                       resp_temp_max = parameters$resp_temp_max,
-                       water_temp = 26, min_per_i = min_per_i)
-
-      # simulate fishpop growth and including change of seafloor pools
-      rcpp_fishpop_growth(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
-                          seafloor = seafloor_values,
-                          pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
-                          pop_a = parameters$pop_a, pop_b = parameters$pop_b,
-                          pop_n_body = parameters$pop_n_body,
-                          pop_max_reserves = parameters$pop_max_reserves,
-                          pop_consumption_prop = parameters$pop_consumption_prop,
-                          extent = extent, dimensions = dimensions,
-                          min_per_i = min_per_i)
-
-      # simulate mortality
-      rcpp_mortality(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
-                     seafloor = seafloor_values,
-                     pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
-                     pop_max_reserves = parameters$pop_max_reserves,
-                     extent = extent, dimensions = dimensions)
-
-    }
-
-    # diffuse values between neighbors
-    rcpp_diffuse_values(seafloor = seafloor_values, cell_adj = cell_adj,
-                        nutrients_diffusion = parameters$nutrients_diffusion,
-                        detritus_diffusion = parameters$detritus_diffusion,
-                        detritus_fish_diffusion = parameters$detritus_fish_diffusion)
-
-    # remove nutrients from cells
-    rcpp_nutr_output(seafloor = seafloor_values, nutrients_output = parameters$nutrients_output)
-
-    # update tracking list
-    if (i %% save_each == 0) {
-
-      seafloor_track[[i / save_each + 1]] <- rlang::duplicate(seafloor_values)
-
-      fishpop_track[[i / save_each + 1]] <- rlang::duplicate(fishpop_values)
-
-    }
-
-    # print progress
-    if (verbose) {
-
-      message("\r> ...Progress: ", floor(i / max_i * 100), "% of total iterations... \t\t\t",
-              appendLF = FALSE)
-
-    }
-  }
-
-  # new line after last progress message
+   # new line after last progress message
   if (verbose) {
 
     message("")
