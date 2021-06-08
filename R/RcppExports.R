@@ -301,7 +301,7 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
-#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_mean,move_var,move_visibility Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
@@ -331,7 +331,6 @@ rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_thres_reserves, m
 #'
 #' @param seafloor Matrix with seafloor values.
 #' @param nutr_input Vector with amount of nutrient input each timestep.
-#' @param timestep Integer with current timestep.
 #'
 #' @details
 #' Simulate external nutrient input to the each cell. The \code{nutr_input}
@@ -522,7 +521,7 @@ rcpp_run_simulation <- function(seafloor, fishpop, seafloor_track, fishpop_track
 #' @description Rcpp seagrass growth
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param coords_reef Matrix with id and coords of reef cells.
+#' @param cells_reef Vector with ID of reef cells.
 #' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 #' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
 #' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.

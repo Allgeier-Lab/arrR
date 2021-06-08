@@ -10,8 +10,6 @@ rcpp_nutr_input(seafloor, nutr_input)
 \item{seafloor}{Matrix with seafloor values.}
 
 \item{nutr_input}{Vector with amount of nutrient input each timestep.}
-
-\item{timestep}{Integer with current timestep.}
 }
 \value{
 void
