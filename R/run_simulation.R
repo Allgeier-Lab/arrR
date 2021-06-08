@@ -93,6 +93,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                           died_consumption = numeric(), died_background = numeric(),
                           behavior = numeric())
 
+    # not used but needed
+    max_dist <- 0.0
+
   # get 95% of maximum movement distances
   } else {
 
