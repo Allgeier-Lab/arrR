@@ -19,7 +19,7 @@ rcpp_move_rand(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{coords_reef}{Matrix with coords of reef cells.}
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{move_mean, move_var}{Double with mean and variance movement parameter.}
 

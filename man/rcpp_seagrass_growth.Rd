@@ -26,13 +26,13 @@ rcpp_seagrass_growth(
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{cells_reef}{Vector with id of reef cells.}
-
 \item{bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma}{Numeric with uptake parameters.}
 
 \item{bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min}{Numerich with biomass values and parameters.}
 
 \item{seagrass_slough, seagrass_thres, seagrass_slope, time_frac}{Numerich with various parameters.}
+
+\item{coords_reef}{Matrix with id and coords of reef cells.}
 }
 \value{
 void

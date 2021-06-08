@@ -10,7 +10,7 @@
 //' @description Rcpp move random
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with coords of reef cells.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param move_mean,move_var Double with mean and variance movement parameter.
 //' @param move_visibility Double with "sight" distance of fish.
 //' @param max_dist Numeric with maximum movement distance

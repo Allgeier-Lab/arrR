@@ -1,9 +1,10 @@
 #include "rcpp_run_simulation.h"
+#include "progress.hpp"
+#include "progress_bar.hpp"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_mineralization.h"
-#include "rcpp_move_rand.h"
-#include "rcpp_move_behav.h"
+#include "rcpp_move_wrap.h"
 #include "rcpp_respiration.h"
 #include "rcpp_fishpop_growth.h"
 #include "rcpp_mortality.h"
@@ -21,7 +22,7 @@
 //' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 //' @param max_dist Double with maximum movement distance.
 //' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
-//' @param cells_reef, coords_reef Vector and Matrix with ID and coords of reef cells.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param cell_adj Matrix with cell adjacencies.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -49,8 +50,8 @@
 void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                          List seafloor_track, List fishpop_track, List parameters,
                          int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_thres_reserves,
-                         Rcpp::NumericVector cells_reef, Rcpp::NumericMatrix coords_reef,
-                         Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
+                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          Rcpp::NumericVector nutr_input,
                          int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                          bool verbose) {
@@ -63,7 +64,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
   // calc time_frac for rcpp_seagrass_growth
   double time_frac = (min_per_i / 60.0) * seagrass_each;
 
-  // setup progress
+  // get only ID of reefs as vector
+  Rcpp::NumericVector cells_reef = coords_reef(_, 0);
+
+  // setup progress bar
   Progress progress(max_i, verbose);
 
   // run simulation
@@ -76,8 +80,8 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
     }
 
-    // simulate nutrient input
-    if (nutr_input(i) != 0.0) {
+    // simulate nutrient input if present
+    if (nutr_input(i) > 0.0) {
 
       // simulate nutrient input
       rcpp_nutr_input(seafloor, nutr_input(i));
@@ -85,7 +89,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // simulate seagrass only each seagrass_each iterations
-    if ((i * min_per_i) % (min_per_i * seagrass_each) == 0) {
+    if ((i * min_per_i) % (seagrass_each * min_per_i) == 0) {
 
       // simulate seagrass growth
       rcpp_seagrass_growth(seafloor, cells_reef,
@@ -103,39 +107,13 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // fish indiviuals are present and i above burn_in
-    if (i >= burn_in && pop_n != 0) {
+    if ((i >= burn_in) && (pop_n != 0)) {
 
       // calculate new coordinates and activity
-      // MH: wrap into rcpp_move_wrap for cleaner code?
-
-      // random movement
-      if (movement == "rand") {
-
-        rcpp_move_rand(fishpop, coords_reef,
-                       as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]),
-                       as<double>(parameters["move_visibility"]), max_dist, FALSE, extent, dimensions);
-
-      // attracted movement
-      } else if (movement == "attr") {
-
-        rcpp_move_rand(fishpop, coords_reef,
-                       as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]),
-                       as<double>(parameters["move_visibility"]), max_dist, TRUE, extent, dimensions);
-
-      // behaviour movement
-      } else if (movement == "behav") {
-
-        rcpp_move_behav(fishpop, coords_reef, pop_thres_reserves,
-                        as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]),
-                        as<double>(parameters["move_reef"]), as<double>(parameters["move_border"]),
-                        as<double>(parameters["move_return"]), max_dist, extent, dimensions);
-
-      // throw error
-      } else {
-
-        throw std::range_error("Please select allowed 'movement' vale");
-
-      }
+      rcpp_move_wrap(fishpop, coords_reef, movement, pop_thres_reserves,
+                     as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]), as<double>(parameters["move_visibility"]),
+                     as<double>(parameters["move_reef"]), as<double>(parameters["move_border"]),
+                     as<double>(parameters["move_return"]), max_dist, extent, dimensions);
 
       // simulate fish respiration (26°C is mean water temperature in the Bahamas)
       rcpp_respiration(fishpop,

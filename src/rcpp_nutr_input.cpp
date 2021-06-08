@@ -6,7 +6,6 @@
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param nutr_input Vector with amount of nutrient input each timestep.
-//' @param timestep Integer with current timestep.
 //'
 //' @details
 //' Simulate external nutrient input to the each cell. The \code{nutr_input}

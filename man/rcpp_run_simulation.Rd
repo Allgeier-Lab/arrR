@@ -14,7 +14,6 @@ rcpp_run_simulation(
   movement,
   max_dist,
   pop_thres_reserves,
-  cells_reef,
   coords_reef,
   cell_adj,
   extent,
@@ -43,7 +42,7 @@ rcpp_run_simulation(
 
 \item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
 
-\item{cells_reef, }{coords_reef Vector and Matrix with ID and coords of reef cells.}
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{cell_adj}{Matrix with cell adjacencies.}
 

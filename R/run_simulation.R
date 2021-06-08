@@ -146,12 +146,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get cell id of reef cells
   cells_reef <- which(seafloor_values[, 16] == 1)
 
-  # get coordinates of reef cells
-  coords_reef <- seafloor_values[cells_reef, c(1,2)]
-
-  # # MH: cbind id to coords so only one matrix has to be passed on?
-  # coords_reef <- cbind(id = which(seafloor_values[, 16] == 1),
-  #                      seafloor_values[cells_reef, c(1,2)])
+  # get cell id of reef cells and coordinates of reef cells
+  coords_reef <- cbind(id = cells_reef,
+                       seafloor_values[cells_reef, c(1,2)])
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
@@ -184,7 +181,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                       seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                       parameters = parameters, pop_n = starting_values$pop_n,
                       movement = movement, max_dist = max_dist, pop_thres_reserves = pop_thres_reserves,
-                      cells_reef = cells_reef, coords_reef = coords_reef, cell_adj = cell_adj,
+                      coords_reef = coords_reef, cell_adj = cell_adj,
                       extent = extent, dimensions = dimensions, nutr_input = nutr_input,
                       max_i = max_i, min_per_i = min_per_i, save_each = save_each,
                       seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
