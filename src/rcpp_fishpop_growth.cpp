@@ -64,13 +64,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     double consumption_require = ((growth_weight + fishpop(fish_id_temp, 8) *
                                   fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
-    // MH: Checking
-    if (consumption_require <= 0) {
-
-      throw std::range_error("'consumption_require' < 0 which does not make sense.");
-
-    }
-
     // check mortality behavior 3 (foraging, reserves + detritus available)
     if (fishpop(fish_id_temp, 11) == 3.0) {
 
@@ -133,13 +126,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
               consumption_reserve = seafloor(cell_id_temp, 5);
 
             }
-          }
-
-          // MH: Checking
-          if (consumption_reserve < 0) {
-
-            throw std::range_error("'consumption_reserve' < 0 which does not make sense.");
-
           }
 
           // reduce detritus pool by reserves
@@ -206,13 +192,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
     // calc non-used consumption (excretion)
     double excretion_temp = consumption_require - (growth_weight * pop_n_body);
-
-    // MH: Checking
-    if (excretion_temp < 0) {
-
-      throw std::range_error("'excretion_temp' < 0 which does not make sense.");
-
-    }
 
     // add non-used consumption to nutrient pool
     seafloor(cell_id_temp, 4) += excretion_temp;

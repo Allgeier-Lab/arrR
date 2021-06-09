@@ -30,22 +30,8 @@ void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
     // get detritus amount that goes into nutrients pool
     double mineralization = seafloor(i, 5) * detritus_mineralization;
 
-    // MH: Checking
-    if (mineralization < 0) {
-
-      throw std::range_error("'mineralization' < 0 which does not make sense.");
-
-    }
-
     // calculate decomposition amount
     double fish_decompostion = seafloor(i, 6) * detritus_fish_decomp;
-
-    // MH: Checking
-    if (fish_decompostion < 0) {
-
-      throw std::range_error("'fish_decompostion' < 0 which does not make sense.");
-
-    }
 
     // add detritus to nutrients pool
     seafloor(i, 4) += mineralization;

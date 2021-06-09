@@ -52,13 +52,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
       // calculate detritus fraction from bg biomass
       double bg_detritus = seafloor(i, 3) * (seagrass_slough * bg_modf);
 
-      // MH: Checking
-      if (bg_detritus < 0) {
-
-        throw std::range_error("'bg_detritus' < 0 which does not make sense.");
-
-      }
-
       // remove detritus from bg biomass
       seafloor(i, 3) -= bg_detritus;
 
@@ -71,13 +64,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
       // calculate detritus fraction from ag biomass
       double ag_detritus = seafloor(i, 2) * (seagrass_slough * ag_modf);
-
-      // MH: Checking
-      if (ag_detritus < 0) {
-
-        throw std::range_error("'bg_detritus' < 0 which does not make sense.");
-
-      }
 
       // remove detritus from ag biomass
       seafloor(i, 2) -= ag_detritus;
@@ -94,13 +80,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
       double bg_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
                                           bg_v_max, bg_k_m, time_frac);
 
-      // MH: Checking
-      if (bg_uptake < 0) {
-
-        throw std::range_error("'bg_uptake' < 0 which does not make sense.");
-
-      }
-
       // remove bg nutrients uptake
       seafloor(i, 4) -= bg_uptake;
 
@@ -110,13 +89,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
       // calculate total possible nutrient uptake bg
       double ag_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
                                           ag_v_max, ag_k_m, time_frac);
-
-      // MH: Checking
-      if (ag_uptake < 0) {
-
-        throw std::range_error("'ag_uptake' < 0 which does not make sense.");
-
-      }
 
       // remove ag nutrients uptake
       seafloor(i, 4) -= ag_uptake;
@@ -134,13 +106,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
         // calculate bg growth
         double bg_growth = total_uptake / bg_gamma;
-
-        // MH: Checking
-        if (bg_growth < 0) {
-
-          throw std::range_error("'bg_growth' < 0 which does not make sense.");
-
-        }
 
         // add bg detritus to biomass
         seafloor(i, 3) += bg_growth;
@@ -165,13 +130,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
           // calculate bg growth
           double ag_growth = total_uptake / ag_gamma;
-
-          // MH: Checking
-          if (ag_growth < 0) {
-
-            throw std::range_error("'ag_growth' < 0 which does not make sense.");
-
-          }
 
           // add bg detritus to biomass
           seafloor(i, 2) += ag_growth;
@@ -201,13 +159,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
           // calculate bg growth
           double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
 
-          // MH: Checking
-          if (bg_growth < 0) {
-
-            throw std::range_error("'bg_growth' < 0 which does not make sense.");
-
-          }
-
           // add bg growth to biomass
           seafloor(i, 3) += bg_growth;
 
@@ -216,13 +167,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
           // calculate ag growth
           double ag_growth = (total_uptake * (1 - bg_ratio)) / ag_gamma;
-
-          // MH: Checking
-          if (ag_growth < 0) {
-
-            throw std::range_error("'ag_growth' < 0 which does not make sense.");
-
-          }
 
           // add ag growth to biomass
           seafloor(i, 2) += ag_growth;
@@ -241,13 +185,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         // calculate difference between current and max
         bg_detritus = seafloor(i, 3) - bg_biomass_max;
 
-        // MH: Checking
-        if (bg_detritus < 0) {
-
-          throw std::range_error("'bg_detritus' < 0 which does not make sense.");
-
-        }
-
         // remove difference from biomass
         seafloor(i, 3) -= bg_detritus;
 
@@ -264,13 +201,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
         // calculate difference between current and max
         ag_detritus = seafloor(i, 2) - ag_biomass_max;
-
-        // MH: Checking
-        if (ag_detritus < 0) {
-
-          throw std::range_error("'ag_detritus' < 0 which does not make sense.");
-
-        }
 
         // remove difference from biomass
         seafloor(i, 2) -= ag_detritus;
