@@ -61,20 +61,22 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       (std::pow(fishpop(fish_id_temp, 5), pop_b)));
 
     // consumption req based on growth in weight + metabolic costs based on weight + n required
-    double consumption_require = ((growth_weight + fishpop(fish_id_temp, 10) *
+    double consumption_require = ((growth_weight + fishpop(fish_id_temp, 8) *
                                   fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
     // check mortality behavior 3 (foraging, reserves + detritus available)
-    if (fishpop(fish_id_temp, 13) == 3.0) {
+    if (fishpop(fish_id_temp, 11) == 3.0) {
 
       // individual dies because consumption requirements cannot be met by
       // detritus in cell and reserves
-      if (consumption_require > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 7))) {
+      if (consumption_require > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 9))) {
 
         rcpp_reincarnate(fishpop, fishpop_track, seafloor,
                          fish_id_temp, cell_id_temp,
                          pop_linf, pop_n_body, pop_max_reserves,
                          "consumption");
+
+        continue;
 
       // individual grows because consumption requirements can be met
       } else {
@@ -99,10 +101,10 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
           // calculate amount that fish can eat per cell to fill reserves based on
           // maximum reserves
-          double consumption_limit = pop_consumption_prop * fishpop(fish_id_temp, 8);
+          double consumption_limit = pop_consumption_prop * fishpop(fish_id_temp, 10);
 
           // calculate difference between reserves max and current reserves
-          double nutrients_diff = fishpop(fish_id_temp, 8) - fishpop(fish_id_temp, 7);
+          double nutrients_diff = fishpop(fish_id_temp, 10) - fishpop(fish_id_temp, 9);
 
           // reserves can be filled completely
           if (consumption_limit >= nutrients_diff
@@ -130,28 +132,29 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           seafloor(cell_id_temp, 5) -= consumption_reserve;
 
           // increase reserves
-          fishpop(fish_id_temp, 7) += consumption_reserve;
+          fishpop(fish_id_temp, 9) += consumption_reserve;
 
-          // track total consumption
+          // track consumption cell
           seafloor(cell_id_temp, 13) += (consumption_require + consumption_reserve);
+
+          // track consumption fish
+          fishpop(fish_id_temp, 12) += (consumption_require + consumption_reserve);
 
         // reserves are needed to meet consumption requirement
         } else {
 
           // reduced reserves because there was not enough detritus in cell,
-          fishpop(fish_id_temp, 7) -= (consumption_require - seafloor(cell_id_temp, 5));
-
-          // track consumption
-          seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
+          fishpop(fish_id_temp, 9) -= (consumption_require - seafloor(cell_id_temp, 5));
 
           // set detritus pool to zero
           seafloor(cell_id_temp, 5) = 0.0;
 
+          // track consumption cell
+          seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
+
+          fishpop(fish_id_temp, 12) += seafloor(cell_id_temp, 5);
+
         }
-
-        // update max reserves based on weight
-        fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
-
       }
 
     // check mortality behavior 1 (@reef) and 2 (returning) (only reserves avail)
@@ -159,12 +162,14 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
       // MH: This would be where Issue #53 comes into play
       // individual dies because consumption requirements cannot be met by reserves
-      if (consumption_require > fishpop(fish_id_temp, 7)) {
+      if (consumption_require > fishpop(fish_id_temp, 9)) {
 
         rcpp_reincarnate(fishpop, fishpop_track, seafloor,
                          fish_id_temp, cell_id_temp,
                          pop_linf, pop_n_body, pop_max_reserves,
                          "consumption");
+
+        continue;
 
       // individual grows because consumption requirements can be met
       } else {
@@ -173,7 +178,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
 
         // fish uses reserves to meet consumption requirements
-        fishpop(fish_id_temp, 7) -= consumption_require;
+        fishpop(fish_id_temp, 9) -= consumption_require;
 
         // increase fish dimensions length
         fishpop(fish_id_temp, 5) += growth_length;
@@ -181,20 +186,23 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // increase fish dimensions weight
         fishpop(fish_id_temp, 6) += growth_weight;
 
-        // update max reserves based on weight
-        fishpop(fish_id_temp, 8) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
-
       }
     }
+
+    // update max reserves based on weight
+    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
 
     // calc non-used consumption (excretion)
     double excretion_temp = consumption_require - (growth_weight * pop_n_body);
 
-    // track excretion
-    seafloor(cell_id_temp, 14) += excretion_temp;
-
     // add non-used consumption to nutrient pool
     seafloor(cell_id_temp, 4) += excretion_temp;
+
+    // track excretion cell
+    seafloor(cell_id_temp, 14) += excretion_temp;
+
+    // track excretion fish
+    fishpop(fish_id_temp, 13) += excretion_temp;
 
   }
 }

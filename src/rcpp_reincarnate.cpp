@@ -32,14 +32,14 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   double y_coord = fishpop(fish_id, 3);
 
   // save current mortality counter
-  int died_consumption = fishpop(fish_id, 11);
+  int died_consumption = fishpop(fish_id, 14);
 
-  int died_background = fishpop(fish_id, 12);
+  int died_background = fishpop(fish_id, 15);
 
   // calculate increase in fish mass including reserves
   // mass_difference = weight - weight specific nutrient content + fish reserves
   double mass_diff = (fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) *
-    pop_n_body + fishpop(fish_id, 7);
+    pop_n_body + fishpop(fish_id, 9);
 
   // add to dead detritus pool
   seafloor(cell_id, 6) += mass_diff;
@@ -59,38 +59,50 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   if (reserves_wanted >= seafloor(cell_id, 5)) {
 
     // fish fully consumes detritus pool in cell
-    fishpop(fish_id, 7) = seafloor(cell_id, 5);
+    fishpop(fish_id, 9) = seafloor(cell_id, 5);
 
     // set pool to zero
     seafloor(cell_id, 5) = 0;
+
+    // track consumption cell
+    seafloor(cell_id, 13) += seafloor(cell_id, 5);
+
+    // track consumption fish
+    fishpop(fish_id, 12) += seafloor(cell_id, 5);
 
   // detritus pool is larger than what is wanted, so only subset is used
   } else {
 
     // wanted reserves can be filled completely
-    fishpop(fish_id, 7) = reserves_wanted;
+    fishpop(fish_id, 9) = reserves_wanted;
 
     // reduced detritus pool by wanted reserves
     seafloor(cell_id, 5) -= reserves_wanted;
+
+    // track consumption cell
+    seafloor(cell_id, 13) += reserves_wanted;
+
+    // track consumption fish
+    fishpop(fish_id, 12) += reserves_wanted;
 
   }
 
   // update mortality counter
   if (reason == "consumption") {
 
-    fishpop(fish_id, 11) = died_consumption + 1;
+    fishpop(fish_id, 14) = died_consumption + 1;
 
-    fishpop(fish_id, 12) = died_background;
+    fishpop(fish_id, 15) = died_background;
 
   } else if (reason == "background") {
 
-    fishpop(fish_id, 11) = died_consumption;
+    fishpop(fish_id, 14) = died_consumption;
 
-    fishpop(fish_id, 12) = died_background + 1;
+    fishpop(fish_id, 15) = died_background + 1;
 
   } else {
 
-    throw std::range_error("'reason must be 'consumption' or 'background'");
+    throw std::range_error("'reason' must be 'consumption' or 'background'.");
 
   }
 }

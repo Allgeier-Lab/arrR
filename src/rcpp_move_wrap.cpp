@@ -61,7 +61,7 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
     // throw error
   } else {
 
-    throw std::range_error("Please select allowed 'movement' vale");
+    throw std::range_error("'movement' must be either 'rand', 'attr', or 'behav'.");
 
   }
 }

@@ -85,18 +85,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # check if fishpop is NULL
   if (is.null(fishpop)) {
 
-    fishpop <- data.frame(id = numeric(), age = numeric(),
-                          x = numeric(), y = numeric(), heading = numeric(),
-                          length = numeric(), weight = numeric(),
-                          reserves = numeric(), reserves_max = numeric(),
-                          activity = numeric(), respiration = numeric(),
-                          died_consumption = numeric(), died_background = numeric(),
-                          behavior = numeric())
+    # create empty dataframe
+    fishpop <- setup_fishpop(seafloor = seafloor, starting_values = list(pop_n = 0),
+                             verbose = FALSE)
 
     # not used but needed objects
     max_dist <- 0.0
 
-    pop_thres_reserves <- rep(x = 0.0, times = 5)
+    pop_thres_reserves <- 0.0
 
   # get 95% of maximum movement distances
   } else {

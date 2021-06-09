@@ -59,12 +59,14 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
     fishpop <- data.frame(id = 1:starting_values$pop_n, age = 0,
                           x = x, y = y, heading = heading,
                           length = size$length, weight = size$weight,
-                          reserves = reserves_max, reserves_max = reserves_max,
                           activity = numeric(starting_values$pop_n),
                           respiration = numeric(starting_values$pop_n),
+                          reserves = reserves_max, reserves_max = reserves_max,
+                          behavior = numeric(starting_values$pop_n),
+                          consumption = numeric(starting_values$pop_n),
+                          excretion = numeric(starting_values$pop_n),
                           died_consumption = numeric(starting_values$pop_n),
-                          died_background = numeric(starting_values$pop_n),
-                          behavior = numeric(starting_values$pop_n))
+                          died_background = numeric(starting_values$pop_n))
 
   # No individuals need to be created
   } else {
@@ -73,12 +75,10 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
     fishpop <- data.frame(id = numeric(), age = numeric(),
                           x = numeric(), y = numeric(), heading = numeric(),
                           length = numeric(), weight = numeric(),
+                          activity = numeric(), respiration = numeric(),
                           reserves = numeric(), reserves_max = numeric(),
-                          activity = numeric(),
-                          respiration = numeric(),
-                          died_consumption = numeric(),
-                          died_background = numeric(),
-                          behavior = numeric())
+                          behavior = numeric(), consumption = numeric(), excretion = numeric(),
+                          died_consumption = numeric(), died_background = numeric())
 
   }
 

@@ -39,7 +39,7 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
     fishpop(i, 3) = xy_temp(1);
 
     // update activity
-    fishpop(i, 9) = (1 / max_dist) * move_dist + 1;
+    fishpop(i, 7) = (1 / max_dist) * move_dist + 1;
 
     // turn fish randomly after moving (runif always returns vector, thus (0))
     // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)

@@ -46,7 +46,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     double move_dist = 0.0;
 
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
+    if (fishpop(i, 9) >= (pop_thres_reserves(i) * fishpop(i, 10))) {
 
       // init vector for temp coords
       Rcpp::NumericVector coords_temp(2, 0.0);
@@ -63,7 +63,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
       if (closest_reef(1) <= move_border) {
 
         //Behavior column = 1
-        fishpop(i, 13) = 1.0;
+        fishpop(i, 11) = 1.0;
 
         // move_dist is now from a log-normal distribution within Xm of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
@@ -72,7 +72,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
       } else {
 
         // set behavior column
-        fishpop(i, 13) = 2.0;
+        fishpop(i, 11) = 2.0;
 
         double theta = rcpp_get_bearing(coords_temp(0), coords_temp(1),
                                         coords_reef(closest_reef(0), 0),
@@ -100,7 +100,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     } else {
 
       // Behavior column = 3
-      fishpop(i, 13) = 3.0;
+      fishpop(i, 11) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
