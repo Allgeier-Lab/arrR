@@ -185,8 +185,8 @@ rcpp_get_bearing <- function(x_fish, y_fish, x_reef, y_reef) {
 #' @rdname rcpp_mineralization
 #'
 #' @export
-rcpp_mineralization <- function(seafloor, detritus_fish_decomp, detritus_mineralization) {
-    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_fish_decomp, detritus_mineralization))
+rcpp_mineralization <- function(seafloor, detritus_mineralization, detritus_fish_decomp) {
+    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_mineralization, detritus_fish_decomp))
 }
 
 #' rcpp_modify_degree

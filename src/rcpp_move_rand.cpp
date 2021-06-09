@@ -47,7 +47,7 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
     if (reef_attraction) {
 
       // vector with direction angles
-      NumericVector angles = NumericVector::create(-45.0, 0.0, 45.0);
+      Rcpp::NumericVector angles = Rcpp::NumericVector::create(-45.0, 0.0, 45.0);
 
       // create vector for 3 distances (left, straight, right)
       Rcpp::NumericVector distance(angles.length(), 0.0);
@@ -62,7 +62,7 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
         double y_temp = fishpop(i, 3) +
           (move_visibility * sin(std::fmod((fishpop(i, 4) + angles(j)), 360) * (PI / 180)));
 
-        NumericVector coords_temp = NumericVector::create(x_temp, y_temp);
+        Rcpp::NumericVector coords_temp = Rcpp::NumericVector::create(x_temp, y_temp);
 
         coords_temp = rcpp_translate_torus(coords_temp, extent);
 

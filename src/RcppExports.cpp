@@ -108,14 +108,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_mineralization
-void rcpp_mineralization(Rcpp::NumericMatrix seafloor, double detritus_fish_decomp, double detritus_mineralization);
-RcppExport SEXP _arrR_rcpp_mineralization(SEXP seafloorSEXP, SEXP detritus_fish_decompSEXP, SEXP detritus_mineralizationSEXP) {
+void rcpp_mineralization(Rcpp::NumericMatrix seafloor, double detritus_mineralization, double detritus_fish_decomp);
+RcppExport SEXP _arrR_rcpp_mineralization(SEXP seafloorSEXP, SEXP detritus_mineralizationSEXP, SEXP detritus_fish_decompSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_fish_decomp(detritus_fish_decompSEXP);
     Rcpp::traits::input_parameter< double >::type detritus_mineralization(detritus_mineralizationSEXP);
-    rcpp_mineralization(seafloor, detritus_fish_decomp, detritus_mineralization);
+    Rcpp::traits::input_parameter< double >::type detritus_fish_decomp(detritus_fish_decompSEXP);
+    rcpp_mineralization(seafloor, detritus_mineralization, detritus_fish_decomp);
     return R_NilValue;
 END_RCPP
 }

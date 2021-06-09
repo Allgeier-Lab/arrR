@@ -24,7 +24,7 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {
 
     // calculate new x coord
-    NumericVector xy_temp = NumericVector::create(
+    Rcpp::NumericVector xy_temp = Rcpp::NumericVector::create(
       fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
       fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
     );

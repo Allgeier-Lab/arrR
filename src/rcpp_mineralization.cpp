@@ -22,27 +22,41 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
-                         double detritus_fish_decomp, double detritus_mineralization) {
+                         double detritus_mineralization, double detritus_fish_decomp) {
 
   // loop through all seafloor values
   for (int i = 0; i < seafloor.nrow(); i++) {
 
-    // calculate decomposition amount
-    double fish_decompostion = seafloor(i, 6) * detritus_fish_decomp;
-
-    // redistribute fish detritus to active detritus
-    seafloor(i, 5) += fish_decompostion;
-
-    seafloor(i, 6) -= fish_decompostion;
-
     // get detritus amount that goes into nutrients pool
     double mineralization = seafloor(i, 5) * detritus_mineralization;
 
-    // add to nutrients pool
+    // MH: Checking
+    if (mineralization < 0) {
+
+      throw std::range_error("'mineralization' < 0 which does not make sense.");
+
+    }
+
+    // calculate decomposition amount
+    double fish_decompostion = seafloor(i, 6) * detritus_fish_decomp;
+
+    // MH: Checking
+    if (fish_decompostion < 0) {
+
+      throw std::range_error("'fish_decompostion' < 0 which does not make sense.");
+
+    }
+
+    // add detritus to nutrients pool
     seafloor(i, 4) += mineralization;
 
-    // remove from detritus pool
+    // remove biomass from detritus pool
     seafloor(i, 5) -= mineralization;
+
+    // redistribute fish detritus to biomass detritus
+    seafloor(i, 5) += fish_decompostion;
+
+    seafloor(i, 6) -= fish_decompostion;
 
   }
 }

@@ -64,6 +64,13 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     double consumption_require = ((growth_weight + fishpop(fish_id_temp, 8) *
                                   fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
 
+    // MH: Checking
+    if (consumption_require <= 0) {
+
+      throw std::range_error("'consumption_require' < 0 which does not make sense.");
+
+    }
+
     // check mortality behavior 3 (foraging, reserves + detritus available)
     if (fishpop(fish_id_temp, 11) == 3.0) {
 
@@ -128,6 +135,13 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
             }
           }
 
+          // MH: Checking
+          if (consumption_reserve < 0) {
+
+            throw std::range_error("'consumption_reserve' < 0 which does not make sense.");
+
+          }
+
           // reduce detritus pool by reserves
           seafloor(cell_id_temp, 5) -= consumption_reserve;
 
@@ -143,7 +157,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // reserves are needed to meet consumption requirement
         } else {
 
-          // reduced reserves because there was not enough detritus in cell,
+          // reduced reserves because there was not enough detritus in cell
           fishpop(fish_id_temp, 9) -= (consumption_require - seafloor(cell_id_temp, 5));
 
           // set detritus pool to zero
@@ -152,6 +166,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           // track consumption cell
           seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
 
+          // track consumption fish
           fishpop(fish_id_temp, 12) += seafloor(cell_id_temp, 5);
 
         }
@@ -189,11 +204,15 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       }
     }
 
-    // update max reserves based on weight
-    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
-
     // calc non-used consumption (excretion)
     double excretion_temp = consumption_require - (growth_weight * pop_n_body);
+
+    // MH: Checking
+    if (excretion_temp < 0) {
+
+      throw std::range_error("'excretion_temp' < 0 which does not make sense.");
+
+    }
 
     // add non-used consumption to nutrient pool
     seafloor(cell_id_temp, 4) += excretion_temp;
@@ -203,6 +222,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
     // track excretion fish
     fishpop(fish_id_temp, 13) += excretion_temp;
+
+    // update max reserves based on weight
+    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
 
   }
 }

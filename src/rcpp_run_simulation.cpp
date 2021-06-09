@@ -67,6 +67,14 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
   // get only ID of reefs as vector
   Rcpp::NumericVector cells_reef = coords_reef(_, 0);
 
+  // flag if diffusion needs to be run
+  bool diffuse_flag = (as<double>(parameters["nutrients_diffusion"]) > 0.0) ||
+    (as<double>(parameters["detritus_diffusion"]) > 0.0) ||
+    (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
+
+  // flag if output needs to be run
+  bool output_flag = as<double>(parameters["nutrients_output"]) > 0.0;
+
   // setup progress bar
   Progress progress(max_i, verbose);
 
@@ -101,8 +109,8 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
                            as<double>(parameters["seagrass_slough"]), time_frac);
 
       // simulate mineralization (detritus to nutrients pool)
-      rcpp_mineralization(seafloor, as<double>(parameters["detritus_fish_decomp"]),
-                          as<double>(parameters["detritus_mineralization"]));
+      rcpp_mineralization(seafloor, as<double>(parameters["detritus_mineralization"]),
+                          as<double>(parameters["detritus_fish_decomp"]));
 
     }
 
@@ -135,13 +143,18 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
     }
 
+    // only diffuse if all parameters larger than zero
+    if (diffuse_flag) {
+
     // diffuse values between neighbors
     rcpp_diffuse_values(seafloor, cell_adj,
                         as<double>(parameters["nutrients_diffusion"]), as<double>(parameters["detritus_diffusion"]),
                         as<double>(parameters["detritus_fish_diffusion"]));
 
+    }
+
     // remove nutrients from cells if output parameter > 0
-    if(as<double>(parameters["nutrients_output"]) > 0.0) {
+    if (output_flag) {
 
       rcpp_nutr_output(seafloor, as<double>(parameters["nutrients_output"]));
 
