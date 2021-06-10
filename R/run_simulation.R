@@ -239,7 +239,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                  starting_values = starting_values, parameters = parameters,
                  nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
-                 save_each = save_each, extent = raster::extent(extent), grain = raster::res(seafloor),
+                 save_each = save_each, seagrass_each = seagrass_each,
+                 extent = raster::extent(extent), grain = raster::res(seafloor),
                  coords_reef = coords_reef)
 
   # set class of result
