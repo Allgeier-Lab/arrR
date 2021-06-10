@@ -67,7 +67,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
 
 /*** R
 # create new individual
-rcpp_mortality_backgr(fishpop = fishpop_values, fishpop_track = fishpop_track,
+rcpp_mortality_backgr(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
                       seafloor = seafloor_values,
                       pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
                       pop_max_reserves = parameters$pop_max_reserves,

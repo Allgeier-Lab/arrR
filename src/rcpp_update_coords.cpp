@@ -48,5 +48,5 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
 }
 
 /*** R
-update_coords(fishpop_values, i, move_dist, max_dist);
+update_coords(fishpop = fishpop_values, i = i, move_dist = move_dist, max_dist = max_dist)
 */

@@ -34,6 +34,5 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output) {
 
 /*** R
 # diffuse values and save result
-rcpp_nutr_output(seafloor = seafloor_values,
-                   nutrients_output = parameters$nutrients_output)
+rcpp_nutr_output(seafloor = seafloor_values, nutrients_output = parameters$nutrients_output)
 */

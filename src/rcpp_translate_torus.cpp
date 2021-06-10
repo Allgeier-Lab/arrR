@@ -52,12 +52,8 @@ Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
 }
 
 /*** R
-
 # rcpp_translate_torus
-rcpp_translate_torus(coords = c(5, -5.5),
-                     extent = c(-10, 10, -10, 10))
+rcpp_translate_torus(coords = c(5, -5.5), extent = c(-10, 10, -10, 10))
 
-rcpp_translate_torus(coords = c(12.5, -5.5),
-                     extent = c(-10, 10, -10, 10))
-
+rcpp_translate_torus(coords = c(12.5, -5.5), extent = c(-10, 10, -10, 10))
 */

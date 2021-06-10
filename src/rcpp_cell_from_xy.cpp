@@ -70,7 +70,6 @@ int rcpp_cell_from_xy(Rcpp::NumericVector coords,
 }
 
 /*** R
-
 # rcpp_cell_from_xy
 x <- runif(n = 1, min = -50, max = 50)
 y <- runif(n = 1, min = -50, max = 50)

@@ -61,14 +61,15 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
     // throw error
   } else {
 
-    throw std::range_error("'movement' must be either 'rand', 'attr', or 'behav'.");
+    Rcpp::stop("'movement' must be either 'rand', 'attr', or 'behav'.");
 
   }
 }
 
 /*** R
-rcpp_move_wrap(fishpop, coords_reef, movement, pop_thres_reserves,
-               as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]), as<double>(parameters["move_visibility"]),
-               as<double>(parameters["move_reef"]), as<double>(parameters["move_border"]),
-               as<double>(parameters["move_return"]), max_dist, extent, dimensions))
+rcpp_move_wrap(fishpop = fishpop_values, coords_reef = coords_reef, movement = movement,
+               pop_thres_reserves = pop_thres_reserves,
+               move_mean = parameters$move_mean, move_var = parameters$move_var, move_visibility = parameters$move_visibility,
+               move_reef = parameters$move_reef, move_border = parameters$move_border, move_return = parameters$move_return,
+               max_dist = max_dist, extent = extent, dimensions = dimensions)
 */

@@ -114,15 +114,10 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
 }
 
 /*** R
-rcpp_move_behav(fishpop = fishpop_values,
-                coords_reef = coords_reef,
-                pop_thres_reserves = pop_thres_reserves,
-                move_mean = parameters$move_mean,
-                move_var = parameters$move_var,
-                move_reef = parameters$move_reef,
-                move_border = parameters$move_border,
-                move_return = parameters$move_return,
-                max_dist = max_dist,
-                extent = as.vector(extent, mode = "numeric"),
+rcpp_move_behav(fishpop = fishpop_values, coords_reef = coords_reef,
+                pop_thres_reserves = pop_thres_reserves, move_mean = parameters$move_mean,
+                move_var = parameters$move_var, move_reef = parameters$move_reef,
+                move_border = parameters$move_border, move_return = parameters$move_return,
+                max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),
                 dimensions = dimensions)
 */

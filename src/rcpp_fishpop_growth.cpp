@@ -210,7 +210,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
 /*** R
 rcpp_fishpop_growth(fishpop = fishpop_values,
-                    fishpop_track = fishpop_track, seafloor = seafloor_values,
+                    fishpop_track = fishpop_track[[1]], seafloor = seafloor_values,
                     pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
                     pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                     pop_n_body = parameters$pop_n_body,

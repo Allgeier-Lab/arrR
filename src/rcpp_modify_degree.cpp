@@ -34,3 +34,7 @@ double rcpp_modify_degree(double x, double y) {
 
   return(x);
 }
+
+/*** R
+rcpp_modify_degree(x = 332, y = 15)
+*/

@@ -74,13 +74,8 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
 }
 
 /*** R
-resp_intercept <- parameters$resp_intercept * (1 / 24) * (1 / 60) * min_per_i
-
-rcpp_respiration(fishpop = fishpop_values,
-                 resp_intercept = parameters$resp_intercept,
-                 resp_slope = parameters$resp_slope,
-                 resp_temp_low = parameters$resp_temp_low,
-                 resp_temp_optm = parameters$resp_temp_optm,
-                 resp_temp_max = parameters$resp_temp_max,
+rcpp_respiration(fishpop = fishpop_values, resp_intercept = parameters$resp_intercept,
+                 resp_slope = parameters$resp_slope, resp_temp_low = parameters$resp_temp_low,
+                 resp_temp_optm = parameters$resp_temp_optm, resp_temp_max = parameters$resp_temp_max,
                  water_temp = water_temp, min_per_i = min_per_i)
 */

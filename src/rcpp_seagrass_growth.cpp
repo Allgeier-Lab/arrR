@@ -223,17 +223,11 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 }
 
 /*** R
-rcpp_seagrass_growth(seafloor = seafloor_values,
-                     coords_reef = coords_reef,
-                     bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
-                     bg_gamma = parameters$bg_gamma,
-                     ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
-                     ag_gamma = parameters$ag_gamma,
-                     bg_biomass_max = parameters$bg_biomass_max,
-                     bg_biomass_min = parameters$bg_biomass_min,
-                     ag_biomass_max = parameters$ag_biomass_max,
-                     ag_biomass_min = parameters$ag_biomass_min,
-                     seagrass_thres = parameters$seagrass_thres,
-                     seagrass_slough = parameters$seagrass_slough,
+rcpp_seagrass_growth(seafloor = seafloor_values, coords_reef = coords_reef,
+                     bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m, bg_gamma = parameters$bg_gamma,
+                     ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m, ag_gamma = parameters$ag_gamma,
+                     bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
+                     ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
+                     seagrass_thres = parameters$seagrass_thres, seagrass_slough = parameters$seagrass_slough,
                      min_per_i = min_per_i)
 */

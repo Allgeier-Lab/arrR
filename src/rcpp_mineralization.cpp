@@ -46,3 +46,9 @@ void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
 
   }
 }
+
+/*** R
+cpp_mineralization(seafloor = seafloor_values,
+                   detritus_mineralization = parameters$detritus_mineralization,
+                   detritus_fish_decomp = parameters$detritus_mineralization)
+*/

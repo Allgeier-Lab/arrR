@@ -102,7 +102,16 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   } else {
 
-    throw std::range_error("'reason' must be 'consumption' or 'background'.");
+    Rcpp::stop("'reason' must be 'consumption' or 'background'.");
 
   }
 }
+
+/*** R
+rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]]
+                 seafloor = seafloor_values,
+                 fish_id = fish_id_temp, cell_id = cell_id,
+                 pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
+                 pop_max_reserves = pop_max_reserves, reason = "consumption")
+
+*/

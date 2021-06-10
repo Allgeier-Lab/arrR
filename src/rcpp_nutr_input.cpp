@@ -34,7 +34,5 @@ void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input) {
 }
 
 /*** R
-rcpp_nutr_input(seafloor = seafloor_values,
-               nutr_input = nutr_input,
-               timestep = timestep)
+rcpp_nutr_input(seafloor = seafloor_values,nutr_input = nutr_input)
 */

@@ -36,7 +36,11 @@ double rcpp_convert_nutr(double x, String to) {
   // throw error if to option is not present
   } else {
 
-    throw std::range_error("Please select either to='g' or to='umol'.");
+    Rcpp::stop("Please select either to='g' or to='umol'.");
 
   }
 }
+
+/*** R
+rcpp_convert_nutr(x = 0.005, to = "umol")
+*/

@@ -50,7 +50,6 @@ double rcpp_nutr_uptake(double nutrients, double biomass,
 }
 
 /*** R
-
 nutrients <- 0.003  # g nutrients
 biomass <- 100 # g dry biomass
 v_max <- parameters$ag_v_max

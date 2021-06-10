@@ -91,13 +91,9 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
 
 /*** R
 # calculate new coordinates and activity
-rcpp_move_rand(fishpop = fishpop_values,
-               coords_reef = coords_reef,
-               move_mean = parameters$move_mean,
-               move_var = parameters$move_var,
+rcpp_move_rand(fishpop = fishpop_values, coords_reef = coords_reef,
+               move_mean = parameters$move_mean, move_var = parameters$move_var,
                move_visibility = parameters$move_visibility,
-               max_dist = max_dist,
-               extent = as.vector(extent, mode = "numeric"),
-               dimensions = dimensions,
-               reef_attraction = reef_attraction)
+               max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),
+               dimensions = dimensions, reef_attraction = reef_attraction)
 */
