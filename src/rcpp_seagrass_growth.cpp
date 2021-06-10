@@ -101,8 +101,8 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
       // seagrass growth //
 
-      // uptake not big enough to keep bg stable
-      if (total_uptake <= (bg_detritus * bg_gamma)) {
+      // uptake not big enough to keep bg stable; bg and ag shrinks
+      if (total_uptake < (bg_detritus * bg_gamma)) {
 
         // calculate bg growth
         double bg_growth = total_uptake / bg_gamma;
@@ -125,16 +125,16 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         // remove bg detritus from uptake
         total_uptake -= bg_detritus * bg_gamma;
 
-        // remaining uptake cannot keep ag stable, all uptake to ag
-        if (total_uptake <= (ag_detritus * ag_gamma)) {
+        // remaining uptake cannot keep ag stable; ag shrinks
+        if (total_uptake < (ag_detritus * ag_gamma)) {
 
-          // calculate bg growth
+          // calculate ag growth
           double ag_growth = total_uptake / ag_gamma;
 
-          // add bg detritus to biomass
+          // add ag detritus to biomass
           seafloor(i, 2) += ag_growth;
 
-          // track bg biomass production
+          // track ag biomass production
           seafloor(i, 7) += ag_growth;
 
         // keep ag stable and use remaining nutrients according to sigmoid
@@ -149,7 +149,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
           // update uptake
           total_uptake -= ag_detritus * ag_gamma;
 
-          // additional growth
+          // additional growth //
 
           // calculate potential allocation ratio
           double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
@@ -213,6 +213,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
 
       }
 
+    // MH: Just get rid of this?
     // reef cell; do nothing
     } else {
 

@@ -53,7 +53,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   fishpop(fish_id, 3) = y_coord;
 
   // calculate new reserves for new fish of new size
-  double reserves_wanted = pop_n_body * fishpop(fish_id, 6) * pop_max_reserves;
+  double reserves_wanted = pop_n_body * fishpop(fish_id, 6) * (pop_max_reserves * 0.5);
 
   // detritus pool is smaller than wanted reserves, detritus pool is fully used
   if (reserves_wanted >= seafloor(cell_id, 5)) {
