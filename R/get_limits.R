@@ -34,6 +34,15 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   # get timestep
   i <- timestep
 
+  check_i <- vapply(result, function(x) i %in% x$seafloor$timestep,
+                    FUN.VALUE = logical(1))
+
+  if (!all(check_i)) {
+
+    stop("'timestep' is not present in all provided 'mdl_rn' objects.", call. = FALSE)
+
+  }
+
   # loop through result list
   limits <- lapply(X = result, FUN = function(x) {
 
