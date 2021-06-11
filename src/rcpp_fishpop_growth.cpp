@@ -191,7 +191,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     }
 
     // calc non-used consumption (excretion)
-    double excretion_temp = consumption_require - (growth_weight * pop_n_body);
+    double excretion_temp = (consumption_require - (growth_weight * pop_n_body));
 
     // add non-used consumption to nutrient pool
     seafloor(cell_id_temp, 4) += excretion_temp;

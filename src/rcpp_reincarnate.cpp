@@ -38,8 +38,8 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   // calculate increase in fish mass including reserves
   // mass_difference = weight - weight specific nutrient content + fish reserves
-  double mass_diff = (fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) *
-    pop_n_body + fishpop(fish_id, 9);
+  double mass_diff = ((fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) * pop_n_body) +
+    fishpop(fish_id, 9);
 
   // add to dead detritus pool
   seafloor(cell_id, 6) += mass_diff;
