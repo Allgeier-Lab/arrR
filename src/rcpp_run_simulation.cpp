@@ -146,10 +146,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     // only diffuse if all parameters larger than zero
     if (diffuse_flag) {
 
-    // diffuse values between neighbors
-    rcpp_diffuse_values(seafloor, cell_adj,
-                        as<double>(parameters["nutrients_diffusion"]), as<double>(parameters["detritus_diffusion"]),
-                        as<double>(parameters["detritus_fish_diffusion"]));
+      // diffuse values between neighbors
+      rcpp_diffuse_values(seafloor, cell_adj,
+                          as<double>(parameters["nutrients_diffusion"]), as<double>(parameters["detritus_diffusion"]),
+                          as<double>(parameters["detritus_fish_diffusion"]));
 
     }
 
