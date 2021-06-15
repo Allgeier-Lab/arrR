@@ -4,12 +4,14 @@
 \alias{get_stable_values}
 \title{get_stable_values}
 \usage{
-get_stable_values(starting_values, parameters)
+get_stable_values(starting_values, parameters, fishpop = FALSE)
 }
 \arguments{
 \item{starting_values}{List with all starting value parameters.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{fishpop}{Logical if TRUE and estimate of the maximum consumption is added to detritus.}
 }
 \value{
 list
