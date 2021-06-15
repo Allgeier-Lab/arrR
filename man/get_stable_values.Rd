@@ -4,7 +4,12 @@
 \alias{get_stable_values}
 \title{get_stable_values}
 \usage{
-get_stable_values(starting_values, parameters, fishpop = FALSE)
+get_stable_values(
+  starting_values,
+  parameters,
+  fishpop = FALSE,
+  min_per_i = NULL
+)
 }
 \arguments{
 \item{starting_values}{List with all starting value parameters.}
@@ -12,6 +17,8 @@ get_stable_values(starting_values, parameters, fishpop = FALSE)
 \item{parameters}{List with all model parameters.}
 
 \item{fishpop}{Logical if TRUE and estimate of the maximum consumption is added to detritus.}
+
+\item{min_per_i}{Integer to specify minutes per i.}
 }
 \value{
 list

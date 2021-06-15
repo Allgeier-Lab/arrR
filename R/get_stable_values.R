@@ -5,6 +5,7 @@
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param fishpop Logical if TRUE and estimate of the maximum consumption is added to detritus.
+#' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
 #' Returns a list with starting values which allow stable seagrass growth if no
@@ -20,7 +21,7 @@
 #' @rdname get_stable_values
 #'
 #' @export
-get_stable_values <- function(starting_values, parameters, fishpop = FALSE) {
+get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_per_i = NULL) {
 
   # calculate detritus modifier for bg biomass
   bg_modf <- (starting_values$bg_biomass - parameters$bg_biomass_min) /
@@ -50,6 +51,12 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE) {
 
   # calculate amount of consumpotion for maximum size
   if (fishpop) {
+
+    if (is.null(min_per_i)) {
+
+      stop("Please provide 'min_per_i' argument", call. = FALSE)
+
+    }
 
     # calc growth in length and weight for maximum pop_linf
     growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i * parameters$pop_linf
