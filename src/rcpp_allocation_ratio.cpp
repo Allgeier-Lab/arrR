@@ -46,7 +46,7 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
   }
 
   // set to 100% if below threshold; never true if threshold < 0
-  if (biomass < threshold_temp) {
+  if (biomass <= threshold_temp) {
 
     ratio = 1.0;
 
@@ -67,9 +67,16 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
     // calc turning point of allocation function
     double midpoint = -log(2.0) / log(std::abs(threshold));
 
-    // calculate ratio0
+    // calculate ratio
     ratio = 1 - (1 / (1 + std::pow((std::pow(biomass_norm, midpoint) /
       (1 - std::pow(biomass_norm, midpoint))), -slope)));
+
+  }
+
+  // check if ratio is not NaN (because 0 division)
+  if (std::isnan(ratio)) {
+
+    Rcpp::stop("Allocation ratio is NaN.");
 
   }
 
