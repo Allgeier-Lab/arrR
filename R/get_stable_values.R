@@ -4,6 +4,7 @@
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
+#' @param fishpop Logical if TRUE and estimate of the maximum consumption is added to detritus.
 #'
 #' @details
 #' Returns a list with starting values which allow stable seagrass growth if no
@@ -19,7 +20,7 @@
 #' @rdname get_stable_values
 #'
 #' @export
-get_stable_values <- function(starting_values, parameters) {
+get_stable_values <- function(starting_values, parameters, fishpop = FALSE) {
 
   # calculate detritus modifier for bg biomass
   bg_modf <- (starting_values$bg_biomass - parameters$bg_biomass_min) /
@@ -46,6 +47,31 @@ get_stable_values <- function(starting_values, parameters) {
   # if detritus_mineralization is zero detritus pool will be Inf
   detritus_pool <- ifelse(test = is.infinite(detritus_pool),
                           yes = 0, no = detritus_pool)
+
+  # calculate amount of consumpotion for maximum size
+  if (fishpop) {
+
+    # calc growth in length and weight for maximum pop_linf
+    growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i * parameters$pop_linf
+
+    growth_weight <- parameters$pop_a * ((parameters$pop_linf + growth_length) ^ parameters$pop_b -
+                                           parameters$pop_linf ^ parameters$pop_b)
+
+    # calculate maximum weight
+    max_weight <- parameters$pop_a * (parameters$pop_linf ^ parameters$pop_b)
+
+    # MH: Calculate based on parameters
+    # mean respiration value
+    respiration <- 0.0015
+
+    # calculate consumption requirements
+    consumption_require <- ((growth_weight + respiration * max_weight) / 0.55) * parameters$pop_n_body
+
+    # MH: This assumes that all fish are in the same cell at the same time. Maybe use floor(pop_n / 2)
+    # multiply by number of fish and add to value
+    detritus_pool <- detritus_pool + consumption_require * starting_values$pop_n
+
+  }
 
   # combine to result list
   result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool)
