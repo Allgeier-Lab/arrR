@@ -212,13 +212,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         seafloor(i, 9) += ag_detritus;
 
       }
-
-    // MH: Just get rid of this?
-    // reef cell; do nothing
-    } else {
-
-      continue;
-
     }
   }
 }
