@@ -51,8 +51,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
                                                                dimensions, extent) - 1;
 
     // calculate growth in length and weight
-    double growth_length = pop_k *
-      (1.0 / 365.0) * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i *
+    double growth_length = pop_k * (365.0 * 24.0 * 60.0) * min_per_i *
       (pop_linf - fishpop(fish_id_temp, 5));
 
     // length intial + change in length^b

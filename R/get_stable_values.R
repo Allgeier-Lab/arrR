@@ -58,25 +58,27 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
 
     }
 
+    size <- parameters$pop_linf / 2
+
+    # calculate weight
+    weight <- parameters$pop_a * (size ^ parameters$pop_b)
+
     # calc growth in length and weight for maximum pop_linf
-    growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i * parameters$pop_linf
+    growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i * (parameters$pop_linf - size)
 
-    growth_weight <- parameters$pop_a * ((parameters$pop_linf + growth_length) ^ parameters$pop_b -
-                                           parameters$pop_linf ^ parameters$pop_b)
-
-    # calculate maximum weight
-    max_weight <- parameters$pop_a * (parameters$pop_linf ^ parameters$pop_b)
+    growth_weight <- parameters$pop_a * ((size + growth_length) ^ parameters$pop_b -
+                                           size ^ parameters$pop_b)
 
     # MH: Calculate based on parameters
     # mean respiration value
-    respiration <- 0.0015
+    respiration <- 0.001
 
     # calculate consumption requirements
-    consumption_require <- ((growth_weight + respiration * max_weight) / 0.55) * parameters$pop_n_body
+    consumption_require <- ((growth_weight + respiration * weight) / 0.55) * parameters$pop_n_body
 
-    # MH: This assumes that all fish are in the same cell at the same time. Maybe use floor(pop_n / 2)
-    # multiply by number of fish and add to value
-    detritus_pool <- detritus_pool + consumption_require * starting_values$pop_n
+    # add to detritus pool
+    # MH: Could be to less if more than 1 fish in cell
+    detritus_pool <- detritus_pool + consumption_require # * starting_values$pop_n
 
   }
 

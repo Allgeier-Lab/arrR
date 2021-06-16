@@ -31,7 +31,7 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double water_temp, double min_per_i) {
 
   // scale intercept to correct tick scale
-  resp_intercept = resp_intercept * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i;
+  resp_intercept = resp_intercept / (24.0 * 60.0) * min_per_i;
 
   // for f(T) temperature dependence function for respiration
   double v_resp = (resp_temp_max - water_temp) / (resp_temp_max - resp_temp_optm);
@@ -48,6 +48,7 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
   // loop through all fish individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
+    // MH:  Make sure this is calculated using min_per_i
     // calculate respiration
     // Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
     // to result in unit of tick^-1
