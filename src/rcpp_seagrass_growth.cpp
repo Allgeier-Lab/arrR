@@ -212,12 +212,6 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
         seafloor(i, 9) += ag_detritus;
 
       }
-
-    // No reef cell
-    } else {
-
-      continue;
-
     }
   }
 }

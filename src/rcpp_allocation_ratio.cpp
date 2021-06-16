@@ -86,7 +86,7 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 /*** R
 parameters <- arrR::default_parameters
 
-parameters$seagrass_thres <- 1/4
+parameters$seagrass_thres <- 1
 parameters$seagrass_slope <- 3
 
 biomass <- parameters$bg_biomass_min +
