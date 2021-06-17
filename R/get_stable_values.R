@@ -74,12 +74,13 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
     # calculate consumption requirements
     consumption_require <- ((growth_weight + respiration * weight) / 0.55) * parameters$pop_n_body
 
-    # calculate maximum reserves
-    consumption_reserves <- weight * parameters$pop_n_body * parameters$pop_max_reserves
+    # # calculate maximum reserves
+    # consumption_reserves <- weight * parameters$pop_n_body * parameters$pop_max_reserves
 
     # add to detritus pool
-    detritus_pool <- detritus_pool + (consumption_require + consumption_reserves) *
-      ceiling(starting_values$pop_n / 2)
+    # detritus_pool <- detritus_pool + (consumption_require + consumption_reserves) *
+    #   ceiling(starting_values$pop_n / 2)
+    detritus_pool <- detritus_pool + consumption_require
 
   }
 
