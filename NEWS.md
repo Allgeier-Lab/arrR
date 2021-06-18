@@ -1,6 +1,7 @@
 # arrR 0.5.1
 * Main simulation loop completely in Rcpp `rcpp_run_simulation`
 * Better tracking of fish consumption and excretion
+* Age counter in iterations
 
 # arrR 0.5.0
 * Simpler allocation rule based on curves.

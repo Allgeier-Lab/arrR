@@ -79,7 +79,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
   Progress progress(max_i, verbose);
 
   // run simulation
-  for (int i = 0; i < max_i; i++) {
+  for (int i = 1; i <= max_i; i++) {
 
     // check abort of function
     if (Progress::check_abort()) {
@@ -89,10 +89,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // simulate nutrient input if present
-    if (nutr_input(i) > 0.0) {
+    if (nutr_input(i - 1) > 0.0) {
 
       // simulate nutrient input
-      rcpp_nutr_input(seafloor, nutr_input(i));
+      rcpp_nutr_input(seafloor, nutr_input(i - 1));
 
     }
 
@@ -115,7 +115,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // fish indiviuals are present and i above burn_in
-    if ((i >= burn_in) && (pop_n != 0)) {
+    if ((i > burn_in) && (pop_n != 0)) {
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, coords_reef, movement, pop_thres_reserves,
@@ -163,9 +163,9 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     // update tracking list
     if (i % save_each == 0) {
 
-      seafloor_track[i / save_each + 1] = Rcpp::clone(seafloor);
+      seafloor_track[i / save_each] = Rcpp::clone(seafloor);
 
-      fishpop_track[i / save_each + 1] = Rcpp::clone(fishpop);
+      fishpop_track[i / save_each] = Rcpp::clone(fishpop);
 
     }
 

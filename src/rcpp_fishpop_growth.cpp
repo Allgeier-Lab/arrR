@@ -71,7 +71,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
                          seafloor, extent, dimensions,
                          pop_linf, pop_n_body, pop_max_reserves,
-                         "background");
+                         "consumption");
 
         continue;
 
@@ -79,7 +79,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       } else {
 
         //  increase age (60 min * 24 h = 1440 min/day)
-        fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
+        fishpop(fish_id_temp, 1) += 1; // (min_per_i / 1440.0);
 
         // increase fish dimensions length
         fishpop(fish_id_temp, 5) += growth_length;
@@ -165,7 +165,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
                          seafloor, extent, dimensions,
                          pop_linf, pop_n_body, pop_max_reserves,
-                         "background");
+                         "consumption");
 
         continue;
 
@@ -173,7 +173,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       } else {
 
         // increase age (60 min * 24 h = 1440 min/day)
-        fishpop(fish_id_temp, 1) += (min_per_i / 1440.0);
+        fishpop(fish_id_temp, 1) += 1; // (min_per_i / 1440.0);
 
         // fish uses reserves to meet consumption requirements
         fishpop(fish_id_temp, 9) -= consumption_require;
