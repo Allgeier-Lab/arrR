@@ -58,28 +58,27 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
 
     }
 
+    # get length of individual, set to maximum
+    length <- parameters$pop_linf
+
     # calculate weight of maximum size
-    weight <- parameters$pop_a * (parameters$pop_linf ^ parameters$pop_b)
+    weight <- parameters$pop_a * (length ^ parameters$pop_b)
 
     # calc growth in length and weight for maximum pop_linf
-    growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i * parameters$pop_linf
+    growth_length <- parameters$pop_k / (365.0 * 24.0 * 60.0) * min_per_i *
+      (parameters$pop_linf - length)
 
-    growth_weight <- parameters$pop_a * ((parameters$pop_linf + growth_length) ^ parameters$pop_b -
-                                           parameters$pop_linf ^ parameters$pop_b)
+    growth_weight <- parameters$pop_a * ((length + growth_length) ^ parameters$pop_b -
+                                           length ^ parameters$pop_b)
 
-    # MH: Calculate based on parameters
-    # mean respiration value
+    # mean respiration value based on simulation_runs
+    # MH: use parameters values to calc
     respiration <- 0.001
 
     # calculate consumption requirements
     consumption_require <- ((growth_weight + respiration * weight) / 0.55) * parameters$pop_n_body
 
-    # # calculate maximum reserves
-    # consumption_reserves <- weight * parameters$pop_n_body * parameters$pop_max_reserves
-
     # add to detritus pool
-    # detritus_pool <- detritus_pool + (consumption_require + consumption_reserves) *
-    #   ceiling(starting_values$pop_n / 2)
     detritus_pool <- detritus_pool + consumption_require
 
   }

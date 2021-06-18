@@ -82,6 +82,13 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  # get time at beginning for final print
+  if (verbose) {
+
+    t_start <- Sys.time()
+
+  }
+
   # check if fishpop is NULL
   if (is.null(fishpop)) {
 
@@ -249,9 +256,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # new line after last progress message
   if (verbose) {
 
+    # get time at end
+    t_diff <- round(Sys.time() - t_start, digits = 1)
+
     message("")
 
-    message("> All done.")
+    message("> All done (Runtime: ", t_diff," ", units(t_diff), ").")
 
   }
 

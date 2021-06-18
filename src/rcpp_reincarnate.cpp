@@ -36,6 +36,11 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   int died_background = fishpop(fish_id, 15);
 
+  // save consumption and excretion
+  double consumption = fishpop(fish_id, 12);
+
+  double excretion = fishpop(fish_id, 13);
+
   // calculate increase in fish mass including reserves
   // mass_difference = weight - weight specific nutrient content + fish reserves
   double mass_diff = ((fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) * pop_n_body) +
@@ -52,11 +57,15 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   fishpop(fish_id, 3) = y_coord;
 
-  // calculate new reserves for new fish of new size
-  double reserves_wanted = pop_n_body * fishpop(fish_id, 6) * (pop_max_reserves * 0.5);
+  // set consumption and excretion to old valuues
+  fishpop(fish_id, 12) = consumption;
+
+  fishpop(fish_id, 13) = excretion;
+
+  // MH: Starting from here comment out to dont use detritus to fill reserves
 
   // detritus pool is smaller than wanted reserves, detritus pool is fully used
-  if (reserves_wanted >= seafloor(cell_id, 5)) {
+  if (fishpop(fish_id, 10) >= seafloor(cell_id, 5)) {
 
     // fish fully consumes detritus pool in cell
     fishpop(fish_id, 9) = seafloor(cell_id, 5);
@@ -74,16 +83,16 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   } else {
 
     // wanted reserves can be filled completely
-    fishpop(fish_id, 9) = reserves_wanted;
+    fishpop(fish_id, 9) = fishpop(fish_id, 10);
 
     // reduced detritus pool by wanted reserves
-    seafloor(cell_id, 5) -= reserves_wanted;
+    seafloor(cell_id, 5) -= fishpop(fish_id, 10);
 
     // track consumption cell
-    seafloor(cell_id, 13) += reserves_wanted;
+    seafloor(cell_id, 13) += fishpop(fish_id, 10);
 
     // track consumption fish
-    fishpop(fish_id, 12) += reserves_wanted;
+    fishpop(fish_id, 12) += fishpop(fish_id, 10);
 
   }
 
@@ -113,5 +122,4 @@ rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]]
                  fish_id = fish_id_temp, cell_id = cell_id,
                  pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
                  pop_max_reserves = pop_max_reserves, reason = "consumption")
-
 */
