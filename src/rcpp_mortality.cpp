@@ -37,11 +37,6 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // get current id of individual
     int fish_id_temp = fish_id(i);
 
-    // get cell id of current individual
-    int cell_id_temp = rcpp_cell_from_xy(Rcpp::NumericVector::create(fishpop(fish_id_temp, 2),
-                                                                     fishpop(fish_id_temp, 3)),
-                                                                     dimensions, extent) - 1;
-
     // create death probability
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
@@ -51,15 +46,10 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // individual dies if random number is smaller than death probability
     if (random_prob < death_prob) {
 
-      rcpp_reincarnate(fishpop, fishpop_track, seafloor,
-                       fish_id_temp, cell_id_temp,
+      rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
+                       seafloor, extent, dimensions,
                        pop_linf, pop_n_body, pop_max_reserves,
                        "background");
-
-    // skip current individual
-    } else {
-
-      continue;
 
     }
   }

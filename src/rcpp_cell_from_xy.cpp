@@ -22,12 +22,10 @@
 //'
 //' @export
 // [[Rcpp::export]]
-int rcpp_cell_from_xy(Rcpp::NumericVector coords,
-                      Rcpp::NumericVector dimensions, Rcpp::NumericVector extent) {
+int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent) {
 
   // coords outside extent; return NA
-  if (coords(0) < extent(0) || coords(0) > extent(1) ||
-      coords(1) < extent(2) || coords(1) > extent(3)) {
+  if (x < extent(0) || x > extent(1) || y < extent(2) || y > extent(3)) {
 
     int cell_id = NA_REAL;
 
@@ -42,20 +40,20 @@ int rcpp_cell_from_xy(Rcpp::NumericVector coords,
     double grain_y = dimensions(0) / (extent(3) - extent(2));
 
     // get row number; points in between rows go to the row below
-    double row_id = floor((extent(3) - coords(1)) * grain_y);
+    double row_id = floor((extent(3) - y) * grain_y);
 
     // last row must go up
-    if (coords(1) == extent(2)) {
+    if (y == extent(2)) {
 
       row_id = dimensions(0) - 1 ;
 
     }
 
     // get col number; points in between cols go to the col right
-    double col_id = floor((coords(0) - extent(0)) * grain_x);
+    double col_id = floor((x - extent(0)) * grain_x);
 
     // last col must go left
-    if (coords(0) == extent(1)) {
+    if (x == extent(1)) {
 
       col_id = dimensions(1) - 1;
 
@@ -74,9 +72,8 @@ int rcpp_cell_from_xy(Rcpp::NumericVector coords,
 x <- runif(n = 1, min = -50, max = 50)
 y <- runif(n = 1, min = -50, max = 50)
 
-rcpp_cell_from_xy(dimensions = c(100, 100),
-                  extent = c(-50, 50, -50, 50),
-                  cbind(x = x, y = y))
+rcpp_cell_from_xy(x= x, y = y, dimensions = c(100, 100),
+                  extent = c(-50, 50, -50, 50))
 
 raster::cellFromXY(object = raster::raster(nrows = 100, ncols = 100,
                                            xmn = -50, xmx = 50,

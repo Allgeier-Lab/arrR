@@ -1,12 +1,15 @@
 #include "rcpp_reincarnate.h"
+#include "rcpp_cell_from_xy.h"
 
 //' rcpp_reincarnate
 //'
 //' @description Rcpp reincarnate
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+//' @param fish_id Vector with id of fish and corresponding cell ids.
 //' @param seafloor Matrix with seafloor values.
-//' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
 //' @param pop_linf,pop_n_body,pop_max_reserves Numeric with parameters.
 //' @param reason String with reason of reincarnation.
 //'
@@ -20,16 +23,26 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
-                      Rcpp::NumericMatrix seafloor,
-                      int fish_id, int cell_id,
+void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id,
+                      Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                       double pop_linf, double pop_n_body, double pop_max_reserves,
                       String reason) {
 
-  // save current original coordinates
-  double x_coord = fishpop(fish_id, 2);
+  int cell_id = 0;
 
-  double y_coord = fishpop(fish_id, 3);
+  // kill old individual //
+
+  // get cell id of old individual
+  cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
+                              dimensions, extent) - 1;
+
+  // calculate increase in fish mass including reserves
+  // mass_difference = weight - weight specific nutrient content + fish reserves
+  double mass_diff = ((fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) * pop_n_body) +
+    fishpop(fish_id, 9);
+
+  // add to dead detritus pool
+  seafloor(cell_id, 6) += mass_diff;
 
   // save current mortality counter
   int died_consumption = fishpop(fish_id, 14);
@@ -41,28 +54,41 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   double excretion = fishpop(fish_id, 13);
 
-  // calculate increase in fish mass including reserves
-  // mass_difference = weight - weight specific nutrient content + fish reserves
-  double mass_diff = ((fishpop(fish_id, 6) - fishpop_track(fish_id, 6)) * pop_n_body) +
-    fishpop(fish_id, 9);
-
-  // add to dead detritus pool
-  seafloor(cell_id, 6) += mass_diff;
+  // create new individual
 
   // create new individual, access all columns of fish_id matrix
   fishpop(fish_id, _) = fishpop_track(fish_id, _);
 
-  // put new fish back in place of dead fish
-  fishpop(fish_id, 2) = x_coord;
-
-  fishpop(fish_id, 3) = y_coord;
-
-  // set consumption and excretion to old valuues
+  // set consumption and excretion to old values
   fishpop(fish_id, 12) = consumption;
 
   fishpop(fish_id, 13) = excretion;
 
-  // MH: Starting from here comment out to dont use detritus to fill reserves
+  // set counters to old values
+  fishpop(fish_id, 14) = died_consumption;
+
+  fishpop(fish_id, 15) = died_background;
+
+  // update mortality counter
+  if (reason == "consumption") {
+
+    fishpop(fish_id, 14) += 1;
+
+  } else if (reason == "background") {
+
+    fishpop(fish_id, 15) += 1;
+
+  } else {
+
+    Rcpp::stop("'reason' must be 'consumption' or 'background'.");
+
+  }
+
+  // fill reserves //
+
+  // get cell id of new individual
+  cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
+                              dimensions, extent) - 1;
 
   // detritus pool is smaller than wanted reserves, detritus pool is fully used
   if (fishpop(fish_id, 10) >= seafloor(cell_id, 5)) {
@@ -95,31 +121,11 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
     fishpop(fish_id, 12) += fishpop(fish_id, 10);
 
   }
-
-  // update mortality counter
-  if (reason == "consumption") {
-
-    fishpop(fish_id, 14) = died_consumption + 1;
-
-    fishpop(fish_id, 15) = died_background;
-
-  } else if (reason == "background") {
-
-    fishpop(fish_id, 14) = died_consumption;
-
-    fishpop(fish_id, 15) = died_background + 1;
-
-  } else {
-
-    Rcpp::stop("'reason' must be 'consumption' or 'background'.");
-
-  }
 }
 
 /*** R
-rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]]
-                 seafloor = seafloor_values,
-                 fish_id = fish_id_temp, cell_id = cell_id,
+rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]], fish_id = fish_id_temp,
+                 seafloor = seafloor_values, extent = extent, dimensions = dimensions,
                  pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
                  pop_max_reserves = pop_max_reserves, reason = "consumption")
 */

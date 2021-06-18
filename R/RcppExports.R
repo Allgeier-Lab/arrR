@@ -49,8 +49,8 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' @rdname rcpp_cell_from_xy
 #'
 #' @export
-rcpp_cell_from_xy <- function(coords, dimensions, extent) {
-    .Call(`_arrR_rcpp_cell_from_xy`, coords, dimensions, extent)
+rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
+    .Call(`_arrR_rcpp_cell_from_xy`, x, y, dimensions, extent)
 }
 
 #' rcpp_closest_reef
@@ -404,8 +404,10 @@ rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @description Rcpp reincarnate
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param fish_id Vector with id of fish and corresponding cell ids.
 #' @param seafloor Matrix with seafloor values.
-#' @param fish_id,cell_id Vector with id of fish and corresponding cell ids.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
 #' @param pop_linf,pop_n_body,pop_max_reserves Numeric with parameters.
 #' @param reason String with reason of reincarnation.
 #'
@@ -418,8 +420,8 @@ rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @rdname rcpp_reincarnate
 #'
 #' @export
-rcpp_reincarnate <- function(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_max_reserves, reason) {
-    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_max_reserves, reason))
+rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_max_reserves, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_max_reserves, reason))
 }
 
 #' rcpp_respiration

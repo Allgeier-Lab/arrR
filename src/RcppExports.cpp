@@ -21,15 +21,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_cell_from_xy
-int rcpp_cell_from_xy(Rcpp::NumericVector coords, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
-RcppExport SEXP _arrR_rcpp_cell_from_xy(SEXP coordsSEXP, SEXP dimensionsSEXP, SEXP extentSEXP) {
+int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
+RcppExport SEXP _arrR_rcpp_cell_from_xy(SEXP xSEXP, SEXP ySEXP, SEXP dimensionsSEXP, SEXP extentSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type coords(coordsSEXP);
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_cell_from_xy(coords, dimensions, extent));
+    rcpp_result_gen = Rcpp::wrap(rcpp_cell_from_xy(x, y, dimensions, extent));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -246,20 +247,21 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_reincarnate
-void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, int fish_id, int cell_id, double pop_linf, double pop_n_body, double pop_max_reserves, String reason);
-RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP seafloorSEXP, SEXP fish_idSEXP, SEXP cell_idSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_max_reservesSEXP, SEXP reasonSEXP) {
+void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double pop_linf, double pop_n_body, double pop_max_reserves, String reason);
+RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP fish_idSEXP, SEXP seafloorSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_max_reservesSEXP, SEXP reasonSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_track(fishpop_trackSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< int >::type fish_id(fish_idSEXP);
-    Rcpp::traits::input_parameter< int >::type cell_id(cell_idSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
     Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_max_reserves(pop_max_reservesSEXP);
     Rcpp::traits::input_parameter< String >::type reason(reasonSEXP);
-    rcpp_reincarnate(fishpop, fishpop_track, seafloor, fish_id, cell_id, pop_linf, pop_n_body, pop_max_reserves, reason);
+    rcpp_reincarnate(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_max_reserves, reason);
     return R_NilValue;
 END_RCPP
 }
@@ -389,7 +391,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_allocation_ratio", (DL_FUNC) &_arrR_rcpp_allocation_ratio, 5},
-    {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 3},
+    {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 4},
     {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
@@ -404,7 +406,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_nutr_input", (DL_FUNC) &_arrR_rcpp_nutr_input, 2},
     {"_arrR_rcpp_nutr_output", (DL_FUNC) &_arrR_rcpp_nutr_output, 2},
     {"_arrR_rcpp_nutr_uptake", (DL_FUNC) &_arrR_rcpp_nutr_uptake, 5},
-    {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 9},
+    {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 10},
     {"_arrR_rcpp_respiration", (DL_FUNC) &_arrR_rcpp_respiration, 8},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 4},
     {"_arrR_rcpp_run_simulation", (DL_FUNC) &_arrR_rcpp_run_simulation, 20},

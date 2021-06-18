@@ -46,9 +46,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     int fish_id_temp = fish_id(i);
 
     // get cell id of current individual
-    int cell_id_temp = rcpp_cell_from_xy(NumericVector::create(fishpop(fish_id_temp, 2),
-                                                               fishpop(fish_id_temp, 3)),
-                                                               dimensions, extent) - 1;
+    int cell_id_temp = rcpp_cell_from_xy(fishpop(fish_id_temp, 2), fishpop(fish_id_temp, 3),
+                                         dimensions, extent) - 1;
 
     // calculate growth in length and weight
     double growth_length = pop_k / (365.0 * 24.0 * 60.0) * min_per_i *
@@ -69,10 +68,10 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // detritus in cell and reserves
       if (consumption_require > (seafloor(cell_id_temp, 5) + fishpop(fish_id_temp, 9))) {
 
-        rcpp_reincarnate(fishpop, fishpop_track, seafloor,
-                         fish_id_temp, cell_id_temp,
+        rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
+                         seafloor, extent, dimensions,
                          pop_linf, pop_n_body, pop_max_reserves,
-                         "consumption");
+                         "background");
 
         continue;
 
@@ -163,10 +162,10 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // individual dies because consumption requirements cannot be met by reserves
       if (consumption_require > fishpop(fish_id_temp, 9)) {
 
-        rcpp_reincarnate(fishpop, fishpop_track, seafloor,
-                         fish_id_temp, cell_id_temp,
+        rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
+                         seafloor, extent, dimensions,
                          pop_linf, pop_n_body, pop_max_reserves,
-                         "consumption");
+                         "background");
 
         continue;
 

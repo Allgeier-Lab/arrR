@@ -7,9 +7,10 @@
 rcpp_reincarnate(
   fishpop,
   fishpop_track,
-  seafloor,
   fish_id,
-  cell_id,
+  seafloor,
+  extent,
+  dimensions,
   pop_linf,
   pop_n_body,
   pop_max_reserves,
@@ -19,9 +20,13 @@ rcpp_reincarnate(
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop and starting fishpop values.}
 
+\item{fish_id}{Vector with id of fish and corresponding cell ids.}
+
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
+
+\item{dimensions}{Vector with dimensions (nrow, ncol).}
 
 \item{pop_linf, pop_n_body, pop_max_reserves}{Numeric with parameters.}
 

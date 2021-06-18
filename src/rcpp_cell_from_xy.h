@@ -5,7 +5,6 @@
 
 using namespace Rcpp;
 
-int rcpp_cell_from_xy(Rcpp::NumericVector coords,
-                      Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
+int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector dimensions, Rcpp::NumericVector extent);
 
 //#endif // RCPP_CELL_FROM_XY
