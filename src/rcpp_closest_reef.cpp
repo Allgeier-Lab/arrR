@@ -51,7 +51,7 @@ Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericVector coords_temp,
     }
   }
 
-  // calculate new xy coords using different distance and heading based on behvior
+  // create resulting vector
   Rcpp::NumericVector result = Rcpp::NumericVector::create(reef_dist_id, reef_dist_temp);
 
   return(result);
