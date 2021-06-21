@@ -4,7 +4,8 @@
 
 //' rcpp_move_wrap
 //'
-//' @description Rcpp move wrap
+//' @description
+//' Rcpp movement behavior wrapper.
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with ID and coords of reef cells.
@@ -19,10 +20,11 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Wrapper function around all movement algorithms.
-//'
-//' @references
-//' Add reference
+//' Wrapper function around different movement algorithms. Individuals can either move
+//' completely random (\code{movement = "rand"}), attracted towards the artifical reef cells
+//' \code{movement = "attr"} or movement can be  depending on the bioenergetics of the
+//' fish individuals \code{movement = "behav"}. For more information see \code{\link{rcpp_move_rand}},
+//' \code{\link{rcpp_move_rand}} or \code{\link{rcpp_move_behav}}.
 //'
 //' @return void
 //'

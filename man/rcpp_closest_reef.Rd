@@ -15,9 +15,9 @@ rcpp_closest_reef(coords_temp, coords_reef)
 vector
 }
 \description{
-Rcpp closest reef
+Rcpp get closest reef.
 }
 \details{
-Get id and distance to closet reef cell. The first element of the returning
-vector is the id, the second the distance in meter.
+Get ID and distance to closet reef cell. The first element of the returning
+vector is the ID, the second the distance in meter.
 }

@@ -17,12 +17,14 @@ rcpp_allocation_ratio(biomass, biomass_min, biomass_max, threshold, slope)
 void
 }
 \description{
-Rcpp allocation ratio
+Rcpp allocation ratio.
 }
 \details{
-Rcpp implementation of the allocation ratio. If the threshold is positive, all
-the ratio is 1 if biomass is below the threshold. If threshold is negative, the
-ratio will be 0.5 at the threshold.
+Get ratio of bg and ag nutrient allocation. If ratio = 1, all nutrients are
+allocated in the bg biomass.
+
+If the threshold is positive, the ratio is r=1 for all biomass values below the threshold.
+If threshold is negative, the ratio is be r=0.5 at the threshold.
 }
 \references{
 User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with

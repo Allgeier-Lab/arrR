@@ -15,10 +15,11 @@ rcpp_nutr_output(seafloor, nutrients_output)
 void
 }
 \description{
-Rcpp nutrient output
+Rcpp nutrient output.
 }
 \details{
-Simulate loss of nutrients to to output of the system for each cell and timestep.
+Simulates loss of nutrients (i.e., output of the system) for each cell and timestep.
+The loss is calculated as a ratio of the present nutrients in each cell.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

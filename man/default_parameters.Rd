@@ -11,9 +11,11 @@ List
 default_parameters
 }
 \description{
-List with all default parameters.
+List with default parameters.
 }
 \references{
-ADD REFERENCES
+Citations for all parameters and starting values can be found in
+Esquivel et al (2021). Mechanistic support for increased primary
+production around artificial reefs. Manuscript in preparation.
 }
 \keyword{datasets}

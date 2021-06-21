@@ -2,14 +2,15 @@
 
 //' rcpp_cell_from_xy
 //'
-//' @description Rcpp cell from xy
+//' @description
+//' Rcpp get cell from xy
 //'
-//' @param coords Vector with coordinates.
+//' @param x,y Numeric with x,y coordinates.
 //' @param dimensions Vector with number or rows and cols
 //' @param extent Vector with extent (xmin, xmax, ymin, ymax).
 //'
 //' @details
-//' Get cell id from xy coordinate. Allows only one coordinate pair at a time.
+//' Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
 //'
 //' @references
 //' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
@@ -72,7 +73,7 @@ int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector dimensions, Rcpp::
 x <- runif(n = 1, min = -50, max = 50)
 y <- runif(n = 1, min = -50, max = 50)
 
-rcpp_cell_from_xy(x= x, y = y, dimensions = c(100, 100),
+rcpp_cell_from_xy(x = x, y = y, dimensions = c(100, 100),
                   extent = c(-50, 50, -50, 50))
 
 raster::cellFromXY(object = raster::raster(nrows = 100, ncols = 100,

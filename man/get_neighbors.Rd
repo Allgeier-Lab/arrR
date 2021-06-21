@@ -17,9 +17,18 @@ get_neighbors(x, direction = 4, torus = FALSE)
 matrix
 }
 \description{
-Internal function to get id of neighbouring cells
+Get ID of neighboring cells.
 }
 \details{
-Return matrix with cell ids of neighboring cells. If \code{torus = TRUE} a neighbors
-are considerd on a torus.
+Internal function to get matrix with cell IDs of all neighboring cells.
+If \code{torus = TRUE} the neighborhood is considered on a torus i.e., the top-right
+cell neighbors the bottom-left cell etc. The \code{direction} arguments allows to
+specifiy which cells are considered to be neighbors (direction = 4: "Rook's case";
+direction = 8: "Queen's case").
+}
+\examples{
+\dontrun{
+get_neighbors(seafloor)
+}
+
 }

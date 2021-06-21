@@ -17,13 +17,17 @@ get_density(result, timestep = result$max_i, normalize = FALSE)
 data.frame
 }
 \description{
-Get density of fish occurrence within each raster cell.
+Get density of fish individuals within cell.
 }
 \details{
-Calculates the fish density for each cells. This means the total count of
-fish occurrence within a raster cell is divided by the maximum timestep.
+Calculates the fish density for each cells. Thus, the total count of
+fish occurrences within a raster cell is divided by the maximum timestep. Please
+keep in mind that if not each timestep was saved during \code{\link{run_simulation}},
+the returned density might not be the "true" density because some occurrences might be missed.
 }
 \examples{
-# Add example code
+\dontrun{
+get_density(result = result_rand)
+}
 
 }

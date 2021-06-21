@@ -4,7 +4,15 @@
 \alias{calc_size}
 \title{calc_size}
 \usage{
-calc_size(pop_n, pop_mean_size, pop_var_size, pop_linf, pop_a, pop_b, use_log)
+calc_size(
+  pop_n,
+  pop_mean_size,
+  pop_var_size,
+  pop_linf,
+  pop_a,
+  pop_b,
+  use_log = TRUE
+)
 }
 \arguments{
 \item{pop_n}{Numeric with starting values for number of individuals.}
@@ -17,11 +25,27 @@ and variance.}
 \item{use_log}{Logical if TRUE, random log distribution is used.}
 }
 \value{
-vector
+list
 }
 \description{
-Internal function to calculate size
+Calculate size and weight of fish individuals.
 }
 \details{
-Internal function to calculate size and weight of fish individuals.
+Internal function to calculate size and weight of fish individuals based on
+length-weight relationships. The starting length is randomly drawn from a log-norm
+or uniform distribution. If an uniform distribution is used, the minimum and maximum
+are based on 10% and 90% of the maximum size (\code{pop_linf}), respectively.
+}
+\examples{
+calc_size(pop_n = 8, pop_mean_size = default_starting_values$pop_mean_size,
+pop_var_size = default_starting_values$pop_var_size,
+pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
+pop_b = default_parameters$pop_b, use_log = TRUE)
+
+}
+\references{
+Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document].
+www.fishbase.org.
+
+The LENGTH-WEIGHT Table. https://www.fishbase.org/manual/fishbasethe_length_weight_table.htm
 }

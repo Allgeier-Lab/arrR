@@ -15,8 +15,10 @@ rcpp_translate_torus(coords, extent)
 vector
 }
 \description{
-Rcpp translate torus
+Rcpp translate coordinates around torus.
 }
 \details{
-Translate coordinates if they exceed extent.
+Torus translation of coordinates if they exceed the provided extent. The translation
+is done until coordinate is within extent (i.e., could be translated several times
+if the difference is big).
 }

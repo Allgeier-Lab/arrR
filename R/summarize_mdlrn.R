@@ -1,18 +1,27 @@
 #' summarize_mdlrn
 #'
-#' @description Summarize results.
+#' @description
+#' Summarize results of model run.
 #'
 #' @param result mdl_rn object of simulation run.
 #' @param summary String with summary functions. Must return one value when used
 #' with aggregate().
 #'
 #' @details
-#' Function to summarize results for each timestep.
+#' Function to summarize results for each timestep. The \code{summary} argument
+#' allows to specify which summary statistics are used for each cell. The selected
+#' statistics are used by \code{\link{aggregate}} and must return one value.
+#'
+#' For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
+#' are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
+#' iv) died_background are returned.
 #'
 #' @return list
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' summarize_mdlrn(result_rand)
+#' }
 #'
 #' @aliases summarize_mdlrn
 #' @rdname summarize_mdlrn
@@ -25,8 +34,7 @@ summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
 
   # get cols to summarise
   seafloor <- subset(result$seafloor, select = c("ag_biomass", "bg_biomass",
-                                                 "nutrients_pool", "detritus_pool",
-                                                 "detritus_fish"))
+                                                 "nutrients_pool", "detritus_pool"))
 
   seafloor <- lapply(X = summary, function(i) {
 

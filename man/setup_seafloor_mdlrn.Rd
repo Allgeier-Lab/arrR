@@ -17,12 +17,16 @@ setup_seafloor_mdlrn(mdl_rn, verbose = TRUE, ...)
 RasterBrick
 }
 \description{
-Initiate environment (seafloor) from model run
+Setup seafloor from previous \code{mdl_rn} object.
 }
 \details{
-Function to setup the environment (seafloor) from previous model run.
+Function to setup the environment (seafloor) from previous \code{mdl_rn} object.
+Thus, the created environment will have the final values of the provided \code{mdl_rn}
+object as cell values.
 }
 \examples{
-# Add example code
+\dontrun{
+setup_seafloor_mdlrn(mdl_rn = result_rand)
+}
 
 }

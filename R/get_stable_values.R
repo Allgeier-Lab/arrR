@@ -1,6 +1,7 @@
 #' get_stable_values
 #'
-#' @description Get starting values for stable growth.
+#' @description
+#' Get values for stable biomass growth.
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -8,8 +9,11 @@
 #' @param min_per_i Integer to specify minutes per i.
 #'
 #' @details
-#' Returns a list with starting values which allow stable seagrass growth if no
-#' fish individuals are present.
+#' Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool
+#' which allow stable seagrass growth if no fish individuals are present. This means,
+#' that both pools contain exactly the amount to balance the sloughed bg_biomass and ag_biomass
+#' each  timestep. If \code{fishpop = TRUE} and estimate of detritus consumption of one fish
+#' individual of maximum size is added to the detritus pool.
 #'
 #' @return list
 #'

@@ -5,7 +5,8 @@
 
 //' rcpp_mortality
 //'
-//' @description Rcpp mortality
+//' @description
+//' Rcpp simulate (background) mortality.
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
@@ -14,12 +15,14 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Function to simulate background mortality of fish population individuals.
+//' Function to simulate background mortality of fish individuals. The mortality
+//' probability increases with increasing size and approximates p = 1 for \code{pop_linf}.
+//' If a individual dies, a new individual is created using \code{\link{rcpp_reincarnate}}.
 //'
 //' @return void
 //'
-//' @aliases rcpp_mortality_backgr
-//' @rdname rcpp_mortality_backgr
+//' @aliases rcpp_mortality
+//' @rdname rcpp_mortality
 //'
 //' @export
 // [[Rcpp::export]]

@@ -10,12 +10,12 @@ plot_allocation(parameters)
 \item{parameters}{List with model parameters.}
 }
 \description{
-Plotting method allocation
+Plotting method for seagrass growth allocation ratio.
 }
 \details{
-Plots the allocation ratio for given parameters
+
 }
 \examples{
-# Add example code
+plot_allocation(parameters = default_parameters)
 
 }

@@ -2,13 +2,16 @@
 
 //' rcpp_translate_torus
 //'
-//' @description Rcpp translate torus
+//' @description
+//' Rcpp translate coordinates around torus.
 //'
 //' @param coords Vector with coordinates.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //'
 //' @details
-//' Translate coordinates if they exceed extent.
+//' Torus translation of coordinates if they exceed the provided extent. The translation
+//' is done until coordinate is within extent (i.e., could be translated several times
+//' if the difference is big).
 //'
 //' @return vector
 //'

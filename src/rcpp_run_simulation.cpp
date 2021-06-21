@@ -13,7 +13,8 @@
 
 //' rcpp_run_simulation
 //'
-//' @description Rcpp run simulation
+//' @description
+//' Rcpp run simulation.
 //'
 //' @param seafloor,fishpop Matrix with seafloor and fishpop data.
 //' @param seafloor_track,fishpop_track List with entry for each saving timestep.
@@ -35,10 +36,14 @@
 //' @param verbose If TRUE, progress reports are printed.
 //'
 //' @details
-//' Run model
+//' The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
+//' (ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
+//' (v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
+//' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 //'
 //' @references
-//' Add reference
+//' For a detailed model describtion, see Esquivel et al (2021). Mechanistic support for
+//' increased primary production around artificial reefs. Manuscript in preparation.
 //'
 //' @return void
 //'

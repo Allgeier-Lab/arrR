@@ -16,12 +16,17 @@
 \item{...}{Arguments passed to cat.}
 }
 \description{
-Printing method for mdl_rn object
+Printing method for \code{mdl_rn} object.
 }
 \details{
 Printing method for model run results simulated with \code{\link{run_simulation}}.
+Includes some information about the model run itself and distribution values (min, mean, max)
+for some values of the seafloor and fishpop.
 }
 \examples{
-# Add example code
+\dontrun{
+print(result_rand)
+}
+
 
 }

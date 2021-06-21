@@ -1,6 +1,7 @@
 #' check_parameters
 #'
-#' @description Check model parameters and starting values.
+#' @description
+#' Check model parameters and starting values.
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -8,13 +9,14 @@
 #'
 #' @details
 #' The function checks if all required starting values and parameters are provided.
-#' If values are missing, a vector with the name of the corresponding values will
-#' be returned. If no arguments are provided, a list of all required values is printed
+#' If parameters and/or starting values are missing, a vector with the name of the
+#' corresponding values is returned. If no arguments are provided, a list of all
+#' required parameters and values is printed
 #'
 #' @return void
 #'
 #' @examples
-#' # Add example code
+#' check_parameters()
 #'
 #' @aliases check_parameters
 #' @rdname check_parameters
@@ -68,10 +70,10 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                            "move_reef",
                            "move_return",
 
-                           "pop_max_reserves",
-                           "pop_thres_reserves_min",
-                           "pop_thres_reserves_max",
-                           "pop_consumption_prop",
+                           "pop_max_reserves", # pop_reserves_max
+                           "pop_thres_reserves_min", # pop_reserves_thres_lo
+                           "pop_thres_reserves_max", # pop_reserves_thres_hi
+                           "pop_consumption_prop", # pop_reserves_consumption
 
                            "pop_a",
                            "pop_b",
@@ -318,7 +320,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose && final_flag) {
+  if (verbose && final_flag && !is.null(parameters) || !is.null(starting_values)) {
 
     message("> All checking done!")
 

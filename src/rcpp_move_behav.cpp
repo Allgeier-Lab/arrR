@@ -7,7 +7,8 @@
 
 //' rcpp_move_behav
 //'
-//' @description Rcpp move behaviour
+//' @description
+//' Rcpp simulate movement based on bioenergetics.
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with ID and coords of reef cells.
@@ -21,10 +22,12 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Move fish individuals depending on their current stae.
+//' Fish indivivuals move based on how much nutrients they have stored in their
+//' reserves. There are three different movement behaviors.
 //'
-//' @references
-//' Add reference
+//' If reservers above a certain threshold, individuals either shelter at reef cells (behavior 1)
+//' or move back towards reef cells (behavior 2). If reserves are not above the threshold,
+//' individuals move randomly across the environment to forage.
 //'
 //' @return void
 //'

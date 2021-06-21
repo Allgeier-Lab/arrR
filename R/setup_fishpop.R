@@ -1,6 +1,7 @@
 #' setup_fishpop
 #'
-#' @description Initiate fish population.
+#' @description
+#' Setup fish population for model run.
 #'
 #' @param seafloor Environment created with \code{\link{setup_seafloor}}.
 #' @param starting_values List with all starting value parameters.
@@ -9,13 +10,20 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Function to setup the fish population. If no fish shoud be created, set
-#' \code{starting_values$pop_n = 0}.
+#' Function to setup the fish population. If \code{use_log = TRUE} the size distribution
+#' of the fish population follows a log-norm distribution. For more information, see
+#' \code{\link{calc_size}}. If no fish should be created, set \code{starting_values$pop_n = 0}.
 #'
 #' @return data.frame
 #'
 #' @examples
-#' # Add example code
+#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' ncol = 2, byrow = TRUE)
+#'
+#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+#' reefs = reefs, starting_values = default_starting_values)
+#' fishpop <- setup_fishpop(seafloor = seafloor,
+#' starting_values = default_starting_values, parameters = default_parameters)
 #'
 #' @aliases setup_fishpop
 #' @rdname setup_fishpop

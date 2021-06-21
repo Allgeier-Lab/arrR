@@ -36,12 +36,19 @@
 \item{...}{Not used.}
 }
 \description{
-Plotting method for mdl_rn object
+Plotting method for \code{mdl_rn} object.
 }
 \details{
 Plotting method for model run results simulated with \code{\link{run_simulation}}.
+The \code{what} arguments allows to either plot the seafloor values or fishpop values.
+For both, it is possible to either plot a spatial raster at a certain timestep
+\code{summarize = FALSE} or a summary of the values over all saved  timestep \code{summarize = TRUE}.
+If a spatial raster is plotted, the limits can be set identical. For more information see
+\code{\link{get_limits}}.
 }
 \examples{
-# Add example code
+\dontrun{
+plot(result_rand)
+}
 
 }

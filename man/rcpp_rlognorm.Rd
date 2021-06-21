@@ -17,7 +17,7 @@ rcpp_rlognorm(mean, sd, min, max)
 double
 }
 \description{
-Rcpp rlognorm
+Rcpp rlognorm.
 }
 \details{
 Draws random number from log-norm distribution. Function uses log-transformed

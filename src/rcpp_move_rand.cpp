@@ -7,7 +7,8 @@
 
 //' rcpp_move_rand
 //'
-//' @description Rcpp move random
+//' @description
+//' Rcpp simulate random/attracted movement.
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with ID and coords of reef cells.
@@ -19,11 +20,16 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Rcpp implementation to move fish individuals randomly or attracted depending
-//' on move distance and heading value.
+//' Simulate movemnt of indivudals eiter either random (\code{reef_attraction = FALSE})
+//' or attracted towards the artifical reef cells (\code{reef_attraction = TRUE}).
 //'
-//' @references
-//' Add reference
+//' In the case of random movement, each timestep a random movement distance
+//' is drawn from a lognorm distribution and the individal moves into a random heading
+//' direction drawn from an uniform distribution.
+//'
+//' In the case of attracted movement, fish individuals are aware of the distance to
+//' the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
+//' always swim in the direction of the shortest distance to a reef cell.
 //'
 //' @return void
 //'

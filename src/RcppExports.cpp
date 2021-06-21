@@ -95,16 +95,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_get_bearing
-double rcpp_get_bearing(double x_fish, double y_fish, double x_reef, double y_reef);
-RcppExport SEXP _arrR_rcpp_get_bearing(SEXP x_fishSEXP, SEXP y_fishSEXP, SEXP x_reefSEXP, SEXP y_reefSEXP) {
+double rcpp_get_bearing(double x1, double y1, double x2, double y2);
+RcppExport SEXP _arrR_rcpp_get_bearing(SEXP x1SEXP, SEXP y1SEXP, SEXP x2SEXP, SEXP y2SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x_fish(x_fishSEXP);
-    Rcpp::traits::input_parameter< double >::type y_fish(y_fishSEXP);
-    Rcpp::traits::input_parameter< double >::type x_reef(x_reefSEXP);
-    Rcpp::traits::input_parameter< double >::type y_reef(y_reefSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_bearing(x_fish, y_fish, x_reef, y_reef));
+    Rcpp::traits::input_parameter< double >::type x1(x1SEXP);
+    Rcpp::traits::input_parameter< double >::type y1(y1SEXP);
+    Rcpp::traits::input_parameter< double >::type x2(x2SEXP);
+    Rcpp::traits::input_parameter< double >::type y2(y2SEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_bearing(x1, y1, x2, y2));
     return rcpp_result_gen;
 END_RCPP
 }
