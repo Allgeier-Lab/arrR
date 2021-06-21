@@ -4,12 +4,12 @@
 \alias{rcpp_closest_reef}
 \title{rcpp_closest_reef}
 \usage{
-rcpp_closest_reef(coords_temp, coords_reef)
+rcpp_closest_reef(x, y, coords_reef)
 }
 \arguments{
-\item{coords_temp}{Vector with xy coords of current individual.}
-
 \item{coords_reef}{Matrix with ID and coords of reef cells.}
+
+\item{coords_temp}{Vector with xy coords of current individual.}
 }
 \value{
 vector

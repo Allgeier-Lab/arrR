@@ -37,7 +37,7 @@ double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 }
 
 /*** R
-closest_reef <- rcpp_closest_reef(fishpop_values[3, c(3, 4), drop = FALSE], coords_reef)
+closest_reef <- rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
 
 reef_id <- closest_reef[1] + 1
 

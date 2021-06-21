@@ -51,16 +51,9 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 9) >= (pop_reserves_thres(i) * fishpop(i, 10))) {
 
-      // init vector for temp coords
-      Rcpp::NumericVector coords_temp(2, 0.0);
-
-      // get current x,y coords
-      coords_temp(0) = fishpop(i, 2);
-
-      coords_temp(1) = fishpop(i, 3);
-
       // get id and distance to closest reef
-      Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
+      Rcpp::NumericVector closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
+                                                           coords_reef);
 
       // behaviour 1: fish already at reef so they stay there
       if (closest_reef(1) <= move_border) {
@@ -77,7 +70,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
         // set behavior column
         fishpop(i, 11) = 2.0;
 
-        double theta = rcpp_get_bearing(coords_temp(0), coords_temp(1),
+        double theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
                                         coords_reef(closest_reef(0), 0),
                                         coords_reef(closest_reef(0), 1));
 

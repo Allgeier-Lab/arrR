@@ -24,16 +24,13 @@
 void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {
 
-  // MH: Get rid of Rcpp::NumericVector::create()? Might be hard due to rcpp_translate_torus
+  // calculate new x,y coord
+  double x_temp = fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0)));
 
-  // calculate new x coord
-  Rcpp::NumericVector xy_temp = Rcpp::NumericVector::create(
-    fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0))),
-    fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)))
-  );
+  double y_temp = fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)));
 
   // make sure coords are within study area
-  xy_temp = rcpp_translate_torus(xy_temp, extent);
+  Rcpp::NumericVector xy_temp = rcpp_translate_torus(x_temp, y_temp, extent);
 
   // update x coord
   fishpop(i, 2) = xy_temp(0);

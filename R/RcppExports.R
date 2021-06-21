@@ -75,8 +75,8 @@ rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
 #' @rdname rcpp_closest_reef
 #'
 #' @export
-rcpp_closest_reef <- function(coords_temp, coords_reef) {
-    .Call(`_arrR_rcpp_closest_reef`, coords_temp, coords_reef)
+rcpp_closest_reef <- function(x, y, coords_reef) {
+    .Call(`_arrR_rcpp_closest_reef`, x, y, coords_reef)
 }
 
 #' rcpp_convert_nutr
@@ -664,7 +664,7 @@ rcpp_shuffle <- function(min, max) {
 #' @description
 #' Rcpp translate coordinates around torus.
 #'
-#' @param coords Vector with coordinates.
+#' @param x,y Double with x,y coordinates
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #'
 #' @details
@@ -678,8 +678,8 @@ rcpp_shuffle <- function(min, max) {
 #' @rdname rcpp_translate_torus
 #'
 #' @export
-rcpp_translate_torus <- function(coords, extent) {
-    .Call(`_arrR_rcpp_translate_torus`, coords, extent)
+rcpp_translate_torus <- function(x, y, extent) {
+    .Call(`_arrR_rcpp_translate_torus`, x, y, extent)
 }
 
 #' rcpp_update_coords

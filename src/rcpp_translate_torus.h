@@ -5,7 +5,6 @@
 
 using namespace Rcpp;
 
-Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
-                                         Rcpp::NumericVector extent);
+Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent);
 
 //#endif // RCPP_TRANSLATE_TORUS

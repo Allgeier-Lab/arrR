@@ -195,7 +195,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # get cell id of reef cells and coordinates of reef cells
   coords_reef <- cbind(id = cells_reef,
-                       seafloor_values[cells_reef, c(1,2)])
+                       seafloor_values[cells_reef, c(1, 2)])
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)

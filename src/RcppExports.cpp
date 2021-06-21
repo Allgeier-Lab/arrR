@@ -35,14 +35,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_closest_reef
-Rcpp::NumericVector rcpp_closest_reef(Rcpp::NumericVector coords_temp, Rcpp::NumericMatrix coords_reef);
-RcppExport SEXP _arrR_rcpp_closest_reef(SEXP coords_tempSEXP, SEXP coords_reefSEXP) {
+Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef);
+RcppExport SEXP _arrR_rcpp_closest_reef(SEXP xSEXP, SEXP ySEXP, SEXP coords_reefSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type coords_temp(coords_tempSEXP);
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_closest_reef(coords_temp, coords_reef));
+    rcpp_result_gen = Rcpp::wrap(rcpp_closest_reef(x, y, coords_reef));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -363,14 +364,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_translate_torus
-Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords, Rcpp::NumericVector extent);
-RcppExport SEXP _arrR_rcpp_translate_torus(SEXP coordsSEXP, SEXP extentSEXP) {
+Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent);
+RcppExport SEXP _arrR_rcpp_translate_torus(SEXP xSEXP, SEXP ySEXP, SEXP extentSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type coords(coordsSEXP);
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_translate_torus(coords, extent));
+    rcpp_result_gen = Rcpp::wrap(rcpp_translate_torus(x, y, extent));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -392,7 +394,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_allocation_ratio", (DL_FUNC) &_arrR_rcpp_allocation_ratio, 5},
     {"_arrR_rcpp_cell_from_xy", (DL_FUNC) &_arrR_rcpp_cell_from_xy, 4},
-    {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 2},
+    {"_arrR_rcpp_closest_reef", (DL_FUNC) &_arrR_rcpp_closest_reef, 3},
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_fishpop_growth", (DL_FUNC) &_arrR_rcpp_fishpop_growth, 13},
@@ -412,7 +414,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_run_simulation", (DL_FUNC) &_arrR_rcpp_run_simulation, 20},
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 16},
     {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
-    {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 2},
+    {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 3},
     {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
     {NULL, NULL, 0}
 };
