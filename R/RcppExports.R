@@ -62,7 +62,7 @@ rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
 #' @description
 #' Rcpp get closest reef.
 #'
-#' @param coords_temp Vector with xy coords of current individual.
+#' @param x,y Numeric with xy coords of current individual.
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #'
 #' @details

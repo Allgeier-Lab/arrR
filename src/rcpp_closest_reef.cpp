@@ -5,7 +5,7 @@
 //' @description
 //' Rcpp get closest reef.
 //'
-//' @param coords_temp Vector with xy coords of current individual.
+//' @param x,y Numeric with xy coords of current individual.
 //' @param coords_reef Matrix with ID and coords of reef cells.
 //'
 //' @details
