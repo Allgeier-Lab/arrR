@@ -10,7 +10,7 @@ rcpp_mortality(
   seafloor,
   pop_linf,
   pop_n_body,
-  pop_max_reserves,
+  pop_reserves_max,
   extent,
   dimensions
 )
@@ -20,7 +20,7 @@ rcpp_mortality(
 
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{pop_linf, pop_n_body, pop_max_reserves}{Numeric with parameters.}
+\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 

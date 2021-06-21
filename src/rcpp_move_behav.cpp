@@ -12,7 +12,7 @@
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param coords_reef Matrix with ID and coords of reef cells.
-//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param move_mean,move_var Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.
@@ -37,7 +37,7 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                     Rcpp::NumericVector pop_thres_reserves,
+                     Rcpp::NumericVector pop_reserves_thres,
                      double move_mean, double move_var,
                      double move_reef, double move_border, double move_return, double max_dist,
                      Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
@@ -49,7 +49,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     double move_dist = 0.0;
 
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 9) >= (pop_thres_reserves(i) * fishpop(i, 10))) {
+    if (fishpop(i, 9) >= (pop_reserves_thres(i) * fishpop(i, 10))) {
 
       // init vector for temp coords
       Rcpp::NumericVector coords_temp(2, 0.0);
@@ -118,7 +118,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
 
 /*** R
 rcpp_move_behav(fishpop = fishpop_values, coords_reef = coords_reef,
-                pop_thres_reserves = pop_thres_reserves, move_mean = parameters$move_mean,
+                pop_reserves_thres = pop_reserves_thres, move_mean = parameters$move_mean,
                 move_var = parameters$move_var, move_reef = parameters$move_reef,
                 move_border = parameters$move_border, move_return = parameters$move_return,
                 max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),

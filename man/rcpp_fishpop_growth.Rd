@@ -13,8 +13,8 @@ rcpp_fishpop_growth(
   pop_a,
   pop_b,
   pop_n_body,
-  pop_max_reserves,
-  pop_consumption_prop,
+  pop_reserves_max,
+  pop_reserves_consump,
   extent,
   dimensions,
   min_per_i
@@ -27,9 +27,9 @@ rcpp_fishpop_growth(
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
-\item{pop_n_body, pop_max_reserves, min_per_i}{Numeric with parameters.}
+\item{pop_n_body, pop_reserves_max, min_per_i}{Numeric with parameters.}
 
-\item{pop_consumption_prop}{Double with consumption limit to fill reserves each timestep.}
+\item{pop_reserves_consump}{Double with consumption limit to fill reserves each timestep.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -54,7 +54,7 @@ their reserves.
 If individuals are within behavior 2 or 3 (only for \code{movement = behav}),
 the consumption requirement must be met by the reserves only.
 
-If \code{0 > pop_consumption_prop < 1}, only a ratio of the \code{pop_max_reserves}
+If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
 can be consumed each timestep.
 }
 \references{

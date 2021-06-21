@@ -8,7 +8,7 @@ rcpp_move_wrap(
   fishpop,
   coords_reef,
   movement,
-  pop_thres_reserves,
+  pop_reserves_thres,
   move_mean,
   move_var,
   move_visibility,
@@ -27,7 +27,7 @@ rcpp_move_wrap(
 
 \item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
+\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{move_mean, move_var, move_visibility}{Double with mean movement parameter.}
 

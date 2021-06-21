@@ -138,7 +138,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     # not used but needed objects
     max_dist <- 0.0
 
-    pop_thres_reserves <- 0.0
+    pop_reserves_thres <- 0.0
 
   # get 95% of maximum movement distances
   } else {
@@ -156,9 +156,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
     # getting thres_reserves parameter for each individual
-    pop_thres_reserves <- stats::runif(n = nrow(fishpop),
-                                       min = parameters$pop_thres_reserves_min,
-                                       max = parameters$pop_thres_reserves_max)
+    pop_reserves_thres <- stats::runif(n = nrow(fishpop),
+                                       min = parameters$pop_reserves_thres_lo,
+                                       max = parameters$pop_reserves_thres_hi)
 
     # set behavior to foraging
     if (movement %in% c("rand", "attr")) {
@@ -227,7 +227,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
                       seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                       parameters = parameters, pop_n = starting_values$pop_n,
-                      movement = movement, max_dist = max_dist, pop_thres_reserves = pop_thres_reserves,
+                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
                       coords_reef = coords_reef, cell_adj = cell_adj,
                       extent = extent, dimensions = dimensions, nutr_input = nutr_input,
                       max_i = max_i, min_per_i = min_per_i, save_each = save_each,

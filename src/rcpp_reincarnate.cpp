@@ -11,7 +11,7 @@
 //' @param seafloor Matrix with seafloor values.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param pop_linf,pop_n_body,pop_max_reserves Numeric with parameters.
+//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
 //' @param reason String with reason of reincarnation.
 //'
 //' @details
@@ -30,7 +30,7 @@
 // [[Rcpp::export]]
 void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id,
                       Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
-                      double pop_linf, double pop_n_body, double pop_max_reserves,
+                      double pop_linf, double pop_n_body, double pop_reserves_max,
                       String reason) {
 
   int cell_id = 0;
@@ -132,5 +132,5 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]], fish_id = fish_id_temp,
                  seafloor = seafloor_values, extent = extent, dimensions = dimensions,
                  pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
-                 pop_max_reserves = pop_max_reserves, reason = "consumption")
+                 pop_reserves_max = pop_reserves_max, reason = "consumption")
 */

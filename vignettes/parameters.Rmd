@@ -97,10 +97,10 @@ parameter_df <- data.frame(
            "move_reef",
            "move_return",
        
-           "pop_max_reserves",
-           "pop_thres_reserves_min",
-           "pop_thres_reserves_max",
-           "pop_consumption_prop",
+           "pop_reserves_max",
+           "pop_reserves_thres_lo",
+           "pop_reserves_thres_hi",
+           "pop_reserves_consump",
 
            "pop_a",
            "pop_b",
@@ -146,11 +146,11 @@ parameter_df <- data.frame(
           "simulate_movement()",
           
           # update functions
-          "pop_max_reserves",
-          "pop_thres_reserves_min",
-          "pop_thres_reserves_max",
-          "pop_consumption_prop",
-          
+          "pop_reserves_max",
+          "pop_reserves_thres_lo",
+          "pop_reserves_thres_hi",
+          "pop_reserves_consump",
+
           "pop_a",
           "pop_b",
           "pop_k",
@@ -166,6 +166,7 @@ parameter_df <- data.frame(
   # update description
   descr = c("Maximum value of aboveground biomass", 
             "Minimum value of aboveground biomass", 
+            # update describtion
             "ag_v_max", 
             "ag_k_m",
             "ag_gamma",

@@ -7,7 +7,7 @@
 rcpp_move_behav(
   fishpop,
   coords_reef,
-  pop_thres_reserves,
+  pop_reserves_thres,
   move_mean,
   move_var,
   move_reef,
@@ -23,7 +23,7 @@ rcpp_move_behav(
 
 \item{coords_reef}{Matrix with ID and coords of reef cells.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
+\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{move_mean, move_var}{Double with mean movement parameter.}
 

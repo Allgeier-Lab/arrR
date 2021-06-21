@@ -11,8 +11,8 @@
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 //' @param seafloor Matrix with seafloor values.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-//' @param pop_n_body,pop_max_reserves,min_per_i Numeric with parameters.
-//' @param pop_consumption_prop Double with consumption limit to fill reserves each timestep.
+//' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
+//' @param pop_reserves_consump Double with consumption limit to fill reserves each timestep.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -29,7 +29,7 @@
 //' If individuals are within behavior 2 or 3 (only for \code{movement = behav}),
 //' the consumption requirement must be met by the reserves only.
 //'
-//' If \code{0 > pop_consumption_prop < 1}, only a ratio of the \code{pop_max_reserves}
+//' If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
 //' can be consumed each timestep.
 //'
 //' @references
@@ -50,7 +50,7 @@
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
-                         double pop_n_body, double pop_max_reserves, double pop_consumption_prop,
+                         double pop_n_body, double pop_reserves_max, double pop_reserves_consump,
                          Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          double min_per_i) {
 
@@ -88,7 +88,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
                          seafloor, extent, dimensions,
-                         pop_linf, pop_n_body, pop_max_reserves,
+                         pop_linf, pop_n_body, pop_reserves_max,
                          "consumption");
 
         continue;
@@ -116,7 +116,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
           // calculate amount that fish can eat per cell to fill reserves based on
           // maximum reserves
-          double consumption_limit = pop_consumption_prop * fishpop(fish_id_temp, 10);
+          double consumption_limit = pop_reserves_consump * fishpop(fish_id_temp, 10);
 
           // calculate difference between reserves max and current reserves
           double nutrients_diff = fishpop(fish_id_temp, 10) - fishpop(fish_id_temp, 9);
@@ -182,7 +182,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
                          seafloor, extent, dimensions,
-                         pop_linf, pop_n_body, pop_max_reserves,
+                         pop_linf, pop_n_body, pop_reserves_max,
                          "consumption");
 
         continue;
@@ -218,7 +218,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     fishpop(fish_id_temp, 13) += excretion_temp;
 
     // update max reserves based on weight
-    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_max_reserves;
+    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
 
   }
 }
@@ -229,6 +229,6 @@ rcpp_fishpop_growth(fishpop = fishpop_values,
                     pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
                     pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                     pop_n_body = parameters$pop_n_body,
-                    pop_max_reserves = parameters$pop_max_reserves,
+                    pop_reserves_max = pop_reserves_max,
                     min_per_i = min_per_i
 */

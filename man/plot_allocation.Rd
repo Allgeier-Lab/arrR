@@ -13,7 +13,9 @@ plot_allocation(parameters)
 Plotting method for seagrass growth allocation ratio.
 }
 \details{
-
+Plotting method for the allocation ratio rule used during the seagrass growth
+dynamics. For more information see \code{\link{rcpp_seagrass_growth}} and
+\code{rcpp_allocation_ratio}.
 }
 \examples{
 plot_allocation(parameters = default_parameters)

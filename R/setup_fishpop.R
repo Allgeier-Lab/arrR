@@ -61,7 +61,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                       use_log = use_log)
 
     # calculate maximum reserves
-    reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_max_reserves
+    reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_reserves_max
 
     # combine to final data frame
     fishpop <- data.frame(id = 1:starting_values$pop_n, age = 0,
