@@ -4,10 +4,10 @@
 \alias{rcpp_cell_from_xy}
 \title{rcpp_cell_from_xy}
 \usage{
-rcpp_cell_from_xy(coords, dimensions, extent)
+rcpp_cell_from_xy(x, y, dimensions, extent)
 }
 \arguments{
-\item{coords}{Vector with coordinates.}
+\item{x, y}{Numeric with x,y coordinates.}
 
 \item{dimensions}{Vector with number or rows and cols}
 
@@ -17,10 +17,10 @@ rcpp_cell_from_xy(coords, dimensions, extent)
 int
 }
 \description{
-Rcpp cell from xy
+Rcpp get cell from xy
 }
 \details{
-Get cell id from xy coordinate. Allows only one coordinate pair at a time.
+Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
 }
 \references{
 Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis

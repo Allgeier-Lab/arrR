@@ -15,12 +15,17 @@ get_starting_values(seafloor_values, fishpop_values)
 list
 }
 \description{
-Internal function get mean starting values
+Get mean starting values of model run.
 }
 \details{
-Internal function to get mean starting values.
+Internal function to get mean starting values during \code{\link{run_simulation}}.
+Includes values for i) bg_biomass, ii) ag_biomass, iii) nutrients_pool, iv) detritus_pool,
+v) pop_n, and vi) pop_mean_size. The function is needed because some of the values
+can include stochasticity  and thus differ from the starting values.
 }
 \examples{
-# Add example code
+\dontrun{
+get_starting_values(seafloor_values = seafloor_values, fishpop_values = fishpop_values)
+}
 
 }

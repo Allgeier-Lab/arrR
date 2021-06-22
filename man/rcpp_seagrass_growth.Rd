@@ -38,10 +38,25 @@ rcpp_seagrass_growth(
 void
 }
 \description{
-Rcpp seagrass growth
+Rcpp seagrass growth sub-process.
 }
 \details{
 Function to simulate processes of aboveground and belowground seagrass slough and growth.
+All processes are simulated adapted after DeAngelis (1992).
+
+First, an amount of bg and ag slough is calculated pased on \code{seagrass_slough}.
+The ratio is additionally decreased the smaller the biomass gets and approximates zero
+for the minimum capacity in a cell.
+
+Second, the amount of nutrients that is taken
+up from the water column depend on the biomass and available nutrients in each cell.
+
+Third, allocation of uptake in bg or ag biomass depends on the uptake amount, the
+amount of sloughed biomass and the corresponding capacities of bg and ag in the cells.
+Additional growth (after slough was neutralised) depends on the allocation ratio,
+which can be plotted using \code{\link{plot_allocation}}.
+
+Fourth, all cells in which biomass is above the maximum capacity slough all additional biomass.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

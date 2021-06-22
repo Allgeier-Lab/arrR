@@ -2,7 +2,8 @@
 
 //' rcpp_nutr_input
 //'
-//' @description Rcpp nutrient input
+//' @description
+//' Rcpp simulate nutrient input.
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param nutr_input Vector with amount of nutrient input each timestep.
@@ -10,6 +11,7 @@
 //' @details
 //' Simulate external nutrient input to the each cell. The \code{nutr_input}
 //' vector must have as many elements as \code{max_i} to add input each timestep.
+//' If not nutrients should be added, set all values of \code{nutr_input} to zero.
 //'
 //' @references
 //' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

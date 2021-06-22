@@ -13,7 +13,8 @@
 
 //' rcpp_run_simulation
 //'
-//' @description Rcpp run simulation
+//' @description
+//' Rcpp run simulation.
 //'
 //' @param seafloor,fishpop Matrix with seafloor and fishpop data.
 //' @param seafloor_track,fishpop_track List with entry for each saving timestep.
@@ -21,7 +22,7 @@
 //' @param pop_n Integer with number of individuals.
 //' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 //' @param max_dist Double with maximum movement distance.
-//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param cell_adj Matrix with cell adjacencies.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -35,10 +36,14 @@
 //' @param verbose If TRUE, progress reports are printed.
 //'
 //' @details
-//' Run model
+//' The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
+//' (ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
+//' (v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
+//' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 //'
 //' @references
-//' Add reference
+//' For a detailed model describtion, see Esquivel et al (2021). Mechanistic support for
+//' increased primary production around artificial reefs. Manuscript in preparation.
 //'
 //' @return void
 //'
@@ -49,7 +54,7 @@
 // [[Rcpp::export]]
 void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                          List seafloor_track, List fishpop_track, List parameters,
-                         int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_thres_reserves,
+                         int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                          Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
                          Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          Rcpp::NumericVector nutr_input,
@@ -79,7 +84,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
   Progress progress(max_i, verbose);
 
   // run simulation
-  for (int i = 0; i < max_i; i++) {
+  for (int i = 1; i <= max_i; i++) {
 
     // check abort of function
     if (Progress::check_abort()) {
@@ -89,10 +94,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // simulate nutrient input if present
-    if (nutr_input(i) > 0.0) {
+    if (nutr_input(i - 1) > 0.0) {
 
       // simulate nutrient input
-      rcpp_nutr_input(seafloor, nutr_input(i));
+      rcpp_nutr_input(seafloor, nutr_input(i - 1));
 
     }
 
@@ -115,10 +120,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     }
 
     // fish indiviuals are present and i above burn_in
-    if ((i >= burn_in) && (pop_n != 0)) {
+    if ((i > burn_in) && (pop_n != 0)) {
 
       // calculate new coordinates and activity
-      rcpp_move_wrap(fishpop, coords_reef, movement, pop_thres_reserves,
+      rcpp_move_wrap(fishpop, coords_reef, movement, pop_reserves_thres,
                      as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]), as<double>(parameters["move_visibility"]),
                      as<double>(parameters["move_reef"]), as<double>(parameters["move_border"]),
                      as<double>(parameters["move_return"]), max_dist, extent, dimensions);
@@ -133,13 +138,13 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
       rcpp_fishpop_growth(fishpop, fishpop_track[0], seafloor,
                           as<double>(parameters["pop_k"]), as<double>(parameters["pop_linf"]),
                           as<double>(parameters["pop_a"]), as<double>(parameters["pop_b"]),
-                          as<double>(parameters["pop_n_body"]), as<double>(parameters["pop_max_reserves"]),
-                          as<double>(parameters["pop_consumption_prop"]), extent, dimensions, min_per_i);
+                          as<double>(parameters["pop_n_body"]), as<double>(parameters["pop_reserves_max"]),
+                          as<double>(parameters["pop_reserves_consump"]), extent, dimensions, min_per_i);
 
       // simulate mortality
       rcpp_mortality(fishpop, fishpop_track[0], seafloor,
                      as<double>(parameters["pop_linf"]), as<double>(parameters["pop_n_body"]),
-                     as<double>(parameters["pop_max_reserves"]), extent, dimensions);
+                     as<double>(parameters["pop_reserves_max"]), extent, dimensions);
 
     }
 
@@ -163,9 +168,9 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     // update tracking list
     if (i % save_each == 0) {
 
-      seafloor_track[i / save_each + 1] = Rcpp::clone(seafloor);
+      seafloor_track[i / save_each] = Rcpp::clone(seafloor);
 
-      fishpop_track[i / save_each + 1] = Rcpp::clone(fishpop);
+      fishpop_track[i / save_each] = Rcpp::clone(fishpop);
 
     }
 
@@ -179,7 +184,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                     parameters = parameters, pop_n = starting_values$pop_n,
-                    movement = movement, max_dist = max_dist, pop_thres_reserves = pop_thres_reserves,
+                    movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
                     cells_reef = cells_reef, coords_reef = coords_reef, cell_adj = cell_adj,
                     extent = extent, dimensions = dimensions, nutr_input = nutr_input,
                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,

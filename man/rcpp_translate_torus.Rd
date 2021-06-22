@@ -4,10 +4,10 @@
 \alias{rcpp_translate_torus}
 \title{rcpp_translate_torus}
 \usage{
-rcpp_translate_torus(coords, extent)
+rcpp_translate_torus(x, y, extent)
 }
 \arguments{
-\item{coords}{Vector with coordinates.}
+\item{x, y}{Double with x,y coordinates}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 }
@@ -15,8 +15,10 @@ rcpp_translate_torus(coords, extent)
 vector
 }
 \description{
-Rcpp translate torus
+Rcpp translate coordinates around torus.
 }
 \details{
-Translate coordinates if they exceed extent.
+Torus translation of coordinates if they exceed the provided extent. The translation
+is done until coordinate is within extent (i.e., could be translated several times
+if the difference is big).
 }

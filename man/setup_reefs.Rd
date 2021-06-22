@@ -17,13 +17,9 @@ setup_reefs(object, xy, extent)
 RasterBrick
 }
 \description{
-Internal function to setup reefs
+Setup reef cells for seafloor.
 }
 \details{
-Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
-environmental values of AR to NA/0.
-}
-\examples{
-# Add example code
-
+Internal function to setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
+Sets all seafloor values of AR to NA/0. Used during \code{\link{setup_seafloor}}.
 }

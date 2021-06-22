@@ -3,7 +3,8 @@
 
 //' rcpp_rlognorm
 //'
-//' @description Rcpp rlognorm
+//' @description
+//' Rcpp rlognorm.
 //'
 //' @param mean Double with mean.
 //' @param sd Double with sd

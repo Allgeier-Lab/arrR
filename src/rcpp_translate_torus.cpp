@@ -2,13 +2,16 @@
 
 //' rcpp_translate_torus
 //'
-//' @description Rcpp translate torus
+//' @description
+//' Rcpp translate coordinates around torus.
 //'
-//' @param coords Vector with coordinates.
+//' @param x,y Double with x,y coordinates
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //'
 //' @details
-//' Translate coordinates if they exceed extent.
+//' Torus translation of coordinates if they exceed the provided extent. The translation
+//' is done until coordinate is within extent (i.e., could be translated several times
+//' if the difference is big).
 //'
 //' @return vector
 //'
@@ -17,43 +20,56 @@
 //'
 //' @export
 // [[Rcpp::export]]
-Rcpp::NumericVector rcpp_translate_torus(Rcpp::NumericVector coords,
-                                         Rcpp::NumericVector extent) {
+Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent) {
 
-  // translate x coords left side
-  while (coords(0) < extent(0)) {
+  // init numeric vector
+  Rcpp::NumericVector coords (2, 0.0);
 
-    coords(0) = extent(1) - (extent(0) - coords(0));
+  // check if x needs to be changed
+  if(x < extent(0) || x > extent(1)) {
 
+    // translate x coords left side
+    while (x < extent(0)) {
+
+      x = extent(1) - (extent(0) - x);
+
+    }
+
+    // translate x coord right side
+    while (x > extent(1)) {
+
+      x = extent(0) + (x - extent(1));
+
+    }
   }
 
-  // translate x coord right side
-  while (coords(0) > extent(1)) {
+  // check if y needs to be changed
+  if (y < extent(2) || y > extent(3)) {
 
-    coords(0) = extent(0) + (coords(0) - extent(1));
+    // translate y coord bottom
+    while (y < extent(2)) {
 
+      y = extent(3) - (extent(2) - y);
+
+    }
+
+    // translate y coord top
+    while (y > extent(3)) {
+
+      y = extent(2) + (y - extent(3));
+
+    }
   }
 
-  // translate y coord bottom
-  while (coords(1) < extent(2)) {
-
-    coords(1) = extent(3) - (extent(2) - coords(1));
-
-  }
-
-  // translate y coord top
-  while (coords(1) > extent(3)) {
-
-    coords(1) = extent(2) + (coords(1) - extent(3));
-
-  }
+  // save coords
+  coords(0) = x; coords(1) = y;
 
   return(coords);
 }
 
 /*** R
 # rcpp_translate_torus
-rcpp_translate_torus(coords = c(5, -5.5), extent = c(-10, 10, -10, 10))
+rcpp_translate_torus(x = 5, y =  -5.5, extent = c(-10, 10, -10, 10))
 
-rcpp_translate_torus(coords = c(12.5, -5.5), extent = c(-10, 10, -10, 10))
+rcpp_translate_torus(x = 12.5, y = -5.5, extent = c(-10, 10, -10, 10))
 */

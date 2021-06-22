@@ -2,13 +2,14 @@
 
 //' rcpp_get_bearing
 //'
-//' @description Rcpp get bearing
+//' @description
+//' Rcpp get bearing between two coordinate pairs.
 //'
-//' @param x_fish,y_fish Double with xy coords of fish individual.
-//' @param x_reef,y_reef Double with xy coords of closest reef.
+//' @param x1,y1 Double with first xy coords pair.
+//' @param x2,y2 Double with second xy coords pair.
 //'
 //' @details
-//' Get bearing between fish individual and closest reef cell.
+//' Get bearing between (x1,y1) and (x2,y2).
 //'
 //' @return double
 //'
@@ -17,11 +18,10 @@
 //'
 //' @export
 // [[Rcpp::export]]
-double rcpp_get_bearing(double x_fish, double y_fish,
-                        double x_reef, double y_reef) {
+double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 
   // calculate bearing between fish coords and shortest reef cell
-  double theta = atan2(y_reef - y_fish, x_reef - x_fish);
+  double theta = atan2(y2 - y1, x2 - x1);
 
   // correct if in bottom left sector?
   if (theta < 0.0) {
@@ -37,7 +37,7 @@ double rcpp_get_bearing(double x_fish, double y_fish,
 }
 
 /*** R
-closest_reef <- rcpp_closest_reef(fishpop_values[3, c(3, 4), drop = FALSE], coords_reef)
+closest_reef <- rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
 
 reef_id <- closest_reef[1] + 1
 

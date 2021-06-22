@@ -2,13 +2,17 @@
 
 //' rcpp_convert_nutr
 //'
-//' @description Rcpp convert nutrients
+//' @description
+//' Rcpp convert nutrients.
 //'
 //' @param x Numeric with nutrient amount.
 //' @param to String to specify in which unit to convert.
 //'
 //' @details
-//' Rcpp implementation to convert nutrients between g and umol (ammonium; NH4)
+//' Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
+//'
+//' @references
+//' https://en.wikipedia.org/wiki/Ammonium
 //'
 //' @return double
 //'

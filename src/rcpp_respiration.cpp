@@ -2,7 +2,8 @@
 
 //' rcpp_respiration
 //'
-//' @description Rcpp respration
+//' @description
+//' Rcpp simulate respration.
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param resp_intercept,resp_slope Numeric with regression parameters.
@@ -11,12 +12,19 @@
 //'
 //' @details
 //' Function to simulate respiration of fish population individuals based on movement,
-//' body size and water temperature.
+//' body size and water temperature. The respiration is temperature dependent with an
+//' activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
+//'
+//' If respiration is a infinite number (due to zero division), set to respiration = 1.0.
 //'
 //' @references
 //' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
 //' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
 //' Centre for Limnology, Madison,USA.
+//'
+//' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
+//' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
+//' J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
 //'
 //' @return void
 //'
@@ -68,7 +76,7 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
     } else {
 
       // update respiration col
-      fishpop(i, 8) = 1;
+      fishpop(i, 8) = 1.0;
 
     }
   }

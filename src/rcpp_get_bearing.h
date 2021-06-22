@@ -5,7 +5,6 @@
 
 using namespace Rcpp;
 
-double rcpp_get_bearing(double x_fish, double y_fish,
-                        double x_reef, double y_reef);
+double rcpp_get_bearing(double x1, double y1, double x2, double y2);
 
 //#endif // RCPP_GET_BEARING

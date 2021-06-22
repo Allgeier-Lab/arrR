@@ -2,16 +2,19 @@
 
 //' rcpp_allocation_ratio
 //'
-//' @description Rcpp allocation ratio
+//' @description
+//' Rcpp allocation ratio.
 //'
 //' @param biomass Numeric with biomass.
 //' @param biomass_min,biomass_max Numeric with minum and maximum of biomass.
 //' @param threshold,slope Numeric with function parameters.
 //'
 //' @details
-//' Rcpp implementation of the allocation ratio. If the threshold is positive, all
-//' the ratio is 1 if biomass is below the threshold. If threshold is negative, the
-//' ratio will be 0.5 at the threshold.
+//' Get ratio of bg and ag nutrient allocation. If ratio = 1, all nutrients are
+//' allocated in the bg biomass.
+//'
+//' If the threshold is positive, the ratio is r=1 for all biomass values below the threshold.
+//' If threshold is negative, the ratio is be r=0.5 at the threshold.
 //'
 //' @references
 //' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
@@ -84,7 +87,7 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 }
 
 /*** R
-parameters <- arrR::default_parameters
+parameters <- default_parameters
 
 parameters$seagrass_thres <- 1
 parameters$seagrass_slope <- 3

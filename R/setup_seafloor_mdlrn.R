@@ -1,18 +1,23 @@
 #' setup_seafloor_mdlrn
 #'
-#' @description Initiate environment (seafloor) from model run
+#' @description
+#' Setup seafloor from previous \code{mdl_rn} object.
 #'
 #' @param mdl_rn \code{mdl_rn} object created with \code{\link{run_simulation}}.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
 #' @details
-#' Function to setup the environment (seafloor) from previous model run.
+#' Function to setup the environment (seafloor) from previous \code{mdl_rn} object.
+#' Thus, the created environment will have the final values of the provided \code{mdl_rn}
+#' object as cell values.
 #'
 #' @return RasterBrick
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' setup_seafloor_mdlrn(mdl_rn = result_rand)
+#' }
 #'
 #' @aliases setup_seafloor_mdlrn
 #' @rdname setup_seafloor_mdlrn

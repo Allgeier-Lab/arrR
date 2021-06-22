@@ -39,10 +39,10 @@ default_parameters <- list(
   pop_linf = 41.6,
   pop_n_body = 0.02999,
 
-  pop_max_reserves = 0.5,
-  pop_thres_reserves_min = 0.5,
-  pop_thres_reserves_max = 0.5,
-  pop_consumption_prop = 1.0,
+  pop_reserves_max = 0.5,
+  pop_reserves_thres_lo = 0.5,
+  pop_reserves_thres_hi = 0.5,
+  pop_reserves_consump = 1.0,
 
   resp_intercept = 0.0108,
   resp_slope = -0.2,

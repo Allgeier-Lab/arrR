@@ -1,6 +1,7 @@
 #' run_simulation
 #'
-#' @description Core function to run model.
+#' @description
+#' Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
@@ -16,14 +17,52 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
-#' (ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
-#' (vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
+#' This is the core function of the \code{arrR} model that allows to easily run the
+#' model. Besides running all sub-processes, the function also includes some basic
+#' checks to make sure the model does not crash. However, this does not ensure that
+#' e.g. all parameter values "make sense". The function returns a \code{mdl_rn} object
+#' which stores besides the model run results a lot of information about the model run
+#' specification and many function that can handle the objects exist (e.g. plotting).
+#'
+#' The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
+#' (ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
+#' (v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
+#' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
+#'
+#' The \code{movement} argument allows to either specify random movement of individuals,
+#' attracted movement towards the artificial reef of individuals or a movement behavior based
+#' on their biosenergetics.
+#'
+#' If \code{nutr_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+#' nutrient output, set the \code{nutrients_output} parameter to zero.
+#'
+#' If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
+#' but only each timestep specified by the object. However, \code{max_i} must be dividable by
+#' \code{save_each} without rest. Similar,  \code{seagrass_each} allows to simulate all
+#' seagrass sub-processes only each specified timestep.
+#'
+#' If \code{burn_in > 0}, all sub-processes related to fish individuals are not simulated
+#' before this timestep is reached.
+#'
+#' @references
+#' For a detailed model describtion see Esquivel et al (2021). Mechanistic support for
+#' increased primary production around artificial reefs. Manuscript in preparation.
 #'
 #' @return mdl_rn
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' ncol = 2, byrow = TRUE)
+#'
+#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+#' reefs = reefs, starting_values = default_starting_values)
+#' fishpop <- setup_fishpop(seafloor = seafloor,
+#' starting_values = default_starting_values, parameters = default_parameters)
+#'
+#' run_simulation(seafloor = seafloor, fishpop = fishpop, parameters = parameters,
+#' max_i = 1000, min_per_i = 120, save_each = 10)
+#' }
 #'
 #' @aliases run_simulation
 #' @rdname run_simulation
@@ -82,6 +121,13 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  # get time at beginning for final print
+  if (verbose) {
+
+    t_start <- Sys.time()
+
+  }
+
   # check if fishpop is NULL
   if (is.null(fishpop)) {
 
@@ -92,7 +138,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     # not used but needed objects
     max_dist <- 0.0
 
-    pop_thres_reserves <- 0.0
+    pop_reserves_thres <- 0.0
 
   # get 95% of maximum movement distances
   } else {
@@ -110,9 +156,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
     # getting thres_reserves parameter for each individual
-    pop_thres_reserves <- stats::runif(n = nrow(fishpop),
-                                       min = parameters$pop_thres_reserves_min,
-                                       max = parameters$pop_thres_reserves_max)
+    pop_reserves_thres <- stats::runif(n = nrow(fishpop),
+                                       min = parameters$pop_reserves_thres_lo,
+                                       max = parameters$pop_reserves_thres_hi)
 
     # set behavior to foraging
     if (movement %in% c("rand", "attr")) {
@@ -149,7 +195,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # get cell id of reef cells and coordinates of reef cells
   coords_reef <- cbind(id = cells_reef,
-                       seafloor_values[cells_reef, c(1,2)])
+                       seafloor_values[cells_reef, c(1, 2)])
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
@@ -181,7 +227,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
                       seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                       parameters = parameters, pop_n = starting_values$pop_n,
-                      movement = movement, max_dist = max_dist, pop_thres_reserves = pop_thres_reserves,
+                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
                       coords_reef = coords_reef, cell_adj = cell_adj,
                       extent = extent, dimensions = dimensions, nutr_input = nutr_input,
                       max_i = max_i, min_per_i = min_per_i, save_each = save_each,
@@ -249,9 +295,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # new line after last progress message
   if (verbose) {
 
+    # get time at end
+    t_diff <- round(Sys.time() - t_start, digits = 1)
+
     message("")
 
-    message("> All done.")
+    message("> All done (Runtime: ", t_diff," ", units(t_diff), ").")
 
   }
 

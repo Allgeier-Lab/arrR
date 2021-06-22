@@ -1,19 +1,24 @@
 #' get_density
 #'
-#' @description Get density of fish occurrence within each raster cell.
+#' @description
+#' Get density of fish individuals within cell.
 #'
 #' @param result mdl_rn object of simulation run.
 #' @param timestep Integer to specify maximum timestep.
 #' @param normalize Logical if TRUE count is divided by timesteps.
 #'
 #' @details
-#' Calculates the fish density for each cells. This means the total count of
-#' fish occurrence within a raster cell is divided by the maximum timestep.
+#' Calculates the fish density for each cells. Thus, the total count of
+#' fish occurrences within a raster cell is divided by the maximum timestep. Please
+#' keep in mind that if not each timestep was saved during \code{\link{run_simulation}},
+#' the returned density might not be the "true" density because some occurrences might be missed.
 #'
 #' @return data.frame
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' get_density(result = result_rand)
+#' }
 #'
 #' @aliases get_density
 #' @rdname get_density
@@ -35,6 +40,15 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)
+
+  }
+
+  # return warning if save_each != 1 because not all occurences are counted
+  if (result$save_each != 1) {
+
+    warning("Please be aware that 'true' density might be higher because 'save_each' is not one.",
+            call. = FALSE)
+
   }
 
   # create empty raster

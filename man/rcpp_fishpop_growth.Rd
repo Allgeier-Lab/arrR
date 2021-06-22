@@ -13,8 +13,8 @@ rcpp_fishpop_growth(
   pop_a,
   pop_b,
   pop_n_body,
-  pop_max_reserves,
-  pop_consumption_prop,
+  pop_reserves_max,
+  pop_reserves_consump,
   extent,
   dimensions,
   min_per_i
@@ -27,9 +27,9 @@ rcpp_fishpop_growth(
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
-\item{pop_n_body, pop_max_reserves, min_per_i}{Numeric with parameters.}
+\item{pop_n_body, pop_reserves_max, min_per_i}{Numeric with parameters.}
 
-\item{pop_consumption_prop}{Double with consumption limit to fill reserves each timestep.}
+\item{pop_reserves_consump}{Double with consumption limit to fill reserves each timestep.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -39,12 +39,29 @@ rcpp_fishpop_growth(
 void
 }
 \description{
-Rcpp fishpop growth
+Rcpp simulate fishpop growth.
 }
 \details{
-Function to simulate consumption, possible mortality, growth and excretion of fish
-population.
+Function to simulate consumption, mortality, growth and excretion of fish
+individuals. First each fish individual has to follow the von Bertalanffy growth curve
+and the corresponding amount of nutrients for this are calculated based on a
+bioenergetics model (Allgeier et al. 2020). The nutrients are consumed from the
+detritus_pool in the cell each individual is located in. If the available amount is not big
+enough, fish can either use their reserves or they die (see \code{\link{rcpp_reincarnate}}).
+Last, if the detritus pool is big enough, individuals can additionally fill up
+their reserves.
+
+If individuals are within behavior 2 or 3 (only for \code{movement = behav}),
+the consumption requirement must be met by the reserves only.
+
+If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
+can be consumed each timestep.
 }
 \references{
-Add reference
+Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
+Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
+harvest. Sci. Adv. 6, eaax8329. https://doi.org/10.1126/sciadv.aax8329
+
+Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
+ [WWW Document]. www.fishbase.org
 }

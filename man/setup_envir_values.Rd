@@ -26,8 +26,14 @@ setup_envir_values(
 RasterBrick
 }
 \description{
-Internal function to setup environmental values
+Setup environmental values for seafloor.
 }
 \details{
-Internal function to set biomass cell values of non-ARs cells.
+Internal function to setup environmental values used during \code{\link{setup_seafloor}}.
+The function creates a \code{RasterBrick} with all required values. All incremental
+values that will be increased during model run are set to zero. The function does not
+setup reef cells.
+
+If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
+as
 }

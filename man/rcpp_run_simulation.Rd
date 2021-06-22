@@ -13,7 +13,7 @@ rcpp_run_simulation(
   pop_n,
   movement,
   max_dist,
-  pop_thres_reserves,
+  pop_reserves_thres,
   coords_reef,
   cell_adj,
   extent,
@@ -40,7 +40,7 @@ rcpp_run_simulation(
 
 \item{max_dist}{Double with maximum movement distance.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
+\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{coords_reef}{Matrix with ID and coords of reef cells.}
 
@@ -68,11 +68,15 @@ rcpp_run_simulation(
 void
 }
 \description{
-Rcpp run simulation
+Rcpp run simulation.
 }
 \details{
-Run model
+The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
+(ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
+(v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
+(viii) diffusion of nutrients/detritus, and ix) nutrient output.
 }
 \references{
-Add reference
+For a detailed model describtion, see Esquivel et al (2021). Mechanistic support for
+increased primary production around artificial reefs. Manuscript in preparation.
 }

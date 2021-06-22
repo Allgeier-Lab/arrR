@@ -8,7 +8,7 @@ rcpp_move_wrap(
   fishpop,
   coords_reef,
   movement,
-  pop_thres_reserves,
+  pop_reserves_thres,
   move_mean,
   move_var,
   move_visibility,
@@ -27,7 +27,7 @@ rcpp_move_wrap(
 
 \item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
-\item{pop_thres_reserves}{Vector with threshold of pop_max_reserves to drain prior to foraging.}
+\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{move_mean, move_var, move_visibility}{Double with mean movement parameter.}
 
@@ -47,11 +47,12 @@ rcpp_move_wrap(
 void
 }
 \description{
-Rcpp move wrap
+Rcpp movement behavior wrapper.
 }
 \details{
-Wrapper function around all movement algorithms.
-}
-\references{
-Add reference
+Wrapper function around different movement algorithms. Individuals can either move
+completely random (\code{movement = "rand"}), attracted towards the artifical reef cells
+\code{movement = "attr"} or movement can be  depending on the bioenergetics of the
+fish individuals \code{movement = "behav"}. For more information see \code{\link{rcpp_move_rand}},
+\code{\link{rcpp_move_rand}} or \code{\link{rcpp_move_behav}}.
 }

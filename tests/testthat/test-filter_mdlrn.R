@@ -27,11 +27,9 @@ max_i <- 100
 
 min_per_i <- 120
 
-result_rand <- arrR::run_simulation(seafloor = input_seafloor,
-                                    fishpop  = input_fishpop,
-                                    parameters = parameters,
-                                    movement = "rand",
-                                    max_i = max_i, min_per_i = min_per_i)
+result_rand <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+                                    parameters = parameters,  movement = "rand",
+                                    max_i = max_i, min_per_i = min_per_i, save_each = 2)
 
 filter_time <- 50
 
@@ -49,7 +47,10 @@ test_that("filter_mdlrn only return until timestep", {
 
 test_that("filter_mdlrn returns error", {
 
-  expect_error(object = filter_mdlrn(result = c(1:5), timestep = filter_time),
-               regexp = "Please prove mdl_rn object createt with run_simulation.")
+  expect_error(object = filter_mdlrn(result = 1:5, timestep = filter_time),
+               regexp = "Please provide 'mdl_rn' object created with 'run_simulation'.")
+
+  expect_error(object = filter_mdlrn(result = result_rand, timestep = 51),
+               regexp = "'timestep' was not saved during model run.")
 
 })

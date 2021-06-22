@@ -23,9 +23,10 @@ rcpp_diffuse_values(
 void
 }
 \description{
-Rcpp diffuse values
+Rcpp simulate diffusion of values.
 }
 \details{
-A certain share of each cell value, specified by the diffusion parameters, is
-diffused to its 8 neighboring cells.
+Simulates the diffusion of a certain share of i) nutrients_pool, ii) detritus_pool,
+and iii) detritus_fish_diffusion of each cell with its neighboring cells. Scheduling
+is simulated pseudo-simultaneous.
 }

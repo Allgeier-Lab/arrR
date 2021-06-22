@@ -15,8 +15,11 @@ rcpp_convert_nutr(x, to)
 double
 }
 \description{
-Rcpp convert nutrients
+Rcpp convert nutrients.
 }
 \details{
-Rcpp implementation to convert nutrients between g and umol (ammonium; NH4)
+Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
+}
+\references{
+https://en.wikipedia.org/wiki/Ammonium
 }

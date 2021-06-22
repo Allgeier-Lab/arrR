@@ -6,7 +6,6 @@
 #'
 #' For more information about how to use the model, please see \code{browseVignettes("arrR")}.
 #'
-#'
 #' @name arrR
 #' @docType package
 #' @useDynLib arrR, .registration = TRUE

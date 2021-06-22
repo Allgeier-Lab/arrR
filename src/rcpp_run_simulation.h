@@ -9,7 +9,7 @@ using namespace Rcpp;
 
 void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                          List seafloor_track, List fishpop_track, List parameters,
-                         int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_thres_reserves,
+                         int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                          Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
                          Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          Rcpp::NumericVector nutr_input,

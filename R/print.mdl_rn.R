@@ -1,6 +1,7 @@
 #' print.mdl_rn
 #'
-#' @description Printing method for mdl_rn object
+#' @description
+#' Printing method for \code{mdl_rn} object.
 #'
 #' @param x mdl_rn object.
 #' @param timestep Numeric with timestep to print.
@@ -9,9 +10,14 @@
 #'
 #' @details
 #' Printing method for model run results simulated with \code{\link{run_simulation}}.
+#' Includes some information about the model run itself and distribution values (min, mean, max)
+#' for some values of the seafloor and fishpop.
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' print(result_rand)
+#' }
+#'
 #'
 #' @aliases print.mdl_rn
 #' @rdname print.mdl_rn
