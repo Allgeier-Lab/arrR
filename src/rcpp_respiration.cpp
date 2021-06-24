@@ -38,7 +38,7 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_temp_low, double resp_temp_max, double resp_temp_optm,
                       double water_temp, double min_per_i) {
 
-  // scale intercept to correct tick scale
+  // scale intercept to correct tick scale from (g/g/day to min_per_i)
   resp_intercept = resp_intercept / (24.0 * 60.0) * min_per_i;
 
   // for f(T) temperature dependence function for respiration
@@ -56,12 +56,10 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
   // loop through all fish individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // MH:  Make sure this is calculated using min_per_i
     // calculate respiration
-    // Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
-    // to result in unit of tick^-1
+    // oxycaloric coefficient c=13560.0 in J/gO2; energy-density of fish e=4800.0 J/g(wet weight)
     double respiration = (resp_intercept * std::pow(fishpop(i, 6), resp_slope) *
-                          temp_dependence * fishpop(i, 7)) * 13560.0 * (1.0 / 4800.0);
+                          temp_dependence * fishpop(i, 7)) * 13560.0 / 4800.0;
 
     // check if finite number
     bool check_finite = std::isfinite(respiration);
