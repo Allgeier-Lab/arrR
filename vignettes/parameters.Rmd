@@ -42,7 +42,7 @@ starting_values_df <- data.frame(name = c("ag_biomass",
                                          "setup_seafloor()", 
                                          
                                          "setup_seafloor()",
-                                         "detritus_pool()", 
+                                         "setup_seafloor()", 
                                          
                                          "setup_fishpop()", 
                                          "setup_fishpop()", 
@@ -66,152 +66,182 @@ knitr::kable(starting_values_df, col.names = c("Name", "Function", "Describtion"
 
 ```{r, parameters, echo = FALSE}
 parameter_df <- data.frame(
-  name = c("ag_biomass_max", 
-           "ag_biomass_min", 
-           "ag_v_max", 
-           "ag_k_m",
-           "ag_gamma",
-                                    
-           "bg_biomass_max", 
-           "bg_biomass_min", 
-           "bg_v_max", 
-           "bg_k_m", 
-           "bg_gamma", 
-           
-           "seagrass_thres",
-           "seagrass_slope",
-           "seagrass_slough",
-                                    
-           "nutrients_diffusion", 
-           "nutrients_output", 
-           
-           "detritus_mineralization",
-           "detritus_diffusion",
-           "detritus_fish_decomp",
-           "detritus_fish_diffusion",
-           
-           "move_mean",
-           "move_var",
-           "move_visibility",
-           "move_border",
-           "move_reef",
-           "move_return",
-       
-           "pop_reserves_max",
-           "pop_reserves_thres_lo",
-           "pop_reserves_thres_hi",
-           "pop_reserves_consump",
-
-           "pop_a",
-           "pop_b",
-           "pop_k",
-           "pop_linf",
-           "pop_n_body",
-           
-           "resp_intercept", 
-           "resp_slope", 
-           "resp_temp_low", 
-           "resp_temp_optm", 
-           "resp_temp_max"), 
   
-  fun = c("rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()",
-          "rcpp_seagrass_growth()", 
-          
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()",
-          "rcpp_seagrass_growth()",
-          
-          "rcpp_seagrass_growth()", 
-          "rcpp_seagrass_growth()",
-          "rcpp_seagrass_growth()",
-          
-          "rcpp_mineralization()",
-          "rcpp_mineralization()",
-          
-          "rcpp_mineralization()",
-          "rcpp_mineralization()",
-          "rcpp_mineralization()",
-          "rcpp_mineralization()",
-          
-          "simulate_movement()",
-          "simulate_movement()",
-          "simulate_movement()",
-          "simulate_movement()",
-          "simulate_movement()",
-          "simulate_movement()",
-          
-          # update functions
-          "pop_reserves_max",
-          "pop_reserves_thres_lo",
-          "pop_reserves_thres_hi",
-          "pop_reserves_consump",
-
-          "pop_a",
-          "pop_b",
-          "pop_k",
-          "pop_linf",
-          "pop_n_body",
+  name = c(
+    # ag_*
+    "ag_biomass_max", 
+    "ag_biomass_min", 
+    "ag_v_max", 
+    "ag_k_m",
+    "ag_gamma",
     
-          "rcpp_respiration()", 
-          "rcpp_respiration()", 
-          "rcpp_respiration()", 
-          "rcpp_respiration()", 
-          "rcpp_respiration()"),
+    # bg_*
+    "bg_biomass_max", 
+    "bg_biomass_min", 
+    "bg_v_max", 
+    "bg_k_m", 
+    "bg_gamma", 
+      
+    # seagrass_*
+    "seagrass_thres",
+    "seagrass_slope",
+    "seagrass_slough",
+    
+    # nutrients_*
+    "nutrients_diffusion", 
+    "nutrients_output", 
+    
+    # detritus_*
+    "detritus_mineralization",
+    "detritus_diffusion",
+    "detritus_fish_decomp",
+    "detritus_fish_diffusion",
+    
+    # move_* 
+    "move_mean",
+    "move_var",
+    "move_visibility",
+    "move_border",
+    "move_reef",
+    "move_return",
+    
+    # pop_reserves_*
+    "pop_reserves_max",
+    "pop_reserves_thres_lo",
+    "pop_reserves_thres_hi",
+    "pop_reserves_consump",
   
-  # update description
-  descr = c("Maximum value of aboveground biomass", 
-            "Minimum value of aboveground biomass", 
-            # update describtion
-            "ag_v_max", 
-            "ag_k_m",
-            "ag_gamma",
-                                     
-            "bg_biomass_max", 
-            "bg_biomass_min", 
-            "bg_v_max", 
-            "bg_k_m", 
-            "bg_gamma", 
-            
-            "seagrass_thres",
-            "seagrass_slope",
-            "seagrass_slough",
-                                     
-            "nutrients_diffusion", 
-            "nutrients_output", 
-            
-            "detritus_mineralization",
-            "detritus_diffusion",
-            "detritus_fish_decomp",
-            "detritus_fish_diffusion",
-            
-            "move_mean",
-            "move_var",
-            "move_visibility",
-            "move_border",
-            "move_reef",
-            "move_return",
+    # pop_*
+    "pop_a",
+    "pop_b",
+    "pop_k",
+    "pop_linf",
+    "pop_n_body",
+      
+    # resp_*
+    "resp_intercept", 
+    "resp_slope", 
+    "resp_temp_low", 
+    "resp_temp_optm", 
+    "resp_temp_max"), 
+  
+  fun = c(
+    
+     # ag_*
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()",
+    "rcpp_seagrass_growth()", 
+    
+     # bg_*      
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()",
+    "rcpp_seagrass_growth()",
         
-            "pop_max_reserves",
-            "pop_thres_reserves_min",
-            "pop_thres_reserves_max",
-            "pop_consumption_prop",
- 
-            "pop_a",
-            "pop_b",
-            "pop_k",
-            "pop_linf",
-            "pop_n_body",
-           
-            "resp_intercept", 
-            "resp_slope", 
-            "resp_temp_low", 
-            "resp_temp_optm", 
-            "resp_temp_max"))
+    # seagrass_*  
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()",
+    "rcpp_seagrass_growth()",
+    
+     # nutrients_*      
+    "rcpp_diffuse_values()",
+    "rcpp_nutr_output()",
+         
+    # detritus_*
+    "rcpp_mineralization()",
+    "rcpp_diffuse_values()",
+    "rcpp_mineralization()",
+    "rcpp_diffuse_values()",
+    
+    # move_* 
+    "rcpp_move_rand(), rcpp_move_behav()",
+    "rcpp_move_rand()",
+    "rcpp_move_rand()",
+    "rcpp_move_behav()",
+    "rcpp_move_behav()",
+    "rcpp_move_behav()",
+    
+    # pop_reserves_*
+    "rcpp_fishpop_growth(), rcpp_mortality()",
+    "run_simulation()",
+    "run_simulation()",
+    "rcpp_fishpop_growth()",
+  
+    # pop_*
+    "rcpp_fishpop_growth()",
+    "rcpp_fishpop_growth()",
+    "rcpp_fishpop_growth()",
+    "rcpp_fishpop_growth(), rcpp_mortality()",
+    "rcpp_fishpop_growth(), rcpp_mortality()",
+      
+    # resp_*
+    "rcpp_respiration()", 
+    "rcpp_respiration()", 
+    "rcpp_respiration()", 
+    "rcpp_respiration()", 
+    "rcpp_respiration()"),
+  
+  descr = c(
+    
+    # ag_*
+    "Maximum aboveground biomass", 
+    "Minimum aboveground biomass", 
+    "Maximum aboveground uptake rate", 
+    "Half-saturation aboveground nutrient uptake",
+    "Nutrient content percent per dry weight aboveground biomass",
+    
+    # bg_*
+    "Maximum belowground biomass", 
+    "Minimum belowground biomass", 
+    "Maximum belowground uptake rate", 
+    "Half-saturation belowground nutrient uptake",
+    "Nutrient content percent per dry weight belowground biomass",
+      
+    # seagrass_*
+    "Midpoint or threshold of allocation function",
+    "Slope of allocation function",
+    "Sloughed fraction of biomass",
+    
+    # nutrients_*
+    "Fraction of nutrients that is diffused across neighboring cells", 
+    "Fraction of nutrients that exits the system each timestep", 
+    
+    # detritus_*
+    "Fraction of detrital biomass that is mineralized",
+    "Fraction of detrital biomass that is diffused across neighboring cells",
+    "Fraction of fish detrital biomass that is decomposited",
+    "Fraction of fish detrital biomass that is diffused across neighboring cells",
+    
+    # move_* 
+    "Mean movement distance",
+    "Variance of movement distance",
+    "Distance in which individuals individuals are aware of distance to AR",
+    "Distance to the AR until individuals are considered to be at the AR",
+    "Movement distance directly at the AR",
+    "Movement distance for returning to the AR",
+    
+    # pop_reserves_*
+    "Fraction of total biomass that individuals can store as reserves",
+    "Lower boundary of reservers at which individuals leave AR to forage",
+    "Upper boundary of reservers at which individuals leave AR to forage",
+    "Fraction of reserves that individuals can consume each timestep",
+  
+    # pop_*
+    "Length-weight relationship",
+    "Length-weight relationship",
+    "Growth coefficient",
+    "Maximum body length",
+    "Nutrient ratio of individual body mass ",
+      
+    # resp_*
+    "Intercept of respiration function", 
+    "Slope of respiration function", 
+    "Low water temperature for respiration", 
+    "Optimum water temperature for respiration", 
+    "Maximum water temperature for respiration"))
                 
 knitr::kable(parameter_df, col.names = c("Name", "Function", "Describtion"), align = "lrr") %>% 
   kableExtra::kable_styling(full_width = TRUE, position = "center", font_size = 12, )
