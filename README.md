@@ -64,8 +64,6 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
 #> > ...Checking parameter values...
 #> > ...Checking if starting values are within parameter boundaries...
-#> > Not needed parameter values: move_border
-#> 
 #> > All checking done!
 ```
 
@@ -100,13 +98,11 @@ specifications of the model run.
 min_per_i <- 120
 
 # run the model for three years
-years <- 1
-
+years <- 3
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # save results only every 15 days
 days <- 5
-
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 
@@ -117,20 +113,20 @@ result <- run_simulation(seafloor = input_seafloor,
                          save_each = save_each)
 
 result
-#> Total time : 4380 iterations (365 days) [Burn-in: 0 iter.]
+#> Total time : 13140 iterations (1095 days) [Burn-in: 0 iter.]
 #> Saved each : 60 iterations (5 days)
 #> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
 #> Fishpop    : 8 indiv (movement: 'rand')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 97.802, 556.153, 0, 0.019, 0
-#> Mean     : 97.911, 556.421, 0, 0.082, 0
-#> Maximum  : 98.135, 556.953, 0.004, 0.1, 0
+#> Minimum  : 62.14, 535.131, 0, 1.524, 0
+#> Mean     : 62.252, 541.715, 0, 1.535, 0
+#> Maximum  : 65.061, 622.339, 0.006, 1.539, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 11.93, 30.624, 0, 0
-#> Mean     : 15.698, 78.557, 0, 0
-#> Maximum  : 19.898, 154.274, 0, 0
+#> Minimum  : 20.314, 164.723, 0, 0
+#> Mean     : 22.991, 247.922, 0, 0
+#> Maximum  : 26.127, 364.934, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
