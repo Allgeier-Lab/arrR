@@ -3,13 +3,18 @@
 
 //' rcpp_nutr_uptake
 //'
-//' @description Rcpp nutrient uptake
+//' @description
+//' Rcpp nutrient uptake.
 //'
 //' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
 //' @param v_max,k_m,time_frac Numeric with parameters
 //'
 //' @details
-//' Calculate nutrient uptake of cells.
+//' Calculate nutrient uptake of each cells depending on avaiable nutrients in the
+//' water column and biomass. All values are scaled to the time period which can be
+//' specified by \code{time_frac}. Are uptaken nutrients are removed from the pool.
+//' If the calculated uptake exceeds the available amount, only the  available amount
+//' is taken up.
 //'
 //' @references
 //' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
@@ -50,21 +55,21 @@ double rcpp_nutr_uptake(double nutrients, double biomass,
 }
 
 /*** R
+nutrients <- seq(from = 0.0, to = 0.01, length.out = 100)
 
-nutrients <- 0.003  # g nutrients
-biomass <- 100 # g dry biomass
-v_max <- parameters$ag_v_max
-k_m <- parameters$ag_k_m
+uptake <- vapply(nutrients, FUN = function(x)
+  rcpp_nutr_uptake(nutrients = x, biomass = 1,
+                   v_max = parameters$ag_v_max, k_m = parameters$ag_k_m, time_frac = 1),
+  FUN.VALUE = numeric(1))
 
-(nutrients_umol <- rcpp_convert_nutr(nutrients, "umol"))
+nutrients_umol <- vapply(nutrients, FUN = function(x) rcpp_convert_nutr(x = x, to = "umol"),
+                         FUN.VALUE = numeric(1))
 
-(v_amb <- v_max * nutrients_umol / (k_m + nutrients_umol))
+uptake_umol <- vapply(uptake, FUN = function(x) rcpp_convert_nutr(x = x, to = "umol"),
+                      FUN.VALUE = numeric(1))
 
-(uptake_umol <- v_amb * biomass * 2)
+plot(x = nutrients_umol, y = uptake_umol, type = "l",
+     ylim = c(0,  parameters$ag_v_max), xlim = c(0, max(nutrients_umol)))
 
-uptake_umol / 1000
-
-(uptake_g <- rcpp_convert_nutr(uptake_umol, "g"))
-
-uptake_g > nutrients
+abline(a = parameters$ag_v_max, b = 0, lty = 2, col = "grey")
 */

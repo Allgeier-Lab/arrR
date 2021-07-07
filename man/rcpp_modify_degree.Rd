@@ -15,8 +15,9 @@ rcpp_modify_degree(x, y)
 double
 }
 \description{
-Rcpp modify degree
+Rcpp modify degree.
 }
 \details{
-Substract or add degree to angle. Makes sure angles are between 0 <= x <= 360.
+Modify the degree of direction heading of individuals. The function ensures that
+all degree are between 0 <= x <= 360.
 }

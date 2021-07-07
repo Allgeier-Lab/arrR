@@ -1,8 +1,10 @@
 #include "rcpp_rlognorm.h"
+#include "truncnorm.h"
 
 //' rcpp_rlognorm
 //'
-//' @description Rcpp rlognorm
+//' @description
+//' Rcpp rlognorm.
 //'
 //' @param mean Double with mean.
 //' @param sd Double with sd
@@ -33,7 +35,7 @@ double rcpp_rlognorm(double mean, double sd, double min, double max) {
   double log_sd = std::sqrt(std::log(1 + (std::pow(sd, 2) / std::pow(mean, 2))));
 
   // https://github.com/duckmayr/RcppDist
-  double log_rand = std::exp(r_truncnorm(log_mean, log_sd, log(min), log(max)));
+  double log_rand = std::exp(r_truncnorm(log_mean, log_sd, std::log(min), std::log(max)));
 
   return (log_rand);
 }

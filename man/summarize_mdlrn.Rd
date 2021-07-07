@@ -16,12 +16,20 @@ with aggregate().}
 list
 }
 \description{
-Summarize results.
+Summarize results of model run.
 }
 \details{
-Function to summarize results for each timestep.
+Function to summarize results for each timestep. The \code{summary} argument
+allows to specify which summary statistics are used for each cell. The selected
+statistics are used by \code{\link{aggregate}} and must return one value.
+
+For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
+are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
+iv) died_background are returned.
 }
 \examples{
-# Add example code
+\dontrun{
+summarize_mdlrn(result_rand)
+}
 
 }

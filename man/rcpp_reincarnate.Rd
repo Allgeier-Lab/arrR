@@ -7,23 +7,28 @@
 rcpp_reincarnate(
   fishpop,
   fishpop_track,
-  seafloor,
   fish_id,
-  cell_id,
+  seafloor,
+  extent,
+  dimensions,
   pop_linf,
   pop_n_body,
-  pop_want_reserves,
+  pop_reserves_max,
   reason
 )
 }
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop and starting fishpop values.}
 
+\item{fish_id}{Vector with id of fish and corresponding cell ids.}
+
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{fish_id, cell_id}{Vector with id of fish and corresponding cell ids.}
+\item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
-\item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+\item{dimensions}{Vector with dimensions (nrow, ncol).}
+
+\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
 
 \item{reason}{String with reason of reincarnation.}
 }
@@ -31,8 +36,12 @@ rcpp_reincarnate(
 void
 }
 \description{
-Rcpp reincarnate
+Rcpp reincarnate fish indivudals.
 }
 \details{
-Create new individual after mortality event.
+Creates a new individual after mortality event. The new individual has the same
+value as the just died individual at the beginning of the simulation (i.e., timestep zero).
+The mass difference (i.e. current mass minus mass at timestep zero) plus reserves
+of the died individual are added to the detritus pool. The reincarnated individual
+tries to fill its reserves from the detritus pool if enough nutrients are available.
 }

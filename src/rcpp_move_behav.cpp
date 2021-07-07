@@ -7,11 +7,12 @@
 
 //' rcpp_move_behav
 //'
-//' @description Rcpp move behaviour
+//' @description
+//' Rcpp simulate movement based on bioenergetics.
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with coords of reef cells.
-//' @param pop_thres_reserves Vector with threshold of pop_max_reserves to drain prior to foraging.
+//' @param coords_reef Matrix with ID and coords of reef cells.
+//' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param move_mean,move_var Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.
@@ -21,10 +22,12 @@
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Move fish individuals depending on their current stae.
+//' Fish indivivuals move based on how much nutrients they have stored in their
+//' reserves. There are three different movement behaviors.
 //'
-//' @references
-//' Add reference
+//' If reservers above a certain threshold, individuals either shelter at reef cells (behavior 1)
+//' or move back towards reef cells (behavior 2). If reserves are not above the threshold,
+//' individuals move randomly across the environment to forage.
 //'
 //' @return void
 //'
@@ -34,10 +37,9 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                     Rcpp::NumericVector pop_thres_reserves,
+                     Rcpp::NumericVector pop_reserves_thres,
                      double move_mean, double move_var,
-                     double move_reef, double move_border,
-                     double move_return, double max_dist,
+                     double move_reef, double move_border, double move_return, double max_dist,
                      Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
 
   // loop through fishpop individuals
@@ -47,24 +49,17 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     double move_dist = 0.0;
 
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 7) >= (pop_thres_reserves(i) * fishpop(i, 8))) {
-
-      // init vector for temp coords
-      Rcpp::NumericVector coords_temp(2, 0.0);
-
-      // get current x,y coords
-      coords_temp(0) = fishpop(i, 2);
-
-      coords_temp(1) = fishpop(i, 3);
+    if (fishpop(i, 9) >= (pop_reserves_thres(i) * fishpop(i, 10))) {
 
       // get id and distance to closest reef
-      Rcpp::NumericVector closest_reef = rcpp_closest_reef(coords_temp, coords_reef);
+      Rcpp::NumericVector closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
+                                                           coords_reef);
 
       // behaviour 1: fish already at reef so they stay there
       if (closest_reef(1) <= move_border) {
 
         //Behavior column = 1
-        fishpop(i, 13) = 1.0;
+        fishpop(i, 11) = 1.0;
 
         // move_dist is now from a log-normal distribution within Xm of reef to move
         move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
@@ -73,9 +68,9 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
       } else {
 
         // set behavior column
-        fishpop(i, 13) = 2.0;
+        fishpop(i, 11) = 2.0;
 
-        double theta = rcpp_get_bearing(coords_temp(0), coords_temp(1),
+        double theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
                                         coords_reef(closest_reef(0), 0),
                                         coords_reef(closest_reef(0), 1));
 
@@ -101,7 +96,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
     } else {
 
       // Behavior column = 3
-      fishpop(i, 13) = 3.0;
+      fishpop(i, 11) = 3.0;
 
       // pull move_dist from log norm with mean_move
       move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
@@ -115,15 +110,10 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
 }
 
 /*** R
-rcpp_move_behav(fishpop = fishpop_values,
-                coords_reef = coords_reef,
-                pop_thres_reserves = pop_thres_reserves,
-                move_mean = parameters$move_mean,
-                move_var = parameters$move_var,
-                move_reef = parameters$move_reef,
-                move_border = parameters$move_border,
-                move_return = parameters$move_return,
-                max_dist = max_dist,
-                extent = as.vector(extent, mode = "numeric"),
+rcpp_move_behav(fishpop = fishpop_values, coords_reef = coords_reef,
+                pop_reserves_thres = pop_reserves_thres, move_mean = parameters$move_mean,
+                move_var = parameters$move_var, move_reef = parameters$move_reef,
+                move_border = parameters$move_border, move_return = parameters$move_return,
+                max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),
                 dimensions = dimensions)
 */

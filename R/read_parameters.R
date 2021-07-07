@@ -1,9 +1,10 @@
 #' read_parameters
 #'
-#' @description Read parameters from text file.
+#' @description
+#' Read parameters from text file.
 #'
 #' @details
-#' Construct a list with all default parameters. Columns must be named 'parameter' and
+#' Creates a list with all parameters or starting values. Columns must be named 'parameter' and
 #' 'value'.
 #'
 #' @param file String with path to text file.
@@ -17,7 +18,9 @@
 #' @rdname read_parameters
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' read_parameters(file = "starting-values.csv", sep = ";")
+#' }
 #'
 #' @export
 read_parameters <- function(file, sep =";", return_list = TRUE, ...) {

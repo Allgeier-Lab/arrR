@@ -1,19 +1,17 @@
 #' setup_reefs
 #'
-#' @description Internal function to setup reefs
+#' @description
+#' Setup reef cells for seafloor.
 #'
 #' @param object Raster* object
 #' @param xy 2-Column matrix with coordinates of artificial reefs
 #' @param extent Vector with number of rows and columns (spatial extent).
 #'
 #' @details
-#' Internal function to set cell values of AR = 1 and non-AR = 0. Also, sets all
-#' environmental values of AR to NA/0.
+#' Internal function to setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
+#' Sets all seafloor values of AR to NA/0. Used during \code{\link{setup_seafloor}}.
 #'
 #' @return RasterBrick
-#'
-#' @examples
-#' # Add example code
 #'
 #' @aliases setup_reefs
 #' @rdname setup_reefs

@@ -33,13 +33,23 @@ setup_seafloor(
 RasterBrick
 }
 \description{
-Initiate environment (seafloor)
+Setup seafloor for model run.
 }
 \details{
 Function to setup the environment (seafloor). The center of the environment is
-always set to (0,0). All biomass values are dry values, nutrient values are in gram.
+always set to (0,0). bg_biomass and ag_biomass values are in g dry weight.
+Nutrients_pool and deritus_pool values are in g nutrients. Reef cells are indicated
+by \code{reef = 1}, whereas non-reef cells are indicated by \code{reef = 0}. All
+other values are increased cumulative during the model run started by \code{\link{run_simulation}}.
+
+If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
+as \code{x * (1 +- random)} as minimum and maximum values, respectively.
 }
 \examples{
-# Add example code
+reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+ncol = 2, byrow = TRUE)
+
+seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+reefs = reefs, starting_values = default_starting_values)
 
 }

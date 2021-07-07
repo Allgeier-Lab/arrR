@@ -2,13 +2,15 @@
 
 //' rcpp_nutr_output
 //'
-//' @description Rcpp nutrient output
+//' @description
+//' Rcpp nutrient output.
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param nutrients_output Double with fraction removed from each cell.
 //'
 //' @details
-//' Simulate loss of nutrients to to output of the system for each cell and timestep.
+//' Simulates loss of nutrients (i.e., output of the system) for each cell and timestep.
+//' The loss is calculated as a ratio of the present nutrients in each cell.
 //'
 //' @references
 //' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
@@ -34,6 +36,5 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output) {
 
 /*** R
 # diffuse values and save result
-rcpp_nutr_output(seafloor = seafloor_values,
-                   nutrients_output = parameters$nutrients_output)
+rcpp_nutr_output(seafloor = seafloor_values, nutrients_output = parameters$nutrients_output)
 */

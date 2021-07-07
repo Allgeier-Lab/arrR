@@ -4,20 +4,20 @@
 \alias{rcpp_closest_reef}
 \title{rcpp_closest_reef}
 \usage{
-rcpp_closest_reef(coords_temp, coords_reef)
+rcpp_closest_reef(x, y, coords_reef)
 }
 \arguments{
-\item{coords_temp}{Vector with xy coords of current individual.}
+\item{x, y}{Numeric with xy coords of current individual.}
 
-\item{coords_reef}{Matrix coords of reef cells.}
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 }
 \value{
 vector
 }
 \description{
-Rcpp closest reef
+Rcpp get closest reef.
 }
 \details{
-Get id and distance to closet reef cell. The first element of the returning
-vector is the id, the second the distance in meter.
+Get ID and distance to closet reef cell. The first element of the returning
+vector is the ID, the second the distance in meter.
 }

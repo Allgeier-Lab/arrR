@@ -1,6 +1,7 @@
 #' check_parameters
 #'
-#' @description Check model parameters and starting values.
+#' @description
+#' Check model parameters and starting values.
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
@@ -8,13 +9,14 @@
 #'
 #' @details
 #' The function checks if all required starting values and parameters are provided.
-#' If values are missing, a vector with the name of the corresponding values will
-#' be returned. If no arguments are provided, a list of all required values is printed
+#' If parameters and/or starting values are missing, a vector with the name of the
+#' corresponding values is returned. If no arguments are provided, a list of all
+#' required parameters and values is printed
 #'
 #' @return void
 #'
 #' @examples
-#' # Add example code
+#' check_parameters()
 #'
 #' @aliases check_parameters
 #' @rdname check_parameters
@@ -51,28 +53,27 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
                            "seagrass_thres",
                            "seagrass_slope",
+                           "seagrass_slough",
 
                            "nutrients_diffusion",
                            "nutrients_output",
 
-                           "detritus_ratio",
                            "detritus_mineralization",
                            "detritus_diffusion",
+                           "detritus_fish_decomp",
                            "detritus_fish_diffusion",
-                           "detritus_fish_ratio",
 
                            "move_mean",
                            "move_var",
-                           "move_reef",
-                           "move_border",
-                           "move_return",
                            "move_visibility",
+                           "move_border",
+                           "move_reef",
+                           "move_return",
 
-                           "pop_max_reserves",
-                           "pop_want_reserves",
-                           "pop_consumption_prop",
-                           "pop_thres_reserves_min",
-                           "pop_thres_reserves_max",
+                           "pop_reserves_max",
+                           "pop_reserves_thres_lo",
+                           "pop_reserves_thres_hi",
+                           "pop_reserves_consump", # pop_reserves_consumption
 
                            "pop_a",
                            "pop_b",
@@ -177,45 +178,31 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
-    # check if reserves parameter makes sense
-    if (parameters$pop_max_reserves < parameters$pop_want_reserves) {
-
-      # set final flag to false
-      final_flag <- FALSE
-
-      warning("'pop_max_reserves' must be bigger than 'pop_want_reserves'",
-              call. = FALSE)
-
-
-    }
-
-
     # check if all ratios are betwenn 0 and 1
     check_ratios <- any(c(c(parameters$seagrass_thres,
+                            parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
                             parameters$nutrients_output,
 
-                            parameters$detritus_ratio,
                             parameters$detritus_mineralization,
-                            parameters$detritus_fish_ratio,
+                            parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_max_reserves,
-                            parameters$pop_want_reserves) > 1,
+                            parameters$pop_reserves_max) > 1,
 
-                          c(parameters$nutrients_diffusion,
+                          c(parameters$seagrass_slough,
+
+                            parameters$nutrients_diffusion,
                             parameters$nutrients_output,
 
-                            parameters$detritus_ratio,
                             parameters$detritus_mineralization,
-                            parameters$detritus_fish_ratio,
+                            parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_max_reserves,
-                            parameters$pop_want_reserves) < 0))
+                            parameters$pop_reserves_max) < 0))
 
     # check if all fraction are between 0 and 1
     if (check_ratios) {
@@ -333,15 +320,15 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose && final_flag) {
+  if (verbose && final_flag && !is.null(parameters) || !is.null(starting_values)) {
 
-    message("\n> All checking done!")
+    message("> All checking done!")
 
   }
 
   else if (verbose && !final_flag) {
 
-    message("\n> Make sure to check critical warnings!")
+    message("> Make sure to check critical warnings!\n")
 
   }
 }

@@ -2,7 +2,6 @@
 % Please edit documentation in R/RcppExports.R
 \name{rcpp_mortality}
 \alias{rcpp_mortality}
-\alias{rcpp_mortality_backgr}
 \title{rcpp_mortality}
 \usage{
 rcpp_mortality(
@@ -11,7 +10,7 @@ rcpp_mortality(
   seafloor,
   pop_linf,
   pop_n_body,
-  pop_want_reserves,
+  pop_reserves_max,
   extent,
   dimensions
 )
@@ -21,7 +20,7 @@ rcpp_mortality(
 
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{pop_linf, pop_n_body, pop_want_reserves}{Numeric with parameters.}
+\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -31,8 +30,10 @@ rcpp_mortality(
 void
 }
 \description{
-Rcpp mortality
+Rcpp simulate (background) mortality.
 }
 \details{
-Function to simulate background mortality of fish population individuals.
+Function to simulate background mortality of fish individuals. The mortality
+probability increases with increasing size and approximates p = 1 for \code{pop_linf}.
+If a individual dies, a new individual is created using \code{\link{rcpp_reincarnate}}.
 }

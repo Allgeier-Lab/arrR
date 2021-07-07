@@ -4,19 +4,19 @@
 \alias{rcpp_get_bearing}
 \title{rcpp_get_bearing}
 \usage{
-rcpp_get_bearing(x_fish, y_fish, x_reef, y_reef)
+rcpp_get_bearing(x1, y1, x2, y2)
 }
 \arguments{
-\item{x_fish, y_fish}{Double with xy coords of fish individual.}
+\item{x1, y1}{Double with first xy coords pair.}
 
-\item{x_reef, y_reef}{Double with xy coords of closest reef.}
+\item{x2, y2}{Double with second xy coords pair.}
 }
 \value{
 double
 }
 \description{
-Rcpp get bearing
+Rcpp get bearing between two coordinate pairs.
 }
 \details{
-Get bearing between fish individual and closest reef cell.
+Get bearing between (x1,y1) and (x2,y2).
 }

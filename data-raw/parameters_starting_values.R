@@ -16,34 +16,33 @@ default_parameters <- list(
 
   seagrass_thres = 1/2,
   seagrass_slope = 2.0,
+  seagrass_slough = 0.0001,
 
-  nutrients_diffusion = 0.6,
+  nutrients_diffusion = 2/3,
   nutrients_output = 0.0,
 
-  detritus_ratio = 0.0001,
   detritus_mineralization = 0.0001,
-  detritus_fish_ratio = 0.6,
-  detritus_diffusion = 0.3,
-  detritus_fish_diffusion = 0.3,
+  detritus_diffusion = 1/3,
+  detritus_fish_decomp = 0.5,
+  detritus_fish_diffusion = 1/3,
 
-  move_border = 2.0,
   move_mean = 10.0,
   move_var = 5.0,
+  move_visibility = 1.0,
+  move_border = 2.0,
   move_reef = 0.5,
   move_return = 50.0,
-  move_visibility = 1.0,
-
-  pop_max_reserves = 0.8,
-  pop_want_reserves = 0.8,
-  pop_thres_reserves_min = 0.5,
-  pop_thres_reserves_max = 0.5,
-  pop_consumption_prop = 1.0,
 
   pop_a = 0.0121,
   pop_b = 3.161,
   pop_k = 0.2,
   pop_linf = 41.6,
   pop_n_body = 0.02999,
+
+  pop_reserves_max = 0.5,
+  pop_reserves_thres_lo = 0.5,
+  pop_reserves_thres_hi = 0.5,
+  pop_reserves_consump = 1.0,
 
   resp_intercept = 0.0108,
   resp_slope = -0.2,
@@ -63,8 +62,8 @@ default_starting_values <- list(
   ag_biomass = ag,
   bg_biomass = bg,
 
-  nutrients_pool = 0.75,
-  detritus_pool = 0.75,
+  nutrients_pool = 0.25,
+  detritus_pool = 0.25,
 
   pop_n = 8,
   pop_mean_size = 9.0,

@@ -13,8 +13,8 @@ rcpp_shuffle(min, max)
 vector
 }
 \description{
-Rcpp shuffle
+Rcpp shuffle vector.
 }
 \details{
-Get vector with random sequence from min to max.
+Creates vector with IDs from \code{min} to \code{max}, but in random order.
 }

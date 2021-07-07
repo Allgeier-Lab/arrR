@@ -1,6 +1,7 @@
 #' plot.mdl_rn
 #'
-#' @description Plotting method for mdl_rn object
+#' @description
+#' Plotting method for \code{mdl_rn} object.
 #'
 #' @param x mdl_rn object of simulation run.
 #' @param what Character specifying what to plot.
@@ -14,9 +15,16 @@
 #'
 #' @details
 #' Plotting method for model run results simulated with \code{\link{run_simulation}}.
+#' The \code{what} arguments allows to either plot the seafloor values or fishpop values.
+#' For both, it is possible to either plot a spatial raster at a certain timestep
+#' \code{summarize = FALSE} or a summary of the values over all saved  timestep \code{summarize = TRUE}.
+#' If a spatial raster is plotted, the limits can be set identical. For more information see
+#' \code{\link{get_limits}}.
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' plot(result_rand)
+#' }
 #'
 #' @aliases plot.mdl_rn
 #' @rdname plot.mdl_rn
@@ -24,8 +32,7 @@
 #' @export
 plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                         timestep = x$max_i, limits = NULL, burn_in = TRUE,
-                        normalize = FALSE,
-                        base_size = 10, ...) {
+                        normalize = FALSE, base_size = 10, ...) {
 
   # plot summarized results
   if (summarize) {
@@ -58,7 +65,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
         ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Dry weight ag biomass [g/cell]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -71,7 +78,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
         ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Dry weight bg biomass [g/cell]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -84,7 +91,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
         ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Nutrients pool [g/cell]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -97,7 +104,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
         ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Detritus pool [g/cell]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -126,7 +133,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Body length [cm]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -138,7 +145,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Body weigth [g]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -150,7 +157,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Count mortality consumption [#]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
@@ -162,7 +169,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                                         col = summary, linetype = summary)) +
         ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
         ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
-        ggplot2::guides(col = FALSE, linetype = FALSE) +
+        ggplot2::guides(col = "none", linetype = "none") +
         ggplot2::labs(x = "Timestep", y = "Count mortality background [#]") +
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))

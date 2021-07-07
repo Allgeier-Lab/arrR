@@ -21,10 +21,11 @@ Check model parameters and starting values.
 }
 \details{
 The function checks if all required starting values and parameters are provided.
-If values are missing, a vector with the name of the corresponding values will
-be returned. If no arguments are provided, a list of all required values is printed
+If parameters and/or starting values are missing, a vector with the name of the
+corresponding values is returned. If no arguments are provided, a list of all
+required parameters and values is printed
 }
 \examples{
-# Add example code
+check_parameters()
 
 }

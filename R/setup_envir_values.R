@@ -1,6 +1,7 @@
 #' setup_envir_values
 #'
-#' @description Internal function to setup environmental values
+#' @description
+#' Setup environmental values for seafloor.
 #'
 #' @param seafloor Raster* object.
 #' @param ag_biomass,bg_biomass,nutrients_pool Numeric with starting values.
@@ -8,7 +9,13 @@
 #' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #'
 #' @details
-#' Internal function to set biomass cell values of non-ARs cells.
+#' Internal function to setup environmental values used during \code{\link{setup_seafloor}}.
+#' The function creates a \code{RasterBrick} with all required values. All incremental
+#' values that will be increased during model run are set to zero. The function does not
+#' setup reef cells.
+#'
+#' If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
+#' as
 #'
 #' @return RasterBrick
 #'

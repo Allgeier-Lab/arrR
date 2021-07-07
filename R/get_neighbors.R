@@ -1,16 +1,25 @@
 #' get_neighbors
 #'
-#' @description Internal function to get id of neighbouring cells
+#' @description
+#' Get ID of neighboring cells.
 #'
 #' @param x RasterLayer.
 #' @param direction Integer specifying if 4 or 8 neighborhood rule should be applied.
 #' @param torus If TRUE RasterLayer is treated as torus.
 #'
 #' @details
-#' Return matrix with cell ids of neighboring cells. If \code{torus = TRUE} a neighbors
-#' are considerd on a torus.
+#' Internal function to get matrix with cell IDs of all neighboring cells.
+#' If \code{torus = TRUE} the neighborhood is considered on a torus i.e., the top-right
+#' cell neighbors the bottom-left cell etc. The \code{direction} arguments allows to
+#' specifiy which cells are considered to be neighbors (direction = 4: "Rook's case";
+#' direction = 8: "Queen's case").
 #'
 #' @return matrix
+#'
+#' @examples
+#' \dontrun{
+#' get_neighbors(seafloor)
+#' }
 #'
 #' @aliases get_neighbors
 #' @rdname get_neighbors

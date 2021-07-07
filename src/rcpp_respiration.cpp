@@ -2,7 +2,8 @@
 
 //' rcpp_respiration
 //'
-//' @description Rcpp respration
+//' @description
+//' Rcpp simulate respration.
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param resp_intercept,resp_slope Numeric with regression parameters.
@@ -11,12 +12,19 @@
 //'
 //' @details
 //' Function to simulate respiration of fish population individuals based on movement,
-//' body size and water temperature.
+//' body size and water temperature. The respiration is temperature dependent with an
+//' activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
+//'
+//' If respiration is a infinite number (due to zero division), set to respiration = 1.0.
 //'
 //' @references
 //' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
 //' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
 //' Centre for Limnology, Madison,USA.
+//'
+//' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
+//' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
+//' J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
 //'
 //' @return void
 //'
@@ -30,8 +38,8 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_temp_low, double resp_temp_max, double resp_temp_optm,
                       double water_temp, double min_per_i) {
 
-  // scale intercept to correct tick scale
-  resp_intercept = resp_intercept * (1.0 / 24.0) * (1.0 / 60.0) * min_per_i;
+  // scale intercept to correct tick scale from (g/g/day to min_per_i)
+  resp_intercept = resp_intercept / (24.0 * 60.0) * min_per_i;
 
   // for f(T) temperature dependence function for respiration
   double v_resp = (resp_temp_max - water_temp) / (resp_temp_max - resp_temp_optm);
@@ -49,10 +57,9 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // calculate respiration
-    // Oxycaloric coefficient in J/gO2 consumed multiplied by the energy-density of fish
-    // to result in unit of tick^-1
+    // oxycaloric coefficient c=13560.0 in J/gO2; energy-density of fish e=4800.0 J/g(wet weight)
     double respiration = (resp_intercept * std::pow(fishpop(i, 6), resp_slope) *
-                          temp_dependence * fishpop(i, 9)) * 13560.0 * (1.0 / 4800.0);
+                          temp_dependence * fishpop(i, 7)) * 13560.0 / 4800.0;
 
     // check if finite number
     bool check_finite = std::isfinite(respiration);
@@ -61,26 +68,21 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
     if (check_finite) {
 
       // update respiration col
-      fishpop(i, 10) = respiration;
+      fishpop(i, 8) = respiration;
 
     // respiration is infinite (divided by zero probably), use 1 instead
     } else {
 
       // update respiration col
-      fishpop(i, 10) = 1;
+      fishpop(i, 8) = 1.0;
 
     }
   }
 }
 
 /*** R
-resp_intercept <- parameters$resp_intercept * (1 / 24) * (1 / 60) * min_per_i
-
-rcpp_respiration(fishpop = fishpop_values,
-                 resp_intercept = parameters$resp_intercept,
-                 resp_slope = parameters$resp_slope,
-                 resp_temp_low = parameters$resp_temp_low,
-                 resp_temp_optm = parameters$resp_temp_optm,
-                 resp_temp_max = parameters$resp_temp_max,
+rcpp_respiration(fishpop = fishpop_values, resp_intercept = parameters$resp_intercept,
+                 resp_slope = parameters$resp_slope, resp_temp_low = parameters$resp_temp_low,
+                 resp_temp_optm = parameters$resp_temp_optm, resp_temp_max = parameters$resp_temp_max,
                  water_temp = water_temp, min_per_i = min_per_i)
 */

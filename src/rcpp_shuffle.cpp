@@ -1,13 +1,16 @@
 #include "rcpp_shuffle.h"
+#include "random"
+#include "chrono"
 
 //' rcpp_shuffle
 //'
-//' @description Rcpp shuffle
+//' @description
+//' Rcpp shuffle vector.
 //'
 //' @param min,max Integer with minum and maximum value of vector.
 //'
 //' @details
-//' Get vector with random sequence from min to max.
+//' Creates vector with IDs from \code{min} to \code{max}, but in random order.
 //'
 //' @return vector
 //'

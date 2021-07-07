@@ -1,17 +1,22 @@
 #' filter_mdlrn
 #'
-#' @description Filter model run results
+#' @description
+#' Filter model run for specific timestep.
 #'
 #' @param result mdl_rn object of simulation run.
 #' @param timestep Vector with timesteps to select
 #'
 #' @details
-#' Function to filter results according to timestep
+#' This functions allows to return only specific timesteps of a \code{mdl_rn} object
+#' created with \code{\link{run_simulation}}. The function ensures that the object will
+#' still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
 #'
-#' @return data.frame
+#' @return mdl_rn
 #'
 #' @examples
-#' # Add example code
+#'  \dontrun{
+#' filter_mdlrn(result = result_rand, timestep = 10200)
+#' }
 #'
 #' @aliases filter_mdlrn
 #' @rdname filter_mdlrn
@@ -22,7 +27,7 @@ filter_mdlrn <- function(result, timestep = max(result$max_i)) {
   # check if mdl_rn is provided
   if (!inherits(x = result, what = "mdl_rn")) {
 
-    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+    stop("Please provide 'mdl_rn' object created with 'run_simulation'.", call. = FALSE)
 
   }
 

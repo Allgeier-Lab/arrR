@@ -2,13 +2,15 @@
 
 //' rcpp_modify_degree
 //'
-//' @description Rcpp modify degree
+//' @description
+//' Rcpp modify degree.
 //'
 //' @param x Numeric with current angle in degree.
 //' @param y Numerich with change of degree (negative or positive).
 //'
 //' @details
-//' Substract or add degree to angle. Makes sure angles are between 0 <= x <= 360.
+//' Modify the degree of direction heading of individuals. The function ensures that
+//' all degree are between 0 <= x <= 360.
 //'
 //' @return double
 //'
@@ -34,3 +36,7 @@ double rcpp_modify_degree(double x, double y) {
 
   return(x);
 }
+
+/*** R
+rcpp_modify_degree(x = 332, y = 33.5)
+*/

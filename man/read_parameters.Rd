@@ -22,10 +22,12 @@ list
 Read parameters from text file.
 }
 \details{
-Construct a list with all default parameters. Columns must be named 'parameter' and
+Creates a list with all parameters or starting values. Columns must be named 'parameter' and
 'value'.
 }
 \examples{
-# Add example code
+\dontrun{
+read_parameters(file = "starting-values.csv", sep = ";")
+}
 
 }

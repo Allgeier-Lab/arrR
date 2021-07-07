@@ -12,15 +12,19 @@ filter_mdlrn(result, timestep = max(result$max_i))
 \item{timestep}{Vector with timesteps to select}
 }
 \value{
-data.frame
+mdl_rn
 }
 \description{
-Filter model run results
+Filter model run for specific timestep.
 }
 \details{
-Function to filter results according to timestep
+This functions allows to return only specific timesteps of a \code{mdl_rn} object
+created with \code{\link{run_simulation}}. The function ensures that the object will
+still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
 }
 \examples{
-# Add example code
+ \dontrun{
+filter_mdlrn(result = result_rand, timestep = 10200)
+}
 
 }

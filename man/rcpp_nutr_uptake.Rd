@@ -15,10 +15,14 @@ rcpp_nutr_uptake(nutrients, biomass, v_max, k_m, time_frac)
 double
 }
 \description{
-Rcpp nutrient uptake
+Rcpp nutrient uptake.
 }
 \details{
-Calculate nutrient uptake of cells.
+Calculate nutrient uptake of each cells depending on avaiable nutrients in the
+water column and biomass. All values are scaled to the time period which can be
+specified by \code{time_frac}. Are uptaken nutrients are removed from the pool.
+If the calculated uptake exceeds the available amount, only the  available amount
+is taken up.
 }
 \references{
 Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass

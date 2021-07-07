@@ -15,14 +15,17 @@ get_limits(result, timestep = result[[1]]$max_i)
 list
 }
 \description{
-Get list with min and max values of seafloor for better plotting
+Get list with min and max values for better plotting.
 }
 \details{
-Returns list with minimum and maximum values of several result runs for better
-plotting. Can be provided to the \code{limits} argument of the
-\code{\link{plot.mdl_rn}} function.
+Returns list with minimum and maximum values of several model result runs for better
+plotting. The list includes the range for i) ag_biommass, ii) bg_biomass, iii)
+nutrients_pool, and iv) detritus_pool. Can be provided to the \code{limits} argument
+of the \code{\link{plot.mdl_rn}} function.
 }
 \examples{
-# Add example code
+\dontrun{
+get_limits(result = list(result_rand, result_attr))
+}
 
 }

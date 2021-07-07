@@ -1,3 +1,9 @@
+# arrR 0.5.1
+* Main simulation loop completely in Rcpp `rcpp_run_simulation`
+* Better tracking of fish consumption and excretion
+* Age counter in iterations
+* Better name or `pop_reserves_*` parameters
+
 # arrR 0.5.0
 * Simpler allocation rule based on curves.
 * Adding new movement behaviors code based on reserve
@@ -12,6 +18,9 @@
 * Adding `rcpp_allocation_ratio` and smoother sigmoid function
 * Adding `get_stable_values` function
 * Calling all `rcpp_` functions directly if possible in `run_simulation`
+* Renamed `detritus_ratio` to `seagrass_slough`
+* Renamed `detritus_fish_ratio` to `detritus_fish_decomp`
+* Remove `pop_want_reserves` parameter. Fish always try to fill up reserves
 
 # arrR 0.4.0
 * Add `simulate_input` and `simulate_output`

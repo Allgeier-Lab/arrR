@@ -2,15 +2,17 @@
 
 //' rcpp_diffuse_values
 //'
-//' @description Rcpp diffuse values
+//' @description
+//' Rcpp simulate diffusion of values.
 //'
 //' @param seafloor Matrix with seafloor values.
 //' @param cell_adj Matrix with cell adjacencies.
 //' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 //'
 //' @details
-//' A certain share of each cell value, specified by the diffusion parameters, is
-//' diffused to its 8 neighboring cells.
+//' Simulates the diffusion of a certain share of i) nutrients_pool, ii) detritus_pool,
+//' and iii) detritus_fish_diffusion of each cell with its neighboring cells. Scheduling
+//' is simulated pseudo-simultaneous.
 //'
 //' @return void
 //'
@@ -24,8 +26,6 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_
                          double detritus_fish_diffusion) {
 
   // get number of rows for cell adj and seafloor
-  int n_row_cell_adj = cell_adj.nrow();
-
   int n_row_seafloor = seafloor.nrow();
 
   // create vectors to store seafloor values
@@ -47,7 +47,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_
   }
 
   // add and remove diffused amounts
-  for (int j = 0; j < n_row_cell_adj; j++) {
+  for (int j = 0; j < cell_adj.nrow(); j++) {
 
     //  get current focal and neighbor cell; C++ starts at 0
     int focal = cell_adj(j, 0) - 1;
@@ -72,8 +72,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_
 }
 
 /*** R
-rcpp_diffuse_values(seafloor = seafloor,
-                    cell_adj = cell_adj,
+rcpp_diffuse_values(seafloor = seafloor, cell_adj = cell_adj,
                     nutrients_diffusion = parameters$nutrients_diffusion,
                     detritus_diffusion = parameters$detritus_diffusion,
                     detritus_fish_diffusion = parameters$detritus_fish_diffusion)

@@ -1,7 +1,7 @@
 Package: arrR
 Type: Package
 Title: Individual-Based Simulation Model of Artifical Reefs in R
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
@@ -32,7 +32,6 @@ Imports:
     ggplot2,
     raster,
     Rcpp,
-    rlang,
     stats,
     utils
 Encoding: UTF-8
@@ -46,5 +45,6 @@ Suggests:
     rmarkdown
 LinkingTo: 
     Rcpp,
-    RcppDist
+    RcppDist, 
+    RcppProgress
 VignetteBuilder: knitr

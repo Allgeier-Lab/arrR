@@ -1,6 +1,7 @@
 #' run_simulation
 #'
-#' @description Core function to run model.
+#' @description
+#' Core function to run model.
 #'
 #' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
@@ -16,14 +17,52 @@
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Wrapper function to run model. Executes the following sub-processes (i) simulate_seagrass
-#' (ii) distribute_detritus (iii) simulate_movement (iv) simulate_movement (v) simulate_respiration
-#' (vi) simulate_growth (vii) simulate_mortality and (viii) simulate_diffusion.
+#' This is the core function of the \code{arrR} model that allows to easily run the
+#' model. Besides running all sub-processes, the function also includes some basic
+#' checks to make sure the model does not crash. However, this does not ensure that
+#' e.g. all parameter values "make sense". The function returns a \code{mdl_rn} object
+#' which stores besides the model run results a lot of information about the model run
+#' specification and many function that can handle the objects exist (e.g. plotting).
+#'
+#' The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
+#' (ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
+#' (v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
+#' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
+#'
+#' The \code{movement} argument allows to either specify random movement of individuals,
+#' attracted movement towards the artificial reef of individuals or a movement behavior based
+#' on their biosenergetics.
+#'
+#' If \code{nutr_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+#' nutrient output, set the \code{nutrients_output} parameter to zero.
+#'
+#' If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
+#' but only each timestep specified by the object. However, \code{max_i} must be dividable by
+#' \code{save_each} without rest. Similar,  \code{seagrass_each} allows to simulate all
+#' seagrass sub-processes only each specified timestep.
+#'
+#' If \code{burn_in > 0}, all sub-processes related to fish individuals are not simulated
+#' before this timestep is reached.
+#'
+#' @references
+#' For a detailed model describtion see Esquivel et al (2021). Mechanistic support for
+#' increased primary production around artificial reefs. Manuscript in preparation.
 #'
 #' @return mdl_rn
 #'
 #' @examples
-#' # Add example code
+#' \dontrun{
+#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' ncol = 2, byrow = TRUE)
+#'
+#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+#' reefs = reefs, starting_values = default_starting_values)
+#' fishpop <- setup_fishpop(seafloor = seafloor,
+#' starting_values = default_starting_values, parameters = default_parameters)
+#'
+#' run_simulation(seafloor = seafloor, fishpop = fishpop, parameters = parameters,
+#' max_i = 1000, min_per_i = 120, save_each = 10)
+#' }
 #'
 #' @aliases run_simulation
 #' @rdname run_simulation
@@ -82,16 +121,24 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  # get time at beginning for final print
+  if (verbose) {
+
+    t_start <- Sys.time()
+
+  }
+
   # check if fishpop is NULL
   if (is.null(fishpop)) {
 
-    fishpop <- data.frame(id = numeric(), age = numeric(),
-                          x = numeric(), y = numeric(), heading = numeric(),
-                          length = numeric(), weight = numeric(),
-                          reserves = numeric(), reserves_max = numeric(),
-                          activity = numeric(), respiration = numeric(),
-                          died_consumption = numeric(), died_background = numeric(),
-                          behavior = numeric())
+    # create empty dataframe
+    fishpop <- setup_fishpop(seafloor = seafloor, starting_values = list(pop_n = 0),
+                             verbose = FALSE)
+
+    # not used but needed objects
+    max_dist <- 0.0
+
+    pop_reserves_thres <- 0.0
 
   # get 95% of maximum movement distances
   } else {
@@ -109,9 +156,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
 
     # getting thres_reserves parameter for each individual
-    pop_thres_reserves <- stats::runif(n = nrow(fishpop),
-                                       min = parameters$pop_thres_reserves_min,
-                                       max = parameters$pop_thres_reserves_max)
+    pop_reserves_thres <- stats::runif(n = nrow(fishpop),
+                                       min = parameters$pop_reserves_thres_lo,
+                                       max = parameters$pop_reserves_thres_hi)
 
     # set behavior to foraging
     if (movement %in% c("rand", "attr")) {
@@ -119,6 +166,13 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
       fishpop$behavior <- 3.0
 
     }
+  }
+
+  # create vector for nutr_input
+  if (is.null(nutr_input)) {
+
+    nutr_input <- rep(x = 0.0, times = max_i)
+
   }
 
   # convert seafloor and fishpop as matrix
@@ -139,8 +193,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get cell id of reef cells
   cells_reef <- which(seafloor_values[, 16] == 1)
 
-  # get coordinates of reef cells
-  coords_reef <- seafloor_values[cells_reef, c(1,2)]
+  # get cell id of reef cells and coordinates of reef cells
+  coords_reef <- cbind(id = cells_reef,
+                       seafloor_values[cells_reef, c(1, 2)])
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
@@ -149,11 +204,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
   fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # save input data in tracking data.frame
-  seafloor_track[[1]] <- rlang::duplicate(seafloor_values)
-
-  fishpop_track[[1]] <- rlang::duplicate(fishpop_values)
 
   # print some basic information about model run
   if (verbose) {
@@ -168,110 +218,22 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("> One iteration equals ", min_per_i, " minutes.")
 
-    message("")
-
     message("> ...Starting simulation...")
 
+    message("")
+
   }
 
-  # simulate until max_i is reached
-  for (i in 1:max_i) {
+  rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
+                      seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                      parameters = parameters, pop_n = starting_values$pop_n,
+                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
+                      coords_reef = coords_reef, cell_adj = cell_adj,
+                      extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                      seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 
-    # simulate nutrient input
-    if (!is.null(nutr_input)) {
-
-      # simulate nutrient input
-      rcpp_nutr_input(seafloor = seafloor_values, nutr_input = nutr_input, timestep = i)
-
-    }
-
-    # simulate seagrass only each seagrass_each iterations
-    if ((i * min_per_i) %% (min_per_i * seagrass_each) == 0) {
-
-      # simulate seagrass growth
-      rcpp_seagrass_growth(seafloor = seafloor_values, cells_reef = cells_reef,
-                           bg_v_max = parameters$bg_v_max, bg_k_m = parameters$bg_k_m,
-                           ag_v_max = parameters$ag_v_max, ag_k_m = parameters$ag_k_m,
-                           bg_gamma = parameters$bg_gamma, ag_gamma = parameters$ag_gamma,
-                           bg_biomass_max = parameters$bg_biomass_max, bg_biomass_min = parameters$bg_biomass_min,
-                           ag_biomass_max = parameters$ag_biomass_max, ag_biomass_min = parameters$ag_biomass_min,
-                           seagrass_thres = parameters$seagrass_thres, seagrass_slope = parameters$seagrass_slope,
-                           detritus_ratio = parameters$detritus_ratio,
-                           time_frac = (min_per_i / 60) * seagrass_each)
-
-      # simulate mineralization (detritus to nutrients pool)
-      rcpp_mineralization(seafloor = seafloor_values,
-                          detritus_fish_ratio = parameters$detritus_fish_ratio,
-                          detritus_mineralization = parameters$detritus_mineralization)
-
-    }
-
-    if (i > burn_in && starting_values$pop_n != 0) {
-
-      # simulate fish movement
-      simulate_movement(fishpop_values = fishpop_values,
-                        movement = movement, parameters = parameters,
-                        pop_thres_reserves = pop_thres_reserves,
-                        max_dist = max_dist, coords_reef = coords_reef,
-                        extent = extent, dimensions = dimensions)
-
-      # simulate fish respiration (26°C is mean water temperature in the Bahamas)
-      rcpp_respiration(fishpop = fishpop_values,
-                       resp_intercept = parameters$resp_intercept, resp_slope = parameters$resp_slope,
-                       resp_temp_low = parameters$resp_temp_low,
-                       resp_temp_optm = parameters$resp_temp_optm,
-                       resp_temp_max = parameters$resp_temp_max,
-                       water_temp = 26, min_per_i = min_per_i)
-
-      # simulate fishpop growth and including change of seafloor pools
-      rcpp_fishpop_growth(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
-                          seafloor = seafloor_values,
-                          pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
-                          pop_a = parameters$pop_a, pop_b = parameters$pop_b,
-                          pop_n_body = parameters$pop_n_body,
-                          pop_want_reserves = parameters$pop_want_reserves,
-                          pop_max_reserves = parameters$pop_max_reserves,
-                          pop_consumption_prop = parameters$pop_consumption_prop,
-                          extent = extent, dimensions = dimensions,
-                          min_per_i = min_per_i)
-
-      # simulate mortality
-      rcpp_mortality(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
-                     seafloor = seafloor_values,
-                     pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
-                     pop_want_reserves = parameters$pop_want_reserves,
-                     extent = extent, dimensions = dimensions)
-
-    }
-
-    # diffuse values between neighbors
-    rcpp_diffuse_values(seafloor = seafloor_values, cell_adj = cell_adj,
-                        nutrients_diffusion = parameters$nutrients_diffusion,
-                        detritus_diffusion = parameters$detritus_diffusion,
-                        detritus_fish_diffusion = parameters$detritus_fish_diffusion)
-
-    # remove nutrients from cells
-    rcpp_nutr_output(seafloor = seafloor_values, nutrients_output = parameters$nutrients_output)
-
-    # update tracking list
-    if (i %% save_each == 0) {
-
-      seafloor_track[[i / save_each + 1]] <- rlang::duplicate(seafloor_values)
-
-      fishpop_track[[i / save_each + 1]] <- rlang::duplicate(fishpop_values)
-
-    }
-
-    # print progress
-    if (verbose) {
-
-      message("\r> ...Progress: ", floor(i / max_i * 100), "% of total iterations... \t\t\t",
-              appendLF = FALSE)
-
-    }
-  }
-
-  # new line after last progress message
+   # new line after last progress message
   if (verbose) {
 
     message("")
@@ -323,7 +285,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                  starting_values = starting_values, parameters = parameters,
                  nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
-                 save_each = save_each, extent = raster::extent(extent), grain = raster::res(seafloor),
+                 save_each = save_each, seagrass_each = seagrass_each,
+                 extent = raster::extent(extent), grain = raster::res(seafloor),
                  coords_reef = coords_reef)
 
   # set class of result
@@ -332,9 +295,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # new line after last progress message
   if (verbose) {
 
+    # get time at end
+    t_diff <- round(Sys.time() - t_start, digits = 1)
+
     message("")
 
-    message("> All done.")
+    message("> All done (Runtime: ", t_diff," ", units(t_diff), ").")
 
   }
 
