@@ -1,29 +1,30 @@
-#' setup_seafloor_mdlrn
+#' mdlrn_to_raster
 #'
 #' @description
-#' Setup seafloor from previous \code{mdl_rn} object.
+#' Convert \code{mdl_rn} object to \code{RasterBrick}.
 #'
 #' @param mdl_rn \code{mdl_rn} object created with \code{\link{run_simulation}}.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
 #' @details
-#' Function to setup the environment (seafloor) from previous \code{mdl_rn} object.
-#' Thus, the created environment will have the final values of the provided \code{mdl_rn}
-#' object as cell values.
+#' Function to convert the environment (seafloor) from a previous \code{mdl_rn} object to
+#' a \code{RasterBrick}. Thus, the created environment will have the final values of the
+#' provided \code{mdl_rn} object as cell values. Can be used as sarting seafloor for
+#' new simulation.
 #'
 #' @return RasterBrick
 #'
 #' @examples
 #' \dontrun{
-#' setup_seafloor_mdlrn(mdl_rn = result_rand)
+#' mdlrn_to_raster(mdl_rn = result_rand)
 #' }
 #'
-#' @aliases setup_seafloor_mdlrn
-#' @rdname setup_seafloor_mdlrn
+#' @aliases mdlrn_to_raster
+#' @rdname mdlrn_to_raster
 #'
 #' @export
-setup_seafloor_mdlrn <- function(mdl_rn, verbose = TRUE, ...) {
+mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
 
   # check if mdl_rn is provided
   if (!inherits(x = mdl_rn, what = "mdl_rn")) {

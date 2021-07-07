@@ -3,6 +3,7 @@
 * Better tracking of fish consumption and excretion
 * Age counter in iterations
 * Better name for `pop_reserves_*` parameters
+* Renamed `setup_seafloor_mdlrn` to `mdlrn_to_raster`
 
 # arrR 0.5.0
 * Simpler allocation rule based on curves.
