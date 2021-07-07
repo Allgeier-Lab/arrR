@@ -162,7 +162,7 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' harvest. Sci. Adv. 6, eaax8329. https://doi.org/10.1126/sciadv.aax8329
 #'
 #' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
-#'  [WWW Document]. www.fishbase.org
+#' [WWW Document]. www.fishbase.org
 #'
 #' @return void
 #'
@@ -444,6 +444,9 @@ rcpp_nutr_output <- function(seafloor, nutrients_output) {
 #' is taken up.
 #'
 #' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#'
 #' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
 #' Thalassia testudinum: Development of a whole-plant nitrogen budget.
 #' Limnol. Oceanogr. 44, 1204–1215.https://doi.org/10.4319/lo.1999.44.5.1204

@@ -38,7 +38,7 @@
 //' harvest. Sci. Adv. 6, eaax8329. https://doi.org/10.1126/sciadv.aax8329
 //'
 //' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
-//'  [WWW Document]. www.fishbase.org
+//' [WWW Document]. www.fishbase.org
 //'
 //' @return void
 //'
