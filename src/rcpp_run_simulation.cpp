@@ -106,16 +106,16 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
       // simulate seagrass growth
       rcpp_seagrass_growth(seafloor, cells_reef,
-                           as<double>(parameters["bg_v_max"]), as<double>(parameters["bg_k_m"]), as<double>(parameters["bg_gamma"]),
-                           as<double>(parameters["ag_v_max"]), as<double>(parameters["ag_k_m"]), as<double>(parameters["ag_gamma"]),
-                           as<double>(parameters["bg_biomass_max"]), as<double>(parameters["bg_biomass_min"]),
-                           as<double>(parameters["ag_biomass_max"]), as<double>(parameters["ag_biomass_min"]),
-                           as<double>(parameters["seagrass_thres"]), as<double>(parameters["seagrass_slope"]),
-                           as<double>(parameters["seagrass_slough"]), time_frac);
+                           parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
+                           parameters["ag_v_max"], parameters["ag_k_m"], parameters["ag_gamma"],
+                           parameters["bg_biomass_max"], parameters["bg_biomass_min"],
+                           parameters["ag_biomass_max"], parameters["ag_biomass_min"],
+                           parameters["seagrass_thres"], parameters["seagrass_slope"],
+                           parameters["seagrass_slough"], time_frac);
 
       // simulate mineralization (detritus to nutrients pool)
-      rcpp_mineralization(seafloor, as<double>(parameters["detritus_mineralization"]),
-                          as<double>(parameters["detritus_fish_decomp"]));
+      rcpp_mineralization(seafloor, parameters["detritus_mineralization"],
+                          parameters["detritus_fish_decomp"]);
 
     }
 
@@ -124,27 +124,27 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, coords_reef, movement, pop_reserves_thres,
-                     as<double>(parameters["move_mean"]), as<double>(parameters["move_var"]), as<double>(parameters["move_visibility"]),
-                     as<double>(parameters["move_reef"]), as<double>(parameters["move_border"]),
-                     as<double>(parameters["move_return"]), max_dist, extent, dimensions);
+                     parameters["move_mean"], parameters["move_var"], parameters["move_visibility"],
+                     parameters["move_reef"], parameters["move_border"],
+                     parameters["move_return"], max_dist, extent, dimensions);
 
       // simulate fish respiration (26°C is mean water temperature in the Bahamas)
       rcpp_respiration(fishpop,
-                       as<double>(parameters["resp_intercept"]), as<double>(parameters["resp_slope"]),
-                       as<double>(parameters["resp_temp_low"]), as<double>(parameters["resp_temp_max"]),
-                       as<double>(parameters["resp_temp_optm"]), 26.0, min_per_i);
+                       parameters["resp_intercept"], parameters["resp_slope"],
+                       parameters["resp_temp_low"], parameters["resp_temp_max"],
+                       parameters["resp_temp_optm"], 26.0, min_per_i);
 
       // simulate fishpop growth and including change of seafloor pools
       rcpp_fishpop_growth(fishpop, fishpop_track[0], seafloor,
-                          as<double>(parameters["pop_k"]), as<double>(parameters["pop_linf"]),
-                          as<double>(parameters["pop_a"]), as<double>(parameters["pop_b"]),
-                          as<double>(parameters["pop_n_body"]), as<double>(parameters["pop_reserves_max"]),
-                          as<double>(parameters["pop_reserves_consump"]), extent, dimensions, min_per_i);
+                          parameters["pop_k"], parameters["pop_linf"],
+                          parameters["pop_a"], parameters["pop_b"],
+                          parameters["pop_n_body"], parameters["pop_reserves_max"],
+                          parameters["pop_reserves_consump"], extent, dimensions, min_per_i);
 
       // simulate mortality
       rcpp_mortality(fishpop, fishpop_track[0], seafloor,
-                     as<double>(parameters["pop_linf"]), as<double>(parameters["pop_n_body"]),
-                     as<double>(parameters["pop_reserves_max"]), extent, dimensions);
+                     parameters["pop_linf"], parameters["pop_n_body"],
+                     parameters["pop_reserves_max"], extent, dimensions);
 
     }
 
@@ -153,15 +153,15 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
       // diffuse values between neighbors
       rcpp_diffuse_values(seafloor, cell_adj,
-                          as<double>(parameters["nutrients_diffusion"]), as<double>(parameters["detritus_diffusion"]),
-                          as<double>(parameters["detritus_fish_diffusion"]));
+                          parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
+                          parameters["detritus_fish_diffusion"]);
 
     }
 
     // remove nutrients from cells if output parameter > 0
     if (output_flag) {
 
-      rcpp_nutr_output(seafloor, as<double>(parameters["nutrients_output"]));
+      rcpp_nutr_output(seafloor, parameters["nutrients_output"]);
 
     }
 
