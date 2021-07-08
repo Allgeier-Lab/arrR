@@ -1,4 +1,4 @@
-#include "rcpp_run_simulation.h"
+#include "rcpp_sim_processes.h"
 #include "progress.hpp"
 #include "progress_bar.hpp"
 #include "rcpp_nutr_input.h"
@@ -11,7 +11,7 @@
 #include "rcpp_diffuse_values.h"
 #include "rcpp_nutr_output.h"
 
-//' rcpp_run_simulation
+//' rcpp_sim_processes
 //'
 //' @description
 //' Rcpp run simulation.
@@ -47,19 +47,19 @@
 //'
 //' @return void
 //'
-//' @aliases rcpp_run_simulation
-//' @rdname rcpp_run_simulation
+//' @aliases rcpp_sim_processes
+//' @rdname rcpp_sim_processes
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
-                         List seafloor_track, List fishpop_track, List parameters,
-                         int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
-                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
-                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
-                         Rcpp::NumericVector nutr_input,
-                         int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
-                         bool verbose) {
+void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
+                        List seafloor_track, List fishpop_track, List parameters,
+                        int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
+                        Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
+                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                        Rcpp::NumericVector nutr_input,
+                        int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
+                        bool verbose) {
 
   // save input data in tracking list
   seafloor_track[0] = Rcpp::clone(seafloor);
@@ -185,7 +185,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 }
 
 /*** R
-rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
+rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                     parameters = parameters, pop_n = starting_values$pop_n,
                     movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
