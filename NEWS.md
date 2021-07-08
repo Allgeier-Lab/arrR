@@ -1,3 +1,9 @@
+# arrR 1.0
+* Renamed `rcpp_run_simulation` to `rcpp_sim_processes`
+* Adding all needed references
+* Nested loop to diffuse values in `rcpp_diffuse_values`
+* Improvment of `get_neighbors` using modular division
+
 # arrR 0.5.1
 * Main simulation loop completely in Rcpp `rcpp_run_simulation`
 * Better tracking of fish consumption and excretion

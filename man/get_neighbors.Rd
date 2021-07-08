@@ -10,6 +10,8 @@ get_neighbors(x, direction = 8, cpp = FALSE)
 \item{x}{RasterLayer.}
 
 \item{direction}{Integer specifying if 4 or 8 neighborhood rule should be applied.}
+
+\item{cpp}{Logical specifying if all indices start with 0 according to C++ indexing.}
 }
 \value{
 matrix

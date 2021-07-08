@@ -5,6 +5,7 @@
 #'
 #' @param x RasterLayer.
 #' @param direction Integer specifying if 4 or 8 neighborhood rule should be applied.
+#' @param cpp Logical specifying if all indices start with 0 according to C++ indexing.
 #'
 #' @details
 #' Internal function to get matrix with cell IDs of all neighboring cells.
