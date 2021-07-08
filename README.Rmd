@@ -28,15 +28,14 @@ knitr::opts_chunk$set(
 
 <img src="man/figures/logo.png" align="right" width="150" />
 
-The goal of *arrR* is to simulate seagrass growth around artificial reefs.
+The goal of *arrR* is to simulate seagrass growth around artificial reefs. For a detailed model description, see _Esquivel et al (2021). Mechanistic support for increased primary production around artificial reefs. Manuscript in preparation._
 
 ## Installation
 
-You can install *arrR* from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. You will need the `auth_token` because the repository is currently set to private so only members of the Allgeier Lab can see it. **PLEASE DON'T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW FIRST**.
+You can install *arrR* from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. If you want to install the development version, please specify the argument `ref = "development"` within the function.
 
 ```{r install, eval = FALSE}
-remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
-                        auth_token = "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")
+remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
 <!-- Add CRAN link if applicable -->

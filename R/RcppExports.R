@@ -649,7 +649,7 @@ rcpp_shuffle <- function(min, max) {
 #' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 #'
 #' @references
-#' For a detailed model describtion, see Esquivel et al (2021). Mechanistic support for
+#' For a detailed model description, see Esquivel et al (2021). Mechanistic support for
 #' increased primary production around artificial reefs. Manuscript in preparation.
 #'
 #' @return void
