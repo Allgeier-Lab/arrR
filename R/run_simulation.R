@@ -45,7 +45,7 @@
 #' before this timestep is reached.
 #'
 #' @references
-#' For a detailed model describtion see Esquivel et al (2021). Mechanistic support for
+#' For a detailed model description see Esquivel et al (2021). Mechanistic support for
 #' increased primary production around artificial reefs. Manuscript in preparation.
 #'
 #' @return mdl_rn
@@ -180,9 +180,17 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   fishpop_values <- as.matrix(fishpop)
 
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
   # get mean starting values
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
                                          fishpop_values = fishpop_values)
+
+  # get neighboring cells for each focal cell using torus
+  cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
 
   # get extent of environment
   extent <- as.vector(raster::extent(seafloor))
@@ -197,13 +205,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   coords_reef <- cbind(id = cells_reef,
                        seafloor_values[cells_reef, c(1, 2)])
 
-  # get neighboring cells for each focal cell using torus
-  cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
+  # check if no reef is present but movement not rand
+  if (length(cells_reef) == 0 && movement %in% c("attr", "behav")) {
 
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+    movement <- "rand"
 
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+    warning("No reef cells present. Thus 'movement' set to 'rand'.", call. = FALSE)
+
+  }
 
   # print some basic information about model run
   if (verbose) {
@@ -224,14 +233,15 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
-                      seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                      parameters = parameters, pop_n = starting_values$pop_n,
-                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                      coords_reef = coords_reef, cell_adj = cell_adj,
-                      extent = extent, dimensions = dimensions, nutr_input = nutr_input,
-                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                      seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
+  rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
+                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                     parameters = parameters, pop_n = starting_values$pop_n,
+                     movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
+                     coords_reef = coords_reef, cell_adj = cell_adj,
+                     extent = extent, dimensions = dimensions,
+                     nutr_input = nutr_input,
+                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                     seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 
    # new line after last progress message
   if (verbose) {

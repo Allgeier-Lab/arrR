@@ -8,6 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-We try to maintain a list of publications that have used the **arrR** package. If you have used **arrR** in your own work, we would love to hear from you. Please file an issue on GitHub so we can add your work to this list or contact us via [e-mail](mailto:mhessel@umich.edu). 
+We try to maintain a list of publications that have used the **arrR** package. If you have used *arrR* in your own work, we would love to hear from you. Please file an [issue](https://github.com/Allgeier-Lab/arrR/issues) on GitHub so we can add your work to this list or contact us via [e-mail](mailto:mhk.hesselbarth@gmail.com). 
+
+To cite *arrR* in publications or acknowledge its use, please use the following temporary citation information, substituting the version of the application that you used for ‘v0.0’:
+
+_Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E. In preparation. Mechanistic support for increased primary production around artificial reefs. v0.0_
+
+For more information see Publication record vignette. The get a BibTex entry, please use `citation("arrR")`.
 
 ## List of publications

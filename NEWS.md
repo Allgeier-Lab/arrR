@@ -1,8 +1,15 @@
+# arrR 1.0
+* Renamed `rcpp_run_simulation` to `rcpp_sim_processes`
+* Adding all needed references
+* Nested loop to diffuse values in `rcpp_diffuse_values`
+* Improvment of `get_neighbors` using modular division
+
 # arrR 0.5.1
 * Main simulation loop completely in Rcpp `rcpp_run_simulation`
 * Better tracking of fish consumption and excretion
 * Age counter in iterations
-* Better name or `pop_reserves_*` parameters
+* Better name for `pop_reserves_*` parameters
+* Renamed `setup_seafloor_mdlrn` to `mdlrn_to_raster`
 
 # arrR 0.5.0
 * Simpler allocation rule based on curves.

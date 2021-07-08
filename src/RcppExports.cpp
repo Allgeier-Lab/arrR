@@ -297,35 +297,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpp_run_simulation
-void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, List seafloor_track, List fishpop_track, List parameters, int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, Rcpp::NumericVector nutr_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
-RcppExport SEXP _arrR_rcpp_run_simulation(SEXP seafloorSEXP, SEXP fishpopSEXP, SEXP seafloor_trackSEXP, SEXP fishpop_trackSEXP, SEXP parametersSEXP, SEXP pop_nSEXP, SEXP movementSEXP, SEXP max_distSEXP, SEXP pop_reserves_thresSEXP, SEXP coords_reefSEXP, SEXP cell_adjSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP nutr_inputSEXP, SEXP max_iSEXP, SEXP min_per_iSEXP, SEXP save_eachSEXP, SEXP seagrass_eachSEXP, SEXP burn_inSEXP, SEXP verboseSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
-    Rcpp::traits::input_parameter< List >::type seafloor_track(seafloor_trackSEXP);
-    Rcpp::traits::input_parameter< List >::type fishpop_track(fishpop_trackSEXP);
-    Rcpp::traits::input_parameter< List >::type parameters(parametersSEXP);
-    Rcpp::traits::input_parameter< int >::type pop_n(pop_nSEXP);
-    Rcpp::traits::input_parameter< String >::type movement(movementSEXP);
-    Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_reserves_thres(pop_reserves_thresSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type cell_adj(cell_adjSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
-    Rcpp::traits::input_parameter< int >::type max_i(max_iSEXP);
-    Rcpp::traits::input_parameter< int >::type min_per_i(min_per_iSEXP);
-    Rcpp::traits::input_parameter< int >::type save_each(save_eachSEXP);
-    Rcpp::traits::input_parameter< int >::type seagrass_each(seagrass_eachSEXP);
-    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
-    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_run_simulation(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose);
-    return R_NilValue;
-END_RCPP
-}
 // rcpp_seagrass_growth
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double seagrass_thres, double seagrass_slope, double seagrass_slough, double time_frac);
 RcppExport SEXP _arrR_rcpp_seagrass_growth(SEXP seafloorSEXP, SEXP cells_reefSEXP, SEXP bg_v_maxSEXP, SEXP bg_k_mSEXP, SEXP bg_gammaSEXP, SEXP ag_v_maxSEXP, SEXP ag_k_mSEXP, SEXP ag_gammaSEXP, SEXP bg_biomass_maxSEXP, SEXP bg_biomass_minSEXP, SEXP ag_biomass_maxSEXP, SEXP ag_biomass_minSEXP, SEXP seagrass_thresSEXP, SEXP seagrass_slopeSEXP, SEXP seagrass_sloughSEXP, SEXP time_fracSEXP) {
@@ -361,6 +332,35 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type max(maxSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_shuffle(min, max));
     return rcpp_result_gen;
+END_RCPP
+}
+// rcpp_sim_processes
+void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, List seafloor_track, List fishpop_track, List parameters, int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, Rcpp::NumericVector nutr_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
+RcppExport SEXP _arrR_rcpp_sim_processes(SEXP seafloorSEXP, SEXP fishpopSEXP, SEXP seafloor_trackSEXP, SEXP fishpop_trackSEXP, SEXP parametersSEXP, SEXP pop_nSEXP, SEXP movementSEXP, SEXP max_distSEXP, SEXP pop_reserves_thresSEXP, SEXP coords_reefSEXP, SEXP cell_adjSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP nutr_inputSEXP, SEXP max_iSEXP, SEXP min_per_iSEXP, SEXP save_eachSEXP, SEXP seagrass_eachSEXP, SEXP burn_inSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
+    Rcpp::traits::input_parameter< List >::type seafloor_track(seafloor_trackSEXP);
+    Rcpp::traits::input_parameter< List >::type fishpop_track(fishpop_trackSEXP);
+    Rcpp::traits::input_parameter< List >::type parameters(parametersSEXP);
+    Rcpp::traits::input_parameter< int >::type pop_n(pop_nSEXP);
+    Rcpp::traits::input_parameter< String >::type movement(movementSEXP);
+    Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_reserves_thres(pop_reserves_thresSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type cell_adj(cell_adjSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type dimensions(dimensionsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
+    Rcpp::traits::input_parameter< int >::type max_i(max_iSEXP);
+    Rcpp::traits::input_parameter< int >::type min_per_i(min_per_iSEXP);
+    Rcpp::traits::input_parameter< int >::type save_each(save_eachSEXP);
+    Rcpp::traits::input_parameter< int >::type seagrass_each(seagrass_eachSEXP);
+    Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_sim_processes(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose);
+    return R_NilValue;
 END_RCPP
 }
 // rcpp_translate_torus
@@ -411,9 +411,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 10},
     {"_arrR_rcpp_respiration", (DL_FUNC) &_arrR_rcpp_respiration, 8},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 4},
-    {"_arrR_rcpp_run_simulation", (DL_FUNC) &_arrR_rcpp_run_simulation, 20},
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 16},
     {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
+    {"_arrR_rcpp_sim_processes", (DL_FUNC) &_arrR_rcpp_sim_processes, 20},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 3},
     {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
     {NULL, NULL, 0}

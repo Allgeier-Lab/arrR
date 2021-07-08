@@ -5,14 +5,12 @@
 #'
 #' @param x RasterLayer.
 #' @param direction Integer specifying if 4 or 8 neighborhood rule should be applied.
-#' @param torus If TRUE RasterLayer is treated as torus.
+#' @param cpp Logical specifying if all indices start with 0 according to C++ indexing.
 #'
 #' @details
 #' Internal function to get matrix with cell IDs of all neighboring cells.
-#' If \code{torus = TRUE} the neighborhood is considered on a torus i.e., the top-right
-#' cell neighbors the bottom-left cell etc. The \code{direction} arguments allows to
-#' specifiy which cells are considered to be neighbors (direction = 4: "Rook's case";
-#' direction = 8: "Queen's case").
+#' The \code{direction} arguments allows to specifiy which cells are considered to be
+#' neighbors (direction = 4: "Rook's case"; direction = 8: "Queen's case").
 #'
 #' @return matrix
 #'
@@ -25,32 +23,46 @@
 #' @rdname get_neighbors
 #'
 #' @export
-get_neighbors <- function(x, direction = 4, torus = FALSE) {
-
-  # get number of cols
-  n_ncol <- raster::ncol(x)
+get_neighbors <- function(x, direction = 8, cpp = FALSE) {
 
   # get total number of cells
   n_cell <- raster::ncell(x)
 
+  # get number of cols
+  n_col <- raster::ncol(x)
+
   # seq for each focal cell
-  focal_id <- 1:n_cell
+  focal_id <- 0:(n_cell - 1)
+
+  # get id of left, top, right, bottom id
+  left <- (focal_id - 1) %% n_cell
+
+  top <- (focal_id - n_col) %% n_cell
+
+  right <- (focal_id + 1) %% n_cell
+
+  bottom <- (focal_id + n_col) %% n_cell
 
   # get 4 neighbors
   if (direction == 4) {
 
     neighbors <- cbind(focal = rep(focal_id, times = 4),
-                       neighbor = c(focal_id + 1, focal_id + n_ncol,
-                                    focal_id - 1, focal_id - n_ncol))
+                       neighbor = c(left, top, right, bottom))
 
-  # get 8 neighbors
+    # get 8 neighbors
   } else if (direction == 8) {
 
-    neighbors <- cbind(focal = rep(focal_id, times = 4),
-                       neighbor = c(focal_id + 1, focal_id + (n_ncol + 1),
-                                    focal_id + n_ncol, focal_id + (n_ncol - 1),
-                                    focal_id - 1, focal_id - (n_ncol + 1),
-                                    focal_id - n_ncol, focal_id - (n_ncol - 1)))
+    top_left <- (focal_id - (n_col + 1)) %% n_cell
+
+    top_right <- (focal_id - (n_col - 1)) %% n_cell
+
+    bottom_right <- (focal_id + (n_col + 1)) %% n_cell
+
+    bottom_left <- (focal_id + (n_col - 1)) %% n_cell
+
+    neighbors <- cbind(focal = rep(focal_id, times = 8),
+                       neighbor = c(left, top_left, top, top_right,
+                                    right, bottom_right, bottom, bottom_left))
 
   }
 
@@ -61,25 +73,14 @@ get_neighbors <- function(x, direction = 4, torus = FALSE) {
 
   }
 
-  # check which ids are outside extent
-  remove_id <- which(neighbors[, 2] <= 0 | neighbors[, 2] > n_cell)
-
-  # remove all rows outside extent
-  if (!torus) {
-
-    neighbors <- neighbors[-remove_id, ]
-
-  # use the maximum number of cells to get torus ids
-  } else {
-
-    replace_id <- abs(n_cell - abs(neighbors[remove_id, 2]))
-
-    neighbors[remove_id, 2] <- replace_id
-
-  }
-
   # sort result
   neighbors <- neighbors[order(neighbors[, 1]), ]
+
+  if (!cpp) {
+
+    neighbors = neighbors + 1
+
+  }
 
   return(neighbors)
 }

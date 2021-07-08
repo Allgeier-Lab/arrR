@@ -94,6 +94,6 @@ max_i = 1000, min_per_i = 120, save_each = 10)
 
 }
 \references{
-For a detailed model describtion see Esquivel et al (2021). Mechanistic support for
+For a detailed model description see Esquivel et al (2021). Mechanistic support for
 increased primary production around artificial reefs. Manuscript in preparation.
 }
