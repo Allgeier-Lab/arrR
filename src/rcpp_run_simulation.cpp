@@ -24,6 +24,7 @@
 //' @param max_dist Double with maximum movement distance.
 //' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param coords_reef Matrix with ID and coords of reef cells.
+//' @param cell_adj Matrix with cell adjacencies.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //' @param nutr_input Vector with amount of nutrient input each timestep.
@@ -54,7 +55,8 @@
 void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                          List seafloor_track, List fishpop_track, List parameters,
                          int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
-                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
+                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          Rcpp::NumericVector nutr_input,
                          int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                          bool verbose) {
@@ -154,7 +156,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     if (diffuse_flag) {
 
       // diffuse values between neighbors
-      rcpp_diffuse_values(seafloor, n_cell, dimensions(1),
+      rcpp_diffuse_values(seafloor, cell_adj,
                           parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
                           parameters["detritus_fish_diffusion"]);
 

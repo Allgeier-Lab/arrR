@@ -109,7 +109,7 @@ rcpp_convert_nutr <- function(x, to) {
 #' Rcpp simulate diffusion of values.
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param n_cell,n_col Integer with number of cells and columns.
+#' @param cell_adj Matrix with cell adjacencies.
 #' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 #'
 #' @details
@@ -123,8 +123,8 @@ rcpp_convert_nutr <- function(x, to) {
 #' @rdname rcpp_diffuse_values
 #'
 #' @export
-rcpp_diffuse_values <- function(seafloor, n_cell, n_col, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
-    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, n_cell, n_col, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
+rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
+    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
 }
 
 #' rcpp_fishpop_growth
@@ -193,31 +193,6 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' @export
 rcpp_get_bearing <- function(x1, y1, x2, y2) {
     .Call(`_arrR_rcpp_get_bearing`, x1, y1, x2, y2)
-}
-
-#' rcpp_get_neighbors
-#'
-#' @description
-#' Rcpp get id of neighboring cells
-#'
-#' @param id Integer with id of focal cell.
-#' @param n_col,n_cell Integer with number of columns and cells.
-#' @param directions Integer specifying neighborhood rule
-#'
-#' @details
-#' Returns a vector with cell ID of neighboring cells. The direction argument can be
-#' set to \code{directions = 4} (Rook's case) or \code{directions = 8} (Queen's case).
-#' The returning vector gives the ID in the following order: left, top, right, bottom or
-#' left, top_left, top, top_right, right, bottom_right, bottom, bottom_left.
-#'
-#' @return vector
-#'
-#' @aliases rcpp_get_neighbors
-#' @rdname rcpp_get_neighbors
-#'
-#' @export
-rcpp_get_neighbors <- function(id, n_cell, n_col, directions) {
-    .Call(`_arrR_rcpp_get_neighbors`, id, n_cell, n_col, directions)
 }
 
 #' rcpp_mineralization
@@ -593,6 +568,7 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @param max_dist Double with maximum movement distance.
 #' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 #' @param coords_reef Matrix with ID and coords of reef cells.
+#' @param cell_adj Matrix with cell adjacencies.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #' @param nutr_input Vector with amount of nutrient input each timestep.
@@ -619,8 +595,8 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @rdname rcpp_run_simulation
 #'
 #' @export
-rcpp_run_simulation <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
-    invisible(.Call(`_arrR_rcpp_run_simulation`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
+rcpp_run_simulation <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
+    invisible(.Call(`_arrR_rcpp_run_simulation`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
 }
 
 #' rcpp_seagrass_growth

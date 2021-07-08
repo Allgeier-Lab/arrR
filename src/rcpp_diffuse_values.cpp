@@ -1,5 +1,4 @@
 #include "rcpp_diffuse_values.h"
-#include "rcpp_get_neighbors.h"
 
 //' rcpp_diffuse_values
 //'
@@ -7,7 +6,7 @@
 //' Rcpp simulate diffusion of values.
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param n_cell,n_col Integer with number of cells and columns.
+//' @param cell_adj Matrix with cell adjacencies.
 //' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 //'
 //' @details
@@ -22,9 +21,12 @@
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, int n_cell, int n_col,
+void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj,
                          double nutrients_diffusion, double detritus_diffusion,
                          double detritus_fish_diffusion) {
+
+  // get number of rows for cell adj and seafloor
+  int n_cell = seafloor.nrow();
 
   // create vectors to store seafloor values
   Rcpp::NumericVector nutrients (n_cell);
@@ -44,34 +46,33 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, int n_cell, int n_col,
 
   }
 
-  // get all seafloor values
-  for (int i = 0; i < n_cell; i++) {
+  // add and remove diffused amounts
+  for (int j = 0; j < cell_adj.nrow(); j++) {
 
-    Rcpp::IntegerVector neighbooring = rcpp_get_neighbors(i, n_cell, n_col, 8);
+    //  get current focal and neighbor cell
+    int focal = cell_adj(j, 0);
 
-    for (int j = 0; j < neighbooring.length(); j++) {
+    int neighbor = cell_adj(j, 1);
 
-      int neighbor_temp = neighbooring(j);
+    // add values of focal cell to neighbor cell
+    seafloor(neighbor, 4) += nutrients(focal);
 
-      // add values of focal cell to neighbor cell
-      seafloor(neighbor_temp, 4) += nutrients(i);
+    seafloor(neighbor, 5) += detritus(focal);
 
-      seafloor(neighbor_temp, 5) += detritus(i);
+    seafloor(neighbor, 6) += detritus_fish(focal);
 
-      seafloor(neighbor_temp, 6) += detritus_fish(i);
+    // remove value from focal cell
+    seafloor(focal, 4) -= nutrients(focal);
 
-      // remove value from focal cell
-      seafloor(i, 4) -= nutrients(i);
+    seafloor(focal, 5) -= detritus(focal);
 
-      seafloor(i, 5) -= detritus(i);
+    seafloor(focal, 6) -= detritus_fish(focal);
 
-      seafloor(i, 6) -= detritus_fish(i);
-    }
   }
 }
 
 /*** R
-rcpp_diffuse_values(seafloor = seafloor, n_cell = n_cell, n_col = dimensions(2),
+rcpp_diffuse_values(seafloor = seafloor, cell_adj = cell_adj,
                     nutrients_diffusion = parameters$nutrients_diffusion,
                     detritus_diffusion = parameters$detritus_diffusion,
                     detritus_fish_diffusion = parameters$detritus_fish_diffusion)
