@@ -6,7 +6,8 @@
 \usage{
 rcpp_diffuse_values(
   seafloor,
-  cell_adj,
+  n_cell,
+  n_col,
   nutrients_diffusion,
   detritus_diffusion,
   detritus_fish_diffusion
@@ -15,9 +16,9 @@ rcpp_diffuse_values(
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{cell_adj}{Matrix with cell adjacencies.}
-
 \item{nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion}{Numeric with parameters.}
+
+\item{cell_adj}{Matrix with cell adjacencies.}
 }
 \value{
 void

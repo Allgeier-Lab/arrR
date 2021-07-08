@@ -5,7 +5,7 @@
 
 using namespace Rcpp;
 
-void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj,
+void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, int n_cell, int n_col,
                          double nutrients_diffusion, double detritus_diffusion,
                          double detritus_fish_diffusion);
 

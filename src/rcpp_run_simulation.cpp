@@ -24,7 +24,6 @@
 //' @param max_dist Double with maximum movement distance.
 //' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param coords_reef Matrix with ID and coords of reef cells.
-//' @param cell_adj Matrix with cell adjacencies.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //' @param nutr_input Vector with amount of nutrient input each timestep.
@@ -55,8 +54,7 @@
 void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                          List seafloor_track, List fishpop_track, List parameters,
                          int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
-                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
-                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                          Rcpp::NumericVector nutr_input,
                          int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                          bool verbose) {
@@ -79,6 +77,10 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
 
   // flag if output needs to be run
   bool output_flag = as<double>(parameters["nutrients_output"]) > 0.0;
+
+
+  // calculate numober of cells
+  int n_cell = dimensions(0) * dimensions(1);
 
   // setup progress bar
   Progress progress(max_i, verbose);
@@ -152,7 +154,7 @@ void rcpp_run_simulation(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishp
     if (diffuse_flag) {
 
       // diffuse values between neighbors
-      rcpp_diffuse_values(seafloor, cell_adj,
+      rcpp_diffuse_values(seafloor, n_cell, dimensions(1),
                           parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
                           parameters["detritus_fish_diffusion"]);
 
@@ -185,8 +187,7 @@ rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                     parameters = parameters, pop_n = starting_values$pop_n,
                     movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                    cells_reef = cells_reef, coords_reef = coords_reef, cell_adj = cell_adj,
-                    extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                    coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
                     seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 */
