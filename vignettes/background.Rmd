@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-For a more detailed guide how to use `arrR`, please see the [Get started](getstarted.html) vignette.
+For a more detailed guide how to use *arrR*, please see the [Get started](getstarted.html) vignette.
 
 ## Model concept
 
@@ -19,6 +19,8 @@ The goal of *arrR* is to simulate seagrass production around artificial reefs (A
 knitr::include_graphics(path = "Concept.png")
 
 ```
+
+For a detailed model description, please see _Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E. In preparation. Mechanistic support for increased primary production around artificial reefs. v0.0_
 
 ## Scheduling
 
@@ -38,5 +40,3 @@ A simulation is started using the `run_simulation` function. This includes the s
 
 **7. simulate_diffusion()**: Simulates diffusion of detritus biomass and water-column nutrients  across neighboring cells.
 
-### References
-DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
