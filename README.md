@@ -19,9 +19,21 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 <img src="man/figures/logo.png" align="right" width="150" />
 
 The goal of *arrR* is to simulate seagrass growth around artificial
-reefs. For a detailed model description, see *Esquivel et al (2021).
+reefs. For a detailed model description, please see the corresponding
+publications.
+
+### Citation
+
+To cite *arrR* in publications or acknowledge its use, please use the
+following temporary citation information, substituting the version of
+the application that you used for ‘v0.0’:
+
+*Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E. In preparation.
 Mechanistic support for increased primary production around artificial
-reefs. Manuscript in preparation.*
+reefs. v0.0*
+
+For more information see Publication record vignette. The get a BibTex
+entry, please use `citation("arrR")`.
 
 ## Installation
 
@@ -87,6 +99,13 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
 #> > ...Creating 8 individuals within extent(-25, 25, -25, 25)...
 ```
 
+If needed, you can always change parameter or starting values.
+
+``` r
+# set maximum reserves to 10% of body mass
+parameters$pop_reserves_max <- 0.1
+```
+
 To run a simulation, simply provide the previously created seafloor and
 population as well as all parameters to the `run_simulation` function.
 Additionally, you need to specify the number of timesteps that are
@@ -96,12 +115,12 @@ specifications of the model run.
 ``` r
 min_per_i <- 120
 
-# run the model for three years
-years <- 3
+# run the model for ten years
+years <- 10
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
-# save results only every 15 days
-days <- 5
+# save results only every 25 days
+days <- 25
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 
@@ -110,28 +129,42 @@ result <- run_simulation(seafloor = input_seafloor,
                          movement = "rand",
                          max_i = max_i, min_per_i = min_per_i, 
                          save_each = save_each)
+```
 
+To get some basic summary statistics, simply print the object. Keep in
+my, the resulting object is basically just a list. So you can access all
+results very easily.
+
+``` r
 result
-#> Total time : 13140 iterations (1095 days) [Burn-in: 0 iter.]
-#> Saved each : 60 iterations (5 days)
+#> Total time : 43800 iterations (3650 days) [Burn-in: 0 iter.]
+#> Saved each : 300 iterations (25 days)
 #> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
-#> Fishpop    : 8 indiv (movement: 'rand')
+#> Fishpop    : 8 indiv (movement: 'attr')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 62.111, 535.857, 0, 1.52, 0
-#> Mean     : 62.258, 541.864, 0, 1.533, 0
-#> Maximum  : 65.125, 619.434, 0.007, 1.537, 0
+#> Minimum  : 34.086, 523.278, 0, 1.71, 0
+#> Mean     : 38.667, 559.298, 0, 1.738, 0
+#> Maximum  : 156.828, 791.459, 0.007, 1.743, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 21.662, 201.796, 0, 0
-#> Mean     : 23.149, 250.813, 0, 0
-#> Maximum  : 25.433, 335.172, 0, 0
+#> Minimum  : 20.431, 167.733, 0, 1
+#> Mean     : 23.232, 260.29, 0, 1
+#> Maximum  : 27.668, 437.401, 0, 1
+
+# show names of all elements of result object
+names(result)
+#>  [1] "seafloor"        "fishpop"         "movement"        "starting_values"
+#>  [5] "parameters"      "nutr_input"      "max_i"           "min_per_i"      
+#>  [9] "burn_in"         "save_each"       "seagrass_each"   "extent"         
+#> [13] "grain"           "coords_reef"
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
 This will automatically create a plot of the selected timestep (default:
 final timestep). Plotting methods are available for both the seafloor
-and the fish population using the `what` argument.
+and the fish population using the `what` argument. Also, the `summarize`
+argument allows to plot model results over time.
 
 ``` r
 plot(result, what = "seafloor")
