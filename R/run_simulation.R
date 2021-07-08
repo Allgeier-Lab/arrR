@@ -189,6 +189,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   starting_values <- get_starting_values(seafloor_values = seafloor_values,
                                          fishpop_values = fishpop_values)
 
+  # get neighboring cells for each focal cell using torus
+  cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
+
   # get extent of environment
   extent <- as.vector(raster::extent(seafloor))
 
@@ -211,9 +214,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  # get neighboring cells for each focal cell using torus
-  cell_adj <- get_neighbors(x = seafloor, direction = 8, torus = TRUE)
-
   # print some basic information about model run
   if (verbose) {
 
@@ -233,14 +233,15 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  rcpp_run_simulation(seafloor = seafloor_values, fishpop = fishpop_values,
-                      seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                      parameters = parameters, pop_n = starting_values$pop_n,
-                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                      coords_reef = coords_reef, cell_adj = cell_adj,
-                      extent = extent, dimensions = dimensions, nutr_input = nutr_input,
-                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                      seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
+  rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
+                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                     parameters = parameters, pop_n = starting_values$pop_n,
+                     movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
+                     coords_reef = coords_reef, cell_adj = cell_adj,
+                     extent = extent, dimensions = dimensions,
+                     nutr_input = nutr_input,
+                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                     seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 
    # new line after last progress message
   if (verbose) {
