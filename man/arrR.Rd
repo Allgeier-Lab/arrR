@@ -11,8 +11,8 @@ with a fish population influence seagrass growth.
 
 For more information about how to use the model, please see \code{browseVignettes("arrR")}.
 
-For a detailed model description, see Esquivel et al (2021). Mechanistic support for
-increased primary production around artificial reefs. Manuscript in preparation.
+For a detailed model description, see Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E.
+In preparation. Mechanistic support for increased primary production around artificial reefs.
 }
 \seealso{
 Useful links:

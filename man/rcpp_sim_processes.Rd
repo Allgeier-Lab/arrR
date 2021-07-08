@@ -77,6 +77,6 @@ The functions is a 'wrapper' around the following sub-processes: (i) nutrient in
 (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 }
 \references{
-For a detailed model description, see Esquivel et al (2021). Mechanistic support for
-increased primary production around artificial reefs. Manuscript in preparation.
+For a detailed model description, see Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E.
+In preparation. Mechanistic support for increased primary production around artificial reefs.
 }
