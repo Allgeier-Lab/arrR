@@ -19,20 +19,19 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 <img src="man/figures/logo.png" align="right" width="150" />
 
 The goal of *arrR* is to simulate seagrass growth around artificial
-reefs.
+reefs. For a detailed model description, see *Esquivel et al (2021).
+Mechanistic support for increased primary production around artificial
+reefs. Manuscript in preparation.*
 
 ## Installation
 
 You can install *arrR* from
 [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line
-of code. You will need the `auth_token` because the repository is
-currently set to private so only members of the Allgeier Lab can see it.
-**PLEASE DON’T SHARE THIS TOKEN WITH ANYONE WITHOUT LETTING ME KNOW
-FIRST**.
+of code. If you want to install the development version, please specify
+the argument `ref = "development"` within the function.
 
 ``` r
-remotes::install_github(repo = "Allgeier-Lab/arrR",  ref = "development",
-                        auth_token = "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")
+remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
 <!-- Add CRAN link if applicable -->
@@ -119,15 +118,14 @@ result
 #> Fishpop    : 8 indiv (movement: 'rand')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-
-#> Minimum  : 62.14, 535.131, 0, 1.524, 0
-#> Mean     : 62.252, 541.715, 0, 1.535, 0
-#> Maximum  : 65.061, 622.339, 0.006, 1.539, 0
+#> Minimum  : 62.111, 535.857, 0, 1.52, 0
+#> Mean     : 62.258, 541.864, 0, 1.533, 0
+#> Maximum  : 65.125, 619.434, 0.007, 1.537, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 20.314, 164.723, 0, 0
-#> Mean     : 22.991, 247.922, 0, 0
-#> Maximum  : 26.127, 364.934, 0, 0
+#> Minimum  : 21.662, 201.796, 0, 0
+#> Mean     : 23.149, 250.813, 0, 0
+#> Maximum  : 25.433, 335.172, 0, 0
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
