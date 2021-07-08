@@ -119,6 +119,7 @@ result
 #> Fishpop    : 8 indiv (movement: 'rand')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
+
 #> Minimum  : 62.14, 535.131, 0, 1.524, 0
 #> Mean     : 62.252, 541.715, 0, 1.535, 0
 #> Maximum  : 65.061, 622.339, 0.006, 1.539, 0
