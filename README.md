@@ -46,7 +46,8 @@ the argument `ref = "development"` within the function.
 remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
-<!-- Add CRAN link if applicable -->
+For a more detailed guide how to use *arrR*, please see the [Get
+started](getstarted.html) vignette.
 
 ## Example
 
