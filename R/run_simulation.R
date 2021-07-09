@@ -173,6 +173,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     nutr_input <- rep(x = 0.0, times = max_i)
 
+    # set nutrient flag to save results later
+    nutr_input_flag <- FALSE
+
+  } else {
+
+    # set nutrient flag to save results later
+    nutr_input_flag <- TRUE
+
   }
 
   # convert seafloor and fishpop as matrix
@@ -192,18 +200,18 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
 
-  # get extent of environment
-  extent <- as.vector(raster::extent(seafloor))
-
-  # get dimensions of environment (nrow, ncol)
-  dimensions <- dim(seafloor)[1:2]
-
   # get cell id of reef cells
   cells_reef <- which(seafloor_values[, 16] == 1)
 
   # get cell id of reef cells and coordinates of reef cells
   coords_reef <- cbind(id = cells_reef,
                        seafloor_values[cells_reef, c(1, 2)])
+
+  # get extent of environment
+  extent <- as.vector(raster::extent(seafloor))
+
+  # get dimensions of environment (nrow, ncol)
+  dimensions <- dim(seafloor)[1:2]
 
   # check if no reef is present but movement not rand
   if (length(cells_reef) == 0 && movement %in% c("attr", "behav")) {
@@ -219,7 +227,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("> Seafloor with ", raster::extent(extent), "; ", nrow(coords_reef), " reef cells.")
 
-    message("> Population with ", starting_values$pop_n, " individuals.")
+    message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
     message("> Simulating ", max_i, " iterations [Burn-in: ", burn_in, " iter.].")
 
@@ -290,10 +298,16 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  if (!nutr_input_flag) {
+
+    nutr_input <- NA
+
+  }
+
+
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
-                 starting_values = starting_values, parameters = parameters,
-                 nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
+                 starting_values = starting_values, parameters = parameters, nutr_input = nutr_input,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  save_each = save_each, seagrass_each = seagrass_each,
                  extent = raster::extent(extent), grain = raster::res(seafloor),
