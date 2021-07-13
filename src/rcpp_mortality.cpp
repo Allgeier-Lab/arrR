@@ -1,7 +1,4 @@
 #include "rcpp_mortality.h"
-#include "rcpp_cell_from_xy.h"
-#include "rcpp_shuffle.h"
-#include "rcpp_reincarnate.h"
 
 //' rcpp_mortality
 //'

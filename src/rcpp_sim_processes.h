@@ -1,9 +1,20 @@
 //#ifndef RCPP_SIM_PROCESSES
 //#define RCPP_SIM_PROCESSES
 
-#include "Rcpp.h"
-
 // [[Rcpp::depends(RcppProgress)]]
+
+#include "Rcpp.h"
+#include "progress.hpp"
+#include "progress_bar.hpp"
+#include "rcpp_nutr_input.h"
+#include "rcpp_seagrass_growth.h"
+#include "rcpp_mineralization.h"
+#include "rcpp_move_wrap.h"
+#include "rcpp_respiration.h"
+#include "rcpp_fishpop_growth.h"
+#include "rcpp_mortality.h"
+#include "rcpp_diffuse_values.h"
+#include "rcpp_nutr_output.h"
 
 using namespace Rcpp;
 

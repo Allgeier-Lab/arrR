@@ -1,6 +1,4 @@
 #include "rcpp_seagrass_growth.h"
-#include "rcpp_allocation_ratio.h"
-#include "rcpp_nutr_uptake.h"
 
 //' rcpp_seagrass_growth
 //'

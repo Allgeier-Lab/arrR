@@ -1,5 +1,4 @@
 #include "rcpp_reincarnate.h"
-#include "rcpp_cell_from_xy.h"
 
 //' rcpp_reincarnate
 //'

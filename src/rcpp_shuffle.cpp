@@ -1,6 +1,4 @@
 #include "rcpp_shuffle.h"
-#include "random"
-#include "chrono"
 
 //' rcpp_shuffle
 //'

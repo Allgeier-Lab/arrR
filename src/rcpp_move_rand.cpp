@@ -1,9 +1,4 @@
 #include "rcpp_move_rand.h"
-#include "rcpp_closest_reef.h"
-#include "rcpp_modify_degree.h"
-#include "rcpp_rlognorm.h"
-#include "rcpp_translate_torus.h"
-#include "rcpp_update_coords.h"
 
 //' rcpp_move_rand
 //'

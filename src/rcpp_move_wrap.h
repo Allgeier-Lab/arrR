@@ -2,6 +2,8 @@
 //#define RCPP_MOVE_WRAP
 
 #include "Rcpp.h"
+#include "rcpp_move_rand.h"
+#include "rcpp_move_behav.h"
 
 using namespace Rcpp;
 

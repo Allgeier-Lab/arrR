@@ -1,5 +1,4 @@
 #include "rcpp_nutr_uptake.h"
-#include "rcpp_convert_nutr.h"
 
 //' rcpp_nutr_uptake
 //'

@@ -2,6 +2,9 @@
 //#define RCPP_FISHPOP_GROWTH
 
 #include "Rcpp.h"
+#include "rcpp_cell_from_xy.h"
+#include "rcpp_reincarnate.h"
+#include "rcpp_shuffle.h"
 
 using namespace Rcpp;
 

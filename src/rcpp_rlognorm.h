@@ -1,9 +1,10 @@
 //#ifndef RCPP_RLOGNORM
 //#define RCPP_RLOGNORM
 
-#include "Rcpp.h"
-
 // [[Rcpp::depends(RcppDist)]]
+
+#include "Rcpp.h"
+#include "truncnorm.h"
 
 using namespace Rcpp;
 

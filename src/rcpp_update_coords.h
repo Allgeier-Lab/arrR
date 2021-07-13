@@ -2,6 +2,7 @@
 //#define RCPP_UPDATE_COORDS
 
 #include "Rcpp.h"
+#include "rcpp_translate_torus.h"
 
 using namespace Rcpp;
 

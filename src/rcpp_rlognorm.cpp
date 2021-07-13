@@ -1,5 +1,4 @@
 #include "rcpp_rlognorm.h"
-#include "truncnorm.h"
 
 //' rcpp_rlognorm
 //'

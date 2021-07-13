@@ -2,6 +2,8 @@
 //#define RCPP_SEAGRASS_GROWTH
 
 #include "Rcpp.h"
+#include "rcpp_allocation_ratio.h"
+#include "rcpp_nutr_uptake.h"
 
 using namespace Rcpp;
 

@@ -1,7 +1,4 @@
 #include "rcpp_fishpop_growth.h"
-#include "rcpp_cell_from_xy.h"
-#include "rcpp_reincarnate.h"
-#include "rcpp_shuffle.h"
 
 //' rcpp_fishpop_growth
 //'
