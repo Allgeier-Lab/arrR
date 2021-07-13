@@ -1,4 +1,10 @@
+// [[Rcpp::depends(RcppDist)]]
+
+#include <Rcpp.h>
+#include <truncnorm.h>
 #include "rcpp_rlognorm.h"
+
+using namespace Rcpp;
 
 //' rcpp_rlognorm
 //'

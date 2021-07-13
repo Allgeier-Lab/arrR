@@ -53,13 +53,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_convert_nutr
-double rcpp_convert_nutr(double x, String to);
+double rcpp_convert_nutr(double x, Rcpp::String to);
 RcppExport SEXP _arrR_rcpp_convert_nutr(SEXP xSEXP, SEXP toSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< String >::type to(toSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type to(toSEXP);
     rcpp_result_gen = Rcpp::wrap(rcpp_convert_nutr(x, to));
     return rcpp_result_gen;
 END_RCPP
@@ -194,13 +194,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_move_wrap
-void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef, String movement, Rcpp::NumericVector pop_reserves_thres, double move_mean, double move_var, double move_visibility, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef, Rcpp::String movement, Rcpp::NumericVector pop_reserves_thres, double move_mean, double move_var, double move_visibility, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
 RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP coords_reefSEXP, SEXP movementSEXP, SEXP pop_reserves_thresSEXP, SEXP move_meanSEXP, SEXP move_varSEXP, SEXP move_visibilitySEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
-    Rcpp::traits::input_parameter< String >::type movement(movementSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type movement(movementSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_reserves_thres(pop_reserves_thresSEXP);
     Rcpp::traits::input_parameter< double >::type move_mean(move_meanSEXP);
     Rcpp::traits::input_parameter< double >::type move_var(move_varSEXP);
@@ -253,7 +253,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_reincarnate
-void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double pop_linf, double pop_n_body, double pop_reserves_max, String reason);
+void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::String reason);
 RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP fish_idSEXP, SEXP seafloorSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_reserves_maxSEXP, SEXP reasonSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -266,7 +266,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_reserves_max(pop_reserves_maxSEXP);
-    Rcpp::traits::input_parameter< String >::type reason(reasonSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type reason(reasonSEXP);
     rcpp_reincarnate(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason);
     return R_NilValue;
 END_RCPP
@@ -340,17 +340,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sim_processes
-void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, List seafloor_track, List fishpop_track, List parameters, int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, Rcpp::NumericVector nutr_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
+void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters, int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, Rcpp::NumericVector nutr_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
 RcppExport SEXP _arrR_rcpp_sim_processes(SEXP seafloorSEXP, SEXP fishpopSEXP, SEXP seafloor_trackSEXP, SEXP fishpop_trackSEXP, SEXP parametersSEXP, SEXP pop_nSEXP, SEXP movementSEXP, SEXP max_distSEXP, SEXP pop_reserves_thresSEXP, SEXP coords_reefSEXP, SEXP cell_adjSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP nutr_inputSEXP, SEXP max_iSEXP, SEXP min_per_iSEXP, SEXP save_eachSEXP, SEXP seagrass_eachSEXP, SEXP burn_inSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
-    Rcpp::traits::input_parameter< List >::type seafloor_track(seafloor_trackSEXP);
-    Rcpp::traits::input_parameter< List >::type fishpop_track(fishpop_trackSEXP);
-    Rcpp::traits::input_parameter< List >::type parameters(parametersSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type seafloor_track(seafloor_trackSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type fishpop_track(fishpop_trackSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type parameters(parametersSEXP);
     Rcpp::traits::input_parameter< int >::type pop_n(pop_nSEXP);
-    Rcpp::traits::input_parameter< String >::type movement(movementSEXP);
+    Rcpp::traits::input_parameter< Rcpp::String >::type movement(movementSEXP);
     Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type pop_reserves_thres(pop_reserves_thresSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);

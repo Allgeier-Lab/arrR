@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_get_bearing.h"
+
+using namespace Rcpp;
 
 //' rcpp_get_bearing
 //'

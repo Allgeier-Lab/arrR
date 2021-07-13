@@ -1,12 +1,6 @@
 //#ifndef RCPP_SEAGRASS_GROWTH
 //#define RCPP_SEAGRASS_GROWTH
 
-#include "Rcpp.h"
-#include "rcpp_allocation_ratio.h"
-#include "rcpp_nutr_uptake.h"
-
-using namespace Rcpp;
-
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
                           double bg_v_max, double bg_k_m, double bg_gamma,
                           double ag_v_max, double ag_k_m, double ag_gamma,

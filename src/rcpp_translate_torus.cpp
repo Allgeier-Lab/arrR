@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_translate_torus.h"
+
+using namespace Rcpp;
 
 //' rcpp_translate_torus
 //'

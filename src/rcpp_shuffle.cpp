@@ -1,4 +1,9 @@
+#include <Rcpp.h>
+#include <random>
+#include <chrono>
 #include "rcpp_shuffle.h"
+
+using namespace Rcpp;
 
 //' rcpp_shuffle
 //'
@@ -20,7 +25,7 @@
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 
   // create sequance from min to max
-  IntegerVector x = seq(min, max);
+  Rcpp::IntegerVector x = Rcpp::seq(min, max);
 
   // obtain a time-based seed
   // http://www.cplusplus.com/reference/algorithm/shuffle/

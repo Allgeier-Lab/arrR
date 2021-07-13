@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_cell_from_xy.h"
+
+using namespace Rcpp;
 
 //' rcpp_cell_from_xy
 //'

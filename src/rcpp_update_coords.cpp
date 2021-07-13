@@ -1,4 +1,8 @@
+#include <Rcpp.h>
 #include "rcpp_update_coords.h"
+#include "rcpp_translate_torus.h"
+
+using namespace Rcpp;
 
 //' rcpp_update_coords
 //'

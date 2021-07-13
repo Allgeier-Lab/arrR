@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_convert_nutr.h"
+
+using namespace Rcpp;
 
 //' rcpp_convert_nutr
 //'
@@ -21,7 +24,7 @@
 //'
 //' @export
 // [[Rcpp::export]]
-double rcpp_convert_nutr(double x, String to) {
+double rcpp_convert_nutr(double x, Rcpp::String to) {
 
   // convert to gram by multiplying factor
   if (to == "g") {

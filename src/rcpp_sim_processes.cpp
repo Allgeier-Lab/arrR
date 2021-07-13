@@ -1,4 +1,20 @@
+// [[Rcpp::depends(RcppProgress)]]
+
+#include <Rcpp.h>
+#include <progress.hpp>
+#include <progress_bar.hpp>
 #include "rcpp_sim_processes.h"
+#include "rcpp_nutr_input.h"
+#include "rcpp_seagrass_growth.h"
+#include "rcpp_mineralization.h"
+#include "rcpp_move_wrap.h"
+#include "rcpp_respiration.h"
+#include "rcpp_fishpop_growth.h"
+#include "rcpp_mortality.h"
+#include "rcpp_diffuse_values.h"
+#include "rcpp_nutr_output.h"
+
+using namespace Rcpp;
 
 //' rcpp_sim_processes
 //'
@@ -42,8 +58,8 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
-                        List seafloor_track, List fishpop_track, List parameters,
-                        int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
+                        Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters,
+                        int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
                         Rcpp::NumericVector nutr_input,
@@ -72,7 +88,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
   // flag if output needs to be run
   bool output_flag = as<double>(parameters["nutrients_output"]) > 0.0;
 
-  // calculate numober of cells
+  // calculate number of cells
   int n_cell = dimensions(0) * dimensions(1);
 
   // run simulation

@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_diffuse_values.h"
+
+using namespace Rcpp;
 
 //' rcpp_diffuse_values
 //'
