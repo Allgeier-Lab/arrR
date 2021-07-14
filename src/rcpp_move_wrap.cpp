@@ -5,6 +5,8 @@
 
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 //' rcpp_move_wrap
 //'
 //' @description

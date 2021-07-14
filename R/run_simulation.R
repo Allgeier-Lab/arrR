@@ -73,6 +73,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            nutr_input = NULL, verbose = TRUE) {
 
+  # check input and warnings #
+
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
                              warning = function(wrn) wrn)
@@ -121,6 +123,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  # setup fishpop #
+
   # get time at beginning for final print
   if (verbose) {
 
@@ -168,6 +172,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     }
   }
 
+  fishpop_values <- as.matrix(fishpop)
+
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  # setup nutrient input #
+
   # create vector for nutr_input
   if (is.null(nutr_input)) {
 
@@ -183,19 +193,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  # convert seafloor and fishpop as matrix
-  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
-
-  fishpop_values <- as.matrix(fishpop)
-
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # get mean starting values
-  starting_values <- get_starting_values(seafloor_values = seafloor_values,
-                                         fishpop_values = fishpop_values)
+  # setup seafloor #
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
@@ -213,6 +211,18 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get dimensions of environment (nrow, ncol)
   dimensions <- dim(seafloor)[1:2]
 
+  # convert seafloor and fishpop as matrix
+  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
+
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  # various #
+
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fishpop_values = fishpop_values)
+
   # check if no reef is present but movement not rand
   if (length(cells_reef) == 0 && movement %in% c("attr", "behav")) {
 
@@ -221,6 +231,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     warning("No reef cells present. Thus 'movement' set to 'rand'.", call. = FALSE)
 
   }
+
+  # print model run characteristics #
 
   # print some basic information about model run
   if (verbose) {

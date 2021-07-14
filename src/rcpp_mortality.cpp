@@ -6,6 +6,8 @@
 
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 //' rcpp_mortality
 //'
 //' @description

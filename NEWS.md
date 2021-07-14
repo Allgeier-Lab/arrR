@@ -1,5 +1,6 @@
 # arrR 1.1
 * Fix bug in `run_simulation` and return of `nutr_input`
+* Export `R` and `Rcpp` interfaces of core functions
 
 # arrR 1.0
 * Renamed `rcpp_run_simulation` to `rcpp_sim_processes`

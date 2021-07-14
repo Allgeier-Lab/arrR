@@ -190,10 +190,10 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
 
 /*** R
 rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
-                    seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                    parameters = parameters, pop_n = starting_values$pop_n,
-                    movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                    coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
-                    max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                    seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
+                   seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                   parameters = parameters, pop_n = starting_values$pop_n,
+                   movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
+                   coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                   max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                   seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 */

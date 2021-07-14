@@ -708,3 +708,7 @@ rcpp_update_coords <- function(fishpop, i, move_dist, max_dist, extent) {
     invisible(.Call(`_arrR_rcpp_update_coords`, fishpop, i, move_dist, max_dist, extent))
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_arrR_RcppExport_registerCCallable', PACKAGE = 'arrR')
+})
