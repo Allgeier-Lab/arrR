@@ -195,6 +195,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # setup seafloor #
 
+  # convert seafloor and fishpop as matrix
+  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
+
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
 
@@ -210,9 +213,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # get dimensions of environment (nrow, ncol)
   dimensions <- dim(seafloor)[1:2]
-
-  # convert seafloor and fishpop as matrix
-  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
 
   # create lists to store results for each timestep
   seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
