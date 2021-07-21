@@ -116,12 +116,12 @@ specifications of the model run.
 ``` r
 min_per_i <- 120
 
-# run the model for ten years
-years <- 10
+# run the model for 50 years
+years <- 50
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
-# save results only every 25 days
-days <- 25
+# save results only every 365 days
+days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 
@@ -138,20 +138,20 @@ results very easily.
 
 ``` r
 result
-#> Total time : 43800 iterations (3650 days) [Burn-in: 0 iter.]
-#> Saved each : 300 iterations (25 days)
+#> Total time : 219000 iterations (18250 days) [Burn-in: 0 iter.]
+#> Saved each : 4380 iterations (365 days)
 #> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
 #> Fishpop    : 8 indiv (movement: 'attr')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 34.086, 523.278, 0, 1.71, 0
-#> Mean     : 38.667, 559.298, 0, 1.738, 0
-#> Maximum  : 156.828, 791.459, 0.007, 1.743, 0
+#> Minimum  : 16.704, 652.553, 0, 3.249, 0
+#> Mean     : 37.878, 698.361, 0, 3.293, 0
+#> Maximum  : 192.971, 875.432, 0.01, 3.306, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 20.431, 167.733, 0, 1
-#> Mean     : 23.232, 260.29, 0, 1
-#> Maximum  : 27.668, 437.401, 0, 1
+#> Minimum  : 17.606, 104.794, 0, 6
+#> Mean     : 27.632, 483.012, 0, 6.5
+#> Maximum  : 32.941, 759.188, 0, 7
 
 # show names of all elements of result object
 names(result)
