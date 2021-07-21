@@ -37,11 +37,13 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' Rcpp get cell from xy
 #'
 #' @param x,y Numeric with x,y coordinates.
-#' @param dimensions Vector with number or rows and cols
 #' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+#' @param dimensions Vector with number or rows and cols
+#' @param rcpp Logical if TRUE Rcpp index is returned.
 #'
 #' @details
 #' Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
+#' If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
 #'
 #' @references
 #' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
@@ -53,8 +55,8 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' @rdname rcpp_cell_from_xy
 #'
 #' @export
-rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
-    .Call(`_arrR_rcpp_cell_from_xy`, x, y, dimensions, extent)
+rcpp_cell_from_xy <- function(x, y, extent, dimensions, rcpp) {
+    .Call(`_arrR_rcpp_cell_from_xy`, x, y, extent, dimensions, rcpp)
 }
 
 #' rcpp_closest_reef
@@ -603,10 +605,13 @@ rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamm
 #' @description
 #' Rcpp shuffle vector.
 #'
-#' @param min,max Integer with minum and maximum value of vector.
+#' @param min,max Integer with minimum and maximum value of vector.
 #'
 #' @details
 #' Creates vector with IDs from \code{min} to \code{max}, but in random order.
+#'
+#' @references
+#' How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
 #'
 #' @return vector
 #'

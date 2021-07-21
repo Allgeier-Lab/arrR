@@ -1,6 +1,5 @@
 #include <Rcpp.h>
 #include "rcpp_mortality.h"
-#include "rcpp_cell_from_xy.h"
 #include "rcpp_shuffle.h"
 #include "rcpp_reincarnate.h"
 
@@ -34,7 +33,7 @@ using namespace Rcpp;
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
                     double pop_linf, double pop_n_body, double pop_reserves_max,
-                    Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
   Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
@@ -43,13 +42,13 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
   for (int i = 0; i < fish_id.length(); i++) {
 
     // get current id of individual
-    int fish_id_temp = fish_id(i);
+    int fish_id_temp = fish_id[i];
 
     // create death probability
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against
-    double random_prob = Rcpp::runif(1, 0.0, 1.0)(0);
+    double random_prob = Rcpp::runif(1, 0.0, 1.0)[0];
 
     // individual dies if random number is smaller than death probability
     if (random_prob < death_prob) {

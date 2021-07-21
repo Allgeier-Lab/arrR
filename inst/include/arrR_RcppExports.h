@@ -44,11 +44,11 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_reserves_max, double pop_reserves_consump, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions, double min_per_i) {
+    inline void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_reserves_max, double pop_reserves_consump, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double min_per_i) {
         typedef SEXP(*Ptr_rcpp_fishpop_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_fishpop_growth p_rcpp_fishpop_growth = NULL;
         if (p_rcpp_fishpop_growth == NULL) {
-            validateSignature("void(*rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::NumericVector,double)");
+            validateSignature("void(*rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
             p_rcpp_fishpop_growth = (Ptr_rcpp_fishpop_growth)R_GetCCallable("arrR", "_arrR_rcpp_fishpop_growth");
         }
         RObject rcpp_result_gen;
@@ -84,11 +84,11 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+    inline void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
         typedef SEXP(*Ptr_rcpp_mortality)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_mortality p_rcpp_mortality = NULL;
         if (p_rcpp_mortality == NULL) {
-            validateSignature("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::NumericVector)");
+            validateSignature("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
             p_rcpp_mortality = (Ptr_rcpp_mortality)R_GetCCallable("arrR", "_arrR_rcpp_mortality");
         }
         RObject rcpp_result_gen;
@@ -104,11 +104,11 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef, Rcpp::String movement, Rcpp::NumericVector pop_reserves_thres, double move_mean, double move_var, double move_visibility, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef, Rcpp::String movement, Rcpp::NumericVector pop_reserves_thres, double move_mean, double move_var, double move_visibility, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
         typedef SEXP(*Ptr_rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_move_wrap p_rcpp_move_wrap = NULL;
         if (p_rcpp_move_wrap == NULL) {
-            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,Rcpp::NumericVector,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::NumericVector)");
+            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,Rcpp::NumericVector,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
             p_rcpp_move_wrap = (Ptr_rcpp_move_wrap)R_GetCCallable("arrR", "_arrR_rcpp_move_wrap");
         }
         RObject rcpp_result_gen;

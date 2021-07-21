@@ -61,7 +61,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
                         Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters,
                         int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
-                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                        Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                         Rcpp::NumericVector nutr_input,
                         int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                         bool verbose) {
@@ -69,16 +69,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
   // setup progress bar
   Progress progress(max_i, verbose);
 
-  // save input data in tracking list
-  seafloor_track[0] = Rcpp::clone(seafloor);
-
-  fishpop_track[0] = Rcpp::clone(fishpop);
-
-  // calc time_frac for rcpp_seagrass_growth
-  double time_frac = (min_per_i / 60.0) * seagrass_each;
-
-  // get only ID of reefs as vector
-  Rcpp::NumericVector cells_reef = coords_reef(_, 0);
+  // inital flags to run processes //
 
   // flag if diffusion needs to be run
   bool diffuse_flag = (as<double>(parameters["nutrients_diffusion"]) > 0.0) ||
@@ -88,8 +79,22 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
   // flag if output needs to be run
   bool output_flag = as<double>(parameters["nutrients_output"]) > 0.0;
 
-  // calculate number of cells
-  int n_cell = dimensions(0) * dimensions(1);
+  // init seafloor stuff //
+
+  // get only ID of reefs as vector
+  Rcpp::NumericVector cells_reef = coords_reef(_, 0);
+
+  // init various stuff //
+
+  // calc time_frac for rcpp_seagrass_growth
+  double time_frac = (min_per_i / 60.0) * seagrass_each;
+
+  // save original data //
+
+  // save input data in tracking list
+  seafloor_track[0] = Rcpp::clone(seafloor);
+
+  fishpop_track[0] = Rcpp::clone(fishpop);
 
   // run simulation
   for (int i = 1; i <= max_i; i++) {
@@ -102,10 +107,10 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     }
 
     // simulate nutrient input if present
-    if (nutr_input(i - 1) > 0.0) {
+    if (nutr_input[i - 1] > 0.0) {
 
       // simulate nutrient input
-      rcpp_nutr_input(seafloor, nutr_input(i - 1));
+      rcpp_nutr_input(seafloor, nutr_input[i - 1]);
 
     }
 

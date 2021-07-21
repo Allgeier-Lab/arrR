@@ -56,7 +56,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
                          double pop_n_body, double pop_reserves_max, double pop_reserves_consump,
-                         Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                         Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                          double min_per_i) {
 
   // create random order if fish id because detritus can run out
@@ -66,11 +66,11 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
   for (int i = 0; i < fish_id.length(); i++) {
 
     // create counter for temp fish id because randomized in simulate_fishpop_growth
-    int fish_id_temp = fish_id(i);
+    int fish_id_temp = fish_id[i];
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(fish_id_temp, 2), fishpop(fish_id_temp, 3),
-                                         dimensions, extent) - 1;
+                                         extent, dimensions, TRUE);
 
     // calculate growth in length and weight
     double growth_length = pop_k / (365.0 * 24.0 * 60.0) * min_per_i *
@@ -102,7 +102,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       } else {
 
         //  increase age (60 min * 24 h = 1440 min/day)
-        fishpop(fish_id_temp, 1) += 1; // (min_per_i / 1440.0);
+        fishpop(fish_id_temp, 1) += 1.0; // (min_per_i / 1440.0);
 
         // increase fish dimensions length
         fishpop(fish_id_temp, 5) += growth_length;
@@ -196,7 +196,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       } else {
 
         // increase age (60 min * 24 h = 1440 min/day)
-        fishpop(fish_id_temp, 1) += 1; // (min_per_i / 1440.0);
+        fishpop(fish_id_temp, 1) += 1.0; // (min_per_i / 1440.0);
 
         // fish uses reserves to meet consumption requirements
         fishpop(fish_id_temp, 9) -= consumption_require;
@@ -235,5 +235,5 @@ rcpp_fishpop_growth(fishpop = fishpop_values,
                     pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                     pop_n_body = parameters$pop_n_body,
                     pop_reserves_max = pop_reserves_max,
-                    min_per_i = min_per_i
+                    min_per_i = min_per_i)
 */

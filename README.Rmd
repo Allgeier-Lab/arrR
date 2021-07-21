@@ -98,12 +98,12 @@ result <- arrR:::result
 ```{r run_sim_dummy, eval = FALSE}
 min_per_i <- 120
 
-# run the model for ten years
-years <- 10
+# run the model for 50 years
+years <- 50
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
-# save results only every 25 days
-days <- 25
+# save results only every 365 days
+days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, 

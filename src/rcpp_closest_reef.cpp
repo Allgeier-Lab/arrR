@@ -58,7 +58,9 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
   }
 
   // save results
-  result(0) = reef_dist_id; result(1) = reef_dist_temp;
+  result[0] = reef_dist_id;
+
+  result[1] = reef_dist_temp;
 
   return(result);
 }

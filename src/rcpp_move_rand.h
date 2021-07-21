@@ -4,6 +4,6 @@
 void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                     double move_mean, double move_var, double move_visibility,
                     double max_dist, bool reef_attraction,
-                    Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
 
 //#endif // RCPP_MOVE_RAND

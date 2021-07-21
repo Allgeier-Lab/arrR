@@ -65,18 +65,18 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_
       int neighbor = cell_adj(k + counter, 1);
 
       // add values of focal cell to neighbor cell
-      seafloor(neighbor, 4) += nutrients(j);
+      seafloor(neighbor, 4) += nutrients[j];
 
-      seafloor(neighbor, 5) += detritus(j);
+      seafloor(neighbor, 5) += detritus[j];
 
-      seafloor(neighbor, 6) += detritus_fish(j);
+      seafloor(neighbor, 6) += detritus_fish[j];
 
       // remove value from focal cell
-      seafloor(j, 4) -= nutrients(j);
+      seafloor(j, 4) -= nutrients[j];
 
-      seafloor(j, 5) -= detritus(j);
+      seafloor(j, 5) -= detritus[j];
 
-      seafloor(j, 6) -= detritus_fish(j);
+      seafloor(j, 6) -= detritus_fish[j];
 
     }
 

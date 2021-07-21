@@ -5,6 +5,6 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
                      Rcpp::NumericVector pop_reserves_thres,
                      double move_mean, double move_var,
                      double move_reef, double move_border, double move_return, double max_dist,
-                     Rcpp::NumericVector extent, Rcpp::NumericVector dimensions);
+                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
 
 //#endif // RCPP_MOVE_FISHPOP
