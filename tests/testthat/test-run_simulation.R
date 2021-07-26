@@ -113,9 +113,9 @@ test_that("run_simulation stops if nutr_input is not equal to max_i", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
-                                    nutr_input = 0.1,
+                                    nutr_input = c(0.1, 0.2, 0.3),
                                     movement = "rand",
-                                    max_i = max_i),
+                                    max_i = max_i, min_per_i = min_per_i),
                regexp = "'nutr_input' must have input amount for each iteration.")
 
 })

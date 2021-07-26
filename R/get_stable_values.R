@@ -30,18 +30,19 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
                               verbose = TRUE) {
 
   # create input flag
-  flag_input <- ifelse(test = parameters$nutrients_output == 0.0, yes = FALSE, no = TRUE)
+  flag_input <- ifelse(test = parameters$nutrients_output > 0.0,
+                       yes = TRUE, no = FALSE)
 
   # print message about nutrient input/output needed
   if (verbose) {
 
     if (flag_input) {
 
-     message("> Returning input value because nutrients_output > 0.")
+     message("> Returning nutrient input value because nutrients_output > 0.")
 
     } else {
 
-      message("> Returning no input value because nutrients_output = 0.")
+      message("> Returning no nutrient input value because nutrients_output = 0.")
 
     }
   }
@@ -64,15 +65,11 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
   nutrients_pool <- (bg_detritus * parameters$bg_gamma) +
     (ag_detritus * parameters$ag_gamma)
 
-  if (flag_input) {
+  # calc output amount and set as input
+  nutr_input <- nutrients_pool * parameters$nutrients_output
 
-    # calc output amount and set as input
-    nutr_input <- nutrients_pool * parameters$nutrients_output
-
-    # remove output amount from stable nutrients pool
-    nutrients_pool <- nutrients_pool - nutr_input
-
-  }
+  # remove output amount from stable nutrients pool
+  nutrients_pool <- nutrients_pool - nutr_input
 
   # calculate detritus  amount for stable nutrients minus slough amount
   detritus_pool <- ((nutrients_pool + nutr_input) / parameters$detritus_mineralization) -
@@ -81,6 +78,13 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
   # if detritus_mineralization is zero detritus pool will be Inf
   detritus_pool <- ifelse(test = is.infinite(detritus_pool),
                           yes = 0, no = detritus_pool)
+
+  # if input is 0, return NULL
+  if (!flag_input) {
+
+    nutr_input <- NULL
+
+  }
 
   # calculate amount of consumption for maximum size
   if (fishpop) {
@@ -113,12 +117,6 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
 
     # add to detritus pool
     detritus_pool <- detritus_pool + consumption_require
-
-  }
-
-  if (!flag_input) {
-
-    nutr_input <- NULL
 
   }
 
