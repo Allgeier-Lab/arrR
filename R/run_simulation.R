@@ -102,7 +102,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if each i has input
-  if (!is.null(nutr_input) && length(nutr_input) != max_i) {
+  if (!is.null(nutr_input) && length(nutr_input) != max_i && length(nutr_input) != 1) {
 
     stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
 
@@ -184,12 +184,19 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     nutr_input <- rep(x = 0.0, times = max_i)
 
     # set nutrient flag to save results later
-    nutr_input_flag <- FALSE
+    flag_nutr_input <- FALSE
 
   } else {
 
+    # repeat if only one value is present
+    if (length(nutr_input) == 1) {
+
+      nutr_input <- rep(x = nutr_input, times = max_i)
+
+    }
+
     # set nutrient flag to save results later
-    nutr_input_flag <- TRUE
+    flag_nutr_input <- TRUE
 
   }
 
@@ -310,12 +317,11 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  if (!nutr_input_flag) {
+  if (!flag_nutr_input) {
 
     nutr_input <- NA
 
   }
-
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,

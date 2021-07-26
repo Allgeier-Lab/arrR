@@ -8,7 +8,8 @@ get_stable_values(
   starting_values,
   parameters,
   fishpop = FALSE,
-  min_per_i = NULL
+  min_per_i = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ get_stable_values(
 \item{fishpop}{Logical if TRUE and estimate of the maximum consumption is added to detritus.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
+
+\item{verbose}{Logical if message should be printed.}
 }
 \value{
 list
