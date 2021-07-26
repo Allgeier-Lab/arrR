@@ -25,7 +25,7 @@
 check_parameters <- function(starting_values = NULL, parameters = NULL, verbose = TRUE) {
 
   # logical for final ok
-  final_flag <- TRUE
+  flag_final <- TRUE
 
   # specify all required starting values
   required_starting <- c("ag_biomass",
@@ -148,7 +148,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
             parameters$resp_temp_max)) {
 
       # set final flag to false
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("'resp_temp_low' or 'resp_temp_optm' is >= 'resp_temp_max'.",
               call. = FALSE)
@@ -160,7 +160,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
             c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
 
       # set final flag to false
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("Minimum biomasses are larger than maximum biomasses.",
               call. = FALSE)
@@ -171,7 +171,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     if (parameters$pop_a < 0) {
 
       # set final flag to false
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("'pop_a' must be positive number.",
               call. = FALSE)
@@ -207,7 +207,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if all fraction are between 0 and 1
     if (check_ratios) {
 
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("Some parameters that must be 0 <= x <= 1 are outside range.",
               call. = FALSE)
@@ -238,7 +238,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
             c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
 
       # set final flag to false
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("Starting biomasses are larger than maximum biomasses.", call. = FALSE)
 
@@ -249,7 +249,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
             c(parameters$bg_biomass_min, parameters$ag_biomass_min))) {
 
       # set final flag to false
-      final_flag <- FALSE
+      flag_final <- FALSE
 
       warning("Starting biomasses are smaller than minimum biomasses.",
               call. = FALSE)
@@ -297,7 +297,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     missing_starting <- paste(required_starting[check_starting], collapse = " ")
 
     # set final flag to false
-    final_flag <- FALSE
+    flag_final <- FALSE
 
     warning("Missing starting values: ", missing_starting,
             call. = FALSE)
@@ -312,7 +312,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                                 collapse = " ")
 
     # set final flag to false
-    final_flag <- FALSE
+    flag_final <- FALSE
 
     warning("Missing parameter values: ", missing_parameters,
             call. = FALSE)
@@ -320,13 +320,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose && final_flag && !is.null(parameters) || !is.null(starting_values)) {
+  if (verbose && flag_final && !is.null(parameters) || !is.null(starting_values)) {
 
     message("> All checking done!")
 
   }
 
-  else if (verbose && !final_flag) {
+  else if (verbose && !flag_final) {
 
     message("> Make sure to check critical warnings!\n")
 
