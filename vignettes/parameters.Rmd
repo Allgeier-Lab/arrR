@@ -100,7 +100,6 @@ parameter_df <- data.frame(
     # move_* 
     "move_mean",
     "move_var",
-    "move_visibility",
     "move_border",
     "move_reef",
     "move_return",
@@ -158,7 +157,6 @@ parameter_df <- data.frame(
     
     # move_* 
     "rcpp_move_rand(), rcpp_move_behav()",
-    "rcpp_move_rand()",
     "rcpp_move_rand()",
     "rcpp_move_behav()",
     "rcpp_move_behav()",
@@ -218,7 +216,6 @@ parameter_df <- data.frame(
     # move_* 
     "Mean movement distance",
     "Variance of movement distance",
-    "Distance in which individuals individuals are aware of distance to AR",
     "Distance to the AR until individuals are considered to be at the AR",
     "Movement distance directly at the AR",
     "Movement distance for returning to the AR",

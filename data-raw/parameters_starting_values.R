@@ -28,7 +28,6 @@ default_parameters <- list(
 
   move_mean = 10.0,
   move_var = 5.0,
-  move_visibility = 1.0,
   move_border = 2.0,
   move_reef = 0.5,
   move_return = 50.0,

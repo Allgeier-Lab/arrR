@@ -136,7 +136,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, coords_reef, movement, pop_reserves_thres,
-                     parameters["move_mean"], parameters["move_var"], parameters["move_visibility"],
+                     parameters["move_mean"], parameters["move_var"],
                      parameters["move_reef"], parameters["move_border"],
                      parameters["move_return"], max_dist, extent, dimensions);
 

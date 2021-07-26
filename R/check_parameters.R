@@ -65,7 +65,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
                            "move_mean",
                            "move_var",
-                           "move_visibility",
                            "move_border",
                            "move_reef",
                            "move_return",

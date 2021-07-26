@@ -11,7 +11,6 @@ rcpp_move_wrap(
   pop_reserves_thres,
   move_mean,
   move_var,
-  move_visibility,
   move_reef,
   move_border,
   move_return,
@@ -29,7 +28,7 @@ rcpp_move_wrap(
 
 \item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
-\item{move_mean, move_var, move_visibility}{Double with mean movement parameter.}
+\item{move_mean, move_var}{Double with mean movement parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef.}
 

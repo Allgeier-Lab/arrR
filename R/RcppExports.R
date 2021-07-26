@@ -315,7 +315,6 @@ rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean,
 #' @param fishpop Matrix with fishpop values.
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param move_mean,move_var Double with mean and variance movement parameter.
-#' @param move_visibility Double with "sight" distance of fish.
 #' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -339,8 +338,8 @@ rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean,
 #' @rdname rcpp_move_rand
 #'
 #' @export
-rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions))
+rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_move_wrap
@@ -352,7 +351,7 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
-#' @param move_mean,move_var,move_visibility Double with mean movement parameter.
+#' @param move_mean,move_var Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
@@ -373,8 +372,8 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @rdname rcpp_move_wrap
 #'
 #' @export
-rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_visibility, move_reef, move_border, move_return, max_dist, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_visibility, move_reef, move_border, move_return, max_dist, extent, dimensions))
+rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions))
 }
 
 #' rcpp_nutr_input
