@@ -60,9 +60,9 @@ The starting values and parameters must be imported as two separated list with a
 To check if all parameters are available, use `check_parameters`.
 
 ```{r check_parameters}
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
 check_parameters(starting_values = starting_values, parameters = parameters)
 ```

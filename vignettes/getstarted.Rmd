@@ -36,10 +36,10 @@ Please see the [Parameter](parameters.html) vignette for more information about 
 
 ```{r check_parameters}
 # get starting values
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
 # get paramters
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
 # change some starting values and parameters
 starting_values$pop_n <- 8

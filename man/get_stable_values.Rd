@@ -37,7 +37,7 @@ each  timestep. If \code{fishpop = TRUE} and estimate of detritus consumption of
 individual of maximum size is added to the detritus pool.
 }
 \examples{
-get_stable_values(starting_values = default_starting_values,
-parameters = default_parameters)
+get_stable_values(starting_values = arrR_starting_values,
+parameters = arrR_parameters)
 
 }

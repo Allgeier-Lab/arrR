@@ -1,9 +1,9 @@
 ## code to prepare `DATASET` dataset goes here
 library(arrR)
 
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
 check_parameters(starting_values = starting_values, parameters = parameters)
 

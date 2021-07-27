@@ -28,7 +28,7 @@
 #' ncol = 2, byrow = TRUE)
 #'
 #' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = default_starting_values)
+#' reefs = reefs, starting_values = arrR_starting_values)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor

@@ -7,7 +7,7 @@
 #' Citations for all parameters and starting values can be found in
 #' Esquivel et al (2021). Mechanistic support for increased primary
 #' production around artificial reefs. Manuscript in preparation.
-"default_parameters"
+"arrR_parameters"
 
 #' Default starting values
 #'
@@ -18,4 +18,4 @@
 #' Citations for all parameters and starting values can be found in
 #' Esquivel et al (2021). Mechanistic support for increased primary
 #' production around artificial reefs. Manuscript in preparation.
-"default_starting_values"
+"arrR_starting_values"

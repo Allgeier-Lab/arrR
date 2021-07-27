@@ -19,8 +19,8 @@
 #' @return list
 #'
 #' @examples
-#' get_stable_values(starting_values = default_starting_values,
-#' parameters = default_parameters)
+#' get_stable_values(starting_values = arrR_starting_values,
+#' parameters = arrR_parameters)
 #'
 #' @aliases get_stable_values
 #' @rdname get_stable_values

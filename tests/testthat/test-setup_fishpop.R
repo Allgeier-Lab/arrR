@@ -1,7 +1,7 @@
 # get parameters
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
 starting_values_null <- starting_values
 

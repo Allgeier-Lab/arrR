@@ -56,9 +56,9 @@
 #' ncol = 2, byrow = TRUE)
 #'
 #' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = default_starting_values)
+#' reefs = reefs, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
-#' starting_values = default_starting_values, parameters = default_parameters)
+#' starting_values = arrR_starting_values, parameters = arrR_parameters)
 #'
 #' run_simulation(seafloor = seafloor, fishpop = fishpop, parameters = parameters,
 #' max_i = 1000, min_per_i = 120, save_each = 10)
