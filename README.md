@@ -68,9 +68,9 @@ the actual values.
 To check if all parameters are available, use `check_parameters`.
 
 ``` r
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
 check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
@@ -155,14 +155,14 @@ result
 #> Fishpop    : 8 indiv (movement: 'attr')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 98.524, 604.46, 0, 2.979, 0
-#> Mean     : 110.261, 609.782, 0, 3.02, 0
-#> Maximum  : 193.01, 725.706, 0.011, 3.029, 0
+#> Minimum  : 98.488, 604.46, 0, 2.968, 0
+#> Mean     : 110.451, 609.929, 0, 3.014, 0
+#> Maximum  : 193.01, 728.101, 0.009, 3.026, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 18.241, 117.217, 0, 1
-#> Mean     : 23.56, 284.28, 0, 1
-#> Maximum  : 28.304, 469.984, 0, 1
+#> Minimum  : 18.59, 124.446, 0, 1
+#> Mean     : 25.285, 361.808, 0, 1
+#> Maximum  : 31.005, 626.888, 0, 1
 
 # show names of all elements of result object
 names(result)
