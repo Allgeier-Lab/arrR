@@ -101,7 +101,7 @@ parameters$seagrass_thres <- -1/4
 To run a simulation, simply provide the previously created seafloor and population as well as all parameters to the `run_simulation` function. Additionally, you need to specify the number of timesteps that are simulated. Check out `?run_simulation` to see further possible specifications of the model run.
 
 ```{r run_sim, echo = FALSE}
-result <- arrR:::result
+result <- arrR:::result_readme
 ```
 
 ```{r run_sim_dummy, eval = FALSE}

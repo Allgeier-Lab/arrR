@@ -46,9 +46,9 @@ save_each <- (24 / (min_per_i / 60)) * days
 max_i %% save_each
 
 # run model
-result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                         parameters = parameters, movement = "attr",
-                         max_i = max_i, min_per_i = min_per_i,
-                         seagrass_each = seagrass_each, save_each = save_each)
+result_readme <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                parameters = parameters, movement = "attr",
+                                max_i = max_i, min_per_i = min_per_i,
+                                seagrass_each = seagrass_each, save_each = save_each)
 
-usethis::use_data(result, internal = TRUE, overwrite = TRUE)
+usethis::use_data(result_readme, internal = TRUE, overwrite = TRUE)

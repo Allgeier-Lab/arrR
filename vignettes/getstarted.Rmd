@@ -77,7 +77,7 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
 The `run_simulation` functions starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations, called timesteps here).
 
 ```{r run_sim, echo = FALSE}
-result <- arrR:::result
+result <- arrR:::result_readme
 ```
 
 ```{r run_sim_dummy, eval = FALSE}
