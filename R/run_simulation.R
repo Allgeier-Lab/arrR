@@ -212,8 +212,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   cells_reef <- which(seafloor_values[, 16] == 1)
 
   # get cell id of reef cells and coordinates of reef cells
-  coords_reef <- cbind(id = cells_reef,
-                       seafloor_values[cells_reef, c(1, 2)])
+  coords_reef <- matrix(data = c(cells_reef, seafloor_values[cells_reef, 1:2]),
+                        ncol = 3)
 
   # get extent of environment
   extent <- as.vector(raster::extent(seafloor))

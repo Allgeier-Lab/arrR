@@ -31,7 +31,7 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
   double reef_dist_temp = R_PosInf;
 
   // init id of closest reef cell
-  int reef_dist_id = 0;
+  int reef_dist_id = NA_REAL;
 
   // calculate distance between current coords and closest reef cell
   for (int i = 0; i < coords_reef.nrow(); i++) {
