@@ -93,16 +93,16 @@ starting_values$pop_n <- 4
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
                       ncol = 2, byrow = TRUE)
 
-input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, 
+input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1, 
                                  reefs = reef_matrix, 
                                  starting_values = starting_values)
-#> > ...Creating seafloor with extent(50, 50)...
+#> > ...Creating seafloor with 100 rows x 100 cols...
 #> > ...Creating 5 artifical reef cells...
 
 input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
                                starting_values = starting_values, 
                                parameters = parameters)
-#> > ...Creating 4 individuals within extent(-25, 25, -25, 25)...
+#> > ...Creating 4 individuals within extent(-50, 50, -50, 50)...
 ```
 
 If needed, you can always change parameter or starting values.
@@ -151,25 +151,25 @@ results very easily.
 result
 #> Total time : 43800 iterations (3650 days) [Burn-in: 0 iter.]
 #> Saved each : 4380 iterations (365 days)
-#> Seafloor   : extent(-50, 50, -50, 50), 5 reef cells
+#> Seafloor   : 100 rows x 100 cols; 5 reef cells
 #> Fishpop    : 8 indiv (movement: 'attr')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 98.488, 604.46, 0, 2.968, 0
-#> Mean     : 110.451, 609.929, 0, 3.014, 0
-#> Maximum  : 193.01, 728.101, 0.009, 3.026, 0
+#> Minimum  : 98.505, 604.46, 0, 2.975, 0
+#> Mean     : 110.279, 609.797, 0, 3.018, 0
+#> Maximum  : 193.01, 725.739, 0.009, 3.03, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 18.59, 124.446, 0, 1
-#> Mean     : 25.285, 361.808, 0, 1
-#> Maximum  : 31.005, 626.888, 0, 1
+#> Minimum  : 19.845, 153, 0, 1
+#> Mean     : 25.055, 328.78, 0, 1
+#> Maximum  : 28.103, 459.518, 0, 1
 
 # show names of all elements of result object
 names(result)
 #>  [1] "seafloor"        "fishpop"         "movement"        "starting_values"
-#>  [5] "parameters"      "nutr_input"      "max_i"           "min_per_i"      
-#>  [9] "burn_in"         "save_each"       "seagrass_each"   "extent"         
-#> [13] "grain"           "coords_reef"
+#>  [5] "parameters"      "nutr_input"      "coords_reef"     "extent"         
+#>  [9] "grain"           "dimensions"      "max_i"           "min_per_i"      
+#> [13] "burn_in"         "seagrass_each"   "save_each"
 ```
 
 To plot the results, pass the resulting object to the `plot` function.
