@@ -78,7 +78,7 @@ starting_values$pop_n <- 4
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
                       ncol = 2, byrow = TRUE)
 
-input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, 
+input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1, 
                                  reefs = reef_matrix, 
                                  starting_values = starting_values)
 

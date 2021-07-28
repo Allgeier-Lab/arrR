@@ -12,10 +12,8 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # create input seafloor
-input_seafloor <- arrR::setup_seafloor(extent = c(50, 50), grain =  c(1, 1),
-                                       reefs = reef_matrix,
-                                       starting_values = starting_values,
-                                       random = 0.0)
+input_seafloor <- arrR::setup_seafloor(dimensions = c(50, 50), grain = c(1, 1),
+                                       reefs = reef_matrix, starting_values = starting_values)
 
 input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
                                      starting_values = starting_values,
@@ -35,6 +33,9 @@ input_fishpop_null <- arrR::setup_fishpop(seafloor = input_seafloor,
 test_that("setup_fishpop creates data.frame", {
 
   expect_is(object = input_fishpop, class = "data.frame")
+
+  expect_is(object = input_fishpop_log, class = "data.frame")
+
 
 })
 

@@ -55,7 +55,7 @@
 #' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
 #' reefs = reefs, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
 #' starting_values = arrR_starting_values, parameters = arrR_parameters)
@@ -244,7 +244,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # print some basic information about model run
   if (verbose) {
 
-    message("> Seafloor with ", raster::extent(extent), "; ", nrow(coords_reef), " reef cells.")
+    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cells.")
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
@@ -326,10 +326,10 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
                  starting_values = starting_values, parameters = parameters, nutr_input = nutr_input,
+                 coords_reef = coords_reef, extent = raster::extent(extent),
+                 grain = raster::res(seafloor), dimensions = dimensions,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
-                 save_each = save_each, seagrass_each = seagrass_each,
-                 extent = raster::extent(extent), grain = raster::res(seafloor),
-                 coords_reef = coords_reef)
+                 seagrass_each = seagrass_each, save_each = save_each)
 
   # set class of result
   class(result) <- "mdl_rn"

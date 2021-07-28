@@ -33,15 +33,12 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
 
   }
 
-  # get extent and reef coords
-  extent <- mdl_rn$extent
-
   reefs <- mdl_rn$coords_reef
 
   # print progress
   if (verbose) {
 
-    message("> ...Creating seafloor with extent(", extent[1], ", ", extent[2], ")...")
+    message("> ...Creating seafloor with ", mdl_rn$dimensions[1], " rows x ", mdl_rn$dimensions[2], " cols...")
 
     if (!is.null(reefs)) {
 

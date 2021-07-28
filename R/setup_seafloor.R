@@ -3,7 +3,7 @@
 #' @description
 #' Setup seafloor for model run.
 #'
-#' @param extent Vector with number of rows and columns (spatial extent).
+#' @param dimensions Vector with number of rows and columns (spatial dimensions).
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
 #' @param reefs 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
@@ -27,30 +27,41 @@
 #' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
 #' reefs = reefs, starting_values = arrR_starting_values)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random = 0,
+setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress
   if (verbose) {
 
-    message("> ...Creating seafloor with extent(", extent[1], ", ", extent[2], ")...")
+    message("> ...Creating seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols...")
+
+  }
+
+  # check length of grain argument
+  if (length(grain) == 1) {
+
+    grain <- rep(x = grain, times = 2)
+
+  } else if (length(grain) > 2) {
+
+    stop("Please provide 'grain' argument with either one or two elements.", call. = FALSE)
 
   }
 
   # calculate extent of environment with the center being (0,0)
-  extent_x <- extent[1] / 2 * c(-1, 1)
+  extent_x <- dimensions[1] / 2 * c(-1, 1)
 
-  extent_y <- extent[2] / 2 * c(-1, 1)
+  extent_y <- dimensions[2] / 2 * c(-1, 1)
 
   # setup template landscape
-  seafloor <- raster::raster(nrows = extent[1], ncol = extent[2], res = grain,
+  seafloor <- raster::raster(nrows = dimensions[1], ncol = dimensions[2], res = grain,
                              xmn = extent_x[1], xmx = extent_x[2],
                              ymn = extent_y[1], ymx = extent_y[2],
                              vals = NA, crs = NA, ...)
@@ -89,7 +100,7 @@ setup_seafloor <- function(extent, grain, reefs = NULL, starting_values, random 
     }
 
     # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    seafloor <- setup_reefs(object = seafloor, xy = reefs, extent = extent)
+    seafloor <- setup_reefs(object = seafloor, xy = reefs, dimensions = dimensions)
 
   # no AR coords provided
   } else {

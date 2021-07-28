@@ -87,7 +87,7 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
   # print result
   cat(paste0("Total time : ", i, " iterations (", total_time, " days) [Burn-in: ", x$burn_in, " iter.]\n",
              "Saved each : ", x$save_each, " iterations (", save_time, " days)\n",
-             "Seafloor   : ", x$extent, ", ", nrow(x$coords_reef), " reef cells\n",
+             "Seafloor   : ", x$dimensions[1], " rows x " , x$dimensions[2],  " cols; ", nrow(x$coords_reef), " reef cells\n",
              "Fishpop    : ", x$starting_values$pop_n, " indiv (movement: '", x$movement,"')\n",
              "\n",
              "Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)\n",

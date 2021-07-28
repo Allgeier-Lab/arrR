@@ -5,7 +5,7 @@
 #'
 #' @param object Raster* object
 #' @param xy 2-Column matrix with coordinates of artificial reefs
-#' @param extent Vector with number of rows and columns (spatial extent).
+#' @param dimensions Vector with number of rows and columns (spatial dimensions).
 #'
 #' @details
 #' Internal function to setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
@@ -17,7 +17,7 @@
 #' @rdname setup_reefs
 #'
 #' @export
-setup_reefs <- function(object, xy, extent) {
+setup_reefs <- function(object, xy, dimensions) {
 
   # get cell ids of provided coordinates
   cell_ids <- raster::cellFromXY(object = object, xy = xy)

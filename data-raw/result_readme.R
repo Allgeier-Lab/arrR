@@ -21,7 +21,7 @@ starting_values$nutrients_pool <- stable_values$nutrients_pool
 
 starting_values$detritus_pool <- stable_values$detritus_pool
 
-input_seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
+input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = c(1, 1),
                                  reefs = reef_matrix,
                                  starting_values = starting_values)
 
