@@ -55,10 +55,10 @@
 #' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = default_starting_values)
+#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+#' reefs = reefs, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
-#' starting_values = default_starting_values, parameters = default_parameters)
+#' starting_values = arrR_starting_values, parameters = arrR_parameters)
 #'
 #' run_simulation(seafloor = seafloor, fishpop = fishpop, parameters = parameters,
 #' max_i = 1000, min_per_i = 120, save_each = 10)
@@ -72,6 +72,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            nutr_input = NULL, verbose = TRUE) {
+
+  # check input and warnings #
 
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
@@ -100,7 +102,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if each i has input
-  if (!is.null(nutr_input) && length(nutr_input) != max_i) {
+  if (!is.null(nutr_input) && length(nutr_input) != max_i && length(nutr_input) != 1) {
 
     stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
 
@@ -120,6 +122,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
          call. = FALSE)
 
   }
+
+  # setup fishpop #
 
   # get time at beginning for final print
   if (verbose) {
@@ -150,7 +154,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                        yes = 1.0, no = parameters$move_var)
 
     max_dist <- vapply(X = 1:1000000, FUN = function(i) {
-      rcpp_rlognorm(mean = mean_temp, sd = sqrt(var_temp), min = 0, max = Inf)},
+      rcpp_rlognorm(mean = mean_temp, sd = sqrt(var_temp), min = 0.0, max = Inf)},
       FUN.VALUE = numeric(1))
 
     max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
@@ -168,29 +172,48 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     }
   }
 
+  fishpop_values <- as.matrix(fishpop)
+
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  # setup nutrient input #
+
   # create vector for nutr_input
   if (is.null(nutr_input)) {
 
     nutr_input <- rep(x = 0.0, times = max_i)
 
+    # set nutrient flag to save results later
+    flag_nutr_input <- FALSE
+
+  } else {
+
+    # repeat if only one value is present
+    if (length(nutr_input) == 1) {
+
+      nutr_input <- rep(x = nutr_input, times = max_i)
+
+    }
+
+    # set nutrient flag to save results later
+    flag_nutr_input <- TRUE
+
   }
+
+  # setup seafloor #
 
   # convert seafloor and fishpop as matrix
   seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
 
-  fishpop_values <- as.matrix(fishpop)
-
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # get mean starting values
-  starting_values <- get_starting_values(seafloor_values = seafloor_values,
-                                         fishpop_values = fishpop_values)
-
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
+
+  # get cell id of reef cells
+  cells_reef <- which(seafloor_values[, 16] == 1)
+
+  # get cell id of reef cells and coordinates of reef cells
+  coords_reef <- matrix(data = c(cells_reef, seafloor_values[cells_reef, 1:2]),
+                        ncol = 3)
 
   # get extent of environment
   extent <- as.vector(raster::extent(seafloor))
@@ -198,12 +221,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # get dimensions of environment (nrow, ncol)
   dimensions <- dim(seafloor)[1:2]
 
-  # get cell id of reef cells
-  cells_reef <- which(seafloor_values[, 16] == 1)
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
 
-  # get cell id of reef cells and coordinates of reef cells
-  coords_reef <- cbind(id = cells_reef,
-                       seafloor_values[cells_reef, c(1, 2)])
+  # various #
+
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fishpop_values = fishpop_values)
 
   # check if no reef is present but movement not rand
   if (length(cells_reef) == 0 && movement %in% c("attr", "behav")) {
@@ -214,12 +239,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  # print model run characteristics #
+
   # print some basic information about model run
   if (verbose) {
 
-    message("> Seafloor with ", raster::extent(extent), "; ", nrow(coords_reef), " reef cells.")
+    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cells.")
 
-    message("> Population with ", starting_values$pop_n, " individuals.")
+    message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
     message("> Simulating ", max_i, " iterations [Burn-in: ", burn_in, " iter.].")
 
@@ -290,14 +317,19 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
+  if (!flag_nutr_input) {
+
+    nutr_input <- NA
+
+  }
+
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
-                 starting_values = starting_values, parameters = parameters,
-                 nutr_input = ifelse(test = is.null(nutr_input), yes = NA, no = nutr_input),
+                 starting_values = starting_values, parameters = parameters, nutr_input = nutr_input,
+                 coords_reef = coords_reef, extent = raster::extent(extent),
+                 grain = raster::res(seafloor), dimensions = dimensions,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
-                 save_each = save_each, seagrass_each = seagrass_each,
-                 extent = raster::extent(extent), grain = raster::res(seafloor),
-                 coords_reef = coords_reef)
+                 seagrass_each = seagrass_each, save_each = save_each)
 
   # set class of result
   class(result) <- "mdl_rn"

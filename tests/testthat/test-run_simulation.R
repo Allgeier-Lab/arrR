@@ -1,27 +1,19 @@
 # get parameters
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # create input seafloor
-input_seafloor <- arrR::setup_seafloor(extent = c(50, 50), grain =  c(1, 1),
-                                       reefs = reef_matrix,
-                                       starting_values = starting_values,
-                                       random = 0.0)
+input_seafloor <- arrR::setup_seafloor(dimensions = c(50, 50), grain = c(1, 1),
+                                       reefs = reef_matrix, starting_values = starting_values)
 
 input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
                                      starting_values = starting_values,
-                                     parameters = parameters,
-                                     use_log = FALSE)
-
-input_fishpop_log <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                         starting_values = starting_values,
-                                         parameters = parameters,
-                                         use_log = TRUE)
+                                     parameters = parameters)
 
 max_i <- 100
 
@@ -29,10 +21,8 @@ min_per_i <- 120
 
 burn_in <- 5
 
-result_rand <- arrR::run_simulation(seafloor = input_seafloor,
-                                    fishpop  = input_fishpop,
-                                    parameters = parameters,
-                                    movement = "rand",
+result_rand <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
+                                    parameters = parameters, movement = "rand",
                                     max_i = max_i, min_per_i = min_per_i,
                                     burn_in = burn_in)
 
@@ -65,6 +55,8 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand$min_per_i, expected = min_per_i)
 
   expect_equal(object = result_rand$extent, expected = raster::extent(input_seafloor))
+
+  expect_equal(object = result_rand$dimensions, expected = dim(input_seafloor)[1:2])
 
   expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
 
@@ -113,9 +105,9 @@ test_that("run_simulation stops if nutr_input is not equal to max_i", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
-                                    nutr_input = 0.1,
+                                    nutr_input = c(0.1, 0.2, 0.3),
                                     movement = "rand",
-                                    max_i = max_i),
+                                    max_i = max_i, min_per_i = min_per_i),
                regexp = "'nutr_input' must have input amount for each iteration.")
 
 })

@@ -1,27 +1,19 @@
 # get parameters
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # create input seafloor
-input_seafloor <- arrR::setup_seafloor(extent = c(50, 50), grain =  c(1, 1),
-                                       reefs = reef_matrix,
-                                       starting_values = starting_values,
-                                       random = 0.0)
+input_seafloor <- arrR::setup_seafloor(dimensions = c(50, 50), grain = c(1, 1),
+                                       reefs = reef_matrix, starting_values = starting_values)
 
 input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
                                      starting_values = starting_values,
-                                     parameters = parameters,
-                                     use_log = FALSE)
-
-input_fishpop_log <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                         starting_values = starting_values,
-                                         parameters = parameters,
-                                         use_log = TRUE)
+                                     parameters = parameters)
 
 max_i <- 100
 

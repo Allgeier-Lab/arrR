@@ -1,4 +1,9 @@
+#include <Rcpp.h>
 #include "rcpp_mineralization.h"
+
+using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_mineralization
 //'

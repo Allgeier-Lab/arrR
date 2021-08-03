@@ -1,9 +1,11 @@
+#include <Rcpp.h>
 #include "rcpp_move_behav.h"
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
-#include "rcpp_translate_torus.h"
 #include "rcpp_update_coords.h"
+
+using namespace Rcpp;
 
 //' rcpp_move_behav
 //'
@@ -40,7 +42,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
                      Rcpp::NumericVector pop_reserves_thres,
                      double move_mean, double move_var,
                      double move_reef, double move_border, double move_return, double max_dist,
-                     Rcpp::NumericVector extent, Rcpp::NumericVector dimensions) {
+                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
@@ -56,7 +58,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
                                                            coords_reef);
 
       // behaviour 1: fish already at reef so they stay there
-      if (closest_reef(1) <= move_border) {
+      if (closest_reef[1] <= move_border) {
 
         //Behavior column = 1
         fishpop(i, 11) = 1.0;
@@ -71,14 +73,14 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
         fishpop(i, 11) = 2.0;
 
         double theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
-                                        coords_reef(closest_reef(0), 0),
-                                        coords_reef(closest_reef(0), 1));
+                                        coords_reef(closest_reef[0], 0),
+                                        coords_reef(closest_reef[0], 1));
 
         // update heading
         fishpop(i, 4) = theta;
 
         // check if reef is further away then move return distance
-        if (move_return <= closest_reef(1)) {
+        if (move_return <= closest_reef[1]) {
 
           // sample move distance from lognorm of move_return (swim faster/move further)
           move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
@@ -87,7 +89,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_ree
         } else {
 
           // sample move distance from around distance to reef
-          move_dist = rcpp_rlognorm(closest_reef(1), 1.0, 0.0, max_dist);
+          move_dist = rcpp_rlognorm(closest_reef[1], 1.0, 0.0, max_dist);
 
         }
       }

@@ -19,8 +19,8 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 <img src="man/figures/logo.png" align="right" width="150" />
 
 The goal of *arrR* is to simulate seagrass growth around artificial
-reefs. For a detailed model description, please see the corresponding
-publications.
+reefs (ARs). For a detailed model description, please see the
+corresponding publications.
 
 ### Citation
 
@@ -46,7 +46,8 @@ the argument `ref = "development"` within the function.
 remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
-<!-- Add CRAN link if applicable -->
+For a more detailed guide how to use *arrR*, please see the [Get
+started](getstarted.html) vignette.
 
 ## Example
 
@@ -67,9 +68,9 @@ the actual values.
 To check if all parameters are available, use `check_parameters`.
 
 ``` r
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
 check_parameters(starting_values = starting_values, parameters = parameters)
 #> > ...Checking starting values...
@@ -79,24 +80,29 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 ```
 
 To setup the simulation seafloor and individuals, simply run
-`setup_seafloor` and `setup_population`. If you want to add artificial
-reefs to the seafloor, provide a `matrix` with x,y coordinates of all AR
-cells.
+`setup_seafloor` and `setup_population`. If you want to add ARs to the
+seafloor, provide a `matrix` with x,y coordinates. If you want, you can
+set/change all starting values before this
+
+``` r
+# set population size to four individuals
+starting_values$pop_n <- 4
+```
 
 ``` r
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
                       ncol = 2, byrow = TRUE)
 
-input_seafloor <- setup_seafloor(extent = c(50, 50), grain = 1, 
+input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1, 
                                  reefs = reef_matrix, 
                                  starting_values = starting_values)
-#> > ...Creating seafloor with extent(50, 50)...
+#> > ...Creating seafloor with 100 rows x 100 cols...
 #> > ...Creating 5 artifical reef cells...
 
 input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
                                starting_values = starting_values, 
                                parameters = parameters)
-#> > ...Creating 8 individuals within extent(-25, 25, -25, 25)...
+#> > ...Creating 4 individuals within extent(-50, 50, -50, 50)...
 ```
 
 If needed, you can always change parameter or starting values.
@@ -104,6 +110,10 @@ If needed, you can always change parameter or starting values.
 ``` r
 # set maximum reserves to 10% of body mass
 parameters$pop_reserves_max <- 0.1
+
+# for more inforamtion about seagrass_thres values see ?rcpp_allocation_ratio and 
+# ?plot_allocation
+parameters$seagrass_thres <- -1/4
 ```
 
 To run a simulation, simply provide the previously created seafloor and
@@ -119,16 +129,18 @@ min_per_i <- 120
 years <- 10
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
-# save results only every 25 days
-days <- 25
+# save results only every 365 days
+days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
-result <- run_simulation(seafloor = input_seafloor, 
-                         fishpop = input_fishpop,
-                         parameters = parameters, 
-                         movement = "rand",
+# run seagrass once each day
+days <- 1
+seagrass_each <- (24 / (min_per_i / 60)) * days
+
+result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                         parameters = parameters, movement = "rand",
                          max_i = max_i, min_per_i = min_per_i, 
-                         save_each = save_each)
+                         seagrass_each = seagrass_each, save_each = save_each)
 ```
 
 To get some basic summary statistics, simply print the object. Keep in
@@ -138,26 +150,26 @@ results very easily.
 ``` r
 result
 #> Total time : 43800 iterations (3650 days) [Burn-in: 0 iter.]
-#> Saved each : 300 iterations (25 days)
-#> Seafloor   : extent(-25, 25, -25, 25), 5 reef cells
+#> Saved each : 4380 iterations (365 days)
+#> Seafloor   : 100 rows x 100 cols; 5 reef cells
 #> Fishpop    : 8 indiv (movement: 'attr')
 #> 
 #> Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)
-#> Minimum  : 34.086, 523.278, 0, 1.71, 0
-#> Mean     : 38.667, 559.298, 0, 1.738, 0
-#> Maximum  : 156.828, 791.459, 0.007, 1.743, 0
+#> Minimum  : 98.505, 604.46, 0, 2.975, 0
+#> Mean     : 110.279, 609.797, 0, 3.018, 0
+#> Maximum  : 193.01, 725.739, 0.009, 3.03, 0
 #> 
 #> Fishpop  : (length, weight, died_consumption, died_background)
-#> Minimum  : 20.431, 167.733, 0, 1
-#> Mean     : 23.232, 260.29, 0, 1
-#> Maximum  : 27.668, 437.401, 0, 1
+#> Minimum  : 19.845, 153, 0, 1
+#> Mean     : 25.055, 328.78, 0, 1
+#> Maximum  : 28.103, 459.518, 0, 1
 
 # show names of all elements of result object
 names(result)
 #>  [1] "seafloor"        "fishpop"         "movement"        "starting_values"
-#>  [5] "parameters"      "nutr_input"      "max_i"           "min_per_i"      
-#>  [9] "burn_in"         "save_each"       "seagrass_each"   "extent"         
-#> [13] "grain"           "coords_reef"
+#>  [5] "parameters"      "nutr_input"      "coords_reef"     "extent"         
+#>  [9] "grain"           "dimensions"      "max_i"           "min_per_i"      
+#> [13] "burn_in"         "seagrass_each"   "save_each"
 ```
 
 To plot the results, pass the resulting object to the `plot` function.

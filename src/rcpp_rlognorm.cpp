@@ -1,5 +1,10 @@
+// [[Rcpp::depends(RcppDist)]]
+
+#include <Rcpp.h>
+#include <truncnorm.h>
 #include "rcpp_rlognorm.h"
-#include "truncnorm.h"
+
+using namespace Rcpp;
 
 //' rcpp_rlognorm
 //'
@@ -54,7 +59,7 @@ foo <- function(n, m, s) {
 }
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rlognorm(mean = mean, sd = sd,
-                                                        min = 0, max = max))
+                                                        min = 0.0, max = max))
 
 rand_b <- purrr::map_dbl(1:n, function(i) foo(n = 1, m = mean, s = sd))
 
@@ -71,7 +76,7 @@ abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
 
 bench::mark(
-  rcpp_rlognorm(mean = mean, sd = sd, min = -Inf, max = Inf),
+  rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf),
   foo(n = 1, m = mean, s = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )

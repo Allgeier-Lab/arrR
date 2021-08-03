@@ -1,6 +1,11 @@
+#include <Rcpp.h>
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_allocation_ratio.h"
 #include "rcpp_nutr_uptake.h"
+
+using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_seagrass_growth
 //'

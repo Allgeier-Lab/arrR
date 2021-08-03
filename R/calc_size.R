@@ -24,10 +24,10 @@
 #' @return list
 #'
 #' @examples
-#' calc_size(pop_n = 8, pop_mean_size = default_starting_values$pop_mean_size,
-#' pop_var_size = default_starting_values$pop_var_size,
-#' pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
-#' pop_b = default_parameters$pop_b, use_log = TRUE)
+#' calc_size(pop_n = 8, pop_mean_size = arrR_starting_values$pop_mean_size,
+#' pop_var_size = arrR_starting_values$pop_var_size,
+#' pop_linf = arrR_parameters$pop_linf, pop_a = arrR_parameters$pop_a,
+#' pop_b = arrR_parameters$pop_b, use_log = TRUE)
 #'
 #' @aliases calc_size
 #' @rdname calc_size
@@ -40,9 +40,8 @@ calc_size <- function(pop_n, pop_mean_size, pop_var_size,
   if (use_log) {
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
-      rcpp_rlognorm(mean = pop_mean_size,
-                    sd = sqrt(pop_var_size),
-                    min = 0, max = Inf)}, FUN.VALUE = numeric(1))
+      rcpp_rlognorm(mean = pop_mean_size, sd = sqrt(pop_var_size),
+                    min = 0.0, max = Inf)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size
   } else {

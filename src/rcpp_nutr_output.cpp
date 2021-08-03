@@ -1,4 +1,9 @@
+#include <Rcpp.h>
 #include "rcpp_nutr_output.h"
+
+using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_nutr_output
 //'
@@ -28,8 +33,11 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output) {
   // loop through all raster cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
+    // calculate output amount
+    double output = seafloor(i, 4) * nutrients_output;
+
     // add nutrient input of timestep
-    seafloor(i, 4) -= seafloor(i, 4) * nutrients_output;
+    seafloor(i, 4) -= output;
 
   }
 }

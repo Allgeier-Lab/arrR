@@ -5,7 +5,7 @@
 \title{setup_seafloor}
 \usage{
 setup_seafloor(
-  extent,
+  dimensions,
   grain,
   reefs = NULL,
   starting_values,
@@ -15,7 +15,7 @@ setup_seafloor(
 )
 }
 \arguments{
-\item{extent}{Vector with number of rows and columns (spatial extent).}
+\item{dimensions}{Vector with number of rows and columns (spatial dimensions).}
 
 \item{grain}{Vector with size of cells in x- and y-direction (spatial grain).}
 
@@ -49,7 +49,7 @@ as \code{x * (1 +- random)} as minimum and maximum values, respectively.
 reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-reefs = reefs, starting_values = default_starting_values)
+seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+reefs = reefs, starting_values = arrR_starting_values)
 
 }

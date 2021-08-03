@@ -1,16 +1,22 @@
+#include <Rcpp.h>
+#include <random>
+#include <chrono>
 #include "rcpp_shuffle.h"
-#include "random"
-#include "chrono"
+
+using namespace Rcpp;
 
 //' rcpp_shuffle
 //'
 //' @description
 //' Rcpp shuffle vector.
 //'
-//' @param min,max Integer with minum and maximum value of vector.
+//' @param min,max Integer with minimum and maximum value of vector.
 //'
 //' @details
 //' Creates vector with IDs from \code{min} to \code{max}, but in random order.
+//'
+//' @references
+//' How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
 //'
 //' @return vector
 //'
@@ -22,10 +28,9 @@
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 
   // create sequance from min to max
-  IntegerVector x = seq(min, max);
+  Rcpp::IntegerVector x = Rcpp::seq(min, max);
 
   // obtain a time-based seed
-  // http://www.cplusplus.com/reference/algorithm/shuffle/
   int seed = std::chrono::system_clock::now().time_since_epoch().count();
 
   // shuffle vector; std::default_random_engine(seed)

@@ -1,25 +1,24 @@
 # get parameters
-parameters <- arrR::default_parameters
+parameters <- arrR::arrR_parameters
 
-starting_values <- arrR::default_starting_values
+starting_values <- arrR::arrR_starting_values
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # set extent
-extent <- c(50, 50)
+dimensions <- c(50, 50)
 
 # set grain
 grain <- c(1, 1)
 
 # create input seafloor
-input_seafloor <- arrR::setup_seafloor(extent = extent, grain = grain,
+input_seafloor <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                        reefs = reef_matrix,
-                                       starting_values = starting_values,
-                                       random = 0.0)
+                                       starting_values = starting_values)
 
-input_seafloor_rnd <- arrR::setup_seafloor(extent = extent, grain = grain,
+input_seafloor_rnd <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                            reefs = reef_matrix,
                                            starting_values = starting_values,
                                            random = 0.25)
@@ -33,7 +32,7 @@ test_that("setup_seafloor creates RasterBrick", {
 test_that("setup_seafloor has correct dimensions", {
 
   expect_equal(object = raster::ncell(input_seafloor),
-               expected = extent[[1]] * extent[[2]])
+               expected = dimensions[[1]] * dimensions[[2]])
 
   expect_equal(object = raster::res(input_seafloor),
                expected = grain)
@@ -79,13 +78,12 @@ test_that("setup_seafloor adds random noise", {
 
 test_that("setup_seafloor returns error", {
 
-  expect_error(object = arrR::setup_seafloor(extent = extent, grain = grain,
-                                             reefs = 5,
-                                             starting_values = starting_values,
+  expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
+                                             reefs = 5, starting_values = starting_values,
                                              random = 0.25),
                regexp = "Please provide a 2-column with x,y coordinates of reef cells.")
 
-  expect_error(object = arrR::setup_seafloor(extent = extent, grain = grain,
+  expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                              reefs = cbind(reef_matrix, 5),
                                              starting_values = starting_values,
                                              random = 0.25),

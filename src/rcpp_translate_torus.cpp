@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_translate_torus.h"
+
+using namespace Rcpp;
 
 //' rcpp_translate_torus
 //'
@@ -26,43 +29,43 @@ Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector
   Rcpp::NumericVector coords (2, 0.0);
 
   // check if x needs to be changed
-  if(x < extent(0) || x > extent(1)) {
+  if (x < extent[0] || x > extent[1]) {
 
     // translate x coords left side
-    while (x < extent(0)) {
+    while (x < extent[0]) {
 
-      x = extent(1) - (extent(0) - x);
+      x = extent[1] - (extent[0] - x);
 
     }
 
     // translate x coord right side
-    while (x > extent(1)) {
+    while (x > extent[1]) {
 
-      x = extent(0) + (x - extent(1));
+      x = extent[0] + (x - extent[1]);
 
     }
   }
 
   // check if y needs to be changed
-  if (y < extent(2) || y > extent(3)) {
+  if (y < extent[2] || y > extent[3]) {
 
     // translate y coord bottom
-    while (y < extent(2)) {
+    while (y < extent[2]) {
 
-      y = extent(3) - (extent(2) - y);
+      y = extent[3] - (extent[2] - y);
 
     }
 
     // translate y coord top
-    while (y > extent(3)) {
+    while (y > extent[3]) {
 
-      y = extent(2) + (y - extent(3));
+      y = extent[2] + (y - extent[3]);
 
     }
   }
 
   // save coords
-  coords(0) = x; coords(1) = y;
+  coords[0] = x; coords[1] = y;
 
   return(coords);
 }

@@ -37,11 +37,13 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' Rcpp get cell from xy
 #'
 #' @param x,y Numeric with x,y coordinates.
-#' @param dimensions Vector with number or rows and cols
 #' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+#' @param dimensions Vector with number or rows and cols
+#' @param rcpp Logical if TRUE Rcpp index is returned.
 #'
 #' @details
 #' Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
+#' If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
 #'
 #' @references
 #' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
@@ -53,8 +55,8 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' @rdname rcpp_cell_from_xy
 #'
 #' @export
-rcpp_cell_from_xy <- function(x, y, dimensions, extent) {
-    .Call(`_arrR_rcpp_cell_from_xy`, x, y, dimensions, extent)
+rcpp_cell_from_xy <- function(x, y, extent, dimensions, rcpp) {
+    .Call(`_arrR_rcpp_cell_from_xy`, x, y, extent, dimensions, rcpp)
 }
 
 #' rcpp_closest_reef
@@ -313,7 +315,6 @@ rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean,
 #' @param fishpop Matrix with fishpop values.
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param move_mean,move_var Double with mean and variance movement parameter.
-#' @param move_visibility Double with "sight" distance of fish.
 #' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -337,8 +338,8 @@ rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean,
 #' @rdname rcpp_move_rand
 #'
 #' @export
-rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, move_visibility, max_dist, reef_attraction, extent, dimensions))
+rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions))
 }
 
 #' rcpp_move_wrap
@@ -350,7 +351,7 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
-#' @param move_mean,move_var,move_visibility Double with mean movement parameter.
+#' @param move_mean,move_var Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
@@ -371,8 +372,8 @@ rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, move_visib
 #' @rdname rcpp_move_wrap
 #'
 #' @export
-rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_visibility, move_reef, move_border, move_return, max_dist, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_visibility, move_reef, move_border, move_return, max_dist, extent, dimensions))
+rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, coords_reef, movement, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions))
 }
 
 #' rcpp_nutr_input
@@ -603,10 +604,13 @@ rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamm
 #' @description
 #' Rcpp shuffle vector.
 #'
-#' @param min,max Integer with minum and maximum value of vector.
+#' @param min,max Integer with minimum and maximum value of vector.
 #'
 #' @details
 #' Creates vector with IDs from \code{min} to \code{max}, but in random order.
+#'
+#' @references
+#' How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
 #'
 #' @return vector
 #'
@@ -708,3 +712,7 @@ rcpp_update_coords <- function(fishpop, i, move_dist, max_dist, extent) {
     invisible(.Call(`_arrR_rcpp_update_coords`, fishpop, i, move_dist, max_dist, extent))
 }
 
+# Register entry points for exported C++ functions
+methods::setLoadAction(function(ns) {
+    .Call('_arrR_RcppExport_registerCCallable', PACKAGE = 'arrR')
+})

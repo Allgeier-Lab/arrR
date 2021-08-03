@@ -7,6 +7,7 @@
 #' @param parameters List with all model parameters.
 #' @param fishpop Logical if TRUE and estimate of the maximum consumption is added to detritus.
 #' @param min_per_i Integer to specify minutes per i.
+#' @param verbose Logical if message should be printed.
 #'
 #' @details
 #' Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool
@@ -18,14 +19,33 @@
 #' @return list
 #'
 #' @examples
-#' get_stable_values(starting_values = default_starting_values,
-#' parameters = default_parameters)
+#' get_stable_values(starting_values = arrR_starting_values,
+#' parameters = arrR_parameters)
 #'
 #' @aliases get_stable_values
 #' @rdname get_stable_values
 #'
 #' @export
-get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_per_i = NULL) {
+get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_per_i = NULL,
+                              verbose = TRUE) {
+
+  # create input flag
+  flag_input <- ifelse(test = parameters$nutrients_output > 0.0,
+                       yes = TRUE, no = FALSE)
+
+  # print message about nutrient input/output needed
+  if (verbose) {
+
+    if (flag_input) {
+
+     message("> Returning nutrient input value because 'nutrients_output' > 0.")
+
+    } else {
+
+      message("> Returning no nutrient input value because 'nutrients_output' = 0.")
+
+    }
+  }
 
   # calculate detritus modifier for bg biomass
   bg_modf <- (starting_values$bg_biomass - parameters$bg_biomass_min) /
@@ -45,15 +65,28 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
   nutrients_pool <- (bg_detritus * parameters$bg_gamma) +
     (ag_detritus * parameters$ag_gamma)
 
+  # calc output amount and set as input
+  nutr_input <- nutrients_pool * parameters$nutrients_output
+
+  # remove output amount from stable nutrients pool
+  nutrients_pool <- nutrients_pool - nutr_input
+
   # calculate detritus  amount for stable nutrients minus slough amount
-  detritus_pool <- (nutrients_pool / parameters$detritus_mineralization) -
-    ((ag_detritus * parameters$ag_gamma) + (bg_detritus * parameters$bg_gamma))
+  detritus_pool <- ((nutrients_pool + nutr_input) / parameters$detritus_mineralization) -
+    ((bg_detritus * parameters$bg_gamma) + (ag_detritus * parameters$ag_gamma))
 
   # if detritus_mineralization is zero detritus pool will be Inf
   detritus_pool <- ifelse(test = is.infinite(detritus_pool),
                           yes = 0, no = detritus_pool)
 
-  # calculate amount of consumpotion for maximum size
+  # if input is 0, return NULL
+  if (!flag_input) {
+
+    nutr_input <- NULL
+
+  }
+
+  # calculate amount of consumption for maximum size
   if (fishpop) {
 
     if (is.null(min_per_i)) {
@@ -88,7 +121,8 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
   }
 
   # combine to result list
-  result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool)
+  result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool,
+                 nutr_input = nutr_input)
 
   return(result)
 }

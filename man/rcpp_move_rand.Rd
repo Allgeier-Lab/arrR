@@ -9,7 +9,6 @@ rcpp_move_rand(
   coords_reef,
   move_mean,
   move_var,
-  move_visibility,
   max_dist,
   reef_attraction,
   extent,
@@ -22,8 +21,6 @@ rcpp_move_rand(
 \item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{move_mean, move_var}{Double with mean and variance movement parameter.}
-
-\item{move_visibility}{Double with "sight" distance of fish.}
 
 \item{max_dist}{Numeric with maximum movement distance}
 

@@ -1,4 +1,9 @@
+#include <Rcpp.h>
 #include "rcpp_respiration.h"
+
+using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_respiration
 //'

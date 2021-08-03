@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_modify_degree.h"
+
+using namespace Rcpp;
 
 //' rcpp_modify_degree
 //'

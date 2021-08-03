@@ -1,4 +1,9 @@
+#include <Rcpp.h>
 #include "rcpp_nutr_input.h"
+
+using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_nutr_input
 //'

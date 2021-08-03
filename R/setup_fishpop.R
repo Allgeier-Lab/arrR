@@ -20,10 +20,10 @@
 #' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(extent = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = default_starting_values)
+#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+#' reefs = reefs, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
-#' starting_values = default_starting_values, parameters = default_parameters)
+#' starting_values = arrR_starting_values, parameters = arrR_parameters)
 #'
 #' @aliases setup_fishpop
 #' @rdname setup_fishpop

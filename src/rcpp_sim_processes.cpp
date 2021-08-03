@@ -1,6 +1,9 @@
+// [[Rcpp::depends(RcppProgress)]]
+
+#include <Rcpp.h>
+#include <progress.hpp>
+#include <progress_bar.hpp>
 #include "rcpp_sim_processes.h"
-#include "progress.hpp"
-#include "progress_bar.hpp"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_mineralization.h"
@@ -10,6 +13,8 @@
 #include "rcpp_mortality.h"
 #include "rcpp_diffuse_values.h"
 #include "rcpp_nutr_output.h"
+
+using namespace Rcpp;
 
 //' rcpp_sim_processes
 //'
@@ -53,39 +58,43 @@
 //' @export
 // [[Rcpp::export]]
 void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
-                        List seafloor_track, List fishpop_track, List parameters,
-                        int pop_n, String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
+                        Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters,
+                        int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
-                        Rcpp::NumericVector extent, Rcpp::NumericVector dimensions,
+                        Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                         Rcpp::NumericVector nutr_input,
                         int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                         bool verbose) {
+
+  // setup progress bar
+  Progress progress(max_i, verbose);
+
+  // inital flags to run processes //
+
+  // flag if diffusion needs to be run
+  bool flag_diffuse = (as<double>(parameters["nutrients_diffusion"]) > 0.0) ||
+    (as<double>(parameters["detritus_diffusion"]) > 0.0) ||
+    (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
+
+  // flag if output needs to be run
+  bool flag_output = as<double>(parameters["nutrients_output"]) > 0.0;
+
+  // init seafloor stuff //
+
+  // get only ID of reefs as vector
+  Rcpp::NumericVector cells_reef = coords_reef(_, 0);
+
+  // init various stuff //
+
+  // calc time_frac for rcpp_seagrass_growth
+  double time_frac = (min_per_i / 60.0) * seagrass_each;
+
+  // save original data //
 
   // save input data in tracking list
   seafloor_track[0] = Rcpp::clone(seafloor);
 
   fishpop_track[0] = Rcpp::clone(fishpop);
-
-  // calc time_frac for rcpp_seagrass_growth
-  double time_frac = (min_per_i / 60.0) * seagrass_each;
-
-  // get only ID of reefs as vector
-  Rcpp::NumericVector cells_reef = coords_reef(_, 0);
-
-  // flag if diffusion needs to be run
-  bool diffuse_flag = (as<double>(parameters["nutrients_diffusion"]) > 0.0) ||
-    (as<double>(parameters["detritus_diffusion"]) > 0.0) ||
-    (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
-
-  // flag if output needs to be run
-  bool output_flag = as<double>(parameters["nutrients_output"]) > 0.0;
-
-
-  // calculate numober of cells
-  int n_cell = dimensions(0) * dimensions(1);
-
-  // setup progress bar
-  Progress progress(max_i, verbose);
 
   // run simulation
   for (int i = 1; i <= max_i; i++) {
@@ -98,10 +107,9 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     }
 
     // simulate nutrient input if present
-    if (nutr_input(i - 1) > 0.0) {
+    if (nutr_input[i - 1] > 0.0) {
 
-      // simulate nutrient input
-      rcpp_nutr_input(seafloor, nutr_input(i - 1));
+      rcpp_nutr_input(seafloor, nutr_input[i - 1]);
 
     }
 
@@ -128,7 +136,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, coords_reef, movement, pop_reserves_thres,
-                     parameters["move_mean"], parameters["move_var"], parameters["move_visibility"],
+                     parameters["move_mean"], parameters["move_var"],
                      parameters["move_reef"], parameters["move_border"],
                      parameters["move_return"], max_dist, extent, dimensions);
 
@@ -153,7 +161,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     }
 
     // only diffuse if all parameters larger than zero
-    if (diffuse_flag) {
+    if (flag_diffuse) {
 
       // diffuse values between neighbors
       rcpp_diffuse_values(seafloor, cell_adj,
@@ -163,7 +171,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     }
 
     // remove nutrients from cells if output parameter > 0
-    if (output_flag) {
+    if (flag_output) {
 
       rcpp_nutr_output(seafloor, parameters["nutrients_output"]);
 
@@ -186,10 +194,10 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
 
 /*** R
 rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
-                    seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                    parameters = parameters, pop_n = starting_values$pop_n,
-                    movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                    coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
-                    max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                    seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
+                   seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                   parameters = parameters, pop_n = starting_values$pop_n,
+                   movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
+                   coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                   max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                   seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 */

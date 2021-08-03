@@ -4,14 +4,14 @@
 \alias{setup_reefs}
 \title{setup_reefs}
 \usage{
-setup_reefs(object, xy, extent)
+setup_reefs(object, xy, dimensions)
 }
 \arguments{
 \item{object}{Raster* object}
 
 \item{xy}{2-Column matrix with coordinates of artificial reefs}
 
-\item{extent}{Vector with number of rows and columns (spatial extent).}
+\item{dimensions}{Vector with number of rows and columns (spatial dimensions).}
 }
 \value{
 RasterBrick

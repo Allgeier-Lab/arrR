@@ -1,4 +1,7 @@
+#include <Rcpp.h>
 #include "rcpp_allocation_ratio.h"
+
+using namespace Rcpp;
 
 //' rcpp_allocation_ratio
 //'
@@ -87,7 +90,7 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 }
 
 /*** R
-parameters <- default_parameters
+parameters <- arrR_parameters
 
 parameters$seagrass_thres <- 1
 parameters$seagrass_slope <- 3
