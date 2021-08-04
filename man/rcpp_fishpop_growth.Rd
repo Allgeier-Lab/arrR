@@ -51,7 +51,7 @@ enough, fish can either use their reserves or they die (see \code{\link{rcpp_rei
 Last, if the detritus pool is big enough, individuals can additionally fill up
 their reserves.
 
-If individuals are within behavior 2 or 3 (only for \code{movement = behav}),
+If individuals are within behavior 1 or 2 (only for \code{movement = behav}),
 the consumption requirement must be met by the reserves only.
 
 If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}

@@ -38,11 +38,11 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
 
     if (flag_input) {
 
-     message("> Returning nutrient input value because 'nutrients_output' > 0.")
+     message("> Returning nutrient input value because 'nutrients_output > 0'.")
 
     } else {
 
-      message("> Returning no nutrient input value because 'nutrients_output' = 0.")
+      message("> Returning no nutrient input value because 'nutrients_output = 0'.")
 
     }
   }

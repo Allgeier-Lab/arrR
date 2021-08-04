@@ -189,7 +189,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_reserves_max) > 1,
+                            parameters$pop_reserves_max,
+                            parameters$pop_reserves_thres_hi) > 1,
 
                           c(parameters$seagrass_slough,
 
@@ -201,7 +202,10 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
 
-                            parameters$pop_reserves_max) < 0))
+                            parameters$pop_reserves_max,
+                            parameters$pop_reserves_thres_lo) < 0,
+
+                          parameters$pop_reserves_thres_lo > parameters$pop_reserves_thres_hi))
 
     # check if all fraction are between 0 and 1
     if (check_ratios) {

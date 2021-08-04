@@ -325,7 +325,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
-                 starting_values = starting_values, parameters = parameters, nutr_input = nutr_input,
+                 pop_reserves_thres = pop_reserves_thres, nutr_input = nutr_input,
+                 starting_values = starting_values, parameters = parameters,
                  coords_reef = coords_reef, extent = raster::extent(extent),
                  grain = raster::res(seafloor), dimensions = dimensions,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
