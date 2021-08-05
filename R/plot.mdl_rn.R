@@ -49,7 +49,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
     if (what == "seafloor") {
 
       # get max_i of summarized
-      i <- max(summarised_result$seafloor$timestep)
+      timestep_slctd <- max(summarised_result$seafloor$timestep)
 
       # get seafloor data
       seafloor <- subset(summarised_result$seafloor,
@@ -124,7 +124,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                                    "died_consumption", "died_background"))
 
       # get max_i of summarized
-      i <- max(summarised_result$seafloor$timestep)
+      timestep_slctd <- max(summarised_result$seafloor$timestep)
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = fishpop) +
@@ -185,10 +185,11 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   # plot map
   } else {
 
-    i <- timestep
+    # get timestep
+    timestep_slctd <- timestep
 
-    # check if i can be divided by save_each without reminder
-    if (i %% x$save_each != 0) {
+    # check if timestep_slctd can be divided by save_each without reminder
+    if (timestep_slctd %% x$save_each != 0) {
 
       stop("'timestep' was not saved during model run.",
            call. = FALSE)
@@ -197,7 +198,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
     if (what == "seafloor") {
 
       # get seafloor data
-      seafloor <- subset(x$seafloor, timestep == i,
+      seafloor <- subset(x$seafloor, timestep == timestep_slctd,
                          select = c("x", "y",
                                     "ag_biomass", "bg_biomass",
                                     "nutrients_pool", "detritus_pool"))
@@ -256,15 +257,15 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       }
 
       # get seafloor data
-      fishpop <- get_density(x, timestep = i, normalize = normalize)
+      fishpop <- get_density(x, timestep = timestep_slctd, normalize = normalize)
 
 
       name <- ifelse(test = normalize, yes = "Density [#/cell/total time]",
                      no = "Density [#/cell]")
 
       # create title
-      plot_title <- paste0("Total time : ", i, " iterations (",
-                           round(i * x$min_per_i / 60 / 24, 1), " days)",
+      plot_title <- paste0("Total time : ", timestep_slctd, " iterations (",
+                           round(timestep_slctd * x$min_per_i / 60 / 24, 1), " days)",
                            "\nFishpop    : ", x$starting_values$pop_n," indiv (movement: ", x$movement, ")")
 
       # create plot
@@ -289,8 +290,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   }
 
   # create title
-  plot_title <- paste0("Total time : ", i, " iterations (",
-                       round(i * x$min_per_i / 60 / 24, 1), " days)",
+  plot_title <- paste0("Total time : ", timestep_slctd, " iterations (",
+                       round(timestep_slctd * x$min_per_i / 60 / 24, 1), " days)",
                        "\nFishpop    : ", x$starting_values$pop_n," indiv (movement: '", x$movement, "')")
 
 

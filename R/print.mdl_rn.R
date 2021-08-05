@@ -25,17 +25,18 @@
 #' @export
 print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
 
-  i <- timestep
+  # get timestep
+  timestep_slctd <- timestep
 
-  # check if i can be divided by save_each without reminder
-  if (i %% x$save_each != 0) {
+  # check if timestep_slctd can be divided by save_each without reminder
+  if (timestep_slctd %% x$save_each != 0) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)
   }
 
   # get seafloor values of selected timestep
-  seafloor_values <- subset(x$seafloor, timestep == i,
+  seafloor_values <- subset(x$seafloor, timestep == timestep_slctd,
                             select = c(ag_biomass, bg_biomass, nutrients_pool,
                                        detritus_pool, detritus_fish))
 
@@ -55,8 +56,8 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
   if (nrow(x$fishpop > 0)) {
 
     # get fish population values of selected timestep
-    fishpop_values <- subset(x$fishpop, timestep == i, select = c(length, weight,
-                                                                  died_consumption, died_background))
+    fishpop_values <- subset(x$fishpop, timestep == timestep_slctd,
+                             select = c(length, weight, died_consumption, died_background))
 
     # calculate min, median, max values
     min_fishpop <- round(apply(X = fishpop_values, MARGIN = 2, FUN = min, na.rm = TRUE),
@@ -85,7 +86,7 @@ print.mdl_rn <- function(x, timestep = x$max_i, digits = 3, ...) {
   save_time <- round(x$save_each * x$min_per_i / 60 / 24, digits = 2)
 
   # print result
-  cat(paste0("Total time : ", i, " iterations (", total_time, " days) [Burn-in: ", x$burn_in, " iter.]\n",
+  cat(paste0("Total time : ", timestep_slctd, " iterations (", total_time, " days) [Burn-in: ", x$burn_in, " iter.]\n",
              "Saved each : ", x$save_each, " iterations (", save_time, " days)\n",
              "Seafloor   : ", x$dimensions[1], " rows x " , x$dimensions[2],  " cols; ", nrow(x$coords_reef), " reef cells\n",
              "Fishpop    : ", x$starting_values$pop_n, " indiv (movement: '", x$movement,"')\n",

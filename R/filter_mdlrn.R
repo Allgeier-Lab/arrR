@@ -31,20 +31,21 @@ filter_mdlrn <- function(result, timestep = max(result$max_i)) {
 
   }
 
-  i <- timestep
+  # get timestep
+  timestep_slctd <- timestep
 
-  # check if i can be divided by save_each without reminder
-  if (i %% result$save_each != 0) {
+  # check if timestep_slctd can be divided by save_each without reminder
+  if (timestep_slctd %% result$save_each != 0) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)
   }
 
   # get row id if timesteps that are selected
-  seafloor_id <- which(result$seafloor$timestep %in% i)
+  seafloor_id <- which(result$seafloor$timestep %in% timestep_slctd)
 
   # get row id if timesteps that are selected
-  fishpop_id <- which(result$fishpop$timestep %in% i)
+  fishpop_id <- which(result$fishpop$timestep %in% timestep_slctd)
 
   # subset data.frame
   seafloor_track <- result$seafloor[seafloor_id, ]
@@ -59,7 +60,7 @@ filter_mdlrn <- function(result, timestep = max(result$max_i)) {
   result$fishpop <- fishpop_track
 
   # replace elements
-  result$max_i <- max(i)
+  result$max_i <- max(timestep_slctd)
 
   return(result)
 }

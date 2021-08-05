@@ -36,9 +36,9 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   }
 
   # get timestep
-  i <- timestep
+  timestep_slctd <- timestep
 
-  check_i <- vapply(result, function(x) i %in% x$seafloor$timestep,
+  check_i <- vapply(result, function(x) timestep_slctd %in% x$seafloor$timestep,
                     FUN.VALUE = logical(1))
 
   if (!all(check_i)) {
@@ -51,7 +51,7 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   limits <- lapply(X = result, FUN = function(x) {
 
     # filter current result
-    result_temp <- subset(x$seafloor, timestep %in% i,
+    result_temp <- subset(x$seafloor, timestep %in% timestep_slctd,
                           select = c("ag_biomass", "bg_biomass",
                                      "nutrients_pool", "detritus_pool"))
 
