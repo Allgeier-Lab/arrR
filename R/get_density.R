@@ -33,10 +33,10 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
 
   }
 
-  i <- timestep
+  timestep_slctd <- timestep
 
   # check if i can be divided by save_each without reminder
-  if (i %% result$save_each != 0) {
+  if (timestep_slctd %% result$save_each != 0) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)
@@ -56,15 +56,18 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
 
   if (nrow(result$fishpop > 0)) {
 
+    # get fishpop and filter all timesteps <= than selected timestep
+    fishpop_temp <- subset(result$fishpop, timestep <= timestep_slctd)
+
     # remove burn_in
     if (result$burn_in > 0) {
 
-      result$fishpop <- result$fishpop[result$fishpop$burn_in == "no", ]
+      fishpop_temp <- subset(fishpop_temp, burn_in == "no")
 
     }
 
     # count fish within each cell
-    ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")],
+    ras_density <- raster::rasterize(x = fishpop_temp[, c("x", "y")],
                                      y = ras_density,
                                      fun = "count", background = 0)
 
@@ -77,7 +80,7 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
     # normalize by max_i
     if (normalize) {
 
-      ras_density$density <- ras_density$density / i
+      ras_density$density <- ras_density$density / timestep_slctd
 
     }
 

@@ -1,3 +1,7 @@
+# arrR 1.1.1
+* Return `pop_reserves_thres` in final `mdl_rn` object
+* Fix bug in `get_density` if not `max_i` was selected as timestep
+
 # arrR 1.1
 * Fix bug in `run_simulation` and return of `nutr_input`
 * Export `R` and `Rcpp` interfaces of core functions
