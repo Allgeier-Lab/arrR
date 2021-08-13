@@ -324,7 +324,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # combine result to list
-  result <- list(seafloor = seafloor_track, fishpop = fishpop_track, movement = movement,
+  result <- list(seafloor = seafloor_track, fishpop = fishpop_track, 
+                 movement = movement, max_dist = max_dist,
                  pop_reserves_thres = pop_reserves_thres, nutr_input = nutr_input,
                  starting_values = starting_values, parameters = parameters,
                  coords_reef = coords_reef, extent = raster::extent(extent),
