@@ -11,8 +11,7 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/Allgeier-Lab/arrR/branch/main/graph/badge.svg)](https://codecov.io/gh/Allgeier-Lab/arrR?branch=main)
+[![codecov](https://codecov.io/gh/Allgeier-Lab/arrR/branch/development/graph/badge.svg?token=Jx7R1vWP3s)](https://codecov.io/gh/Allgeier-Lab/arrR)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
