@@ -11,6 +11,8 @@ Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![R build
 status](https://github.com/Allgeier-Lab/arrR/workflows/R-CMD-check/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/Allgeier-Lab/arrR/branch/main/graph/badge.svg)](https://codecov.io/gh/Allgeier-Lab/arrR?branch=main)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -24,16 +26,17 @@ corresponding publications.
 
 ### Citation
 
-To cite *arrR* in publications or acknowledge its use, please use the
-following temporary citation information, substituting the version of
-the application that you used for ‘v0.0’:
+To cite *arrR* in a publication or acknowledge its use, please use the
+following temporary citation information, substituting ‘v0.0’ with the
+version of the package that you used:
 
-*Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E. In preparation.
-Mechanistic support for increased primary production around artificial
-reefs. v0.0*
+*Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support
+for increased primary production around artificial reefs. Manuscript
+submitted for publication. v0.0*
 
-For more information see Publication record vignette. The get a BibTex
-entry, please use `citation("arrR")`.
+For more information, please see the [Publication
+record](publication-record.html) vignette. To get a BibTex entry, please
+use `citation("arrR")`.
 
 ## Installation
 
@@ -46,8 +49,10 @@ the argument `ref = "development"` within the function.
 remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
-For a more detailed guide how to use *arrR*, please see the [Get
-started](getstarted.html) vignette.
+Please see the [General background](general-background.html) vignette
+for a general overview of *arrR*. Please see the [Get
+started](get-started.html) vignette for a quick tutorial how to use
+*arrR*. To get a BibTex entry, please use `citation("arrR")`.
 
 ## Example
 
