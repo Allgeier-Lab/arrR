@@ -10,10 +10,8 @@ on:
       - main
       - development
 
-name: R-CMD-check
-
 jobs:
-  R-CMD-check:
+  r-cmd-check:
     if: "!contains(github.event.commits[0].message, '[skip-ci]')"
     runs-on: ${{ matrix.config.os }}
 

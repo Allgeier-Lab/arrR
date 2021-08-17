@@ -9,7 +9,7 @@ on:
 name: Render-README
 
 jobs:
-  build:
+  render-readme:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -36,6 +36,7 @@ jobs:
       - name: Install packages
         run: |
           R -e 'install.packages("renv")'
+          R -e 'install.packages("rmarkdown")'
           R -e 'renv::restore()'
 
       - name: Render Rmarkdown files

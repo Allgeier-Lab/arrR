@@ -8,8 +8,6 @@ on:
       - main
       - development
 
-name: Test-coverage
-
 jobs:
   test-coverage:
     runs-on: macOS-latest
