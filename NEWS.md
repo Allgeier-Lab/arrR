@@ -1,3 +1,6 @@
+# arrR 1.2
+* Adding `pkgdown` homepage
+
 # arrR 1.1.1
 * Return `pop_reserves_thres` in final `mdl_rn` object
 * Fix bug in `get_density` if not `max_i` was selected as timestep
