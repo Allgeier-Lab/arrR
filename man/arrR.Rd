@@ -9,10 +9,11 @@
 Individual-based simulation model to analyze how artificial reefs in combination
 with a fish population influence seagrass growth.
 
-For more information about how to use the model, please see \code{browseVignettes("arrR")}.
+For more information about how to use the model, please see \url{https://allgeier-lab.github.io/arrR/}.
 
-For a detailed model description, see Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E.
-In preparation. Mechanistic support for increased primary production around artificial reefs.
+For a detailed model description, see Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E.
+Mechanistic support for increased primary production around artificial reefs. Manuscript
+submitted for publication.
 }
 \seealso{
 Useful links:
@@ -27,7 +28,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Kenzo E. Esquivel \email{kesquivel@berkeley.edu}
+  \item Kenzo E. Esquivel \email{kesquivel@berkeley.edu} (\href{https://orcid.org/0000-0002-1326-289X}{ORCID})
   \item Katrina S. Munsterman \email{kmunster@umich.edu} (\href{https://orcid.org/0000-0002-9303-2049}{ORCID})
 }
 

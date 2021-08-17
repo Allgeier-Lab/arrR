@@ -20,11 +20,11 @@ knitr::opts_chunk$set(
 library(arrR)
 ```
 
-To get a BibTex entry, please use `citation("arrR")`.
-
 ## Movement behaviors
 
-The *arrR* packages allows to specify different movement behaviors for each model run.
+The **arrR** model allows to specify different movement behaviors for each model run.
+
+...Work in progress...
 
 ### Random movement
 

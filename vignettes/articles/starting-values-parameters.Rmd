@@ -21,9 +21,9 @@ library(knitr)
 library(kableExtra)
 ```
 
-Please see the [General background](general-background.html) vignette for a general overview of *arrR*. Please see the [Get started](get-started.html) vignette for a quick tutorial how to use *arrR*. To get a BibTex entry, please use `citation("arrR")`.
+Please see `vignette("general-background")` for a general overview of **arrR**. For a quick tutorial of how to use **arrR**, please see `vignette("get-started")`.
 
-To see a full list all needed starting values and parameters, simply run `check_parameters()`. Both starting values and parameters must be provided as named lists. The package contains a set of default values you can easily access (`arrR_parameters`, `arrR_starting_values`).
+To see a full list all needed starting values and parameters, simply run `check_parameters()`. Both starting values and parameters must be provided as a named lists. The package contains a set of default values you can easily access (`arrR_parameters`, `arrR_starting_values`).
 
 ## Starting values
 

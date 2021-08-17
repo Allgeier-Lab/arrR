@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Please see the [General background](general-background.html) vignette for a general overview of *arrR*. To get a BibTex entry, please use `citation("arrR")`.
+Please see `vignette("general-background")` for a general model description of **arrR**. To get a BibTex entry, please use `citation("arrR")` or see `vignette("publication-record")`.
 
-## How to use `arrR`
+## How to use **arrR**
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(arrR)
@@ -26,19 +26,21 @@ library(dplyr)
 library(ggplot2)
 ```
 
-You can always use `?` in front of a function to see the help page. For many functions, there are additionally options you can specify which are not necessarily explained here.
+You can always use `?` in front of a function to see the help page. For many functions, there are additionally arguments which you can specify, which are not necessarily explained here.
 
 ### 1. Import and change starting values and parameters
 
-After you installed and loaded the package, you can access default/exemplary starting values and parameters of the model. Since both objects are simply named lists, you can easily change certain parameters. If you pass the objects to `check_parameters`, the function will check if all required values are available.
+After you installed and loaded the package, you can access default/exemplary starting values and parameters of the model. Since both objects are just named lists, you can easily change certain parameters. If you pass the objects to `check_parameters()`, the function will check if all required values are available and return warnings if not. 
 
-Please see the [Starting values and parameters](starting-values-parameters.html) vignette for more information about all parameters.
+Of course, you can also load your own data as a list containing starting values and parameters. The `read_parameters()` function can help with this. You can also create the starting values and parameter lists completely from scratch as long as they are two named lists containing all required values.
+
+Please see `vignette("starting-values-parameters")` for more information about all parameters.
 
 ```{r check_parameters}
 # get starting values
 starting_values <- arrR::arrR_starting_values
 
-# get paramters
+# get parameters
 parameters <- arrR::arrR_parameters
 
 # change some starting values and parameters
@@ -46,15 +48,13 @@ starting_values$pop_n <- 8
 
 parameters$pop_reserves_max <- 0.1
 
-# check if all parameters are present and meaningful (to a degree...)
+# check if all parameters are present and meaningful
 check_parameters(starting_values = starting_values, parameters = parameters)
 ```
 
-Of course, you can import or create the starting values and parameter list completely from scratch as long as they are two named lists containing all required values.
-
 ### 2. Setup seafloor and fish population
 
-Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs, simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate (0,0).
+Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate *x,y(0,0)*. Additionally, when setting up the seafloor, you need to specify the dimenstions in *x*- and *y*-directions and the grain of one cell.
 
 ```{r setup_inputs}
 # create 5 reef cells in center of seafloor
@@ -63,8 +63,7 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 
 # create seafloor
 input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1, 
-                                 reefs = reef_matrix, 
-                                 starting_values = starting_values)
+                                 reefs = reef_matrix, starting_values = starting_values)
 
 # create fishpop
 input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
@@ -74,26 +73,34 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
 
 ### 3. Run the model
 
-The `run_simulation` functions starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations, called timesteps here).
-
 ```{r run_sim, echo = FALSE}
+# load pre-calculated model object to save some time
 result <- arrR:::result_readme
 ```
 
+The `run_simulation()` function is the core function of the package that starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations called *i* here).
+
+Further, you can specify how often all seagrass related processes should be simulated, e.g. only once a day using `seagrass_each`. 
+
+Last, because the produced output can be quite large, you can save only every *j* iterations, specified by `save_each`. The model will still simulate all processes each iteration, however, only safe and return the specified iterations to reduce the required memory.
+
+One of the most important function arguments of `run_simulation()` is the `movement` argument, which specifites how individiauls move across the simulation environment. For more information, please see `vignette("movement-behaviors")`.
+
 ```{r run_sim_dummy, eval = FALSE}
+# one iterations equals 120 minutes
 min_per_i <- 120
 
 # run the model for ten years
 years <- 10
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
-# save results only every 365 days
-days <- 365
-save_each <- (24 / (min_per_i / 60)) * days
-
 # run seagrass once each day
 days <- 1
 seagrass_each <- (24 / (min_per_i / 60)) * days
+
+# save results only every 365 days
+days <- 365
+save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                          parameters = parameters, movement = "rand",
@@ -103,14 +110,14 @@ result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
 
 ### 4. Look at model results
 
-You can get a first glance and the results simply printing the model output. This gives you some summary statistics at the last timesteps of the model.
+You can get a first glance and the results simply printing the model output. This gives you some summary statistics at the last iteration of the model.
 
 ```{r print_result}
 # print model results
 result
 ```
 
-The returning object is simply a list, so analyzing the results yourself should be pretty straightforward. Simply access the data you need. 
+The returning object `mdl_rn` object is simply a list "under the hood", so analyzing the results yourself should be pretty straightforward. Simply access the data you need. 
 
 ```{r access_result, fig.align = "center"}
 # show all elements of result list
@@ -136,3 +143,6 @@ Lastly, you can plot the results. Make also sure to check out the `summarize` ar
 plot(result, what = "seafloor")
 ```
 
+### 5. Various
+
+**arrR** comes with many helper functions, such as `get_density()`, `get_limits()`, `filter_mdlrn()` or `summarize_mdlrn()`. Make sure to check out the [Index](https://allgeier-lab.github.io/arrR/reference/index.html) for an overview.
