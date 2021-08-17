@@ -1,0 +1,47 @@
+---
+title: "1. General Background"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{1. General Background}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+For a more detailed guide how to use *arrR*, please see the [Get started](get-started.html) vignette.
+
+## Model concept
+
+The goal of *arrR* is to simulate seagrass production around artificial reefs (AR) using an individual-based simulation model (IBM). Seagrass biomass and water-column nutrients are simulated using a primary production model within grid cells. Fish individuals move across the cells, consume detritus and excrete nutrients. 
+
+```{r concept_fig, echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Schematic overview of model concept."}
+
+knitr::include_graphics(path = "Concept.png")
+
+```
+
+For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support for increased primary production around artificial reefs. Manuscript submitted for publication.*
+
+To get a BibTex entry, please use `citation("arrR")`.
+
+## Scheduling
+
+A simulation is started using the `run_simulation` function. This includes the simulation of the several sub-processes with the following scheduling:
+
+**1. Nutrient input**: Simulates nutrient input to the ecosystem each timestep if a vector with corresponding values is provided. 
+
+**2. Seagrass dynamics**: Simulates belowground and aboveground seagrass slough, nutrient uptake and seagrass growth based on the current biomass and the available nutrients for each grid cell. While slough decreases seagrass biomass and increases the detritus biomass, seagrass growth increases the seagrass biomass.
+
+**3. Mineralization**: Simulates mineralization of detritus biomass to water-column nutrients, i.e. decreases the detritus pool and increases the nutrients pool for each grid cell.
+
+**4. Fish movement**: Simulates movement of fish individuals across the grid cells. Movement can be random, attracted towards reef cells or based on fish characteristics. Uses torus translation at the boundary of the study area. For more information about movement, see the corresponding [Movement](movement-behaviors.html) vignette.
+
+**5. Fish respiration**: Simulates respiration of fish individuals based on their body size and movement activity.
+
+**6. Fish growth, consumption and excretion**: Simulates growth of fish individuals based on their current body size. For this, individuals consume detritus biomass of the grid cell they are located in. If the detritus biomass is smaller than the required amount of individuals (based on growth and respiration), mortality takes place. Lastly, fish individuals excrete non-required consumption to the nutrients pool.
+
+**7. Fish (background) mortality**: Simulates background mortality of fish individuals based on their body size. The mortality probability increases with increasing body size. All mortality events increase the (fish) detritus biomass.
+
+**8. Nutrients and detritus diffusion**: Simulates diffusion of detritus biomass and water-column nutrients across neighboring cells.
+
+**9. Nutrients output**: Simulates a certain proportion of the water-column nutrients that are lost to the ecosystem each timestep.

@@ -1,8 +1,8 @@
 ---
-title: "3. Starting values and parameters"
+title: "4. Starting values and parameters"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{3. Starting values and parameters}
+  %\VignetteIndexEntry{4. Starting values and parameters}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -21,7 +21,7 @@ library(knitr)
 library(kableExtra)
 ```
 
-Please see the [Get started](getstarted.html) vignette for a quick tutorial how to use `arrR`.
+Please see the [General background](general-background.html) vignette for a general overview of *arrR*. Please see the [Get started](get-started.html) vignette for a quick tutorial how to use *arrR*. To get a BibTex entry, please use `citation("arrR")`.
 
 To see a full list all needed starting values and parameters, simply run `check_parameters()`. Both starting values and parameters must be provided as named lists. The package contains a set of default values you can easily access (`arrR_parameters`, `arrR_starting_values`).
 

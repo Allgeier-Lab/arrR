@@ -1,0 +1,41 @@
+---
+title: "3. Movement behaviors"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{3. Movement behaviors}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(arrR)
+```
+
+To get a BibTex entry, please use `citation("arrR")`.
+
+## Movement behaviors
+
+The *arrR* packages allows to specify different movement behaviors for each model run.
+
+### Random movement
+
+Work in progress
+
+### Attracted movement
+
+Work in progress
+
+### Behavioral movement
+
+Work in progress.
+
+

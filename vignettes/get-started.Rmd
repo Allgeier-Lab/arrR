@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Please see the [General background](background.html) vignette for a general overview of *arrR*.
+Please see the [General background](general-background.html) vignette for a general overview of *arrR*. To get a BibTex entry, please use `citation("arrR")`.
 
 ## How to use `arrR`
 
@@ -32,7 +32,7 @@ You can always use `?` in front of a function to see the help page. For many fun
 
 After you installed and loaded the package, you can access default/exemplary starting values and parameters of the model. Since both objects are simply named lists, you can easily change certain parameters. If you pass the objects to `check_parameters`, the function will check if all required values are available.
 
-Please see the [Parameter](parameters.html) vignette for more information about all parameters.
+Please see the [Starting values and parameters](starting-values-parameters.html) vignette for more information about all parameters.
 
 ```{r check_parameters}
 # get starting values
