@@ -1,9 +1,9 @@
 ---
-title: "5. Publication record"
+title: "Publication record"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{5. Publication record}
+  %\VignetteIndexEntry{Publication record}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,3 +18,5 @@ information, substituting 'v0.0' with the version of the package that you used:
 To get a BibTex entry, please use `citation("arrR")`.
 
 ## List of publications
+
+...Work in progress...

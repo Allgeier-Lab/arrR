@@ -27,7 +27,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Kenzo Esquivel \email{kesquivel@berkeley.edu}
+  \item Kenzo E. Esquivel \email{kesquivel@berkeley.edu}
   \item Katrina S. Munsterman \email{kmunster@umich.edu} (\href{https://orcid.org/0000-0002-9303-2049}{ORCID})
 }
 

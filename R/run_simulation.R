@@ -45,8 +45,9 @@
 #' before this timestep is reached.
 #'
 #' @references
-#' For a detailed model description see Esquivel et al (2021). Mechanistic support for
-#' increased primary production around artificial reefs. Manuscript in preparation.
+#' For a detailed model description see Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E.
+#' Mechanistic support for increased primary production around artificial reefs. Manuscript
+#' submitted for publication.
 #'
 #' @return mdl_rn
 #'
@@ -324,7 +325,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # combine result to list
-  result <- list(seafloor = seafloor_track, fishpop = fishpop_track, 
+  result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  movement = movement, max_dist = max_dist,
                  pop_reserves_thres = pop_reserves_thres, nutr_input = nutr_input,
                  starting_values = starting_values, parameters = parameters,

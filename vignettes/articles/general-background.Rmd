@@ -1,9 +1,9 @@
 ---
-title: "1. General Background"
+title: "General Background"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{1. General Background}
+  %\VignetteIndexEntry{General Background}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

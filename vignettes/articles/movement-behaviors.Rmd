@@ -1,8 +1,8 @@
 ---
-title: "3. Movement behaviors"
+title: "Movement behaviors"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{3. Movement behaviors}
+  %\VignetteIndexEntry{Movement behaviors}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -28,14 +28,14 @@ The *arrR* packages allows to specify different movement behaviors for each mode
 
 ### Random movement
 
-Work in progress
+...Work in progress...
 
 ### Attracted movement
 
-Work in progress
+...Work in progress...
 
 ### Behavioral movement
 
-Work in progress.
+...Work in progress...
 
 

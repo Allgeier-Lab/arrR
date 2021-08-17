@@ -1,8 +1,8 @@
 ---
-title: "4. Starting values and parameters"
+title: "Starting values and parameters"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{4. Starting values and parameters}
+  %\VignetteIndexEntry{Starting values and parameters}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

@@ -5,46 +5,47 @@ template:
     bootswatch: sandstone
 
 reference:
-  - title: Main functions
+  - title: Prepare model run
     contents:
       - read_parameters
       - check_parameters
-      - setup_fish_population
       - setup_seafloor
-      - run_simulation
-  - title: Sub-models
+      - setup_fishpop
+      - get_stable_values
+      - arrR_starting_values
+      - arrR_parameters
+  - title: Run model
     contents:
-      - simulate_seagrass
-      - distribute_detritus
-      - simulate_movement
-      - simulate_respiration
-      - simulate_growth
-      - simulate_mortality
-      - simulate_diffusion
+      - run_simulation
   - title: Various
     contents:
+      - filter_mdlrn
+      - summarize_mdlrn
       - get_density
+      - mdlrn_to_raster
       - get_limits
-      - summarize_results
-      - print.mdl_rn
+      - plot_allocation
       - plot.mdl_rn
-  - title: Internal functions
+      - print.mdl_rn
+  - title: Sub-processes
     contents:
-      - calc_nutr_uptake
-      - calc_size
-      - calc_summary
-      - convert_nutr
-      - create_rebirth
-      - get_neighbors
-      - grow_seagrass
+      - rcpp_sim_processes
+      - rcpp_nutr_input
+      - rcpp_seagrass_growth
+      - rcpp_mineralization
+      - rcpp_move_wrap
+      - rcpp_respiration
+      - rcpp_fishpop_growth
+      - rcpp_mortality
       - rcpp_diffuse_values
-      - setup_envir_values
-      - setup_reefs
-      - translate_torus
+      - rcpp_nutr_output
 
 navbar:
   title: arrR
   left:
+    - text: "Get Started"
+      icon: fa fa-magic
+      href: articles/get-started.html
     - icon: fa-gears
       text: "Functions"
       href: reference/index.html
@@ -53,10 +54,13 @@ navbar:
       menu:
        - text: "General Background"
          icon: fa-book
-         href: articles/background.html
+         href: articles/articles/general-background.html
+       - text: "Movement behaviors"
+         icon: fa-book
+         href: articles/articles/movement-behaviors.html
        - text: "Publication Record"
          icon: fa-file-text-o
-         href: articles/publication_record.html
+         href: articles/articles/publication-record.html
   right:
     - icon: fa-newspaper-o
       text: "News"
