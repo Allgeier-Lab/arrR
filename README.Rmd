@@ -40,7 +40,7 @@ information, substituting 'v0.0' with the version of the package that you used:
 
 ## Installation
 
-You can install *arrR* from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. If you want to install the most recent development version, please specify the argument `ref = "development"` within the function.
+You can install **arrR** from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. If you want to install the most recent development version, please specify the argument `ref = "development"` within the function.
 
 ```{r install, eval = FALSE}
 remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
@@ -48,7 +48,7 @@ remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 
 ## Get started
 
-Please see `vignette("get-started")` for a short tutorial how to use **arrR**
+Please see `vignette("get-started")` for a short tutorial how to use **arrR**.
 
 ## Code of Conduct
 
