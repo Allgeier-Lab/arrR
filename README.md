@@ -29,11 +29,11 @@ see `vignette("general-background")`. Please see
 > To cite *arrR* in a publication or acknowledge its use, please use the
 > following temporary citation information, substituting ‘v0.0’ with the
 > version of the package that you used:
-
+> 
 > *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic
 > support for increased primary production around artificial reefs.
 > Manuscript submitted for publication. v0.0*
-
+> 
 > For more information, please see `vignette("publication-record")`. To
 > get a BibTex entry, please use `citation("arrR")`.
 
