@@ -43,7 +43,8 @@ Suggests:
     testthat,
     kableExtra,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 LinkingTo: 
     Rcpp,
     RcppDist, 

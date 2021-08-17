@@ -11,3 +11,4 @@
 ^Meta$
 ^data-raw$
 ^codemeta\.json$
+^codecov\.yml$
