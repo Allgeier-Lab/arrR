@@ -54,13 +54,13 @@ navbar:
       menu:
        - text: "General Background"
          icon: fa-book
-         href: articles/articles/general-background.html
+         href: articles/general-background.html
        - text: "Movement behaviors"
          icon: fa-book
-         href: articles/articles/movement-behaviors.html
+         href: articles/movement-behaviors.html
        - text: "Publication Record"
          icon: fa-file-text-o
-         href: articles/articles/publication-record.html
+         href: articles/publication-record.html
   right:
     - icon: fa-newspaper-o
       text: "News"

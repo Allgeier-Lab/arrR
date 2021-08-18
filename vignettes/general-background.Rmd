@@ -9,7 +9,7 @@ vignette: >
 ---
 
 > For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support for increased primary production around artificial reefs. Manuscript submitted for publication.*
-
+>
 > To get a BibTex entry, please use `citation("arrR")`.
 
 ## Model concept
@@ -20,7 +20,7 @@ Seagrass primary production is simulated using a single-nutrient primary product
 
 ```{r concept_fig, echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Schematic overview of model concept (Adapted from DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6."}
 
-knitr::include_graphics(path = "Concept.pdf")
+knitr::include_graphics(path = "Concept.png")
 
 ```
 
