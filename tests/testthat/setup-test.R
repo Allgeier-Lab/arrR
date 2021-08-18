@@ -46,13 +46,13 @@ input_fishpop_null <- arrR::setup_fishpop(seafloor = input_seafloor,
                                           use_log = TRUE, verbose = FALSE)
 
 # setup iterations arguments
-max_i <- 100
+max_i <- 1000
 
 min_per_i <- 120
 
 burn_in <- 5
 
-save_each <- 2
+save_each <- 10
 
 # run model
 result_rand <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,

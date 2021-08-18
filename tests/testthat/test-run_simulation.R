@@ -9,7 +9,7 @@ test_that("run_simulation contains seafloor and fishpop", {
   n_cells <- max_i * raster::ncell(input_seafloor) / save_each +
     raster::ncell(input_seafloor)
 
-  n_fish <- max_i * nrow(input_fishpop) / 2 + nrow(input_fishpop)
+  n_fish <- max_i * nrow(input_fishpop) / save_each + nrow(input_fishpop)
 
   seq_i <- seq(from = 0, to = max_i, by = save_each)
 
@@ -51,7 +51,11 @@ test_that("run_simulation uses correct movement behavior", {
 
   density_attr <- arrR::get_density(result = result_attr, verbose = FALSE)
 
-  expect_gt(object = max(density_attr$density), expected = max(density_rand$density))
+  n_rand <- sum(head(sort(density_rand$density, decreasing = TRUE)))
+
+  n_attr <- sum(head(sort(density_attr$density, decreasing = TRUE)))
+
+  expect_gt(object = n_attr, expected = n_rand)
 
 })
 
