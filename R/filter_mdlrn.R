@@ -35,7 +35,7 @@ filter_mdlrn <- function(result, timestep = max(result$max_i)) {
   timestep_slctd <- timestep
 
   # check if timestep_slctd can be divided by save_each without reminder
-  if (timestep_slctd %% result$save_each != 0) {
+  if (timestep_slctd %% result$save_each != 0 || timestep_slctd > result$max_i) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)

@@ -13,6 +13,7 @@
   burn_in = TRUE,
   normalize = FALSE,
   base_size = 10,
+  verbose = TRUE,
   ...
 )
 }
@@ -32,6 +33,8 @@
 \item{normalize}{Logical if TRUE count is divided by timesteps.}
 
 \item{base_size}{Numeric to specify base font size.}
+
+\item{verbose}{If TRUE, progress reports are printed.}
 
 \item{...}{Not used.}
 }

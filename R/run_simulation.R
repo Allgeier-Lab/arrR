@@ -109,13 +109,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  # check if burn in makes sense
-  if (burn_in >= max_i || burn_in < 0) {
-
-    warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0.", call. = FALSE)
-
-  }
-
   # check if move is valid
   if (!movement %in% c("rand", "attr", "behav")) {
 
@@ -123,6 +116,20 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
          call. = FALSE)
 
   }
+
+  # check if burn in makes sense
+  if (burn_in >= max_i || burn_in < 0) {
+
+    # set to 0
+    burn_in <- 0
+
+    if (verbose) {
+
+      warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0. Setting to burn_in = 0", call. = FALSE)
+
+    }
+  }
+
 
   # setup fishpop #
 
@@ -236,7 +243,11 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     movement <- "rand"
 
-    warning("No reef cells present. Thus 'movement' set to 'rand'.", call. = FALSE)
+    if (verbose) {
+
+      warning("No reef cells present. Thus 'movement' set to 'rand'.", call. = FALSE)
+
+    }
 
   }
 

@@ -1,0 +1,62 @@
+test_that("check_parameters checks starting values and parameters only", {
+
+  expect_message(object = arrR::check_parameters(starting_values = starting_values))
+
+  expect_message(object = arrR::check_parameters(parameters = parameters))
+
+})
+
+test_that("check_parameters returns warning for ratios", {
+
+  parameters$seagrass_slough <- 1.1
+
+  expect_warning(object = arrR::check_parameters(parameters = parameters),
+                 regexp = "Some parameters that must be 0 <= x <= 1 are outside range.")
+
+})
+
+test_that("check_parameters returns warning for biomass", {
+
+  parameters$bg_biomass_min <- parameters$bg_biomass_max * 2
+
+  expect_warning(object = arrR::check_parameters(parameters = parameters),
+                 regexp = "Some minimum parameters are larger than maximum parameters.")
+
+})
+
+test_that("check_parameters returns warning for biomass", {
+
+  parameters$pop_a <- -0.1
+
+  expect_warning(object = arrR::check_parameters(parameters = parameters),
+                 regexp = "'pop_a' must be positive number.")
+
+})
+
+test_that("check_parameters returns warning for missing parameters", {
+
+  parameters <- parameters[-1]
+
+  starting_values <- starting_values[-1]
+
+  expect_warning(object = arrR::check_parameters(parameters = parameters),
+                 regexp = "Missing parameter values: ag_biomass_max")
+
+  expect_warning(object = arrR::check_parameters(starting_values = starting_values),
+                 regexp = "Missing starting values: ag_biomass")
+
+})
+
+test_that("check_parameters returns message for additional values", {
+
+  parameters$swim <- 2.5
+
+  starting_values$swim <- 2.5
+
+  expect_message(object = arrR::check_parameters(parameters = parameters),
+                 regexp = "Not needed parameter values: swim")
+
+  expect_message(object = arrR::check_parameters(starting_values = starting_values),
+                 regexp = "Not needed starting values: swim")
+
+})

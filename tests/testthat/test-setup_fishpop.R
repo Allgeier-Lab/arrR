@@ -1,41 +1,8 @@
-# get parameters
-parameters <- arrR::arrR_parameters
-
-starting_values <- arrR::arrR_starting_values
-
-starting_values_null <- starting_values
-
-starting_values_null$pop_n <- 0
-
-# create reef
-reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
-                      ncol = 2, byrow = TRUE)
-
-# create input seafloor
-input_seafloor <- arrR::setup_seafloor(dimensions = c(50, 50), grain = c(1, 1),
-                                       reefs = reef_matrix, starting_values = starting_values)
-
-input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                     starting_values = starting_values,
-                                     parameters = parameters,
-                                     use_log = FALSE)
-
-input_fishpop_log <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                         starting_values = starting_values,
-                                         parameters = parameters,
-                                         use_log = TRUE)
-
-input_fishpop_null <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                          starting_values = starting_values_null,
-                                          parameters = parameters,
-                                          use_log = TRUE)
-
 test_that("setup_fishpop creates data.frame", {
 
-  expect_is(object = input_fishpop, class = "data.frame")
+  expect_s3_class(object = input_fishpop, class = "data.frame")
 
-  expect_is(object = input_fishpop_log, class = "data.frame")
-
+  expect_s3_class(object = input_fishpop_unif, class = "data.frame")
 
 })
 
@@ -48,9 +15,9 @@ test_that("setup_fishpop has correct dimensions", {
 
 test_that("setup_fishpop uses log distribution of size", {
 
-  size_unif <- mean(input_fishpop$weight)
+  size_unif <- mean(input_fishpop_unif$weight)
 
-  size_log <- mean(input_fishpop_log$weight)
+  size_log <- mean(input_fishpop$weight)
 
   expect_gt(object = size_unif, expected = size_log)
 

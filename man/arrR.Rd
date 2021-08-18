@@ -18,7 +18,7 @@ submitted for publication.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/Allgeier-Lab/arrR}
+  \item \url{https://allgeier-lab.github.io/arrR/}
   \item Report bugs at \url{https://github.com/Allgeier-Lab/arrR/issues}
 }
 

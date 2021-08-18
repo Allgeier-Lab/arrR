@@ -154,8 +154,6 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
-
-
     # check if min is smaller than max
     # check if min parameter is above maximum parameter
     if ( any(c(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
@@ -165,7 +163,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
       # set final flag to false
       flag_final <- FALSE
 
-      warning("Some minimum parameters are larger than maximum parameters",
+      warning("Some minimum parameters are larger than maximum parameters.",
               call. = FALSE)
 
     }
@@ -274,7 +272,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     if (verbose) {
 
       message("> Not needed starting values: ",
-              additional_starting, "\n")
+              additional_starting)
 
     }
   }
@@ -325,7 +323,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose && flag_final && !is.null(parameters) || !is.null(starting_values)) {
+  if (verbose && flag_final && (!is.null(parameters) || !is.null(starting_values))) {
 
     message("> All checking done!")
 

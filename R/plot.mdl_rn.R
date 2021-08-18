@@ -11,6 +11,7 @@
 #' @param burn_in If TRUE, line to indicate burn-in time is plotted.
 #' @param normalize Logical if TRUE count is divided by timesteps.
 #' @param base_size Numeric to specify base font size.
+#' @param verbose If TRUE, progress reports are printed.
 #' @param ... Not used.
 #'
 #' @details
@@ -32,7 +33,7 @@
 #' @export
 plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
                         timestep = x$max_i, limits = NULL, burn_in = TRUE,
-                        normalize = FALSE, base_size = 10, ...) {
+                        normalize = FALSE, base_size = 10, verbose = TRUE, ...) {
 
   # plot summarized results
   if (summarize) {
@@ -257,8 +258,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       }
 
       # get seafloor data
-      fishpop <- get_density(x, timestep = timestep_slctd, normalize = normalize)
-
+      fishpop <- get_density(x, timestep = timestep_slctd, normalize = normalize,
+                             verbose = verbose)
 
       name <- ifelse(test = normalize, yes = "Density [#/cell/total time]",
                      no = "Density [#/cell]")

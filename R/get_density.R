@@ -6,6 +6,7 @@
 #' @param result mdl_rn object of simulation run.
 #' @param timestep Integer to specify maximum timestep.
 #' @param normalize Logical if TRUE count is divided by timesteps.
+#' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
 #' Calculates the fish density for each cells. Thus, the total count of
@@ -24,19 +25,19 @@
 #' @rdname get_density
 #'
 #' @export
-get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
+get_density <- function(result, timestep = result$max_i, normalize = FALSE, verbose = TRUE) {
 
   # check if mdl_rn is provided
   if (!inherits(x = result, what = "mdl_rn")) {
 
-    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
+    stop("Please provide 'mdl_rn' object createt with run_simulation.", call. = FALSE)
 
   }
 
   timestep_slctd <- timestep
 
   # check if i can be divided by save_each without reminder
-  if (timestep_slctd %% result$save_each != 0) {
+  if (timestep_slctd %% result$save_each != 0 || timestep_slctd > result$max_i) {
 
     stop("'timestep' was not saved during model run.",
          call. = FALSE)
@@ -46,9 +47,12 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE) {
   # return warning if save_each != 1 because not all occurences are counted
   if (result$save_each != 1) {
 
-    warning("Please be aware that 'true' density might be higher because 'save_each' is not one.",
-            call. = FALSE)
+    if (verbose) {
 
+      warning("Please be aware that 'true' density might be higher because 'save_each' is not one.",
+              call. = FALSE)
+
+    }
   }
 
   # create empty raster

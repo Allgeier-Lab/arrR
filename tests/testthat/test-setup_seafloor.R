@@ -1,28 +1,3 @@
-# get parameters
-parameters <- arrR::arrR_parameters
-
-starting_values <- arrR::arrR_starting_values
-
-# create reef
-reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
-                      ncol = 2, byrow = TRUE)
-
-# set extent
-dimensions <- c(50, 50)
-
-# set grain
-grain <- c(1, 1)
-
-# create input seafloor
-input_seafloor <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                       reefs = reef_matrix,
-                                       starting_values = starting_values)
-
-input_seafloor_rnd <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                           reefs = reef_matrix,
-                                           starting_values = starting_values,
-                                           random = 0.25)
-
 test_that("setup_seafloor creates RasterBrick", {
 
   expect_s4_class(object = input_seafloor, class = "RasterBrick")

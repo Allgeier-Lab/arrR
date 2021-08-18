@@ -24,7 +24,7 @@ Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              comment = c(ORCID = "0000-0002-9005-6432")))
 Maintainer: Maximillian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
 Description: The goal of arrR is to simulate seagrass growth around artificial reefs.
-URL: https://github.com/Allgeier-Lab/arrR
+URL: https://allgeier-lab.github.io/arrR/
 BugReports: https://github.com/Allgeier-Lab/arrR/issues
 License: GPL (>= 3)
 Encoding: UTF-8
