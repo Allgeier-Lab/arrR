@@ -58,8 +58,8 @@ bg <- arrR_parameters$bg_biomass_min +
 
 arrR_starting_values <- list(
 
-  ag_biomass = ag,
   bg_biomass = bg,
+  ag_biomass = ag,
 
   nutrients_pool = 0.25,
   detritus_pool = 0.25,

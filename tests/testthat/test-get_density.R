@@ -16,8 +16,9 @@ test_that("get_density returns value for each cell", {
 
   coords <- raster::coordinates(input_seafloor)
 
-  expect_identical(density_rand$x, expected = coords[, 1])
-  expect_identical(density_rand$y, expected = coords[, 2])
+  expect_equal(density_rand$x, expected = coords[, 1])
+
+  expect_equal(density_rand$y, expected = coords[, 2])
 
 })
 

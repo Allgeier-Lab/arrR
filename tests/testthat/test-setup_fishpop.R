@@ -19,6 +19,7 @@ test_that("setup_fishpop uses log distribution of size", {
 
   size_log <- mean(input_fishpop$weight)
 
+
   expect_gt(object = size_unif, expected = size_log)
 
 })

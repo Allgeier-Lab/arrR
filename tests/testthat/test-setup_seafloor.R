@@ -43,6 +43,7 @@ test_that("setup_seafloor adds random noise", {
 
   range_random <- range(raster::values(input_seafloor_rnd$ag_biomass), na.rm = TRUE)
 
+
   expect_equal(object = range_homo[[1]],
                expected = range_homo[[2]])
 

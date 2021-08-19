@@ -28,7 +28,6 @@ test_that("filter_mdlrn returns error", {
   expect_error(object = arrR::filter_mdlrn(result = result_rand, timestep = 101),
                regexp = "'timestep' was not saved during model run.")
 
-
   expect_error(object = arrR::filter_mdlrn(result = result_rand, timestep = 51),
                regexp = "'timestep' was not saved during model run.")
 
