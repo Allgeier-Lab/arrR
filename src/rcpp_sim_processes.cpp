@@ -174,7 +174,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     // remove nutrients from cells if output parameter > 0
     if (flag_output) {
 
-      rcpp_nutr_output(seafloor, parameters["nutrients_output"]);
+      rcpp_nutr_output(seafloor, parameters["nutrients_output"], parameters["detritus_output"]);
 
     }
 

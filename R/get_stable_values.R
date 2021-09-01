@@ -38,11 +38,11 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
 
     if (flag_input) {
 
-     message("> Returning nutrient input value because 'nutrients_output > 0'.")
+     message("> Returning nutrient input value because 'nutrients_output' > 0.")
 
     } else {
 
-      message("> Returning no nutrient input value because 'nutrients_output = 0'.")
+      message("> Returning no nutrient input value because 'nutrients_output' = 0.")
 
     }
   }
@@ -71,7 +71,7 @@ get_stable_values <- function(starting_values, parameters, fishpop = FALSE, min_
   # remove output amount from stable nutrients pool
   nutrients_pool <- nutrients_pool - nutr_input
 
-  # calculate detritus  amount for stable nutrients minus slough amount
+  # calculate detritus amount for stable nutrients minus slough amount
   detritus_pool <- ((nutrients_pool + nutr_input) / parameters$detritus_mineralization) -
     ((bg_detritus * parameters$bg_gamma) + (ag_detritus * parameters$ag_gamma))
 

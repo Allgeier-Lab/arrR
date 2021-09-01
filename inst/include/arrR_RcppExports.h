@@ -144,17 +144,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output) {
-        typedef SEXP(*Ptr_rcpp_nutr_output)(SEXP,SEXP);
+    inline void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output) {
+        typedef SEXP(*Ptr_rcpp_nutr_output)(SEXP,SEXP,SEXP);
         static Ptr_rcpp_nutr_output p_rcpp_nutr_output = NULL;
         if (p_rcpp_nutr_output == NULL) {
-            validateSignature("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double)");
+            validateSignature("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
             p_rcpp_nutr_output = (Ptr_rcpp_nutr_output)R_GetCCallable("arrR", "_arrR_rcpp_nutr_output");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_output)));
+            rcpp_result_gen = p_rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_output)), Shield<SEXP>(Rcpp::wrap(detritus_output)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

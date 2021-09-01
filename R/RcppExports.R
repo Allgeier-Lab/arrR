@@ -409,7 +409,7 @@ rcpp_nutr_input <- function(seafloor, nutr_input) {
 #' Rcpp nutrient output.
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param nutrients_output Double with fraction removed from each cell.
+#' @param nutrients_output,detritus_output Double with fraction removed from each cell.
 #'
 #' @details
 #' Simulates loss of nutrients (i.e., output of the system) for each cell and timestep.
@@ -425,8 +425,8 @@ rcpp_nutr_input <- function(seafloor, nutr_input) {
 #' @rdname rcpp_nutr_output
 #'
 #' @export
-rcpp_nutr_output <- function(seafloor, nutrients_output) {
-    invisible(.Call(`_arrR_rcpp_nutr_output`, seafloor, nutrients_output))
+rcpp_nutr_output <- function(seafloor, nutrients_output, detritus_output) {
+    invisible(.Call(`_arrR_rcpp_nutr_output`, seafloor, nutrients_output, detritus_output))
 }
 
 #' rcpp_nutr_uptake

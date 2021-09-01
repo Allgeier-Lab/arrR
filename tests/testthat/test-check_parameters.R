@@ -40,10 +40,10 @@ test_that("check_parameters returns warning for missing parameters", {
   starting_values <- starting_values[-1]
 
   expect_warning(object = arrR::check_parameters(parameters = parameters),
-                 regexp = "Missing parameter values: ag_biomass_max")
+                 regexp = "Missing parameter values: bg_biomass_min")
 
   expect_warning(object = arrR::check_parameters(starting_values = starting_values),
-                 regexp = "Missing starting values: ag_biomass")
+                 regexp = "Missing starting values: bg_biomass")
 
 })
 

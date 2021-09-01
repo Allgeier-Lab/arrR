@@ -367,20 +367,21 @@ RcppExport SEXP _arrR_rcpp_nutr_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP) {
     return rcpp_result_gen;
 }
 // rcpp_nutr_output
-void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output);
-static SEXP _arrR_rcpp_nutr_output_try(SEXP seafloorSEXP, SEXP nutrients_outputSEXP) {
+void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output);
+static SEXP _arrR_rcpp_nutr_output_try(SEXP seafloorSEXP, SEXP nutrients_outputSEXP, SEXP detritus_outputSEXP) {
 BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< double >::type nutrients_output(nutrients_outputSEXP);
-    rcpp_nutr_output(seafloor, nutrients_output);
+    Rcpp::traits::input_parameter< double >::type detritus_output(detritus_outputSEXP);
+    rcpp_nutr_output(seafloor, nutrients_output, detritus_output);
     return R_NilValue;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_nutr_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP) {
+RcppExport SEXP _arrR_rcpp_nutr_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP, SEXP detritus_outputSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_output_try(seafloorSEXP, nutrients_outputSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_output_try(seafloorSEXP, nutrients_outputSEXP, detritus_outputSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -615,7 +616,7 @@ static int _arrR_RcppExport_validate(const char* sig) {
         signatures.insert("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
         signatures.insert("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,Rcpp::NumericVector,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
         signatures.insert("void(*rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
-        signatures.insert("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double)");
+        signatures.insert("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
         signatures.insert("void(*rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
         signatures.insert("void(*rcpp_seagrass_growth)(Rcpp::NumericMatrix,Rcpp::NumericVector,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
     }
@@ -652,7 +653,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_move_rand", (DL_FUNC) &_arrR_rcpp_move_rand, 8},
     {"_arrR_rcpp_move_wrap", (DL_FUNC) &_arrR_rcpp_move_wrap, 12},
     {"_arrR_rcpp_nutr_input", (DL_FUNC) &_arrR_rcpp_nutr_input, 2},
-    {"_arrR_rcpp_nutr_output", (DL_FUNC) &_arrR_rcpp_nutr_output, 2},
+    {"_arrR_rcpp_nutr_output", (DL_FUNC) &_arrR_rcpp_nutr_output, 3},
     {"_arrR_rcpp_nutr_uptake", (DL_FUNC) &_arrR_rcpp_nutr_uptake, 5},
     {"_arrR_rcpp_reincarnate", (DL_FUNC) &_arrR_rcpp_reincarnate, 10},
     {"_arrR_rcpp_respiration", (DL_FUNC) &_arrR_rcpp_respiration, 8},

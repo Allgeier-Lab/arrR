@@ -28,35 +28,50 @@ To see a full list all needed starting values and parameters, simply run `check_
 ## Starting values
 
 ```{r, sarting_values, echo = FALSE}
-starting_values_df <- data.frame(name = c("ag_biomass", 
-                                          "bg_biomass", 
-                                          
-                                          "nutrients_pool", 
-                                          "detritus_pool", 
-                                          
-                                          "pop_n", 
-                                          "pop_mean_size", 
-                                          "pop_var_size"), 
-                                 
-                                 fun = c("setup_seafloor()", 
-                                         "setup_seafloor()", 
+starting_values_df <- data.frame(
+  
+  name = c(
+  
+    # biomass 
+    "bg_biomass", 
+    "ag_biomass", 
+    
+    # nutrients/detritus
+    "nutrients_pool", 
+    "detritus_pool", 
+    
+    # fishpop related
+    "pop_n", 
+    "pop_mean_size", 
+    "pop_var_size"), 
+  
+  fun = c(
+    
+    # biomass 
+    "setup_seafloor()", 
+    "setup_seafloor()", 
                                          
-                                         "setup_seafloor()",
-                                         "setup_seafloor()", 
+    "setup_seafloor()",
+    "setup_seafloor()", 
                                          
-                                         "setup_fishpop()", 
-                                         "setup_fishpop()", 
-                                         "setup_fishpop()"), 
-                                 
-                                 descr = c("Starting aboveground biomass", 
-                                           "Starting belowground biomass", 
-                                           
-                                           "Starting nutrients pool", 
-                                           "Starting detritus biomass", 
-                                           
-                                           "Number of fish individuals", 
-                                           "Mean fish individual size", 
-                                           "Variation fish individual size"))
+    "setup_fishpop()", 
+    "setup_fishpop()", 
+    "setup_fishpop()"), 
+  
+  descr = c(
+    
+    # biomass 
+    "Starting belowground biomass", 
+    "Starting aboveground biomass", 
+    
+    # nutrients/detritus                                       
+    "Starting nutrients pool", 
+    "Starting detritus biomass", 
+      
+    # fishpop related                                     
+    "Number of fish individuals", 
+    "Mean fish individual size", 
+    "Variation fish individual size"))
                 
 knitr::kable(starting_values_df, col.names = c("Name", "Function", "Describtion"), align = "lrr") %>% 
   kableExtra::kable_styling(full_width = TRUE, position = "center", font_size = 12, )
@@ -68,20 +83,21 @@ knitr::kable(starting_values_df, col.names = c("Name", "Function", "Describtion"
 parameter_df <- data.frame(
   
   name = c(
-    # ag_*
-    "ag_biomass_max", 
-    "ag_biomass_min", 
-    "ag_v_max", 
-    "ag_k_m",
-    "ag_gamma",
     
     # bg_*
-    "bg_biomass_max", 
     "bg_biomass_min", 
+    "bg_biomass_max", 
     "bg_v_max", 
     "bg_k_m", 
     "bg_gamma", 
-      
+    
+    # ag_*
+    "ag_biomass_min", 
+    "ag_biomass_max", 
+    "ag_v_max", 
+    "ag_k_m",
+    "ag_gamma",
+  
     # seagrass_*
     "seagrass_thres",
     "seagrass_slope",
@@ -96,6 +112,7 @@ parameter_df <- data.frame(
     "detritus_diffusion",
     "detritus_fish_decomp",
     "detritus_fish_diffusion",
+    "detritus_output",
     
     # move_* 
     "move_mean",
@@ -126,6 +143,13 @@ parameter_df <- data.frame(
   
   fun = c(
     
+     # bg_*      
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()", 
+    "rcpp_seagrass_growth()",
+    "rcpp_seagrass_growth()",
+    
      # ag_*
     "rcpp_seagrass_growth()", 
     "rcpp_seagrass_growth()", 
@@ -133,13 +157,6 @@ parameter_df <- data.frame(
     "rcpp_seagrass_growth()",
     "rcpp_seagrass_growth()", 
     
-     # bg_*      
-    "rcpp_seagrass_growth()", 
-    "rcpp_seagrass_growth()", 
-    "rcpp_seagrass_growth()", 
-    "rcpp_seagrass_growth()",
-    "rcpp_seagrass_growth()",
-        
     # seagrass_*  
     "rcpp_seagrass_growth()", 
     "rcpp_seagrass_growth()",
@@ -154,6 +171,7 @@ parameter_df <- data.frame(
     "rcpp_diffuse_values()",
     "rcpp_mineralization()",
     "rcpp_diffuse_values()",
+    "rcpp_nutr_output()",
     
     # move_* 
     "rcpp_move_rand(), rcpp_move_behav()",
@@ -184,20 +202,20 @@ parameter_df <- data.frame(
   
   descr = c(
     
+    # bg_*
+    "Minimum belowground biomass", 
+    "Maximum belowground biomass", 
+    "Maximum belowground uptake rate", 
+    "Half-saturation belowground nutrient uptake",
+    "Nutrient content percent per dry weight belowground biomass",
+    
     # ag_*
-    "Maximum aboveground biomass", 
     "Minimum aboveground biomass", 
+    "Maximum aboveground biomass", 
     "Maximum aboveground uptake rate", 
     "Half-saturation aboveground nutrient uptake",
     "Nutrient content percent per dry weight aboveground biomass",
     
-    # bg_*
-    "Maximum belowground biomass", 
-    "Minimum belowground biomass", 
-    "Maximum belowground uptake rate", 
-    "Half-saturation belowground nutrient uptake",
-    "Nutrient content percent per dry weight belowground biomass",
-      
     # seagrass_*
     "Midpoint or threshold of allocation function",
     "Slope of allocation function",
@@ -212,6 +230,7 @@ parameter_df <- data.frame(
     "Fraction of detrital biomass that is diffused across neighboring cells",
     "Fraction of fish detrital biomass that is decomposited",
     "Fraction of fish detrital biomass that is diffused across neighboring cells",
+     "Fraction of detritus pool that exits the system each timestep", 
     
     # move_* 
     "Mean movement distance",

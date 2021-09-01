@@ -28,63 +28,80 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   flag_final <- TRUE
 
   # specify all required starting values
-  required_starting <- c("ag_biomass",
-                         "bg_biomass",
+  required_starting <- c(
 
-                         "nutrients_pool",
-                         "detritus_pool",
+    # biomasses
+    "bg_biomass",
+    "ag_biomass",
 
-                         "pop_n",
-                         "pop_mean_size",
-                         "pop_var_size")
+    # nutr/detritus
+    "nutrients_pool",
+    "detritus_pool",
+
+    # fishpop related
+    "pop_n",
+    "pop_mean_size",
+    "pop_var_size")
 
   # specify all required parameters
-  required_parameters <- c("ag_biomass_max",
-                           "ag_biomass_min",
-                           "ag_v_max",
-                           "ag_k_m",
-                           "ag_gamma",
+  required_parameters <- c(
 
-                           "bg_biomass_max",
-                           "bg_biomass_min",
-                           "bg_v_max",
-                           "bg_k_m",
-                           "bg_gamma",
+    # belowground biomass
+    "bg_biomass_min",
+    "bg_biomass_max",
+    "bg_v_max",
+    "bg_k_m",
+    "bg_gamma",
 
-                           "seagrass_thres",
-                           "seagrass_slope",
-                           "seagrass_slough",
+    # aboveground biomass
+    "ag_biomass_min",
+    "ag_biomass_max",
+    "ag_v_max",
+    "ag_k_m",
+    "ag_gamma",
 
-                           "nutrients_diffusion",
-                           "nutrients_output",
+    # seagrass relate
+    "seagrass_thres",
+    "seagrass_slope",
+    "seagrass_slough",
 
-                           "detritus_mineralization",
-                           "detritus_diffusion",
-                           "detritus_fish_decomp",
-                           "detritus_fish_diffusion",
+    # nutrients
+    "nutrients_diffusion",
+    "nutrients_output",
 
-                           "move_mean",
-                           "move_var",
-                           "move_border",
-                           "move_reef",
-                           "move_return",
+    # detritus
+    "detritus_mineralization",
+    "detritus_diffusion",
+    "detritus_fish_decomp",
+    "detritus_fish_diffusion",
+    "detritus_output",
 
-                           "pop_reserves_max",
-                           "pop_reserves_thres_lo",
-                           "pop_reserves_thres_hi",
-                           "pop_reserves_consump", # pop_reserves_consumption
+    # fishpop movement
+    "move_mean",
+    "move_var",
+    "move_border",
+    "move_reef",
+    "move_return",
 
-                           "pop_a",
-                           "pop_b",
-                           "pop_k",
-                           "pop_linf",
-                           "pop_n_body",
+    # fishpop reserves
+    "pop_reserves_max",
+    "pop_reserves_thres_lo",
+    "pop_reserves_thres_hi",
+    "pop_reserves_consump",
 
-                           "resp_intercept",
-                           "resp_slope",
-                           "resp_temp_low",
-                           "resp_temp_optm",
-                           "resp_temp_max")
+    # fishpop dimensions
+    "pop_a",
+    "pop_b",
+    "pop_k",
+    "pop_linf",
+    "pop_n_body",
+
+    # fishpop respiration
+    "resp_intercept",
+    "resp_slope",
+    "resp_temp_low",
+    "resp_temp_optm",
+    "resp_temp_max")
 
   # just print list with required parameters
   if (is.null(starting_values) && is.null(parameters)) {
@@ -190,6 +207,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
+                            parameters$detritus_output,
 
                             parameters$pop_reserves_max,
                             parameters$pop_reserves_thres_hi) > 1,
@@ -203,6 +221,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
+                            parameters$detritus_output,
 
                             parameters$pop_reserves_max,
                             parameters$pop_reserves_thres_lo) < 0))

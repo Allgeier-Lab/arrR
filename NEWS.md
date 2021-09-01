@@ -1,5 +1,6 @@
 # arrR 1.2
 * Adding `pkgdown` homepage
+* Add `detritus_output` to `rcpp_nutr_output`
 
 # arrR 1.1.1
 * Return `pop_reserves_thres` in final `mdl_rn` object
