@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - development
+  pull_request:
+    branches:
+      - main
 
 name: R-CMD-check
 
