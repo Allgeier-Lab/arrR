@@ -38,10 +38,10 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, dou
 
     double detritus = seafloor(i, 5) * detritus_output;
 
-    // add nutrient input of timestep
+    // remove output from nutrients pool
     seafloor(i, 4) -= nutrients;
 
-    // add nutrient input of timestep
+    // remove output from detritus pool
     seafloor(i, 5) -= detritus;
 
   }

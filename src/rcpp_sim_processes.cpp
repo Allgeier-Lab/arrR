@@ -78,7 +78,8 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
 
   // flag if output needs to be run
-  bool flag_output = as<double>(parameters["nutrients_output"]) > 0.0;
+  bool flag_output = (as<double>(parameters["nutrients_output"]) > 0.0) ||
+    (as<double>(parameters["detritus_output"]) > 0.0);
 
   // init seafloor stuff //
 
