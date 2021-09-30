@@ -4,10 +4,12 @@
 \alias{plot_allocation}
 \title{plot_allocation}
 \usage{
-plot_allocation(parameters)
+plot_allocation(parameters, base_size = 10)
 }
 \arguments{
 \item{parameters}{List with model parameters.}
+
+\item{base_size}{Numeric to specify base font size.}
 }
 \description{
 Plotting method for seagrass growth allocation ratio.
