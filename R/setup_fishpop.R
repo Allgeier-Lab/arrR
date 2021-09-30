@@ -39,7 +39,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
 
   }
 
-  #
+  # create fishpop
   if (starting_values$pop_n != 0) {
 
     # create random coordinates within environment

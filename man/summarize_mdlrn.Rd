@@ -4,13 +4,22 @@
 \alias{summarize_mdlrn}
 \title{summarize_mdlrn}
 \usage{
-summarize_mdlrn(result, summary = c("min", "mean", "max"))
+summarize_mdlrn(
+  result,
+  what = c("seafloor", "fishpop"),
+  summary = c("min", "mean", "max"),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
 
+\item{what}{Vector with 'seafloor' and/or 'fishpop' to specifiy what to summarize.}
+
 \item{summary}{String with summary functions. Must return one value when used
 with aggregate().}
+
+\item{verbose}{Logical if warning messages should be printed.}
 }
 \value{
 list

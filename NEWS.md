@@ -1,11 +1,13 @@
 # arrR 1.2
 * Adding `pkgdown` homepage
 * Add `detritus_output` to `rcpp_nutr_output`
+* Streamlined code for `summarize_mdlrn` and `plot.mdl_rn`
 
-# arrR 1.1.1
+# arrR 1.2
 * Return `pop_reserves_thres` in final `mdl_rn` object
 * Fix bug in `get_density` if not `max_i` was selected as timestep
 * Return `max_dist` in `run_simulation`
+* Minor bugfix in `run_simulation` if fishpop with 0 indiv was provided
 
 # arrR 1.1
 * Fix bug in `run_simulation` and return of `nutr_input`

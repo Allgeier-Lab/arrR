@@ -141,11 +141,15 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if fishpop is NULL
-  if (is.null(fishpop)) {
+  if (is.null(fishpop) || nrow(fishpop) == 0) {
 
-    # create empty dataframe
-    fishpop <- setup_fishpop(seafloor = seafloor, starting_values = list(pop_n = 0),
-                             verbose = FALSE)
+    if (is.null(fishpop)) {
+
+      # create empty dataframe
+      fishpop <- setup_fishpop(seafloor = seafloor, starting_values = list(pop_n = 0),
+                               verbose = FALSE)
+
+    }
 
     # not used but needed objects
     max_dist <- 0.0
