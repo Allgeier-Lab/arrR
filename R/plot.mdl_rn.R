@@ -68,11 +68,11 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
                                              col = "summary", linetype = "summary")) +
-      ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
+      ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Dry weight ag biomass [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = "Dry weight bg biomass [g/cell]") +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -81,11 +81,11 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
       ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
                                              col = "summary", linetype = "summary")) +
-      ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
+      ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Dry weight bg biomass [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = "Dry weight ag biomass [g/cell]") +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -138,10 +138,10 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = ag_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = bg_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$ag_biomass,
-                                      name = "Dry weight ag\nbiomass [g/cell]") +
+                                      name = "Dry weight bg\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
@@ -149,10 +149,10 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = bg_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = ag_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$bg_biomass,
-                                      name = "Dry weight bg\nbiomass [g/cell]") +
+                                      name = "Dry weight ag\nbiomass [g/cell]") +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
         ggplot2::theme_classic(base_size = base_size) +
