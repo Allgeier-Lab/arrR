@@ -1,27 +1,26 @@
 on:
   push:
-    branches:
-      - main
-      - development
-    paths:
-      - README.Rmd
+    branches: [main, development]
+    paths: ['README.Rmd']
 
 name: Render-README
 
 jobs:
   render-readme:
-    # The type of runner that the job will run on
-    runs-on: macOS-latest
-
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: r-lib/actions/setup-r@v1
-    - uses: r-lib/actions/setup-pandoc@v1
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    # Install packages needed
-    - name: install required packages
-      run: Rscript -e 'install.packages("rmarkdown")'
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-renv@v1
 
     # Render READEME.md using rmarkdown
     - name: render README
