@@ -24,15 +24,17 @@
 #' @return list
 #'
 #' @examples
+#' \dontrun{
 #' calc_size(pop_n = 8, pop_mean_size = arrR_starting_values$pop_mean_size,
 #' pop_var_size = arrR_starting_values$pop_var_size,
 #' pop_linf = arrR_parameters$pop_linf, pop_a = arrR_parameters$pop_a,
 #' pop_b = arrR_parameters$pop_b, use_log = TRUE)
+#' }
 #'
 #' @aliases calc_size
 #' @rdname calc_size
 #'
-#' @export
+#' @keywords internal
 calc_size <- function(pop_n, pop_mean_size, pop_var_size,
                       pop_linf, pop_a, pop_b, use_log = TRUE) {
 

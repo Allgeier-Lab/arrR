@@ -9,24 +9,26 @@ reference:
     contents:
       - read_parameters
       - check_parameters
+      - arrR_starting_values
+      - arrR_parameters
       - setup_seafloor
       - setup_fishpop
       - get_stable_values
-      - arrR_starting_values
-      - arrR_parameters
   - title: Run model
     contents:
       - run_simulation
   - title: Various
     contents:
       - filter_mdlrn
-      - summarize_mdlrn
       - get_density
-      - mdlrn_to_raster
       - get_limits
+      - get_production
+      - mdlrn_to_raster
       - plot_allocation
+      - plot_production
       - plot.mdl_rn
       - print.mdl_rn
+      - summarize_mdlrn
   - title: Sub-processes
     contents:
       - rcpp_sim_processes

@@ -53,3 +53,4 @@ If reservers above a certain threshold, individuals either shelter at reef cells
 or move back towards reef cells (behavior 2). If reserves are not above the threshold,
 individuals move randomly across the environment to forage.
 }
+\keyword{internal}

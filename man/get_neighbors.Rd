@@ -30,3 +30,4 @@ get_neighbors(seafloor)
 }
 
 }
+\keyword{internal}

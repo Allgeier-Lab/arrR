@@ -1,8 +1,9 @@
-# arrR 1.2
+# arrR 1.3
 * Adding `pkgdown` homepage
 * Add `detritus_output` to `rcpp_nutr_output`
 * Streamlined code for `summarize_mdlrn` and `plot.mdl_rn`
 * Adding `get_production` and `plot_production` function
+* Don't export all functions but use internals
 
 # arrR 1.2
 * Return `pop_reserves_thres` in final `mdl_rn` object

@@ -21,3 +21,4 @@ Rcpp get closest reef.
 Get ID and distance to closet reef cell. The first element of the returning
 vector is the ID, the second the distance in meter.
 }
+\keyword{internal}

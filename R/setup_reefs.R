@@ -16,7 +16,7 @@
 #' @aliases setup_reefs
 #' @rdname setup_reefs
 #'
-#' @export
+#' @keywords internal
 setup_reefs <- function(object, xy, dimensions) {
 
   # get cell ids of provided coordinates

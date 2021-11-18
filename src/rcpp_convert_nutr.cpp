@@ -22,7 +22,7 @@ using namespace Rcpp;
 //' @aliases rcpp_convert_nutr
 //' @rdname rcpp_convert_nutr
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_convert_nutr(double x, Rcpp::String to) {
 

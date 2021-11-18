@@ -22,7 +22,7 @@
 #' @aliases get_neighbors
 #' @rdname get_neighbors
 #'
-#' @export
+#' @keywords internal
 get_neighbors <- function(x, direction = 8, cpp = FALSE) {
 
   # get total number of cells
