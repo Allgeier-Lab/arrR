@@ -7,8 +7,8 @@
 Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
-[![R-CMD-check](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml/badge.svg?branch=development)](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/Allgeier-Lab/arrR/branch/development/graph/badge.svg?token=Jx7R1vWP3s)](https://codecov.io/gh/Allgeier-Lab/arrR)
+[![R-CMD-check](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/Allgeier-Lab/arrR/branch/main/graph/badge.svg?token=Jx7R1vWP3s)](https://codecov.io/gh/Allgeier-Lab/arrR)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -47,8 +47,8 @@ remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 
 ## Get started
 
-Please see `vignette("get-started")` for a short tutorial how to use
-**arrR**.
+Please see `vignette("get-started")` for a short tutorial how to use the
+**arrR** package.
 
 ## Code of Conduct
 
@@ -61,4 +61,5 @@ By contributing to this project, you agree to abide by its terms.
 
 Questions or bugs? Please get in touch via
 [mhk.hesselbarth\<at\>gmail.com](mailto:mhk.hesselbarth@gmail.com) or
-submit an issue [here](https://github.com/Allgeier-Lab/arrR/issues).
+submit an issue [here](https://github.com/Allgeier-Lab/arrR/issues). We
+are always happy to hear your input\!
