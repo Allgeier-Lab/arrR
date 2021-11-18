@@ -48,7 +48,7 @@ remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 
 ## Get started
 
-Please see `vignette("get-started")` for a short tutorial how to use **arrR**.
+Please see `vignette("get-started")` for a short tutorial how to use the **arrR** package.
 
 ## Code of Conduct
 
