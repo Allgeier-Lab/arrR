@@ -19,7 +19,7 @@ using namespace Rcpp;
 //' @aliases rcpp_get_bearing
 //' @rdname rcpp_get_bearing
 //'
-//' @keywords internal
+//' @export
 // [[Rcpp::export]]
 double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 

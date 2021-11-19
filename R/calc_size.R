@@ -10,7 +10,7 @@
 #' @param use_log Logical if TRUE, random log distribution is used.
 #'
 #' @details
-#' Internal function to calculate size and weight of fish individuals based on
+#' Calculate size and weight of fish individuals based on
 #' length-weight relationships. The starting length is randomly drawn from a log-norm
 #' or uniform distribution. If an uniform distribution is used, the minimum and maximum
 #' are based on 10% and 90% of the maximum size (\code{pop_linf}), respectively.
@@ -34,7 +34,7 @@
 #' @aliases calc_size
 #' @rdname calc_size
 #'
-#' @keywords internal
+#' @export
 calc_size <- function(pop_n, pop_mean_size, pop_var_size,
                       pop_linf, pop_a, pop_b, use_log = TRUE) {
 

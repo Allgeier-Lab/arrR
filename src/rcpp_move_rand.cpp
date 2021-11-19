@@ -38,7 +38,7 @@ using namespace Rcpp;
 //' @aliases rcpp_move_rand
 //' @rdname rcpp_move_rand
 //'
-//' @keywords internal
+//' @export
 // [[Rcpp::export]]
 void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                     double move_mean, double move_var, double max_dist, bool reef_attraction,

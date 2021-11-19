@@ -24,4 +24,3 @@ Rcpp update coordinates.
 \details{
 Update xy coordinates and activity of fish individuals depending on \code{move_dist}.
 }
-\keyword{internal}

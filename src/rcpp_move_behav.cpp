@@ -36,7 +36,7 @@ using namespace Rcpp;
 //' @aliases rcpp_move_behav
 //' @rdname rcpp_move_behav
 //'
-//' @keywords internal
+//' @export
 // [[Rcpp::export]]
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                      Rcpp::NumericVector pop_reserves_thres,

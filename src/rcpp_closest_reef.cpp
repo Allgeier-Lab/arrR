@@ -20,8 +20,8 @@ using namespace Rcpp;
 //' @aliases rcpp_closest_reef
 //' @rdname rcpp_closest_reef
 //'
-//' @keywords internal
-// [[Rcpp::export]]
+//' @export
+// [[Rcpp::export]]s
 Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
 
   // init vector to store result

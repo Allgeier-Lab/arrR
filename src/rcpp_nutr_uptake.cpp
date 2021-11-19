@@ -32,7 +32,7 @@ using namespace Rcpp;
 //' @aliases rcpp_nutr_uptake
 //' @rdname rcpp_nutr_uptake
 //'
-//' @keywords internal
+//' @export
 // [[Rcpp::export]]
 double rcpp_nutr_uptake(double nutrients, double biomass,
                         double v_max, double k_m, double time_frac) {

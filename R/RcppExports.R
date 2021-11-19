@@ -26,7 +26,7 @@
 #' @aliases rcpp_allocation_ratio
 #' @rdname rcpp_allocation_ratio
 #'
-#' @keywords internal
+#' @export
 rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, slope) {
     .Call(`_arrR_rcpp_allocation_ratio`, biomass, biomass_min, biomass_max, threshold, slope)
 }
@@ -54,7 +54,7 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #' @aliases rcpp_cell_from_xy
 #' @rdname rcpp_cell_from_xy
 #'
-#' @keywords internal
+#' @export
 rcpp_cell_from_xy <- function(x, y, extent, dimensions, rcpp) {
     .Call(`_arrR_rcpp_cell_from_xy`, x, y, extent, dimensions, rcpp)
 }
@@ -76,10 +76,8 @@ rcpp_cell_from_xy <- function(x, y, extent, dimensions, rcpp) {
 #' @aliases rcpp_closest_reef
 #' @rdname rcpp_closest_reef
 #'
-#' @keywords internal
-rcpp_closest_reef <- function(x, y, coords_reef) {
-    .Call(`_arrR_rcpp_closest_reef`, x, y, coords_reef)
-}
+#' @export
+NULL
 
 #' rcpp_convert_nutr
 #'
@@ -100,7 +98,7 @@ rcpp_closest_reef <- function(x, y, coords_reef) {
 #' @aliases rcpp_convert_nutr
 #' @rdname rcpp_convert_nutr
 #'
-#' @keywords internal
+#' @export
 rcpp_convert_nutr <- function(x, to) {
     .Call(`_arrR_rcpp_convert_nutr`, x, to)
 }
@@ -124,7 +122,7 @@ rcpp_convert_nutr <- function(x, to) {
 #' @aliases rcpp_diffuse_values
 #' @rdname rcpp_diffuse_values
 #'
-#' @keywords internal
+#' @export
 rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
     invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
 }
@@ -192,7 +190,7 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' @aliases rcpp_get_bearing
 #' @rdname rcpp_get_bearing
 #'
-#' @keywords internal
+#' @export
 rcpp_get_bearing <- function(x1, y1, x2, y2) {
     .Call(`_arrR_rcpp_get_bearing`, x1, y1, x2, y2)
 }
@@ -242,7 +240,7 @@ rcpp_mineralization <- function(seafloor, detritus_mineralization, detritus_fish
 #' @aliases rcpp_modify_degree
 #' @rdname rcpp_modify_degree
 #'
-#' @keywords internal
+#' @export
 rcpp_modify_degree <- function(x, y) {
     .Call(`_arrR_rcpp_modify_degree`, x, y)
 }
@@ -302,7 +300,7 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #' @aliases rcpp_move_behav
 #' @rdname rcpp_move_behav
 #'
-#' @keywords internal
+#' @export
 rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions) {
     invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, coords_reef, pop_reserves_thres, move_mean, move_var, move_reef, move_border, move_return, max_dist, extent, dimensions))
 }
@@ -337,7 +335,7 @@ rcpp_move_behav <- function(fishpop, coords_reef, pop_reserves_thres, move_mean,
 #' @aliases rcpp_move_rand
 #' @rdname rcpp_move_rand
 #'
-#' @keywords internal
+#' @export
 rcpp_move_rand <- function(fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions) {
     invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, coords_reef, move_mean, move_var, max_dist, reef_attraction, extent, dimensions))
 }
@@ -457,7 +455,7 @@ rcpp_nutr_output <- function(seafloor, nutrients_output, detritus_output) {
 #' @aliases rcpp_nutr_uptake
 #' @rdname rcpp_nutr_uptake
 #'
-#' @keywords internal
+#' @export
 rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
     .Call(`_arrR_rcpp_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
 }
@@ -487,7 +485,7 @@ rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
 #' @aliases rcpp_reincarnate
 #' @rdname rcpp_reincarnate
 #'
-#' @keywords internal
+#' @export
 rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason) {
     invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason))
 }
@@ -551,7 +549,7 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @aliases rcpp_rlognorm
 #' @rdname rcpp_rlognorm
 #'
-#' @keywords internal
+#' @export
 rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
@@ -617,7 +615,7 @@ rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamm
 #' @aliases rcpp_shuffle
 #' @rdname rcpp_shuffle
 #'
-#' @keywords internal
+#' @export
 rcpp_shuffle <- function(min, max) {
     .Call(`_arrR_rcpp_shuffle`, min, max)
 }
@@ -685,7 +683,7 @@ rcpp_sim_processes <- function(seafloor, fishpop, seafloor_track, fishpop_track,
 #' @aliases rcpp_translate_torus
 #' @rdname rcpp_translate_torus
 #'
-#' @keywords internal
+#' @export
 rcpp_translate_torus <- function(x, y, extent) {
     .Call(`_arrR_rcpp_translate_torus`, x, y, extent)
 }
@@ -708,7 +706,7 @@ rcpp_translate_torus <- function(x, y, extent) {
 #' @aliases rcpp_update_coords
 #' @rdname rcpp_update_coords
 #'
-#' @keywords internal
+#' @export
 rcpp_update_coords <- function(fishpop, i, move_dist, max_dist, extent) {
     invisible(.Call(`_arrR_rcpp_update_coords`, fishpop, i, move_dist, max_dist, extent))
 }

@@ -21,4 +21,3 @@ Rcpp modify degree.
 Modify the degree of direction heading of individuals. The function ensures that
 all degree are between 0 <= x <= 360.
 }
-\keyword{internal}
