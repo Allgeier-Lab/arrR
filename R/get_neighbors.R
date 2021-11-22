@@ -8,7 +8,7 @@
 #' @param cpp Logical specifying if all indices start with 0 according to C++ indexing.
 #'
 #' @details
-#' Internal function to get matrix with cell IDs of all neighboring cells.
+#' Get matrix with cell IDs of all neighboring cells.
 #' The \code{direction} arguments allows to specifiy which cells are considered to be
 #' neighbors (direction = 4: "Rook's case"; direction = 8: "Queen's case").
 #'
@@ -22,7 +22,7 @@
 #' @aliases get_neighbors
 #' @rdname get_neighbors
 #'
-#' @keywords internal
+#' @export
 get_neighbors <- function(x, direction = 8, cpp = FALSE) {
 
   # get total number of cells

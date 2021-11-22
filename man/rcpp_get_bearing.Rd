@@ -20,4 +20,3 @@ Rcpp get bearing between two coordinate pairs.
 \details{
 Get bearing between (x1,y1) and (x2,y2).
 }
-\keyword{internal}

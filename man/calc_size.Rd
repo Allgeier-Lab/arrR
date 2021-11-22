@@ -31,7 +31,7 @@ list
 Calculate size and weight of fish individuals.
 }
 \details{
-Internal function to calculate size and weight of fish individuals based on
+Calculate size and weight of fish individuals based on
 length-weight relationships. The starting length is randomly drawn from a log-norm
 or uniform distribution. If an uniform distribution is used, the minimum and maximum
 are based on 10% and 90% of the maximum size (\code{pop_linf}), respectively.
@@ -51,4 +51,3 @@ www.fishbase.org.
 
 The LENGTH-WEIGHT Table. https://www.fishbase.org/manual/fishbasethe_length_weight_table.htm
 }
-\keyword{internal}

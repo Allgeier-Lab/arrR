@@ -20,7 +20,7 @@ matrix
 Get ID of neighboring cells.
 }
 \details{
-Internal function to get matrix with cell IDs of all neighboring cells.
+Get matrix with cell IDs of all neighboring cells.
 The \code{direction} arguments allows to specifiy which cells are considered to be
 neighbors (direction = 4: "Rook's case"; direction = 8: "Queen's case").
 }
@@ -30,4 +30,3 @@ get_neighbors(seafloor)
 }
 
 }
-\keyword{internal}
