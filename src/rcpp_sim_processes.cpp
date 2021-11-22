@@ -56,6 +56,7 @@ using namespace Rcpp;
 //' @aliases rcpp_sim_processes
 //' @rdname rcpp_sim_processes
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
                         Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters,

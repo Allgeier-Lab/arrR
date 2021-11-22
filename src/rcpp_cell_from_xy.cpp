@@ -26,6 +26,7 @@ using namespace Rcpp;
 //' @aliases rcpp_cell_from_xy
 //' @rdname rcpp_cell_from_xy
 //'
+//' @export
 // [[Rcpp::export]]
 int rcpp_cell_from_xy(double x, double y,
                       Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,

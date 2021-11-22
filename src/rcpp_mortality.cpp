@@ -28,6 +28,7 @@ using namespace Rcpp;
 //' @aliases rcpp_mortality
 //' @rdname rcpp_mortality
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,

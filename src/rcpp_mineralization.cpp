@@ -28,6 +28,7 @@ using namespace Rcpp;
 //' @aliases rcpp_mineralization
 //' @rdname rcpp_mineralization
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
                          double detritus_mineralization, double detritus_fish_decomp) {

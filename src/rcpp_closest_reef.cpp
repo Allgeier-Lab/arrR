@@ -20,6 +20,7 @@ using namespace Rcpp;
 //' @aliases rcpp_closest_reef
 //' @rdname rcpp_closest_reef
 //'
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
 

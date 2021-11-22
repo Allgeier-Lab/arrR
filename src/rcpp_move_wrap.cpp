@@ -36,6 +36,7 @@ using namespace Rcpp;
 //' @aliases rcpp_move_wrap
 //' @rdname rcpp_move_wrap
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
                     Rcpp::String movement, Rcpp::NumericVector pop_reserves_thres,

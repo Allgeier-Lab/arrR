@@ -45,6 +45,7 @@ using namespace Rcpp;
 //' @aliases rcpp_seagrass_growth
 //' @rdname rcpp_seagrass_growth
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
                           double bg_v_max, double bg_k_m, double bg_gamma,

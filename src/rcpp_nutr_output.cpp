@@ -26,6 +26,7 @@ using namespace Rcpp;
 //' @aliases rcpp_nutr_output
 //' @rdname rcpp_nutr_output
 //'
+//' @export
 // [[Rcpp::export]]
 void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output) {
 
