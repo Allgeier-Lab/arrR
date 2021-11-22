@@ -48,4 +48,3 @@ In the case of attracted movement, fish individuals are aware of the distance to
 the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
 always swim in the direction of the shortest distance to a reef cell.
 }
-\keyword{internal}

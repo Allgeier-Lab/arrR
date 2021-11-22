@@ -1,19 +1,24 @@
 ## code to prepare `DATASET` dataset goes here
 library(arrR)
 
+# get starting values
 starting_values <- arrR::arrR_starting_values
 
+# get parameters
 parameters <- arrR::arrR_parameters
 
-check_parameters(starting_values = starting_values, parameters = parameters)
+# change some starting values and parameters
+starting_values$pop_n <- 8
 
 parameters$pop_reserves_max <- 0.1
 
 parameters$seagrass_thres <- -1/4
 
+# create 5 reef cells in center of seafloor
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
+# get stable value
 stable_values <- get_stable_values(starting_values = starting_values,
                                    parameters = parameters)
 
@@ -21,14 +26,15 @@ starting_values$nutrients_pool <- stable_values$nutrients_pool
 
 starting_values$detritus_pool <- stable_values$detritus_pool
 
-input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = c(1, 1),
-                                 reefs = reef_matrix,
-                                 starting_values = starting_values)
+# create seafloor
+input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+                                 reefs = reef_matrix, starting_values = starting_values)
 
-input_fishpop <- setup_fishpop(seafloor = input_seafloor,
-                               starting_values = starting_values,
+# create fishpop
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, starting_values = starting_values,
                                parameters = parameters)
 
+# setup iterations things
 min_per_i <- 120
 
 # run the model for 10 years

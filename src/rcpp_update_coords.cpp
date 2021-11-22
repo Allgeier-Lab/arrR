@@ -22,7 +22,6 @@ using namespace Rcpp;
 //' @aliases rcpp_update_coords
 //' @rdname rcpp_update_coords
 //'
-//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {

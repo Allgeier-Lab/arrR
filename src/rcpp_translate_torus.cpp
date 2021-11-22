@@ -21,7 +21,6 @@ using namespace Rcpp;
 //' @aliases rcpp_translate_torus
 //' @rdname rcpp_translate_torus
 //'
-//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent) {
 

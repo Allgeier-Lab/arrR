@@ -9,7 +9,7 @@
 #' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #'
 #' @details
-#' Internal function to setup environmental values used during \code{\link{setup_seafloor}}.
+#' Setup environmental values used during \code{\link{setup_seafloor}}.
 #' The function creates a \code{RasterBrick} with all required values. All incremental
 #' values that will be increased during model run are set to zero. The function does not
 #' setup reef cells.
@@ -22,7 +22,7 @@
 #' @aliases setup_envir_values
 #' @rdname setup_envir_values
 #'
-#' @keywords internal
+#' @export
 setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
                                nutrients_pool, detritus_pool, random) {
 

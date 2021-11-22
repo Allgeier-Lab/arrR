@@ -48,18 +48,30 @@ starting_values$pop_n <- 8
 
 parameters$pop_reserves_max <- 0.1
 
+parameters$seagrass_thres <- -1/4
+
 # check if all parameters are present and meaningful
 check_parameters(starting_values = starting_values, parameters = parameters)
 ```
 
 ### 2. Setup seafloor and fish population
 
-Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate *x,y(0,0)*. Additionally, when setting up the seafloor, you need to specify the dimenstions in *x*- and *y*-directions and the grain of one cell.
+Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate *x,y(0,0)*. Additionally, when setting up the seafloor, you need to specify the dimensions in *x*- and *y*-directions and the grain of one cell.
+
+The function `get_stable_values` allows to calculate the nutrients and detritus amount to keep the whole ecosystem theoretical stable (excluding fish detritus consumption and nutrient excretion). The values can be used to set up the simulation environment.
 
 ```{r setup_inputs}
 # create 5 reef cells in center of seafloor
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
                       ncol = 2, byrow = TRUE)
+
+# get stable nutrient/detritus values
+stable_values <- get_stable_values(starting_values = starting_values,
+                                   parameters = parameters)
+
+starting_values$nutrients_pool <- stable_values$nutrients_pool
+
+starting_values$detritus_pool <- stable_values$detritus_pool
 
 # create seafloor
 input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1, 

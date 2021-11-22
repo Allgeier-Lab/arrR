@@ -30,4 +30,3 @@ Simulates the diffusion of a certain share of i) nutrients_pool, ii) detritus_po
 and iii) detritus_fish_diffusion of each cell with its neighboring cells. Scheduling
 is simulated pseudo-simultaneous.
 }
-\keyword{internal}

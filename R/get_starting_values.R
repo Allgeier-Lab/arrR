@@ -7,7 +7,7 @@
 #' @param fishpop_values Matrix population created with \code{\link{setup_fishpop}}.
 #'
 #' @details
-#' Internal function to get mean starting values during \code{\link{run_simulation}}.
+#' Get mean starting values during \code{\link{run_simulation}}.
 #' Includes values for i) bg_biomass, ii) ag_biomass, iii) nutrients_pool, iv) detritus_pool,
 #' v) pop_n, and vi) pop_mean_size. The function is needed because some of the values
 #' can include stochasticity  and thus differ from the starting values.
@@ -22,7 +22,7 @@
 #' @aliases get_starting_values
 #' @rdname get_starting_values
 #'
-#' @keywords internal
+#' @export
 get_starting_values <- function(seafloor_values, fishpop_values) {
 
   # get mean values and # fish pop

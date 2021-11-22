@@ -24,7 +24,6 @@ using namespace Rcpp;
 //' @aliases rcpp_diffuse_values
 //' @rdname rcpp_diffuse_values
 //'
-//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj,
                          double nutrients_diffusion, double detritus_diffusion,
