@@ -50,7 +50,6 @@ using namespace Rcpp;
 //' @aliases rcpp_fishpop_growth
 //' @rdname rcpp_fishpop_growth
 //'
-//' @export
 // [[Rcpp::export]]
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,

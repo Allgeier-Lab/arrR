@@ -27,7 +27,6 @@ using namespace Rcpp;
 //' @aliases rcpp_nutr_input
 //' @rdname rcpp_nutr_input
 //'
-//' @export
 // [[Rcpp::export]]
 void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input) {
 
