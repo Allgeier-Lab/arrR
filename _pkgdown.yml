@@ -1,8 +1,8 @@
-title: arrR | Simulating artifical reefs in R
+url: https://allgeier-lab.github.io/arrR/
 
 template:
-  params:
-    bootswatch: sandstone
+  bootstrap: 5
+  bootswatch: sandstone
 
 reference:
   - title: Prepare model run
@@ -41,6 +41,26 @@ reference:
       - rcpp_mortality
       - rcpp_diffuse_values
       - rcpp_nutr_output
+  - title: Helper functions
+      - calc_size
+      - get_neighbors
+      - get_starting_values
+      - rcpp_allocation_ratio
+      - rcpp_cell_from_xy
+      - rcpp_closest_reef
+      - rcpp_convert_nutr
+      - rcpp_get_bearing
+      - rcpp_modify_degree
+      - rcpp_move_behav
+      - rcpp_move_rand
+      - rcpp_nutr_uptake
+      - rcpp_reincarnate
+      - rcpp_rlognorm
+      - rcpp_shuffle
+      - rcpp_translate_torus
+      - rcpp_update_coords
+      - setup_envir_values
+      - setup_reefs
 
 navbar:
   title: arrR

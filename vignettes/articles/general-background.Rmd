@@ -9,8 +9,8 @@ vignette: >
 ---
 
 > For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support for increased primary production around artificial reefs. Manuscript submitted for publication.*
->
-> To get a BibTex entry, please use `citation("arrR")`.
+
+To get a BibTex entry, please use `citation("arrR")`.
 
 ## Model concept
 
@@ -20,7 +20,7 @@ Seagrass primary production is simulated using a single-nutrient primary product
 
 ```{r concept_fig, echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Schematic overview of model concept (Adapted from DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6."}
 
-knitr::include_graphics(path = "Concept.png")
+knitr::include_graphics(path = "concept.png")
 
 ```
 
@@ -48,12 +48,12 @@ A simulation is started using the `run_simulation()` function. This includes the
 
 ### References
 
-DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 
-DeAngelis, D.L., Grimm, V., 2014. Individual-based models in ecology after four decades. F1000Prime Reports 6, 1–6. https://doi.org/10.12703/P6-39
+DeAngelis, D.L., Grimm, V., 2014. Individual-based models in ecology after four decades. F1000Prime Reports 6, 1–6. <https://doi.org/10.12703/P6-39>
 
-Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document]. URL www.fishbase.org (accessed 9.9.20).
+Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document]. URL <www.fishbase.org> (accessed 9.9.20).
 
-Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass Thalassia testudinum: Development of a whole-plant nitrogen budget. Limnol. Oceanogr. 44, 1204–1215. https://doi.org/10.4319/lo.1999.44.5.1204
+Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass Thalassia testudinum: Development of a whole-plant nitrogen budget. Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
 
 Schreck, C.B., Moyle, P.B. (Eds.), 1990. Methods for fish biology. American Fisheries Society, Bethesda, MD, USA.
