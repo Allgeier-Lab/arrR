@@ -50,7 +50,7 @@ remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 
 Please see `vignette("get-started")` for a short tutorial how to use the **arrR** package.
 
-```{r include = FALSE, fig.align = 'center'}
+```{r plot_result, echo = FALSE, fig.align = 'center'}
 plot(arrR:::result_readme)
 ```
 
