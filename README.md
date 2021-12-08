@@ -14,7 +14,7 @@ v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/li
 
 <!-- badges: end -->
 
-<img src="man/figures/logo.png" align="right" width="150" />
+<a href='https://allgeier-lab.github.io/arrR/'><img src='man/figures/logo.png' align="right" width="150" /></a>
 
 # **arrR** | **Ar**tifical **r**eefs in **R**
 
@@ -23,16 +23,16 @@ artificial reefs (ARs). For a more detailed model description, please
 see `vignette("general-background")`. Please see
 `vignette("get-started")` for a short tutorial how to use **arrR**.
 
-> To cite *arrR* in a publication or acknowledge its use, please use the
-> following temporary citation information, substituting ‘v0.0’ with the
-> version of the package that you used:
-> 
+To cite *arrR* in a publication or acknowledge its use, please use the
+following temporary citation information, substituting ‘v0.0’ with the
+version of the package that you used:
+
 > *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic
 > support for increased primary production around artificial reefs.
 > Manuscript submitted for publication. v0.0*
-> 
-> For more information, please see `vignette("publication-record")`. To
-> get a BibTex entry, please use `citation("arrR")`.
+
+For more information, please see `vignette("publication-record")`. To
+get a BibTex entry, please use `citation("arrR")`.
 
 ## Installation
 
