@@ -69,7 +69,7 @@ reference:
       - rcpp_shuffle
       - rcpp_translate_torus
       - rcpp_update_coords
-  - title: Internal
+  - title: internal
     contents:
       - arrR
 
