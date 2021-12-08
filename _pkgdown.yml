@@ -69,23 +69,23 @@ reference:
       - rcpp_shuffle
       - rcpp_translate_torus
       - rcpp_update_coords
-  - title: internal
-    contents:
-      - arrR
 
 navbar:
   structure:
     left:  [getstarted, reference, articles, news]
     right: [github, contact, search]
   components:
+
     getstarted:
       text: "Get Started"
       icon: fa fa-magic
       href: articles/get-started.html
+
     reference:
       icon: fa-gears
       text: "Functions"
       href: reference/index.html
+
     articles:
       icon: fa-graduation-cap
       text: "More"
@@ -99,10 +99,12 @@ navbar:
        - text: "Publication Record"
          icon: fa-file-text-o
          href: articles/publication-record.html
+
     news:
       icon: fa-newspaper-o
       text: "News"
       href: news/index.html
+
     contact:
       icon: fa-user
       hreft: https://mhesselbarth.rbind.io

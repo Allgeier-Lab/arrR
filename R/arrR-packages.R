@@ -14,6 +14,7 @@
 #' @docType package
 #' @useDynLib arrR, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
+#' @keywords internal
 "_PACKAGE"
 
 globalVariables(names = c(
