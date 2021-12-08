@@ -5,6 +5,8 @@ template:
   bootswatch: sandstone
 
 reference:
+  - contents:
+      - arrR
   - title: Prepare model run
     contents:
       - read_parameters
