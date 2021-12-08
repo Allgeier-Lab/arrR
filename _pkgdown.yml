@@ -2,7 +2,7 @@ url: https://allgeier-lab.github.io/arrR/
 
 template:
   bootstrap: 5
-  bootswatch: sandstone
+  bootswatch: lumen
 
 reference:
   - contents:
@@ -66,16 +66,21 @@ reference:
       - setup_reefs
 
 navbar:
-  title: arrR
-  left:
-    - text: "Get Started"
+  structure:
+    left:  [getstarted, reference, articles, news]
+    right: [github, contact, search]
+  components:
+    getstarted:
+      text: "Get Started"
       icon: fa fa-magic
       href: articles/get-started.html
-    - icon: fa-gears
+    reference:
+      icon: fa-gears
       text: "Functions"
       href: reference/index.html
-    - text: "More"
+    articles:
       icon: fa-graduation-cap
+      text: "More"
       menu:
        - text: "General Background"
          icon: fa-book
@@ -86,13 +91,14 @@ navbar:
        - text: "Publication Record"
          icon: fa-file-text-o
          href: articles/publication-record.html
-  right:
-    - icon: fa-newspaper-o
+    news:
+      icon: fa-newspaper-o
       text: "News"
       href: news/index.html
-    - icon: fa-github fa-lg
-      text: "Github"
-      href: https://github.com/Allgeier-Lab/arrR
-    - icon: fa-user
-      text: "Contact"
+    contact:
+      icon: fa-user
       hreft: https://mhesselbarth.rbind.io
+
+home:
+  sidebar:
+    structure: [authors, citation, license, community]
