@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# **arrR** | **Ar**tifical **r**eefs in **R** <img src="man/figures/logo.png" align="right" alt="" width="120" />
+
 <!-- badges: start -->
 
 | Development                                                                                                                        | CI                                                                                                                                                                           | License                                                                                                         |
@@ -10,14 +12,12 @@
 
 <!-- badges: end -->
 
-<a href='https://allgeier-lab.github.io/arrR/'><img src='man/figures/logo.png' align="right" width="150" /></a>
-
-# **arrR** | **Ar**tifical **r**eefs in **R**
-
 The goal of **arrR** is to simulate seagrass primary production around
 artificial reefs (ARs). For a more detailed model description, please
 see `vignette("general-background")`. Please see
 `vignette("get-started")` for a short tutorial how to use **arrR**.
+
+## Citation
 
 To cite *arrR* in a publication or acknowledge its use, please use the
 following temporary citation information, substituting ‘v0.0’ with the
