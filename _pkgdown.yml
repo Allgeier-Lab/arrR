@@ -5,8 +5,6 @@ template:
   bootswatch: lumen
 
 reference:
-  - contents:
-      - arrR
   - title: Prepare model run
     contents:
       - read_parameters
@@ -16,9 +14,11 @@ reference:
       - setup_seafloor
       - setup_fishpop
       - get_stable_values
+
   - title: Run model
     contents:
       - run_simulation
+
   - title: Various
     contents:
       - filter_mdlrn
@@ -31,6 +31,7 @@ reference:
       - plot.mdl_rn
       - print.mdl_rn
       - summarize_mdlrn
+
   - title: Sub-processes
     contents:
       - rcpp_sim_processes
@@ -43,11 +44,17 @@ reference:
       - rcpp_mortality
       - rcpp_diffuse_values
       - rcpp_nutr_output
+
   - title: Helper functions
     contents:
       - calc_size
       - get_neighbors
       - get_starting_values
+      - setup_envir_values
+      - setup_reefs
+
+  - title: Rcpp functions
+    contents:
       - rcpp_allocation_ratio
       - rcpp_cell_from_xy
       - rcpp_closest_reef
@@ -62,8 +69,9 @@ reference:
       - rcpp_shuffle
       - rcpp_translate_torus
       - rcpp_update_coords
-      - setup_envir_values
-      - setup_reefs
+  - title: Internal
+    contents:
+      - arrR
 
 navbar:
   structure:
@@ -101,4 +109,4 @@ navbar:
 
 home:
   sidebar:
-    structure: [authors, citation, license, community]
+    structure: [authors, license]
