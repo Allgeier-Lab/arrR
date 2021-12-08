@@ -21,5 +21,5 @@ Rcpp convert nutrients.
 Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
 }
 \references{
-https://en.wikipedia.org/wiki/Ammonium
+<https://en.wikipedia.org/wiki/Ammonium>
 }

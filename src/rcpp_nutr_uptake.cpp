@@ -21,11 +21,11 @@ using namespace Rcpp;
 //'
 //' @references
 //' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-//' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 //'
-//' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
-//' Thalassia testudinum: Development of a whole-plant nitrogen budget.
-//' Limnol. Oceanogr. 44, 1204–1215.https://doi.org/10.4319/lo.1999.44.5.1204
+//'Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
+//'Thalassia testudinum: Development of a whole-plant nitrogen budget.
+//'Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
 //'
 //' @return double
 //'

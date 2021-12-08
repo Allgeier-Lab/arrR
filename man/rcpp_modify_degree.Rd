@@ -9,7 +9,7 @@ rcpp_modify_degree(x, y)
 \arguments{
 \item{x}{Numeric with current angle in degree.}
 
-\item{y}{Numerich with change of degree (negative or positive).}
+\item{y}{Numeric with change of degree (negative or positive).}
 }
 \value{
 double

@@ -19,7 +19,7 @@
 #'
 #' @references
 #' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
-#' domain and range [0,1]?" https://stats.stackexchange.com/questions/214877/
+#' domain and range [0,1]?" <https://stats.stackexchange.com/questions/214877/>
 #'
 #' @return void
 #'
@@ -47,7 +47,7 @@ rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, 
 #'
 #' @references
 #' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
-#' and Modeling. R package version 3.4-5. https://CRAN.R-project.org/package=raster
+#' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
 #'
 #' @return int
 #'
@@ -93,7 +93,7 @@ rcpp_closest_reef <- function(x, y, coords_reef) {
 #' Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
 #'
 #' @references
-#' https://en.wikipedia.org/wiki/Ammonium
+#' <https://en.wikipedia.org/wiki/Ammonium>
 #'
 #' @return double
 #'
@@ -161,10 +161,10 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' @references
 #' Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
 #' Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
-#' harvest. Sci. Adv. 6, eaax8329. https://doi.org/10.1126/sciadv.aax8329
+#' harvest. Sci. Adv. 6, eaax8329. <https://doi.org/10.1126/sciadv.aax8329>
 #'
 #' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
-#' [WWW Document]. www.fishbase.org
+#' [WWW Document]. <www.fishbase.org>
 #'
 #' @return void
 #'
@@ -208,12 +208,12 @@ rcpp_get_bearing <- function(x1, y1, x2, y2) {
 #' @details
 #' Simulate mineralization of the detritus pool i.e., a ratio of the detritus_pool
 #' is added to the nutrients_pool. The corresponding amount is removed from the detritus_pool.
-#' Also, simulates decompostion of the detritus_fish_pool by removing a ratio and
+#' Also, simulates decomposition of the detritus_fish_pool by removing a ratio and
 #' adding it to the detritus_pool.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 #'
 #' @return void
 #'
@@ -231,7 +231,7 @@ rcpp_mineralization <- function(seafloor, detritus_mineralization, detritus_fish
 #' Rcpp modify degree.
 #'
 #' @param x Numeric with current angle in degree.
-#' @param y Numerich with change of degree (negative or positive).
+#' @param y Numeric with change of degree (negative or positive).
 #'
 #' @details
 #' Modify the degree of direction heading of individuals. The function ensures that
@@ -290,10 +290,10 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
 #' @details
-#' Fish indivivuals move based on how much nutrients they have stored in their
+#' Fish individualsmove based on how much nutrients they have stored in their
 #' reserves. There are three different movement behaviors.
 #'
-#' If reservers above a certain threshold, individuals either shelter at reef cells (behavior 1)
+#' If reserves above a certain threshold, individuals either shelter at reef cells (behavior 1)
 #' or move back towards reef cells (behavior 2). If reserves are not above the threshold,
 #' individuals move randomly across the environment to forage.
 #'
@@ -391,7 +391,7 @@ rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, m
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 #'
 #' @return void
 #'
@@ -417,7 +417,7 @@ rcpp_nutr_input <- function(seafloor, nutr_input) {
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 #'
 #' @return void
 #'
@@ -446,11 +446,11 @@ rcpp_nutr_output <- function(seafloor, nutrients_output, detritus_output) {
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 #'
-#' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
-#' Thalassia testudinum: Development of a whole-plant nitrogen budget.
-#' Limnol. Oceanogr. 44, 1204–1215.https://doi.org/10.4319/lo.1999.44.5.1204
+#'Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
+#'Thalassia testudinum: Development of a whole-plant nitrogen budget.
+#'Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
 #'
 #' @return double
 #'
@@ -516,7 +516,7 @@ rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, 
 #'
 #' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
 #' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
-#' J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
+#' J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
 #'
 #' @return void
 #'
@@ -544,7 +544,7 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @references
 #' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
 #' Integration of Additional Probability Distributions. R package version 0.1.1.
-#' https://CRAN.R-project.org/package=RcppDist
+#' <https://CRAN.R-project.org/package=RcppDist>
 #'
 #' @return double
 #'
@@ -587,7 +587,7 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-#' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 #'
 #' @return void
 #'
@@ -610,7 +610,7 @@ rcpp_seagrass_growth <- function(seafloor, cells_reef, bg_v_max, bg_k_m, bg_gamm
 #' Creates vector with IDs from \code{min} to \code{max}, but in random order.
 #'
 #' @references
-#' How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
+#' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
 #'
 #' @return vector
 #'

@@ -16,12 +16,12 @@ using namespace Rcpp;
 //' @details
 //' Simulate mineralization of the detritus pool i.e., a ratio of the detritus_pool
 //' is added to the nutrients_pool. The corresponding amount is removed from the detritus_pool.
-//' Also, simulates decompostion of the detritus_fish_pool by removing a ratio and
+//' Also, simulates decomposition of the detritus_fish_pool by removing a ratio and
 //' adding it to the detritus_pool.
 //'
 //' @references
 //' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-//' Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 //'
 //' @return void
 //'

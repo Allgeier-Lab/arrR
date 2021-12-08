@@ -47,7 +47,8 @@ pop_b = arrR_parameters$pop_b, use_log = TRUE)
 }
 \references{
 Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document].
-www.fishbase.org.
+<www.fishbase.org>
 
-The LENGTH-WEIGHT Table. https://www.fishbase.org/manual/fishbasethe_length_weight_table.htm
+The LENGTH-WEIGHT Table.
+<https://www.fishbase.org/manual/fishbasethe_length_weight_table.htm>
 }

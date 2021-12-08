@@ -26,5 +26,5 @@ values and a normal distribution internally.
 \references{
 Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
 Integration of Additional Probability Distributions. R package version 0.1.1.
-https://CRAN.R-project.org/package=RcppDist
+<https://CRAN.R-project.org/package=RcppDist>
 }

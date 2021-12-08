@@ -60,5 +60,5 @@ Fourth, all cells in which biomass is above the maximum capacity slough all addi
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6
+Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
 }

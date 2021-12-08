@@ -24,10 +24,10 @@ using namespace Rcpp;
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Fish indivivuals move based on how much nutrients they have stored in their
+//' Fish individualsmove based on how much nutrients they have stored in their
 //' reserves. There are three different movement behaviors.
 //'
-//' If reservers above a certain threshold, individuals either shelter at reef cells (behavior 1)
+//' If reserves above a certain threshold, individuals either shelter at reef cells (behavior 1)
 //' or move back towards reef cells (behavior 2). If reserves are not above the threshold,
 //' individuals move randomly across the environment to forage.
 //'

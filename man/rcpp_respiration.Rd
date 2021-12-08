@@ -44,5 +44,5 @@ Centre for Limnology, Madison,USA.
 
 Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
 model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
-J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
+J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
 }

@@ -9,7 +9,7 @@ using namespace Rcpp;
 //' Rcpp modify degree.
 //'
 //' @param x Numeric with current angle in degree.
-//' @param y Numerich with change of degree (negative or positive).
+//' @param y Numeric with change of degree (negative or positive).
 //'
 //' @details
 //' Modify the degree of direction heading of individuals. The function ensures that

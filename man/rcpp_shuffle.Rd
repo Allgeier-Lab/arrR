@@ -19,5 +19,5 @@ Rcpp shuffle vector.
 Creates vector with IDs from \code{min} to \code{max}, but in random order.
 }
 \references{
-How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
+How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
 }

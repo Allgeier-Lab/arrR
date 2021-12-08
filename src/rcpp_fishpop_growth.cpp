@@ -40,10 +40,10 @@ using namespace Rcpp;
 //' @references
 //' Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
 //' Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
-//' harvest. Sci. Adv. 6, eaax8329. https://doi.org/10.1126/sciadv.aax8329
+//' harvest. Sci. Adv. 6, eaax8329. <https://doi.org/10.1126/sciadv.aax8329>
 //'
 //' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
-//' [WWW Document]. www.fishbase.org
+//' [WWW Document]. <www.fishbase.org>
 //'
 //' @return void
 //'

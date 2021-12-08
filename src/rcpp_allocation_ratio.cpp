@@ -21,7 +21,7 @@ using namespace Rcpp;
 //'
 //' @references
 //' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
-//' domain and range [0,1]?" https://stats.stackexchange.com/questions/214877/
+//' domain and range [0,1]?" <https://stats.stackexchange.com/questions/214877/>
 //'
 //' @return void
 //'

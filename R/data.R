@@ -3,6 +3,7 @@
 #' List with default parameters.
 #'
 #' @format List
+#'
 #' @references
 #' Citations for all parameters and starting values can be found in
 #' Esquivel et al (2021). Mechanistic support for increased primary
@@ -14,6 +15,7 @@
 #' List with default starting values.
 #'
 #' @format List
+#'
 #' @references
 #' Citations for all parameters and starting values can be found in
 #' Esquivel et al (2021). Mechanistic support for increased primary
