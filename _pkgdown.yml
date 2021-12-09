@@ -75,7 +75,6 @@ navbar:
     left:  [getstarted, reference, articles, news]
     right: [github, contact, search]
   components:
-
     getstarted:
       text: "Get Started"
       icon: fa fa-magic
@@ -111,4 +110,4 @@ navbar:
 
 home:
   sidebar:
-    structure: [authors, license]
+    structure: [authors, license, community]
