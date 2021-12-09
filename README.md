@@ -51,12 +51,11 @@ Please see `vignette("get-started")` for a short tutorial how to use the
 ## Code of Conduct
 
 Please note that the **arrR** package is released with a [Contributor
-Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
+you agree to abide by its terms.
 
 To see how to contribute to this project, please see the [Contributing
-guidelines](https://allgeier-lab.github.io/arrR/CONTRIBUTING.html).
+guidelines](CONTRIBUTING.md).
 
 ### Contact
 
