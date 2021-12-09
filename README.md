@@ -55,6 +55,9 @@ Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
+To see how to contribute to this project, please see the [Contributing
+guidelines](https://allgeier-lab.github.io/arrR/CONTRIBUTING.html).
+
 ### Contact
 
 Questions or bugs? Please get in touch via
