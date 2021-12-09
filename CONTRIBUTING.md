@@ -8,15 +8,15 @@ Please note that the **arrR** project is released with a [Contributor Code of Co
 
 ## How to contribute
 
-### Ask a question ⁉️
+### Ask a question :interrobang:
 
 Browse the [documentation](https://allgeier-lab.github.io/arrR/) to see if you can find a solution. Still stuck? Open an [issue on GitHub](https://github.com/Allgeier-Lab/arrR/issues) on GitHub. We'll try to do our best to address it, as questions often lead to better documentation or the discovery of bugs.
 
-Want to ask a question in private? Contact the package maintainer by [email](mailto:mhk.hesselbarth@gmail.com).
+Want to ask a question in private? Contact the package maintainer by [mhk.hesselbarth\<at\>gmail.com](mailto:mhk.hesselbarth@gmail.com).
 
 Please try to include a reproducible example using for example the [`reprex`](https://reprex.tidyverse.org) package.
 
-### Propose an idea 💡
+### Propose an idea :bulb:
 
 Take a look at the [documentation](https://allgeier-lab.github.io/arrR/) and [issue on GitHub](https://github.com/Allgeier-Lab/arrR/issues) list to see if it isn't included or suggested yet. If not, please open a new issue!
 
@@ -25,7 +25,7 @@ While we can't promise to implement your idea, it helps to:
 * Explain in detail how it would work.
 * Keep the scope as narrow as possible.
 
-### Report a bug 🐛
+### Report a bug :bug:
 
 Report it as an [issue on GitHub](https://github.com/Allgeier-Lab/arrR/issues) so we can fix it. A good bug report makes it easier for us to do so, so please include:
 
@@ -35,13 +35,13 @@ Report it as an [issue on GitHub](https://github.com/Allgeier-Lab/arrR/issues) s
 
 Again, please try to include a reproducible example using for example the [`reprex`](https://reprex.tidyverse.org) package.
 
-### Improve the documentation 📖
+### Improve the documentation :book:
 
 Good documentation makes all the difference, so your help to improve it is very welcome!
 
 We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.  
 
-### Pull request process
+### Pull request process :arrow_up_down:
 
 We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/) for development.
 
@@ -62,4 +62,5 @@ We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/)
 New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
 
 #### References
-This CONTRIBUTING.md is adapted from [here](https://gist.github.com/peterdesmet/e90a1b0dc17af6c12daf6e8b2f044e7c) and [here](https://github.com/r-lib/usethis/blob/main/inst/templates/tidy-contributing.md)
+
+This CONTRIBUTING.md is adapted from [here](https://gist.github.com/peterdesmet/e90a1b0dc17af6c12daf6e8b2f044e7c) and [here](https://github.com/r-lib/usethis/blob/main/inst/templates/tidy-contributing.md).
