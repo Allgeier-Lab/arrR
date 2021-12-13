@@ -262,6 +262,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("> ...Starting simulation at <", t_start, ">...")
 
+    message("")
+
     message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cells.")
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
@@ -357,6 +359,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     # get time at end
     t_end <- Sys.time()
+
+    message("")
 
     message("> All done at <", t_end, ">")
 
