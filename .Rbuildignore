@@ -1,16 +1,13 @@
 ^codecov\.yml$
 ^codemeta\.json$
 ^CODE_OF_CONDUCT\.md$
+^CONTRIBUTING\.md$
 ^data-raw$
-^doc$
-^docs$
 ^\.github$
 ^LICENSE\.md$
-^Meta$
 ^pkgdown$
 ^_pkgdown\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-
 ^vignettes/articles$

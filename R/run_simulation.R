@@ -74,6 +74,13 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            nutr_input = NULL, verbose = TRUE) {
 
+  # get time at beginning for final print
+  if (verbose) {
+
+    t_start <- Sys.time()
+
+  }
+
   # check input and warnings #
 
   # check parameters
@@ -132,13 +139,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
 
   # setup fishpop #
-
-  # get time at beginning for final print
-  if (verbose) {
-
-    t_start <- Sys.time()
-
-  }
 
   # check if fishpop is NULL
   if (is.null(fishpop) || nrow(fishpop) == 0) {
@@ -260,6 +260,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # print some basic information about model run
   if (verbose) {
 
+    message("> ...Starting simulation at <", t_start, ">...")
+
     message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cells.")
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
@@ -269,8 +271,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     message("> Saving each ", save_each, " iterations.")
 
     message("> One iteration equals ", min_per_i, " minutes.")
-
-    message("> ...Starting simulation...")
 
     message("")
 
@@ -356,11 +356,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   if (verbose) {
 
     # get time at end
-    t_diff <- round(Sys.time() - t_start, digits = 1)
+    t_end <- Sys.time()
 
-    message("")
-
-    message("> All done (Runtime: ", t_diff," ", units(t_diff), ").")
+    message("> All done at <", t_end, ">")
 
   }
 
