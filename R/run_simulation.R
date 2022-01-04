@@ -137,7 +137,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     }
   }
 
-
   # setup fishpop #
 
   # check if fishpop is NULL
@@ -155,6 +154,15 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     max_dist <- 0.0
 
     pop_reserves_thres <- 0.0
+
+    # set movement to rand because no fish
+    if (movement != "rand") {
+
+      movement <- "rand"
+
+      warning("No 'fishpop' present. Setting movement argument to 'rand'",
+              call. = FALSE)
+    }
 
   # get 95% of maximum movement distances
   } else {
