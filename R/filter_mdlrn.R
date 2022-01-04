@@ -73,11 +73,13 @@ filter_mdlrn <- function(result, filter = max(result$max_i), reset = FALSE) {
 
     # get row ids where seafloor_last xy equals seafloor xy
     seafloor_rows <- rep(x = seq(from = 1, to = prod(result$dimensions)),
-                         times = length(which(timestep_full >= filter[1])))
+                         times = length(which(timestep_full >= filter[1] &
+                                                timestep_full <= filter[2])))
 
     # get row ids where fishpop_last id equals fihspop id
     fishpop_rows <- rep(x = seq(from = 0, to = result$starting_values$pop_n)[-1],
-                        times = length(which(timestep_full >= filter[1])))
+                        times = length(which(timestep_full >= filter[1] &
+                                               timestep_full <= filter[2])))
 
   }
 
