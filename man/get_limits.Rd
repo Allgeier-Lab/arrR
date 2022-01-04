@@ -4,12 +4,10 @@
 \alias{get_limits}
 \title{get_limits}
 \usage{
-get_limits(result, timestep = result[[1]]$max_i)
+get_limits(result)
 }
 \arguments{
 \item{result}{List with results of model run.}
-
-\item{timestep}{Integer to specify which timestep is plotted.}
 }
 \value{
 list

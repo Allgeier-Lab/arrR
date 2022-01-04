@@ -26,6 +26,7 @@ test_that("get_limits returns min and max", {
 test_that("get_limits returns error", {
 
   expect_error(object = arrR::get_limits(result = list(c(1:5), c(5:10))),
-               regexp = "Please prove mdl_rn object createt with run_simulation.")
+               regexp = "Please provide 'mdl_rn' object createt with 'run_simulation()'.",
+               fixed = TRUE)
 
 })

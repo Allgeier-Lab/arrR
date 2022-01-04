@@ -4,7 +4,6 @@
 #' Get list with min and max values for better plotting.
 #'
 #' @param result List with results of model run.
-#' @param timestep Integer to specify which timestep is plotted.
 #'
 #' @details
 #' Returns list with minimum and maximum values of several model result runs for better
@@ -23,7 +22,7 @@
 #' @rdname get_limits
 #'
 #' @export
-get_limits <- function(result, timestep = result[[1]]$max_i) {
+get_limits <- function(result) {
 
   # check if mdl_rn is provided
   check_class <- vapply(X = result, FUN = function(x) inherits(x = x, what = "mdl_rn"),
@@ -31,19 +30,7 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
 
   if (!any(check_class)) {
 
-    stop("Please prove mdl_rn object createt with run_simulation.", call. = FALSE)
-
-  }
-
-  # get timestep
-  timestep_slctd <- timestep
-
-  check_i <- vapply(result, function(x) timestep_slctd %in% x$seafloor$timestep,
-                    FUN.VALUE = logical(1))
-
-  if (!all(check_i)) {
-
-    stop("'timestep' is not present in all provided 'mdl_rn' objects.", call. = FALSE)
+    stop("Please provide 'mdl_rn' object createt with 'run_simulation()'.", call. = FALSE)
 
   }
 
@@ -51,9 +38,8 @@ get_limits <- function(result, timestep = result[[1]]$max_i) {
   limits <- lapply(X = result, FUN = function(x) {
 
     # filter current result
-    result_temp <- subset(x$seafloor, timestep %in% timestep_slctd,
-                          select = c("ag_biomass", "bg_biomass",
-                                     "nutrients_pool", "detritus_pool"))
+    result_temp <- subset(x$seafloor, select = c("ag_biomass", "bg_biomass",
+                                                 "nutrients_pool", "detritus_pool"))
 
     # get min and max values
     c(ag_min = min(result_temp$ag_biomass, na.rm = TRUE),

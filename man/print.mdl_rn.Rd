@@ -4,12 +4,10 @@
 \alias{print.mdl_rn}
 \title{print.mdl_rn}
 \usage{
-\method{print}{mdl_rn}(x, timestep = x$max_i, digits = 3, ...)
+\method{print}{mdl_rn}(x, digits = 3, ...)
 }
 \arguments{
 \item{x}{mdl_rn object.}
-
-\item{timestep}{Numeric with timestep to print.}
 
 \item{digits}{Numeric of decimal places (round).}
 

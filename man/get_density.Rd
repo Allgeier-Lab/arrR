@@ -4,12 +4,10 @@
 \alias{get_density}
 \title{get_density}
 \usage{
-get_density(result, timestep = result$max_i, normalize = FALSE, verbose = TRUE)
+get_density(result, normalize = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
-
-\item{timestep}{Integer to specify maximum timestep.}
 
 \item{normalize}{Logical if TRUE count is divided by timesteps.}
 

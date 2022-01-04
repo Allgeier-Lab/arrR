@@ -4,7 +4,6 @@
 #' Get density of fish individuals within cell.
 #'
 #' @param result mdl_rn object of simulation run.
-#' @param timestep Integer to specify maximum timestep.
 #' @param normalize Logical if TRUE count is divided by timesteps.
 #' @param verbose If TRUE, progress reports are printed.
 #'
@@ -25,7 +24,7 @@
 #' @rdname get_density
 #'
 #' @export
-get_density <- function(result, timestep = result$max_i, normalize = FALSE, verbose = TRUE) {
+get_density <- function(result, normalize = FALSE, verbose = TRUE) {
 
   # check if mdl_rn is provided
   if (!inherits(x = result, what = "mdl_rn")) {
@@ -34,17 +33,7 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE, verb
 
   }
 
-  timestep_slctd <- timestep
-
-  # check if i can be divided by save_each without reminder
-  if (timestep_slctd %% result$save_each != 0 || timestep_slctd > result$max_i) {
-
-    stop("'timestep' was not saved during model run.",
-         call. = FALSE)
-
-  }
-
-  # return warning if save_each != 1 because not all occurences are counted
+  # return warning if save_each != 1 because not all occurrences are counted
   if (result$save_each != 1) {
 
     if (verbose) {
@@ -60,13 +49,15 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE, verb
 
   if (nrow(result$fishpop > 0)) {
 
-    # get fishpop and filter all timesteps <= than selected timestep
-    fishpop_temp <- subset(result$fishpop, timestep <= timestep_slctd)
-
     # remove burn_in
     if (result$burn_in > 0) {
 
-      fishpop_temp <- subset(fishpop_temp, burn_in == "no")
+      fishpop_temp <- subset(result$fishpop, burn_in == "no")
+
+    # no burn_in
+    } else {
+
+      fishpop_temp <- result$fishpop
 
     }
 
@@ -84,7 +75,7 @@ get_density <- function(result, timestep = result$max_i, normalize = FALSE, verb
     # normalize by max_i
     if (normalize) {
 
-      ras_density$density <- ras_density$density / timestep_slctd
+      ras_density$density <- ras_density$density / result$max_i
 
     }
 

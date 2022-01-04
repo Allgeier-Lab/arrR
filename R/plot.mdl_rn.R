@@ -6,7 +6,6 @@
 #' @param x mdl_rn object of simulation run.
 #' @param what Character specifying what to plot.
 #' @param summarize Character to specify which values of environmental data is used as fill.
-#' @param timestep Integer to specify which timestep is plotted.
 #' @param limits Named list with vectors with min and maximum value of values.
 #' @param burn_in If TRUE, line to indicate burn-in time is plotted.
 #' @param normalize Logical if TRUE count is divided by timesteps.
@@ -31,8 +30,7 @@
 #' @rdname plot.mdl_rn
 #'
 #' @export
-plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
-                        timestep = x$max_i, limits = NULL, burn_in = TRUE,
+plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, burn_in = TRUE,
                         normalize = FALSE, base_size = 10, verbose = TRUE, ...) {
 
   # check if fishpop is present
@@ -52,59 +50,56 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
     }
 
     # set color for burn in threshold
-    col_burn <- ifelse(test = burn_in, yes = "grey", no = NA)
+    col_burn <- ifelse(test = x$burn_in, yes = "grey", no = NA)
 
-    burn_in_itr <- x$burn_in
-
+    # summarize results
     data_sum <- summarize_mdlrn(result = x, what = what)[[1]]
 
+    # get name of columns
     col_names <- names(data_sum)
-
-    # get max_i of summarized
-    timestep_slctd <- max(data_sum$timestep)
 
     # create plot
     gg_top_left <- ggplot2::ggplot(data = data_sum) +
-      ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
+      ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Dry weight bg biomass [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = col_names[2]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # create plot
     gg_top_right <- ggplot2::ggplot(data = data_sum) +
-      ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
+      ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Dry weight ag biomass [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = col_names[3]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # create plot
     gg_bottom_left <- ggplot2::ggplot(data = data_sum) +
-      ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
+      ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[4],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Nutrients pool [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = col_names[4]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # create plot
     gg_bottom_right <- ggplot2::ggplot(data = data_sum) +
-      ggplot2::geom_vline(xintercept = burn_in_itr, col = col_burn, linetype = 3) +
+      ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
       ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[5],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
@@ -118,23 +113,11 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   # plot map
   } else {
 
-    # get timestep
-    timestep_slctd <- timestep
-
-    # check if timestep_slctd can be divided by save_each without reminder
-    if (timestep_slctd %% x$save_each != 0) {
-
-      stop("'timestep' was not saved during model run.",
-           call. = FALSE)
-    }
-
     if (what == "seafloor") {
 
       # get seafloor data
-      seafloor <- subset(x$seafloor, timestep == timestep_slctd,
-                         select = c("x", "y",
-                                    "ag_biomass", "bg_biomass",
-                                    "nutrients_pool", "detritus_pool"))
+      seafloor <- subset(x$seafloor, select = c("x", "y", "ag_biomass", "bg_biomass",
+                                                "nutrients_pool", "detritus_pool"))
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
@@ -184,15 +167,14 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
     } else if (what == "fishpop") {
 
       # get seafloor data
-      fishpop <- get_density(x, timestep = timestep_slctd, normalize = normalize,
-                             verbose = verbose)
+      fishpop <- get_density(x, normalize = normalize, verbose = verbose)
 
       name <- ifelse(test = normalize, yes = "Density [#/cell/total time]",
                      no = "Density [#/cell]")
 
       # create title
-      plot_title <- paste0("Total time : ", timestep_slctd, " iterations (",
-                           round(timestep_slctd * x$min_per_i / 60 / 24, 1), " days)",
+      plot_title <- paste0("Total time : ", x$max_i, " iterations (",
+                           round(x$max_i * x$min_per_i / 60 / 24, 1), " days)",
                            "\nFishpop    : ", x$starting_values$pop_n," indiv (movement: ", x$movement, ")")
 
       # create plot
@@ -217,8 +199,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE,
   }
 
   # create title
-  plot_title <- paste0("Total time : ", timestep_slctd, " iterations (",
-                       round(timestep_slctd * x$min_per_i / 60 / 24, 1), " days)",
+  plot_title <- paste0("Total time : ", x$max_i, " iterations (",
+                       round(x$max_i * x$min_per_i / 60 / 24, 1), " days)",
                        "\nFishpop    : ", x$starting_values$pop_n," indiv (movement: '", x$movement, "')")
 
 

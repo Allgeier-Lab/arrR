@@ -8,7 +8,6 @@
   x,
   what = "seafloor",
   summarize = FALSE,
-  timestep = x$max_i,
   limits = NULL,
   burn_in = TRUE,
   normalize = FALSE,
@@ -23,8 +22,6 @@
 \item{what}{Character specifying what to plot.}
 
 \item{summarize}{Character to specify which values of environmental data is used as fill.}
-
-\item{timestep}{Integer to specify which timestep is plotted.}
 
 \item{limits}{Named list with vectors with min and maximum value of values.}
 

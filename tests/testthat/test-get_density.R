@@ -33,12 +33,4 @@ test_that("get_density returns error", {
  expect_error(object = arrR::get_density(result = c(1, 2, 3)),
               regexp = "Please provide 'mdl_rn' object createt with run_simulation.")
 
-  expect_error(object = arrR::get_density(result = result_rand, verbose = FALSE,
-                                          timestep = 101),
-               regexp = "'timestep' was not saved during model run.")
-
-  expect_error(object = arrR::get_density(result = result_rand, verbose = FALSE,
-                                          timestep = 51),
-               regexp = "'timestep' was not saved during model run.")
-
 })
