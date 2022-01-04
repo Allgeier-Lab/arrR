@@ -224,20 +224,20 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print model results</span>
 <span class="va">result</span>
-<span class="co">#&gt; Total time : 43800 iterations (3650 days) [Burn-in: 0 iter.]</span>
+<span class="co">#&gt; Total time : 0-43800 iterations (3650 days) [Burn-in: 0 iter.]</span>
 <span class="co">#&gt; Saved each : 4380 iterations (365 days)</span>
 <span class="co">#&gt; Seafloor   : 100 rows x 100 cols; 5 reef cells</span>
 <span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool, detritus_fish)</span>
-<span class="co">#&gt; Minimum  : 98.408, 604.46, 0, 2.972, 0</span>
-<span class="co">#&gt; Mean     : 110.483, 610.06, 0, 3.014, 0</span>
-<span class="co">#&gt; Maximum  : 193.01, 730.655, 0.007, 3.024, 0</span>
+<span class="co">#&gt; Minimum  : 98.408, 604.46, 0, 2.949, 0</span>
+<span class="co">#&gt; Mean     : 107.108, 607.313, 0, 3.086, 0</span>
+<span class="co">#&gt; Maximum  : 193.01, 730.655, 0.011, 3.231, 0.004</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span>
-<span class="co">#&gt; Minimum  : 18.218, 116.735, 0, 1</span>
-<span class="co">#&gt; Mean     : 24.487, 316.556, 0, 1</span>
-<span class="co">#&gt; Maximum  : 29.606, 541.774, 0, 1</span></code></pre></div>
+<span class="co">#&gt; Minimum  : 5.784, 3.106, 0, 0</span>
+<span class="co">#&gt; Mean     : 21.397, 270.675, 0, 0.352</span>
+<span class="co">#&gt; Maximum  : 33.897, 831.081, 0, 1</span></code></pre></div>
 <p>The returning object <code>mdl_rn</code> object is simply a list “under the hood”, so analyzing the results yourself should be pretty straightforward. Simply access the data you need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of result list</span>
