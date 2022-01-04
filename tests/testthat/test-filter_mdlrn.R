@@ -2,7 +2,7 @@
 filter_time <- 50
 
 # filter results
-result_fltr <- arrR::filter_mdlrn(result = result_rand, timestep = filter_time)
+result_fltr <- arrR::filter_mdlrn(result = result_rand, filter = filter_time)
 
 test_that("result_fltr returns mdl_rn", {
 
@@ -22,13 +22,13 @@ test_that("filter_mdlrn only return until timestep", {
 
 test_that("filter_mdlrn returns error", {
 
-  expect_error(object = arrR::filter_mdlrn(result = 1:5, timestep = filter_time),
+  expect_error(object = arrR::filter_mdlrn(result = 1:5, filter = filter_time),
                regexp = "Please provide 'mdl_rn' object created with 'run_simulation'.")
 
-  expect_error(object = arrR::filter_mdlrn(result = result_rand, timestep = 101),
-               regexp = "'timestep' was not saved during model run.")
+  expect_error(object = arrR::filter_mdlrn(result = result_rand, filter = 1001),
+               regexp = "'filter' is not within 0 <= x <= max_i.")
 
-  expect_error(object = arrR::filter_mdlrn(result = result_rand, timestep = 51),
-               regexp = "'timestep' was not saved during model run.")
+  expect_error(object = arrR::filter_mdlrn(result = result_rand, filter = 51),
+               regexp = "No iterations left after applying 'filter'.")
 
 })

@@ -4,12 +4,16 @@
 \alias{filter_mdlrn}
 \title{filter_mdlrn}
 \usage{
-filter_mdlrn(result, timestep = max(result$max_i))
+filter_mdlrn(result, filter = max(result$max_i), reset = FALSE)
 }
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
 
-\item{timestep}{Vector with timesteps to select}
+\item{filter}{Vector with timesteps (\code{nutr_input}) or min/max timesteps
+(\code{nutr_input}) to return.}
+
+\item{reset}{Logical if TRUE, cumulative seafloor values are reduced by value
+before filter minimum.}
 }
 \value{
 mdl_rn
@@ -24,7 +28,7 @@ still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
 }
 \examples{
  \dontrun{
-filter_mdlrn(result = result_rand, timestep = 10200)
+filter_mdlrn(result = result_rand, filter = c(result_rand$max_i / 2, result_rand$max_i))
 }
 
 }

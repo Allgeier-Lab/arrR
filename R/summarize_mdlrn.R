@@ -81,7 +81,7 @@ summarize_mdlrn <- function(result, what = c("seafloor", "fishpop"),
     data_temp <- do.call(what = "rbind", args = lapply(X = summary, function(j) {
 
       cbind(stats::aggregate(x = data_temp, by = list(timestep = timestep_temp),
-                       FUN = j, na.rm = TRUE), summary = j)}))
+                             FUN = j, na.rm = TRUE), summary = j)}))
 
     # add burn_in col
     data_temp$burn_in <- ifelse(test = data_temp$timestep < result$burn_in,
