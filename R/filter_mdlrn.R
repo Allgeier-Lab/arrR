@@ -35,7 +35,7 @@ filter_mdlrn <- function(result, filter = max(result$max_i), reset = FALSE) {
   }
 
   # repeat filter
-  if (length(filter == 1)) {
+  if (length(filter) == 1) {
 
     filter <- rep(x = filter, times = 2)
 
