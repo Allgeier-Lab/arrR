@@ -25,8 +25,7 @@
 get_production <- function(result, lag = TRUE) {
 
   # select only required columns
-  seafloor_temp <- subset(x = result$seafloor,
-                          select = c("timestep", "ag_production", "bg_production"))
+  seafloor_temp <- result$seafloor[, c("timestep", "ag_production", "bg_production")]
 
   # sum for each timestep
   seafloor_temp <- stats::aggregate(x = seafloor_temp[, -1],

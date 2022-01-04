@@ -116,8 +116,9 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     if (what == "seafloor") {
 
       # get seafloor data
-      seafloor <- subset(x$seafloor, select = c("x", "y", "ag_biomass", "bg_biomass",
-                                                "nutrients_pool", "detritus_pool"))
+      seafloor <- subset(x$seafloor, timestep == max(timestep),
+                         select = c("x", "y", "ag_biomass", "bg_biomass",
+                                    "nutrients_pool", "detritus_pool"))
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +

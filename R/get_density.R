@@ -52,18 +52,12 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
     # remove burn_in
     if (result$burn_in > 0) {
 
-      fishpop_temp <- subset(result$fishpop, burn_in == "no")
-
-    # no burn_in
-    } else {
-
-      fishpop_temp <- result$fishpop
+      result$fishpop <- subset(result$fishpop, burn_in == "no")
 
     }
 
     # count fish within each cell
-    ras_density <- raster::rasterize(x = fishpop_temp[, c("x", "y")],
-                                     y = ras_density,
+    ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")], y = ras_density,
                                      fun = "count", background = 0)
 
     # convert to data frame

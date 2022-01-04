@@ -25,8 +25,9 @@
 print.mdl_rn <- function(x, digits = 3, ...) {
 
   # get seafloor values of selected timestep
-  seafloor_values <- subset(x$seafloor, select = c(ag_biomass, bg_biomass, nutrients_pool,
-                                                   detritus_pool, detritus_fish))
+  seafloor_values <- subset(x$seafloor, timestep == max(timestep),
+                            select = c("ag_biomass", "bg_biomass", "nutrients_pool",
+                                       "detritus_pool", "detritus_fish"))
 
   min_seafloor <- round(apply(X = seafloor_values, MARGIN = 2,
                               FUN = min, na.rm = TRUE),
@@ -44,8 +45,9 @@ print.mdl_rn <- function(x, digits = 3, ...) {
   if (nrow(x$fishpop > 0)) {
 
     # get fish population values of selected timestep
-    fishpop_values <- subset(x$fishpop, select = c(length, weight,
-                                                   died_consumption, died_background))
+    fishpop_values <- subset(x$fishpop, timestep == max(timestep),
+                             select = c("length", "weight",
+                                        "died_consumption", "died_background"))
 
     # calculate min, median, max values
     min_fishpop <- round(apply(X = fishpop_values, MARGIN = 2, FUN = min, na.rm = TRUE),

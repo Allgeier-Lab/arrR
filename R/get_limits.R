@@ -38,8 +38,8 @@ get_limits <- function(result) {
   limits <- lapply(X = result, FUN = function(x) {
 
     # filter current result
-    result_temp <- subset(x$seafloor, select = c("ag_biomass", "bg_biomass",
-                                                 "nutrients_pool", "detritus_pool"))
+    result_temp <- x$seafloor[, c("ag_biomass", "bg_biomass",
+                                  "nutrients_pool", "detritus_pool")]
 
     # get min and max values
     c(ag_min = min(result_temp$ag_biomass, na.rm = TRUE),

@@ -118,7 +118,7 @@ filter_mdlrn <- function(result, filter = max(result$max_i), reset = FALSE) {
   }
 
   # replace elements
-  result$max_i <- max(filter)
+  result$max_i <- max(result$seafloor$timestep)
 
   return(result)
 }
