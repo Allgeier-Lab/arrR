@@ -268,7 +268,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # print some basic information about model run
   if (verbose) {
 
-    message("> ...Starting simulation at <", t_start, ">...")
+    message("> ...Starting at <", t_start, ">...")
 
     message("")
 
@@ -370,7 +370,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("")
 
-    message("> All done at <", t_end, ">")
+    message("> ...All done at <", t_end, ">...")
 
   }
 
