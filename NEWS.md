@@ -1,3 +1,6 @@
+# arrR 1.3.1
+* Changes to `get_stable_values`
+
 # arrR 1.3
 * Adding `pkgdown` homepage
 * Add `detritus_output` to `rcpp_nutr_output`
