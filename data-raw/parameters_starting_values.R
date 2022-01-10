@@ -17,7 +17,7 @@ arrR_parameters <- list(
   ag_gamma = 0.0144,
 
   # seagrass related
-  seagrass_thres = 1/2,
+  seagrass_thres = -1/2,
   seagrass_slope = 2.0,
   seagrass_slough = 0.0001,
 

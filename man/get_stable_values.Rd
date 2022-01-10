@@ -4,22 +4,12 @@
 \alias{get_stable_values}
 \title{get_stable_values}
 \usage{
-get_stable_values(
-  starting_values,
-  parameters,
-  fishpop = FALSE,
-  min_per_i = NULL,
-  verbose = TRUE
-)
+get_stable_values(bg_biomass, ag_biomass, parameters, verbose = TRUE)
 }
 \arguments{
-\item{starting_values}{List with all starting value parameters.}
+\item{bg_biomass, ag_biomass}{Numeric with starting bg and ag biomass.}
 
 \item{parameters}{List with all model parameters.}
-
-\item{fishpop}{Logical if TRUE and estimate of the maximum consumption is added to detritus.}
-
-\item{min_per_i}{Integer to specify minutes per i.}
 
 \item{verbose}{Logical if message should be printed.}
 }
@@ -33,11 +23,10 @@ Get values for stable biomass growth.
 Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool
 which allow stable seagrass growth if no fish individuals are present. This means,
 that both pools contain exactly the amount to balance the sloughed bg_biomass and ag_biomass
-each  timestep. If \code{fishpop = TRUE} and estimate of detritus consumption of one fish
-individual of maximum size is added to the detritus pool.
+each  timestep.
 }
 \examples{
-get_stable_values(starting_values = arrR_starting_values,
-parameters = arrR_parameters)
+get_stable_values(bg_biomass = arrR_starting_values$bg_biomass,
+ag_biomass = arrR_starting_values$ag_biomass, parameters = arrR_parameters)
 
 }
