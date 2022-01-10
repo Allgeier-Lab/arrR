@@ -72,7 +72,7 @@ get_stable_values <- function(bg_biomass, ag_biomass, parameters, verbose = TRUE
     ((bg_detritus * parameters$bg_gamma) + (ag_detritus * parameters$ag_gamma))
 
   # if detritus_mineralization is zero detritus pool will be Inf
-  detritus_pool <- ifelse(test = is.infinite(detritus_pool),
+  detritus_pool <- ifelse(test = parameters$detritus_mineralization == 0,
                           yes = 0, no = detritus_pool)
 
   # if input is 0, return NULL
