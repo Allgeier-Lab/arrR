@@ -52,7 +52,7 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand_inout$nutr_input, expected = nutr_input)
 
 
-  expect_equal(object = result_rand$extent, expected = terra::ext(input_seafloor))
+  expect_equal(object = terra::ext(result_rand$extent), expected = terra::ext(input_seafloor))
 
   expect_equal(object = result_rand$dimensions, expected = dim(input_seafloor)[1:2])
 
