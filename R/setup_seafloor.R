@@ -71,7 +71,7 @@ setup_seafloor <- function(dimensions, grain, reef = NULL, starting_values, rand
                           nlyrs = 14, names = layer_names,
                           xmin = extent_x[1], xmax = extent_x[2],
                           ymin = extent_y[1], ymax = extent_y[2],
-                          vals = NA, crs = "", ...)
+                          vals = 0.0, crs = "", ...)
 
   # setup environmental values
   seafloor <- setup_envir_values(seafloor = seafloor,

@@ -46,15 +46,5 @@ setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
                                                              min = detritus_pool * (1 - random),
                                                              max = detritus_pool * (1 + random))
 
-  # set all cumulative trackers to zero
-  track_names <- c("detritus_fish", "ag_production", "bg_production",
-                   "ag_slough", "bg_slough", "ag_uptake", "bg_uptake",
-                   "consumption", "excretion")
-
-  terra::values(seafloor)[, track_names] <- 0.0
-
-  # add reef layer
-  terra::values(seafloor)[, "reef"] <- 0
-
   return(seafloor)
 }
