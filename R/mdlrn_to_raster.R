@@ -51,17 +51,20 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
     }
   }
 
+  # remove timestep and burn_in column
+  id_remove <- which(names(mdl_rn$seafloor) %in% c("timestep", "burn_in"))
+
   # get selected last timestep and remove timestep and burnin col
-  seafloor_values <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == mdl_rn$max_i, -c(18, 19)]
+  seafloor_values <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == mdl_rn$max_i, -id_remove]
 
   # reset all tracking cols
   seafloor_values[, c("ag_production", "bg_production",
                       "ag_slough", "bg_slough",
                       "ag_uptake", "bg_uptake",
-                      "consumption", "excretion")] <- 0
+                      "consumption", "excretion")] <- 0.0
 
   # convert to raster
-  seafloor <- terra::rast(seafloor_values, res = mdl_rn$grain, type = "xyz", ...)
+  seafloor <- terra::rast(seafloor_values, crs = "", type = "xyz", ...)
 
   return(seafloor)
 }
