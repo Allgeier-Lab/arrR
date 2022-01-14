@@ -1,47 +1,47 @@
-test_that("setup_seafloor creates RasterBrick", {
+test_that("setup_seafloor creates SpatRaster", {
 
-  expect_s4_class(object = input_seafloor, class = "RasterBrick")
+  expect_s4_class(object = input_seafloor, class = "SpatRaster")
 
 })
 
 test_that("setup_seafloor has correct dimensions", {
 
-  expect_equal(object = raster::ncell(input_seafloor),
+  expect_equal(object = terra::ncell(input_seafloor),
                expected = dimensions[[1]] * dimensions[[2]])
 
-  expect_equal(object = raster::res(input_seafloor),
+  expect_equal(object = terra::res(input_seafloor),
                expected = grain)
 
 })
 
 test_that("setup_seafloor includes reef cells", {
 
-  expect_equal(object = sum(raster::values(input_seafloor$reef)),
+  expect_equal(object = sum(terra::values(input_seafloor$reef)),
                expected = nrow(reef_matrix))
 
 })
 
 test_that("setup_seafloor has correct starting values", {
 
-  expect_equal(object = mean(raster::values(input_seafloor$ag_biomass), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$ag_biomass), na.rm = TRUE),
                expected = starting_values$ag_biomass)
 
-  expect_equal(object = mean(raster::values(input_seafloor$bg_biomass), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$bg_biomass), na.rm = TRUE),
                expected = starting_values$bg_biomass)
 
-  expect_equal(object = mean(raster::values(input_seafloor$nutrients_pool), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$nutrients_pool), na.rm = TRUE),
                expected = starting_values$nutrients_pool)
 
-  expect_equal(object = mean(raster::values(input_seafloor$detritus_pool), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$detritus_pool), na.rm = TRUE),
                expected = starting_values$detritus_pool)
 
 })
 
 test_that("setup_seafloor adds random noise", {
 
-  range_homo <- range(raster::values(input_seafloor$ag_biomass), na.rm = TRUE)
+  range_homo <- range(terra::values(input_seafloor$ag_biomass), na.rm = TRUE)
 
-  range_random <- range(raster::values(input_seafloor_rnd$ag_biomass), na.rm = TRUE)
+  range_random <- range(terra::values(input_seafloor_rnd$ag_biomass), na.rm = TRUE)
 
 
   expect_equal(object = range_homo[[1]],
@@ -55,12 +55,12 @@ test_that("setup_seafloor adds random noise", {
 test_that("setup_seafloor returns error", {
 
   expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                             reefs = 5, starting_values = starting_values,
+                                             reef = 5, starting_values = starting_values,
                                              random = 0.25),
                regexp = "Please provide a 2-column with x,y coordinates of reef cells.")
 
   expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                             reefs = cbind(reef_matrix, 5),
+                                             reef = cbind(reef_matrix, 5),
                                              starting_values = starting_values,
                                              random = 0.25),
                regexp = "Please provide a 2-column with x,y coordinates of reef cells.")

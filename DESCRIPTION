@@ -1,7 +1,7 @@
 Package: arrR
 Type: Package
 Title: Individual-Based Simulation Model of Artifical Reefs in R
-Version: 1.3.1
+Version: 1.4
 Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
@@ -35,9 +35,9 @@ Depends: R (>= 3.1)
 Imports:
     cowplot,
     ggplot2,
-    raster,
     Rcpp,
     stats,
+    terra,
     utils
 Suggests: 
     dplyr,

@@ -17,11 +17,11 @@
 #' @return data.frame
 #'
 #' @examples
-#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
 #' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = arrR_starting_values)
+#' reef = reef, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
 #' starting_values = arrR_starting_values, parameters = arrR_parameters)
 #'
@@ -35,7 +35,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
   if (verbose) {
 
     message("> ...Creating ", starting_values$pop_n, " individuals within ",
-            raster::extent(seafloor), "...")
+            terra::ext(seafloor), "...")
 
   }
 
@@ -43,11 +43,11 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
   if (starting_values$pop_n != 0) {
 
     # create random coordinates within environment
-    x <- stats::runif(n = starting_values$pop_n, min = raster::xmin(seafloor),
-                      max = raster::xmax(seafloor))
+    x <- stats::runif(n = starting_values$pop_n, min = terra::xmin(seafloor),
+                      max = terra::xmax(seafloor))
 
-    y <- stats::runif(n = starting_values$pop_n, min = raster::ymin(seafloor),
-                      max = raster::ymax(seafloor))
+    y <- stats::runif(n = starting_values$pop_n, min = terra::ymin(seafloor),
+                      max = terra::ymax(seafloor))
 
     heading <- stats::runif(n = starting_values$pop_n, min = 0, max = 360)
 

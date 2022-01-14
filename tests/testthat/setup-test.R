@@ -1,5 +1,5 @@
 library(dplyr)
-library(raster)
+library(terra)
 
 # get parameters
 parameters <- arrR::arrR_parameters
@@ -39,11 +39,11 @@ nutr_input <- rep(x = starting_values$nutrients_pool, times = max_i)
 
 # create input seafloor
 input_seafloor <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                       reefs = reef_matrix, starting_values = starting_values,
+                                       reef = reef_matrix, starting_values = starting_values,
                                        verbose = FALSE)
 
 input_seafloor_rnd <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                           reefs = reef_matrix,
+                                           reef = reef_matrix,
                                            starting_values = starting_values,
                                            random = 0.25, verbose = FALSE)
 

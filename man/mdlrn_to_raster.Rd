@@ -11,17 +11,17 @@ mdlrn_to_raster(mdl_rn, verbose = TRUE, ...)
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
-\item{...}{Additional arguments passed on to \code{\link{raster}}.}
+\item{...}{Additional arguments passed on to \code{\link{rast}}.}
 }
 \value{
-RasterBrick
+SpatRaster
 }
 \description{
-Convert \code{mdl_rn} object to \code{RasterBrick}.
+Convert \code{mdl_rn} object to \code{SpatRaster}.
 }
 \details{
 Function to convert the environment (seafloor) from a previous \code{mdl_rn} object to
-a \code{RasterBrick}. Thus, the created environment will have the final values of the
+a \code{SpatRaster}. Thus, the created environment will have the final values of the
 provided \code{mdl_rn} object as cell values. Can be used as sarting seafloor for
 new simulation.
 }

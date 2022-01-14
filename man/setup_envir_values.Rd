@@ -14,7 +14,7 @@ setup_envir_values(
 )
 }
 \arguments{
-\item{seafloor}{Raster* object.}
+\item{seafloor}{SpatRaster object.}
 
 \item{ag_biomass, bg_biomass, nutrients_pool}{Numeric with starting values.}
 
@@ -23,14 +23,14 @@ setup_envir_values(
 \item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
 }
 \value{
-RasterBrick
+SpatRaster
 }
 \description{
 Setup environmental values for seafloor.
 }
 \details{
 Setup environmental values used during \code{\link{setup_seafloor}}.
-The function creates a \code{RasterBrick} with all required values. All incremental
+The function creates a \code{SpatRaster} with all required values. All incremental
 values that will be increased during model run are set to zero. The function does not
 setup reef cells.
 

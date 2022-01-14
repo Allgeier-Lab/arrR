@@ -91,8 +91,8 @@ y <- runif(n = 1, min = -50, max = 50)
 rcpp_cell_from_xy(x = x, y = y, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
                   rcpp = FALSE)
 
-raster::cellFromXY(object = raster::raster(nrows = 100, ncols = 100,
-                                           xmn = -50, xmx = 50,
-                                           ymn = -50, ymx = 50),
-                   xy = cbind(x = x, y = y))
+terra::cellFromXY(object = terra::rast(nrows = 100, ncols = 100,
+                                       xmin = -50, xmax = 50,
+                                       ymin = -50, ymax = 50),
+                  xy = cbind(x = x, y = y))
 */

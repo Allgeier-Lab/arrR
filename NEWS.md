@@ -1,3 +1,6 @@
+# arrR 1.4
+* Use `terra` instead of `raster`
+
 # arrR 1.3.1
 * Changes to `get_stable_values`
 

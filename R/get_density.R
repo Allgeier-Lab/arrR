@@ -45,7 +45,8 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
   }
 
   # create empty raster
-  ras_density <- raster::raster(ext = result$extent, resolution = result$grain)
+  ras_density <- terra::rast(ext = result$extent, resolution = result$grain,
+                             crs = "")
 
   if (nrow(result$fishpop > 0)) {
 
@@ -57,11 +58,11 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
     }
 
     # count fish within each cell
-    ras_density <- raster::rasterize(x = result$fishpop[, c("x", "y")], y = ras_density,
-                                     fun = "count", background = 0)
+    ras_density <- terra::rasterize(x = result$fishpop[, c("x", "y")], y = ras_density,
+                                    fun = "count", background = 0)
 
     # convert to data frame
-    ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
+    ras_density <- terra::as.data.frame(ras_density, xy = TRUE, na.rm = FALSE)
 
     # rename
     names(ras_density) <- c("x", "y", "density")
@@ -76,7 +77,7 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
   } else {
 
     # convert to dataframe
-    ras_density <- raster::as.data.frame(ras_density, xy = TRUE)
+    ras_density <- terra::as.data.frame(ras_density, xy = TRUE, na.rm = FALSE)
 
     # set density to 0
     ras_density$layer <- 0
