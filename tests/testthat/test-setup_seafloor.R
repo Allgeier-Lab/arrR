@@ -16,32 +16,32 @@ test_that("setup_seafloor has correct dimensions", {
 
 test_that("setup_seafloor includes reef cells", {
 
-  expect_equal(object = sum(terra::values(input_seafloor$reef)),
+  expect_equal(object = sum(terra::values(input_seafloor$reef, mat = FALSE)),
                expected = nrow(reef_matrix))
 
 })
 
 test_that("setup_seafloor has correct starting values", {
 
-  expect_equal(object = mean(terra::values(input_seafloor$ag_biomass), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$ag_biomass, mat = FALSE), na.rm = TRUE),
                expected = starting_values$ag_biomass)
 
-  expect_equal(object = mean(terra::values(input_seafloor$bg_biomass), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$bg_biomass, mat = FALSE), na.rm = TRUE),
                expected = starting_values$bg_biomass)
 
-  expect_equal(object = mean(terra::values(input_seafloor$nutrients_pool), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$nutrients_pool, mat = FALSE), na.rm = TRUE),
                expected = starting_values$nutrients_pool)
 
-  expect_equal(object = mean(terra::values(input_seafloor$detritus_pool), na.rm = TRUE),
+  expect_equal(object = mean(terra::values(input_seafloor$detritus_pool, mat = FALSE), na.rm = TRUE),
                expected = starting_values$detritus_pool)
 
 })
 
 test_that("setup_seafloor adds random noise", {
 
-  range_homo <- range(terra::values(input_seafloor$ag_biomass), na.rm = TRUE)
+  range_homo <- range(terra::values(input_seafloor$ag_biomass, mat = FALSE), na.rm = TRUE)
 
-  range_random <- range(terra::values(input_seafloor_rnd$ag_biomass), na.rm = TRUE)
+  range_random <- range(terra::values(input_seafloor_rnd$ag_biomass, mat = FALSE), na.rm = TRUE)
 
 
   expect_equal(object = range_homo[[1]],
