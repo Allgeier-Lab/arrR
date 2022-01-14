@@ -17,7 +17,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
   <a class="nav-link" href="../articles/get-started.html">
     <span class="fa fa fa fa-magic"></span>
@@ -137,6 +137,8 @@ of the fish population follows a log-norm distribution. For more information, se
 <span class="r-in"><span class="va">seafloor</span> <span class="op">&lt;-</span> <span class="fu"><a href="setup_seafloor.html">setup_seafloor</a></span><span class="op">(</span>dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span>, grain <span class="op">=</span> <span class="fl">1</span>,</span>
 <span class="r-in">reefs <span class="op">=</span> <span class="va">reefs</span>, starting_values <span class="op">=</span> <span class="va">arrR_starting_values</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating seafloor with 100 rows x 100 cols...</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>multiple methods tables found for ‘direction’</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>multiple methods tables found for ‘gridDistance’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating 5 artifical reef cells...</span>
 <span class="r-in"><span class="va">fishpop</span> <span class="op">&lt;-</span> <span class="fu">setup_fishpop</span><span class="op">(</span>seafloor <span class="op">=</span> <span class="va">seafloor</span>,</span>
 <span class="r-in">starting_values <span class="op">=</span> <span class="va">arrR_starting_values</span>, parameters <span class="op">=</span> <span class="va">arrR_parameters</span><span class="op">)</span></span>
@@ -153,7 +155,7 @@ of the fish population follows a log-norm distribution. For more information, se
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer></div>
