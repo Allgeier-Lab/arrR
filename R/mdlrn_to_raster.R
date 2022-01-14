@@ -52,7 +52,7 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
   }
 
   # get selected last timestep and remove timestep and burnin col
-  seafloor_values <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == mdl_rn$max_i, -c(18, 19)]
+  seafloor_values <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == mdl_rn$max_i, -c(17, 18)]
 
   # reset all tracking cols
   seafloor_values[, c("ag_production", "bg_production",
