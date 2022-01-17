@@ -64,7 +64,7 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
                       "consumption", "excretion")] <- 0.0
 
   # convert to raster
-  seafloor <- terra::rast(seafloor_values, crs = "", type = "xyz", ...)
+  seafloor <- terra::rast(x = seafloor_values, crs = "", type = "xyz", ...)
 
   return(seafloor)
 }

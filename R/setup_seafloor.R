@@ -68,7 +68,7 @@ setup_seafloor <- function(dimensions, grain, reef = NULL, starting_values, rand
 
   # setup template landscape
   seafloor <- terra::rast(nrows = dimensions[1], ncol = dimensions[2], res = grain,
-                          nlyrs = 14, names = layer_names,
+                          nlyrs = length(layer_names), names = layer_names,
                           xmin = extent_x[1], xmax = extent_x[2],
                           ymin = extent_y[1], ymax = extent_y[2],
                           vals = 0.0, crs = "", ...)

@@ -45,7 +45,7 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
   }
 
   # create empty raster
-  ras_density <- terra::rast(ext = result$extent, resolution = result$grain,
+  ras_density <- terra::rast(ext = terra::ext(result$extent), resolution = result$grain,
                              crs = "", vals = 0.0, names = "density")
 
   if (nrow(result$fishpop > 0)) {
