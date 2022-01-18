@@ -5,7 +5,6 @@
 #'
 #' @param bg_biomass,ag_biomass Numeric with starting bg and ag biomass.
 #' @param parameters List with all model parameters.
-#' @param verbose Logical if message should be printed.
 #'
 #' @details
 #' Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool
@@ -23,25 +22,7 @@
 #' @rdname get_stable_values
 #'
 #' @export
-get_stable_values <- function(bg_biomass, ag_biomass, parameters, verbose = TRUE) {
-
-  # create input flag
-  flag_input <- ifelse(test = parameters$nutrients_output > 0.0,
-                       yes = TRUE, no = FALSE)
-
-  # print message about nutrient input/output needed
-  if (verbose) {
-
-    if (flag_input) {
-
-     message("> Returning nutrient input value because 'nutrients_output' > 0.")
-
-    } else {
-
-      message("> Returning no nutrient input value because 'nutrients_output' = 0.")
-
-    }
-  }
+get_stable_values <- function(bg_biomass, ag_biomass, parameters) {
 
   # calculate detritus modifier for bg biomass
   bg_modf <- (bg_biomass - parameters$bg_biomass_min) /
@@ -58,33 +39,22 @@ get_stable_values <- function(bg_biomass, ag_biomass, parameters, verbose = TRUE
   ag_detritus <- ag_biomass * (parameters$seagrass_slough * ag_modf)
 
   # calculate amount of nutrients to keep ag and bg stable
-  nutrients_pool <- (bg_detritus * parameters$bg_gamma) +
+  nutrients_required <- (bg_detritus * parameters$bg_gamma) +
     (ag_detritus * parameters$ag_gamma)
 
-  # calc output amount and set as input
-  nutr_input <- nutrients_pool * parameters$nutrients_output
-
   # remove output amount from stable nutrients pool
-  nutrients_pool <- nutrients_pool - nutr_input
+  nutrients_pool <- nutrients_required * (1 - parameters$nutrients_output)
 
   # calculate detritus amount for stable nutrients minus slough amount
-  detritus_pool <- ((nutrients_pool + nutr_input) / parameters$detritus_mineralization) -
-    ((bg_detritus * parameters$bg_gamma) + (ag_detritus * parameters$ag_gamma))
+  detritus_pool <- ((nutrients_required / parameters$detritus_mineralization) -
+    nutrients_required)
 
-  # if detritus_mineralization is zero detritus pool will be Inf
-  detritus_pool <- ifelse(test = parameters$detritus_mineralization == 0,
-                          yes = 0, no = detritus_pool)
-
-  # if input is 0, return NULL
-  if (!flag_input) {
-
-    nutr_input <- NULL
-
-  }
+  # calculate nutrient inputs
+  nutrients_input <- nutrients_required - nutrients_pool
 
   # combine to result list
   result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool,
-                 nutr_input = nutr_input)
+                 nutrients_input = nutrients_input)
 
   return(result)
 }

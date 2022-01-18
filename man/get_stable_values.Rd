@@ -4,14 +4,12 @@
 \alias{get_stable_values}
 \title{get_stable_values}
 \usage{
-get_stable_values(bg_biomass, ag_biomass, parameters, verbose = TRUE)
+get_stable_values(bg_biomass, ag_biomass, parameters)
 }
 \arguments{
 \item{bg_biomass, ag_biomass}{Numeric with starting bg and ag biomass.}
 
 \item{parameters}{List with all model parameters.}
-
-\item{verbose}{Logical if message should be printed.}
 }
 \value{
 list
