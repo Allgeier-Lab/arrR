@@ -67,6 +67,7 @@ reference:
       - rcpp_reincarnate
       - rcpp_rlognorm
       - rcpp_shuffle
+      - rcpp_sum
       - rcpp_translate_torus
       - rcpp_update_coords
 
