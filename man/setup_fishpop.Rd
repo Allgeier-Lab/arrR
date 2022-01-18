@@ -35,11 +35,11 @@ of the fish population follows a log-norm distribution. For more information, se
 \code{\link{calc_size}}. If no fish should be created, set \code{starting_values$pop_n = 0}.
 }
 \examples{
-reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
 seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reefs = reefs, starting_values = arrR_starting_values)
+reef = reef, starting_values = arrR_starting_values)
 fishpop <- setup_fishpop(seafloor = seafloor,
 starting_values = arrR_starting_values, parameters = arrR_parameters)
 

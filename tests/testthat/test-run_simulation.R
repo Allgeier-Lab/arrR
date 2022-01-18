@@ -12,8 +12,8 @@ test_that("run_simulation returns rnd_mdl", {
 
 test_that("run_simulation contains seafloor and fishpop", {
 
-  n_cells <- max_i * raster::ncell(input_seafloor) / save_each +
-    raster::ncell(input_seafloor)
+  n_cells <- max_i * terra::ncell(input_seafloor) / save_each +
+    terra::ncell(input_seafloor)
 
   n_fish <- max_i * nrow(input_fishpop) / save_each + nrow(input_fishpop)
 
@@ -52,11 +52,11 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand_inout$nutr_input, expected = nutr_input)
 
 
-  expect_equal(object = result_rand$extent, expected = raster::extent(input_seafloor))
+  expect_equal(object = terra::ext(result_rand$extent), expected = terra::ext(input_seafloor))
 
   expect_equal(object = result_rand$dimensions, expected = dim(input_seafloor)[1:2])
 
-  expect_equal(object = result_rand$grain, expected = raster::res(input_seafloor))
+  expect_equal(object = result_rand$grain, expected = terra::res(input_seafloor))
 
 
   expect_equal(object = result_rand$max_i, expected = max_i)

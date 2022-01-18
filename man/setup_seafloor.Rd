@@ -7,7 +7,7 @@
 setup_seafloor(
   dimensions,
   grain,
-  reefs = NULL,
+  reef = NULL,
   starting_values,
   random = 0,
   verbose = TRUE,
@@ -19,7 +19,7 @@ setup_seafloor(
 
 \item{grain}{Vector with size of cells in x- and y-direction (spatial grain).}
 
-\item{reefs}{2-Column matrix with coordinates of artificial reefs.}
+\item{reef}{2-Column matrix with coordinates of artificial reefs.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -27,10 +27,10 @@ setup_seafloor(
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
-\item{...}{Additional arguments passed on to \code{\link{raster}}.}
+\item{...}{Additional arguments passed on to \code{\link{rast}}.}
 }
 \value{
-RasterBrick
+SpatRaster
 }
 \description{
 Setup seafloor for model run.
@@ -46,10 +46,10 @@ If \code{random > 0}, the stochasticity is added to all starting values using \c
 as \code{x * (1 +- random)} as minimum and maximum values, respectively.
 }
 \examples{
-reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
 seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reefs = reefs, starting_values = arrR_starting_values)
+reef = reef, starting_values = arrR_starting_values)
 
 }

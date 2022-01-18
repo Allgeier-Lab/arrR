@@ -20,7 +20,7 @@ run_simulation(
 )
 }
 \arguments{
-\item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor}{SpatRaster with environment created with \code{\link{setup_seafloor}}.}
 
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
 
@@ -80,11 +80,11 @@ before this timestep is reached.
 }
 \examples{
 \dontrun{
-reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
 seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reefs = reefs, starting_values = arrR_starting_values)
+reef = reef, starting_values = arrR_starting_values)
 fishpop <- setup_fishpop(seafloor = seafloor,
 starting_values = arrR_starting_values, parameters = arrR_parameters)
 

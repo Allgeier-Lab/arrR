@@ -667,6 +667,29 @@ rcpp_sim_processes <- function(seafloor, fishpop, seafloor_track, fishpop_track,
     invisible(.Call(`_arrR_rcpp_sim_processes`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
 }
 
+#' rcpp_sum
+#'
+#' @description
+#' Rcpp vector sum
+#'
+#' @param x Numeric vector.
+#'
+#' @details
+#' Calculate sum of vector
+#'
+#' @references
+#' https://teuder.github.io/rcpp4everyone_en/030_basic_usage.html
+#'
+#' @return double
+#'
+#' @aliases rcpp_sum
+#' @rdname rcpp_sum
+#'
+#' @export
+rcpp_sum <- function(x) {
+    .Call(`_arrR_rcpp_sum`, x)
+}
+
 #' rcpp_translate_torus
 #'
 #' @description

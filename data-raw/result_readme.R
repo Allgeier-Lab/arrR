@@ -29,7 +29,8 @@ starting_values$detritus_pool <- stable_values$detritus_pool
 
 # create seafloor
 input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-                                 reefs = reef_matrix, starting_values = starting_values)
+                                 reef = reef_matrix, starting_values = starting_values,
+                                 random = 0.05)
 
 # create fishpop
 input_fishpop <- setup_fishpop(seafloor = input_seafloor, starting_values = starting_values,

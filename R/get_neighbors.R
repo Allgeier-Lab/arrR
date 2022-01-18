@@ -26,10 +26,10 @@
 get_neighbors <- function(x, direction = 8, cpp = FALSE) {
 
   # get total number of cells
-  n_cell <- raster::ncell(x)
+  n_cell <- terra::ncell(x)
 
   # get number of cols
-  n_col <- raster::ncol(x)
+  n_col <- terra::ncol(x)
 
   # seq for each focal cell
   focal_id <- 0:(n_cell - 1)

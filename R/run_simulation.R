@@ -3,7 +3,7 @@
 #' @description
 #' Core function to run model.
 #'
-#' @param seafloor RasterBrick with environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor SpatRaster with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param parameters List with all model parameters.
@@ -53,11 +53,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
 #' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = arrR_starting_values)
+#' reef = reef, starting_values = arrR_starting_values)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
 #' starting_values = arrR_starting_values, parameters = arrR_parameters)
 #'
@@ -223,20 +223,20 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # setup seafloor #
 
   # convert seafloor and fishpop as matrix
-  seafloor_values <- as.matrix(raster::as.data.frame(seafloor, xy = TRUE))
+  seafloor_values <- as.matrix(terra::as.data.frame(seafloor, xy = TRUE, na.rm = FALSE))
 
   # get neighboring cells for each focal cell using torus
   cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
 
   # get cell id of reef cells
-  cells_reef <- which(seafloor_values[, 16] == 1)
+  cells_reef <- which(seafloor_values[, "reef"] == 1)
 
   # get cell id of reef cells and coordinates of reef cells
-  coords_reef <- matrix(data = c(cells_reef, seafloor_values[cells_reef, 1:2]),
+  coords_reef <- matrix(data = c(cells_reef, seafloor_values[cells_reef, c("x", "y")]),
                         ncol = 3)
 
   # get extent of environment
-  extent <- as.vector(raster::extent(seafloor))
+  extent <- as.vector(terra::ext(seafloor))
 
   # get dimensions of environment (nrow, ncol)
   dimensions <- dim(seafloor)[1:2]
@@ -257,7 +257,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     if (verbose) {
 
-      warning("No reef cells present. Thus 'movement' set to 'rand'.", call. = FALSE)
+      warning("No reef cell(s) present. Thus 'movement' set to 'rand'.", call. = FALSE)
 
     }
 
@@ -272,7 +272,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("")
 
-    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cells.")
+    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cell(s).")
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
@@ -312,7 +312,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # add timestep to  seafloor/fishpop counter
   seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
-                                 each = raster::ncell(seafloor))
+                                 each = terra::ncell(seafloor))
 
   # fishpop is present
   if (starting_values$pop_n > 0) {
@@ -354,8 +354,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                  movement = movement, max_dist = max_dist,
                  pop_reserves_thres = pop_reserves_thres, nutr_input = nutr_input,
                  starting_values = starting_values, parameters = parameters,
-                 coords_reef = coords_reef, extent = raster::extent(extent),
-                 grain = raster::res(seafloor), dimensions = dimensions,
+                 coords_reef = coords_reef, extent = extent,
+                 grain = terra::res(seafloor), dimensions = dimensions,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  seagrass_each = seagrass_each, save_each = save_each)
 

@@ -5,11 +5,11 @@
 #'
 #' @param dimensions Vector with number of rows and columns (spatial dimensions).
 #' @param grain Vector with size of cells in x- and y-direction (spatial grain).
-#' @param reefs 2-Column matrix with coordinates of artificial reefs.
+#' @param reef 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
 #' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
 #' @param verbose If TRUE, progress reports are printed.
-#' @param ... Additional arguments passed on to \code{\link{raster}}.
+#' @param ... Additional arguments passed on to \code{\link{rast}}.
 #'
 #' @details
 #' Function to setup the environment (seafloor). The center of the environment is
@@ -21,20 +21,20 @@
 #' If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
 #' as \code{x * (1 +- random)} as minimum and maximum values, respectively.
 #'
-#' @return RasterBrick
+#' @return SpatRaster
 #'
 #' @examples
-#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
 #' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = arrR_starting_values)
+#' reef = reef, starting_values = arrR_starting_values)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, random = 0,
+setup_seafloor <- function(dimensions, grain, reef = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress
@@ -60,11 +60,18 @@ setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, ran
 
   extent_y <- dimensions[2] / 2 * c(-1, 1)
 
+  layer_names <- c("ag_biomass", "bg_biomass", "nutrients_pool",
+                   "detritus_pool", "detritus_fish",
+                   "ag_production", "bg_production", "ag_slough", "bg_slough",
+                   "ag_uptake", "bg_uptake",
+                   "consumption", "excretion", "reef")
+
   # setup template landscape
-  seafloor <- raster::raster(nrows = dimensions[1], ncol = dimensions[2], res = grain,
-                             xmn = extent_x[1], xmx = extent_x[2],
-                             ymn = extent_y[1], ymx = extent_y[2],
-                             vals = NA, crs = NA, ...)
+  seafloor <- terra::rast(nrows = dimensions[1], ncol = dimensions[2], res = grain,
+                          nlyrs = length(layer_names), names = layer_names,
+                          xmin = extent_x[1], xmax = extent_x[2],
+                          ymin = extent_y[1], ymax = extent_y[2],
+                          vals = 0.0, crs = "", ...)
 
   # setup environmental values
   seafloor <- setup_envir_values(seafloor = seafloor,
@@ -75,24 +82,24 @@ setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, ran
                                  random = random)
 
   # AR coords provided
-  if (!is.null(reefs)) {
+  if (!is.null(reef)) {
 
     # print progress
     if (verbose) {
 
-      message("> ...Creating ", nrow(reefs), " artifical reef cells...")
+      message("> ...Creating ", nrow(reef), " artifical reef cell(s)...")
 
     }
 
     # check if matrix with coords is provided
-    if (!inherits(x = reefs, what = "matrix")) {
+    if (!inherits(x = reef, what = "matrix")) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
 
     }
 
-    if (inherits(x = reefs, what = "matrix") && ncol(reefs) != 2) {
+    if (inherits(x = reef, what = "matrix") && ncol(reef) != 2) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
@@ -100,20 +107,16 @@ setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, ran
     }
 
     # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    seafloor <- setup_reefs(object = seafloor, xy = reefs, dimensions = dimensions)
+    seafloor <- setup_reef(seafloor = seafloor, reef = reef)
 
   # no AR coords provided
   } else {
 
     if (verbose) {
 
-      message("> ...No artifical reefs present...")
+      message("> ...No artifical reef(s) present...")
 
     }
-
-    # add reef layer
-    seafloor$reef <- 0
-
   }
 
   return(seafloor)
