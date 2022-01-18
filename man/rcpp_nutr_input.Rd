@@ -4,12 +4,12 @@
 \alias{rcpp_nutr_input}
 \title{rcpp_nutr_input}
 \usage{
-rcpp_nutr_input(seafloor, nutr_input)
+rcpp_nutr_input(seafloor, nutrients_input)
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{nutr_input}{Vector with amount of nutrient input each timestep.}
+\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 }
 \value{
 void
@@ -18,9 +18,9 @@ void
 Rcpp simulate nutrient input.
 }
 \details{
-Simulate external nutrient input to the each cell. The \code{nutr_input}
+Simulate external nutrient input to the each cell. The \code{nutrients_input}
 vector must have as many elements as \code{max_i} to add input each timestep.
-If not nutrients should be added, set all values of \code{nutr_input} to zero.
+If not nutrients should be added, set all values of \code{nutrients_input} to zero.
 }
 \references{
 DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer

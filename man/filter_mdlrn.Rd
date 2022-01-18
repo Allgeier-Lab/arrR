@@ -9,8 +9,7 @@ filter_mdlrn(result, filter = max(result$max_i), reset = FALSE)
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
 
-\item{filter}{Vector with timesteps (\code{nutr_input}) or min/max timesteps
-(\code{nutr_input}) to return.}
+\item{filter}{Vector with min/max timesteps}
 
 \item{reset}{Logical if TRUE, cumulative seafloor values are reduced by value
 before filter minimum.}
@@ -24,7 +23,7 @@ Filter model run for specific timestep.
 \details{
 This functions allows to return only specific timesteps of a \code{mdl_rn} object
 created with \code{\link{run_simulation}}. The function ensures that the object will
-still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
+still be a \code{mdl_rn} object.
 }
 \examples{
  \dontrun{

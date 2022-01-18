@@ -35,7 +35,7 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = names(result_rand),
                expected = c("seafloor", "fishpop", "movement", "max_dist", "pop_reserves_thres",
-                            "nutr_input", "starting_values", "parameters", "coords_reef",
+                            "nutrients_input", "starting_values", "parameters", "coords_reef",
                             "extent", "grain", "dimensions", "max_i", "min_per_i",
                             "burn_in", "seagrass_each", "save_each"))
 
@@ -47,9 +47,9 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_behav$movement, expected = "behav")
 
 
-  expect_equal(object = result_rand$nutr_input, expected = NA)
+  expect_equal(object = result_rand$nutrients_input, expected = NA)
 
-  expect_equal(object = result_rand_inout$nutr_input, expected = nutr_input)
+  expect_equal(object = result_rand_inout$nutrients_input, expected = nutrients_input)
 
 
   expect_equal(object = terra::ext(result_rand$extent), expected = terra::ext(input_seafloor))
@@ -103,14 +103,14 @@ test_that("run_simulation stops max_i cannot be divided by save_each", {
 
 })
 
-test_that("run_simulation stops if nutr_input is not equal to max_i", {
+test_that("run_simulation stops if nutrients_input is not equal to max_i", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                                     parameters = parameters,
-                                    nutr_input = c(0.1, 0.2, 0.3),
+                                    nutrients_input = c(0.1, 0.2, 0.3),
                                     movement = "rand",
                                     max_i = max_i, min_per_i = min_per_i),
-               regexp = "'nutr_input' must have input amount for each iteration.")
+               regexp = "'nutrients_input' must have input amount for each iteration.")
 
 })
 

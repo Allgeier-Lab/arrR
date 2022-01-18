@@ -382,12 +382,12 @@ rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, m
 #' Rcpp simulate nutrient input.
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param nutr_input Vector with amount of nutrient input each timestep.
+#' @param nutrients_input Vector with amount of nutrient input each timestep.
 #'
 #' @details
-#' Simulate external nutrient input to the each cell. The \code{nutr_input}
+#' Simulate external nutrient input to the each cell. The \code{nutrients_input}
 #' vector must have as many elements as \code{max_i} to add input each timestep.
-#' If not nutrients should be added, set all values of \code{nutr_input} to zero.
+#' If not nutrients should be added, set all values of \code{nutrients_input} to zero.
 #'
 #' @references
 #' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
@@ -399,8 +399,8 @@ rcpp_move_wrap <- function(fishpop, coords_reef, movement, pop_reserves_thres, m
 #' @rdname rcpp_nutr_input
 #'
 #' @export
-rcpp_nutr_input <- function(seafloor, nutr_input) {
-    invisible(.Call(`_arrR_rcpp_nutr_input`, seafloor, nutr_input))
+rcpp_nutr_input <- function(seafloor, nutrients_input) {
+    invisible(.Call(`_arrR_rcpp_nutr_input`, seafloor, nutrients_input))
 }
 
 #' rcpp_nutr_output
@@ -409,7 +409,7 @@ rcpp_nutr_input <- function(seafloor, nutr_input) {
 #' Rcpp nutrient output.
 #'
 #' @param seafloor Matrix with seafloor values.
-#' @param nutrients_output,detritus_output Double with fraction removed from each cell.
+#' @param nutrients_loss,detritus_loss Double with fraction removed from each cell.
 #'
 #' @details
 #' Simulates loss of nutrients (i.e., output of the system) for each cell and timestep.
@@ -425,8 +425,8 @@ rcpp_nutr_input <- function(seafloor, nutr_input) {
 #' @rdname rcpp_nutr_output
 #'
 #' @export
-rcpp_nutr_output <- function(seafloor, nutrients_output, detritus_output) {
-    invisible(.Call(`_arrR_rcpp_nutr_output`, seafloor, nutrients_output, detritus_output))
+rcpp_nutr_output <- function(seafloor, nutrients_loss, detritus_loss) {
+    invisible(.Call(`_arrR_rcpp_nutr_output`, seafloor, nutrients_loss, detritus_loss))
 }
 
 #' rcpp_nutr_uptake
@@ -638,7 +638,7 @@ rcpp_shuffle <- function(min, max) {
 #' @param cell_adj Matrix with cell adjacencies.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param nutr_input Vector with amount of nutrient input each timestep.
+#' @param nutrients_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param save_each Numeric how often data should be saved to return.
@@ -663,8 +663,8 @@ rcpp_shuffle <- function(min, max) {
 #' @rdname rcpp_sim_processes
 #'
 #' @export
-rcpp_sim_processes <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
-    invisible(.Call(`_arrR_rcpp_sim_processes`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
+rcpp_sim_processes <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutrients_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
+    invisible(.Call(`_arrR_rcpp_sim_processes`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutrients_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
 }
 
 #' rcpp_sum

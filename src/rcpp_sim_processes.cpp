@@ -33,7 +33,7 @@ using namespace Rcpp;
 //' @param cell_adj Matrix with cell adjacencies.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param nutr_input Vector with amount of nutrient input each timestep.
+//' @param nutrients_input Vector with amount of nutrient input each timestep.
 //' @param max_i Integer with maximum number of simulation timesteps.
 //' @param min_per_i Integer to specify minutes per i.
 //' @param save_each Numeric how often data should be saved to return.
@@ -64,7 +64,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
                         int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres,
                         Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj,
                         Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
-                        Rcpp::NumericVector nutr_input,
+                        Rcpp::NumericVector nutrients_input,
                         int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                         bool verbose) {
 
@@ -79,11 +79,11 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
 
   // get input flag
-  bool flag_input = rcpp_sum(nutr_input) > 0.0;
+  bool flag_input = rcpp_sum(nutrients_input) > 0.0;
 
   // flag if output needs to be run
-  bool flag_output = (as<double>(parameters["nutrients_output"]) > 0.0) ||
-    (as<double>(parameters["detritus_output"]) > 0.0);
+  bool flag_output = (as<double>(parameters["nutrients_loss"]) > 0.0) ||
+    (as<double>(parameters["detritus_loss"]) > 0.0);
 
   // init seafloor stuff //
 
@@ -113,9 +113,9 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     }
 
     // simulate nutrient input if present
-    if (flag_input && (nutr_input[i - 1] > 0.0)) {
+    if (flag_input && (nutrients_input[i - 1] > 0.0)) {
 
-      rcpp_nutr_input(seafloor, nutr_input[i - 1]);
+      rcpp_nutr_input(seafloor, nutrients_input[i - 1]);
 
     }
 
@@ -179,7 +179,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     // remove nutrients from cells if output parameter > 0
     if (flag_output) {
 
-      rcpp_nutr_output(seafloor, parameters["nutrients_output"], parameters["detritus_output"]);
+      rcpp_nutr_output(seafloor, parameters["nutrients_loss"], parameters["detritus_loss"]);
 
     }
 
@@ -203,7 +203,7 @@ rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
                    seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                    parameters = parameters, pop_n = starting_values$pop_n,
                    movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                   coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutr_input = nutr_input,
+                   coords_reef = coords_reef, extent = extent, dimensions = dimensions, nutrients_input = nutrients_input,
                    max_i = max_i, min_per_i = min_per_i, save_each = save_each,
                    seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 */

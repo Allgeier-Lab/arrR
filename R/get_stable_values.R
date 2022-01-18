@@ -43,7 +43,7 @@ get_stable_values <- function(bg_biomass, ag_biomass, parameters) {
     (ag_detritus * parameters$ag_gamma)
 
   # remove output amount from stable nutrients pool
-  nutrients_pool <- nutrients_required * (1 - parameters$nutrients_output)
+  nutrients_pool <- nutrients_required * (1 - parameters$nutrients_loss)
 
   # calculate detritus amount for stable nutrients minus slough amount
   detritus_pool <- ((nutrients_required / parameters$detritus_mineralization) -

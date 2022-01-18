@@ -11,7 +11,7 @@ using namespace Rcpp;
 //' Rcpp nutrient output.
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param nutrients_output,detritus_output Double with fraction removed from each cell.
+//' @param nutrients_loss,detritus_loss Double with fraction removed from each cell.
 //'
 //' @details
 //' Simulates loss of nutrients (i.e., output of the system) for each cell and timestep.
@@ -28,15 +28,15 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output) {
+void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
 
   // loop through all raster cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
     // calculate output amount
-    double nutrients = seafloor(i, 4) * nutrients_output;
+    double nutrients = seafloor(i, 4) * nutrients_loss;
 
-    double detritus = seafloor(i, 5) * detritus_output;
+    double detritus = seafloor(i, 5) * detritus_loss;
 
     // remove output from nutrients pool
     seafloor(i, 4) -= nutrients;
@@ -49,6 +49,6 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, dou
 
 /*** R
 # diffuse values and save result
-rcpp_nutr_output(seafloor = seafloor_values, nutrients_output = parameters$nutrients_output,
-                 detritus_output = parameters$detritus_output)
+rcpp_nutr_output(seafloor = seafloor_values, nutrients_loss = parameters$nutrients_loss,
+                 detritus_lossf = parameters$detritus_loss)
 */

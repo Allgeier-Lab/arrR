@@ -333,20 +333,20 @@ RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP coords_reefSEXP, SEX
     return rcpp_result_gen;
 }
 // rcpp_nutr_input
-void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input);
-static SEXP _arrR_rcpp_nutr_input_try(SEXP seafloorSEXP, SEXP nutr_inputSEXP) {
+void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input);
+static SEXP _arrR_rcpp_nutr_input_try(SEXP seafloorSEXP, SEXP nutrients_inputSEXP) {
 BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type nutr_input(nutr_inputSEXP);
-    rcpp_nutr_input(seafloor, nutr_input);
+    Rcpp::traits::input_parameter< double >::type nutrients_input(nutrients_inputSEXP);
+    rcpp_nutr_input(seafloor, nutrients_input);
     return R_NilValue;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_nutr_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP) {
+RcppExport SEXP _arrR_rcpp_nutr_input(SEXP seafloorSEXP, SEXP nutrients_inputSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_input_try(seafloorSEXP, nutr_inputSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_input_try(seafloorSEXP, nutrients_inputSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -367,21 +367,21 @@ RcppExport SEXP _arrR_rcpp_nutr_input(SEXP seafloorSEXP, SEXP nutr_inputSEXP) {
     return rcpp_result_gen;
 }
 // rcpp_nutr_output
-void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output);
-static SEXP _arrR_rcpp_nutr_output_try(SEXP seafloorSEXP, SEXP nutrients_outputSEXP, SEXP detritus_outputSEXP) {
+void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss);
+static SEXP _arrR_rcpp_nutr_output_try(SEXP seafloorSEXP, SEXP nutrients_lossSEXP, SEXP detritus_lossSEXP) {
 BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
-    Rcpp::traits::input_parameter< double >::type nutrients_output(nutrients_outputSEXP);
-    Rcpp::traits::input_parameter< double >::type detritus_output(detritus_outputSEXP);
-    rcpp_nutr_output(seafloor, nutrients_output, detritus_output);
+    Rcpp::traits::input_parameter< double >::type nutrients_loss(nutrients_lossSEXP);
+    Rcpp::traits::input_parameter< double >::type detritus_loss(detritus_lossSEXP);
+    rcpp_nutr_output(seafloor, nutrients_loss, detritus_loss);
     return R_NilValue;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_nutr_output(SEXP seafloorSEXP, SEXP nutrients_outputSEXP, SEXP detritus_outputSEXP) {
+RcppExport SEXP _arrR_rcpp_nutr_output(SEXP seafloorSEXP, SEXP nutrients_lossSEXP, SEXP detritus_lossSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_output_try(seafloorSEXP, nutrients_outputSEXP, detritus_outputSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_nutr_output_try(seafloorSEXP, nutrients_lossSEXP, detritus_lossSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -550,8 +550,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_sim_processes
-void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters, int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, Rcpp::NumericVector nutr_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
-RcppExport SEXP _arrR_rcpp_sim_processes(SEXP seafloorSEXP, SEXP fishpopSEXP, SEXP seafloor_trackSEXP, SEXP fishpop_trackSEXP, SEXP parametersSEXP, SEXP pop_nSEXP, SEXP movementSEXP, SEXP max_distSEXP, SEXP pop_reserves_thresSEXP, SEXP coords_reefSEXP, SEXP cell_adjSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP nutr_inputSEXP, SEXP max_iSEXP, SEXP min_per_iSEXP, SEXP save_eachSEXP, SEXP seagrass_eachSEXP, SEXP burn_inSEXP, SEXP verboseSEXP) {
+void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters, int pop_n, Rcpp::String movement, double max_dist, Rcpp::NumericVector pop_reserves_thres, Rcpp::NumericMatrix coords_reef, Rcpp::NumericMatrix cell_adj, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, Rcpp::NumericVector nutrients_input, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose);
+RcppExport SEXP _arrR_rcpp_sim_processes(SEXP seafloorSEXP, SEXP fishpopSEXP, SEXP seafloor_trackSEXP, SEXP fishpop_trackSEXP, SEXP parametersSEXP, SEXP pop_nSEXP, SEXP movementSEXP, SEXP max_distSEXP, SEXP pop_reserves_thresSEXP, SEXP coords_reefSEXP, SEXP cell_adjSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP nutrients_inputSEXP, SEXP max_iSEXP, SEXP min_per_iSEXP, SEXP save_eachSEXP, SEXP seagrass_eachSEXP, SEXP burn_inSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
@@ -567,14 +567,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type cell_adj(cell_adjSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutr_input(nutr_inputSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type nutrients_input(nutrients_inputSEXP);
     Rcpp::traits::input_parameter< int >::type max_i(max_iSEXP);
     Rcpp::traits::input_parameter< int >::type min_per_i(min_per_iSEXP);
     Rcpp::traits::input_parameter< int >::type save_each(save_eachSEXP);
     Rcpp::traits::input_parameter< int >::type seagrass_each(seagrass_eachSEXP);
     Rcpp::traits::input_parameter< int >::type burn_in(burn_inSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_sim_processes(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutr_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose);
+    rcpp_sim_processes(seafloor, fishpop, seafloor_track, fishpop_track, parameters, pop_n, movement, max_dist, pop_reserves_thres, coords_reef, cell_adj, extent, dimensions, nutrients_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose);
     return R_NilValue;
 END_RCPP
 }

@@ -67,14 +67,14 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     # nutrients
     "nutrients_diffusion",
-    "nutrients_output",
+    "nutrients_loss",
 
     # detritus
     "detritus_mineralization",
     "detritus_diffusion",
     "detritus_fish_decomp",
     "detritus_fish_diffusion",
-    "detritus_output",
+    "detritus_loss",
 
     # fishpop movement
     "move_mean",
@@ -201,13 +201,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
-                            parameters$nutrients_output,
+                            parameters$nutrients_loss,
 
                             parameters$detritus_mineralization,
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
-                            parameters$detritus_output,
+                            parameters$detritus_loss,
 
                             parameters$pop_reserves_max,
                             parameters$pop_reserves_thres_hi) > 1,
@@ -215,13 +215,13 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                           c(parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
-                            parameters$nutrients_output,
+                            parameters$nutrients_loss,
 
                             parameters$detritus_mineralization,
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
-                            parameters$detritus_output,
+                            parameters$detritus_loss,
 
                             parameters$pop_reserves_max,
                             parameters$pop_reserves_thres_lo) < 0))

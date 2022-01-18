@@ -124,7 +124,7 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutr_input) {
+    inline void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
         typedef SEXP(*Ptr_rcpp_nutr_input)(SEXP,SEXP);
         static Ptr_rcpp_nutr_input p_rcpp_nutr_input = NULL;
         if (p_rcpp_nutr_input == NULL) {
@@ -134,7 +134,7 @@ namespace arrR {
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_nutr_input(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutr_input)));
+            rcpp_result_gen = p_rcpp_nutr_input(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_input)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -144,7 +144,7 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_output, double detritus_output) {
+    inline void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
         typedef SEXP(*Ptr_rcpp_nutr_output)(SEXP,SEXP,SEXP);
         static Ptr_rcpp_nutr_output p_rcpp_nutr_output = NULL;
         if (p_rcpp_nutr_output == NULL) {
@@ -154,7 +154,7 @@ namespace arrR {
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_output)), Shield<SEXP>(Rcpp::wrap(detritus_output)));
+            rcpp_result_gen = p_rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_loss)), Shield<SEXP>(Rcpp::wrap(detritus_loss)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

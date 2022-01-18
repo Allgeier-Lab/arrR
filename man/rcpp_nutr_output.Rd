@@ -4,12 +4,12 @@
 \alias{rcpp_nutr_output}
 \title{rcpp_nutr_output}
 \usage{
-rcpp_nutr_output(seafloor, nutrients_output, detritus_output)
+rcpp_nutr_output(seafloor, nutrients_loss, detritus_loss)
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{nutrients_output, detritus_output}{Double with fraction removed from each cell.}
+\item{nutrients_loss, detritus_loss}{Double with fraction removed from each cell.}
 }
 \value{
 void

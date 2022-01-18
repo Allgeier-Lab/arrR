@@ -18,7 +18,7 @@ rcpp_sim_processes(
   cell_adj,
   extent,
   dimensions,
-  nutr_input,
+  nutrients_input,
   max_i,
   min_per_i,
   save_each,
@@ -50,7 +50,7 @@ rcpp_sim_processes(
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
 
-\item{nutr_input}{Vector with amount of nutrient input each timestep.}
+\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 

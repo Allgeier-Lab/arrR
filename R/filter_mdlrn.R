@@ -4,15 +4,14 @@
 #' Filter model run for specific timestep.
 #'
 #' @param result mdl_rn object of simulation run.
-#' @param filter Vector with timesteps (\code{nutr_input}) or min/max timesteps
-#' (\code{nutr_input}) to return.
+#' @param filter Vector with min/max timesteps
 #' @param reset Logical if TRUE, cumulative seafloor values are reduced by value
 #' before filter minimum.
 #'
 #' @details
 #' This functions allows to return only specific timesteps of a \code{mdl_rn} object
 #' created with \code{\link{run_simulation}}. The function ensures that the object will
-#' still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
+#' still be a \code{mdl_rn} object.
 #'
 #' @return mdl_rn
 #'

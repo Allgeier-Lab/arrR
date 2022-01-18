@@ -105,14 +105,14 @@ parameter_df <- data.frame(
     
     # nutrients_*
     "nutrients_diffusion", 
-    "nutrients_output", 
+    "nutrients_loss", 
     
     # detritus_*
     "detritus_mineralization",
     "detritus_diffusion",
     "detritus_fish_decomp",
     "detritus_fish_diffusion",
-    "detritus_output",
+    "detritus_loss",
     
     # move_* 
     "move_mean",

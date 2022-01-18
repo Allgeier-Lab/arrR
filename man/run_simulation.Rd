@@ -15,7 +15,7 @@ run_simulation(
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
-  nutr_input = NULL,
+  nutrients_input = NULL,
   verbose = TRUE
 )
 }
@@ -40,7 +40,7 @@ run_simulation(
 
 \item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
 
-\item{nutr_input}{Vector with amount of nutrient input each timestep.}
+\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }
@@ -67,8 +67,8 @@ The \code{movement} argument allows to either specify random movement of individ
 attracted movement towards the artificial reef of individuals or a movement behavior based
 on their biosenergetics.
 
-If \code{nutr_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
-nutrient output, set the \code{nutrients_output} parameter to zero.
+If \code{nutrients_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+nutrient output, set the \code{nutrients_loss} parameter to zero.
 
 If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
 but only each timestep specified by the object. However, \code{max_i} must be dividable by

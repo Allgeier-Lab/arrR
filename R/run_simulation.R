@@ -7,7 +7,7 @@
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param parameters List with all model parameters.
-#' @param nutr_input Vector with amount of nutrient input each timestep.
+#' @param nutrients_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
@@ -33,8 +33,8 @@
 #' attracted movement towards the artificial reef of individuals or a movement behavior based
 #' on their biosenergetics.
 #'
-#' If \code{nutr_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
-#' nutrient output, set the \code{nutrients_output} parameter to zero.
+#' If \code{nutrients_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+#' nutrient output, set the \code{nutrients_loss} parameter to zero.
 #'
 #' If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
 #' but only each timestep specified by the object. However, \code{max_i} must be dividable by
@@ -72,7 +72,7 @@
 run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           nutr_input = NULL, verbose = TRUE) {
+                           nutrients_input = NULL, verbose = TRUE) {
 
   # get time at beginning for final print
   if (verbose) {
@@ -110,9 +110,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if each i has input
-  if (!is.null(nutr_input) && length(nutr_input) != max_i && length(nutr_input) != 1) {
+  if (!is.null(nutrients_input) && length(nutrients_input) != max_i && length(nutrients_input) != 1) {
 
-    stop("'nutr_input' must have input amount for each iteration.", call. = FALSE)
+    stop("'nutrients_input' must have input amount for each iteration.", call. = FALSE)
 
   }
 
@@ -198,10 +198,10 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   # setup nutrient input #
 
-  # create vector for nutr_input
-  if (is.null(nutr_input)) {
+  # create vector for nutrients_input
+  if (is.null(nutrients_input)) {
 
-    nutr_input <- rep(x = 0.0, times = max_i)
+    nutrients_input <- rep(x = 0.0, times = max_i)
 
     # set nutrient flag to save results later
     flag_nutr_input <- FALSE
@@ -209,9 +209,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   } else {
 
     # repeat if only one value is present
-    if (length(nutr_input) == 1) {
+    if (length(nutrients_input) == 1) {
 
-      nutr_input <- rep(x = nutr_input, times = max_i)
+      nutrients_input <- rep(x = nutrients_input, times = max_i)
 
     }
 
@@ -292,7 +292,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                      movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
                      coords_reef = coords_reef, cell_adj = cell_adj,
                      extent = extent, dimensions = dimensions,
-                     nutr_input = nutr_input,
+                     nutrients_input = nutrients_input,
                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
                      seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
 
@@ -345,14 +345,14 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   if (!flag_nutr_input) {
 
-    nutr_input <- NA
+    nutrients_input <- NA
 
   }
 
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
                  movement = movement, max_dist = max_dist,
-                 pop_reserves_thres = pop_reserves_thres, nutr_input = nutr_input,
+                 pop_reserves_thres = pop_reserves_thres, nutrients_input = nutrients_input,
                  starting_values = starting_values, parameters = parameters,
                  coords_reef = coords_reef, extent = extent,
                  grain = terra::res(seafloor), dimensions = dimensions,

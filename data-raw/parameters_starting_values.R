@@ -23,14 +23,14 @@ arrR_parameters <- list(
 
   # nutrients
   nutrients_diffusion = 2/3,
-  nutrients_output = 0.0,
+  nutrients_loss = 0.0,
 
   # detritus
   detritus_mineralization = 0.0001,
   detritus_diffusion = 1/3,
   detritus_fish_decomp = 0.5,
   detritus_fish_diffusion = 1/3,
-  detritus_output = 0.0,
+  detritus_loss = 0.0,
 
   # fishpop movement
   move_mean = 10.0,
