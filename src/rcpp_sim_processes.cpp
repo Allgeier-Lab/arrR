@@ -4,7 +4,6 @@
 #include <progress.hpp>
 #include <progress_bar.hpp>
 #include "rcpp_sim_processes.h"
-#include "rcpp_sum.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_mineralization.h"
@@ -79,7 +78,7 @@ void rcpp_sim_processes(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpo
     (as<double>(parameters["detritus_fish_diffusion"])) > 0.0;
 
   // get input flag
-  bool flag_input = rcpp_sum(nutrients_input) > 0.0;
+  bool flag_input = Rcpp::sum(nutrients_input) > 0.0;
 
   // flag if output needs to be run
   bool flag_output = (as<double>(parameters["nutrients_loss"]) > 0.0) ||
