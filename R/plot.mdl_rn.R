@@ -106,7 +106,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = "Detritus pool [g/cell]") +
+      ggplot2::labs(x = "Timestep", y = col_names[5]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 

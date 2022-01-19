@@ -33,6 +33,13 @@ using namespace Rcpp;
 double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max,
                              double threshold, double slope) {
 
+  // check if biomass > max or < min
+  if (biomass < biomass_min || biomass > biomass_max) {
+
+    Rcpp::stop("'biomass_min' <= 'biomass' <= 'biomass_max' is not true.");
+
+  }
+
   // init ratio
   double ratio = 0.0;
 
