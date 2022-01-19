@@ -51,7 +51,7 @@ reference:
       - get_neighbors
       - get_starting_values
       - setup_envir_values
-      - setup_reefs
+      - setup_reef
 
   - title: Rcpp functions
     contents:
