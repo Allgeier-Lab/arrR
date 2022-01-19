@@ -160,6 +160,9 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_sim_processes.html</loc>
   </url>
   <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_sum.html</loc>
+  </url>
+  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_translate_torus.html</loc>
   </url>
   <url>
@@ -178,7 +181,7 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_fishpop.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/setup_reefs.html</loc>
+    <loc>https://allgeier-lab.github.io/arrR/reference/setup_reef.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_seafloor.html</loc>

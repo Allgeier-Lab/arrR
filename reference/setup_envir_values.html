@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>seafloor</dt>
-<dd><p>Raster* object.</p></dd>
+<dd><p>SpatRaster object.</p></dd>
 <dt>ag_biomass, bg_biomass, nutrients_pool</dt>
 <dd><p>Numeric with starting values.</p></dd>
 <dt>detritus_pool</dt>
@@ -119,12 +119,12 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>RasterBrick</p>
+    <p>SpatRaster</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Setup environmental values used during <code><a href="setup_seafloor.html">setup_seafloor</a></code>.
-The function creates a <code>RasterBrick</code> with all required values. All incremental
+The function creates a <code>SpatRaster</code> with all required values. All incremental
 values that will be increased during model run are set to zero. The function does not
 setup reef cells.</p>
 <p>If <code>random &gt; 0</code>, the stochasticity is added to all starting values using <code>random</code>
