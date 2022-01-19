@@ -3,6 +3,7 @@
 * Rename `nutr_input` to `nutrients_input`
 * Rename `nutrients_output` to `nutrients_loss`
 * Rename `detritus_output` to `detritus_loss`
+* Run all seagrass/water column processes on same temporal scale
 
 # arrR 1.3.1
 * Changes to `get_stable_values`

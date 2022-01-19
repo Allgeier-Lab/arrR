@@ -110,7 +110,8 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if each i has input
-  if (!is.null(nutrients_input) && length(nutrients_input) != max_i && length(nutrients_input) != 1) {
+  if (!is.null(nutrients_input) && (length(nutrients_input) != (max_i / seagrass_each)) &&
+      (length(nutrients_input) != 1)) {
 
     stop("'nutrients_input' must have input amount for each iteration.", call. = FALSE)
 
@@ -201,7 +202,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # create vector for nutrients_input
   if (is.null(nutrients_input)) {
 
-    nutrients_input <- rep(x = 0.0, times = max_i)
+    nutrients_input <- rep(x = 0.0, times = max_i / seagrass_each)
 
     # set nutrient flag to save results later
     flag_nutr_input <- FALSE
@@ -211,7 +212,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     # repeat if only one value is present
     if (length(nutrients_input) == 1) {
 
-      nutrients_input <- rep(x = nutrients_input, times = max_i)
+      nutrients_input <- rep(x = nutrients_input, times = max_i / seagrass_each)
 
     }
 
