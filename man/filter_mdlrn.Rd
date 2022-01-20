@@ -9,7 +9,7 @@ filter_mdlrn(result, filter = max(result$max_i), reset = FALSE)
 \arguments{
 \item{result}{mdl_rn object of simulation run.}
 
-\item{filter}{Vector with min/max timesteps}
+\item{filter}{Integer with one or vector with min/max timestep(s) to filter.}
 
 \item{reset}{Logical if TRUE, cumulative seafloor values are reduced by value
 before filter minimum.}
