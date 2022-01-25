@@ -578,17 +578,6 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// rcpp_sum
-double rcpp_sum(Rcpp::NumericVector x);
-RcppExport SEXP _arrR_rcpp_sum(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_sum(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rcpp_translate_torus
 Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent);
 RcppExport SEXP _arrR_rcpp_translate_torus(SEXP xSEXP, SEXP ySEXP, SEXP extentSEXP) {
@@ -672,7 +661,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 16},
     {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
     {"_arrR_rcpp_sim_processes", (DL_FUNC) &_arrR_rcpp_sim_processes, 20},
-    {"_arrR_rcpp_sum", (DL_FUNC) &_arrR_rcpp_sum, 1},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 3},
     {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
     {"_arrR_RcppExport_registerCCallable", (DL_FUNC) &_arrR_RcppExport_registerCCallable, 0},

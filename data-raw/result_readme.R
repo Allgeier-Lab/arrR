@@ -59,4 +59,4 @@ result_readme <- run_simulation(seafloor = input_seafloor, fishpop = input_fishp
                                 max_i = max_i, min_per_i = min_per_i,
                                 seagrass_each = seagrass_each, save_each = save_each)
 
-usethis::use_data(result_readme, internal = TRUE, overwrite = TRUE)
+usethis::use_data(result_readme, internal = TRUE, overwrite = FALSE)

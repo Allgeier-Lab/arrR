@@ -4,7 +4,7 @@
 #' Filter model run for specific timestep.
 #'
 #' @param result mdl_rn object of simulation run.
-#' @param filter Vector with min/max timesteps
+#' @param filter Integer with one or vector with min/max timestep(s) to filter.
 #' @param reset Logical if TRUE, cumulative seafloor values are reduced by value
 #' before filter minimum.
 #'
@@ -38,10 +38,14 @@ filter_mdlrn <- function(result, filter = max(result$max_i), reset = FALSE) {
 
     filter <- rep(x = filter, times = 2)
 
+  } else if (length(filter) != 2) {
+
+    stop("'filter' must be either one timestep or min/max timesteps.", call. = FALSE)
+
   }
 
   # check if all timesteps are within boundaries
-  if (any(filter < 0) || any(filter > result$max_i)) {
+  if ((filter[1] < 0) || (filter[2] > result$max_i)) {
 
     stop("'filter' is not within 0 <= x <= max_i.", call. = FALSE)
 
