@@ -29,6 +29,8 @@
 #' @aliases plot.mdl_rn
 #' @rdname plot.mdl_rn
 #'
+#' @importFrom rlang .data
+#'
 #' @export
 plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, burn_in = TRUE,
                         normalize = FALSE, base_size = 10, verbose = TRUE, ...) {
@@ -116,13 +118,13 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     if (what == "seafloor") {
 
       # get seafloor data
-      seafloor <- subset(x$seafloor, timestep == max(timestep),
-                         select = c("x", "y", "ag_biomass", "bg_biomass",
-                                    "nutrients_pool", "detritus_pool"))
+      seafloor <- x$seafloor[x$seafloor$timestep == max(x$seafloor$timestep),
+                             c("x", "y", "ag_biomass", "bg_biomass",
+                               "nutrients_pool", "detritus_pool")]
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = bg_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$bg_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$ag_biomass,
                                       name = "Dry weight bg\nbiomass [g/cell]") +
@@ -133,7 +135,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = ag_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$ag_biomass)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$bg_biomass,
                                       name = "Dry weight ag\nbiomass [g/cell]") +
@@ -144,7 +146,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = nutrients_pool)) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$nutrients_pool)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$nutrients_pool,
                                       name = "Nutrients\npool [g/cell]") +
@@ -155,7 +157,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = detritus_pool)) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$detritus_pool)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$detritus_pool,
                                       name = "Detritus\nnutrients [g/cell]") +
@@ -164,7 +166,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
         ggplot2::theme_classic(base_size = base_size) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
-    # plot fishpopulation
+    # plot fish population
     } else if (what == "fishpop") {
 
       # get seafloor data
@@ -180,7 +182,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_density <- ggplot2::ggplot(data = fishpop) +
-        ggplot2::geom_raster(ggplot2::aes(x = x, y = y, fill = density)) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$density)) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", name = name) +
         ggplot2::coord_equal() +

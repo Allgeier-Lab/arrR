@@ -53,7 +53,7 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
     # remove burn_in
     if (result$burn_in > 0) {
 
-      result$fishpop <- subset(result$fishpop, burn_in == "no")
+      result$fishpop <- result$fishpop[result$fishpop$burn_in == "no", ]
 
     }
 

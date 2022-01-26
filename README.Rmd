@@ -49,10 +49,6 @@ remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 
 Please see `vignette("get-started")` for a short tutorial how to use the **arrR** package.
 
-```{r plot_result, echo = FALSE, fig.align = 'center', out.width = "75%", out.height = "75%"}
-plot(arrR:::result_readme)
-```
-
 ## Code of Conduct
 
 Please note that the **arrR** package is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.

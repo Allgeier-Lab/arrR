@@ -40,7 +40,7 @@ plot_production <- function(result, lag = TRUE, base_size = 10) {
 
   # create ggplot
   gg_prod <- ggplot2::ggplot(data = production_temp) +
-    ggplot2::geom_line(ggplot2::aes(x = timestep, y = value)) +
+    ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = .data$value)) +
     ggplot2::facet_wrap(. ~ part, scales = "free_y", nrow = 2, ncol = 1) +
     ggplot2::labs(x = "Timestep", y = "Production") +
     ggplot2::scale_color_viridis_d(name = "") +

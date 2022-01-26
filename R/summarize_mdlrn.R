@@ -75,7 +75,7 @@ summarize_mdlrn <- function(result, what = c("seafloor", "fishpop"),
     }
 
     # subset data
-    data_temp <- subset(x = result[[what[i]]], select = cols_temp)
+    data_temp <- result[[what[i]]][, cols_temp]
 
     # calc summary and combine to df
     data_temp <- do.call(what = "rbind", args = lapply(X = summary, function(j) {

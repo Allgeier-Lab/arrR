@@ -1,5 +1,3 @@
-#' @title arrR
-#'
 #' @description
 #' Individual-based simulation model to analyze how artificial reefs in combination
 #' with a fish population influence seagrass growth.
@@ -16,26 +14,3 @@
 #' @importFrom Rcpp sourceCpp
 #' @keywords internal
 "_PACKAGE"
-
-globalVariables(names = c(
-  "ag_biomass",
-  "bg_biomass",
-  "burn_in",
-  "density",
-  "detritus_fish",
-  "detritus_pool",
-  "died_background",
-  "died_consumption",
-  "i",
-  "layer",
-  "max_i",
-  "nutrients_pool",
-  "reef",
-  "save_each",
-  "summary_function",
-  "thres",
-  "timestep",
-  "value",
-  "weight",
-  "x",
-  "y"))

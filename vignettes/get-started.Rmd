@@ -86,11 +86,6 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor,
 
 ### 3. Run the model
 
-```{r run_sim, echo = FALSE}
-# load pre-calculated model object to save some time
-result <- arrR:::result_readme
-```
-
 The `run_simulation()` function is the core function of the package that starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations called *i* here).
 
 Further, you can specify how often all seagrass related processes should be simulated, e.g. only once a day using `seagrass_each`. 
@@ -99,7 +94,7 @@ Last, because the produced output can be quite large, you can save only every *j
 
 One of the most important function arguments of `run_simulation()` is the `movement` argument, which specifites how individiauls move across the simulation environment. For more information, please see `vignette("movement-behaviors")`.
 
-```{r run_sim_dummy, eval = FALSE}
+```{r run_sim}
 # one iterations equals 120 minutes
 min_per_i <- 120
 

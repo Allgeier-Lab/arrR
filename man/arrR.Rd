@@ -4,7 +4,7 @@
 \name{arrR}
 \alias{arrR}
 \alias{arrR-package}
-\title{arrR}
+\title{arrR: Individual-Based Simulation Model of Artifical Reefs in R}
 \description{
 Individual-based simulation model to analyze how artificial reefs in combination
 with a fish population influence seagrass growth.
