@@ -95,6 +95,9 @@ navbar:
        - text: "Movement behaviors"
          icon: fa-book
          href: articles/movement-behaviors.html
+       - text: "Parameters"
+         icon: fa-book
+         href: articles/starting-values-parameters.html
        - text: "Publication Record"
          icon: fa-file-text-o
          href: articles/publication-record.html
