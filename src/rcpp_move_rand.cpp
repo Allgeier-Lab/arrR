@@ -65,10 +65,10 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef
         // get coordinate of Visibility coords
         // MH: This used to be move_visibility insead of move_dist
         double x_temp = fishpop(i, 2) +
-          (move_dist * cos(std::fmod((fishpop(i, 4) + angles[j]), 360) * (PI / 180)));
+          (move_dist * cos(std::fmod((fishpop(i, 4) + angles[j]), 360) * (M_PI / 180)));
 
         double y_temp = fishpop(i, 3) +
-          (move_dist * sin(std::fmod((fishpop(i, 4) + angles[j]), 360) * (PI / 180)));
+          (move_dist * sin(std::fmod((fishpop(i, 4) + angles[j]), 360) * (M_PI / 180)));
 
         // make sure coords are inside extent
         Rcpp::NumericVector coords_temp = rcpp_translate_torus(x_temp, y_temp, extent);
