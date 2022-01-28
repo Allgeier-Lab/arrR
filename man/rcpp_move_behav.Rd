@@ -6,7 +6,6 @@
 \usage{
 rcpp_move_behav(
   fishpop,
-  coords_reef,
   pop_reserves_thres,
   move_mean,
   move_var,
@@ -14,14 +13,13 @@ rcpp_move_behav(
   move_border,
   move_return,
   max_dist,
+  coords_reef,
   extent,
   dimensions
 )
 }
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
-
-\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
@@ -34,6 +32,8 @@ rcpp_move_behav(
 \item{move_return}{Double with mean movement distance when returning to reef.}
 
 \item{max_dist}{Maximum distance an individual can move.}
+
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 

@@ -1,7 +1,7 @@
 //#ifndef RCPP_SEAGRASS_GROWTH
 //#define RCPP_SEAGRASS_GROWTH
 
-void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
+void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
                           double bg_v_max, double bg_k_m, double bg_gamma,
                           double ag_v_max, double ag_k_m, double ag_gamma,
                           double bg_biomass_max, double bg_biomass_min,

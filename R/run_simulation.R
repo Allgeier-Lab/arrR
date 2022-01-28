@@ -151,11 +151,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     }
 
-    # not used but needed objects
-    max_dist <- 0.0
-
-    pop_reserves_thres <- 0.0
-
     # set movement to rand because no fish
     if (movement != "rand") {
 
@@ -165,27 +160,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
               call. = FALSE)
     }
 
-  # get 95% of maximum movement distances
+  # set behavior to foraging only if movement != "behav"
   } else {
 
-    mean_temp <- ifelse(test = movement == "behav",
-                        yes = parameters$move_return, no = parameters$move_mean)
-
-    var_temp <- ifelse(test = movement == "behav",
-                       yes = 1.0, no = parameters$move_var)
-
-    max_dist <- vapply(X = 1:1000000, FUN = function(i) {
-      rcpp_rlognorm(mean = mean_temp, sd = sqrt(var_temp), min = 0.0, max = Inf)},
-      FUN.VALUE = numeric(1))
-
-    max_dist <- stats::quantile(x = max_dist, probs = 0.95, names = FALSE)
-
-    # getting thres_reserves parameter for each individual
-    pop_reserves_thres <- stats::runif(n = nrow(fishpop),
-                                       min = parameters$pop_reserves_thres_lo,
-                                       max = parameters$pop_reserves_thres_hi)
-
-    # set behavior to foraging
     if (movement %in% c("rand", "attr")) {
 
       fishpop$behavior <- 3.0
@@ -226,16 +203,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   # convert seafloor and fishpop as matrix
   seafloor_values <- as.matrix(terra::as.data.frame(seafloor, xy = TRUE, na.rm = FALSE))
 
-  # get neighboring cells for each focal cell using torus
-  cell_adj <- get_neighbors(x = seafloor, direction = 8, cpp = TRUE)
-
-  # get cell id of reef cells
-  cells_reef <- which(seafloor_values[, "reef"] == 1)
-
-  # get cell id of reef cells and coordinates of reef cells
-  coords_reef <- matrix(data = c(cells_reef, seafloor_values[cells_reef, c("x", "y")]),
-                        ncol = 3)
-
   # get extent of environment
   extent <- as.vector(terra::ext(seafloor))
 
@@ -252,7 +219,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
                                          fishpop_values = fishpop_values)
 
   # check if no reef is present but movement not rand
-  if (length(cells_reef) == 0 && movement %in% c("attr", "behav")) {
+  if ((sum(seafloor_values[, "reef"]) == 0) && (movement %in% c("attr", "behav"))) {
 
     movement <- "rand"
 
@@ -261,7 +228,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
       warning("No reef cell(s) present. Thus 'movement' set to 'rand'.", call. = FALSE)
 
     }
-
   }
 
   # print model run characteristics #
@@ -273,7 +239,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
     message("")
 
-    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", nrow(coords_reef), " reef cell(s).")
+    message("> Seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols; ", sum(seafloor_values[, "reef"] == 1), " reef cell(s).")
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
@@ -287,15 +253,12 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
 
   }
 
-  rcpp_sim_processes(seafloor = seafloor_values, fishpop = fishpop_values,
-                     seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                     parameters = parameters, pop_n = starting_values$pop_n,
-                     movement = movement, max_dist = max_dist, pop_reserves_thres = pop_reserves_thres,
-                     coords_reef = coords_reef, cell_adj = cell_adj,
-                     extent = extent, dimensions = dimensions,
-                     nutrients_input = nutrients_input,
-                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                     seagrass_each = seagrass_each, burn_in = burn_in, verbose = verbose)
+  rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
+                seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                parameters = parameters, movement = movement,
+                extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
+                save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
+                verbose = verbose)
 
    # new line after last progress message
   if (verbose) {
@@ -351,12 +314,9 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # combine result to list
-  result <- list(seafloor = seafloor_track, fishpop = fishpop_track,
-                 movement = movement, max_dist = max_dist,
-                 pop_reserves_thres = pop_reserves_thres, nutrients_input = nutrients_input,
-                 starting_values = starting_values, parameters = parameters,
-                 coords_reef = coords_reef, extent = extent,
-                 grain = terra::res(seafloor), dimensions = dimensions,
+  result <- list(seafloor = seafloor_track, fishpop = fishpop_track, nutrients_input = nutrients_input,
+                 movement = movement, parameters = parameters, starting_values = starting_values,
+                 extent = extent, grain = terra::res(seafloor), dimensions = dimensions,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  seagrass_each = seagrass_each, save_each = save_each)
 

@@ -34,11 +34,10 @@ test_that("run_simulation contains seafloor and fishpop", {
 test_that("run_simulation contains model run information", {
 
   expect_equal(object = names(result_rand),
-               expected = c("seafloor", "fishpop", "movement", "max_dist", "pop_reserves_thres",
-                            "nutrients_input", "starting_values", "parameters", "coords_reef",
+               expected = c("seafloor", "fishpop", "nutrients_input",  "movement",
+                            "parameters", "starting_values",
                             "extent", "grain", "dimensions", "max_i", "min_per_i",
                             "burn_in", "seagrass_each", "save_each"))
-
 
   expect_equal(object = result_rand$movement, expected = "rand")
 

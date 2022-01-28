@@ -133,10 +133,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if any additional parameters are present
     add_starting <- which(!names(starting_values) %in% required_starting)
 
-  }
-
   # no starting values present, add NULL so later TRUE/FALSE is working
-  else {
+  } else {
 
     check_starting <- NULL
 
@@ -235,10 +233,9 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
               call. = FALSE)
 
     }
-  }
 
   # no parameter values present, add NULL so later TRUE/FALSE is working
-  else {
+  } else {
 
     check_parameters <- NULL
 
@@ -346,9 +343,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     message("> All checking done!")
 
-  }
-
-  else if (verbose && !flag_final) {
+  } else if (verbose && !flag_final) {
 
     message("> Make sure to check critical warnings!\n")
 

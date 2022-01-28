@@ -34,7 +34,7 @@ reference:
 
   - title: Sub-processes
     contents:
-      - rcpp_sim_processes
+      - rcpp_simulate
       - rcpp_nutr_input
       - rcpp_seagrass_growth
       - rcpp_mineralization
@@ -48,7 +48,6 @@ reference:
   - title: Helper functions
     contents:
       - calc_size
-      - get_neighbors
       - get_starting_values
       - setup_envir_values
       - setup_reef
@@ -59,11 +58,13 @@ reference:
       - rcpp_cell_from_xy
       - rcpp_closest_reef
       - rcpp_convert_nutr
+      - rcpp_get_adjacencies
       - rcpp_get_bearing
       - rcpp_modify_degree
       - rcpp_move_behav
       - rcpp_move_rand
       - rcpp_nutr_uptake
+      - rcpp_quantile
       - rcpp_reincarnate
       - rcpp_rlognorm
       - rcpp_shuffle

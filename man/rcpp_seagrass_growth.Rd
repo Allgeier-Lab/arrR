@@ -6,7 +6,6 @@
 \usage{
 rcpp_seagrass_growth(
   seafloor,
-  cells_reef,
   bg_v_max,
   bg_k_m,
   bg_gamma,
@@ -25,8 +24,6 @@ rcpp_seagrass_growth(
 }
 \arguments{
 \item{seafloor}{Matrix with seafloor values.}
-
-\item{cells_reef}{Vector with ID of reef cells.}
 
 \item{bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma}{Numeric with uptake parameters.}
 
