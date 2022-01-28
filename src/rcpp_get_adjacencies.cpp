@@ -18,7 +18,7 @@ using namespace Rcpp;
 //' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
 //' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
 //'
-//' @return matrix
+//' @return matrixnl
 //'
 //' @aliases rcpp_get_adjacencies
 //' @rdname rcpp_get_adjacencies
@@ -29,6 +29,7 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
   int n_cell = dimensions[0] * dimensions[1];
   int global_counter = 0;
+  int v_temp;
 
   Rcpp::IntegerMatrix adj(n_cell * 8, 2);
 
@@ -37,8 +38,6 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
     for (int j = 0; j < 8; j++) {
 
       adj(global_counter, 0) = i;
-
-      int v_temp;
 
       // left
       if (j == 0) {
