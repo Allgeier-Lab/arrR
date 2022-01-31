@@ -46,7 +46,7 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_behav$movement, expected = "behav")
 
 
-  expect_equal(object = result_rand$nutrients_input, expected = NA)
+  expect_equal(object = result_rand$nutrients_input, expected = 0.0)
 
   expect_equal(object = result_rand_inout$nutrients_input, expected = nutrients_input)
 

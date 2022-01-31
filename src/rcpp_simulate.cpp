@@ -59,11 +59,10 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
+void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
                    Rcpp::List parameters, Rcpp::String movement,
                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
-                   Rcpp::NumericVector nutrients_input,
                    int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                    bool verbose) {
 
@@ -88,6 +87,24 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
 
   // get cell neighborhoods
   Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions);
+
+  // setup nutrients input //
+
+  // only one value present
+  if (nutrients_input.length() == 1) {
+
+    // only value equals zero, so no input
+    if (nutrients_input(0) == 0.0) {
+
+      nutrients_input = Rcpp::rep(0.0, max_i / seagrass_each);
+
+    // constant nutrient input
+    } else {
+
+      nutrients_input = Rcpp::rep(nutrients_input, max_i / seagrass_each);
+
+    }
+  }
 
   // init movement distances //
 

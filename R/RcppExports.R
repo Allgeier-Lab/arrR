@@ -749,8 +749,8 @@ rcpp_shuffle <- function(min, max) {
 #' @rdname rcpp_simulate
 #'
 #' @export
-rcpp_simulate <- function(seafloor, fishpop, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, nutrients_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
-    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, nutrients_input, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
+rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
+    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
 }
 
 #' rcpp_translate_torus

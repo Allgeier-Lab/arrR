@@ -7,13 +7,13 @@
 rcpp_simulate(
   seafloor,
   fishpop,
+  nutrients_input,
   seafloor_track,
   fishpop_track,
   parameters,
   movement,
   extent,
   dimensions,
-  nutrients_input,
   max_i,
   min_per_i,
   save_each,
@@ -25,6 +25,8 @@ rcpp_simulate(
 \arguments{
 \item{seafloor, fishpop}{Matrix with seafloor and fishpop data.}
 
+\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
+
 \item{seafloor_track, fishpop_track}{List with entry for each saving timestep.}
 
 \item{parameters}{List with parameters.}
@@ -34,8 +36,6 @@ rcpp_simulate(
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
-
-\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 
 \item{max_i}{Integer with maximum number of simulation timesteps.}
 

@@ -5,9 +5,9 @@
 #'
 #' @param seafloor SpatRaster with environment created with \code{\link{setup_seafloor}}.
 #' @param fishpop Data.frame with fish population created with \code{\link{setup_fishpop}}.
+#' @param nutrients_input Vector with amount of nutrient input each timestep.
 #' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 #' @param parameters List with all model parameters.
-#' @param nutrients_input Vector with amount of nutrient input each timestep.
 #' @param max_i Integer with maximum number of simulation timesteps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
@@ -33,12 +33,12 @@
 #' attracted movement towards the artificial reef of individuals or a movement behavior based
 #' on their biosenergetics.
 #'
-#' If \code{nutrients_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+#' If \code{nutrients_input} is \code{0.0}, no nutrient input is simulated. To also simulate no
 #' nutrient output, set the \code{nutrients_loss} parameter to zero.
 #'
 #' If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
 #' but only each timestep specified by the object. However, \code{max_i} must be dividable by
-#' \code{save_each} without rest. Similar,  \code{seagrass_each} allows to simulate all
+#' \code{save_each} without rest. Similar, \code{seagrass_each} allows to simulate all
 #' seagrass sub-processes only each specified timestep.
 #'
 #' If \code{burn_in > 0}, all sub-processes related to fish individuals are not simulated
@@ -69,10 +69,11 @@
 #' @rdname run_simulation
 #'
 #' @export
-run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
-                           max_i, min_per_i, seagrass_each = 1,
+run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
+                           movement = "rand", parameters,
+                           max_i, min_per_i,seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           nutrients_input = NULL, verbose = TRUE) {
+                           verbose = TRUE) {
 
   # get time at beginning for final print
   if (verbose) {
@@ -110,8 +111,7 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   }
 
   # check if each i has input
-  if (!is.null(nutrients_input) && (length(nutrients_input) != (max_i / seagrass_each)) &&
-      (length(nutrients_input) != 1)) {
+  if ((length(nutrients_input) != (max_i / seagrass_each)) && (length(nutrients_input) != 1)) {
 
     stop("'nutrients_input' must have input amount for each iteration.", call. = FALSE)
 
@@ -173,30 +173,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
   fishpop_values <- as.matrix(fishpop)
 
   fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # setup nutrient input #
-
-  # create vector for nutrients_input
-  if (is.null(nutrients_input)) {
-
-    nutrients_input <- rep(x = 0.0, times = max_i / seagrass_each)
-
-    # set nutrient flag to save results later
-    flag_nutr_input <- FALSE
-
-  } else {
-
-    # repeat if only one value is present
-    if (length(nutrients_input) == 1) {
-
-      nutrients_input <- rep(x = nutrients_input, times = max_i / seagrass_each)
-
-    }
-
-    # set nutrient flag to save results later
-    flag_nutr_input <- TRUE
-
-  }
 
   # setup seafloor #
 
@@ -304,12 +280,6 @@ run_simulation <- function(seafloor, fishpop, movement = "rand", parameters,
     seafloor_track <- seafloor_track[seafloor_track$burn_in == "no", ]
 
     fishpop_track <- fishpop_track[fishpop_track$burn_in == "no", ]
-
-  }
-
-  if (!flag_nutr_input) {
-
-    nutrients_input <- NA
 
   }
 

@@ -7,6 +7,7 @@
 run_simulation(
   seafloor,
   fishpop,
+  nutrients_input = 0,
   movement = "rand",
   parameters,
   max_i,
@@ -15,7 +16,6 @@ run_simulation(
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
-  nutrients_input = NULL,
   verbose = TRUE
 )
 }
@@ -23,6 +23,8 @@ run_simulation(
 \item{seafloor}{SpatRaster with environment created with \code{\link{setup_seafloor}}.}
 
 \item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
+
+\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 
 \item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
 
@@ -39,8 +41,6 @@ run_simulation(
 \item{burn_in}{Numeric with timesteps used to burn in.}
 
 \item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
-
-\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }
@@ -67,12 +67,12 @@ The \code{movement} argument allows to either specify random movement of individ
 attracted movement towards the artificial reef of individuals or a movement behavior based
 on their biosenergetics.
 
-If \code{nutrients_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
+If \code{nutrients_input} is \code{0.0}, no nutrient input is simulated. To also simulate no
 nutrient output, set the \code{nutrients_loss} parameter to zero.
 
 If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
 but only each timestep specified by the object. However, \code{max_i} must be dividable by
-\code{save_each} without rest. Similar,  \code{seagrass_each} allows to simulate all
+\code{save_each} without rest. Similar, \code{seagrass_each} allows to simulate all
 seagrass sub-processes only each specified timestep.
 
 If \code{burn_in > 0}, all sub-processes related to fish individuals are not simulated
