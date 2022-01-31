@@ -18,7 +18,7 @@ using namespace Rcpp;
 //' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
 //' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
 //'
-//' @return matrixnl
+//' @return matrix
 //'
 //' @aliases rcpp_get_adjacencies
 //' @rdname rcpp_get_adjacencies
