@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_closest_reef.h"
 
 using namespace Rcpp;

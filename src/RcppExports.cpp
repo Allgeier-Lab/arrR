@@ -175,6 +175,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_get_max_dist
+double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand);
+RcppExport SEXP _arrR_rcpp_get_max_dist(SEXP movementSEXP, SEXP parametersSEXP, SEXP n_randSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::String >::type movement(movementSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type parameters(parametersSEXP);
+    Rcpp::traits::input_parameter< int >::type n_rand(n_randSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_max_dist(movement, parameters, n_rand));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcpp_get_reef
 Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor);
 RcppExport SEXP _arrR_rcpp_get_reef(SEXP seafloorSEXP) {
@@ -675,6 +688,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_fishpop_growth", (DL_FUNC) &_arrR_rcpp_fishpop_growth, 13},
     {"_arrR_rcpp_get_adjacencies", (DL_FUNC) &_arrR_rcpp_get_adjacencies, 1},
     {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
+    {"_arrR_rcpp_get_max_dist", (DL_FUNC) &_arrR_rcpp_get_max_dist, 3},
     {"_arrR_rcpp_get_reef", (DL_FUNC) &_arrR_rcpp_get_reef, 1},
     {"_arrR_rcpp_mineralization", (DL_FUNC) &_arrR_rcpp_mineralization, 3},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},

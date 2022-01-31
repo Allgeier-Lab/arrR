@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_get_adjacencies.h"
 
 using namespace Rcpp;
@@ -96,10 +97,7 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 }
 
 /*** R
-
 ras <- terra::rast(nrow = 5, ncol = 5)
 
-get_neighbors(ras, direction = 8, cpp = TRUE)
 rcpp_get_adjacencies(dim(ras)[1:2])
-
 */

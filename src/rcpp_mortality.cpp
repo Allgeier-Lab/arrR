@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_mortality.h"
+
 #include "rcpp_shuffle.h"
 #include "rcpp_reincarnate.h"
 

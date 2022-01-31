@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_move_behav.h"
+
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"

@@ -3,11 +3,13 @@
 #include <Rcpp.h>
 #include <progress.hpp>
 #include <progress_bar.hpp>
+
 #include "rcpp_simulate.h"
+
 #include "rcpp_get_reef.h"
 #include "rcpp_get_adjacencies.h"
+#include "rcpp_get_max_dist.h"
 #include "rcpp_rlognorm.h"
-#include "rcpp_quantile.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_mineralization.h"
@@ -98,38 +100,13 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop,
   // fishpop is present
   if (fishpop.nrow() > 0) {
 
-    // create temp vector with 1 million values
-    Rcpp::NumericVector max_dist_temp (1000000);
+    max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
 
-    // init temp parameter values for behav or rand/attr movement
-    double mean_temp, var_temp;
-
-    // get movement parameters depending on behavior
     if (movement == "behav") {
-
-      mean_temp = parameters["move_return"];
-      var_temp = 1.0;
 
       pop_reserves_thres = Rcpp::runif(fishpop.nrow(), parameters["pop_reserves_thres_lo"],
                                        parameters["pop_reserves_thres_hi"]);
-
-    } else {
-
-      mean_temp = parameters["move_mean"];
-      var_temp = parameters["move_var"];
-
     }
-
-    // create 1 mio random movement distances
-    for (int i = 0; i < max_dist_temp.length(); i ++) {
-
-      max_dist_temp[i] = rcpp_rlognorm(mean_temp, var_temp, 0.0, R_PosInf);
-
-    }
-
-    // get 95% precentile
-    max_dist = rcpp_quantile(max_dist_temp, 0.95);
-
   }
 
   // calc time_frac for rcpp_seagrass_growth

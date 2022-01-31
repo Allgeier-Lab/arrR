@@ -222,6 +222,29 @@ rcpp_get_bearing <- function(x1, y1, x2, y2) {
     .Call(`_arrR_rcpp_get_bearing`, x1, y1, x2, y2)
 }
 
+#' rcpp_get_max_dist
+#'
+#' @description
+#' Rcpp get maximum movement distance
+#'
+#' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+#' @param parameters List with parameters.
+#' @param n_rand Integer with amount of random numbers.
+#'
+#' @details
+#' Calculate double with maximum movement distance. The distance is the 95% quantile
+#' of n_rand random numbers.
+#'
+#' @return double
+#'
+#' @aliases rcpp_get_max_dist
+#' @rdname rcpp_get_max_dist
+#'
+#' @export
+rcpp_get_max_dist <- function(movement, parameters, n_rand) {
+    .Call(`_arrR_rcpp_get_max_dist`, movement, parameters, n_rand)
+}
+
 #' rcpp_get_reef
 #'
 #' @description

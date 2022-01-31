@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_move_wrap.h"
+
 #include "rcpp_move_rand.h"
 #include "rcpp_move_behav.h"
 
