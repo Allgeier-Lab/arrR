@@ -4,6 +4,8 @@
 
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 //' rcpp_get_adjacencies
 //'
 //' @description

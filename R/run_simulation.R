@@ -138,6 +138,20 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
     }
   }
 
+  # setup seafloor #
+
+  # convert seafloor and fishpop as matrix
+  seafloor_values <- as.matrix(terra::as.data.frame(seafloor, xy = TRUE, na.rm = FALSE))
+
+  # get extent of environment
+  extent <- as.vector(terra::ext(seafloor))
+
+  # get dimensions of environment (nrow, ncol)
+  dimensions <- dim(seafloor)[1:2]
+
+  # create lists to store results for each timestep
+  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
   # setup fishpop #
 
   # check if fishpop is NULL
@@ -170,30 +184,6 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
     }
   }
 
-  fishpop_values <- as.matrix(fishpop)
-
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # setup seafloor #
-
-  # convert seafloor and fishpop as matrix
-  seafloor_values <- as.matrix(terra::as.data.frame(seafloor, xy = TRUE, na.rm = FALSE))
-
-  # get extent of environment
-  extent <- as.vector(terra::ext(seafloor))
-
-  # get dimensions of environment (nrow, ncol)
-  dimensions <- dim(seafloor)[1:2]
-
-  # create lists to store results for each timestep
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
-
-  # various #
-
-  # get mean starting values
-  starting_values <- get_starting_values(seafloor_values = seafloor_values,
-                                         fishpop_values = fishpop_values)
-
   # check if no reef is present but movement not rand
   if ((sum(seafloor_values[, "reef"]) == 0) && (movement %in% c("attr", "behav"))) {
 
@@ -205,6 +195,16 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
     }
   }
+
+  fishpop_values <- as.matrix(fishpop)
+
+  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+
+  # setup various #
+
+  # get mean starting values
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fishpop_values = fishpop_values)
 
   # print model run characteristics #
 

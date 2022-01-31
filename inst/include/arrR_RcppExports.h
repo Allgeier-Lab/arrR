@@ -64,6 +64,69 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
+    inline Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_get_adjacencies)(SEXP);
+        static Ptr_rcpp_get_adjacencies p_rcpp_get_adjacencies = NULL;
+        if (p_rcpp_get_adjacencies == NULL) {
+            validateSignature("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector)");
+            p_rcpp_get_adjacencies = (Ptr_rcpp_get_adjacencies)R_GetCCallable("arrR", "_arrR_rcpp_get_adjacencies");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_get_adjacencies(Shield<SEXP>(Rcpp::wrap(dimensions)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<Rcpp::IntegerMatrix >(rcpp_result_gen);
+    }
+
+    inline double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
+        typedef SEXP(*Ptr_rcpp_get_max_dist)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_get_max_dist p_rcpp_get_max_dist = NULL;
+        if (p_rcpp_get_max_dist == NULL) {
+            validateSignature("double(*rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
+            p_rcpp_get_max_dist = (Ptr_rcpp_get_max_dist)R_GetCCallable("arrR", "_arrR_rcpp_get_max_dist");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_get_max_dist(Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(parameters)), Shield<SEXP>(Rcpp::wrap(n_rand)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
+        typedef SEXP(*Ptr_rcpp_get_reef)(SEXP);
+        static Ptr_rcpp_get_reef p_rcpp_get_reef = NULL;
+        if (p_rcpp_get_reef == NULL) {
+            validateSignature("Rcpp::NumericMatrix(*rcpp_get_reef)(Rcpp::NumericMatrix)");
+            p_rcpp_get_reef = (Ptr_rcpp_get_reef)R_GetCCallable("arrR", "_arrR_rcpp_get_reef");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_get_reef(Shield<SEXP>(Rcpp::wrap(seafloor)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<Rcpp::NumericMatrix >(rcpp_result_gen);
+    }
+
     inline void rcpp_mineralization(Rcpp::NumericMatrix seafloor, double detritus_mineralization, double detritus_fish_decomp) {
         typedef SEXP(*Ptr_rcpp_mineralization)(SEXP,SEXP,SEXP);
         static Ptr_rcpp_mineralization p_rcpp_mineralization = NULL;
