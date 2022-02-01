@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,15 +103,15 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rcpp_move_wrap</span><span class="op">(</span>
   <span class="va">fishpop</span>,
-  <span class="va">coords_reef</span>,
-  <span class="va">movement</span>,
   <span class="va">pop_reserves_thres</span>,
+  <span class="va">movement</span>,
   <span class="va">move_mean</span>,
   <span class="va">move_var</span>,
   <span class="va">move_reef</span>,
   <span class="va">move_border</span>,
   <span class="va">move_return</span>,
   <span class="va">max_dist</span>,
+  <span class="va">coords_reef</span>,
   <span class="va">extent</span>,
   <span class="va">dimensions</span>
 <span class="op">)</span></code></pre></div>
@@ -121,12 +121,10 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>fishpop</dt>
 <dd><p>Matrix with fishpop values.</p></dd>
-<dt>coords_reef</dt>
-<dd><p>Matrix with ID and coords of reef cells.</p></dd>
-<dt>movement</dt>
-<dd><p>String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.</p></dd>
 <dt>pop_reserves_thres</dt>
 <dd><p>Vector with threshold of pop_reserves_max to drain prior to foraging.</p></dd>
+<dt>movement</dt>
+<dd><p>String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.</p></dd>
 <dt>move_mean, move_var</dt>
 <dd><p>Double with mean movement parameter.</p></dd>
 <dt>move_reef</dt>
@@ -137,6 +135,8 @@
 <dd><p>Double with mean movement distance when returning to reef.</p></dd>
 <dt>max_dist</dt>
 <dd><p>Maximum distance an individual can move.</p></dd>
+<dt>coords_reef</dt>
+<dd><p>Matrix with ID and coords of reef cells.</p></dd>
 <dt>extent</dt>
 <dd><p>Vector with extent (xmin,xmax,ymin,ymax).</p></dd>
 <dt>dimensions</dt>

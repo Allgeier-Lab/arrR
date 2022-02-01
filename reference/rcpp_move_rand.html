@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,11 +103,11 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rcpp_move_rand</span><span class="op">(</span>
   <span class="va">fishpop</span>,
-  <span class="va">coords_reef</span>,
   <span class="va">move_mean</span>,
   <span class="va">move_var</span>,
   <span class="va">max_dist</span>,
   <span class="va">reef_attraction</span>,
+  <span class="va">coords_reef</span>,
   <span class="va">extent</span>,
   <span class="va">dimensions</span>
 <span class="op">)</span></code></pre></div>
@@ -117,14 +117,14 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>fishpop</dt>
 <dd><p>Matrix with fishpop values.</p></dd>
-<dt>coords_reef</dt>
-<dd><p>Matrix with ID and coords of reef cells.</p></dd>
 <dt>move_mean, move_var</dt>
 <dd><p>Double with mean and variance movement parameter.</p></dd>
 <dt>max_dist</dt>
 <dd><p>Numeric with maximum movement distance</p></dd>
 <dt>reef_attraction</dt>
 <dd><p>Bool if attracted towards reef.</p></dd>
+<dt>coords_reef</dt>
+<dd><p>Matrix with ID and coords of reef cells.</p></dd>
 <dt>extent</dt>
 <dd><p>Vector with extent (xmin,xmax,ymin,ymax).</p></dd>
 <dt>dimensions</dt>

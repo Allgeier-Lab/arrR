@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,6 +104,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">run_simulation</span><span class="op">(</span>
   <span class="va">seafloor</span>,
   <span class="va">fishpop</span>,
+  nutrients_input <span class="op">=</span> <span class="fl">0</span>,
   movement <span class="op">=</span> <span class="st">"rand"</span>,
   <span class="va">parameters</span>,
   <span class="va">max_i</span>,
@@ -112,7 +113,6 @@
   save_each <span class="op">=</span> <span class="fl">1</span>,
   burn_in <span class="op">=</span> <span class="fl">0</span>,
   return_burnin <span class="op">=</span> <span class="cn">TRUE</span>,
-  nutrients_input <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -123,6 +123,8 @@
 <dd><p>SpatRaster with environment created with <code><a href="setup_seafloor.html">setup_seafloor</a></code>.</p></dd>
 <dt>fishpop</dt>
 <dd><p>Data.frame with fish population created with <code><a href="setup_fishpop.html">setup_fishpop</a></code>.</p></dd>
+<dt>nutrients_input</dt>
+<dd><p>Vector with amount of nutrient input each timestep.</p></dd>
 <dt>movement</dt>
 <dd><p>String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.</p></dd>
 <dt>parameters</dt>
@@ -139,8 +141,6 @@
 <dd><p>Numeric with timesteps used to burn in.</p></dd>
 <dt>return_burnin</dt>
 <dd><p>If FALSE all timesteps &lt; burn_in are not returned.</p></dd>
-<dt>nutrients_input</dt>
-<dd><p>Vector with amount of nutrient input each timestep.</p></dd>
 <dt>verbose</dt>
 <dd><p>If TRUE, progress reports are printed.</p></dd>
 </dl></div>
@@ -163,11 +163,11 @@ specification and many function that can handle the objects exist (e.g. plotting
 <p>The <code>movement</code> argument allows to either specify random movement of individuals,
 attracted movement towards the artificial reef of individuals or a movement behavior based
 on their biosenergetics.</p>
-<p>If <code>nutrients_input</code> is <code>NULL</code>, no nutrient input is simulated. To also simulate no
+<p>If <code>nutrients_input</code> is <code>0.0</code>, no nutrient input is simulated. To also simulate no
 nutrient output, set the <code>nutrients_loss</code> parameter to zero.</p>
 <p>If <code>save_each &gt; 1</code>, not all iterations are saved in the final <code>mdl_rn</code> object,
 but only each timestep specified by the object. However, <code>max_i</code> must be dividable by
-<code>save_each</code> without rest. Similar,  <code>seagrass_each</code> allows to simulate all
+<code>save_each</code> without rest. Similar, <code>seagrass_each</code> allows to simulate all
 seagrass sub-processes only each specified timestep.</p>
 <p>If <code>burn_in &gt; 0</code>, all sub-processes related to fish individuals are not simulated
 before this timestep is reached.</p>
