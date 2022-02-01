@@ -45,7 +45,7 @@ reference:
       - rcpp_diffuse_values
       - rcpp_nutr_output
 
-  - title: Helper functions
+  - title: (internal) Helper functions
     contents:
       - calc_size
       - get_starting_values
@@ -60,6 +60,8 @@ reference:
       - rcpp_convert_nutr
       - rcpp_get_adjacencies
       - rcpp_get_bearing
+      - rcpp_get_max_dist
+      - rcpp_get_reef
       - rcpp_modify_degree
       - rcpp_move_behav
       - rcpp_move_rand
