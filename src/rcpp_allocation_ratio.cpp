@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_allocation_ratio.h"
 
 using namespace Rcpp;

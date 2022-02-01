@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_nutr_uptake.h"
+
 #include "rcpp_convert_nutr.h"
 
 using namespace Rcpp;

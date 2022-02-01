@@ -1,3 +1,6 @@
+# arrR 1.4.1
+* Move some pre-process code from `R` to `Rcpp`
+
 # arrR 1.4
 * Use `terra` instead of `raster`
 * Rename `nutr_input` to `nutrients_input`

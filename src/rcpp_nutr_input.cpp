@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_nutr_input.h"
 
 using namespace Rcpp;

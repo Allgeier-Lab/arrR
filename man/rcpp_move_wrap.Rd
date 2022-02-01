@@ -6,15 +6,15 @@
 \usage{
 rcpp_move_wrap(
   fishpop,
-  coords_reef,
-  movement,
   pop_reserves_thres,
+  movement,
   move_mean,
   move_var,
   move_reef,
   move_border,
   move_return,
   max_dist,
+  coords_reef,
   extent,
   dimensions
 )
@@ -22,11 +22,9 @@ rcpp_move_wrap(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{coords_reef}{Matrix with ID and coords of reef cells.}
+\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
-
-\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{move_mean, move_var}{Double with mean movement parameter.}
 
@@ -37,6 +35,8 @@ rcpp_move_wrap(
 \item{move_return}{Double with mean movement distance when returning to reef.}
 
 \item{max_dist}{Maximum distance an individual can move.}
+
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 

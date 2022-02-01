@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_move_rand.h"
+
 #include "rcpp_closest_reef.h"
 #include "rcpp_modify_degree.h"
 #include "rcpp_rlognorm.h"
@@ -14,10 +16,10 @@ using namespace Rcpp;
 //' Rcpp simulate random/attracted movement.
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param move_mean,move_var Double with mean and variance movement parameter.
 //' @param max_dist Numeric with maximum movement distance
 //' @param reef_attraction Bool if attracted towards reef.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -40,8 +42,8 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                    double move_mean, double move_var, double max_dist, bool reef_attraction,
+void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var,
+                    double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // loop through fishpop individuals

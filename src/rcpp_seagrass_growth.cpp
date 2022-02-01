@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_seagrass_growth.h"
+
 #include "rcpp_allocation_ratio.h"
 #include "rcpp_nutr_uptake.h"
 
@@ -13,7 +15,6 @@ using namespace Rcpp;
 //' Rcpp seagrass growth sub-process.
 //'
 //' @param seafloor Matrix with seafloor values.
-//' @param cells_reef Vector with ID of reef cells.
 //' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
 //' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
 //' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
@@ -47,7 +48,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cells_reef,
+void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
                           double bg_v_max, double bg_k_m, double bg_gamma,
                           double ag_v_max, double ag_k_m, double ag_gamma,
                           double bg_biomass_max, double bg_biomass_min,
@@ -58,11 +59,8 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, Rcpp::NumericVector cell
   // loop through all seafloor cells
   for (int i = 0; i < seafloor.nrow(); i++) {
 
-    // counts how often current i is present in vector with reef cells
-    int is_reef = std::count(cells_reef.begin(), cells_reef.end(), i + 1);
-
-    // check if current cell is not a reef cell, i.e. count() will be 0
-    if (is_reef == 0) {
+    // check if current cell is a seagrass cell
+    if (seafloor(i, 15) == 0) {
 
       // calculate detritus //
 

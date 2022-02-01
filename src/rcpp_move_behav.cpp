@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_move_behav.h"
+
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
@@ -13,13 +15,13 @@ using namespace Rcpp;
 //' Rcpp simulate movement based on bioenergetics.
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
 //' @param move_mean,move_var Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.
 //' @param move_return Double with mean movement distance when returning to reef.
 //' @param max_dist Maximum distance an individual can move.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -38,11 +40,11 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                     Rcpp::NumericVector pop_reserves_thres,
-                     double move_mean, double move_var,
-                     double move_reef, double move_border, double move_return, double max_dist,
-                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserves_thres,
+                     double move_mean, double move_var, double move_reef,
+                     double move_border, double move_return, double max_dist,
+                     Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
+                     Rcpp::IntegerVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {

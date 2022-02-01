@@ -63,26 +63,26 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_top_left <- ggplot2::ggplot(data = data_sum) +
       ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
+      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[2]) +
+      ggplot2::labs(x = "Timestep", y = col_names[3]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
     # create plot
     gg_top_right <- ggplot2::ggplot(data = data_sum) +
       ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
+      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[3]) +
+      ggplot2::labs(x = "Timestep", y = col_names[2]) +
       ggplot2::theme_classic(base_size = base_size) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
 
@@ -119,7 +119,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # get seafloor data
       seafloor <- x$seafloor[x$seafloor$timestep == max(x$seafloor$timestep),
-                             c("x", "y", "ag_biomass", "bg_biomass",
+                             c("x", "y", "bg_biomass", "ag_biomass",
                                "nutrients_pool", "detritus_pool")]
 
       # create plot

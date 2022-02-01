@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_respiration.h"
 
 using namespace Rcpp;

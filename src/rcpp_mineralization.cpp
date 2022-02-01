@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_mineralization.h"
 
 using namespace Rcpp;

@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_reincarnate.h"
+
 #include "rcpp_cell_from_xy.h"
 
 using namespace Rcpp;

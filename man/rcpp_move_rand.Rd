@@ -6,11 +6,11 @@
 \usage{
 rcpp_move_rand(
   fishpop,
-  coords_reef,
   move_mean,
   move_var,
   max_dist,
   reef_attraction,
+  coords_reef,
   extent,
   dimensions
 )
@@ -18,13 +18,13 @@ rcpp_move_rand(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{coords_reef}{Matrix with ID and coords of reef cells.}
-
 \item{move_mean, move_var}{Double with mean and variance movement parameter.}
 
 \item{max_dist}{Numeric with maximum movement distance}
 
 \item{reef_attraction}{Bool if attracted towards reef.}
+
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 

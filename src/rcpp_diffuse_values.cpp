@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_diffuse_values.h"
 
 using namespace Rcpp;
@@ -26,7 +27,7 @@ using namespace Rcpp;
 //'
 //' @export
 // [[Rcpp::export]]
-void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix cell_adj,
+void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_adj,
                          double nutrients_diffusion, double detritus_diffusion,
                          double detritus_fish_diffusion) {
 
