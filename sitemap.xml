@@ -49,9 +49,6 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/arrR_starting_values.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/calc_size.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/check_parameters.html</loc>
   </url>
   <url>
@@ -68,9 +65,6 @@
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/get_stable_values.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/get_starting_values.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/index.html</loc>
@@ -148,13 +142,7 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/run_simulation.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/setup_envir_values.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_fishpop.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/setup_reef.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_seafloor.html</loc>
