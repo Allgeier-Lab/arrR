@@ -22,7 +22,7 @@ using namespace Rcpp;
 //' @rdname rcpp_closest_reef
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_closest_reef)]]
 Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
 
   // init vector to store result
@@ -67,6 +67,6 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
 }
 
 /*** R
-rcpp_closest_reef(fishpop_values[1, "x"], fishpop_values[1, "y"], coords_reef)
-rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
+.rcpp_closest_reef(fishpop_values[1, "x"], fishpop_values[1, "y"], coords_reef)
+.rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
 */

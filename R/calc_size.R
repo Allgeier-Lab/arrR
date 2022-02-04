@@ -32,19 +32,19 @@
 #' pop_b = arrR_parameters$pop_b, use_log = TRUE)
 #' }
 #'
-#' @aliases calc_size
-#' @rdname calc_size
+#' @aliases .calc_size
+#' @rdname .calc_size
 #'
 #' @keywords internal
-calc_size <- function(pop_n, pop_mean_size, pop_var_size,
-                      pop_linf, pop_a, pop_b, use_log = TRUE) {
+.calc_size <- function(pop_n, pop_mean_size, pop_var_size,
+                       pop_linf, pop_a, pop_b, use_log = TRUE) {
 
   # use log distribution for starting size
   if (use_log) {
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
-      rcpp_rlognorm(mean = pop_mean_size, sd = sqrt(pop_var_size),
-                    min = 0.0, max = Inf)}, FUN.VALUE = numeric(1))
+      .rcpp_rlognorm(mean = pop_mean_size, sd = sqrt(pop_var_size),
+                     min = 0.0, max = Inf)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size
   } else {

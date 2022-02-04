@@ -29,7 +29,7 @@ using namespace Rcpp;
 //' @rdname rcpp_nutr_input
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_nutr_input)]]
 void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
 
   // loop through all raster cells
@@ -40,7 +40,3 @@ void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
 
   }
 }
-
-/*** R
-rcpp_nutr_input(seafloor = seafloor_values, nutrients_input = nutrients_input)
-*/

@@ -732,36 +732,36 @@ END_RCPP
 static int _arrR_RcppExport_validate(const char* sig) { 
     static std::set<std::string> signatures;
     if (signatures.empty()) {
-        signatures.insert("void(*rcpp_diffuse_values)(Rcpp::NumericMatrix,Rcpp::IntegerMatrix,double,double,double)");
-        signatures.insert("void(*rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
-        signatures.insert("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector)");
-        signatures.insert("double(*rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
-        signatures.insert("Rcpp::NumericMatrix(*rcpp_get_reef)(Rcpp::NumericMatrix)");
-        signatures.insert("void(*rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
-        signatures.insert("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
-        signatures.insert("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::String,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
-        signatures.insert("void(*rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
-        signatures.insert("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
-        signatures.insert("void(*rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
-        signatures.insert("void(*rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
+        signatures.insert("void(*.rcpp_diffuse_values)(Rcpp::NumericMatrix,Rcpp::IntegerMatrix,double,double,double)");
+        signatures.insert("void(*.rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
+        signatures.insert("Rcpp::IntegerMatrix(*.rcpp_get_adjacencies)(Rcpp::IntegerVector)");
+        signatures.insert("double(*.rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
+        signatures.insert("Rcpp::NumericMatrix(*.rcpp_get_reef)(Rcpp::NumericMatrix)");
+        signatures.insert("void(*.rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
+        signatures.insert("void(*.rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
+        signatures.insert("void(*.rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::String,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+        signatures.insert("void(*.rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
+        signatures.insert("void(*.rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
+        signatures.insert("void(*.rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
+        signatures.insert("void(*.rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
     }
     return signatures.find(sig) != signatures.end();
 }
 
 // registerCCallable (register entry points for exported C++ functions)
 RcppExport SEXP _arrR_RcppExport_registerCCallable() { 
-    R_RegisterCCallable("arrR", "_arrR_rcpp_diffuse_values", (DL_FUNC)_arrR_rcpp_diffuse_values_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_fishpop_growth", (DL_FUNC)_arrR_rcpp_fishpop_growth_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_get_adjacencies", (DL_FUNC)_arrR_rcpp_get_adjacencies_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_get_max_dist", (DL_FUNC)_arrR_rcpp_get_max_dist_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_get_reef", (DL_FUNC)_arrR_rcpp_get_reef_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_mineralization", (DL_FUNC)_arrR_rcpp_mineralization_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_mortality", (DL_FUNC)_arrR_rcpp_mortality_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_move_wrap", (DL_FUNC)_arrR_rcpp_move_wrap_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_nutr_input", (DL_FUNC)_arrR_rcpp_nutr_input_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_nutr_output", (DL_FUNC)_arrR_rcpp_nutr_output_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_respiration", (DL_FUNC)_arrR_rcpp_respiration_try);
-    R_RegisterCCallable("arrR", "_arrR_rcpp_seagrass_growth", (DL_FUNC)_arrR_rcpp_seagrass_growth_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_diffuse_values", (DL_FUNC)_arrR_rcpp_diffuse_values_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_fishpop_growth", (DL_FUNC)_arrR_rcpp_fishpop_growth_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_get_adjacencies", (DL_FUNC)_arrR_rcpp_get_adjacencies_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_get_max_dist", (DL_FUNC)_arrR_rcpp_get_max_dist_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_get_reef", (DL_FUNC)_arrR_rcpp_get_reef_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_mineralization", (DL_FUNC)_arrR_rcpp_mineralization_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_mortality", (DL_FUNC)_arrR_rcpp_mortality_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_move_wrap", (DL_FUNC)_arrR_rcpp_move_wrap_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_nutr_input", (DL_FUNC)_arrR_rcpp_nutr_input_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_nutr_output", (DL_FUNC)_arrR_rcpp_nutr_output_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_respiration", (DL_FUNC)_arrR_rcpp_respiration_try);
+    R_RegisterCCallable("arrR", "_arrR_.rcpp_seagrass_growth", (DL_FUNC)_arrR_rcpp_seagrass_growth_try);
     R_RegisterCCallable("arrR", "_arrR_RcppExport_validate", (DL_FUNC)_arrR_RcppExport_validate);
     return R_NilValue;
 }

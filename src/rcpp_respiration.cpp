@@ -38,7 +38,7 @@ using namespace Rcpp;
 //' @rdname rcpp_respiration
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_respiration)]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_intercept, double resp_slope,
                       double resp_temp_low, double resp_temp_max, double resp_temp_optm,
@@ -85,10 +85,3 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
     }
   }
 }
-
-/*** R
-rcpp_respiration(fishpop = fishpop_values, resp_intercept = parameters$resp_intercept,
-                 resp_slope = parameters$resp_slope, resp_temp_low = parameters$resp_temp_low,
-                 resp_temp_optm = parameters$resp_temp_optm, resp_temp_max = parameters$resp_temp_max,
-                 water_temp = water_temp, min_per_i = min_per_i)
-*/

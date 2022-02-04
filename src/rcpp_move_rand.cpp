@@ -41,7 +41,7 @@ using namespace Rcpp;
 //' @rdname rcpp_move_rand
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_move_rand)]]
 void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var,
                     double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
@@ -98,11 +98,3 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_v
 
   }
 }
-
-/*** R
-# calculate new coordinates and activity
-rcpp_move_rand(fishpop = fishpop_values, coords_reef = coords_reef,
-               move_mean = parameters$move_mean, move_var = parameters$move_var,
-               max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),
-               dimensions = dimensions, reef_attraction = reef_attraction)
-*/

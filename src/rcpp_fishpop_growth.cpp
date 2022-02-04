@@ -53,7 +53,7 @@ using namespace Rcpp;
 //' @rdname rcpp_fishpop_growth
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_fishpop_growth)]]
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
@@ -229,13 +229,3 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
   }
 }
-
-/*** R
-rcpp_fishpop_growth(fishpop = fishpop_values,
-                    fishpop_track = fishpop_track[[1]], seafloor = seafloor_values,
-                    pop_k = parameters$pop_k, pop_linf = parameters$pop_linf,
-                    pop_a = parameters$pop_a, pop_b = parameters$pop_b,
-                    pop_n_body = parameters$pop_n_body,
-                    pop_reserves_max = pop_reserves_max,
-                    min_per_i = min_per_i)
-*/

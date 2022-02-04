@@ -26,8 +26,8 @@ plot_allocation <- function(parameters, base_size = 10) {
 
   # calc ratios
   ratio <- vapply(bg_biomass, function(x)
-    rcpp_allocation_ratio(x, biomass_min = parameters$bg_biomass_min, biomass_max = parameters$bg_biomass_max,
-                          threshold = parameters$seagrass_thres, slope = parameters$seagrass_slope),
+    .rcpp_allocation_ratio(x, biomass_min = parameters$bg_biomass_min, biomass_max = parameters$bg_biomass_max,
+                           threshold = parameters$seagrass_thres, slope = parameters$seagrass_slope),
     FUN.VALUE = numeric(1))
 
   # calc threshold

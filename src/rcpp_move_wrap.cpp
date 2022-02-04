@@ -39,7 +39,7 @@ using namespace Rcpp;
 //' @rdname rcpp_move_wrap
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_move_wrap)]]
 void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserves_thres,
                     Rcpp::String movement, double move_mean, double move_var, double move_reef,
                     double move_border, double move_return, double max_dist,
@@ -61,9 +61,9 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserve
     // behaviour movement
   } else if (movement == "behav") {
 
-    // rcpp_move_behav(fishpop, pop_reserves_thres, move_mean, move_var,
-    //                 move_reef, move_border, move_return, max_dist,
-    //                 coords_reef, extent, dimensions);
+    rcpp_move_behav(fishpop, pop_reserves_thres, move_mean, move_var,
+                    move_reef, move_border, move_return, max_dist,
+                    coords_reef, extent, dimensions);
 
     // throw error
   } else {
@@ -72,11 +72,3 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserve
 
   }
 }
-
-/*** R
-rcpp_move_wrap(fishpop = fishpop_values, pop_reserves_thres = pop_reserves_thres,
-               movement = movement, coords_reef = coords_reef,
-               move_mean = parameters$move_mean, move_var = parameters$move_var,
-               move_reef = parameters$move_reef, move_border = parameters$move_border, move_return = parameters$move_return,
-               max_dist = max_dist, extent = extent, dimensions = dimensions)
-*/

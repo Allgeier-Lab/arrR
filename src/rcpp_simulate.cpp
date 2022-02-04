@@ -59,7 +59,7 @@ using namespace Rcpp;
 //' @rdname rcpp_simulate
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_simulate)]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
                    Rcpp::List parameters, Rcpp::String movement,
@@ -251,12 +251,3 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
   }
 }
-
-/*** R
-rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
-              seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-              parameters = parameters, movement = movement,
-              extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
-              save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
-              verbose = verbose)
-*/

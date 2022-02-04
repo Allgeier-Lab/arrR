@@ -27,7 +27,7 @@ using namespace Rcpp;
 //' @rdname rcpp_get_adjacencies
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_get_adjacencies)]]
 Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
   int n_cell = dimensions[0] * dimensions[1];
@@ -100,6 +100,5 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
 /*** R
 ras <- terra::rast(nrow = 5, ncol = 5)
-
-rcpp_get_adjacencies(dim(ras)[1:2])
+.rcpp_get_adjacencies(dim(ras)[1:2])
 */

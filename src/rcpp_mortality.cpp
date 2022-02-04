@@ -31,7 +31,7 @@ using namespace Rcpp;
 //' @rdname rcpp_mortality
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_mortality)]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
                     double pop_linf, double pop_n_body, double pop_reserves_max,
@@ -63,12 +63,3 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     }
   }
 }
-
-/*** R
-# create new individual
-rcpp_mortality_backgr(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]],
-                      seafloor = seafloor_values,
-                      pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
-                      pop_reserves_max = pop_reserves_max,
-                      extent = as.vector(extent, mode = "numeric"), dimensions = dimensions)
-*/

@@ -35,7 +35,7 @@ using namespace Rcpp;
 //' @rdname rcpp_nutr_uptake
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_nutr_uptake)]]
 double rcpp_nutr_uptake(double nutrients, double biomass,
                         double v_max, double k_m, double time_frac) {
 
@@ -66,14 +66,14 @@ double rcpp_nutr_uptake(double nutrients, double biomass,
 nutrients <- seq(from = 0.0, to = 0.01, length.out = 100)
 
 uptake <- vapply(nutrients, FUN = function(x)
-  rcpp_nutr_uptake(nutrients = x, biomass = 1,
-                   v_max = parameters$ag_v_max, k_m = parameters$ag_k_m, time_frac = 1),
+  .rcpp_nutr_uptake(nutrients = x, biomass = 1,
+                    v_max = parameters$ag_v_max, k_m = parameters$ag_k_m, time_frac = 1),
   FUN.VALUE = numeric(1))
 
-nutrients_umol <- vapply(nutrients, FUN = function(x) rcpp_convert_nutr(x = x, to = "umol"),
+nutrients_umol <- vapply(nutrients, FUN = function(x) .rcpp_convert_nutr(x = x, to = "umol"),
                          FUN.VALUE = numeric(1))
 
-uptake_umol <- vapply(uptake, FUN = function(x) rcpp_convert_nutr(x = x, to = "umol"),
+uptake_umol <- vapply(uptake, FUN = function(x) .rcpp_convert_nutr(x = x, to = "umol"),
                       FUN.VALUE = numeric(1))
 
 plot(x = nutrients_umol, y = uptake_umol, type = "l",

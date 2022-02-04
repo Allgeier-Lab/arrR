@@ -22,7 +22,7 @@ using namespace Rcpp;
 //' @rdname rcpp_get_reef
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_get_reef)]]
 Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
   // get vector of reef id
@@ -75,6 +75,6 @@ foo <- function(seafloor) {
 
 bench::mark(
   foo(seafloor_values),
-  rcpp_get_reef(seafloor_values), iterations = 1000, relative = TRUE,
+  .rcpp_get_reef(seafloor_values), iterations = 1000, relative = TRUE,
   )
 */

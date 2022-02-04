@@ -28,7 +28,7 @@ using namespace Rcpp;
 //' @rdname rcpp_cell_from_xy
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_cell_from_xy)]]
 int rcpp_cell_from_xy(double x, double y,
                       Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       bool rcpp) {
@@ -89,8 +89,8 @@ int rcpp_cell_from_xy(double x, double y,
 x <- runif(n = 1, min = -50, max = 50)
 y <- runif(n = 1, min = -50, max = 50)
 
-rcpp_cell_from_xy(x = x, y = y, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
-                  rcpp = FALSE)
+.rcpp_cell_from_xy(x = x, y = y, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
+                   rcpp = FALSE)
 
 terra::cellFromXY(object = terra::rast(nrows = 100, ncols = 100,
                                        xmin = -50, xmax = 50,

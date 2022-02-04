@@ -52,13 +52,13 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
     heading <- stats::runif(n = starting_values$pop_n, min = 0, max = 360)
 
     # calculate length and weight
-    size <- calc_size(pop_n = starting_values$pop_n,
-                      pop_mean_size = starting_values$pop_mean_size,
-                      pop_linf = parameters$pop_linf,
-                      pop_var_size = starting_values$pop_var_size,
-                      pop_a = parameters$pop_a,
-                      pop_b = parameters$pop_b,
-                      use_log = use_log)
+    size <- .calc_size(pop_n = starting_values$pop_n,
+                       pop_mean_size = starting_values$pop_mean_size,
+                       pop_linf = parameters$pop_linf,
+                       pop_var_size = starting_values$pop_var_size,
+                       pop_a = parameters$pop_a,
+                       pop_b = parameters$pop_b,
+                       use_log = use_log)
 
     # calculate maximum reserves
     reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_reserves_max

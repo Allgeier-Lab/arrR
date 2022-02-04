@@ -28,7 +28,7 @@ using namespace Rcpp;
 //' @rdname rcpp_nutr_output
 //'
 //' @keywords internal
-// [[Rcpp::export]]
+// [[Rcpp::export(.rcpp_nutr_output)]]
 void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
 
   // loop through all raster cells
@@ -47,9 +47,3 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, doubl
 
   }
 }
-
-/*** R
-# diffuse values and save result
-rcpp_nutr_output(seafloor = seafloor_values, nutrients_loss = parameters$nutrients_loss,
-                 detritus_lossf = parameters$detritus_loss)
-*/
