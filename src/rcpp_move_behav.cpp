@@ -15,7 +15,7 @@ using namespace Rcpp;
 // Rcpp simulate movement based on bioenergetics.
 //
 // @param fishpop Matrix with fishpop values.
-// @param pop_reserves_thres NumericVector with threshold of pop_reserves_max to drain prior to foraging.
+// @param pop_reserves_thres Map<int,double> with threshold of pop_reserves_max to drain prior to foraging.
 // @param move_mean,move_var Double with mean movement parameter.
 // @param move_reef Double with mean movement distance when sheltering at reef.
 // @param move_border Double with movement distance that surrounds reef cell border.
@@ -39,7 +39,7 @@ using namespace Rcpp;
 // @rdname rcpp_move_behav
 //
 // @keywords internal
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserves_thres,
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, std::map<int, double> pop_reserves_thres,
                      double move_mean, double move_var, double move_reef,
                      double move_border, double move_return, double max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
@@ -52,7 +52,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserv
     double move_dist = 0.0;
 
     // get threshold value of individual
-    double thres_temp = pop_reserves_thres(i); // pop_reserves_thres.find(fishpop(i, 0)) -> second;
+    double thres_temp = pop_reserves_thres.find(fishpop(i, 0)) -> second;
 
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 9) >= (thres_temp * fishpop(i, 10))) {

@@ -15,7 +15,7 @@ using namespace Rcpp;
 // Rcpp movement behavior wrapper.
 //
 // @param fishpop Matrix with fishpop values.
-// @param pop_reserves_thres NumericVector with threshold of pop_reserves_max to drain prior to foraging.
+// @param pop_reserves_thres Map<int,double> with threshold of pop_reserves_max to drain prior to foraging.
 // @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
 // @param move_mean,move_var Double with mean movement parameter.
 // @param move_reef Double with mean movement distance when sheltering at reef.
@@ -39,7 +39,7 @@ using namespace Rcpp;
 // @rdname rcpp_move_wrap
 //
 // @keywords internal
-void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserves_thres,
+void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, std::map<int, double> pop_reserves_thres,
                     Rcpp::String movement, double move_mean, double move_var, double move_reef,
                     double move_border, double move_return, double max_dist,
                     Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
@@ -54,7 +54,7 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector pop_reserve
     // attracted movement
   } else if (movement == "attr") {
 
-    rcpp_move_rand(fishpop, move_mean, move_var, max_dist, TRUE,
+    rcpp_move_rand(fishpop, move_mean, move_var, max_dist, true,
                    coords_reef, extent, dimensions);
 
     // behaviour movement

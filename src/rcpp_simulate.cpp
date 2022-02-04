@@ -112,10 +112,8 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // init double for maximum movement distance
   double max_dist = 0.0;
 
-  // // init vector for reserves threshold
-  // std::map<int, double> pop_reserves_thres;
-
-  Rcpp::NumericVector pop_reserves_thres;
+  // init vector for reserves threshold
+  std::map<int, double> pop_reserves_thres;
 
   // fishpop is present
   if (fishpop.nrow() > 0) {
@@ -124,14 +122,11 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
     if (movement == "behav") {
 
-      // Rcpp::NumericVector values_temp = Rcpp::runif(fishpop.nrow(),
-      //                                               parameters["pop_reserves_thres_lo"],
-      //                                               parameters["pop_reserves_thres_hi"]);
-      //
-      // pop_reserves_thres = rcpp_vec_to_map(fishpop(_, 0), values_temp);
+      Rcpp::NumericVector values_temp = Rcpp::runif(fishpop.nrow(),
+                                                    parameters["pop_reserves_thres_lo"],
+                                                    parameters["pop_reserves_thres_hi"]);
 
-      pop_reserves_thres = Rcpp::runif(fishpop.nrow(), parameters["pop_reserves_thres_lo"],
-                                       parameters["pop_reserves_thres_hi"]);
+      pop_reserves_thres = rcpp_vec_to_map(fishpop(_, 0), values_temp);
 
     }
   }
@@ -173,8 +168,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       }
 
       // simulate seagrass growth
-      rcpp_seagrass_growth(seafloor,
-                           parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
+      rcpp_seagrass_growth(seafloor, parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
                            parameters["ag_v_max"], parameters["ag_k_m"], parameters["ag_gamma"],
                            parameters["bg_biomass_max"], parameters["bg_biomass_min"],
                            parameters["ag_biomass_max"], parameters["ag_biomass_min"],
@@ -197,8 +191,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                      parameters["move_return"], max_dist, coords_reef, extent, dimensions);
 
       // simulate fish respiration (26°C is mean water temperature in the Bahamas)
-      rcpp_respiration(fishpop,
-                       parameters["resp_intercept"], parameters["resp_slope"],
+      rcpp_respiration(fishpop, parameters["resp_intercept"], parameters["resp_slope"],
                        parameters["resp_temp_low"], parameters["resp_temp_max"],
                        parameters["resp_temp_optm"], 26.0, min_per_i);
 

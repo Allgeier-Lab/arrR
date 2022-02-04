@@ -71,7 +71,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(fish_id_temp, 2), fishpop(fish_id_temp, 3),
-                                         extent, dimensions, TRUE);
+                                         extent, dimensions, true);
 
     // calculate growth in length and weight
     double growth_length = pop_k / (365.0 * 24.0 * 60.0) * min_per_i *

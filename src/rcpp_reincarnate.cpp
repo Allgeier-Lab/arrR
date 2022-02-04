@@ -43,7 +43,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   // get cell id of old individual
   cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
-                              extent, dimensions, TRUE);
+                              extent, dimensions, true);
 
   // calculate increase in fish mass including reserves
   // mass_difference = weight - weight specific nutrient content + fish reserves
@@ -97,7 +97,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   // get cell id of new individual
   cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
-                              extent, dimensions, TRUE);
+                              extent, dimensions, true);
 
   // detritus pool is smaller than wanted reserves, detritus pool is fully used
   if (fishpop(fish_id, 10) >= seafloor(cell_id, 5)) {
