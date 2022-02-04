@@ -30,7 +30,7 @@ using namespace Rcpp;
 //' @aliases rcpp_rlognorm
 //' @rdname rcpp_rlognorm
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_rlognorm(double mean, double sd, double min, double max) {
 

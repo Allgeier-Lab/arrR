@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_nutr_output
 //'
@@ -27,7 +27,7 @@ using namespace Rcpp;
 //' @aliases rcpp_nutr_output
 //' @rdname rcpp_nutr_output
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
 

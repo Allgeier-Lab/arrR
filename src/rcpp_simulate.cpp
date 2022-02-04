@@ -9,6 +9,7 @@
 #include "rcpp_get_reef.h"
 #include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
+#include "rcpp_vec_to_map.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
@@ -57,7 +58,7 @@ using namespace Rcpp;
 //' @aliases rcpp_simulate
 //' @rdname rcpp_simulate
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
@@ -111,8 +112,10 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // init double for maximum movement distance
   double max_dist = 0.0;
 
-  // init vector for reserves threshold
-  Rcpp::NumericVector pop_reserves_thres (fishpop.nrow());
+  // // init vector for reserves threshold
+  // std::map<int, double> pop_reserves_thres;
+
+  Rcpp::NumericVector pop_reserves_thres;
 
   // fishpop is present
   if (fishpop.nrow() > 0) {
@@ -121,8 +124,15 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
     if (movement == "behav") {
 
+      // Rcpp::NumericVector values_temp = Rcpp::runif(fishpop.nrow(),
+      //                                               parameters["pop_reserves_thres_lo"],
+      //                                               parameters["pop_reserves_thres_hi"]);
+      //
+      // pop_reserves_thres = rcpp_vec_to_map(fishpop(_, 0), values_temp);
+
       pop_reserves_thres = Rcpp::runif(fishpop.nrow(), parameters["pop_reserves_thres_lo"],
                                        parameters["pop_reserves_thres_hi"]);
+
     }
   }
 

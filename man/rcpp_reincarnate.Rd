@@ -45,3 +45,4 @@ The mass difference (i.e. current mass minus mass at timestep zero) plus reserve
 of the died individual are added to the detritus pool. The reincarnated individual
 tries to fill its reserves from the detritus pool if enough nutrients are available.
 }
+\keyword{internal}

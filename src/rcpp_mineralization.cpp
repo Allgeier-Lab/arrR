@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_mineralization
 //'
@@ -29,7 +29,7 @@ using namespace Rcpp;
 //' @aliases rcpp_mineralization
 //' @rdname rcpp_mineralization
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
                          double detritus_mineralization, double detritus_fish_decomp) {

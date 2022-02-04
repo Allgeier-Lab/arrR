@@ -21,7 +21,7 @@ using namespace Rcpp;
 //' @aliases rcpp_modify_degree
 //' @rdname rcpp_modify_degree
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_modify_degree(double x, double y) {
 

@@ -22,7 +22,7 @@
 #' @aliases get_starting_values
 #' @rdname get_starting_values
 #'
-#' @export
+#' @keywords internal
 get_starting_values <- function(seafloor_values, fishpop_values) {
 
   # get mean values and # fish pop

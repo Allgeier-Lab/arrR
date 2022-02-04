@@ -22,3 +22,4 @@ Torus translation of coordinates if they exceed the provided extent. The transla
 is done until coordinate is within extent (i.e., could be translated several times
 if the difference is big).
 }
+\keyword{internal}

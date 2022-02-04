@@ -7,7 +7,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_seagrass_growth
 //'
@@ -46,7 +46,7 @@ using namespace Rcpp;
 //' @aliases rcpp_seagrass_growth
 //' @rdname rcpp_seagrass_growth
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
                           double bg_v_max, double bg_k_m, double bg_gamma,

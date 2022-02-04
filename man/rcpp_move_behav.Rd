@@ -21,7 +21,7 @@ rcpp_move_behav(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
+\item{pop_reserves_thres}{NumericVector with threshold of pop_reserves_max to drain prior to foraging.}
 
 \item{move_mean, move_var}{Double with mean movement parameter.}
 
@@ -46,10 +46,11 @@ void
 Rcpp simulate movement based on bioenergetics.
 }
 \details{
-Fish individualsmove based on how much nutrients they have stored in their
+Fish individuals move based on how much nutrients they have stored in their
 reserves. There are three different movement behaviors.
 
 If reserves above a certain threshold, individuals either shelter at reef cells (behavior 1)
 or move back towards reef cells (behavior 2). If reserves are not above the threshold,
 individuals move randomly across the environment to forage.
 }
+\keyword{internal}

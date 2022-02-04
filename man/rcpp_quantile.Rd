@@ -23,3 +23,4 @@ Returns q-th percentile of vector.
 \references{
 <https://stackoverflow.com/questions/26786078/rcpp-quantile-implementation>
 }
+\keyword{internal}

@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_respiration
 //'
@@ -37,7 +37,7 @@ using namespace Rcpp;
 //' @aliases rcpp_respiration
 //' @rdname rcpp_respiration
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_intercept, double resp_slope,

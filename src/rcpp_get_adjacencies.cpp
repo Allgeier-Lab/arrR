@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_get_adjacencies
 //'
@@ -26,7 +26,7 @@ using namespace Rcpp;
 //' @aliases rcpp_get_adjacencies
 //' @rdname rcpp_get_adjacencies
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 

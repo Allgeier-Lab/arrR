@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_get_reef
 //'
@@ -21,7 +21,7 @@ using namespace Rcpp;
 //' @aliases rcpp_get_reef
 //' @rdname rcpp_get_reef
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 

@@ -7,7 +7,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_get_max_dist
 //'
@@ -27,7 +27,7 @@ using namespace Rcpp;
 //' @aliases rcpp_get_max_dist
 //' @rdname rcpp_get_max_dist
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
 

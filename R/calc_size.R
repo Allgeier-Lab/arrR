@@ -35,7 +35,7 @@
 #' @aliases calc_size
 #' @rdname calc_size
 #'
-#' @export
+#' @keywords internal
 calc_size <- function(pop_n, pop_mean_size, pop_var_size,
                       pop_linf, pop_a, pop_b, use_log = TRUE) {
 

@@ -32,47 +32,6 @@ reference:
       - print.mdl_rn
       - summarize_mdlrn
 
-  - title: Sub-processes
-    contents:
-      - rcpp_simulate
-      - rcpp_nutr_input
-      - rcpp_seagrass_growth
-      - rcpp_mineralization
-      - rcpp_move_wrap
-      - rcpp_respiration
-      - rcpp_fishpop_growth
-      - rcpp_mortality
-      - rcpp_diffuse_values
-      - rcpp_nutr_output
-
-  - title: (internal) Helper functions
-    contents:
-      - calc_size
-      - get_starting_values
-      - setup_envir_values
-      - setup_reef
-
-  - title: Rcpp functions
-    contents:
-      - rcpp_allocation_ratio
-      - rcpp_cell_from_xy
-      - rcpp_closest_reef
-      - rcpp_convert_nutr
-      - rcpp_get_adjacencies
-      - rcpp_get_bearing
-      - rcpp_get_max_dist
-      - rcpp_get_reef
-      - rcpp_modify_degree
-      - rcpp_move_behav
-      - rcpp_move_rand
-      - rcpp_nutr_uptake
-      - rcpp_quantile
-      - rcpp_reincarnate
-      - rcpp_rlognorm
-      - rcpp_shuffle
-      - rcpp_translate_torus
-      - rcpp_update_coords
-
 navbar:
   structure:
     left:  [getstarted, reference, articles, news]

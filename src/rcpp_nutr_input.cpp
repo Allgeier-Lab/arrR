@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
+// [[Rcpp::interfaces(cpp)]]
 
 //' rcpp_nutr_input
 //'
@@ -28,7 +28,7 @@ using namespace Rcpp;
 //' @aliases rcpp_nutr_input
 //' @rdname rcpp_nutr_input
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
 

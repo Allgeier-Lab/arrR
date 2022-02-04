@@ -29,7 +29,7 @@ using namespace Rcpp;
 //' @aliases rcpp_allocation_ratio
 //' @rdname rcpp_allocation_ratio
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max,
                              double threshold, double slope) {

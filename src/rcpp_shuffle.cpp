@@ -24,7 +24,7 @@ using namespace Rcpp;
 //' @aliases rcpp_shuffle
 //' @rdname rcpp_shuffle
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 

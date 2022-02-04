@@ -15,7 +15,7 @@
 #' @aliases setup_reef
 #' @rdname setup_reef
 #'
-#' @export
+#' @keywords internal
 setup_reef <- function(seafloor, reef) {
 
   # get cell ids of provided coordinates

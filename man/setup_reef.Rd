@@ -21,3 +21,4 @@ Setup reef cells for seafloor.
 Setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
 Sets all seafloor values of AR to NA/0. Used during \code{\link{setup_seafloor}}.
 }
+\keyword{internal}

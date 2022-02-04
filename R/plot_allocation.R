@@ -8,8 +8,8 @@
 #'
 #' @details
 #' Plotting method for the allocation ratio rule used during the seagrass growth
-#' dynamics. For more information see \code{\link{rcpp_seagrass_growth}} and
-#' \code{rcpp_allocation_ratio}.
+#' dynamics. For more information see \code{rcpp_seagrass_growth} and
+#' \code{rcpp_allocation_ratio} (internal functions).
 #'
 #' @examples
 #' plot_allocation(parameters = arrR_parameters)

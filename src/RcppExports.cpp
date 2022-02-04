@@ -715,6 +715,18 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_vec_to_map
+std::map<int, double> rcpp_vec_to_map(Rcpp::NumericVector key, Rcpp::NumericVector value);
+RcppExport SEXP _arrR_rcpp_vec_to_map(SEXP keySEXP, SEXP valueSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type key(keySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type value(valueSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_vec_to_map(key, value));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 // validate (ensure exported C++ functions exist before calling them)
 static int _arrR_RcppExport_validate(const char* sig) { 
@@ -783,6 +795,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_simulate", (DL_FUNC) &_arrR_rcpp_simulate, 15},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 3},
     {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
+    {"_arrR_rcpp_vec_to_map", (DL_FUNC) &_arrR_rcpp_vec_to_map, 2},
     {"_arrR_RcppExport_registerCCallable", (DL_FUNC) &_arrR_RcppExport_registerCCallable, 0},
     {NULL, NULL, 0}
 };

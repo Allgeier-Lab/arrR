@@ -37,3 +37,4 @@ setup reef cells.
 If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
 as
 }
+\keyword{internal}

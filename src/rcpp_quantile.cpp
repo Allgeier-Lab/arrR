@@ -23,7 +23,7 @@ using namespace Rcpp;
 //' @aliases rcpp_quantile
 //' @rdname rcpp_quantile
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
