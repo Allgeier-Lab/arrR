@@ -3,24 +3,23 @@
 
 using namespace Rcpp;
 
-//' rcpp_get_bearing
-//'
-//' @description
-//' Rcpp get bearing between two coordinate pairs.
-//'
-//' @param x1,y1 Double with first xy coords pair.
-//' @param x2,y2 Double with second xy coords pair.
-//'
-//' @details
-//' Get bearing between (x1,y1) and (x2,y2).
-//'
-//' @return double
-//'
-//' @aliases rcpp_get_bearing
-//' @rdname rcpp_get_bearing
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_get_bearing)]]
+// rcpp_get_bearing
+//
+// @description
+// Rcpp get bearing between two coordinate pairs.
+//
+// @param x1,y1 Double with first xy coords pair.
+// @param x2,y2 Double with second xy coords pair.
+//
+// @details
+// Get bearing between (x1,y1) and (x2,y2).
+//
+// @return double
+//
+// @aliases rcpp_get_bearing
+// @rdname rcpp_get_bearing
+//
+// @keywords internal
 double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 
   // calculate bearing between fish coords and shortest reef cell

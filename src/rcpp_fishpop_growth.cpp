@@ -10,50 +10,49 @@ using namespace Rcpp;
 
 // [[Rcpp::interfaces(cpp)]]
 
-//' rcpp_fishpop_growth
-//'
-//' @description
-//' Rcpp simulate fishpop growth.
-//'
-//' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
-//' @param seafloor Matrix with seafloor values.
-//' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-//' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
-//' @param pop_reserves_consump Double with consumption limit to fill reserves each timestep.
-//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
-//' @param dimensions Vector with dimensions (nrow, ncol).
-//'
-//' @details
-//' Function to simulate consumption, mortality, growth and excretion of fish
-//' individuals. First each fish individual has to follow the von Bertalanffy growth curve
-//' and the corresponding amount of nutrients for this are calculated based on a
-//' bioenergetics model (Allgeier et al. 2020). The nutrients are consumed from the
-//' detritus_pool in the cell each individual is located in. If the available amount is not big
-//' enough, fish can either use their reserves or they die (see \code{\link{rcpp_reincarnate}}).
-//' Last, if the detritus pool is big enough, individuals can additionally fill up
-//' their reserves.
-//'
-//' If individuals are within behavior 1 or 2 (only for \code{movement = behav}),
-//' the consumption requirement must be met by the reserves only.
-//'
-//' If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
-//' can be consumed each timestep.
-//'
-//' @references
-//' Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
-//' Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
-//' harvest. Sci. Adv. 6, eaax8329. <https://doi.org/10.1126/sciadv.aax8329>
-//'
-//' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
-//' [WWW Document]. <www.fishbase.org>
-//'
-//' @return void
-//'
-//' @aliases rcpp_fishpop_growth
-//' @rdname rcpp_fishpop_growth
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_fishpop_growth)]]
+// rcpp_fishpop_growth
+//
+// @description
+// Rcpp simulate fishpop growth.
+//
+// @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+// @param seafloor Matrix with seafloor values.
+// @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
+// @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
+// @param pop_reserves_consump Double with consumption limit to fill reserves each timestep.
+// @param extent Vector with extent (xmin,xmax,ymin,ymax).
+// @param dimensions Vector with dimensions (nrow, ncol).
+//
+// @details
+// Function to simulate consumption, mortality, growth and excretion of fish
+// individuals. First each fish individual has to follow the von Bertalanffy growth curve
+// and the corresponding amount of nutrients for this are calculated based on a
+// bioenergetics model (Allgeier et al. 2020). The nutrients are consumed from the
+// detritus_pool in the cell each individual is located in. If the available amount is not big
+// enough, fish can either use their reserves or they die (see \code{\link{rcpp_reincarnate}}).
+// Last, if the detritus pool is big enough, individuals can additionally fill up
+// their reserves.
+//
+// If individuals are within behavior 1 or 2 (only for \code{movement = behav}),
+// the consumption requirement must be met by the reserves only.
+//
+// If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
+// can be consumed each timestep.
+//
+// @references
+// Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
+// Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
+// harvest. Sci. Adv. 6, eaax8329. <https://doi.org/10.1126/sciadv.aax8329>
+//
+// Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
+// [WWW Document]. <www.fishbase.org>
+//
+// @return void
+//
+// @aliases rcpp_fishpop_growth
+// @rdname rcpp_fishpop_growth
+//
+// @keywords internal
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,

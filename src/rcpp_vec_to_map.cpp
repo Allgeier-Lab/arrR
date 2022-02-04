@@ -5,23 +5,22 @@
 
 using namespace Rcpp;
 
-//' rcpp_vec_to_map
-//'
-//' @description
-//' Rcpp matrix to map.
-//'
-//' @param key,value NumericVector with key and values values
-//'
-//' @details
-//' Converts to vectors to a \code{std::map} object.
-//'
-//' @return map
-//'
-//' @aliases rcpp_vec_to_map
-//' @rdname rcpp_vec_to_map
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_vec_to_map)]]
+// rcpp_vec_to_map
+//
+// @description
+// Rcpp matrix to map.
+//
+// @param key,value NumericVector with key and values values
+//
+// @details
+// Converts to vectors to a \code{std::map} object.
+//
+// @return map
+//
+// @aliases rcpp_vec_to_map
+// @rdname rcpp_vec_to_map
+//
+// @keywords internal
 std::map<int, double> rcpp_vec_to_map(Rcpp::NumericVector key, Rcpp::NumericVector value) {
 
   if (key.length() != value.length()) Rcpp::stop("'key' and 'value' must be same length.");

@@ -4,27 +4,26 @@
 
 using namespace Rcpp;
 
-//' rcpp_quantile
-//'
-//' @description
-//' Rcpp quantile
-//'
-//' @param x NumericVector with values.
-//' @param q Double with quantile.
-//'
-//' @details
-//' Returns q-th percentile of vector.
-//'
-//' @references
-//' <https://stackoverflow.com/questions/26786078/rcpp-quantile-implementation>
-//'
-//' @return double
-//'
-//' @aliases rcpp_quantile
-//' @rdname rcpp_quantile
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_quantile)]]
+// rcpp_quantile
+//
+// @description
+// Rcpp quantile
+//
+// @param x NumericVector with values.
+// @param q Double with quantile.
+//
+// @details
+// Returns q-th percentile of vector.
+//
+// @references
+// <https://stackoverflow.com/questions/26786078/rcpp-quantile-implementation>
+//
+// @return double
+//
+// @aliases rcpp_quantile
+// @rdname rcpp_quantile
+//
+// @keywords internal
 double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
   // sort x from min to max

@@ -19,8 +19,8 @@
 #'
 #' @return SpatRaster
 #'
-#' @aliases .setup_envir_values
-#' @rdname .setup_envir_values
+#' @aliases setup_envir_values
+#' @rdname setup_envir_values
 #'
 #' @keywords internal
 .setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,

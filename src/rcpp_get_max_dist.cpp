@@ -9,26 +9,25 @@ using namespace Rcpp;
 
 // [[Rcpp::interfaces(cpp)]]
 
-//' rcpp_get_max_dist
-//'
-//' @description
-//' Rcpp get maximum movement distance
-//'
-//' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
-//' @param parameters List with parameters.
-//' @param n_rand Integer with amount of random numbers.
-//'
-//' @details
-//' Calculate double with maximum movement distance. The distance is the 95% quantile
-//' of n_rand random numbers.
-//'
-//' @return double
-//'
-//' @aliases rcpp_get_max_dist
-//' @rdname rcpp_get_max_dist
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_get_max_dist)]]
+// rcpp_get_max_dist
+//
+// @description
+// Rcpp get maximum movement distance
+//
+// @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+// @param parameters List with parameters.
+// @param n_rand Integer with amount of random numbers.
+//
+// @details
+// Calculate double with maximum movement distance. The distance is the 95% quantile
+// of n_rand random numbers.
+//
+// @return double
+//
+// @aliases rcpp_get_max_dist
+// @rdname rcpp_get_max_dist
+//
+// @keywords internal
 double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
 
   double max_dist = 0.0;

@@ -6,36 +6,35 @@
 
 using namespace Rcpp;
 
-//' rcpp_nutr_uptake
-//'
-//' @description
-//' Rcpp nutrient uptake.
-//'
-//' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
-//' @param v_max,k_m,time_frac Numeric with parameters
-//'
-//' @details
-//' Calculate nutrient uptake of each cells depending on avaiable nutrients in the
-//' water column and biomass. All values are scaled to the time period which can be
-//' specified by \code{time_frac}. Are uptaken nutrients are removed from the pool.
-//' If the calculated uptake exceeds the available amount, only the  available amount
-//' is taken up.
-//'
-//' @references
-//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
-//'
-//'Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
-//'Thalassia testudinum: Development of a whole-plant nitrogen budget.
-//'Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
-//'
-//' @return double
-//'
-//' @aliases rcpp_nutr_uptake
-//' @rdname rcpp_nutr_uptake
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_nutr_uptake)]]
+// rcpp_nutr_uptake
+//
+// @description
+// Rcpp nutrient uptake.
+//
+// @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+// @param v_max,k_m,time_frac Numeric with parameters
+//
+// @details
+// Calculate nutrient uptake of each cells depending on avaiable nutrients in the
+// water column and biomass. All values are scaled to the time period which can be
+// specified by \code{time_frac}. Are uptaken nutrients are removed from the pool.
+// If the calculated uptake exceeds the available amount, only the  available amount
+// is taken up.
+//
+// @references
+// DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+// Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+//
+//Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
+//Thalassia testudinum: Development of a whole-plant nitrogen budget.
+//Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
+//
+// @return double
+//
+// @aliases rcpp_nutr_uptake
+// @rdname rcpp_nutr_uptake
+//
+// @keywords internal
 double rcpp_nutr_uptake(double nutrients, double biomass,
                         double v_max, double k_m, double time_frac) {
 

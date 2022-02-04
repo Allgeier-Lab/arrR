@@ -32,8 +32,8 @@
 #' pop_b = arrR_parameters$pop_b, use_log = TRUE)
 #' }
 #'
-#' @aliases .calc_size
-#' @rdname .calc_size
+#' @aliases calc_size
+#' @rdname calc_size
 #'
 #' @keywords internal
 .calc_size <- function(pop_n, pop_mean_size, pop_var_size,

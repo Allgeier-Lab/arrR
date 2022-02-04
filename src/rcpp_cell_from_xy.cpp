@@ -4,31 +4,30 @@
 
 using namespace Rcpp;
 
-//' rcpp_cell_from_xy
-//'
-//' @description
-//' Rcpp get cell from xy
-//'
-//' @param x,y Numeric with x,y coordinates.
-//' @param extent Vector with extent (xmin, xmax, ymin, ymax).
-//' @param dimensions Vector with number or rows and cols
-//' @param rcpp Logical if TRUE Rcpp index is returned.
-//'
-//' @details
-//' Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
-//' If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
-//'
-//' @references
-//' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
-//' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
-//'
-//' @return int
-//'
-//' @aliases rcpp_cell_from_xy
-//' @rdname rcpp_cell_from_xy
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_cell_from_xy)]]
+// rcpp_cell_from_xy
+//
+// @description
+// Rcpp get cell from xy
+//
+// @param x,y Numeric with x,y coordinates.
+// @param extent Vector with extent (xmin, xmax, ymin, ymax).
+// @param dimensions Vector with number or rows and cols
+// @param rcpp Logical if TRUE Rcpp index is returned.
+//
+// @details
+// Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
+// If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
+//
+// @references
+// Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+// and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
+//
+// @return int
+//
+// @aliases rcpp_cell_from_xy
+// @rdname rcpp_cell_from_xy
+//
+// @keywords internal
 int rcpp_cell_from_xy(double x, double y,
                       Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       bool rcpp) {

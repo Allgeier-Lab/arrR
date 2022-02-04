@@ -6,26 +6,25 @@
 
 using namespace Rcpp;
 
-//' rcpp_shuffle
-//'
-//' @description
-//' Rcpp shuffle vector.
-//'
-//' @param min,max Integer with minimum and maximum value of vector.
-//'
-//' @details
-//' Creates vector with IDs from \code{min} to \code{max}, but in random order.
-//'
-//' @references
-//' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
-//'
-//' @return vector
-//'
-//' @aliases rcpp_shuffle
-//' @rdname rcpp_shuffle
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_shuffle)]]
+// rcpp_shuffle
+//
+// @description
+// Rcpp shuffle vector.
+//
+// @param min,max Integer with minimum and maximum value of vector.
+//
+// @details
+// Creates vector with IDs from \code{min} to \code{max}, but in random order.
+//
+// @references
+// How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
+//
+// @return vector
+//
+// @aliases rcpp_shuffle
+// @rdname rcpp_shuffle
+//
+// @keywords internal
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 
   // create sequance from min to max

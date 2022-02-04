@@ -6,23 +6,22 @@ using namespace Rcpp;
 
 // [[Rcpp::interfaces(cpp)]]
 
-//' rcpp_get_reef
-//'
-//' @description
-//' Rcpp get reef matrix
-//'
-//' @param seafloor Matrix with seafloor values.
-//'
-//' @details
-//' Get matrix with cell id and coordinates of reef cells.
-//'
-//' @return matrix
-//'
-//' @aliases rcpp_get_reef
-//' @rdname rcpp_get_reef
-//'
-//' @keywords internal
-// [[Rcpp::export(.rcpp_get_reef)]]
+// rcpp_get_reef
+//
+// @description
+// Rcpp get reef matrix
+//
+// @param seafloor Matrix with seafloor values.
+//
+// @details
+// Get matrix with cell id and coordinates of reef cells.
+//
+// @return matrix
+//
+// @aliases rcpp_get_reef
+// @rdname rcpp_get_reef
+//
+// @keywords internal
 Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
   // get vector of reef id

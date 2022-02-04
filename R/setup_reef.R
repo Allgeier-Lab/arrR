@@ -12,8 +12,8 @@
 #'
 #' @return SpatRaster
 #'
-#' @aliases .setup_reef
-#' @rdname .setup_reef
+#' @aliases setup_reef
+#' @rdname setup_reef
 #'
 #' @keywords internal
 .setup_reef <- function(seafloor, reef) {
