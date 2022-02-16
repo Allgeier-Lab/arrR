@@ -4,24 +4,25 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_get_reef
-//
-// @description
-// Rcpp get reef matrix
-//
-// @param seafloor Matrix with seafloor values.
-//
-// @details
-// Get matrix with cell id and coordinates of reef cells.
-//
-// @return matrix
-//
-// @aliases rcpp_get_reef
-// @rdname rcpp_get_reef
-//
-// @keywords internal
+//' rcpp_get_reef
+//'
+//' @description
+//' Rcpp get reef matrix
+//'
+//' @param seafloor Matrix with seafloor values.
+//'
+//' @details
+//' Get matrix with cell id and coordinates of reef cells.
+//'
+//' @return matrix
+//'
+//' @aliases rcpp_get_reef
+//' @rdname rcpp_get_reef
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_get_reef)]]
 Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
   // get vector of reef id
@@ -55,3 +56,24 @@ Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
   return reef;
 }
+
+/*** R
+# convert seafloor and fishpop as matrix
+seafloor_values <- as.matrix(terra::as.data.frame(input_seafloor,
+                                                  xy = TRUE, na.rm = FALSE))
+
+foo <- function(seafloor) {
+
+  # get cell id of reef
+  cells_reef <- which(seafloor[, "reef"] == 1)
+
+  # get cell id of reef cells and coordinates of reef cells
+  matrix(data = c(cells_reef, seafloor[cells_reef, c("x", "y")]),
+         ncol = 3)
+}
+
+bench::mark(
+  foo(seafloor_values),
+  .rcpp_get_reef(seafloor_values), iterations = 1000, relative = TRUE,
+)
+*/

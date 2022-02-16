@@ -5,34 +5,37 @@
 
 using namespace Rcpp;
 
-// rcpp_reincarnate
-//
-// @description
-// Rcpp reincarnate fish indivudals.
-//
-// @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
-// @param fish_id Vector with id of fish and corresponding cell ids.
-// @param seafloor Matrix with seafloor values.
-// @param extent Vector with extent (xmin,xmax,ymin,ymax).
-// @param dimensions Vector with dimensions (nrow, ncol).
-// @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
-// @param reason String with reason of reincarnation.
-//
-// @details
-// Creates a new individual after mortality event. The new individual has the same
-// values as the died individual at the beginning of the simulation.
-//
-// The mass difference (i.e. current mass minus mass at time step zero) and the
-// reserves of the died individual are added to the detritus pool. The reincarnated
-// individual tries to fill its reserves from the detritus pool if enough nutrients
-// are available.
-//
-// @return void
-//
-// @aliases rcpp_reincarnate
-// @rdname rcpp_reincarnate
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_reincarnate
+//'
+//' @description
+//' Rcpp reincarnate fish indivudals.
+//'
+//' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+//' @param fish_id Vector with id of fish and corresponding cell ids.
+//' @param seafloor Matrix with seafloor values.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
+//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param reason String with reason of reincarnation.
+//'
+//' @details
+//' Creates a new individual after mortality event. The new individual has the same
+//' values as the died individual at the beginning of the simulation.
+//'
+//' The mass difference (i.e. current mass minus mass at time step zero) and the
+//' reserves of the died individual are added to the detritus pool. The reincarnated
+//' individual tries to fill its reserves from the detritus pool if enough nutrients
+//' are available.
+//'
+//' @return void
+//'
+//' @aliases rcpp_reincarnate
+//' @rdname rcpp_reincarnate
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_reincarnate)]]
 void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id,
                       Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       double pop_linf, double pop_n_body, double pop_reserves_max,

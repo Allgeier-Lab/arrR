@@ -4,24 +4,27 @@
 
 using namespace Rcpp;
 
-// rcpp_modify_degree
-//
-// @description
-// Rcpp modify degree.
-//
-// @param x Numeric with current angle in degree.
-// @param y Numeric with change of degree (negative or positive).
-//
-// @details
-// Modify the degree of direction heading of individuals. The function ensures
-// that all degrees are between 0 <= x <= 360.
-//
-// @return double
-//
-// @aliases rcpp_modify_degree
-// @rdname rcpp_modify_degree
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_modify_degree
+//'
+//' @description
+//' Rcpp modify degree.
+//'
+//' @param x Numeric with current angle in degree.
+//' @param y Numeric with change of degree (negative or positive).
+//'
+//' @details
+//' Modify the degree of direction heading of individuals. The function ensures
+//' that all degrees are between 0 <= x <= 360.
+//'
+//' @return double
+//'
+//' @aliases rcpp_modify_degree
+//' @rdname rcpp_modify_degree
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_modify_degree)]]
 double rcpp_modify_degree(double x, double y) {
 
   // add value to degree
@@ -39,3 +42,7 @@ double rcpp_modify_degree(double x, double y) {
 
   return(x);
 }
+
+/*** R
+.rcpp_modify_degree(x = 332, y = 33.5)
+*/

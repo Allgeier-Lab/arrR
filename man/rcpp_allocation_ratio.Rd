@@ -15,7 +15,7 @@
 \item{threshold, slope}{Numeric with function parameters.}
 }
 \value{
-void
+double
 }
 \description{
 Rcpp allocation ratio.

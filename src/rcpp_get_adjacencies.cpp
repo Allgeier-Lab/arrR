@@ -4,29 +4,30 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_get_adjacencies
-//
-// @description
-// Rcpp get adjacencies
-//
-// @param dimensions Vector with number or rows and cols
-//
-// @details
-// Get matrix with cell IDs of all neighboring cells. Indices start with 0
-// according to C++ indexing.
-//
-// @references
-// Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
-// and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
-//
-// @return matrix
-//
-// @aliases rcpp_get_adjacencies
-// @rdname rcpp_get_adjacencies
-//
-// @keywords internal
+//' rcpp_get_adjacencies
+//'
+//' @description
+//' Rcpp get adjacencies
+//'
+//' @param dimensions Vector with number or rows and cols
+//'
+//' @details
+//' Get matrix with cell IDs of all neighboring cells. Indices start with 0
+//' according to C++ indexing.
+//'
+//' @references
+//' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+//' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
+//'
+//' @return matrix
+//'
+//' @aliases rcpp_get_adjacencies
+//' @rdname rcpp_get_adjacencies
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_get_adjacencies)]]
 Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
   int n_cell = dimensions[0] * dimensions[1];
@@ -95,3 +96,8 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
   return(adj);
 }
+
+/*** R
+ras <- terra::rast(nrow = 5, ncol = 5)
+.rcpp_get_adjacencies(dim(ras)[1:2])
+*/

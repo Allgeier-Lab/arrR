@@ -4,34 +4,35 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_mineralization
-//
-// @description
-// Rcpp simulate mineralization.
-//
-// @param seafloor Matrix with seafloor values.
-// @param detritus_fish_decomp,detritus_mineralization seafloor Numeric with parameters.
-//
-// @details
-// Simulate mineralization of the detritus pool i.e., a ratio of the detritus pool
-// is added to the nutrients pool. The corresponding amount is removed from the
-// detritus pool.
-//
-// Also, simulates decomposition of the detritus fish_pool by removing a ratio and
-// adding it to the detritus pool.
-//
-// @references
-// DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-// Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
-//
-// @return void
-//
-// @aliases rcpp_mineralization
-// @rdname rcpp_mineralization
-//
-// @keywords internal
+//' rcpp_mineralization
+//'
+//' @description
+//' Rcpp simulate mineralization.
+//'
+//' @param seafloor Matrix with seafloor values.
+//' @param detritus_fish_decomp,detritus_mineralization seafloor Numeric with parameters.
+//'
+//' @details
+//' Simulate mineralization of the detritus pool i.e., a ratio of the detritus pool
+//' is added to the nutrients pool. The corresponding amount is removed from the
+//' detritus pool.
+//'
+//' Also, simulates decomposition of the detritus fish_pool by removing a ratio and
+//' adding it to the detritus pool.
+//'
+//' @references
+//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+//'
+//' @return void
+//'
+//' @aliases rcpp_mineralization
+//' @rdname rcpp_mineralization
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_mineralization)]]
 void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
                          double detritus_mineralization, double detritus_fish_decomp) {
 

@@ -4,41 +4,42 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_respiration
-//
-// @description
-// Rcpp simulate respration.
-//
-// @param fishpop Matrix with fishpop values.
-// @param resp_intercept,resp_slope Numeric with regression parameters.
-// @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with water temperature parameters.
-// @param water_temp,min_per_i Numeric with various parameters.
-//
-// @details
-// Function to simulate respiration of fish individuals based on movement, body +
-// size and water temperature. The respiration is temperature dependent with an
-// activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
-//
-// If respiration is a infinite number (due to zero division), set to
-// \code{erespiration=1.0}.
-//
-// @references
-// Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
-// Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
-// Centre for Limnology, Madison,USA.
-//
-// Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
-// model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
-// J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
-//
-// @return void
-//
-// @aliases rcpp_respiration
-// @rdname rcpp_respiration
-//
-// @keywords internal
+//' rcpp_respiration
+//'
+//' @description
+//' Rcpp simulate respration.
+//'
+//' @param fishpop Matrix with fishpop values.
+//' @param resp_intercept,resp_slope Numeric with regression parameters.
+//' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with water temperature parameters.
+//' @param water_temp,min_per_i Numeric with various parameters.
+//'
+//' @details
+//' Function to simulate respiration of fish individuals based on movement, body +
+//' size and water temperature. The respiration is temperature dependent with an
+//' activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
+//'
+//' If respiration is a infinite number (due to zero division), set to
+//' \code{erespiration=1.0}.
+//'
+//' @references
+//' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+//' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+//' Centre for Limnology, Madison,USA.
+//'
+//' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
+//' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
+//' J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
+//'
+//' @return void
+//'
+//' @aliases rcpp_respiration
+//' @rdname rcpp_respiration
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_respiration)]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_intercept, double resp_slope,
                       double resp_temp_low, double resp_temp_max, double resp_temp_optm,

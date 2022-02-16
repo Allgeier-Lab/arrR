@@ -6,29 +6,30 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_get_max_dist
-//
-// @description
-// Rcpp get maximum movement distance
-//
-// @param movement String specifing movement algorithm.
-// @param parameters List with parameters.
-// @param n_rand Integer with amount of random numbers.
-//
-// @details
-// Calculate double with maximum movement distance. The distance is the 95% quantile
-// of \code{n_rand} random numbers.
-//
-// \code{movement} can be either 'rand', 'attr' or 'behav'.
-//
-// @return double
-//
-// @aliases rcpp_get_max_dist
-// @rdname rcpp_get_max_dist
-//
-// @keywords internal
+//' rcpp_get_max_dist
+//'
+//' @description
+//' Rcpp get maximum movement distance
+//'
+//' @param movement String specifing movement algorithm.
+//' @param parameters List with parameters.
+//' @param n_rand Integer with amount of random numbers.
+//'
+//' @details
+//' Calculate double with maximum movement distance. The distance is the 95% quantile
+//' of \code{n_rand} random numbers.
+//'
+//' \code{movement} can be either 'rand', 'attr' or 'behav'.
+//'
+//' @return double
+//'
+//' @aliases rcpp_get_max_dist
+//' @rdname rcpp_get_max_dist
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_get_max_dist)]]
 double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
 
   double max_dist = 0.0;
@@ -44,8 +45,6 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
 
     mean_temp = parameters["move_return"];
     var_temp = 1.0;
-
-
 
   } else {
 
@@ -66,3 +65,9 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
 
   return(max_dist);
 }
+
+/*** R
+.rcpp_get_max_dist(movement = "rand", parameters = arrR_parameters, 1000000)
+.rcpp_get_max_dist(movement = "attr", parameters = arrR_parameters, 1000000)
+.rcpp_get_max_dist(movement = "behav", parameters = arrR_parameters, 1000000)
+*/

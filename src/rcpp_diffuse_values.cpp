@@ -4,28 +4,29 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_diffuse_values
-//
-// @description
-// Rcpp simulate diffusion.
-//
-// @param seafloor Matrix with seafloor values.
-// @param cell_adj Matrix with cell adjacencies.
-// @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
-//
-// @details
-// Simulates the diffusion of the i) nutrients_pool, ii) detritus_pool,
-// and iii) detritus_fish_diffusion of each cell with its neighboring cells.
-// Scheduling is simulated pseudo-simultaneous.
-//
-// @return void
-//
-// @aliases rcpp_diffuse_values
-// @rdname rcpp_diffuse_values
-//
-// @keywords internal
+//' rcpp_diffuse_values
+//'
+//' @description
+//' Rcpp simulate diffusion.
+//'
+//' @param seafloor Matrix with seafloor values.
+//' @param cell_adj Matrix with cell adjacencies.
+//' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
+//'
+//' @details
+//' Simulates the diffusion of the i) nutrients_pool, ii) detritus_pool,
+//' and iii) detritus_fish_diffusion of each cell with its neighboring cells.
+//' Scheduling is simulated pseudo-simultaneous.
+//'
+//' @return void
+//'
+//' @aliases rcpp_diffuse_values
+//' @rdname rcpp_diffuse_values
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_diffuse_values)]]
 void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_adj,
                          double nutrients_diffusion, double detritus_diffusion,
                          double detritus_fish_diffusion) {

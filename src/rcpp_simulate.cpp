@@ -8,7 +8,6 @@
 #include "rcpp_get_reef.h"
 #include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
-#include "rcpp_vec_to_map.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
@@ -21,6 +20,8 @@
 #include "rcpp_nutr_output.h"
 
 using namespace Rcpp;
+
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_simulate
 //'
@@ -106,27 +107,28 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     }
   }
 
-  // init movement distances //
+  // init fishpop //
+
+  // init matrix for reserves threshold
+  Rcpp::NumericMatrix fishpop_attr(fishpop.nrow(), 2);
+
+  // add id column of fish
+  fishpop_attr(_, 0) = fishpop(_, 0);
 
   // init double for maximum movement distance
   double max_dist = 0.0;
 
-  // init vector for reserves threshold
-  std::map<int, double> pop_reserves_thres;
-
   // fishpop is present
   if (fishpop.nrow() > 0) {
 
+    // get maximum movement distance
     max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
 
+    // get random threshold values depending on parameters
     if (movement == "behav") {
 
-      Rcpp::NumericVector values_temp = Rcpp::runif(fishpop.nrow(),
-                                                    parameters["pop_reserves_thres_lo"],
-                                                    parameters["pop_reserves_thres_hi"]);
-
-      pop_reserves_thres = rcpp_vec_to_map(fishpop(_, 0), values_temp);
-
+      fishpop_attr(_, 1) = Rcpp::runif(fishpop.nrow(), parameters["fishpop_attr_lo"],
+                                       parameters["fishpop_attr_hi"]);
     }
   }
 
@@ -184,7 +186,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     if ((i > burn_in) && (fishpop.nrow() != 0)) {
 
       // calculate new coordinates and activity
-      rcpp_move_wrap(fishpop, pop_reserves_thres, movement,
+      rcpp_move_wrap(fishpop, fishpop_attr, movement,
                      parameters["move_mean"], parameters["move_var"],
                      parameters["move_reef"], parameters["move_border"],
                      parameters["move_return"], max_dist, coords_reef, extent, dimensions);

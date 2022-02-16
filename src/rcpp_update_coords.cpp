@@ -5,26 +5,29 @@
 
 using namespace Rcpp;
 
-// rcpp_update_coords
-//
-// @description
-// Rcpp update coordinates.
-//
-// @param fishpop Matrix with fishpop values.
-// @param i Integer with row id.
-// @param move_dist,max_dist Numeric with (maximum) movement distance.
-// @param extent Vector with extent of study area.
-//
-// @details
-// Update xy coordinates and activity of fish individuals depending on
-// \code{move_dist}.
-//
-// @return void
-//
-// @aliases rcpp_update_coords
-// @rdname rcpp_update_coords
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_update_coords
+//'
+//' @description
+//' Rcpp update coordinates.
+//'
+//' @param fishpop Matrix with fishpop values.
+//' @param i Integer with row id.
+//' @param move_dist,max_dist Numeric with (maximum) movement distance.
+//' @param extent Vector with extent of study area.
+//'
+//' @details
+//' Update xy coordinates and activity of fish individuals depending on
+//' \code{move_dist}.
+//'
+//' @return void
+//'
+//' @aliases rcpp_update_coords
+//' @rdname rcpp_update_coords
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_update_coords)]]
 void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {
 

@@ -4,6 +4,8 @@
 
 using namespace Rcpp;
 
+// [[Rcpp::interfaces(r, cpp)]]
+
 //' rcpp_allocation_ratio
 //'
 //' @description
@@ -24,7 +26,7 @@ using namespace Rcpp;
 //' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
 //' domain and range [0,1]?" <https://stats.stackexchange.com/questions/214877/>
 //'
-//' @return void
+//' @return double
 //'
 //' @aliases rcpp_allocation_ratio
 //' @rdname rcpp_allocation_ratio
@@ -97,10 +99,10 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
   return ratio;
 }
 
-/*** R
+/***R
 parameters <- arrR_parameters
 
-parameters$seagrass_thres <- 1
+parameters$seagrass_thres <- 1/3
 parameters$seagrass_slope <- 3
 
 biomass <- parameters$bg_biomass_min +

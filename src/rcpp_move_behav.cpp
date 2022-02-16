@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 
 #include "rcpp_move_behav.h"
+#include "rcpp_which.h"
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
@@ -8,37 +9,40 @@
 
 using namespace Rcpp;
 
-// rcpp_move_behav
-//
-// @description
-// Rcpp simulate movement (behav).
-//
-// @param fishpop Matrix with fishpop values.
-// @param pop_reserves_thres Map<int,double> with threshold of pop_reserves_max to drain prior to foraging.
-// @param move_mean,move_var Double with mean movement parameter.
-// @param move_reef Double with mean movement distance when sheltering at reef.
-// @param move_border Double with movement distance that surrounds reef cell border.
-// @param move_return Double with mean movement distance when returning to reef.
-// @param max_dist Maximum distance an individual can move.
-// @param coords_reef Matrix with ID and coords of reef cells.
-// @param extent Vector with extent (xmin,xmax,ymin,ymax).
-// @param dimensions Vector with dimensions (nrow, ncol).
-//
-// @details
-// Fish individuals move based on how much nutrients they have stored in their
-// reserves. There are three different movement states.
-//
-// If reserves are above a certain threshold, individuals either shelter at reef cells
-// (state 1) or move back towards reef cells (state 2). If reserves are not above
-// the threshold, individuals move randomly across the seafloor to forage (state 3).
-//
-// @return void
-//
-// @aliases rcpp_move_behav
-// @rdname rcpp_move_behav
-//
-// @keywords internal
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, std::map<int, double> pop_reserves_thres,
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_move_behav
+//'
+//' @description
+//' Rcpp simulate movement (behav).
+//'
+//' @param fishpop Matrix with fishpop values.
+//' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+//' @param move_mean,move_var Double with mean movement parameter.
+//' @param move_reef Double with mean movement distance when sheltering at reef.
+//' @param move_border Double with movement distance that surrounds reef cell border.
+//' @param move_return Double with mean movement distance when returning to reef.
+//' @param max_dist Maximum distance an individual can move.
+//' @param coords_reef Matrix with ID and coords of reef cells.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
+//'
+//' @details
+//' Fish individuals move based on how much nutrients they have stored in their
+//' reserves. There are three different movement states.
+//'
+//' If reserves are above a certain threshold, individuals either shelter at reef cells
+//' (state 1) or move back towards reef cells (state 2). If reserves are not above
+//' the threshold, individuals move randomly across the seafloor to forage (state 3).
+//'
+//' @return void
+//'
+//' @aliases rcpp_move_behav
+//' @rdname rcpp_move_behav
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_move_behav)]]
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr,
                      double move_mean, double move_var, double move_reef,
                      double move_border, double move_return, double max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
@@ -50,8 +54,11 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, std::map<int, double> pop_rese
     // init move_dist
     double move_dist = 0.0;
 
+    // get current row id
+    int row_id = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));
+
     // get threshold value of individual
-    double thres_temp = pop_reserves_thres.find(fishpop(i, 0)) -> second;
+    double thres_temp = fishpop_attr(row_id, 1);
 
     // behaviour 1 and 2: reserves above doggy bag
     if (fishpop(i, 9) >= (thres_temp * fishpop(i, 10))) {

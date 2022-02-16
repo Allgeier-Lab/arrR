@@ -4,26 +4,29 @@
 
 using namespace Rcpp;
 
-// rcpp_convert_nutr
-//
-// @description
-// Rcpp convert nutrients.
-//
-// @param x Numeric with nutrient amount.
-// @param to String to specify in which unit to convert.
-//
-// @details
-// Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
-//
-// @references
-// Molecular mass taken from <https://en.wikipedia.org/wiki/Ammonium>
-//
-// @return double
-//
-// @aliases rcpp_convert_nutr
-// @rdname rcpp_convert_nutr
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_convert_nutr
+//'
+//' @description
+//' Rcpp convert nutrients.
+//'
+//' @param x Numeric with nutrient amount.
+//' @param to String to specify in which unit to convert.
+//'
+//' @details
+//' Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
+//'
+//' @references
+//' Molecular mass taken from <https://en.wikipedia.org/wiki/Ammonium>
+//'
+//' @return double
+//'
+//' @aliases rcpp_convert_nutr
+//' @rdname rcpp_convert_nutr
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_convert_nutr)]]
 double rcpp_convert_nutr(double x, Rcpp::String to) {
 
   double result;
@@ -49,3 +52,7 @@ double rcpp_convert_nutr(double x, Rcpp::String to) {
 
   }
 }
+
+/*** R
+.rcpp_convert_nutr(x = 0.005, to = "umol")
+*/

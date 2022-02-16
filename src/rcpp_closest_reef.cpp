@@ -4,24 +4,27 @@
 
 using namespace Rcpp;
 
-// rcpp_closest_reef
-//
-// @description
-// Rcpp get closest reef.
-//
-// @param x,y Numeric with xy coords of current individual.
-// @param coords_reef Matrix with ID and coords of reef cells.
-//
-// @details
-// Get ID and distance to closet reef cell. The first element of the returning
-// vector is the ID, the second the distance in meter.
-//
-// @return vector
-//
-// @aliases rcpp_closest_reef
-// @rdname rcpp_closest_reef
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_closest_reef
+//'
+//' @description
+//' Rcpp get closest reef.
+//'
+//' @param x,y Numeric with xy coords of current individual.
+//' @param coords_reef Matrix with ID and coords of reef cells.
+//'
+//' @details
+//' Get ID and distance to closet reef cell. The first element of the returning
+//' vector is the ID, the second the distance in meter.
+//'
+//' @return vector
+//'
+//' @aliases rcpp_closest_reef
+//' @rdname rcpp_closest_reef
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_closest_reef)]]
 Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
 
   // init vector to store result
@@ -64,3 +67,8 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
 
   return(result);
 }
+
+/*** R
+.rcpp_closest_reef(fishpop_values[1, "x"], fishpop_values[1, "y"], coords_reef)
+.rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
+*/

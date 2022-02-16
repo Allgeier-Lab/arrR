@@ -9,37 +9,40 @@
 
 using namespace Rcpp;
 
-// rcpp_move_rand
-//
-// @description
-// Rcpp simulate movement (rand/attr).
-//
-// @param fishpop Matrix with fishpop values.
-// @param move_mean,move_var Double with mean and variance movement parameter.
-// @param max_dist Numeric with maximum movement distance
-// @param reef_attraction Bool if attracted towards reef.
-// @param coords_reef Matrix with ID and coords of reef cells.
-// @param extent Vector with extent (xmin,xmax,ymin,ymax).
-// @param dimensions Vector with dimensions (nrow, ncol).
-//
-// @details
-// Simulate movement of indivudals eiter either random (\code{reef_attraction = FALSE})
-// or attracted towards the reef cells (\code{reef_attraction = TRUE}).
-//
-// In the case of random movement, each time step a random movement distance
-// is drawn from a lognorm distribution and the individal moves into a random heading
-// direction drawn from an uniform distribution.
-//
-// In the case of attracted movement, fish individuals are aware of the distance to
-// the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
-// always move in the direction of the shortest distance to a reef cell.
-//
-// @return void
-//
-// @aliases rcpp_move_rand
-// @rdname rcpp_move_rand
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_move_rand
+//'
+//' @description
+//' Rcpp simulate movement (rand/attr).
+//'
+//' @param fishpop Matrix with fishpop values.
+//' @param move_mean,move_var Double with mean and variance movement parameter.
+//' @param max_dist Numeric with maximum movement distance
+//' @param reef_attraction Bool if attracted towards reef.
+//' @param coords_reef Matrix with ID and coords of reef cells.
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//' @param dimensions Vector with dimensions (nrow, ncol).
+//'
+//' @details
+//' Simulate movement of indivudals eiter either random (\code{reef_attraction = FALSE})
+//' or attracted towards the reef cells (\code{reef_attraction = TRUE}).
+//'
+//' In the case of random movement, each time step a random movement distance
+//' is drawn from a lognorm distribution and the individal moves into a random heading
+//' direction drawn from an uniform distribution.
+//'
+//' In the case of attracted movement, fish individuals are aware of the distance to
+//' the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
+//' always move in the direction of the shortest distance to a reef cell.
+//'
+//' @return void
+//'
+//' @aliases rcpp_move_rand
+//' @rdname rcpp_move_rand
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_move_rand)]]
 void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var,
                     double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {

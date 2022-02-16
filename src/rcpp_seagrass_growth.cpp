@@ -6,47 +6,48 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_seagrass_growth
-//
-// @description
-// Rcpp seagrass growth.
-//
-// @param seafloor Matrix with seafloor values.
-// @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
-// @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
-// @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
-//
-// @details
-// Function to simulate processes of belowground and aboveground seagrass slough and
-// growth. All processes are simulated adapted after DeAngelis (1992).
-//
-// An amount of bg and ag slough is calculated pased on \code{seagrass_slough}.
-// The ratio is decreased the smaller the biomass gets and approximates zero for
-// the minimum capacity in a cell.
-//
-// The amount of nutrients that is taken up from the water column depend on the
-// seagrass belowground and aboveground biomass and available nutrients in each
-// cell.
-//
-// Allocation of uptake in bg or ag biomass depends on the uptake amount, the
-// amount of sloughed biomass and the corresponding capacities of bg and ag in the cells.
-// Additional growth (after slough was balanced) depends on the allocation ratio.
-//
-// Last, all cells in which either bg or ag biomass is above the maximum capacity,
-// all additionall biomass is sloughed.
-//
-// @references
-// DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-// Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
-//
-// @return void
-//
-// @aliases rcpp_seagrass_growth
-// @rdname rcpp_seagrass_growth
-//
-// @keywords internal
+//' rcpp_seagrass_growth
+//'
+//' @description
+//' Rcpp seagrass growth.
+//'
+//' @param seafloor Matrix with seafloor values.
+//' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
+//' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
+//' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
+//'
+//' @details
+//' Function to simulate processes of belowground and aboveground seagrass slough and
+//' growth. All processes are simulated adapted after DeAngelis (1992).
+//'
+//' An amount of bg and ag slough is calculated pased on \code{seagrass_slough}.
+//' The ratio is decreased the smaller the biomass gets and approximates zero for
+//' the minimum capacity in a cell.
+//'
+//' The amount of nutrients that is taken up from the water column depend on the
+//' seagrass belowground and aboveground biomass and available nutrients in each
+//' cell.
+//'
+//' Allocation of uptake in bg or ag biomass depends on the uptake amount, the
+//' amount of sloughed biomass and the corresponding capacities of bg and ag in the cells.
+//' Additional growth (after slough was balanced) depends on the allocation ratio.
+//'
+//' Last, all cells in which either bg or ag biomass is above the maximum capacity,
+//' all additionall biomass is sloughed.
+//'
+//' @references
+//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+//'
+//' @return void
+//'
+//' @aliases rcpp_seagrass_growth
+//' @rdname rcpp_seagrass_growth
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_seagrass_growth)]]
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
                           double bg_v_max, double bg_k_m, double bg_gamma,
                           double ag_v_max, double ag_k_m, double ag_gamma,

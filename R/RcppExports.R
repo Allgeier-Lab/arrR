@@ -21,7 +21,7 @@
 #' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
 #' domain and range [0,1]?" <https://stats.stackexchange.com/questions/214877/>
 #'
-#' @return void
+#' @return double
 #'
 #' @aliases rcpp_allocation_ratio
 #' @rdname rcpp_allocation_ratio
@@ -29,6 +29,606 @@
 #' @keywords internal
 .rcpp_allocation_ratio <- function(biomass, biomass_min, biomass_max, threshold, slope) {
     .Call(`_arrR_rcpp_allocation_ratio`, biomass, biomass_min, biomass_max, threshold, slope)
+}
+
+#' rcpp_cell_from_xy
+#'
+#' @description
+#' Rcpp get cell from xy
+#'
+#' @param x,y Numeric with x,y coordinates.
+#' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+#' @param dimensions Vector with number or rows and cols
+#' @param rcpp Logical if TRUE Rcpp index is returned.
+#'
+#' @details
+#' Get cell ID from xy coordinates. Allows only one coordinate pair at a time.
+#' If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
+#'
+#' @references
+#' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+#' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
+#'
+#' @return int
+#'
+#' @aliases rcpp_cell_from_xy
+#' @rdname rcpp_cell_from_xy
+#'
+#' @keywords internal
+.rcpp_cell_from_xy <- function(x, y, extent, dimensions, rcpp) {
+    .Call(`_arrR_rcpp_cell_from_xy`, x, y, extent, dimensions, rcpp)
+}
+
+#' rcpp_closest_reef
+#'
+#' @description
+#' Rcpp get closest reef.
+#'
+#' @param x,y Numeric with xy coords of current individual.
+#' @param coords_reef Matrix with ID and coords of reef cells.
+#'
+#' @details
+#' Get ID and distance to closet reef cell. The first element of the returning
+#' vector is the ID, the second the distance in meter.
+#'
+#' @return vector
+#'
+#' @aliases rcpp_closest_reef
+#' @rdname rcpp_closest_reef
+#'
+#' @keywords internal
+.rcpp_closest_reef <- function(x, y, coords_reef) {
+    .Call(`_arrR_rcpp_closest_reef`, x, y, coords_reef)
+}
+
+#' rcpp_convert_nutr
+#'
+#' @description
+#' Rcpp convert nutrients.
+#'
+#' @param x Numeric with nutrient amount.
+#' @param to String to specify in which unit to convert.
+#'
+#' @details
+#' Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
+#'
+#' @references
+#' Molecular mass taken from <https://en.wikipedia.org/wiki/Ammonium>
+#'
+#' @return double
+#'
+#' @aliases rcpp_convert_nutr
+#' @rdname rcpp_convert_nutr
+#'
+#' @keywords internal
+.rcpp_convert_nutr <- function(x, to) {
+    .Call(`_arrR_rcpp_convert_nutr`, x, to)
+}
+
+#' rcpp_diffuse_values
+#'
+#' @description
+#' Rcpp simulate diffusion.
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param cell_adj Matrix with cell adjacencies.
+#' @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
+#'
+#' @details
+#' Simulates the diffusion of the i) nutrients_pool, ii) detritus_pool,
+#' and iii) detritus_fish_diffusion of each cell with its neighboring cells.
+#' Scheduling is simulated pseudo-simultaneous.
+#'
+#' @return void
+#'
+#' @aliases rcpp_diffuse_values
+#' @rdname rcpp_diffuse_values
+#'
+#' @keywords internal
+.rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion) {
+    invisible(.Call(`_arrR_rcpp_diffuse_values`, seafloor, cell_adj, nutrients_diffusion, detritus_diffusion, detritus_fish_diffusion))
+}
+
+#' rcpp_fishpop_growth
+#'
+#' @description
+#' Rcpp simulate fishpop growth.
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+#' @param seafloor Matrix with seafloor values.
+#' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
+#' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
+#' @param pop_reserves_consump Double with consumption limit to fill reserves each time step.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Function to simulate consumption, mortality, growth and excretion of fish
+#' individuals.
+#'
+#' Each fish individual has to follow the von Bertalanffy growth curve (Froese and
+#' Pauly 2019) and the corresponding amount of nutrients for this are calculated based
+#' on a bioenergetics model (Allgeier et al. 2020). The nutrients are consumed
+#' from the detritus pool. If the available amount is not big enough, fish can
+#' either use their reserves. If there are no reserves, individuals die. Last,
+#' if the detritus pool is big enough, individuals can additionally fill up their
+#' reserves.
+#'
+#' If individuals are acting accordingly to movement state 1 or 2 (only for
+#' \code{movement = 'behav'}), the consumption requirement must be met by the
+#' reserves only.
+#'
+#' If \code{0 < pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
+#' can be consumed each time step.
+#'
+#' @references
+#' Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,
+#' Schindler, D.E., 2020. Individual behavior drives ecosystem function and the impacts of
+#' harvest. Sci. Adv. 6, eaax8329. <https://doi.org/10.1126/sciadv.aax8329>
+#'
+#' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication
+#' [WWW Document]. <www.fishbase.org>
+#'
+#' @return void
+#'
+#' @aliases rcpp_fishpop_growth
+#' @rdname rcpp_fishpop_growth
+#'
+#' @keywords internal
+.rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, pop_reserves_consump, extent, dimensions, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, pop_reserves_consump, extent, dimensions, min_per_i))
+}
+
+#' rcpp_get_adjacencies
+#'
+#' @description
+#' Rcpp get adjacencies
+#'
+#' @param dimensions Vector with number or rows and cols
+#'
+#' @details
+#' Get matrix with cell IDs of all neighboring cells. Indices start with 0
+#' according to C++ indexing.
+#'
+#' @references
+#' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+#' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
+#'
+#' @return matrix
+#'
+#' @aliases rcpp_get_adjacencies
+#' @rdname rcpp_get_adjacencies
+#'
+#' @keywords internal
+.rcpp_get_adjacencies <- function(dimensions) {
+    .Call(`_arrR_rcpp_get_adjacencies`, dimensions)
+}
+
+#' rcpp_get_bearing
+#'
+#' @description
+#' Rcpp get bearing between two coordinate pairs.
+#'
+#' @param x1,y1 Double with first xy coords pair.
+#' @param x2,y2 Double with second xy coords pair.
+#'
+#' @details
+#' Get bearing between (x1,y1) and (x2,y2).
+#'
+#' @return double
+#'
+#' @aliases rcpp_get_bearing
+#' @rdname rcpp_get_bearing
+#'
+#' @keywords internal
+.rcpp_get_bearing <- function(x1, y1, x2, y2) {
+    .Call(`_arrR_rcpp_get_bearing`, x1, y1, x2, y2)
+}
+
+#' rcpp_get_max_dist
+#'
+#' @description
+#' Rcpp get maximum movement distance
+#'
+#' @param movement String specifing movement algorithm.
+#' @param parameters List with parameters.
+#' @param n_rand Integer with amount of random numbers.
+#'
+#' @details
+#' Calculate double with maximum movement distance. The distance is the 95% quantile
+#' of \code{n_rand} random numbers.
+#'
+#' \code{movement} can be either 'rand', 'attr' or 'behav'.
+#'
+#' @return double
+#'
+#' @aliases rcpp_get_max_dist
+#' @rdname rcpp_get_max_dist
+#'
+#' @keywords internal
+.rcpp_get_max_dist <- function(movement, parameters, n_rand) {
+    .Call(`_arrR_rcpp_get_max_dist`, movement, parameters, n_rand)
+}
+
+#' rcpp_get_reef
+#'
+#' @description
+#' Rcpp get reef matrix
+#'
+#' @param seafloor Matrix with seafloor values.
+#'
+#' @details
+#' Get matrix with cell id and coordinates of reef cells.
+#'
+#' @return matrix
+#'
+#' @aliases rcpp_get_reef
+#' @rdname rcpp_get_reef
+#'
+#' @keywords internal
+.rcpp_get_reef <- function(seafloor) {
+    .Call(`_arrR_rcpp_get_reef`, seafloor)
+}
+
+#' rcpp_mineralization
+#'
+#' @description
+#' Rcpp simulate mineralization.
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param detritus_fish_decomp,detritus_mineralization seafloor Numeric with parameters.
+#'
+#' @details
+#' Simulate mineralization of the detritus pool i.e., a ratio of the detritus pool
+#' is added to the nutrients pool. The corresponding amount is removed from the
+#' detritus pool.
+#'
+#' Also, simulates decomposition of the detritus fish_pool by removing a ratio and
+#' adding it to the detritus pool.
+#'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+#'
+#' @return void
+#'
+#' @aliases rcpp_mineralization
+#' @rdname rcpp_mineralization
+#'
+#' @keywords internal
+.rcpp_mineralization <- function(seafloor, detritus_mineralization, detritus_fish_decomp) {
+    invisible(.Call(`_arrR_rcpp_mineralization`, seafloor, detritus_mineralization, detritus_fish_decomp))
+}
+
+#' rcpp_modify_degree
+#'
+#' @description
+#' Rcpp modify degree.
+#'
+#' @param x Numeric with current angle in degree.
+#' @param y Numeric with change of degree (negative or positive).
+#'
+#' @details
+#' Modify the degree of direction heading of individuals. The function ensures
+#' that all degrees are between 0 <= x <= 360.
+#'
+#' @return double
+#'
+#' @aliases rcpp_modify_degree
+#' @rdname rcpp_modify_degree
+#'
+#' @keywords internal
+.rcpp_modify_degree <- function(x, y) {
+    .Call(`_arrR_rcpp_modify_degree`, x, y)
+}
+
+#' rcpp_mortality
+#'
+#' @description
+#' Rcpp simulate (background) mortality.
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param seafloor Matrix with seafloor values.
+#' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Function to simulate background mortality of fish individuals. The mortality
+#' probability increases with increasing size and approximates p=1 for \code{pop_linf}.
+#' If a individual dies, a new individual is created.
+#'
+#' @return void
+#'
+#' @aliases rcpp_mortality
+#' @rdname rcpp_mortality
+#'
+#' @keywords internal
+.rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_reserves_max, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_reserves_max, extent, dimensions))
+}
+
+#' rcpp_move_behav
+#'
+#' @description
+#' Rcpp simulate movement (behav).
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_reef Double with mean movement distance when sheltering at reef.
+#' @param move_border Double with movement distance that surrounds reef cell border.
+#' @param move_return Double with mean movement distance when returning to reef.
+#' @param max_dist Maximum distance an individual can move.
+#' @param coords_reef Matrix with ID and coords of reef cells.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Fish individuals move based on how much nutrients they have stored in their
+#' reserves. There are three different movement states.
+#'
+#' If reserves are above a certain threshold, individuals either shelter at reef cells
+#' (state 1) or move back towards reef cells (state 2). If reserves are not above
+#' the threshold, individuals move randomly across the seafloor to forage (state 3).
+#'
+#' @return void
+#'
+#' @aliases rcpp_move_behav
+#' @rdname rcpp_move_behav
+#'
+#' @keywords internal
+.rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, fishpop_attr, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+}
+
+#' rcpp_move_rand
+#'
+#' @description
+#' Rcpp simulate movement (rand/attr).
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param move_mean,move_var Double with mean and variance movement parameter.
+#' @param max_dist Numeric with maximum movement distance
+#' @param reef_attraction Bool if attracted towards reef.
+#' @param coords_reef Matrix with ID and coords of reef cells.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Simulate movement of indivudals eiter either random (\code{reef_attraction = FALSE})
+#' or attracted towards the reef cells (\code{reef_attraction = TRUE}).
+#'
+#' In the case of random movement, each time step a random movement distance
+#' is drawn from a lognorm distribution and the individal moves into a random heading
+#' direction drawn from an uniform distribution.
+#'
+#' In the case of attracted movement, fish individuals are aware of the distance to
+#' the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
+#' always move in the direction of the shortest distance to a reef cell.
+#'
+#' @return void
+#'
+#' @aliases rcpp_move_rand
+#' @rdname rcpp_move_rand
+#'
+#' @keywords internal
+.rcpp_move_rand <- function(fishpop, move_mean, move_var, max_dist, reef_attraction, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, move_mean, move_var, max_dist, reef_attraction, coords_reef, extent, dimensions))
+}
+
+#' rcpp_move_wrap
+#'
+#' @description
+#' Rcpp movement behavior wrapper.
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+#' @param movement String specifing movement algorithm.
+#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_reef Double with mean movement distance when sheltering at reef.
+#' @param move_border Double with movement distance that surrounds reef cell border.
+#' @param move_return Double with mean movement distance when returning to reef.
+#' @param max_dist Maximum distance an individual can move.
+#' @param coords_reef Matrix with ID and coords of reef cells.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#'
+#' @details
+#' Wrapper function around different movement algorithms. Individuals can either move
+#' completely random (\code{'rand'}), attracted towards the artifical reef cells
+#' \code{'attr'} or movement can be depending on the bioenergetics of the
+#' fish individuals \code{'behav'}.
+#'
+#' @return void
+#'
+#' @aliases rcpp_move_wrap
+#' @rdname rcpp_move_wrap
+#'
+#' @keywords internal
+.rcpp_move_wrap <- function(fishpop, fishpop_attr, movement, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, fishpop_attr, movement, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+}
+
+#' rcpp_nutr_input
+#'
+#' @description
+#' Rcpp simulate nutrient input.
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param nutrients_input Vector with amount of nutrient input each time step.
+#'
+#' @details
+#' Simulate external nutrient input to the each cell. The \code{nutrients_input}
+#' vector must have as many elements as \code{max_i} to add input each time step.
+#'
+#' If no nutrients should be added, set all values of \code{nutrients_input} to
+#' zero.
+#'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+#'
+#' @return void
+#'
+#' @aliases rcpp_nutr_input
+#' @rdname rcpp_nutr_input
+#'
+#' @keywords internal
+.rcpp_nutr_input <- function(seafloor, nutrients_input) {
+    invisible(.Call(`_arrR_rcpp_nutr_input`, seafloor, nutrients_input))
+}
+
+#' rcpp_nutr_output
+#'
+#' @description
+#' Rcpp nutrient output.
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param nutrients_loss,detritus_loss Double with fraction removed from each cell.
+#'
+#' @details
+#' Simulates loss of nutrients (i.e., output of the system) for each cell and time
+#' step. The loss is calculated as a ratio of the present nutrients in each cell.
+#'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+#'
+#' @return void
+#'
+#' @aliases rcpp_nutr_output
+#' @rdname rcpp_nutr_output
+#'
+#' @keywords internal
+.rcpp_nutr_output <- function(seafloor, nutrients_loss, detritus_loss) {
+    invisible(.Call(`_arrR_rcpp_nutr_output`, seafloor, nutrients_loss, detritus_loss))
+}
+
+#' rcpp_nutr_uptake
+#'
+#' @description
+#' Rcpp nutrient uptake.
+#'
+#' @param nutrients,biomass Numeric with nutrient and biomass amount of cell.
+#' @param v_max,k_m,time_frac Numeric with parameters
+#'
+#' @details
+#' Calculate nutrient uptake of each cells depending on avaiable nutrients in the
+#' water column and bg and ag biomass. All values are scaled to the time period
+#' which can be specified by \code{time_frac}. If the calculated uptake exceeds
+#' the available amount, only the available amount is taken up.
+#'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+#'
+#' Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass
+#' Thalassia testudinum: Development of a whole-plant nitrogen budget.
+#' Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
+#'
+#' @return double
+#'
+#' @aliases rcpp_nutr_uptake
+#' @rdname rcpp_nutr_uptake
+#'
+#' @keywords internal
+.rcpp_nutr_uptake <- function(nutrients, biomass, v_max, k_m, time_frac) {
+    .Call(`_arrR_rcpp_nutr_uptake`, nutrients, biomass, v_max, k_m, time_frac)
+}
+
+#' rcpp_quantile
+#'
+#' @description
+#' Rcpp quantile
+#'
+#' @param x NumericVector with values.
+#' @param q Double with quantile.
+#'
+#' @details
+#' Returns q-th percentile of vector.
+#'
+#' @references
+#' Rcpp quantile implementation from
+#' <https://stackoverflow.com/questions/26786078/rcpp-quantile-implementation>
+#'
+#' @return double
+#'
+#' @aliases rcpp_quantile
+#' @rdname rcpp_quantile
+#'
+#' @keywords internal
+.rcpp_quantile <- function(x, q) {
+    .Call(`_arrR_rcpp_quantile`, x, q)
+}
+
+#' rcpp_reincarnate
+#'
+#' @description
+#' Rcpp reincarnate fish indivudals.
+#'
+#' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
+#' @param fish_id Vector with id of fish and corresponding cell ids.
+#' @param seafloor Matrix with seafloor values.
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#' @param dimensions Vector with dimensions (nrow, ncol).
+#' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param reason String with reason of reincarnation.
+#'
+#' @details
+#' Creates a new individual after mortality event. The new individual has the same
+#' values as the died individual at the beginning of the simulation.
+#'
+#' The mass difference (i.e. current mass minus mass at time step zero) and the
+#' reserves of the died individual are added to the detritus pool. The reincarnated
+#' individual tries to fill its reserves from the detritus pool if enough nutrients
+#' are available.
+#'
+#' @return void
+#'
+#' @aliases rcpp_reincarnate
+#' @rdname rcpp_reincarnate
+#'
+#' @keywords internal
+.rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason))
+}
+
+#' rcpp_respiration
+#'
+#' @description
+#' Rcpp simulate respration.
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param resp_intercept,resp_slope Numeric with regression parameters.
+#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with water temperature parameters.
+#' @param water_temp,min_per_i Numeric with various parameters.
+#'
+#' @details
+#' Function to simulate respiration of fish individuals based on movement, body +
+#' size and water temperature. The respiration is temperature dependent with an
+#' activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
+#'
+#' If respiration is a infinite number (due to zero division), set to
+#' \code{erespiration=1.0}.
+#'
+#' @references
+#' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
+#' Bioenergetics 3.0 for Windows manual (Manual). University of Wisconsin-Madison,
+#' Centre for Limnology, Madison,USA.
+#'
+#' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
+#' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
+#' J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
+#'
+#' @return void
+#'
+#' @aliases rcpp_respiration
+#' @rdname rcpp_respiration
+#'
+#' @keywords internal
+.rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_respiration`, fishpop, resp_intercept, resp_slope, resp_temp_low, resp_temp_max, resp_temp_optm, water_temp, min_per_i))
 }
 
 #' rcpp_rlognorm
@@ -57,6 +657,73 @@
 #' @keywords internal
 .rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
+}
+
+#' rcpp_seagrass_growth
+#'
+#' @description
+#' Rcpp seagrass growth.
+#'
+#' @param seafloor Matrix with seafloor values.
+#' @param bg_v_max,bg_k_m,bg_gamma,ag_v_max,ag_k_m,ag_gamma Numeric with uptake parameters.
+#' @param bg_biomass_max,bg_biomass_min,ag_biomass_max,ag_biomass_min Numerich with biomass values and parameters.
+#' @param seagrass_slough,seagrass_thres,seagrass_slope,time_frac Numerich with various parameters.
+#'
+#' @details
+#' Function to simulate processes of belowground and aboveground seagrass slough and
+#' growth. All processes are simulated adapted after DeAngelis (1992).
+#'
+#' An amount of bg and ag slough is calculated pased on \code{seagrass_slough}.
+#' The ratio is decreased the smaller the biomass gets and approximates zero for
+#' the minimum capacity in a cell.
+#'
+#' The amount of nutrients that is taken up from the water column depend on the
+#' seagrass belowground and aboveground biomass and available nutrients in each
+#' cell.
+#'
+#' Allocation of uptake in bg or ag biomass depends on the uptake amount, the
+#' amount of sloughed biomass and the corresponding capacities of bg and ag in the cells.
+#' Additional growth (after slough was balanced) depends on the allocation ratio.
+#'
+#' Last, all cells in which either bg or ag biomass is above the maximum capacity,
+#' all additionall biomass is sloughed.
+#'
+#' @references
+#' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+#' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+#'
+#' @return void
+#'
+#' @aliases rcpp_seagrass_growth
+#' @rdname rcpp_seagrass_growth
+#'
+#' @keywords internal
+.rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, seagrass_slough, time_frac) {
+    invisible(.Call(`_arrR_rcpp_seagrass_growth`, seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max, ag_k_m, ag_gamma, bg_biomass_max, bg_biomass_min, ag_biomass_max, ag_biomass_min, seagrass_thres, seagrass_slope, seagrass_slough, time_frac))
+}
+
+#' rcpp_shuffle
+#'
+#' @description
+#' Rcpp shuffle vector.
+#'
+#' @param min,max Integer with min/max values.
+#'
+#' @details
+#' Creates vector with IDs from \code{min} to \code{max} in random order.
+#'
+#' @references
+#' How to use time-based seed taken from
+#' <http://www.cplusplus.com/reference/algorithm/shuffle/>
+#'
+#' @return vector
+#'
+#' @aliases rcpp_shuffle
+#' @rdname rcpp_shuffle
+#'
+#' @keywords internal
+.rcpp_shuffle <- function(min, max) {
+    .Call(`_arrR_rcpp_shuffle`, min, max)
 }
 
 #' rcpp_simulate
@@ -97,6 +764,77 @@
 #' @keywords internal
 .rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
     invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
+}
+
+#' rcpp_translate_torus
+#'
+#' @description
+#' Rcpp translate coordinates around torus.
+#'
+#' @param x,y Double with xy coordinates
+#' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+#'
+#' @details
+#' Torus translation of coordinates if they exceed the provided extent. The translation
+#' is done until coordinates are within extent (i.e., could be translated several times
+#' if the difference is big).
+#'
+#' @return vector
+#'
+#' @aliases rcpp_translate_torus
+#' @rdname rcpp_translate_torus
+#'
+#' @keywords internal
+.rcpp_translate_torus <- function(x, y, extent) {
+    .Call(`_arrR_rcpp_translate_torus`, x, y, extent)
+}
+
+#' rcpp_update_coords
+#'
+#' @description
+#' Rcpp update coordinates.
+#'
+#' @param fishpop Matrix with fishpop values.
+#' @param i Integer with row id.
+#' @param move_dist,max_dist Numeric with (maximum) movement distance.
+#' @param extent Vector with extent of study area.
+#'
+#' @details
+#' Update xy coordinates and activity of fish individuals depending on
+#' \code{move_dist}.
+#'
+#' @return void
+#'
+#' @aliases rcpp_update_coords
+#' @rdname rcpp_update_coords
+#'
+#' @keywords internal
+.rcpp_update_coords <- function(fishpop, i, move_dist, max_dist, extent) {
+    invisible(.Call(`_arrR_rcpp_update_coords`, fishpop, i, move_dist, max_dist, extent))
+}
+
+#' rcpp_which
+#'
+#' @description
+#' Rcpp which.
+#'
+#' @param x Integer with value to find.
+#' @param y Vector with values.
+#'
+#' @details
+#' Returns the index of \code{x} within the \code{y} vector.
+#' The index of the first element is 0. If element is not present within \code{y}
+#' \code{NA} is returned. Returns only the first element if \code{x} is present
+#' multiple times in \code{y}.
+#'
+#' @return vector
+#'
+#' @aliases rcpp_which
+#' @rdname rcpp_which
+#'
+#' @keywords internal
+.rcpp_which <- function(x, y) {
+    .Call(`_arrR_rcpp_which`, x, y)
 }
 
 # Register entry points for exported C++ functions

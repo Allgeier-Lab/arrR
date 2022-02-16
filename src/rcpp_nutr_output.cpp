@@ -4,30 +4,31 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(cpp)]]
+// [[Rcpp::interfaces(r, cpp)]]
 
-// rcpp_nutr_output
-//
-// @description
-// Rcpp nutrient output.
-//
-// @param seafloor Matrix with seafloor values.
-// @param nutrients_loss,detritus_loss Double with fraction removed from each cell.
-//
-// @details
-// Simulates loss of nutrients (i.e., output of the system) for each cell and time
-// step. The loss is calculated as a ratio of the present nutrients in each cell.
-//
-// @references
-// DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
-// Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
-//
-// @return void
-//
-// @aliases rcpp_nutr_output
-// @rdname rcpp_nutr_output
-//
-// @keywords internal
+//' rcpp_nutr_output
+//'
+//' @description
+//' Rcpp nutrient output.
+//'
+//' @param seafloor Matrix with seafloor values.
+//' @param nutrients_loss,detritus_loss Double with fraction removed from each cell.
+//'
+//' @details
+//' Simulates loss of nutrients (i.e., output of the system) for each cell and time
+//' step. The loss is calculated as a ratio of the present nutrients in each cell.
+//'
+//' @references
+//' DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer
+//' Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+//'
+//' @return void
+//'
+//' @aliases rcpp_nutr_output
+//' @rdname rcpp_nutr_output
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_nutr_output)]]
 void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
 
   // loop through all raster cells

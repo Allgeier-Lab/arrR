@@ -4,30 +4,33 @@
 
 using namespace Rcpp;
 
-// rcpp_cell_from_xy
-//
-// @description
-// Rcpp get cell from xy
-//
-// @param x,y Numeric with x,y coordinates.
-// @param extent Vector with extent (xmin, xmax, ymin, ymax).
-// @param dimensions Vector with number or rows and cols
-// @param rcpp Logical if TRUE Rcpp index is returned.
-//
-// @details
-// Get cell ID from xy coordinates. Allows only one coordinate pair at a time.
-// If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
-//
-// @references
-// Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
-// and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
-//
-// @return int
-//
-// @aliases rcpp_cell_from_xy
-// @rdname rcpp_cell_from_xy
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_cell_from_xy
+//'
+//' @description
+//' Rcpp get cell from xy
+//'
+//' @param x,y Numeric with x,y coordinates.
+//' @param extent Vector with extent (xmin, xmax, ymin, ymax).
+//' @param dimensions Vector with number or rows and cols
+//' @param rcpp Logical if TRUE Rcpp index is returned.
+//'
+//' @details
+//' Get cell ID from xy coordinates. Allows only one coordinate pair at a time.
+//' If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
+//'
+//' @references
+//' Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
+//' and Modeling. R package version 3.4-5. <https://CRAN.R-project.org/package=raster>
+//'
+//' @return int
+//'
+//' @aliases rcpp_cell_from_xy
+//' @rdname rcpp_cell_from_xy
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_cell_from_xy)]]
 int rcpp_cell_from_xy(double x, double y,
                       Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       bool rcpp) {
@@ -77,8 +80,21 @@ int rcpp_cell_from_xy(double x, double y,
 
     }
 
-
     return cell_id;
 
   }
 }
+
+/*** R
+# rcpp_cell_from_xy
+x <- runif(n = 1, min = -50, max = 50)
+y <- runif(n = 1, min = -50, max = 50)
+
+.rcpp_cell_from_xy(x = x, y = y, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
+                   rcpp = FALSE)
+
+terra::cellFromXY(object = terra::rast(nrows = 100, ncols = 100,
+                                       xmin = -50, xmax = 50,
+                                       ymin = -50, ymax = 50),
+                  xy = cbind(x = x, y = y))
+*/

@@ -4,25 +4,28 @@
 
 using namespace Rcpp;
 
-// rcpp_translate_torus
-//
-// @description
-// Rcpp translate coordinates around torus.
-//
-// @param x,y Double with xy coordinates
-// @param extent Vector with extent (xmin,xmax,ymin,ymax).
-//
-// @details
-// Torus translation of coordinates if they exceed the provided extent. The translation
-// is done until coordinates are within extent (i.e., could be translated several times
-// if the difference is big).
-//
-// @return vector
-//
-// @aliases rcpp_translate_torus
-// @rdname rcpp_translate_torus
-//
-// @keywords internal
+// [[Rcpp::interfaces(r, cpp)]]
+
+//' rcpp_translate_torus
+//'
+//' @description
+//' Rcpp translate coordinates around torus.
+//'
+//' @param x,y Double with xy coordinates
+//' @param extent Vector with extent (xmin,xmax,ymin,ymax).
+//'
+//' @details
+//' Torus translation of coordinates if they exceed the provided extent. The translation
+//' is done until coordinates are within extent (i.e., could be translated several times
+//' if the difference is big).
+//'
+//' @return vector
+//'
+//' @aliases rcpp_translate_torus
+//' @rdname rcpp_translate_torus
+//'
+//' @keywords internal
+// [[Rcpp::export(.rcpp_translate_torus)]]
 Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent) {
 
   // init numeric vector
@@ -69,3 +72,9 @@ Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector
 
   return(coords);
 }
+
+/*** R
+# rcpp_translate_torus
+.rcpp_translate_torus(x = 5, y =  -5.5, extent = c(-10, 10, -10, 10))
+.rcpp_translate_torus(x = 12.5, y = -5.5, extent = c(-10, 10, -10, 10))
+*/
