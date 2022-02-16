@@ -112,9 +112,9 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>result</dt>
-<dd><p>mdl_rn object of simulation run.</p></dd>
+<dd><p>mdl_rn object.</p></dd>
 <dt>lag</dt>
-<dd><p>Logical if cumulative or difference to previous timestep should be returned.</p></dd>
+<dd><p>Logical if TRUE, difference to previous time step is returned.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -122,9 +122,9 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Function to summarize the ag and bg production of each timestep. The <code>lag</code>
-argument allows to not return the cumulative value, but the difference to the previous
-timestep.</p>
+    <p>Function to summarize the bg and ag seagrass production of each time step.
+The <code>lag</code> argument allows return the cumulative values (<code>FALSE</code>),
+or the difference to the previous time step (<code>TRUE</code>).</p>
     </div>
 
     <div class="section level2">

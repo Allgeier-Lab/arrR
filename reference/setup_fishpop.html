@@ -118,7 +118,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>seafloor</dt>
-<dd><p>Environment created with <code><a href="setup_seafloor.html">setup_seafloor</a></code>.</p></dd>
+<dd><p>SpatRaster object.</p></dd>
 <dt>starting_values</dt>
 <dd><p>List with all starting value parameters.</p></dd>
 <dt>parameters</dt>
@@ -126,7 +126,7 @@
 <dt>use_log</dt>
 <dd><p>Logical if TRUE, random log distribution is used.</p></dd>
 <dt>verbose</dt>
-<dd><p>If TRUE, progress reports are printed.</p></dd>
+<dd><p>Logical if TRUE, information is printed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -136,7 +136,7 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Function to setup the fish population. If <code>use_log = TRUE</code> the size distribution
 of the fish population follows a log-norm distribution. For more information, see
-<code>.calc_size</code> (internal function). If no fish should be created,set <code>starting_values$pop_n = 0</code>.</p>
+<code>.calc_size</code> (internal function). To create no fish, set <code>starting_values$pop_n = 0</code>.</p>
     </div>
 
     <div class="section level2">

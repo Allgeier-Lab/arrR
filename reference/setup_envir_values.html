@@ -125,7 +125,7 @@
 <dt>detritus_pool</dt>
 <dd><p>Numeric with parameter for detritus fraction.</p></dd>
 <dt>random</dt>
-<dd><p>Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.</p></dd>
+<dd><p>Numeric to randomize input values.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -133,12 +133,10 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Setup environmental values used during <code><a href="setup_seafloor.html">setup_seafloor</a></code>.
-The function creates a <code>SpatRaster</code> with all required values. All incremental
-values that will be increased during model run are set to zero. The function does not
-setup reef cells.</p>
-<p>If <code>random &gt; 0</code>, the stochasticity is added to all starting values using <code>random</code>
-as</p>
+    <p>Create a <code>SpatRaster</code> with all required values for model run. The function
+does not setup reef cells.</p>
+<p>If <code>random &gt; 0</code>, the stochasticity is added to all starting values using
+<code>x * (1 +- random)</code> as minimum and maximum values, respectively.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

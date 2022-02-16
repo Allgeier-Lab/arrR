@@ -112,7 +112,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>seafloor</dt>
-<dd><p>Raster* object</p></dd>
+<dd><p>SpatRaster object</p></dd>
 <dt>reef</dt>
 <dd><p>2-Column matrix with coordinates of artificial reefs</p></dd>
 </dl></div>
@@ -122,8 +122,8 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
-Sets all seafloor values of AR to NA/0. Used during <code><a href="setup_seafloor.html">setup_seafloor</a></code>.</p>
+    <p>Setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0) cells.
+The ag and bg biomass of all reef cells are set to <code>NA</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

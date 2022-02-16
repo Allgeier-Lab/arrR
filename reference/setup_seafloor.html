@@ -128,7 +128,7 @@
 <dt>starting_values</dt>
 <dd><p>List with all starting value parameters.</p></dd>
 <dt>random</dt>
-<dd><p>Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.</p></dd>
+<dd><p>Numeric to randomize input values.</p></dd>
 <dt>verbose</dt>
 <dd><p>If TRUE, progress reports are printed.</p></dd>
 <dt>...</dt>
@@ -140,13 +140,12 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Function to setup the environment (seafloor). The center of the environment is
-always set to (0,0). bg_biomass and ag_biomass values are in g dry weight.
-Nutrients_pool and deritus_pool values are in g nutrients. Reef cells are indicated
-by <code>reef = 1</code>, whereas non-reef cells are indicated by <code>reef = 0</code>. All
-other values are increased cumulative during the model run started by <code><a href="run_simulation.html">run_simulation</a></code>.</p>
-<p>If <code>random &gt; 0</code>, the stochasticity is added to all starting values using <code>random</code>
-as <code>x * (1 +- random)</code> as minimum and maximum values, respectively.</p>
+    <p>Function to setup the seafloor. The center of the seafloor raster is always x,y (0,0).
+bg_biomass and ag_biomass values are in g dry weight. nutrients_pool and deritus_pool
+values are in g nutrients. If reef cells are present, the cells in the corresponding
+raster layer are idntified usinge the value one.</p>
+<p>If <code>random &gt; 0</code>, the stochasticity is added to all starting values using
+<code>x * (1 +- random)</code> as minimum and maximum values, respectively.</p>
     </div>
 
     <div class="section level2">

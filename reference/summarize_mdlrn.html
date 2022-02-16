@@ -117,14 +117,13 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>result</dt>
-<dd><p>mdl_rn object of simulation run.</p></dd>
+<dd><p>mdl_rn object.</p></dd>
 <dt>what</dt>
-<dd><p>Vector with 'seafloor' and/or 'fishpop' to specifiy what to summarize.</p></dd>
+<dd><p>Vector with 'seafloor' and/or 'fishpop' to specify what to summarize.</p></dd>
 <dt>summary</dt>
-<dd><p>String with summary functions. Must return one value when used
-with aggregate().</p></dd>
+<dd><p>String with summary functions.</p></dd>
 <dt>verbose</dt>
-<dd><p>Logical if warning messages should be printed.</p></dd>
+<dd><p>Logical if TRUE, warning messages are printed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -132,12 +131,12 @@ with aggregate().</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Function to summarize results for each timestep. The <code>summary</code> argument
+    <p>Summarize results for each time step. The <code>summary</code> argument
 allows to specify which summary statistics are used for each cell. The selected
-statistics are used by <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></code> and must return one value.</p>
-<p>For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
-are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
-iv) died_background are returned.</p>
+statistics are used by <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></code> and must return a single value.</p>
+<p>If <code>what='seafloor'</code>, the i) bg_biomass, ii) ag_biomass, iii) nutrients_pool,
+and iv) detritus_pool are returned. If <code>what='fishpop'</code>, the i) length,
+ii) weight, iii) died_consumption, and iv) died_background are returned.</p>
     </div>
 
     <div class="section level2">
