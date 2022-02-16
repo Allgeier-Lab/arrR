@@ -3,20 +3,19 @@
 #' @description
 #' Summarize results of model run.
 #'
-#' @param result mdl_rn object of simulation run.
-#' @param what Vector with 'seafloor' and/or 'fishpop' to specifiy what to summarize.
-#' @param summary String with summary functions. Must return one value when used
-#' with aggregate().
-#' @param verbose Logical if warning messages should be printed.
+#' @param result mdl_rn object.
+#' @param what Vector with 'seafloor' and/or 'fishpop' to specify what to summarize.
+#' @param summary String with summary functions.
+#' @param verbose Logical if TRUE, warning messages are printed.
 #'
 #' @details
-#' Function to summarize results for each timestep. The \code{summary} argument
+#' Summarize results for each time step. The \code{summary} argument
 #' allows to specify which summary statistics are used for each cell. The selected
-#' statistics are used by \code{\link{aggregate}} and must return one value.
+#' statistics are used by \code{\link{aggregate}} and must return a single value.
 #'
-#' For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
-#' are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
-#' iv) died_background are returned.
+#' If \code{what='seafloor'}, the i) bg_biomass, ii) ag_biomass, iii) nutrients_pool,
+#' and iv) detritus_pool are returned. If \code{what='fishpop'}, the i) length,
+#' ii) weight, iii) died_consumption, and iv) died_background are returned.
 #'
 #' @return list
 #'
@@ -61,7 +60,7 @@ summarize_mdlrn <- function(result, what = c("seafloor", "fishpop"),
       # create vector with columns
       cols_temp <- c("ag_biomass", "bg_biomass", "nutrients_pool", "detritus_pool")
 
-      # get timesteps
+      # get time steps
       timestep_temp <- result$seafloor$timestep
 
     } else {
@@ -69,7 +68,7 @@ summarize_mdlrn <- function(result, what = c("seafloor", "fishpop"),
       # create vector with columns
       cols_temp <- c("length", "weight", "died_consumption", "died_background")
 
-      # get timesteps
+      # get time steps
       timestep_temp <- result$fishpop$timestep
 
     }

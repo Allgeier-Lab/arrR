@@ -3,12 +3,12 @@
 #' @description
 #' Setup reef cells for seafloor.
 #'
-#' @param seafloor Raster* object
+#' @param seafloor SpatRaster object
 #' @param reef 2-Column matrix with coordinates of artificial reefs
 #'
 #' @details
-#' Setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0).
-#' Sets all seafloor values of AR to NA/0. Used during \code{\link{setup_seafloor}}.
+#' Setup cell values of artifice reefs (reef = 1) and non-AR (reef = 0) cells.
+#' The ag and bg biomass of all reef cells are set to \code{NA}.
 #'
 #' @return SpatRaster
 #'

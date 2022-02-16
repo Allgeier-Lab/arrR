@@ -5,13 +5,15 @@
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
-#' @param verbose If TRUE, progress reports are printed.
+#' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
 #' The function checks if all required starting values and parameters are provided.
 #' If parameters and/or starting values are missing, a vector with the name of the
-#' corresponding values is returned. If no arguments are provided, a list of all
-#' required parameters and values is printed
+#' corresponding values is returned.
+#'
+#' If no arguments are provided, a list of all required parameters and values is
+#' printed.
 #'
 #' @return void
 #'

@@ -1,5 +1,6 @@
 # arrR 1.4.1
 * Move some pre-process code from `R` to `Rcpp` and use internal functions
+* Improve documentation
 
 # arrR 1.4
 * Use `terra` instead of `raster`

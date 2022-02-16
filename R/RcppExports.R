@@ -11,11 +11,11 @@
 #' @param threshold,slope Numeric with function parameters.
 #'
 #' @details
-#' Get ratio of bg and ag nutrient allocation. If ratio = 1, all nutrients are
+#' Get ratio of bg and ag nutrient allocation. If ratio=1, all nutrients are
 #' allocated in the bg biomass.
 #'
-#' If the threshold is positive, the ratio is r=1 for all biomass values below the threshold.
-#' If threshold is negative, the ratio is be r=0.5 at the threshold.
+#' If the threshold is positive, the ratio is r=1 for all biomass values below
+#' the threshold. If threshold is negative, the ratio is be r=0.5 at the threshold.
 #'
 #' @references
 #' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with
@@ -65,18 +65,18 @@
 #' Rcpp run simulation.
 #'
 #' @param seafloor,fishpop Matrix with seafloor and fishpop data.
-#' @param nutrients_input Vector with amount of nutrient input each timestep.
-#' @param seafloor_track,fishpop_track List with entry for each saving timestep.
+#' @param nutrients_input Vector with amount of nutrient input each time step.
+#' @param seafloor_track,fishpop_track List with entry for each saving time step.
 #' @param parameters List with parameters.
-#' @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+#' @param movement String specifing movement algorithm.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param max_i Integer with maximum number of simulation timesteps.
+#' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param save_each Numeric how often data should be saved to return.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
-#' @param burn_in Numeric with timesteps used to burn in.
-#' @param verbose If TRUE, progress reports are printed.
+#' @param burn_in Numeric with time steps used to burn in.
+#' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
 #' The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
@@ -85,9 +85,9 @@
 #' (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 #'
 #' @references
-#' For a detailed model description see Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E.
-#' Mechanistic support for increased primary production around artificial reefs. Manuscript
-#' submitted for publication.
+#' For a detailed model description, please see Esquivel, K.E., Hesselbarth, M.H.K.,
+#' Allgeier, J.E., In Press. Mechanistic support for increased primary production
+#' around artificial reefs. Ecological Applications. v0.0
 #'
 #' @return void
 #'

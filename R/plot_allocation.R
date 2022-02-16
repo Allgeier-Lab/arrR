@@ -1,15 +1,14 @@
 #' plot_allocation
 #'
 #' @description
-#' Plotting method for seagrass growth allocation ratio.
+#' Plotting method.
 #'
 #' @param parameters List with model parameters.
-#' @param base_size Numeric to specify base font size.
 #'
 #' @details
-#' Plotting method for the allocation ratio rule used during the seagrass growth
-#' dynamics. For more information see \code{rcpp_seagrass_growth} and
-#' \code{rcpp_allocation_ratio} (internal functions).
+#' Plotting method for the allocation ratio rule used during the nutrient uptake
+#' allocation within the seagrass dynamics. For more information see \code{.rcpp_seagrass_growth}
+#' and \code{.rcpp_allocation_ratio} (internal functions).
 #'
 #' @examples
 #' plot_allocation(parameters = arrR_parameters)
@@ -18,7 +17,7 @@
 #' @rdname plot_allocation
 #'
 #' @export
-plot_allocation <- function(parameters, base_size = 10) {
+plot_allocation <- function(parameters) {
 
   # create vector with bg values
   bg_biomass <- seq(from = parameters$bg_biomass_min,
@@ -49,7 +48,7 @@ plot_allocation <- function(parameters, base_size = 10) {
     ggplot2::scale_color_viridis_d(name = "Biomass") +
     ggplot2::scale_x_continuous(limits = c(parameters$bg_biomass_min, parameters$bg_biomass_max),
                                 breaks = breaks) +
-    ggplot2::theme_classic(base_size = base_size) +
+    ggplot2::theme_classic() +
     ggplot2::theme(legend.position = "bottom")
 
   return(gg)

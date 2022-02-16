@@ -7,7 +7,7 @@
 mdlrn_to_raster(mdl_rn, verbose = TRUE, ...)
 }
 \arguments{
-\item{mdl_rn}{\code{mdl_rn} object created with \code{\link{run_simulation}}.}
+\item{mdl_rn}{mdl_rn object.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 
@@ -17,13 +17,12 @@ mdlrn_to_raster(mdl_rn, verbose = TRUE, ...)
 SpatRaster
 }
 \description{
-Convert \code{mdl_rn} object to \code{SpatRaster}.
+Convert mdl_rn object to SpatRaster.
 }
 \details{
-Function to convert the environment (seafloor) from a previous \code{mdl_rn} object to
-a \code{SpatRaster}. Thus, the created environment will have the final values of the
-provided \code{mdl_rn} object as cell values. Can be used as sarting seafloor for
-new simulation.
+Function to convert the seafloor from a previous \code{mdl_rn} object to
+a \code{SpatRaster}. Thus, the created seafloor will have the final values of the
+provided \code{mdl_rn} object as cell values.
 }
 \examples{
 \dontrun{

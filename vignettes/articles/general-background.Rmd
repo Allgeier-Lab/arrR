@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-> For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support for increased primary production around artificial reefs. Manuscript submitted for publication.*
+> For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., In Press. Mechanistic support for increased primary production around artificial reefs. Ecological Applications*
 
 To get a BibTex entry, please use `citation("arrR")`.
 

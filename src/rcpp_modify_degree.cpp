@@ -13,8 +13,8 @@ using namespace Rcpp;
 // @param y Numeric with change of degree (negative or positive).
 //
 // @details
-// Modify the degree of direction heading of individuals. The function ensures that
-// all degree are between 0 <= x <= 360.
+// Modify the degree of direction heading of individuals. The function ensures
+// that all degrees are between 0 <= x <= 360.
 //
 // @return double
 //
@@ -39,7 +39,3 @@ double rcpp_modify_degree(double x, double y) {
 
   return(x);
 }
-
-/*** R
-.rcpp_modify_degree(x = 332, y = 33.5)
-*/

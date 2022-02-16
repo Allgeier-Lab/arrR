@@ -9,16 +9,16 @@ using namespace Rcpp;
 // rcpp_diffuse_values
 //
 // @description
-// Rcpp simulate diffusion of values.
+// Rcpp simulate diffusion.
 //
 // @param seafloor Matrix with seafloor values.
 // @param cell_adj Matrix with cell adjacencies.
 // @param nutrients_diffusion,detritus_diffusion,detritus_fish_diffusion Numeric with parameters.
 //
 // @details
-// Simulates the diffusion of a certain share of i) nutrients_pool, ii) detritus_pool,
-// and iii) detritus_fish_diffusion of each cell with its neighboring cells. Scheduling
-// is simulated pseudo-simultaneous.
+// Simulates the diffusion of the i) nutrients_pool, ii) detritus_pool,
+// and iii) detritus_fish_diffusion of each cell with its neighboring cells.
+// Scheduling is simulated pseudo-simultaneous.
 //
 // @return void
 //

@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_move_behav.h"
-
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
@@ -12,7 +11,7 @@ using namespace Rcpp;
 // rcpp_move_behav
 //
 // @description
-// Rcpp simulate movement based on bioenergetics.
+// Rcpp simulate movement (behav).
 //
 // @param fishpop Matrix with fishpop values.
 // @param pop_reserves_thres Map<int,double> with threshold of pop_reserves_max to drain prior to foraging.
@@ -27,11 +26,11 @@ using namespace Rcpp;
 //
 // @details
 // Fish individuals move based on how much nutrients they have stored in their
-// reserves. There are three different movement behaviors.
+// reserves. There are three different movement states.
 //
-// If reserves above a certain threshold, individuals either shelter at reef cells (behavior 1)
-// or move back towards reef cells (behavior 2). If reserves are not above the threshold,
-// individuals move randomly across the environment to forage.
+// If reserves are above a certain threshold, individuals either shelter at reef cells
+// (state 1) or move back towards reef cells (state 2). If reserves are not above
+// the threshold, individuals move randomly across the seafloor to forage (state 3).
 //
 // @return void
 //

@@ -7,9 +7,9 @@
 get_density(result, normalize = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{result}{mdl_rn object of simulation run.}
+\item{result}{mdl_rn object.}
 
-\item{normalize}{Logical if TRUE count is divided by timesteps.}
+\item{normalize}{Logical if TRUE, count is divided by time steps.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
 }
@@ -17,13 +17,15 @@ get_density(result, normalize = FALSE, verbose = TRUE)
 data.frame
 }
 \description{
-Get density of fish individuals within cell.
+Get density of fish individuals.
 }
 \details{
-Calculates the fish density for each cells. Thus, the total count of
-fish occurrences within a raster cell is divided by the maximum timestep. Please
-keep in mind that if not each timestep was saved during \code{\link{run_simulation}},
-the returned density might not be the "true" density because some occurrences might be missed.
+Calculates the fish density for each seafloor cells. Thus, the total count of
+fish abundance within a raster cell is divided by the maximum time step.
+
+Please keep in mind that if not each time step was saved during \code{\link{run_simulation}},
+the returned density might not be the "true" density, because some occurrences
+might be missed.
 }
 \examples{
 \dontrun{

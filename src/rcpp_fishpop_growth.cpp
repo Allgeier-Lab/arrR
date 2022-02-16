@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_fishpop_growth.h"
-
 #include "rcpp_cell_from_xy.h"
 #include "rcpp_reincarnate.h"
 #include "rcpp_shuffle.h"
@@ -19,25 +18,28 @@ using namespace Rcpp;
 // @param seafloor Matrix with seafloor values.
 // @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 // @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
-// @param pop_reserves_consump Double with consumption limit to fill reserves each timestep.
+// @param pop_reserves_consump Double with consumption limit to fill reserves each time step.
 // @param extent Vector with extent (xmin,xmax,ymin,ymax).
 // @param dimensions Vector with dimensions (nrow, ncol).
 //
 // @details
 // Function to simulate consumption, mortality, growth and excretion of fish
-// individuals. First each fish individual has to follow the von Bertalanffy growth curve
-// and the corresponding amount of nutrients for this are calculated based on a
-// bioenergetics model (Allgeier et al. 2020). The nutrients are consumed from the
-// detritus_pool in the cell each individual is located in. If the available amount is not big
-// enough, fish can either use their reserves or they die (see \code{\link{rcpp_reincarnate}}).
-// Last, if the detritus pool is big enough, individuals can additionally fill up
-// their reserves.
+// individuals.
 //
-// If individuals are within behavior 1 or 2 (only for \code{movement = behav}),
-// the consumption requirement must be met by the reserves only.
+// Each fish individual has to follow the von Bertalanffy growth curve (Froese and
+// Pauly 2019) and the corresponding amount of nutrients for this are calculated based
+// on a bioenergetics model (Allgeier et al. 2020). The nutrients are consumed
+// from the detritus pool. If the available amount is not big enough, fish can
+// either use their reserves. If there are no reserves, individuals die. Last,
+// if the detritus pool is big enough, individuals can additionally fill up their
+// reserves.
 //
-// If \code{0 > pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
-// can be consumed each timestep.
+// If individuals are acting accordingly to movement state 1 or 2 (only for
+// \code{movement = 'behav'}), the consumption requirement must be met by the
+// reserves only.
+//
+// If \code{0 < pop_reserves_consump < 1}, only a ratio of the \code{pop_reserves_max}
+// can be consumed each time step.
 //
 // @references
 // Allgeier, J.E., Cline, T.J., Walsworth, T.E., Wathen, G., Layman, C.A.,

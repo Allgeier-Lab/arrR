@@ -1,7 +1,7 @@
 #' calc_size
 #'
 #' @description
-#' Calculate size and weight of fish individuals.
+#' Calculate dimensions of fish individuals.
 #'
 #' @param pop_n Numeric with starting values for number of individuals.
 #' @param pop_mean_size,pop_var_size Numeric with parameters for mean size
@@ -10,10 +10,12 @@
 #' @param use_log Logical if TRUE, random log distribution is used.
 #'
 #' @details
-#' Calculate size and weight of fish individuals based on
-#' length-weight relationships. The starting length is randomly drawn from a log-norm
-#' or uniform distribution. If an uniform distribution is used, the minimum and maximum
-#' are based on 10% and 90% of the maximum size (\code{pop_linf}), respectively.
+#' Calculate size and weight of fish individuals based on length-weight relationships
+#' (Froese & Pauly 2019). The starting length is randomly drawn from a log-norm or
+#' uniform distribution.
+#'
+#' If an uniform distribution is used, the minimum and maximum are based on 10%
+#' and 90% of the maximum size (\code{pop_linf}), respectively.
 #'
 #' @references
 #' Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document].

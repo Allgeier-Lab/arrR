@@ -21,7 +21,7 @@
 
 \item{detritus_pool}{Numeric with parameter for detritus fraction.}
 
-\item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
+\item{random}{Numeric to randomize input values.}
 }
 \value{
 SpatRaster
@@ -30,12 +30,10 @@ SpatRaster
 Setup environmental values for seafloor.
 }
 \details{
-Setup environmental values used during \code{\link{setup_seafloor}}.
-The function creates a \code{SpatRaster} with all required values. All incremental
-values that will be increased during model run are set to zero. The function does not
-setup reef cells.
+Create a \code{SpatRaster} with all required values for model run. The function
+does not setup reef cells.
 
-If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
-as
+If \code{random > 0}, the stochasticity is added to all starting values using
+\code{x * (1 +- random)} as minimum and maximum values, respectively.
 }
 \keyword{internal}

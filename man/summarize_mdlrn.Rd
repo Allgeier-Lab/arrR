@@ -12,14 +12,13 @@ summarize_mdlrn(
 )
 }
 \arguments{
-\item{result}{mdl_rn object of simulation run.}
+\item{result}{mdl_rn object.}
 
-\item{what}{Vector with 'seafloor' and/or 'fishpop' to specifiy what to summarize.}
+\item{what}{Vector with 'seafloor' and/or 'fishpop' to specify what to summarize.}
 
-\item{summary}{String with summary functions. Must return one value when used
-with aggregate().}
+\item{summary}{String with summary functions.}
 
-\item{verbose}{Logical if warning messages should be printed.}
+\item{verbose}{Logical if TRUE, warning messages are printed.}
 }
 \value{
 list
@@ -28,13 +27,13 @@ list
 Summarize results of model run.
 }
 \details{
-Function to summarize results for each timestep. The \code{summary} argument
+Summarize results for each time step. The \code{summary} argument
 allows to specify which summary statistics are used for each cell. The selected
-statistics are used by \code{\link{aggregate}} and must return one value.
+statistics are used by \code{\link{aggregate}} and must return a single value.
 
-For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
-are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
-iv) died_background are returned.
+If \code{what='seafloor'}, the i) bg_biomass, ii) ag_biomass, iii) nutrients_pool,
+and iv) detritus_pool are returned. If \code{what='fishpop'}, the i) length,
+ii) weight, iii) died_consumption, and iv) died_background are returned.
 }
 \examples{
 \dontrun{

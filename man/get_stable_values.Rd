@@ -18,10 +18,11 @@ list
 Get values for stable biomass growth.
 }
 \details{
-Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool
-which allow stable seagrass growth if no fish individuals are present. This means,
-that both pools contain exactly the amount to balance the sloughed bg_biomass and ag_biomass
-each  timestep.
+Returns a list with starting values for i) the nutrients_pool and ii) the detritus_pool,
+which allow stable seagrass growth if no fish individuals are present.
+
+This means that both pools contain exactly the amount to balance the sloughed
+bg_biomass and ag_biomass each time step.
 }
 \examples{
 get_stable_values(bg_biomass = arrR_starting_values$bg_biomass,

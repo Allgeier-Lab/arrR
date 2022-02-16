@@ -14,12 +14,11 @@
 \item{...}{Arguments passed to cat.}
 }
 \description{
-Printing method for \code{mdl_rn} object.
+Printing method.
 }
 \details{
-Printing method for model run results simulated with \code{\link{run_simulation}}.
-Includes some information about the model run itself and distribution values (min, mean, max)
-for some values of the seafloor and fishpop.
+Printing method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}.
+Includes information about the model run and resulting seafloor and fishpop values.
 }
 \examples{
 \dontrun{

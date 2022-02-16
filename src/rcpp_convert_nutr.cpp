@@ -16,7 +16,7 @@ using namespace Rcpp;
 // Convert nutrients between g and umol based on molecular mass of (ammonium; NH4)
 //
 // @references
-// <https://en.wikipedia.org/wiki/Ammonium>
+// Molecular mass taken from <https://en.wikipedia.org/wiki/Ammonium>
 //
 // @return double
 //
@@ -26,17 +26,19 @@ using namespace Rcpp;
 // @keywords internal
 double rcpp_convert_nutr(double x, Rcpp::String to) {
 
+  double result;
+
   // convert to gram by multiplying factor
   if (to == "g") {
 
-    double result = x * 18.039 / std::pow(10, 6);
+    result = x * 18.039 / std::pow(10, 6);
 
     return(result);
 
   // convert to umol by multiplying factor
   } else if (to == "umol") {
 
-    double result = x * std::pow(10, 6) / 18.039;
+    result = x * std::pow(10, 6) / 18.039;
 
     return(result);
 
@@ -47,7 +49,3 @@ double rcpp_convert_nutr(double x, Rcpp::String to) {
 
   }
 }
-
-/*** R
-.rcpp_convert_nutr(x = 0.005, to = "umol")
-*/

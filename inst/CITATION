@@ -1,4 +1,4 @@
-citHeader("To cite arrR in a publication or acknowledge its use, please use the following temporary citation information, substituting 'v0.0' with the version of the package that you used:")
+citHeader("To cite arrR in a publication or acknowledge its use, please use the following citation information, substituting 'v0.0' with the version of the package that you used:")
 
 citEntry(
   entry    = "Article",
@@ -6,12 +6,14 @@ citEntry(
   author   = personList(as.person("Kenzo E. Esquivel"),
                         as.person("Maximilian H.K. Hesselbarth"),
                         as.person("Jacob E. Allgeier")),
-  journal  = "tba",
-  year     = "Manuscript submitted for publication",
+  journal  = "Ecological Applications",
+  year     = "In Prees",
   volume   = "",
   number   = "",
   pages    = "",
   url      = "https://allgeier-lab.github.io/arrR",
   version  = "0.0",
-  textVersion = paste("Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E. Mechanistic support for increased primary production around artificial reefs. Manuscript submitted for publication. v0.0")
+  textVersion = paste("Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., In Press. Mechanistic support for increased primary production around artificial reefs. Ecological Applications. v0.0")
 )
+
+

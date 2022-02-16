@@ -1,4 +1,4 @@
-# set filter timestep
+# set filter time step
 filter_time <- 50
 
 # filter results

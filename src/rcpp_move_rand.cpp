@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_move_rand.h"
-
 #include "rcpp_closest_reef.h"
 #include "rcpp_modify_degree.h"
 #include "rcpp_rlognorm.h"
@@ -13,7 +12,7 @@ using namespace Rcpp;
 // rcpp_move_rand
 //
 // @description
-// Rcpp simulate random/attracted movement.
+// Rcpp simulate movement (rand/attr).
 //
 // @param fishpop Matrix with fishpop values.
 // @param move_mean,move_var Double with mean and variance movement parameter.
@@ -24,16 +23,16 @@ using namespace Rcpp;
 // @param dimensions Vector with dimensions (nrow, ncol).
 //
 // @details
-// Simulate movemnt of indivudals eiter either random (\code{reef_attraction = FALSE})
-// or attracted towards the artifical reef cells (\code{reef_attraction = TRUE}).
+// Simulate movement of indivudals eiter either random (\code{reef_attraction = FALSE})
+// or attracted towards the reef cells (\code{reef_attraction = TRUE}).
 //
-// In the case of random movement, each timestep a random movement distance
+// In the case of random movement, each time step a random movement distance
 // is drawn from a lognorm distribution and the individal moves into a random heading
 // direction drawn from an uniform distribution.
 //
 // In the case of attracted movement, fish individuals are aware of the distance to
 // the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
-// always swim in the direction of the shortest distance to a reef cell.
+// always move in the direction of the shortest distance to a reef cell.
 //
 // @return void
 //

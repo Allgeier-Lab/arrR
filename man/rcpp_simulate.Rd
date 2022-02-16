@@ -26,19 +26,19 @@
 \arguments{
 \item{seafloor, fishpop}{Matrix with seafloor and fishpop data.}
 
-\item{nutrients_input}{Vector with amount of nutrient input each timestep.}
+\item{nutrients_input}{Vector with amount of nutrient input each time step.}
 
-\item{seafloor_track, fishpop_track}{List with entry for each saving timestep.}
+\item{seafloor_track, fishpop_track}{List with entry for each saving time step.}
 
 \item{parameters}{List with parameters.}
 
-\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
+\item{movement}{String specifing movement algorithm.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
 
-\item{max_i}{Integer with maximum number of simulation timesteps.}
+\item{max_i}{Integer with maximum number of simulation time steps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 
@@ -46,9 +46,9 @@
 
 \item{seagrass_each}{Integer how often (each i * x) seagrass dynamics will be simulated.}
 
-\item{burn_in}{Numeric with timesteps used to burn in.}
+\item{burn_in}{Numeric with time steps used to burn in.}
 
-\item{verbose}{If TRUE, progress reports are printed.}
+\item{verbose}{Logical if TRUE, progress reports are printed.}
 }
 \value{
 void
@@ -63,8 +63,8 @@ The functions is a 'wrapper' around the following sub-processes: (i) nutrient in
 (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 }
 \references{
-For a detailed model description see Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E.
-Mechanistic support for increased primary production around artificial reefs. Manuscript
-submitted for publication.
+For a detailed model description, please see Esquivel, K.E., Hesselbarth, M.H.K.,
+Allgeier, J.E., In Press. Mechanistic support for increased primary production
+around artificial reefs. Ecological Applications. v0.0
 }
 \keyword{internal}

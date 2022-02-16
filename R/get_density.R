@@ -1,17 +1,19 @@
 #' get_density
 #'
 #' @description
-#' Get density of fish individuals within cell.
+#' Get density of fish individuals.
 #'
-#' @param result mdl_rn object of simulation run.
-#' @param normalize Logical if TRUE count is divided by timesteps.
+#' @param result mdl_rn object.
+#' @param normalize Logical if TRUE, count is divided by time steps.
 #' @param verbose If TRUE, progress reports are printed.
 #'
 #' @details
-#' Calculates the fish density for each cells. Thus, the total count of
-#' fish occurrences within a raster cell is divided by the maximum timestep. Please
-#' keep in mind that if not each timestep was saved during \code{\link{run_simulation}},
-#' the returned density might not be the "true" density because some occurrences might be missed.
+#' Calculates the fish density for each seafloor cells. Thus, the total count of
+#' fish abundance within a raster cell is divided by the maximum time step.
+#'
+#' Please keep in mind that if not each time step was saved during \code{\link{run_simulation}},
+#' the returned density might not be the "true" density, because some occurrences
+#' might be missed.
 #'
 #' @return data.frame
 #'

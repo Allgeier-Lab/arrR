@@ -11,9 +11,9 @@ read_parameters(file, sep = ";", return_list = TRUE, ...)
 
 \item{sep}{String with separator of columns.}
 
-\item{return_list}{Logical if TRUE parameters are returned as list.}
+\item{return_list}{Logical if TRUE, parameters are returned as list.}
 
-\item{...}{Arguments passed on to \code{read.table}.}
+\item{...}{Arguments passed on to \code{\link{read.table}}.}
 }
 \value{
 list
@@ -22,8 +22,8 @@ list
 Read parameters from text file.
 }
 \details{
-Creates a list with all parameters or starting values. Columns must be named 'parameter' and
-'value'.
+Creates a list with all parameters or starting values or parameters. Columns
+must be named 'parameter' and value'.
 }
 \examples{
 \dontrun{

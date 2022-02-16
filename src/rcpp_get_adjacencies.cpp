@@ -14,8 +14,8 @@ using namespace Rcpp;
 // @param dimensions Vector with number or rows and cols
 //
 // @details
-// Get matrix with cell IDs of all neighboring cells. Indices start with 0 according
-// to C++ indexing.
+// Get matrix with cell IDs of all neighboring cells. Indices start with 0
+// according to C++ indexing.
 //
 // @references
 // Code adapted from Robert J. Hijmans (2020). raster: Geographic Data Analysis
@@ -94,10 +94,4 @@ Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
   }
 
   return(adj);
-
 }
-
-/*** R
-ras <- terra::rast(nrow = 5, ncol = 5)
-.rcpp_get_adjacencies(dim(ras)[1:2])
-*/

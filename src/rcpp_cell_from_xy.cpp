@@ -15,7 +15,7 @@ using namespace Rcpp;
 // @param rcpp Logical if TRUE Rcpp index is returned.
 //
 // @details
-// Get cell ID from xy coordinate. Allows only one coordinate pair at a time.
+// Get cell ID from xy coordinates. Allows only one coordinate pair at a time.
 // If \code{rcpp = TRUE} indexing starts at 0 in accordance with C++.
 //
 // @references
@@ -82,17 +82,3 @@ int rcpp_cell_from_xy(double x, double y,
 
   }
 }
-
-/*** R
-# rcpp_cell_from_xy
-x <- runif(n = 1, min = -50, max = 50)
-y <- runif(n = 1, min = -50, max = 50)
-
-.rcpp_cell_from_xy(x = x, y = y, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
-                   rcpp = FALSE)
-
-terra::cellFromXY(object = terra::rast(nrows = 100, ncols = 100,
-                                       xmin = -50, xmax = 50,
-                                       ymin = -50, ymax = 50),
-                  xy = cbind(x = x, y = y))
-*/

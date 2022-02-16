@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_reincarnate.h"
-
 #include "rcpp_cell_from_xy.h"
 
 using namespace Rcpp;
@@ -21,10 +20,12 @@ using namespace Rcpp;
 //
 // @details
 // Creates a new individual after mortality event. The new individual has the same
-// value as the just died individual at the beginning of the simulation (i.e., timestep zero).
-// The mass difference (i.e. current mass minus mass at timestep zero) plus reserves
-// of the died individual are added to the detritus pool. The reincarnated individual
-// tries to fill its reserves from the detritus pool if enough nutrients are available.
+// values as the died individual at the beginning of the simulation.
+//
+// The mass difference (i.e. current mass minus mass at time step zero) and the
+// reserves of the died individual are added to the detritus pool. The reincarnated
+// individual tries to fill its reserves from the detritus pool if enough nutrients
+// are available.
 //
 // @return void
 //

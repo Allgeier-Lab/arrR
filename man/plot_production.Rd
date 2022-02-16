@@ -4,20 +4,19 @@
 \alias{plot_production}
 \title{plot_production}
 \usage{
-plot_production(result, lag = TRUE, base_size = 10)
+plot_production(result, lag = TRUE)
 }
 \arguments{
-\item{result}{mdl_rn object of simulation run.}
+\item{result}{mdl_rn object.}
 
-\item{lag}{Logical if cumulative or difference to previous timestep should be returned.}
-
-\item{base_size}{Numeric to specify base font size.}
+\item{lag}{Logical if TRUE, cumulative or difference to previous time step should be returned.}
 }
 \description{
-Plotting method for production.
+Plotting method.
 }
 \details{
-Plotting method for ag and bg production of the seagrass growth.
+Plotting method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}
+for bg and ag biomass production.
 }
 \examples{
 \dontrun{

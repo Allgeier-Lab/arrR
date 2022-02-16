@@ -16,6 +16,7 @@ using namespace Rcpp;
 // Returns q-th percentile of vector.
 //
 // @references
+// Rcpp quantile implementation from
 // <https://stackoverflow.com/questions/26786078/rcpp-quantile-implementation>
 //
 // @return double
@@ -34,9 +35,3 @@ double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
   return r;
 }
-
-/*** R
-x <- runif(n = 1000000)
-.rcpp_quantile(x = x, q = 0.95)
-quantile(x = x, probs = 0.95)
-*/

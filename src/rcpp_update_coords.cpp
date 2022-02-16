@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_update_coords.h"
-
 #include "rcpp_translate_torus.h"
 
 using namespace Rcpp;
@@ -17,7 +16,8 @@ using namespace Rcpp;
 // @param extent Vector with extent of study area.
 //
 // @details
-// Update xy coordinates and activity of fish individuals depending on \code{move_dist}.
+// Update xy coordinates and activity of fish individuals depending on
+// \code{move_dist}.
 //
 // @return void
 //

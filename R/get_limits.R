@@ -1,15 +1,15 @@
 #' get_limits
 #'
 #' @description
-#' Get list with min and max values for better plotting.
+#' Get min/max values
 #'
-#' @param result List with results of model run.
+#' @param result List with mdl_rn objects.
 #'
 #' @details
-#' Returns list with minimum and maximum values of several model result runs for better
-#' plotting. The list includes the range for i) ag_biommass, ii) bg_biomass, iii)
-#' nutrients_pool, and iv) detritus_pool. Can be provided to the \code{limits} argument
-#' of the \code{\link{plot.mdl_rn}} function.
+#' Returns list with minimum and maximum values of several model runs for better
+#' plotting. The list includes the range for i) bg_biommass, ii) ag_biomass,
+#' iii) nutrients_pool, and iv) detritus_pool. Can be provided to the \code{limits}
+#' argument of the \code{\link{plot.mdl_rn}} function.
 #'
 #' @return list
 #'
@@ -67,5 +67,4 @@ get_limits <- function(result) {
                  detritus_pool = c(min(limits[, 7]), max(limits[, 8])))
 
   return(limits)
-
 }

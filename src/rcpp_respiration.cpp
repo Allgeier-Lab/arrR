@@ -17,11 +17,12 @@ using namespace Rcpp;
 // @param water_temp,min_per_i Numeric with various parameters.
 //
 // @details
-// Function to simulate respiration of fish population individuals based on movement,
-// body size and water temperature. The respiration is temperature dependent with an
+// Function to simulate respiration of fish individuals based on movement, body +
+// size and water temperature. The respiration is temperature dependent with an
 // activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
 //
-// If respiration is a infinite number (due to zero division), set to respiration = 1.0.
+// If respiration is a infinite number (due to zero division), set to
+// \code{erespiration=1.0}.
 //
 // @references
 // Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish

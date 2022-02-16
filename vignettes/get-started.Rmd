@@ -56,7 +56,7 @@ check_parameters(starting_values = starting_values, parameters = parameters)
 
 ### 2. Setup seafloor and fish population
 
-Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a `matrix` with *x*- and*y*-coordinates of all reef cells. The center cell always has the coordinate *x,y(0,0)*. Additionally, when setting up the seafloor, you need to specify the dimensions in *x*- and *y*-directions and the grain of one cell.
+Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a `matrix` with *x*- and *y*-coordinates of all reef cells. The center cell always has the coordinate *x,y(0,0)*. Additionally, when setting up the seafloor, you need to specify the dimensions in *x*- and *y*-directions and the grain of one cell.
 
 The function `get_stable_values` allows to calculate the nutrients and detritus amount to keep the whole ecosystem theoretical stable (excluding fish detritus consumption and nutrient excretion). The values can be used to set up the simulation environment.
 

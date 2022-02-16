@@ -7,9 +7,9 @@
 get_production(result, lag = TRUE)
 }
 \arguments{
-\item{result}{mdl_rn object of simulation run.}
+\item{result}{mdl_rn object.}
 
-\item{lag}{Logical if cumulative or difference to previous timestep should be returned.}
+\item{lag}{Logical if TRUE, difference to previous time step is returned.}
 }
 \value{
 data.frame
@@ -18,9 +18,9 @@ data.frame
 Summarize production of model run.
 }
 \details{
-Function to summarize the ag and bg production of each timestep. The \code{lag}
-argument allows to not return the cumulative value, but the difference to the previous
-timestep.
+Function to summarize the bg and ag seagrass production of each time step.
+The \code{lag} argument allows return the cumulative values (\code{FALSE}),
+or the difference to the previous time step (\code{TRUE}).
 }
 \examples{
 \dontrun{

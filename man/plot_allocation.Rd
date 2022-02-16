@@ -4,20 +4,18 @@
 \alias{plot_allocation}
 \title{plot_allocation}
 \usage{
-plot_allocation(parameters, base_size = 10)
+plot_allocation(parameters)
 }
 \arguments{
 \item{parameters}{List with model parameters.}
-
-\item{base_size}{Numeric to specify base font size.}
 }
 \description{
-Plotting method for seagrass growth allocation ratio.
+Plotting method.
 }
 \details{
-Plotting method for the allocation ratio rule used during the seagrass growth
-dynamics. For more information see \code{rcpp_seagrass_growth} and
-\code{rcpp_allocation_ratio} (internal functions).
+Plotting method for the allocation ratio rule used during the nutrient uptake
+allocation within the seagrass dynamics. For more information see \code{.rcpp_seagrass_growth}
+and \code{.rcpp_allocation_ratio} (internal functions).
 }
 \examples{
 plot_allocation(parameters = arrR_parameters)

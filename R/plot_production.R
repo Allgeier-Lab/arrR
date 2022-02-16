@@ -1,14 +1,14 @@
 #' plot_production
 #'
 #' @description
-#' Plotting method for production.
+#' Plotting method.
 #'
-#' @param result mdl_rn object of simulation run.
-#' @param lag Logical if cumulative or difference to previous timestep should be returned.
-#' @param base_size Numeric to specify base font size.
+#' @param result mdl_rn object.
+#' @param lag Logical if TRUE, cumulative or difference to previous time step should be returned.
 #'
 #' @details
-#' Plotting method for ag and bg production of the seagrass growth.
+#' Plotting method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}
+#' for bg and ag biomass production.
 #'
 #' @examples
 #' \dontrun{
@@ -19,7 +19,7 @@
 #' @rdname plot_production
 #'
 #' @export
-plot_production <- function(result, lag = TRUE, base_size = 10) {
+plot_production <- function(result, lag = TRUE) {
 
   # get production values
   production_temp <- get_production(result = result, lag = lag)
@@ -42,9 +42,9 @@ plot_production <- function(result, lag = TRUE, base_size = 10) {
   gg_prod <- ggplot2::ggplot(data = production_temp) +
     ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = .data$value)) +
     ggplot2::facet_wrap(. ~ part, scales = "free_y", nrow = 2, ncol = 1) +
-    ggplot2::labs(x = "Timestep", y = "Production") +
+    ggplot2::labs(x = "Time step", y = "Production") +
     ggplot2::scale_color_viridis_d(name = "") +
-    ggplot2::theme_classic(base_size = base_size) +
+    ggplot2::theme_classic() +
     ggplot2::theme(legend.position = "bottom")
 
   return(gg_prod)

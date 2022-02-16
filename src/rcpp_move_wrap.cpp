@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_move_wrap.h"
-
 #include "rcpp_move_rand.h"
 #include "rcpp_move_behav.h"
 
@@ -16,7 +15,7 @@ using namespace Rcpp;
 //
 // @param fishpop Matrix with fishpop values.
 // @param pop_reserves_thres Map<int,double> with threshold of pop_reserves_max to drain prior to foraging.
-// @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+// @param movement String specifing movement algorithm.
 // @param move_mean,move_var Double with mean movement parameter.
 // @param move_reef Double with mean movement distance when sheltering at reef.
 // @param move_border Double with movement distance that surrounds reef cell border.
@@ -28,10 +27,9 @@ using namespace Rcpp;
 //
 // @details
 // Wrapper function around different movement algorithms. Individuals can either move
-// completely random (\code{movement = "rand"}), attracted towards the artifical reef cells
-// \code{movement = "attr"} or movement can be  depending on the bioenergetics of the
-// fish individuals \code{movement = "behav"}. For more information see \code{\link{rcpp_move_rand}},
-// \code{\link{rcpp_move_rand}} or \code{\link{rcpp_move_behav}}.
+// completely random (\code{'rand}), attracted towards the artifical reef cells
+// \code{'attr'} or movement can be depending on the bioenergetics of the
+// fish individuals \code{'behav'}.
 //
 // @return void
 //

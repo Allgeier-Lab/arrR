@@ -14,11 +14,11 @@ using namespace Rcpp;
 //' @param threshold,slope Numeric with function parameters.
 //'
 //' @details
-//' Get ratio of bg and ag nutrient allocation. If ratio = 1, all nutrients are
+//' Get ratio of bg and ag nutrient allocation. If ratio=1, all nutrients are
 //' allocated in the bg biomass.
 //'
-//' If the threshold is positive, the ratio is r=1 for all biomass values below the threshold.
-//' If threshold is negative, the ratio is be r=0.5 at the threshold.
+//' If the threshold is positive, the ratio is r=1 for all biomass values below
+//' the threshold. If threshold is negative, the ratio is be r=0.5 at the threshold.
 //'
 //' @references
 //' User wmsmith on CrossValidated: "Is there a formula for an s-shaped curve with

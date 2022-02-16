@@ -13,7 +13,7 @@ setup_fishpop(
 )
 }
 \arguments{
-\item{seafloor}{Environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor}{SpatRaster object.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -21,7 +21,7 @@ setup_fishpop(
 
 \item{use_log}{Logical if TRUE, random log distribution is used.}
 
-\item{verbose}{If TRUE, progress reports are printed.}
+\item{verbose}{Logical if TRUE, information is printed.}
 }
 \value{
 data.frame
@@ -32,7 +32,7 @@ Setup fish population for model run.
 \details{
 Function to setup the fish population. If \code{use_log = TRUE} the size distribution
 of the fish population follows a log-norm distribution. For more information, see
-\code{.calc_size} (internal function). If no fish should be created,set \code{starting_values$pop_n = 0}.
+\code{.calc_size} (internal function). To create no fish, set \code{starting_values$pop_n = 0}.
 }
 \examples{
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),

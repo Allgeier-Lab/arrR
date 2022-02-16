@@ -1,7 +1,6 @@
 #include <Rcpp.h>
 
 #include "rcpp_get_max_dist.h"
-
 #include "rcpp_quantile.h"
 #include "rcpp_rlognorm.h"
 
@@ -14,13 +13,15 @@ using namespace Rcpp;
 // @description
 // Rcpp get maximum movement distance
 //
-// @param movement String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.
+// @param movement String specifing movement algorithm.
 // @param parameters List with parameters.
 // @param n_rand Integer with amount of random numbers.
 //
 // @details
 // Calculate double with maximum movement distance. The distance is the 95% quantile
-// of n_rand random numbers.
+// of \code{n_rand} random numbers.
+//
+// \code{movement} can be either 'rand', 'attr' or 'behav'.
 //
 // @return double
 //
@@ -64,9 +65,4 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
   max_dist = rcpp_quantile(max_dist_temp, 0.95);
 
   return(max_dist);
-
 }
-
-/*** R
-.rcpp_get_max_dist(movement = "rand", parameters = arrR_parameters, 1000000)
-*/

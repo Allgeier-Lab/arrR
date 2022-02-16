@@ -3,16 +3,16 @@
 #' @description
 #' Setup fish population for model run.
 #'
-#' @param seafloor Environment created with \code{\link{setup_seafloor}}.
+#' @param seafloor SpatRaster object.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param use_log Logical if TRUE, random log distribution is used.
-#' @param verbose If TRUE, progress reports are printed.
+#' @param verbose Logical if TRUE, information is printed.
 #'
 #' @details
 #' Function to setup the fish population. If \code{use_log = TRUE} the size distribution
 #' of the fish population follows a log-norm distribution. For more information, see
-#' \code{.calc_size} (internal function). If no fish should be created,set \code{starting_values$pop_n = 0}.
+#' \code{.calc_size} (internal function). To create no fish, set \code{starting_values$pop_n = 0}.
 #'
 #' @return data.frame
 #'

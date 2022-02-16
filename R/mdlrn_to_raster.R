@@ -1,17 +1,16 @@
 #' mdlrn_to_raster
 #'
 #' @description
-#' Convert \code{mdl_rn} object to \code{SpatRaster}.
+#' Convert mdl_rn object to SpatRaster.
 #'
-#' @param mdl_rn \code{mdl_rn} object created with \code{\link{run_simulation}}.
+#' @param mdl_rn mdl_rn object.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Additional arguments passed on to \code{\link{rast}}.
 #'
 #' @details
-#' Function to convert the environment (seafloor) from a previous \code{mdl_rn} object to
-#' a \code{SpatRaster}. Thus, the created environment will have the final values of the
-#' provided \code{mdl_rn} object as cell values. Can be used as sarting seafloor for
-#' new simulation.
+#' Function to convert the seafloor from a previous \code{mdl_rn} object to
+#' a \code{SpatRaster}. Thus, the created seafloor will have the final values of the
+#' provided \code{mdl_rn} object as cell values.
 #'
 #' @return SpatRaster
 #'
@@ -51,10 +50,10 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
     }
   }
 
-  # remove timestep and burn_in column
+  # remove time step and burn_in column
   id_remove <- which(names(mdl_rn$seafloor) %in% c("timestep", "burn_in"))
 
-  # get selected last timestep and remove timestep and burnin col
+  # get selected last time step and remove time step and burnin col
   seafloor_values <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == mdl_rn$max_i, -id_remove]
 
   # reset all tracking cols

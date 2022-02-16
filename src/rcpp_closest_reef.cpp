@@ -64,8 +64,3 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
 
   return(result);
 }
-
-/*** R
-.rcpp_closest_reef(fishpop_values[1, "x"], fishpop_values[1, "y"], coords_reef)
-.rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
-*/

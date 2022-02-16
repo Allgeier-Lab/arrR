@@ -29,13 +29,15 @@ and variance.}
 list
 }
 \description{
-Calculate size and weight of fish individuals.
+Calculate dimensions of fish individuals.
 }
 \details{
-Calculate size and weight of fish individuals based on
-length-weight relationships. The starting length is randomly drawn from a log-norm
-or uniform distribution. If an uniform distribution is used, the minimum and maximum
-are based on 10% and 90% of the maximum size (\code{pop_linf}), respectively.
+Calculate size and weight of fish individuals based on length-weight relationships
+(Froese & Pauly 2019). The starting length is randomly drawn from a log-norm or
+uniform distribution.
+
+If an uniform distribution is used, the minimum and maximum are based on 10%
+and 90% of the maximum size (\code{pop_linf}), respectively.
 }
 \examples{
 \dontrun{

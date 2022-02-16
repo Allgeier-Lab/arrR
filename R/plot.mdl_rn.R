@@ -1,23 +1,23 @@
 #' plot.mdl_rn
 #'
 #' @description
-#' Plotting method for \code{mdl_rn} object.
+#' Plotting method.
 #'
-#' @param x mdl_rn object of simulation run.
+#' @param x mdl_rn object.
 #' @param what Character specifying what to plot.
-#' @param summarize Character to specify which values of environmental data is used as fill.
-#' @param limits Named list with vectors with min and maximum value of values.
+#' @param summarize Character to specify which values of seafloor is used as fill.
+#' @param limits Named list with vectors specifying min/max values.
 #' @param burn_in If TRUE, line to indicate burn-in time is plotted.
-#' @param normalize Logical if TRUE count is divided by timesteps.
-#' @param base_size Numeric to specify base font size.
+#' @param normalize Logical if TRUE, count is divided by time steps.
 #' @param verbose If TRUE, progress reports are printed.
 #' @param ... Not used.
 #'
 #' @details
-#' Plotting method for model run results simulated with \code{\link{run_simulation}}.
+#' Plotting method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}.
 #' The \code{what} arguments allows to either plot the seafloor values or fishpop values.
-#' For both, it is possible to either plot a spatial raster at a certain timestep
-#' \code{summarize = FALSE} or a summary of the values over all saved  timestep \code{summarize = TRUE}.
+#' For both, it is possible to either plot a spatial raster at a certain time step,
+#' or a summary of the values over all saved time steps (\code{summarize} argument).
+#'
 #' If a spatial raster is plotted, the limits can be set identical. For more information see
 #' \code{\link{get_limits}}.
 #'
@@ -33,7 +33,7 @@
 #'
 #' @export
 plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, burn_in = TRUE,
-                        normalize = FALSE, base_size = 10, verbose = TRUE, ...) {
+                        normalize = FALSE, verbose = TRUE, ...) {
 
   # check if fishpop is present
   if (what == "fishpop" && nrow(x$fishpop) == 0) {
@@ -63,28 +63,26 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_top_left <- ggplot2::ggplot(data = data_sum) +
       ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
+      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[3]) +
-      ggplot2::theme_classic(base_size = base_size) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+      ggplot2::labs(x = "Time step", y = col_names[2]) +
+      ggplot2::theme_classic()
 
     # create plot
     gg_top_right <- ggplot2::ggplot(data = data_sum) +
       ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
+      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
                                              col = "summary", linetype = "summary")) +
       ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[2]) +
-      ggplot2::theme_classic(base_size = base_size) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+      ggplot2::labs(x = "Time step", y = col_names[3]) +
+      ggplot2::theme_classic()
 
     # create plot
     gg_bottom_left <- ggplot2::ggplot(data = data_sum) +
@@ -95,9 +93,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[4]) +
-      ggplot2::theme_classic(base_size = base_size) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+      ggplot2::labs(x = "Time step", y = col_names[4]) +
+      ggplot2::theme_classic()
 
     # create plot
     gg_bottom_right <- ggplot2::ggplot(data = data_sum) +
@@ -108,9 +105,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
       ggplot2::guides(col = "none", linetype = "none") +
-      ggplot2::labs(x = "Timestep", y = col_names[5]) +
-      ggplot2::theme_classic(base_size = base_size) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+      ggplot2::labs(x = "Time step", y = col_names[5]) +
+      ggplot2::theme_classic()
 
   # plot map
   } else {
@@ -119,52 +115,51 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # get seafloor data
       seafloor <- x$seafloor[x$seafloor$timestep == max(x$seafloor$timestep),
-                             c("x", "y", "bg_biomass", "ag_biomass",
+                             c("x", "y", "ag_biomass", "bg_biomass",
                                "nutrients_pool", "detritus_pool")]
+
+      # get name of columns
+      col_names <- names(seafloor)
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$bg_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[3])) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
-                                      na.value = "#9B964A", limits = limits$ag_biomass,
-                                      name = "Dry weight bg\nbiomass [g/cell]") +
+                                      na.value = "#9B964A", limits = limits$bg_biomass,
+                                      name = col_names[3]) +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
-        ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+        ggplot2::theme_classic()
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$ag_biomass)) +
+        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[4])) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
-                                      na.value = "#9B964A", limits = limits$bg_biomass,
-                                      name = "Dry weight ag\nbiomass [g/cell]") +
+                                      na.value = "#9B964A", limits = limits$ag_biomass,
+                                      name = col_names[4]) +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
-        ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+        ggplot2::theme_classic()
 
       # create plot
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$nutrients_pool)) +
+        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[5])) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$nutrients_pool,
-                                      name = "Nutrients\npool [g/cell]") +
+                                      name = col_names[5]) +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
-        ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+        ggplot2::theme_classic()
 
       # create plot
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = .data$detritus_pool)) +
+        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[6])) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$detritus_pool,
-                                      name = "Detritus\nnutrients [g/cell]") +
+                                      name = col_names[6]) +
         ggplot2::coord_equal() +
         ggplot2::labs(x = "", y = "") +
-        ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+        ggplot2::theme_classic()
 
     # plot fish population
     } else if (what == "fishpop") {
@@ -186,9 +181,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", name = name) +
         ggplot2::coord_equal() +
-        ggplot2::theme_classic(base_size = base_size) +
-        ggplot2::labs(title = plot_title) +
-        ggplot2::theme(plot.title = ggplot2::element_text(size = base_size))
+        ggplot2::theme_classic() +
+        ggplot2::labs(title = plot_title)
 
       return(gg_density)
 
@@ -209,8 +203,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
   # now add the title
   title <- cowplot::ggdraw() +
-    cowplot::draw_label(label = plot_title,
-                        x = 0, hjust = 0, size = base_size) +
+    cowplot::draw_label(label = plot_title, x = 0, hjust = 0) +
     ggplot2::theme(plot.margin = ggplot2::margin(t = 0, r = 0,
                                                  b = 0, l = 1, "cm"))
 
