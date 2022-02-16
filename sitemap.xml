@@ -94,10 +94,88 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_allocation_ratio.html</loc>
   </url>
   <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_cell_from_xy.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_closest_reef.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_convert_nutr.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_diffuse_values.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_fishpop_growth.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_adjacencies.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_bearing.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_max_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_reef.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_mineralization.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_modify_degree.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_mortality.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_move_behav.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_move_rand.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_move_wrap.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_input.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_output.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_uptake.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_quantile.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_reincarnate.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_respiration.html</loc>
+  </url>
+  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_rlognorm.html</loc>
   </url>
   <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_seagrass_growth.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_shuffle.html</loc>
+  </url>
+  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_simulate.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_translate_torus.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_update_coords.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_which.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/read_parameters.html</loc>
