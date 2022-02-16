@@ -21,8 +21,8 @@
 #' @rdname setup_envir_values
 #'
 #' @keywords internal
-.setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
-                                nutrients_pool, detritus_pool, random) {
+setup_envir_values <- function(seafloor, ag_biomass, bg_biomass,
+                               nutrients_pool, detritus_pool, random) {
 
   # get number of cells
   n_cells <- terra::ncell(seafloor)

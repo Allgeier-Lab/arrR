@@ -23,7 +23,7 @@
 #' @rdname get_starting_values
 #'
 #' @keywords internal
-.get_starting_values <- function(seafloor_values, fishpop_values) {
+get_starting_values <- function(seafloor_values, fishpop_values) {
 
   # get mean values and # fish pop
   ag_biomass <- mean(seafloor_values[, "ag_biomass"], na.rm = TRUE)

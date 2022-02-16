@@ -30,7 +30,7 @@ using namespace Rcpp;
 //' @rdname rcpp_mortality
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_mortality)]]
+// [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
                     double pop_linf, double pop_n_body, double pop_reserves_max,

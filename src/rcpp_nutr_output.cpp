@@ -28,7 +28,7 @@ using namespace Rcpp;
 //' @rdname rcpp_nutr_output
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_nutr_output)]]
+// [[Rcpp::export]]
 void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
 
   // loop through all raster cells

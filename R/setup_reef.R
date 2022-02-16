@@ -16,7 +16,7 @@
 #' @rdname setup_reef
 #'
 #' @keywords internal
-.setup_reef <- function(seafloor, reef) {
+setup_reef <- function(seafloor, reef) {
 
   # get cell ids of provided coordinates
   cell_ids <- terra::cellFromXY(object = seafloor, xy = reef)

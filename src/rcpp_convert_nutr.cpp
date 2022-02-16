@@ -26,7 +26,7 @@ using namespace Rcpp;
 //' @rdname rcpp_convert_nutr
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_convert_nutr)]]
+// [[Rcpp::export]]
 double rcpp_convert_nutr(double x, Rcpp::String to) {
 
   double result;
@@ -54,5 +54,5 @@ double rcpp_convert_nutr(double x, Rcpp::String to) {
 }
 
 /*** R
-.rcpp_convert_nutr(x = 0.005, to = "umol")
+rcpp_convert_nutr(x = 0.005, to = "umol")
 */

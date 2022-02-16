@@ -33,7 +33,7 @@ using namespace Rcpp;
 //' @rdname rcpp_rlognorm
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_rlognorm)]]
+// [[Rcpp::export]]
 double rcpp_rlognorm(double mean, double sd, double min, double max) {
 
   // https://en.wikipedia.org/wiki/Log-normal_distribution
@@ -61,8 +61,8 @@ foo <- function(n, m, s) {
   rlnorm(n = n, location, shape)
 }
 
-rand_a <- purrr::map_dbl(1:n, function(i) .rcpp_rlognorm(mean = mean, sd = sd,
-                                                         min = 0.0, max = max))
+rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rlognorm(mean = mean, sd = sd,
+                                                        min = 0.0, max = max))
 
 rand_b <- purrr::map_dbl(1:n, function(i) foo(n = 1, m = mean, s = sd))
 
@@ -79,7 +79,7 @@ abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
 
 bench::mark(
-  .rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf),
+  rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf),
   foo(n = 1, m = mean, s = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )

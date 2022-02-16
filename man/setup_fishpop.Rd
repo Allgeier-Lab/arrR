@@ -32,7 +32,7 @@ Setup fish population for model run.
 \details{
 Function to setup the fish population. If \code{use_log = TRUE} the size distribution
 of the fish population follows a log-norm distribution. For more information, see
-\code{.calc_size} (internal function). To create no fish, set \code{starting_values$pop_n = 0}.
+\code{calc_size} (internal function). To create no fish, set \code{starting_values$pop_n = 0}.
 }
 \examples{
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),

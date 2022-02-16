@@ -39,7 +39,7 @@ using namespace Rcpp;
 //' @rdname rcpp_respiration
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_respiration)]]
+// [[Rcpp::export]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_intercept, double resp_slope,
                       double resp_temp_low, double resp_temp_max, double resp_temp_optm,

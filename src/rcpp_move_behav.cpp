@@ -41,7 +41,7 @@ using namespace Rcpp;
 //' @rdname rcpp_move_behav
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_move_behav)]]
+// [[Rcpp::export]]
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr,
                      double move_mean, double move_var, double move_reef,
                      double move_border, double move_return, double max_dist,

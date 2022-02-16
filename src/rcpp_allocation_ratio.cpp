@@ -32,7 +32,7 @@ using namespace Rcpp;
 //' @rdname rcpp_allocation_ratio
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_allocation_ratio)]]
+// [[Rcpp::export]]
 double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max,
                              double threshold, double slope) {
 
@@ -108,7 +108,7 @@ parameters$seagrass_slope <- 3
 biomass <- parameters$bg_biomass_min +
 (parameters$bg_biomass_max - parameters$bg_biomass_min) * 1/4
 
-.rcpp_allocation_ratio(biomass, parameters$bg_biomass_min, parameters$bg_biomass_max,
+rcpp_allocation_ratio(biomass, parameters$bg_biomass_min, parameters$bg_biomass_max,
                       parameters$seagrass_thres, parameters$seagrass_slope)
 
 plot_allocation(parameters)

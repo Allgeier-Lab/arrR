@@ -35,7 +35,7 @@ using namespace Rcpp;
 //' @rdname rcpp_reincarnate
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_reincarnate)]]
+// [[Rcpp::export]]
 void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id,
                       Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       double pop_linf, double pop_n_body, double pop_reserves_max,

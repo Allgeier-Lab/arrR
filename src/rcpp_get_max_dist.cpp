@@ -29,7 +29,7 @@ using namespace Rcpp;
 //' @rdname rcpp_get_max_dist
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_get_max_dist)]]
+// [[Rcpp::export]]
 double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
 
   double max_dist = 0.0;
@@ -67,7 +67,7 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
 }
 
 /*** R
-.rcpp_get_max_dist(movement = "rand", parameters = arrR_parameters, 1000000)
-.rcpp_get_max_dist(movement = "attr", parameters = arrR_parameters, 1000000)
-.rcpp_get_max_dist(movement = "behav", parameters = arrR_parameters, 1000000)
+rcpp_get_max_dist(movement = "rand", parameters = arrR_parameters, 1000000)
+rcpp_get_max_dist(movement = "attr", parameters = arrR_parameters, 1000000)
+rcpp_get_max_dist(movement = "behav", parameters = arrR_parameters, 1000000)
 */

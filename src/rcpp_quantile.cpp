@@ -27,7 +27,7 @@ using namespace Rcpp;
 //' @rdname rcpp_quantile
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_quantile)]]
+// [[Rcpp::export]]
 double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
   // sort x from min to max
@@ -41,6 +41,6 @@ double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
 /*** R
 x <- runif(n = 1000000)
-.rcpp_quantile(x = x, q = 0.95)
+rcpp_quantile(x = x, q = 0.95)
 quantile(x = x, probs = 0.95)
 */

@@ -25,7 +25,7 @@ using namespace Rcpp;
 //' @rdname rcpp_which
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_which)]]
+// [[Rcpp::export]]
 int rcpp_which(double x, Rcpp::NumericVector y) {
 
   // init iterator
@@ -55,7 +55,7 @@ int rcpp_which(double x, Rcpp::NumericVector y) {
 }
 
 /*** R
-.rcpp_which(x = 10, y = c(2, 1, 10, 1, 3))
-.rcpp_which(x = 3, y = c(2, 1, 10, 1, 3))
-.rcpp_which(x = 11, y = c(2, 10, 1, 3))
+rcpp_which(x = 10, y = c(2, 1, 10, 1, 3))
+rcpp_which(x = 3, y = c(2, 1, 10, 1, 3))
+rcpp_which(x = 11, y = c(2, 10, 1, 3))
 */

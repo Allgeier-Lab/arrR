@@ -204,8 +204,8 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   # setup various #
 
   # get mean starting values
-  starting_values <- .get_starting_values(seafloor_values = seafloor_values,
-                                          fishpop_values = fishpop_values)
+  starting_values <- get_starting_values(seafloor_values = seafloor_values,
+                                         fishpop_values = fishpop_values)
 
   # print model run characteristics #
 
@@ -234,12 +234,12 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   }
 
-  .rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
-                 seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                 parameters = parameters, movement = movement,
-                 extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
-                 save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
-                 verbose = verbose)
+  rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
+                seafloor_track = seafloor_track, fishpop_track = fishpop_track,
+                parameters = parameters, movement = movement,
+                extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
+                save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
+                verbose = verbose)
 
    # new line after last progress message
   if (verbose) {

@@ -24,17 +24,17 @@ namespace arrR {
         }
     }
 
-    inline double _rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max, double threshold, double slope) {
-        typedef SEXP(*Ptr__rcpp_allocation_ratio)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_allocation_ratio p__rcpp_allocation_ratio = NULL;
-        if (p__rcpp_allocation_ratio == NULL) {
-            validateSignature("double(*_rcpp_allocation_ratio)(double,double,double,double,double)");
-            p__rcpp_allocation_ratio = (Ptr__rcpp_allocation_ratio)R_GetCCallable("arrR", "_arrR__rcpp_allocation_ratio");
+    inline double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_max, double threshold, double slope) {
+        typedef SEXP(*Ptr_rcpp_allocation_ratio)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_allocation_ratio p_rcpp_allocation_ratio = NULL;
+        if (p_rcpp_allocation_ratio == NULL) {
+            validateSignature("double(*rcpp_allocation_ratio)(double,double,double,double,double)");
+            p_rcpp_allocation_ratio = (Ptr_rcpp_allocation_ratio)R_GetCCallable("arrR", "_arrR_rcpp_allocation_ratio");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_allocation_ratio(Shield<SEXP>(Rcpp::wrap(biomass)), Shield<SEXP>(Rcpp::wrap(biomass_min)), Shield<SEXP>(Rcpp::wrap(biomass_max)), Shield<SEXP>(Rcpp::wrap(threshold)), Shield<SEXP>(Rcpp::wrap(slope)));
+            rcpp_result_gen = p_rcpp_allocation_ratio(Shield<SEXP>(Rcpp::wrap(biomass)), Shield<SEXP>(Rcpp::wrap(biomass_min)), Shield<SEXP>(Rcpp::wrap(biomass_max)), Shield<SEXP>(Rcpp::wrap(threshold)), Shield<SEXP>(Rcpp::wrap(slope)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -45,17 +45,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline int _rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, bool rcpp) {
-        typedef SEXP(*Ptr__rcpp_cell_from_xy)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_cell_from_xy p__rcpp_cell_from_xy = NULL;
-        if (p__rcpp_cell_from_xy == NULL) {
-            validateSignature("int(*_rcpp_cell_from_xy)(double,double,Rcpp::NumericVector,Rcpp::IntegerVector,bool)");
-            p__rcpp_cell_from_xy = (Ptr__rcpp_cell_from_xy)R_GetCCallable("arrR", "_arrR__rcpp_cell_from_xy");
+    inline int rcpp_cell_from_xy(double x, double y, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, bool rcpp) {
+        typedef SEXP(*Ptr_rcpp_cell_from_xy)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_cell_from_xy p_rcpp_cell_from_xy = NULL;
+        if (p_rcpp_cell_from_xy == NULL) {
+            validateSignature("int(*rcpp_cell_from_xy)(double,double,Rcpp::NumericVector,Rcpp::IntegerVector,bool)");
+            p_rcpp_cell_from_xy = (Ptr_rcpp_cell_from_xy)R_GetCCallable("arrR", "_arrR_rcpp_cell_from_xy");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_cell_from_xy(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(rcpp)));
+            rcpp_result_gen = p_rcpp_cell_from_xy(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(rcpp)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -66,17 +66,17 @@ namespace arrR {
         return Rcpp::as<int >(rcpp_result_gen);
     }
 
-    inline Rcpp::NumericVector _rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
-        typedef SEXP(*Ptr__rcpp_closest_reef)(SEXP,SEXP,SEXP);
-        static Ptr__rcpp_closest_reef p__rcpp_closest_reef = NULL;
-        if (p__rcpp_closest_reef == NULL) {
-            validateSignature("Rcpp::NumericVector(*_rcpp_closest_reef)(double,double,Rcpp::NumericMatrix)");
-            p__rcpp_closest_reef = (Ptr__rcpp_closest_reef)R_GetCCallable("arrR", "_arrR__rcpp_closest_reef");
+    inline Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
+        typedef SEXP(*Ptr_rcpp_closest_reef)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_closest_reef p_rcpp_closest_reef = NULL;
+        if (p_rcpp_closest_reef == NULL) {
+            validateSignature("Rcpp::NumericVector(*rcpp_closest_reef)(double,double,Rcpp::NumericMatrix)");
+            p_rcpp_closest_reef = (Ptr_rcpp_closest_reef)R_GetCCallable("arrR", "_arrR_rcpp_closest_reef");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_closest_reef(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(coords_reef)));
+            rcpp_result_gen = p_rcpp_closest_reef(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(coords_reef)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -87,17 +87,17 @@ namespace arrR {
         return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline double _rcpp_convert_nutr(double x, Rcpp::String to) {
-        typedef SEXP(*Ptr__rcpp_convert_nutr)(SEXP,SEXP);
-        static Ptr__rcpp_convert_nutr p__rcpp_convert_nutr = NULL;
-        if (p__rcpp_convert_nutr == NULL) {
-            validateSignature("double(*_rcpp_convert_nutr)(double,Rcpp::String)");
-            p__rcpp_convert_nutr = (Ptr__rcpp_convert_nutr)R_GetCCallable("arrR", "_arrR__rcpp_convert_nutr");
+    inline double rcpp_convert_nutr(double x, Rcpp::String to) {
+        typedef SEXP(*Ptr_rcpp_convert_nutr)(SEXP,SEXP);
+        static Ptr_rcpp_convert_nutr p_rcpp_convert_nutr = NULL;
+        if (p_rcpp_convert_nutr == NULL) {
+            validateSignature("double(*rcpp_convert_nutr)(double,Rcpp::String)");
+            p_rcpp_convert_nutr = (Ptr_rcpp_convert_nutr)R_GetCCallable("arrR", "_arrR_rcpp_convert_nutr");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_convert_nutr(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(to)));
+            rcpp_result_gen = p_rcpp_convert_nutr(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(to)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -108,17 +108,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline void _rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_fish_diffusion) {
-        typedef SEXP(*Ptr__rcpp_diffuse_values)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_diffuse_values p__rcpp_diffuse_values = NULL;
-        if (p__rcpp_diffuse_values == NULL) {
-            validateSignature("void(*_rcpp_diffuse_values)(Rcpp::NumericMatrix,Rcpp::IntegerMatrix,double,double,double)");
-            p__rcpp_diffuse_values = (Ptr__rcpp_diffuse_values)R_GetCCallable("arrR", "_arrR__rcpp_diffuse_values");
+    inline void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_adj, double nutrients_diffusion, double detritus_diffusion, double detritus_fish_diffusion) {
+        typedef SEXP(*Ptr_rcpp_diffuse_values)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_diffuse_values p_rcpp_diffuse_values = NULL;
+        if (p_rcpp_diffuse_values == NULL) {
+            validateSignature("void(*rcpp_diffuse_values)(Rcpp::NumericMatrix,Rcpp::IntegerMatrix,double,double,double)");
+            p_rcpp_diffuse_values = (Ptr_rcpp_diffuse_values)R_GetCCallable("arrR", "_arrR_rcpp_diffuse_values");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_diffuse_values(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(cell_adj)), Shield<SEXP>(Rcpp::wrap(nutrients_diffusion)), Shield<SEXP>(Rcpp::wrap(detritus_diffusion)), Shield<SEXP>(Rcpp::wrap(detritus_fish_diffusion)));
+            rcpp_result_gen = p_rcpp_diffuse_values(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(cell_adj)), Shield<SEXP>(Rcpp::wrap(nutrients_diffusion)), Shield<SEXP>(Rcpp::wrap(detritus_diffusion)), Shield<SEXP>(Rcpp::wrap(detritus_fish_diffusion)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -128,17 +128,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void _rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_reserves_max, double pop_reserves_consump, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double min_per_i) {
-        typedef SEXP(*Ptr__rcpp_fishpop_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_fishpop_growth p__rcpp_fishpop_growth = NULL;
-        if (p__rcpp_fishpop_growth == NULL) {
-            validateSignature("void(*_rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
-            p__rcpp_fishpop_growth = (Ptr__rcpp_fishpop_growth)R_GetCCallable("arrR", "_arrR__rcpp_fishpop_growth");
+    inline void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_k, double pop_linf, double pop_a, double pop_b, double pop_n_body, double pop_reserves_max, double pop_reserves_consump, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double min_per_i) {
+        typedef SEXP(*Ptr_rcpp_fishpop_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_fishpop_growth p_rcpp_fishpop_growth = NULL;
+        if (p_rcpp_fishpop_growth == NULL) {
+            validateSignature("void(*rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
+            p_rcpp_fishpop_growth = (Ptr_rcpp_fishpop_growth)R_GetCCallable("arrR", "_arrR_rcpp_fishpop_growth");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_fishpop_growth(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_k)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_a)), Shield<SEXP>(Rcpp::wrap(pop_b)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(pop_reserves_consump)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(min_per_i)));
+            rcpp_result_gen = p_rcpp_fishpop_growth(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_k)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_a)), Shield<SEXP>(Rcpp::wrap(pop_b)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(pop_reserves_consump)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(min_per_i)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -148,17 +148,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline Rcpp::IntegerMatrix _rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr__rcpp_get_adjacencies)(SEXP);
-        static Ptr__rcpp_get_adjacencies p__rcpp_get_adjacencies = NULL;
-        if (p__rcpp_get_adjacencies == NULL) {
-            validateSignature("Rcpp::IntegerMatrix(*_rcpp_get_adjacencies)(Rcpp::IntegerVector)");
-            p__rcpp_get_adjacencies = (Ptr__rcpp_get_adjacencies)R_GetCCallable("arrR", "_arrR__rcpp_get_adjacencies");
+    inline Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_get_adjacencies)(SEXP);
+        static Ptr_rcpp_get_adjacencies p_rcpp_get_adjacencies = NULL;
+        if (p_rcpp_get_adjacencies == NULL) {
+            validateSignature("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector)");
+            p_rcpp_get_adjacencies = (Ptr_rcpp_get_adjacencies)R_GetCCallable("arrR", "_arrR_rcpp_get_adjacencies");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_get_adjacencies(Shield<SEXP>(Rcpp::wrap(dimensions)));
+            rcpp_result_gen = p_rcpp_get_adjacencies(Shield<SEXP>(Rcpp::wrap(dimensions)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -169,17 +169,17 @@ namespace arrR {
         return Rcpp::as<Rcpp::IntegerMatrix >(rcpp_result_gen);
     }
 
-    inline double _rcpp_get_bearing(double x1, double y1, double x2, double y2) {
-        typedef SEXP(*Ptr__rcpp_get_bearing)(SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_get_bearing p__rcpp_get_bearing = NULL;
-        if (p__rcpp_get_bearing == NULL) {
-            validateSignature("double(*_rcpp_get_bearing)(double,double,double,double)");
-            p__rcpp_get_bearing = (Ptr__rcpp_get_bearing)R_GetCCallable("arrR", "_arrR__rcpp_get_bearing");
+    inline double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
+        typedef SEXP(*Ptr_rcpp_get_bearing)(SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_get_bearing p_rcpp_get_bearing = NULL;
+        if (p_rcpp_get_bearing == NULL) {
+            validateSignature("double(*rcpp_get_bearing)(double,double,double,double)");
+            p_rcpp_get_bearing = (Ptr_rcpp_get_bearing)R_GetCCallable("arrR", "_arrR_rcpp_get_bearing");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_get_bearing(Shield<SEXP>(Rcpp::wrap(x1)), Shield<SEXP>(Rcpp::wrap(y1)), Shield<SEXP>(Rcpp::wrap(x2)), Shield<SEXP>(Rcpp::wrap(y2)));
+            rcpp_result_gen = p_rcpp_get_bearing(Shield<SEXP>(Rcpp::wrap(x1)), Shield<SEXP>(Rcpp::wrap(y1)), Shield<SEXP>(Rcpp::wrap(x2)), Shield<SEXP>(Rcpp::wrap(y2)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -190,17 +190,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline double _rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
-        typedef SEXP(*Ptr__rcpp_get_max_dist)(SEXP,SEXP,SEXP);
-        static Ptr__rcpp_get_max_dist p__rcpp_get_max_dist = NULL;
-        if (p__rcpp_get_max_dist == NULL) {
-            validateSignature("double(*_rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
-            p__rcpp_get_max_dist = (Ptr__rcpp_get_max_dist)R_GetCCallable("arrR", "_arrR__rcpp_get_max_dist");
+    inline double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
+        typedef SEXP(*Ptr_rcpp_get_max_dist)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_get_max_dist p_rcpp_get_max_dist = NULL;
+        if (p_rcpp_get_max_dist == NULL) {
+            validateSignature("double(*rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
+            p_rcpp_get_max_dist = (Ptr_rcpp_get_max_dist)R_GetCCallable("arrR", "_arrR_rcpp_get_max_dist");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_get_max_dist(Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(parameters)), Shield<SEXP>(Rcpp::wrap(n_rand)));
+            rcpp_result_gen = p_rcpp_get_max_dist(Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(parameters)), Shield<SEXP>(Rcpp::wrap(n_rand)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -211,17 +211,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline Rcpp::NumericMatrix _rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
-        typedef SEXP(*Ptr__rcpp_get_reef)(SEXP);
-        static Ptr__rcpp_get_reef p__rcpp_get_reef = NULL;
-        if (p__rcpp_get_reef == NULL) {
-            validateSignature("Rcpp::NumericMatrix(*_rcpp_get_reef)(Rcpp::NumericMatrix)");
-            p__rcpp_get_reef = (Ptr__rcpp_get_reef)R_GetCCallable("arrR", "_arrR__rcpp_get_reef");
+    inline Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
+        typedef SEXP(*Ptr_rcpp_get_reef)(SEXP);
+        static Ptr_rcpp_get_reef p_rcpp_get_reef = NULL;
+        if (p_rcpp_get_reef == NULL) {
+            validateSignature("Rcpp::NumericMatrix(*rcpp_get_reef)(Rcpp::NumericMatrix)");
+            p_rcpp_get_reef = (Ptr_rcpp_get_reef)R_GetCCallable("arrR", "_arrR_rcpp_get_reef");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_get_reef(Shield<SEXP>(Rcpp::wrap(seafloor)));
+            rcpp_result_gen = p_rcpp_get_reef(Shield<SEXP>(Rcpp::wrap(seafloor)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -232,17 +232,17 @@ namespace arrR {
         return Rcpp::as<Rcpp::NumericMatrix >(rcpp_result_gen);
     }
 
-    inline void _rcpp_mineralization(Rcpp::NumericMatrix seafloor, double detritus_mineralization, double detritus_fish_decomp) {
-        typedef SEXP(*Ptr__rcpp_mineralization)(SEXP,SEXP,SEXP);
-        static Ptr__rcpp_mineralization p__rcpp_mineralization = NULL;
-        if (p__rcpp_mineralization == NULL) {
-            validateSignature("void(*_rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
-            p__rcpp_mineralization = (Ptr__rcpp_mineralization)R_GetCCallable("arrR", "_arrR__rcpp_mineralization");
+    inline void rcpp_mineralization(Rcpp::NumericMatrix seafloor, double detritus_mineralization, double detritus_fish_decomp) {
+        typedef SEXP(*Ptr_rcpp_mineralization)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_mineralization p_rcpp_mineralization = NULL;
+        if (p_rcpp_mineralization == NULL) {
+            validateSignature("void(*rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
+            p_rcpp_mineralization = (Ptr_rcpp_mineralization)R_GetCCallable("arrR", "_arrR_rcpp_mineralization");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_mineralization(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(detritus_mineralization)), Shield<SEXP>(Rcpp::wrap(detritus_fish_decomp)));
+            rcpp_result_gen = p_rcpp_mineralization(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(detritus_mineralization)), Shield<SEXP>(Rcpp::wrap(detritus_fish_decomp)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -252,158 +252,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline double _rcpp_modify_degree(double x, double y) {
-        typedef SEXP(*Ptr__rcpp_modify_degree)(SEXP,SEXP);
-        static Ptr__rcpp_modify_degree p__rcpp_modify_degree = NULL;
-        if (p__rcpp_modify_degree == NULL) {
-            validateSignature("double(*_rcpp_modify_degree)(double,double)");
-            p__rcpp_modify_degree = (Ptr__rcpp_modify_degree)R_GetCCallable("arrR", "_arrR__rcpp_modify_degree");
+    inline double rcpp_modify_degree(double x, double y) {
+        typedef SEXP(*Ptr_rcpp_modify_degree)(SEXP,SEXP);
+        static Ptr_rcpp_modify_degree p_rcpp_modify_degree = NULL;
+        if (p_rcpp_modify_degree == NULL) {
+            validateSignature("double(*rcpp_modify_degree)(double,double)");
+            p_rcpp_modify_degree = (Ptr_rcpp_modify_degree)R_GetCCallable("arrR", "_arrR_rcpp_modify_degree");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_modify_degree(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<double >(rcpp_result_gen);
-    }
-
-    inline void _rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr__rcpp_mortality)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_mortality p__rcpp_mortality = NULL;
-        if (p__rcpp_mortality == NULL) {
-            validateSignature("void(*_rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
-            p__rcpp_mortality = (Ptr__rcpp_mortality)R_GetCCallable("arrR", "_arrR__rcpp_mortality");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_mortality(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr__rcpp_move_behav)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_move_behav p__rcpp_move_behav = NULL;
-        if (p__rcpp_move_behav == NULL) {
-            validateSignature("void(*_rcpp_move_behav)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
-            p__rcpp_move_behav = (Ptr__rcpp_move_behav)R_GetCCallable("arrR", "_arrR__rcpp_move_behav");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_move_behav(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var, double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr__rcpp_move_rand)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_move_rand p__rcpp_move_rand = NULL;
-        if (p__rcpp_move_rand == NULL) {
-            validateSignature("void(*_rcpp_move_rand)(Rcpp::NumericMatrix,double,double,double,bool,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
-            p__rcpp_move_rand = (Ptr__rcpp_move_rand)R_GetCCallable("arrR", "_arrR__rcpp_move_rand");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_move_rand(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(reef_attraction)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, Rcpp::String movement, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr__rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_move_wrap p__rcpp_move_wrap = NULL;
-        if (p__rcpp_move_wrap == NULL) {
-            validateSignature("void(*_rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
-            p__rcpp_move_wrap = (Ptr__rcpp_move_wrap)R_GetCCallable("arrR", "_arrR__rcpp_move_wrap");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_move_wrap(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
-        typedef SEXP(*Ptr__rcpp_nutr_input)(SEXP,SEXP);
-        static Ptr__rcpp_nutr_input p__rcpp_nutr_input = NULL;
-        if (p__rcpp_nutr_input == NULL) {
-            validateSignature("void(*_rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
-            p__rcpp_nutr_input = (Ptr__rcpp_nutr_input)R_GetCCallable("arrR", "_arrR__rcpp_nutr_input");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_nutr_input(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_input)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
-        typedef SEXP(*Ptr__rcpp_nutr_output)(SEXP,SEXP,SEXP);
-        static Ptr__rcpp_nutr_output p__rcpp_nutr_output = NULL;
-        if (p__rcpp_nutr_output == NULL) {
-            validateSignature("void(*_rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
-            p__rcpp_nutr_output = (Ptr__rcpp_nutr_output)R_GetCCallable("arrR", "_arrR__rcpp_nutr_output");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_loss)), Shield<SEXP>(Rcpp::wrap(detritus_loss)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline double _rcpp_nutr_uptake(double nutrients, double biomass, double v_max, double k_m, double time_frac) {
-        typedef SEXP(*Ptr__rcpp_nutr_uptake)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_nutr_uptake p__rcpp_nutr_uptake = NULL;
-        if (p__rcpp_nutr_uptake == NULL) {
-            validateSignature("double(*_rcpp_nutr_uptake)(double,double,double,double,double)");
-            p__rcpp_nutr_uptake = (Ptr__rcpp_nutr_uptake)R_GetCCallable("arrR", "_arrR__rcpp_nutr_uptake");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_nutr_uptake(Shield<SEXP>(Rcpp::wrap(nutrients)), Shield<SEXP>(Rcpp::wrap(biomass)), Shield<SEXP>(Rcpp::wrap(v_max)), Shield<SEXP>(Rcpp::wrap(k_m)), Shield<SEXP>(Rcpp::wrap(time_frac)));
+            rcpp_result_gen = p_rcpp_modify_degree(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -414,17 +273,137 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline double _rcpp_quantile(Rcpp::NumericVector x, double q) {
-        typedef SEXP(*Ptr__rcpp_quantile)(SEXP,SEXP);
-        static Ptr__rcpp_quantile p__rcpp_quantile = NULL;
-        if (p__rcpp_quantile == NULL) {
-            validateSignature("double(*_rcpp_quantile)(Rcpp::NumericVector,double)");
-            p__rcpp_quantile = (Ptr__rcpp_quantile)R_GetCCallable("arrR", "_arrR__rcpp_quantile");
+    inline void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_mortality)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_mortality p_rcpp_mortality = NULL;
+        if (p_rcpp_mortality == NULL) {
+            validateSignature("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            p_rcpp_mortality = (Ptr_rcpp_mortality)R_GetCCallable("arrR", "_arrR_rcpp_mortality");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_quantile(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(q)));
+            rcpp_result_gen = p_rcpp_mortality(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_move_behav)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_move_behav p_rcpp_move_behav = NULL;
+        if (p_rcpp_move_behav == NULL) {
+            validateSignature("void(*rcpp_move_behav)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            p_rcpp_move_behav = (Ptr_rcpp_move_behav)R_GetCCallable("arrR", "_arrR_rcpp_move_behav");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_move_behav(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var, double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_move_rand)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_move_rand p_rcpp_move_rand = NULL;
+        if (p_rcpp_move_rand == NULL) {
+            validateSignature("void(*rcpp_move_rand)(Rcpp::NumericMatrix,double,double,double,bool,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            p_rcpp_move_rand = (Ptr_rcpp_move_rand)R_GetCCallable("arrR", "_arrR_rcpp_move_rand");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_move_rand(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(reef_attraction)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, Rcpp::String movement, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_move_wrap p_rcpp_move_wrap = NULL;
+        if (p_rcpp_move_wrap == NULL) {
+            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            p_rcpp_move_wrap = (Ptr_rcpp_move_wrap)R_GetCCallable("arrR", "_arrR_rcpp_move_wrap");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_move_wrap(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_var)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline void rcpp_nutr_input(Rcpp::NumericMatrix seafloor, double nutrients_input) {
+        typedef SEXP(*Ptr_rcpp_nutr_input)(SEXP,SEXP);
+        static Ptr_rcpp_nutr_input p_rcpp_nutr_input = NULL;
+        if (p_rcpp_nutr_input == NULL) {
+            validateSignature("void(*rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
+            p_rcpp_nutr_input = (Ptr_rcpp_nutr_input)R_GetCCallable("arrR", "_arrR_rcpp_nutr_input");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_nutr_input(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_input)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, double detritus_loss) {
+        typedef SEXP(*Ptr_rcpp_nutr_output)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_nutr_output p_rcpp_nutr_output = NULL;
+        if (p_rcpp_nutr_output == NULL) {
+            validateSignature("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
+            p_rcpp_nutr_output = (Ptr_rcpp_nutr_output)R_GetCCallable("arrR", "_arrR_rcpp_nutr_output");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_nutr_output(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(nutrients_loss)), Shield<SEXP>(Rcpp::wrap(detritus_loss)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline double rcpp_nutr_uptake(double nutrients, double biomass, double v_max, double k_m, double time_frac) {
+        typedef SEXP(*Ptr_rcpp_nutr_uptake)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_nutr_uptake p_rcpp_nutr_uptake = NULL;
+        if (p_rcpp_nutr_uptake == NULL) {
+            validateSignature("double(*rcpp_nutr_uptake)(double,double,double,double,double)");
+            p_rcpp_nutr_uptake = (Ptr_rcpp_nutr_uptake)R_GetCCallable("arrR", "_arrR_rcpp_nutr_uptake");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_nutr_uptake(Shield<SEXP>(Rcpp::wrap(nutrients)), Shield<SEXP>(Rcpp::wrap(biomass)), Shield<SEXP>(Rcpp::wrap(v_max)), Shield<SEXP>(Rcpp::wrap(k_m)), Shield<SEXP>(Rcpp::wrap(time_frac)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -435,57 +414,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline void _rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::String reason) {
-        typedef SEXP(*Ptr__rcpp_reincarnate)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_reincarnate p__rcpp_reincarnate = NULL;
-        if (p__rcpp_reincarnate == NULL) {
-            validateSignature("void(*_rcpp_reincarnate)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,int,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector,double,double,double,Rcpp::String)");
-            p__rcpp_reincarnate = (Ptr__rcpp_reincarnate)R_GetCCallable("arrR", "_arrR__rcpp_reincarnate");
+    inline double rcpp_quantile(Rcpp::NumericVector x, double q) {
+        typedef SEXP(*Ptr_rcpp_quantile)(SEXP,SEXP);
+        static Ptr_rcpp_quantile p_rcpp_quantile = NULL;
+        if (p_rcpp_quantile == NULL) {
+            validateSignature("double(*rcpp_quantile)(Rcpp::NumericVector,double)");
+            p_rcpp_quantile = (Ptr_rcpp_quantile)R_GetCCallable("arrR", "_arrR_rcpp_quantile");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_reincarnate(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(fish_id)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(reason)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline void _rcpp_respiration(Rcpp::NumericMatrix fishpop, double resp_intercept, double resp_slope, double resp_temp_low, double resp_temp_max, double resp_temp_optm, double water_temp, double min_per_i) {
-        typedef SEXP(*Ptr__rcpp_respiration)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_respiration p__rcpp_respiration = NULL;
-        if (p__rcpp_respiration == NULL) {
-            validateSignature("void(*_rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
-            p__rcpp_respiration = (Ptr__rcpp_respiration)R_GetCCallable("arrR", "_arrR__rcpp_respiration");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_respiration(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(resp_intercept)), Shield<SEXP>(Rcpp::wrap(resp_slope)), Shield<SEXP>(Rcpp::wrap(resp_temp_low)), Shield<SEXP>(Rcpp::wrap(resp_temp_max)), Shield<SEXP>(Rcpp::wrap(resp_temp_optm)), Shield<SEXP>(Rcpp::wrap(water_temp)), Shield<SEXP>(Rcpp::wrap(min_per_i)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-    }
-
-    inline double _rcpp_rlognorm(double mean, double sd, double min, double max) {
-        typedef SEXP(*Ptr__rcpp_rlognorm)(SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_rlognorm p__rcpp_rlognorm = NULL;
-        if (p__rcpp_rlognorm == NULL) {
-            validateSignature("double(*_rcpp_rlognorm)(double,double,double,double)");
-            p__rcpp_rlognorm = (Ptr__rcpp_rlognorm)R_GetCCallable("arrR", "_arrR__rcpp_rlognorm");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_rlognorm(Shield<SEXP>(Rcpp::wrap(mean)), Shield<SEXP>(Rcpp::wrap(sd)), Shield<SEXP>(Rcpp::wrap(min)), Shield<SEXP>(Rcpp::wrap(max)));
+            rcpp_result_gen = p_rcpp_quantile(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(q)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -496,17 +435,17 @@ namespace arrR {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
-    inline void _rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double seagrass_thres, double seagrass_slope, double seagrass_slough, double time_frac) {
-        typedef SEXP(*Ptr__rcpp_seagrass_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_seagrass_growth p__rcpp_seagrass_growth = NULL;
-        if (p__rcpp_seagrass_growth == NULL) {
-            validateSignature("void(*_rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
-            p__rcpp_seagrass_growth = (Ptr__rcpp_seagrass_growth)R_GetCCallable("arrR", "_arrR__rcpp_seagrass_growth");
+    inline void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double pop_linf, double pop_n_body, double pop_reserves_max, Rcpp::String reason) {
+        typedef SEXP(*Ptr_rcpp_reincarnate)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_reincarnate p_rcpp_reincarnate = NULL;
+        if (p_rcpp_reincarnate == NULL) {
+            validateSignature("void(*rcpp_reincarnate)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,int,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector,double,double,double,Rcpp::String)");
+            p_rcpp_reincarnate = (Ptr_rcpp_reincarnate)R_GetCCallable("arrR", "_arrR_rcpp_reincarnate");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_seagrass_growth(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(bg_v_max)), Shield<SEXP>(Rcpp::wrap(bg_k_m)), Shield<SEXP>(Rcpp::wrap(bg_gamma)), Shield<SEXP>(Rcpp::wrap(ag_v_max)), Shield<SEXP>(Rcpp::wrap(ag_k_m)), Shield<SEXP>(Rcpp::wrap(ag_gamma)), Shield<SEXP>(Rcpp::wrap(bg_biomass_max)), Shield<SEXP>(Rcpp::wrap(bg_biomass_min)), Shield<SEXP>(Rcpp::wrap(ag_biomass_max)), Shield<SEXP>(Rcpp::wrap(ag_biomass_min)), Shield<SEXP>(Rcpp::wrap(seagrass_thres)), Shield<SEXP>(Rcpp::wrap(seagrass_slope)), Shield<SEXP>(Rcpp::wrap(seagrass_slough)), Shield<SEXP>(Rcpp::wrap(time_frac)));
+            rcpp_result_gen = p_rcpp_reincarnate(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(fish_id)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(reason)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -516,17 +455,78 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline Rcpp::IntegerVector _rcpp_shuffle(int min, int max) {
-        typedef SEXP(*Ptr__rcpp_shuffle)(SEXP,SEXP);
-        static Ptr__rcpp_shuffle p__rcpp_shuffle = NULL;
-        if (p__rcpp_shuffle == NULL) {
-            validateSignature("Rcpp::IntegerVector(*_rcpp_shuffle)(int,int)");
-            p__rcpp_shuffle = (Ptr__rcpp_shuffle)R_GetCCallable("arrR", "_arrR__rcpp_shuffle");
+    inline void rcpp_respiration(Rcpp::NumericMatrix fishpop, double resp_intercept, double resp_slope, double resp_temp_low, double resp_temp_max, double resp_temp_optm, double water_temp, double min_per_i) {
+        typedef SEXP(*Ptr_rcpp_respiration)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_respiration p_rcpp_respiration = NULL;
+        if (p_rcpp_respiration == NULL) {
+            validateSignature("void(*rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
+            p_rcpp_respiration = (Ptr_rcpp_respiration)R_GetCCallable("arrR", "_arrR_rcpp_respiration");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_shuffle(Shield<SEXP>(Rcpp::wrap(min)), Shield<SEXP>(Rcpp::wrap(max)));
+            rcpp_result_gen = p_rcpp_respiration(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(resp_intercept)), Shield<SEXP>(Rcpp::wrap(resp_slope)), Shield<SEXP>(Rcpp::wrap(resp_temp_low)), Shield<SEXP>(Rcpp::wrap(resp_temp_max)), Shield<SEXP>(Rcpp::wrap(resp_temp_optm)), Shield<SEXP>(Rcpp::wrap(water_temp)), Shield<SEXP>(Rcpp::wrap(min_per_i)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline double rcpp_rlognorm(double mean, double sd, double min, double max) {
+        typedef SEXP(*Ptr_rcpp_rlognorm)(SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_rlognorm p_rcpp_rlognorm = NULL;
+        if (p_rcpp_rlognorm == NULL) {
+            validateSignature("double(*rcpp_rlognorm)(double,double,double,double)");
+            p_rcpp_rlognorm = (Ptr_rcpp_rlognorm)R_GetCCallable("arrR", "_arrR_rcpp_rlognorm");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_rlognorm(Shield<SEXP>(Rcpp::wrap(mean)), Shield<SEXP>(Rcpp::wrap(sd)), Shield<SEXP>(Rcpp::wrap(min)), Shield<SEXP>(Rcpp::wrap(max)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double seagrass_thres, double seagrass_slope, double seagrass_slough, double time_frac) {
+        typedef SEXP(*Ptr_rcpp_seagrass_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_seagrass_growth p_rcpp_seagrass_growth = NULL;
+        if (p_rcpp_seagrass_growth == NULL) {
+            validateSignature("void(*rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
+            p_rcpp_seagrass_growth = (Ptr_rcpp_seagrass_growth)R_GetCCallable("arrR", "_arrR_rcpp_seagrass_growth");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_seagrass_growth(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(bg_v_max)), Shield<SEXP>(Rcpp::wrap(bg_k_m)), Shield<SEXP>(Rcpp::wrap(bg_gamma)), Shield<SEXP>(Rcpp::wrap(ag_v_max)), Shield<SEXP>(Rcpp::wrap(ag_k_m)), Shield<SEXP>(Rcpp::wrap(ag_gamma)), Shield<SEXP>(Rcpp::wrap(bg_biomass_max)), Shield<SEXP>(Rcpp::wrap(bg_biomass_min)), Shield<SEXP>(Rcpp::wrap(ag_biomass_max)), Shield<SEXP>(Rcpp::wrap(ag_biomass_min)), Shield<SEXP>(Rcpp::wrap(seagrass_thres)), Shield<SEXP>(Rcpp::wrap(seagrass_slope)), Shield<SEXP>(Rcpp::wrap(seagrass_slough)), Shield<SEXP>(Rcpp::wrap(time_frac)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+    }
+
+    inline Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
+        typedef SEXP(*Ptr_rcpp_shuffle)(SEXP,SEXP);
+        static Ptr_rcpp_shuffle p_rcpp_shuffle = NULL;
+        if (p_rcpp_shuffle == NULL) {
+            validateSignature("Rcpp::IntegerVector(*rcpp_shuffle)(int,int)");
+            p_rcpp_shuffle = (Ptr_rcpp_shuffle)R_GetCCallable("arrR", "_arrR_rcpp_shuffle");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_shuffle(Shield<SEXP>(Rcpp::wrap(min)), Shield<SEXP>(Rcpp::wrap(max)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -537,17 +537,17 @@ namespace arrR {
         return Rcpp::as<Rcpp::IntegerVector >(rcpp_result_gen);
     }
 
-    inline void _rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input, Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters, Rcpp::String movement, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose) {
-        typedef SEXP(*Ptr__rcpp_simulate)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_simulate p__rcpp_simulate = NULL;
-        if (p__rcpp_simulate == NULL) {
-            validateSignature("void(*_rcpp_simulate)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::List,Rcpp::List,Rcpp::List,Rcpp::String,Rcpp::NumericVector,Rcpp::IntegerVector,int,int,int,int,int,bool)");
-            p__rcpp_simulate = (Ptr__rcpp_simulate)R_GetCCallable("arrR", "_arrR__rcpp_simulate");
+    inline void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input, Rcpp::List seafloor_track, Rcpp::List fishpop_track, Rcpp::List parameters, Rcpp::String movement, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in, bool verbose) {
+        typedef SEXP(*Ptr_rcpp_simulate)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_simulate p_rcpp_simulate = NULL;
+        if (p_rcpp_simulate == NULL) {
+            validateSignature("void(*rcpp_simulate)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::List,Rcpp::List,Rcpp::List,Rcpp::String,Rcpp::NumericVector,Rcpp::IntegerVector,int,int,int,int,int,bool)");
+            p_rcpp_simulate = (Ptr_rcpp_simulate)R_GetCCallable("arrR", "_arrR_rcpp_simulate");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_simulate(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(nutrients_input)), Shield<SEXP>(Rcpp::wrap(seafloor_track)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(parameters)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(max_i)), Shield<SEXP>(Rcpp::wrap(min_per_i)), Shield<SEXP>(Rcpp::wrap(save_each)), Shield<SEXP>(Rcpp::wrap(seagrass_each)), Shield<SEXP>(Rcpp::wrap(burn_in)), Shield<SEXP>(Rcpp::wrap(verbose)));
+            rcpp_result_gen = p_rcpp_simulate(Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(nutrients_input)), Shield<SEXP>(Rcpp::wrap(seafloor_track)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(parameters)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(max_i)), Shield<SEXP>(Rcpp::wrap(min_per_i)), Shield<SEXP>(Rcpp::wrap(save_each)), Shield<SEXP>(Rcpp::wrap(seagrass_each)), Shield<SEXP>(Rcpp::wrap(burn_in)), Shield<SEXP>(Rcpp::wrap(verbose)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -557,17 +557,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline Rcpp::NumericVector _rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent) {
-        typedef SEXP(*Ptr__rcpp_translate_torus)(SEXP,SEXP,SEXP);
-        static Ptr__rcpp_translate_torus p__rcpp_translate_torus = NULL;
-        if (p__rcpp_translate_torus == NULL) {
-            validateSignature("Rcpp::NumericVector(*_rcpp_translate_torus)(double,double,Rcpp::NumericVector)");
-            p__rcpp_translate_torus = (Ptr__rcpp_translate_torus)R_GetCCallable("arrR", "_arrR__rcpp_translate_torus");
+    inline Rcpp::NumericVector rcpp_translate_torus(double x, double y, Rcpp::NumericVector extent) {
+        typedef SEXP(*Ptr_rcpp_translate_torus)(SEXP,SEXP,SEXP);
+        static Ptr_rcpp_translate_torus p_rcpp_translate_torus = NULL;
+        if (p_rcpp_translate_torus == NULL) {
+            validateSignature("Rcpp::NumericVector(*rcpp_translate_torus)(double,double,Rcpp::NumericVector)");
+            p_rcpp_translate_torus = (Ptr_rcpp_translate_torus)R_GetCCallable("arrR", "_arrR_rcpp_translate_torus");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_translate_torus(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(extent)));
+            rcpp_result_gen = p_rcpp_translate_torus(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)), Shield<SEXP>(Rcpp::wrap(extent)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -578,17 +578,17 @@ namespace arrR {
         return Rcpp::as<Rcpp::NumericVector >(rcpp_result_gen);
     }
 
-    inline void _rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i, double move_dist, double max_dist, Rcpp::NumericVector extent) {
-        typedef SEXP(*Ptr__rcpp_update_coords)(SEXP,SEXP,SEXP,SEXP,SEXP);
-        static Ptr__rcpp_update_coords p__rcpp_update_coords = NULL;
-        if (p__rcpp_update_coords == NULL) {
-            validateSignature("void(*_rcpp_update_coords)(Rcpp::NumericMatrix,int,double,double,Rcpp::NumericVector)");
-            p__rcpp_update_coords = (Ptr__rcpp_update_coords)R_GetCCallable("arrR", "_arrR__rcpp_update_coords");
+    inline void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i, double move_dist, double max_dist, Rcpp::NumericVector extent) {
+        typedef SEXP(*Ptr_rcpp_update_coords)(SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_rcpp_update_coords p_rcpp_update_coords = NULL;
+        if (p_rcpp_update_coords == NULL) {
+            validateSignature("void(*rcpp_update_coords)(Rcpp::NumericMatrix,int,double,double,Rcpp::NumericVector)");
+            p_rcpp_update_coords = (Ptr_rcpp_update_coords)R_GetCCallable("arrR", "_arrR_rcpp_update_coords");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_update_coords(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(i)), Shield<SEXP>(Rcpp::wrap(move_dist)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(extent)));
+            rcpp_result_gen = p_rcpp_update_coords(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(i)), Shield<SEXP>(Rcpp::wrap(move_dist)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(extent)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -598,17 +598,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline int _rcpp_which(double x, Rcpp::NumericVector y) {
-        typedef SEXP(*Ptr__rcpp_which)(SEXP,SEXP);
-        static Ptr__rcpp_which p__rcpp_which = NULL;
-        if (p__rcpp_which == NULL) {
-            validateSignature("int(*_rcpp_which)(double,Rcpp::NumericVector)");
-            p__rcpp_which = (Ptr__rcpp_which)R_GetCCallable("arrR", "_arrR__rcpp_which");
+    inline int rcpp_which(double x, Rcpp::NumericVector y) {
+        typedef SEXP(*Ptr_rcpp_which)(SEXP,SEXP);
+        static Ptr_rcpp_which p_rcpp_which = NULL;
+        if (p_rcpp_which == NULL) {
+            validateSignature("int(*rcpp_which)(double,Rcpp::NumericVector)");
+            p_rcpp_which = (Ptr_rcpp_which)R_GetCCallable("arrR", "_arrR_rcpp_which");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p__rcpp_which(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
+            rcpp_result_gen = p_rcpp_which(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(y)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

@@ -59,7 +59,7 @@ using namespace Rcpp;
 //' @rdname rcpp_simulate
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_simulate)]]
+// [[Rcpp::export]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
                    Rcpp::List parameters, Rcpp::String movement,
@@ -127,8 +127,9 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // get random threshold values depending on parameters
     if (movement == "behav") {
 
-      fishpop_attr(_, 1) = Rcpp::runif(fishpop.nrow(), parameters["fishpop_attr_lo"],
-                                       parameters["fishpop_attr_hi"]);
+      fishpop_attr(_, 1) = Rcpp::runif(fishpop.nrow(), parameters["pop_reserves_thres_lo"],
+                                       parameters["pop_reserves_thres_lo"]);
+
     }
   }
 

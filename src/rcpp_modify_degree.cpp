@@ -24,7 +24,7 @@ using namespace Rcpp;
 //' @rdname rcpp_modify_degree
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_modify_degree)]]
+// [[Rcpp::export]]
 double rcpp_modify_degree(double x, double y) {
 
   // add value to degree
@@ -44,5 +44,5 @@ double rcpp_modify_degree(double x, double y) {
 }
 
 /*** R
-.rcpp_modify_degree(x = 332, y = 33.5)
+rcpp_modify_degree(x = 332, y = 33.5)
 */

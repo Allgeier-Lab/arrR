@@ -28,7 +28,7 @@ using namespace Rcpp;
 //' @rdname rcpp_shuffle
 //'
 //' @keywords internal
-// [[Rcpp::export(.rcpp_shuffle)]]
+// [[Rcpp::export]]
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 
   // create sequance from min to max
@@ -44,5 +44,5 @@ Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 }
 
 /*** R
-.rcpp_shuffle(min = 1, max = 10)
+rcpp_shuffle(min = 1, max = 10)
 */
