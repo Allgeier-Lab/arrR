@@ -55,13 +55,10 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
     double move_dist = 0.0;
 
     // get current row id
-    int row_id = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));
-
-    // get threshold value of individual
-    double thres_temp = fishpop_attr(row_id, 1);
+    int id_attr = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));
 
     // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 9) >= (thres_temp * fishpop(i, 10))) {
+    if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
 
       // get id and distance to closest reef
       Rcpp::NumericVector closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
