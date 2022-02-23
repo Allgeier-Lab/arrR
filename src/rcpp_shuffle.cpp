@@ -4,8 +4,6 @@
 
 #include "rcpp_shuffle.h"
 
-using namespace Rcpp;
-
 // [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_shuffle

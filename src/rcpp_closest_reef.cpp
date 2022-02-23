@@ -4,8 +4,6 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
-
 //' rcpp_closest_reef
 //'
 //' @description

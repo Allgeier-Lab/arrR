@@ -4,8 +4,6 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
-
 //' rcpp_translate_torus
 //'
 //' @description

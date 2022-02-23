@@ -5,8 +5,6 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
-
 //' rcpp_update_coords
 //'
 //' @description

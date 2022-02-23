@@ -7,8 +7,6 @@
 
 using namespace Rcpp;
 
-// [[Rcpp::interfaces(r, cpp)]]
-
 //' rcpp_rlognorm
 //'
 //' @description
