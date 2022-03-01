@@ -171,8 +171,12 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
       movement <- "rand"
 
-      warning("No 'fishpop' present. Setting movement argument to 'rand'",
-              call. = FALSE)
+      if (verbose) {
+
+        warning("No 'fishpop' present. Setting movement argument to 'rand'",
+                call. = FALSE)
+
+      }
     }
 
   # set behavior to foraging only if movement != "behav"
