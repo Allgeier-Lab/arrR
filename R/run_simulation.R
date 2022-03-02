@@ -72,7 +72,7 @@
 #' @export
 run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
                            movement = "rand", parameters,
-                           max_i, min_per_i,seagrass_each = 1,
+                           max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            verbose = TRUE) {
 
@@ -112,7 +112,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   }
 
   # check if each i has input
-  if ((length(nutrients_input) != (max_i / seagrass_each)) && (length(nutrients_input) != 1)) {
+  if ((length(nutrients_input) != max_i) && (length(nutrients_input) != 1)) {
 
     stop("'nutrients_input' must have input amount for each iteration.", call. = FALSE)
 

@@ -92,17 +92,8 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // only one value present
   if (nutrients_input.length() == 1) {
 
-    // only value equals zero, so no input
-    if (nutrients_input(0) == 0.0) {
+    nutrients_input = Rcpp::rep(nutrients_input, max_i);
 
-      nutrients_input = Rcpp::rep(0.0, max_i / seagrass_each);
-
-    // constant nutrient input
-    } else {
-
-      nutrients_input = Rcpp::rep(nutrients_input, max_i / seagrass_each);
-
-    }
   }
 
   // init fishpop //
@@ -154,18 +145,15 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
     }
 
+        // simulate nutrient input if present
+    if (flag_input && (nutrients_input[i] > 0.0)) {
+
+      rcpp_nutr_input(seafloor, nutrients_input[i]);
+
+    }
+
     // simulate seagrass only each seagrass_each iterations
     if ((i % seagrass_each) == 0) {
-
-      // calculate counter for nutrient input vector
-      int i_temp = (i / seagrass_each) - 1;
-
-      // simulate nutrient input if present
-      if (flag_input && (nutrients_input[i_temp] > 0.0)) {
-
-        rcpp_nutr_input(seafloor, nutrients_input[i_temp]);
-
-      }
 
       // simulate seagrass growth
       rcpp_seagrass_growth(seafloor, parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
@@ -209,25 +197,21 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
     }
 
-    // run remaining seagrass subprocesses
-    if ((i % seagrass_each) == 0) {
+    // only diffuse if all parameters larger than zero
+    if (flag_diffuse) {
 
-      // only diffuse if all parameters larger than zero
-      if (flag_diffuse) {
+      // diffuse values between neighbors
+      rcpp_diffuse_values(seafloor, cell_adj,
+                          parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
+                          parameters["detritus_fish_diffusion"]);
 
-        // diffuse values between neighbors
-        rcpp_diffuse_values(seafloor, cell_adj,
-                            parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
-                            parameters["detritus_fish_diffusion"]);
+    }
 
-      }
+    // remove nutrients from cells if output parameter > 0
+    if (flag_output) {
 
-      // remove nutrients from cells if output parameter > 0
-      if (flag_output) {
+      rcpp_nutr_output(seafloor, parameters["nutrients_loss"], parameters["detritus_loss"]);
 
-        rcpp_nutr_output(seafloor, parameters["nutrients_loss"], parameters["detritus_loss"]);
-
-      }
     }
 
     // update tracking list
