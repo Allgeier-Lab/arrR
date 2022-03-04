@@ -20,7 +20,7 @@
 
 \item{what}{Character specifying what to plot.}
 
-\item{summarize}{Character to specify which values of seafloor is used as fill.}
+\item{summarize}{Logical if values over time should be plotted.}
 
 \item{limits}{Named list with vectors specifying min/max values.}
 

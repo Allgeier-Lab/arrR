@@ -5,7 +5,7 @@
 #'
 #' @param x mdl_rn object.
 #' @param what Character specifying what to plot.
-#' @param summarize Character to specify which values of seafloor is used as fill.
+#' @param summarize Logical if values over time should be plotted.
 #' @param limits Named list with vectors specifying min/max values.
 #' @param burn_in If TRUE, line to indicate burn-in time is plotted.
 #' @param normalize Logical if TRUE, count is divided by time steps.

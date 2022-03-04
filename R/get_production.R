@@ -30,7 +30,7 @@ get_production <- function(result, lag = TRUE) {
   # sum for each time step
   seafloor_temp <- stats::aggregate(x = seafloor_temp[, -1],
                                     by = list(timestep = seafloor_temp$timestep),
-                                    FUN = "sum")
+                                    FUN = "sum", na.rm = TRUE)
 
   # use difference to previous time step
   if (lag) {

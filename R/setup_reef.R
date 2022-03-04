@@ -25,7 +25,8 @@ setup_reef <- function(seafloor, reef) {
   terra::values(seafloor)[cell_ids, "reef"] <- 1
 
   # set environmental values of AR cells to NA and 0
-  terra::values(seafloor)[cell_ids, c("ag_biomass", "bg_biomass")] <- c(NA, NA)
+  terra::values(seafloor)[cell_ids, c("ag_biomass", "bg_biomass", "ag_production", "bg_production",
+                                      "ag_slough", "bg_slough", "ag_uptake", "bg_uptake")] <- rep(x = NA, times = 8)
 
   return(seafloor)
 }

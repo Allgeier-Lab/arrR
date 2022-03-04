@@ -4,10 +4,12 @@
 \alias{plot_production}
 \title{plot_production}
 \usage{
-plot_production(result, lag = TRUE)
+plot_production(result, summarize = FALSE, lag = TRUE)
 }
 \arguments{
 \item{result}{mdl_rn object.}
+
+\item{summarize}{Logical if values over time should be plotted.}
 
 \item{lag}{Logical if TRUE, cumulative or difference to previous time step should be returned.}
 }
