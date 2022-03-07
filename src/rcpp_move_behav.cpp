@@ -106,7 +106,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       fishpop(i, 11) = 3.0;
 
       // pull move_dist from log norm with mean_move
-      move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
+      move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
 
     }
 

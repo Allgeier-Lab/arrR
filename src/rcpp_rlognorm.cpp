@@ -47,10 +47,10 @@ double rcpp_rlognorm(double mean, double sd, double min, double max) {
 }
 
 /*** R
-mean <- 5
-sd <- 2
+mean <- 25
+sd <- 10
 n <- 1000000
-max <- 10
+max <- 50
 
 foo <- function(n, m, s) {
   # https://msalganik.wordpress.com/2017/01/21/making-sense-of-the-rlnorm-function-in-r/comment-page-1/
@@ -68,6 +68,9 @@ max_value <- ceiling(max(c(rand_a, rand_b)))
 
 mean(rand_a)
 mean(rand_b)
+
+sd(rand_a)
+sd(rand_b)
 
 plot(density(rand_a), col = "#3C9BED", main = "Density", xlim = c(0, max_value))
 lines(density(rand_b), col = "#EC579A")

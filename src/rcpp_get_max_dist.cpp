@@ -32,8 +32,6 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
 
-  double max_dist = 0.0;
-
   // init temp parameter values for behav or rand/attr movement
   double mean_temp, var_temp;
 
@@ -61,7 +59,7 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
   }
 
   // get 95% precentile
-  max_dist = rcpp_quantile(max_dist_temp, 0.95);
+  double max_dist = rcpp_quantile(max_dist_temp, 0.95);
 
   return(max_dist);
 }

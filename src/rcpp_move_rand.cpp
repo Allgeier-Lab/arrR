@@ -49,7 +49,7 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_v
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // sample move dist
-    double move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
+    double move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
 
     // move towards reef
     if (reef_attraction) {
