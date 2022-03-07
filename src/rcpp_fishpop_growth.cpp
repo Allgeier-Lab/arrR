@@ -131,8 +131,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           double nutrients_diff = fishpop(fish_id_temp, 10) - fishpop(fish_id_temp, 9);
 
           // reserves can be filled completely
-          if (consumption_limit >= nutrients_diff
-                && seafloor(cell_id_temp, 5) >= nutrients_diff) {
+          if ((consumption_limit >= nutrients_diff) &&
+              (seafloor(cell_id_temp, 5) >= nutrients_diff)) {
 
             consumption_reserve = nutrients_diff;
 
