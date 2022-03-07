@@ -178,15 +178,6 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
       }
     }
-
-  # set behavior to foraging only if movement != "behav"
-  } else {
-
-    if (movement %in% c("rand", "attr")) {
-
-      fishpop$behavior <- 3.0
-
-    }
   }
 
   # check if no reef is present but movement not rand
