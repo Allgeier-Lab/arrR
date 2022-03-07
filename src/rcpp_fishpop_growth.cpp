@@ -84,6 +84,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     double growth_weight = pop_a * (std::pow((fishpop(fish_id_temp, 5) + growth_length), pop_b) -
                                     std::pow(fishpop(fish_id_temp, 5), pop_b));
 
+    // MH: Update reserves_max already here? Check if they are used somewhere else but end of loop
+    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
+
     // consumption req based on growth in weight + metabolic costs based on weight + n required
     double consumption_require = ((growth_weight + fishpop(fish_id_temp, 8) *
                                   fishpop(fish_id_temp, 6)) / 0.55) * pop_n_body;
@@ -226,8 +229,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // track excretion fish
     fishpop(fish_id_temp, 13) += excretion_temp;
 
-    // update max reserves based on weight
-    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
+    // // MH: Scheduling issue; reserves_max will always be bigger than current. Thus, never exit foraging
+    // // update max reserves based on weight
+    // fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
 
   }
 }
