@@ -26,7 +26,7 @@ provided \code{mdl_rn} object as cell values.
 }
 \examples{
 \dontrun{
-mdlrn_to_raster(mdl_rn = result_rand)
+mdlrn_to_raster(mdl_rn = result)
 }
 
 }

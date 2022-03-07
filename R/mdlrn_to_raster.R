@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' mdlrn_to_raster(mdl_rn = result_rand)
+#' mdlrn_to_raster(mdl_rn = result)
 #' }
 #'
 #' @aliases mdlrn_to_raster
@@ -32,7 +32,9 @@ mdlrn_to_raster <- function(mdl_rn, verbose = TRUE, ...) {
 
   }
 
-  reef <- mdl_rn$coords_reef
+  # get reef cells
+  reef <- mdl_rn$seafloor[mdl_rn$seafloor$timestep == 0 & mdl_rn$seafloor$reef == 1,
+                          c("x", "y")]
 
   # print progress
   if (verbose) {

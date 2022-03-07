@@ -78,8 +78,8 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
         fishpop(i, 11) = 2.0;
 
         double theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
-                                        coords_reef(closest_reef[0], 0),
-                                        coords_reef(closest_reef[0], 1));
+                                        coords_reef(closest_reef[0], 1),
+                                        coords_reef(closest_reef[0], 2));
 
         // update heading
         fishpop(i, 4) = theta;
