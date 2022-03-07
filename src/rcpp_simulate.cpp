@@ -79,6 +79,9 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   bool flag_output = (as<double>(parameters["nutrients_loss"]) > 0.0) ||
     (as<double>(parameters["detritus_loss"]) > 0.0);
 
+  // flag if fishpop is present
+  bool flag_fishpop = fishpop.nrow() > 0;
+
   // init reef coords //
 
   // get reef coords matrix
@@ -108,7 +111,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   double max_dist = 0.0;
 
   // fishpop is present
-  if (fishpop.nrow() > 0) {
+  if (flag_fishpop) {
 
     // get maximum movement distance
     max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
@@ -170,7 +173,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     }
 
     // fish individuals are present and i above burn_in
-    if ((i > burn_in) && (fishpop.nrow() != 0)) {
+    if ((i > burn_in) && flag_fishpop) {
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, fishpop_attr, movement,

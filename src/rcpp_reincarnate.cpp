@@ -65,7 +65,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   double excretion = fishpop(fish_id, 13);
 
-  // create new individual
+  // create new individual //
 
   // create new individual, access all columns of fish_id matrix
   fishpop(fish_id, _) = fishpop_track(fish_id, _);
@@ -101,35 +101,35 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
   cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
                               extent, dimensions, true);
 
-  // detritus pool is smaller than wanted reserves, detritus pool is fully used
-  if (fishpop(fish_id, 10) >= seafloor(cell_id, 5)) {
+  // init consumed detritus
+  double detritus_consumed = 0.0;
 
-    // fish fully consumes detritus pool in cell
-    fishpop(fish_id, 9) = seafloor(cell_id, 5);
+  // detritus pool is smaller than wanted reserves
+  if (seafloor(cell_id, 5) <= fishpop(fish_id, 9)) {
+
+    // fully consumes detritus pool in cell
+    detritus_consumed = seafloor(cell_id, 5);
 
     // set pool to zero
     seafloor(cell_id, 5) = 0.0;
 
-    // track consumption cell
-    seafloor(cell_id, 13) += seafloor(cell_id, 5);
-
-    // track consumption fish
-    fishpop(fish_id, 12) += seafloor(cell_id, 5);
-
-  // detritus pool is larger than what is wanted, so only subset is used
+  // detritus pool is larger than wanted reserves
   } else {
 
-    // wanted reserves can be filled completely
-    fishpop(fish_id, 9) = fishpop(fish_id, 10);
+    // consume wanted reserves
+    detritus_consumed = fishpop(fish_id, 9);
 
-    // reduced detritus pool by wanted reserves
-    seafloor(cell_id, 5) -= fishpop(fish_id, 10);
-
-    // track consumption cell
-    seafloor(cell_id, 13) += fishpop(fish_id, 10);
-
-    // track consumption fish
-    fishpop(fish_id, 12) += fishpop(fish_id, 10);
+    // reduce detritus pool by consumption
+    seafloor(cell_id, 5) -= detritus_consumed;
 
   }
+
+  fishpop(fish_id, 9) = detritus_consumed;
+
+  // track consumption cell
+  seafloor(cell_id, 13) += detritus_consumed;
+
+  // track consumption fish
+  fishpop(fish_id, 12) += detritus_consumed;
+
 }
