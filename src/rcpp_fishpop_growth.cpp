@@ -63,6 +63,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
                          Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                          double min_per_i) {
 
+  // MH: Lots of code repetition here. Maybe check conditions first and set flags?
+
   // create random order if fish id because detritus can run out
   Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
 
@@ -114,6 +116,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // increase fish dimensions weight
         fishpop(fish_id_temp, 6) += growth_weight;
 
+        // update reserves_max already here
+        fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
+
         // consumption requirement can be met by detritus_pool
         if (consumption_require <= seafloor(cell_id_temp, 5)) {
 
@@ -136,7 +141,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
             consumption_reserve = nutrients_diff;
 
-          // reserves cannot be filled completely i) limits or ii) pool
+          // reserves cannot be filled completely i) consumption_limit or ii) detritus_pool
           } else {
 
             // limits are smaller than detritus pool
@@ -211,6 +216,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // increase fish dimensions weight
         fishpop(fish_id_temp, 6) += growth_weight;
 
+        // update reserves_max already here
+        fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
+
       }
     }
 
@@ -225,9 +233,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
     // track excretion fish
     fishpop(fish_id_temp, 13) += excretion_temp;
-
-    // update max reserves based on weight
-    fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
 
   }
 }
