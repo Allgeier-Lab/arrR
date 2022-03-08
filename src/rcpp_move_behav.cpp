@@ -49,8 +49,11 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // init move_dist
-    double move_dist = -1.0;
+    // init move_dist and bearing
+    double move_dist, theta;
+
+    // init vector for reef distance
+    Rcpp::NumericVector closest_reef;
 
     // get current row id
     int id_attr = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));
@@ -75,25 +78,29 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
     // behavior 2: move towards reef
     if (fishpop(i, 11) == 2.0) {
 
-      // MH: Check if below threshold again?
+      // reserves above threshold; return towards reef
+      if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
 
-      // get id and distance to closest reef
-      Rcpp::NumericVector closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
-                                                           coords_reef);
+        // get id and distance to closest reef
+        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
+                                         coords_reef);
 
-      // move towards reef
-      if (closest_reef[1] > move_border) {
+        // reef is further away the the threshold to be "on the reef"
+        if (closest_reef[1] > move_border) {
 
-        // update heading towards reef
-        fishpop(i, 4) = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
-                                         coords_reef(closest_reef[0], 1),
-                                         coords_reef(closest_reef[0], 2));
+          // get direction towards reef
+          theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
+                                   coords_reef(closest_reef[0], 1),
+                                   coords_reef(closest_reef[0], 2));
 
-        // check if reef is further away then move return distance
-        if (closest_reef[1] > move_return) {
+          // update heading towards reef
+          fishpop(i, 4) = theta;
 
-          // sample move distance from lognorm of move_return (swim faster/move further)
-          move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
+          // check if reef is further away then move return distance
+          if (closest_reef[1] > move_return) {
+
+            // sample move distance from lognorm of move_return (swim faster/move further)
+            move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
 
           // reef is closer than move_return, so make to not overshoot
           } else {
@@ -103,32 +110,52 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
 
           }
 
-      // already at reef, switch to behavior 1
+        // already at reef, switch to behavior 1
+        } else {
+
+          fishpop(i, 11) = 1.0;
+
+        }
+
+      // start to forage because reserves below threshold, switch to behavior 3
       } else {
 
-        fishpop(i, 11) = 1.0;
-
-      }
-    }
-
-    if (fishpop(i, 11) == 1.0) {
-
-      // MH: Check if closest_reef[1] > move_border?
-
-      // stay at reef because reserves are above threshold
-      if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
-
-        move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
-
-      // start to forage because reserves below threshold
-      } else {
+        // pull move_dist from log norm with mean_move
+        move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
 
         fishpop(i, 11) = 3.0;
 
       }
     }
 
-    if (move_dist < 0) Rcpp::stop("Upsy-daisies...");
+    if (fishpop(i, 11) == 1.0) {
+
+      // stay at reef because reserves are above threshold
+      if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
+
+        // get id and distance to closest reef
+        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3), coords_reef);
+
+        // moved away from reef
+        if (closest_reef[1] > move_border) {
+
+          fishpop(i, 11) = 2.0;
+
+        }
+
+        // pull random movement distance
+        move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
+
+      // start to forage because reserves below threshold, switch to behavior 3
+      } else {
+
+        // pull move_dist from log norm with mean_move
+        move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
+
+        fishpop(i, 11) = 3.0;
+
+      }
+    }
 
     // update fish coordinates and activity
     rcpp_update_coords(fishpop, i, move_dist, max_dist, extent);
