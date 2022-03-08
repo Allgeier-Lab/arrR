@@ -229,7 +229,7 @@
                          parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"attr"</span>,
                          max_i <span class="op">=</span> <span class="va">max_i</span>, min_per_i <span class="op">=</span> <span class="va">min_per_i</span>, 
                          seagrass_each <span class="op">=</span> <span class="va">seagrass_each</span>, save_each <span class="op">=</span> <span class="va">save_each</span><span class="op">)</span>
-<span class="co">#&gt; &gt; ...Starting at &lt;2022-03-08 16:42:29&gt;...</span>
+<span class="co">#&gt; &gt; ...Starting at &lt;2022-03-08 21:56:52&gt;...</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; &gt; Seafloor with 100 rows x 100 cols; 5 reef cell(s).</span>
 <span class="co">#&gt; &gt; Population with 8 individuals [movement: 'attr'].</span>
@@ -239,7 +239,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; &gt; ...Saving results...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; &gt; ...All done at &lt;2022-03-08 16:43:04&gt;...</span></code></pre></div>
+<span class="co">#&gt; &gt; ...All done at &lt;2022-03-08 21:57:27&gt;...</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="look-at-model-results">4. Look at model results<a class="anchor" aria-label="anchor" href="#look-at-model-results"></a>
@@ -254,14 +254,14 @@
 <span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool)</span>
-<span class="co">#&gt; Minimum  : 98.244, 604.46, 0, 2.963</span>
-<span class="co">#&gt; Mean     : 111.413, 610.24, 0, 3.001</span>
-<span class="co">#&gt; Maximum  : 193.01, 728.746, 0.009, 3.009</span>
+<span class="co">#&gt; Minimum  : 98.311, 604.46, 0, 2.967</span>
+<span class="co">#&gt; Mean     : 111.319, 610.105, 0, 3.003</span>
+<span class="co">#&gt; Maximum  : 193.01, 726.147, 0.009, 3.012</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span>
-<span class="co">#&gt; Minimum  : 13.601, 46.34, 0, 1</span>
-<span class="co">#&gt; Mean     : 22.424, 298.12, 0, 1.625</span>
-<span class="co">#&gt; Maximum  : 34.738, 898.016, 0, 5</span></code></pre></div>
+<span class="co">#&gt; Minimum  : 13.998, 50.758, 0, 1</span>
+<span class="co">#&gt; Mean     : 22.522, 301.307, 0, 1.25</span>
+<span class="co">#&gt; Maximum  : 34.674, 892.798, 0, 2</span></code></pre></div>
 <p>The returning object <code>mdl_rn</code> object is simply a list “under the hood”, so analyzing the results yourself should be pretty straightforward. Simply access the data you need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of result list</span>
@@ -273,20 +273,20 @@
 
 <span class="co"># show e.g. result for fish population</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">fishpop</span><span class="op">)</span>
-<span class="co">#&gt;   id age          x          y   heading    length      weight activity</span>
-<span class="co">#&gt; 1  1   0  -8.968123 -40.777221 266.03949 29.936558 561.1248127        0</span>
-<span class="co">#&gt; 2  2   0 -43.019821  -9.904227  60.16279  6.081694   3.6398796        0</span>
-<span class="co">#&gt; 3  3   0 -48.264700 -28.012616 147.61951  2.665844   0.2684409        0</span>
-<span class="co">#&gt; 4  4   0 -15.773769  21.383799 357.72898  5.687454   2.9449697        0</span>
-<span class="co">#&gt; 5  5   0 -11.602435 -43.694293 133.17675 21.949573 210.3939256        0</span>
-<span class="co">#&gt; 6  6   0 -34.515109  32.932595 220.49871  2.257940   0.1588072        0</span>
+<span class="co">#&gt;   id age          x         y   heading    length       weight activity</span>
+<span class="co">#&gt; 1  1   0 -30.368602  47.24824 124.23885  3.673060   0.73933078        0</span>
+<span class="co">#&gt; 2  2   0  12.037356  32.65351 327.81752  3.447725   0.60523760        0</span>
+<span class="co">#&gt; 3  3   0 -37.132693  24.34566 335.91489  1.287507   0.02689698        0</span>
+<span class="co">#&gt; 4  4   0  32.938875 -14.32276 302.56064 26.495828 381.46036868        0</span>
+<span class="co">#&gt; 5  5   0 -35.354661 -43.76902  57.36493  4.015894   0.98025907        0</span>
+<span class="co">#&gt; 6  6   0   6.268055 -18.09293  78.95666  9.655552  15.69155087        0</span>
 <span class="co">#&gt;   respiration     reserves reserves_max behavior consumption excretion</span>
-<span class="co">#&gt; 1           0 1.4472760538 1.6828133134        3           0         0</span>
-<span class="co">#&gt; 2           0 0.0075804278 0.0109159990        3           0         0</span>
-<span class="co">#&gt; 3           0 0.0007967746 0.0008050543        3           0         0</span>
-<span class="co">#&gt; 4           0 0.0078388983 0.0088319641        3           0         0</span>
-<span class="co">#&gt; 5           0 0.3327530297 0.6309713830        3           0         0</span>
-<span class="co">#&gt; 6           0 0.0004134227 0.0004762628        3           0         0</span>
+<span class="co">#&gt; 1           0 1.542926e-03 2.217253e-03        3           0         0</span>
+<span class="co">#&gt; 2           0 1.360466e-03 1.815108e-03        3           0         0</span>
+<span class="co">#&gt; 3           0 6.362972e-05 8.066405e-05        3           0         0</span>
+<span class="co">#&gt; 4           0 7.963809e-01 1.144000e+00        3           0         0</span>
+<span class="co">#&gt; 5           0 2.848706e-03 2.939797e-03        3           0         0</span>
+<span class="co">#&gt; 6           0 4.082092e-02 4.705896e-02        3           0         0</span>
 <span class="co">#&gt;   died_consumption died_background timestep burn_in</span>
 <span class="co">#&gt; 1                0               0        0      no</span>
 <span class="co">#&gt; 2                0               0        0      no</span>
