@@ -46,12 +46,12 @@ calc_size <- function(pop_n, pop_mean_size, pop_var_size,
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
       rcpp_rlognorm(mean = pop_mean_size, sd = pop_var_size,
-                    min = 0.0, max = Inf)}, FUN.VALUE = numeric(1))
+                    min = 0.0, max = pop_linf * 0.75)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size
   } else {
 
-    body_length <- stats::runif(n = pop_n, min = pop_linf * 0.1, max = pop_linf * 0.9)
+    body_length <- stats::runif(n = pop_n, min = pop_linf * 0.1, max = pop_linf * 0.75)
 
   }
 
