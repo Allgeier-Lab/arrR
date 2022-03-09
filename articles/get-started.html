@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -229,7 +229,7 @@
                          parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"attr"</span>,
                          max_i <span class="op">=</span> <span class="va">max_i</span>, min_per_i <span class="op">=</span> <span class="va">min_per_i</span>, 
                          seagrass_each <span class="op">=</span> <span class="va">seagrass_each</span>, save_each <span class="op">=</span> <span class="va">save_each</span><span class="op">)</span>
-<span class="co">#&gt; &gt; ...Starting at &lt;2022-03-08 21:56:52&gt;...</span>
+<span class="co">#&gt; &gt; ...Starting at &lt;2022-03-09 18:13:56&gt;...</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; &gt; Seafloor with 100 rows x 100 cols; 5 reef cell(s).</span>
 <span class="co">#&gt; &gt; Population with 8 individuals [movement: 'attr'].</span>
@@ -239,7 +239,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; &gt; ...Saving results...</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; &gt; ...All done at &lt;2022-03-08 21:57:27&gt;...</span></code></pre></div>
+<span class="co">#&gt; &gt; ...All done at &lt;2022-03-09 18:14:32&gt;...</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="look-at-model-results">4. Look at model results<a class="anchor" aria-label="anchor" href="#look-at-model-results"></a>
@@ -254,14 +254,14 @@
 <span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool)</span>
-<span class="co">#&gt; Minimum  : 98.311, 604.46, 0, 2.967</span>
-<span class="co">#&gt; Mean     : 111.319, 610.105, 0, 3.003</span>
-<span class="co">#&gt; Maximum  : 193.01, 726.147, 0.009, 3.012</span>
+<span class="co">#&gt; Minimum  : 98.593, 604.46, 0, 2.979</span>
+<span class="co">#&gt; Mean     : 110.709, 609.494, 0, 3.016</span>
+<span class="co">#&gt; Maximum  : 193.01, 718.45, 0.008, 3.025</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span>
-<span class="co">#&gt; Minimum  : 13.998, 50.758, 0, 1</span>
-<span class="co">#&gt; Mean     : 22.522, 301.307, 0, 1.25</span>
-<span class="co">#&gt; Maximum  : 34.674, 892.798, 0, 2</span></code></pre></div>
+<span class="co">#&gt; Minimum  : 12.619, 36.571, 0, 1</span>
+<span class="co">#&gt; Mean     : 22.15, 266.659, 0, 1</span>
+<span class="co">#&gt; Maximum  : 32.198, 706.349, 0, 1</span></code></pre></div>
 <p>The returning object <code>mdl_rn</code> object is simply a list “under the hood”, so analyzing the results yourself should be pretty straightforward. Simply access the data you need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show all elements of result list</span>
@@ -273,20 +273,20 @@
 
 <span class="co"># show e.g. result for fish population</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">fishpop</span><span class="op">)</span>
-<span class="co">#&gt;   id age          x         y   heading    length       weight activity</span>
-<span class="co">#&gt; 1  1   0 -30.368602  47.24824 124.23885  3.673060   0.73933078        0</span>
-<span class="co">#&gt; 2  2   0  12.037356  32.65351 327.81752  3.447725   0.60523760        0</span>
-<span class="co">#&gt; 3  3   0 -37.132693  24.34566 335.91489  1.287507   0.02689698        0</span>
-<span class="co">#&gt; 4  4   0  32.938875 -14.32276 302.56064 26.495828 381.46036868        0</span>
-<span class="co">#&gt; 5  5   0 -35.354661 -43.76902  57.36493  4.015894   0.98025907        0</span>
-<span class="co">#&gt; 6  6   0   6.268055 -18.09293  78.95666  9.655552  15.69155087        0</span>
-<span class="co">#&gt;   respiration     reserves reserves_max behavior consumption excretion</span>
-<span class="co">#&gt; 1           0 1.542926e-03 2.217253e-03        3           0         0</span>
-<span class="co">#&gt; 2           0 1.360466e-03 1.815108e-03        3           0         0</span>
-<span class="co">#&gt; 3           0 6.362972e-05 8.066405e-05        3           0         0</span>
-<span class="co">#&gt; 4           0 7.963809e-01 1.144000e+00        3           0         0</span>
-<span class="co">#&gt; 5           0 2.848706e-03 2.939797e-03        3           0         0</span>
-<span class="co">#&gt; 6           0 4.082092e-02 4.705896e-02        3           0         0</span>
+<span class="co">#&gt;   id age           x         y  heading    length     weight activity</span>
+<span class="co">#&gt; 1  1   0  -2.5909204  33.26638 330.5476  8.454584 10.3115496        0</span>
+<span class="co">#&gt; 2  2   0  -0.4385089  31.32089 280.3458  3.634605  0.7151390        0</span>
+<span class="co">#&gt; 3  3   0   0.5054947 -26.72300 182.6843 17.313337 99.3818295        0</span>
+<span class="co">#&gt; 4  4   0  36.1631015 -23.63252 197.4069  6.179953  3.8290373        0</span>
+<span class="co">#&gt; 5  5   0 -47.3233116  32.54241 297.1697  7.324521  6.5516770        0</span>
+<span class="co">#&gt; 6  6   0  49.6053862  13.76550 192.2750  3.895032  0.8900015        0</span>
+<span class="co">#&gt;   respiration    reserves reserves_max behavior consumption excretion</span>
+<span class="co">#&gt; 1           0 0.015821449  0.030924337        3           0         0</span>
+<span class="co">#&gt; 2           0 0.001432699  0.002144702        3           0         0</span>
+<span class="co">#&gt; 3           0 0.221714658  0.298046107        3           0         0</span>
+<span class="co">#&gt; 4           0 0.007522212  0.011483283        3           0         0</span>
+<span class="co">#&gt; 5           0 0.016404376  0.019648479        3           0         0</span>
+<span class="co">#&gt; 6           0 0.002393429  0.002669114        3           0         0</span>
 <span class="co">#&gt;   died_consumption died_background timestep burn_in</span>
 <span class="co">#&gt; 1                0               0        0      no</span>
 <span class="co">#&gt; 2                0               0        0      no</span>
