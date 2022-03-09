@@ -46,7 +46,7 @@ calc_size <- function(pop_n, pop_mean_size, pop_var_size,
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
       rcpp_rlognorm(mean = pop_mean_size, sd = pop_var_size,
-                    min = 0.0, max = pop_linf * 0.75)}, FUN.VALUE = numeric(1))
+                    min = 3.0, max = pop_linf * 0.75)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size
   } else {
