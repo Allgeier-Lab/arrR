@@ -50,7 +50,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
   for (int i = 0; i < fishpop.nrow(); i++) {
 
     // init move_dist and bearing
-    double move_dist, theta;
+    double move_dist;
 
     // init vector for reef distance
     Rcpp::NumericVector closest_reef;
@@ -82,33 +82,21 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
 
         // get id and distance to closest reef
-        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
-                                         coords_reef);
+        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3), coords_reef);
 
-        // reef is further away the the threshold to be "on the reef"
+        // reef is further away than the threshold to be "on the reef"
         if (closest_reef[1] > move_border) {
 
-          // get direction towards reef
-          theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
-                                   coords_reef(closest_reef[0], 1),
-                                   coords_reef(closest_reef[0], 2));
-
           // update heading towards reef
-          fishpop(i, 4) = theta;
+          fishpop(i, 4) = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
+                                           coords_reef(closest_reef[0], 1),
+                                           coords_reef(closest_reef[0], 2));;
 
-          // check if reef is further away then move return distance
-          if (closest_reef[1] > move_return) {
+          // use either distance to closest_reef or move_return distance
+          double move_temp = std::min(closest_reef[1], move_return);
 
-            // sample move distance from lognorm of move_return (swim faster/move further)
-            move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
-
-          // reef is closer than move_return, so make to not overshoot
-          } else {
-
-            // sample move distance from around distance to reef
-            move_dist = rcpp_rlognorm(closest_reef[1], 1.0, 0.0, max_dist);
-
-          }
+          // sample move distance from around distance to reef
+          move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist);
 
         // already at reef, switch to behavior 1
         } else {
@@ -136,15 +124,29 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
         // get id and distance to closest reef
         closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3), coords_reef);
 
-        // moved away from reef
-        if (closest_reef[1] > move_border) {
+        // still "on reef"
+        if (closest_reef[1] <= move_border) {
+
+          // pull random movement distance
+          move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
+
+        // moved away from reef; switch to behavior 2
+        } else {
+
+          // update heading towards reef
+          fishpop(i, 4) = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
+                                           coords_reef(closest_reef[0], 1),
+                                           coords_reef(closest_reef[0], 2));;
+
+          // use either distance to closest_reef or move_return distance
+          double move_temp = std::min(closest_reef[1], move_return);
+
+          // sample move distance from around distance to reef
+          move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist);
 
           fishpop(i, 11) = 2.0;
 
         }
-
-        // pull random movement distance
-        move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
 
       // start to forage because reserves below threshold, switch to behavior 3
       } else {
