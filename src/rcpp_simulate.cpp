@@ -9,7 +9,6 @@
 #include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
 #include "rcpp_rnorm.h"
-#include "rcpp_rlognorm.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
 #include "rcpp_mineralization.h"

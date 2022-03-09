@@ -41,12 +41,18 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
   // get movement parameters depending on behavior
   if (movement == "behav") {
 
-    mean_temp = parameters["move_return"];
-    var_temp = 1.0;
+    // use either distance to closest_reef or move_return distance
+    mean_temp = std::max(as<double>(parameters["move_return"]),
+                         as<double>(parameters["move_mean"]));
+
+    mean_temp = std::max(mean_temp, as<double>(parameters["move_reef"]));
+
+    var_temp = std::max(as<double>(parameters["move_var"]), 1.0);
 
   } else {
 
     mean_temp = parameters["move_mean"];
+
     var_temp = parameters["move_var"];
 
   }
@@ -65,7 +71,6 @@ double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_ran
 }
 
 /*** R
-rcpp_get_max_dist(movement = "rand", parameters = arrR_parameters, 1000000)
 rcpp_get_max_dist(movement = "attr", parameters = arrR_parameters, 1000000)
 rcpp_get_max_dist(movement = "behav", parameters = arrR_parameters, 1000000)
 */

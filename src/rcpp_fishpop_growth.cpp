@@ -216,7 +216,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // increase fish dimensions weight
         fishpop(fish_id_temp, 6) += growth_weight;
 
-        // update reserves_max already here
+        // update reserves_max
         fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
 
       }

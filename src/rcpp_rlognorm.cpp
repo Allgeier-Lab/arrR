@@ -37,7 +37,7 @@ double rcpp_rlognorm(double mean, double sd, double min, double max) {
   // check if values are within boundaries
   if ((mean < min) || (mean > max)) {
 
-    Rcpp::stop("The 'mean' values is not within the 'min'/'max' boundaries.");
+    Rcpp::stop("The 'mean' values is not within the 'min'/'max' boundaries (rcpp_rlognorm).");
 
   }
 
