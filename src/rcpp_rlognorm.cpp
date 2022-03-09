@@ -34,6 +34,13 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_rlognorm(double mean, double sd, double min, double max) {
 
+  // check if values are within boundaries
+  if ((mean < min) || (mean > max)) {
+
+    Rcpp::stop("The 'mean' values is not within the 'min'/'max' boundaries.");
+
+  }
+
   // https://en.wikipedia.org/wiki/Log-normal_distribution
   double log_mean = std::log(std::pow(mean, 2) /
                              std::sqrt(std::pow(mean, 2) + std::pow(sd, 2)));

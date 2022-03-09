@@ -87,8 +87,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     # fishpop reserves
     "pop_reserves_max",
-    "pop_reserves_thres_lo",
-    "pop_reserves_thres_hi",
+    "pop_reserves_thres_mean",
+    "pop_reserves_thres_var",
     "pop_reserves_consump",
 
     # fishpop dimensions
@@ -173,9 +173,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     # check if min is smaller than max
     # check if min parameter is above maximum parameter
-    if ( any(c(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
-               c(parameters$bg_biomass_max, parameters$ag_biomass_max)),
-             parameters$pop_reserves_thres_lo > parameters$pop_reserves_thres_hi)) {
+    if (any(c(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
+              c(parameters$bg_biomass_max, parameters$ag_biomass_max)))) {
 
       # set final flag to false
       flag_final <- FALSE
@@ -210,7 +209,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_loss,
 
                             parameters$pop_reserves_max,
-                            parameters$pop_reserves_thres_hi) > 1,
+                            parameters$pop_reserves_thres_mean) > 1,
 
                           c(parameters$seagrass_slough,
 
@@ -224,7 +223,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$detritus_loss,
 
                             parameters$pop_reserves_max,
-                            parameters$pop_reserves_thres_lo) < 0))
+                            parameters$pop_reserves_thres_mean) < 0))
 
     # check if all fraction are between 0 and 1
     if (check_ratios) {

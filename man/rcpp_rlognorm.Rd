@@ -2,9 +2,12 @@
 % Please edit documentation in R/RcppExports.R
 \name{rcpp_rlognorm}
 \alias{rcpp_rlognorm}
+\alias{rcpp_rnorm}
 \title{rcpp_rlognorm}
 \usage{
 rcpp_rlognorm(mean, sd, min, max)
+
+rcpp_rnorm(mean, sd, min, max)
 }
 \arguments{
 \item{mean}{Double with mean.}
@@ -15,15 +18,25 @@ rcpp_rlognorm(mean, sd, min, max)
 }
 \value{
 double
+
+double
 }
 \description{
+Rcpp rlognorm.
+
 Rcpp rlognorm.
 }
 \details{
 Draws random number from log-norm distribution. Function uses log-transformed
 values and a normal distribution internally.
+
+Draws random number from norm distribution.
 }
 \references{
+Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+Integration of Additional Probability Distributions. R package version 0.1.1.
+<https://CRAN.R-project.org/package=RcppDist>
+
 Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
 Integration of Additional Probability Distributions. R package version 0.1.1.
 <https://CRAN.R-project.org/package=RcppDist>

@@ -659,6 +659,33 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
 
+#' rcpp_rlognorm
+#'
+#' @description
+#' Rcpp rlognorm.
+#'
+#' @param mean Double with mean.
+#' @param sd Double with sd
+#' @param min,max Double boundaries.
+#'
+#' @details
+#' Draws random number from norm distribution.
+#'
+#' @references
+#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
+#' Integration of Additional Probability Distributions. R package version 0.1.1.
+#' <https://CRAN.R-project.org/package=RcppDist>
+#'
+#' @return double
+#'
+#' @aliases rcpp_rlognorm
+#' @rdname rcpp_rlognorm
+#'
+#' @keywords internal
+rcpp_rnorm <- function(mean, sd, min, max) {
+    .Call(`_arrR_rcpp_rnorm`, mean, sd, min, max)
+}
+
 #' rcpp_seagrass_growth
 #'
 #' @description

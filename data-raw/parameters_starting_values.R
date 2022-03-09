@@ -48,8 +48,8 @@ arrR_parameters <- list(
 
   # fishpop reserves
   pop_reserves_max = 0.5,
-  pop_reserves_thres_lo = 0.5,
-  pop_reserves_thres_hi = 0.5,
+  pop_reserves_thres_mean = 0.1,
+  pop_reserves_thres_var = 0.0,
   pop_reserves_consump = 1.0,
 
   # fishpop respiration

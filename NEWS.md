@@ -1,3 +1,8 @@
+# arrR 1.4.2
+* Update to "behav" movement
+* Renamed `pop_thres_reserves_lo`/`pop_thres_reserves_hi` to `pop_thres_reserves_mean`/`pop_thres_reserves_var`
+* Using `rcpp_rnorm()` for random reserves threshold value
+
 # arrR 1.4.1
 * Move some pre-process code from `R` to `Rcpp` and use internal functions
 * Improve documentation

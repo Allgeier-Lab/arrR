@@ -8,6 +8,7 @@
 #include "rcpp_get_reef.h"
 #include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
+#include "rcpp_rnorm.h"
 #include "rcpp_rlognorm.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
@@ -116,12 +117,15 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // get maximum movement distance
     max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
 
-    // get random threshold values depending on parameters
     if (movement == "behav") {
 
-      fishpop_attr(_, 1) = Rcpp::runif(fishpop.nrow(), parameters["pop_reserves_thres_lo"],
-                                       parameters["pop_reserves_thres_lo"]);
+      // create random reserves threshold value
+      for (int i = 0; i < fishpop.nrow(); i++) {
 
+        fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
+                                        parameters["pop_reserves_thres_var"], 0.0, 1.0);
+
+      }
     }
   }
 
