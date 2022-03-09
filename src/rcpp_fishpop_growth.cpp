@@ -105,6 +105,18 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // update reserves_max
       fishpop(fish_id_temp, 10) = fishpop(fish_id_temp, 6) * pop_n_body * pop_reserves_max;
 
+      // calc non-used consumption (excretion)
+      double excretion = (consumption_require - (growth_weight * pop_n_body));
+
+      // add non-used consumption to nutrient pool
+      seafloor(cell_id_temp, 4) += excretion;
+
+      // track excretion cell
+      seafloor(cell_id_temp, 14) += excretion;
+
+      // track excretion fish
+      fishpop(fish_id_temp, 13) += excretion;
+
       // behavior 3: individuals are foraging
       if (fishpop(fish_id_temp, 11) == 3.0) {
 
@@ -177,19 +189,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         }
       }
-
-      // calc non-used consumption (excretion)
-      double excretion = (consumption_require - (growth_weight * pop_n_body));
-
-      // add non-used consumption to nutrient pool
-      seafloor(cell_id_temp, 4) += excretion;
-
-      // track excretion cell
-      seafloor(cell_id_temp, 14) += excretion;
-
-      // track excretion fish
-      fishpop(fish_id_temp, 13) += excretion;
-
 
     // individual dies because consumption requirements cannot be met by detritus and reserves
     } else {
