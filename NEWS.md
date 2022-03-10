@@ -1,3 +1,6 @@
+# arrR 1.4.2.1
+* Better structure of `rcpp_fishpop_growth()`
+
 # arrR 1.4.2
 * Update to "behav" movement
 * Renamed `pop_thres_reserves_lo`/`pop_thres_reserves_hi` to `pop_thres_reserves_mean`/`pop_thres_reserves_var`
