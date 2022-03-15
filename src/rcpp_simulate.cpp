@@ -151,10 +151,13 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
     }
 
-        // simulate nutrient input if present
-    if (flag_input && (nutrients_input[i] > 0.0)) {
+    //
+    int i_temp = i - 1;
 
-      rcpp_nutr_input(seafloor, nutrients_input[i]);
+    // simulate nutrient input if present
+    if (flag_input && (nutrients_input[i_temp] > 0.0)) {
+
+      rcpp_nutr_input(seafloor, nutrients_input[i_temp]);
 
     }
 
