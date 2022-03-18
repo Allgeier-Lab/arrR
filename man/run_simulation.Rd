@@ -16,6 +16,8 @@ run_simulation(
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
+  to_disk = FALSE,
+  path_disk = NULL,
   verbose = TRUE
 )
 }
@@ -41,6 +43,10 @@ run_simulation(
 \item{burn_in}{Numeric with time steps used to burn in (no fish).}
 
 \item{return_burnin}{If FALSE, all time steps < burn_in are not saved.}
+
+\item{to_disk}{Logical if TRUE, results are written into a text file.}
+
+\item{path_disk}{String with path to result text file.}
 
 \item{verbose}{Logical if TRUE, progress reports are printed.}
 }

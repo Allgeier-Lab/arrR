@@ -14,6 +14,8 @@
 #' @param save_each Numeric how often data should be saved.
 #' @param burn_in Numeric with time steps used to burn in (no fish).
 #' @param return_burnin If FALSE, all time steps < burn_in are not saved.
+#' @param to_disk Logical if TRUE, results are written into a text file.
+#' @param path_disk String with path to result text file.
 #' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
@@ -74,7 +76,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
                            movement = "rand", parameters,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
-                           verbose = TRUE) {
+                           to_disk = FALSE, path_disk = NULL, verbose = TRUE) {
 
   # get time at beginning for final print
   if (verbose) {
@@ -151,7 +153,8 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   dimensions <- dim(seafloor)[1:2]
 
   # create lists to store results for each time step
-  seafloor_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+  # even if to_disk = T, starting matrix is returned
+  seafloor_track <- vector(mode = "list", length = ifelse(test = to_disk, yes = 1, no = (max_i / save_each) + 1))
 
   # setup fishpop #
 
@@ -192,9 +195,12 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
     }
   }
 
+  # convert seafloor and fishpop as matrix
   fishpop_values <- as.matrix(fishpop)
 
-  fishpop_track <- vector(mode = "list", length = (max_i / save_each) + 1)
+  # create lists to store results for each time step
+  # even if to_disk = T, timestep=0 is needed during simulation
+  fishpop_track <- vector(mode = "list", length = ifelse(test = to_disk, yes = 1, no = (max_i / save_each) + 1))
 
   # setup various #
 
@@ -207,6 +213,9 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   total_time <- round(max_i * min_per_i / 60 / 24, digits = 2)
 
   total_save_each <- round(save_each * min_per_i / 60 / 24, digits = 2)
+
+  # get disk to result text file if not specified
+  path_disk <- ifelse(test = is.null(path_disk), yes = getwd(), no = path_disk)
 
   # print some basic information about model run
   if (verbose) {
@@ -225,6 +234,16 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
     message("> One iteration equals ", min_per_i, " minutes.")
 
+    if (to_disk) {
+
+      message("> Writing results to ", path_disk, ".")
+
+    } else {
+
+      message("> Storing results in RAM.")
+
+    }
+
     message("")
 
   }
@@ -234,7 +253,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
                 parameters = parameters, movement = movement,
                 extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
                 save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
-                verbose = verbose)
+                to_disk = to_disk, path_disk = path_disk, verbose = verbose)
 
    # new line after last progress message
   if (verbose) {
@@ -250,29 +269,43 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   fishpop_track <- data.frame(do.call(what = "rbind", args = fishpop_track))
 
-  # add time step to  seafloor/fishpop counter
-  seafloor_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
-                                 each = terra::ncell(seafloor))
+  # create timestep vector to add to data.frames
+  # results written to disk, only initial data.frame present
+  if (to_disk) {
 
-  # fishpop is present
-  if (starting_values$pop_n > 0) {
+    # only initial timestep present
+    timestep_seafloor_temp <- 0
 
-    fishpop_track$timestep <- rep(x = seq(from = 0, to = max_i, by = save_each),
-                                  each = starting_values$pop_n)
+    # either only initial timestep present or no fishpop
+    timestep_fishpop_temp <- ifelse(test = starting_values$pop_n > 0,
+                                    yes = 1, no = 0)
 
-  # no fish are present
+    timestep_fishpop_temp <- numeric(timestep_fishpop_temp)
+
+  # data.frame stored in RAM
   } else {
 
-    fishpop_track$timestep <- numeric(0)
+    # repeat all saved timesteps as often as cells are present
+    timestep_seafloor_temp <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                  each = terra::ncell(seafloor))
+
+    # repeat all saved timsteps as often as individuals are present
+    timestep_fishpop_temp <- rep(x = seq(from = 0, to = max_i, by = save_each),
+                                 each = starting_values$pop_n)
 
   }
 
-  # add burn_in col
-  seafloor_track$burn_in <- ifelse(test = seafloor_track$timestep < burn_in,
-                                   yes = "yes", no = "no")
+  # add timesteps as column
+  seafloor_track$timestep <- timestep_seafloor_temp
 
-  fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep < burn_in,
-                                  yes = "yes", no = "no")
+  fishpop_track$timestep <- timestep_fishpop_temp
+
+  # add burn_in col
+  seafloor_track$burn_in <- ifelse(test = seafloor_track$timestep > burn_in,
+                                   yes = "no", no = "yes")
+
+  fishpop_track$burn_in <- ifelse(test = fishpop_track$timestep > burn_in,
+                                  yes = "no", no = "yes")
 
   # remove all burn_in values
   if (!return_burnin) {
