@@ -25,7 +25,7 @@ using namespace Rcpp;
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-double rcpp_convert_nutr(double x, Rcpp::String to) {
+double rcpp_convert_nutr(double x, std::string to) {
 
   double result;
 
