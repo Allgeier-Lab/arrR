@@ -30,7 +30,7 @@ using namespace Rcpp;
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
+double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand) {
 
   // init temp parameter values for behav or rand/attr movement
   double mean_temp, var_temp;
