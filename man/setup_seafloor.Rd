@@ -49,6 +49,6 @@ reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
 seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reef = reef, starting_values = arrR_starting_values)
+reef = reef, starting_values = default_starting)
 
 }

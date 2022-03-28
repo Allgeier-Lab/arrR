@@ -16,8 +16,8 @@
 #' @return list
 #'
 #' @examples
-#' get_stable_values(bg_biomass = arrR_starting_values$bg_biomass,
-#' ag_biomass = arrR_starting_values$ag_biomass, parameters = arrR_parameters)
+#' get_stable_values(bg_biomass = default_starting$bg_biomass,
+#' ag_biomass = default_starting$ag_biomass, parameters = default_parameters)
 #'
 #' @aliases get_stable_values
 #' @rdname get_stable_values

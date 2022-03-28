@@ -85,11 +85,11 @@ namespace arrR {
         return Rcpp::as<Rcpp::IntegerMatrix >(rcpp_result_gen);
     }
 
-    inline double rcpp_get_max_dist(Rcpp::String movement, Rcpp::List parameters, int n_rand) {
+    inline double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand) {
         typedef SEXP(*Ptr_rcpp_get_max_dist)(SEXP,SEXP,SEXP);
         static Ptr_rcpp_get_max_dist p_rcpp_get_max_dist = NULL;
         if (p_rcpp_get_max_dist == NULL) {
-            validateSignature("double(*rcpp_get_max_dist)(Rcpp::String,Rcpp::List,int)");
+            validateSignature("double(*rcpp_get_max_dist)(std::string,Rcpp::List,int)");
             p_rcpp_get_max_dist = (Ptr_rcpp_get_max_dist)R_GetCCallable("arrR", "_arrR_rcpp_get_max_dist");
         }
         RObject rcpp_result_gen;
@@ -167,11 +167,11 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, Rcpp::String movement, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
         typedef SEXP(*Ptr_rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_move_wrap p_rcpp_move_wrap = NULL;
         if (p_rcpp_move_wrap == NULL) {
-            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::String,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,std::string,double,double,double,double,double,double,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
             p_rcpp_move_wrap = (Ptr_rcpp_move_wrap)R_GetCCallable("arrR", "_arrR_rcpp_move_wrap");
         }
         RObject rcpp_result_gen;
