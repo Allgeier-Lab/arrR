@@ -2,10 +2,10 @@
 library(arrR)
 
 # get starting values
-starting_values <- arrR::arrR_starting_values
+starting_values <- arrR::default_starting
 
 # get parameters
-parameters <- arrR::arrR_parameters
+parameters <- arrR::default_parameters
 
 # change some starting values and parameters
 starting_values$pop_n <- 8

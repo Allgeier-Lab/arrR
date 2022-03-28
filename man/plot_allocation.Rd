@@ -18,6 +18,6 @@ allocation within the seagrass dynamics. For more information see \code{rcpp_sea
 and \code{rcpp_allocation_ratio} (internal functions).
 }
 \examples{
-plot_allocation(parameters = arrR_parameters)
+plot_allocation(parameters = default_parameters)
 
 }

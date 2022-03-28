@@ -11,7 +11,7 @@
 #' and \code{rcpp_allocation_ratio} (internal functions).
 #'
 #' @examples
-#' plot_allocation(parameters = arrR_parameters)
+#' plot_allocation(parameters = default_parameters)
 #'
 #' @aliases plot_allocation
 #' @rdname plot_allocation

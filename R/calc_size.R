@@ -28,10 +28,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' calc_size(pop_n = 8, pop_mean_size = arrR_starting_values$pop_mean_size,
-#' pop_var_size = arrR_starting_values$pop_var_size,
-#' pop_linf = arrR_parameters$pop_linf, pop_a = arrR_parameters$pop_a,
-#' pop_b = arrR_parameters$pop_b, use_log = TRUE)
+#' calc_size(pop_n = 8, pop_mean_size = default_starting$pop_mean_size,
+#' pop_var_size = default_starting$pop_var_size,
+#' pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
+#' pop_b = default_parameters$pop_b, use_log = TRUE)
 #' }
 #'
 #' @aliases calc_size
@@ -51,7 +51,7 @@ calc_size <- function(pop_n, pop_mean_size, pop_var_size,
   # use uniform distribution for starting size
   } else {
 
-    body_length <- stats::runif(n = pop_n, min = pop_linf * 0.1, max = pop_linf * 0.75)
+    body_length <- stats::runif(n = pop_n, min = 3.0, max = pop_linf * 0.75)
 
   }
 

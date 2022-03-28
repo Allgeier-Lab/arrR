@@ -71,6 +71,6 @@ double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand
 }
 
 /*** R
-rcpp_get_max_dist(movement = "attr", parameters = arrR_parameters, 1000000)
-rcpp_get_max_dist(movement = "behav", parameters = arrR_parameters, 1000000)
+rcpp_get_max_dist(movement = "attr", parameters = default_parameters, 1000000)
+rcpp_get_max_dist(movement = "behav", parameters = default_parameters, 1000000)
 */

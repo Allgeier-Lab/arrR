@@ -2,16 +2,16 @@ library(dplyr)
 library(terra)
 
 # get parameters
-parameters <- arrR::arrR_parameters
+parameters <- arrR::default_parameters
 
 parameters_output <- parameters
 
 parameters_output$nutrients_loss <- 0.01
 
 # get starting values
-starting_values <- arrR::arrR_starting_values
+starting_values <- arrR::default_starting
 
-starting_values_null <- arrR::arrR_starting_values
+starting_values_null <- arrR::default_starting
 
 starting_values_null$pop_n <- 0
 

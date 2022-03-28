@@ -40,10 +40,10 @@ and 90% of the maximum size (\code{pop_linf}), respectively.
 }
 \examples{
 \dontrun{
-calc_size(pop_n = 8, pop_mean_size = arrR_starting_values$pop_mean_size,
-pop_var_size = arrR_starting_values$pop_var_size,
-pop_linf = arrR_parameters$pop_linf, pop_a = arrR_parameters$pop_a,
-pop_b = arrR_parameters$pop_b, use_log = TRUE)
+calc_size(pop_n = 8, pop_mean_size = default_starting$pop_mean_size,
+pop_var_size = default_starting$pop_var_size,
+pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
+pop_b = default_parameters$pop_b, use_log = TRUE)
 }
 
 }
