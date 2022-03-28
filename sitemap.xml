@@ -43,16 +43,16 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/arrR.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/arrR_parameters.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/arrR_starting_values.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/calc_size.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/check_parameters.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/default_parameters.html</loc>
+  </url>
+  <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/default_starting.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/filter_mdlrn.html</loc>
