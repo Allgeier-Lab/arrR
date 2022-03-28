@@ -9,8 +9,8 @@ reference:
     contents:
       - read_parameters
       - check_parameters
-      - arrR_starting_values
-      - arrR_parameters
+      - default_starting
+      - default_parameters
       - setup_seafloor
       - setup_fishpop
       - get_stable_values
