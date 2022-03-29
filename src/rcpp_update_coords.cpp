@@ -2,6 +2,7 @@
 
 #include "rcpp_update_coords.h"
 #include "rcpp_translate_torus.h"
+#include "rcpp_runif.h"
 
 using namespace Rcpp;
 
@@ -48,6 +49,6 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
 
   // turn fish randomly after moving (runif always returns vector, thus (0))
   // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-  fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)[0];
+  fishpop(i, 4) =  rcpp_runif(0.0, 360.0);
 
 }

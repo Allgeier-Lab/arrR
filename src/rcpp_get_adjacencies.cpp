@@ -31,8 +31,8 @@ using namespace Rcpp;
 Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
 
   int n_cell = dimensions[0] * dimensions[1];
-  int global_counter = 0;
-  int v_temp;
+
+  int global_counter = 0, v_temp = 0;
 
   Rcpp::IntegerMatrix adj(n_cell * 8, 2);
 

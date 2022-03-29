@@ -46,6 +46,7 @@ Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
       // get x,y coords
       reef(counter, 1) = seafloor(i, 0);
+
       reef(counter, 2) = seafloor(i, 1);
 
       // increase counter

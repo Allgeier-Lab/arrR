@@ -92,7 +92,7 @@ Further, you can specify how often all seagrass related processes should be simu
 
 Last, because the produced output can be quite large, you can save only every *j* iterations, specified by `save_each`. The model will still simulate all processes each iteration, however, only safe and return the specified iterations to reduce the required memory.
 
-One of the most important function arguments of `run_simulation()` is the `movement` argument, which specifites how individiauls move across the simulation environment. For more information, please see `vignette("movement-behaviors")`.
+One of the most important function arguments of `run_simulation()` is the `movement` argument, which specifies how individuals move across the simulation environment. For more information, please see `vignette("movement-behaviors")`.
 
 ```{r run_sim}
 # one iterations equals 120 minutes

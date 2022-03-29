@@ -33,10 +33,11 @@ int rcpp_cell_from_xy(double x, double y,
                       Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                       bool rcpp) {
 
+  // init cell id
+  int cell_id = NA_REAL;
+
   // coords outside extent; return NA
   if (x < extent[0] || x > extent[1] || y < extent[2] || y > extent[3]) {
-
-    int cell_id = NA_REAL;
 
     return cell_id;
 
@@ -69,7 +70,7 @@ int rcpp_cell_from_xy(double x, double y,
     }
 
     // each increase in rows adds ncols cells
-    int cell_id = row_id * dimensions[1] + col_id + 1;
+    cell_id = row_id * dimensions[1] + col_id + 1;
 
     // return rcpp index
     if (rcpp) {
@@ -95,4 +96,7 @@ terra::cellFromXY(object = terra::rast(nrows = 100, ncols = 100,
                                        xmin = -50, xmax = 50,
                                        ymin = -50, ymax = 50),
                   xy = cbind(x = x, y = y))
+
+rcpp_cell_from_xy(x = 51, y = -51, extent = c(-50, 50, -50, 50), dimensions = c(100, 100),
+                  rcpp = FALSE)
 */

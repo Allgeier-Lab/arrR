@@ -7,10 +7,10 @@
 
 using namespace Rcpp;
 
-//' rcpp_rlognorm
+//' rcpp_rnorm
 //'
 //' @description
-//' Rcpp rlognorm.
+//' Rcpp rnorm.
 //'
 //' @param mean Double with mean.
 //' @param sd Double with sd
@@ -26,8 +26,8 @@ using namespace Rcpp;
 //'
 //' @return double
 //'
-//' @aliases rcpp_rlognorm
-//' @rdname rcpp_rlognorm
+//' @aliases rcpp_rnorm
+//' @rdname rcpp_rnorm
 //'
 //' @keywords internal
 // [[Rcpp::export]]
@@ -55,7 +55,7 @@ double rcpp_rnorm(double mean, double sd, double min, double max) {
 /*** R
 mean <- 0.5
 sd <- 0.25
-n <- 1000000
+n <- 3
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rnorm(mean = mean, sd = sd,
                                                      min = 0.0, max = 1.0))
@@ -76,7 +76,7 @@ abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
 
 bench::mark(
-  rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf),
+  rcpp_rnorm(mean = mean, sd = sd, min = 0.0, max = Inf),
   rnorm(n = 1, mean = mean, sd = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )

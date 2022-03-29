@@ -34,6 +34,9 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
   // get number of rows for cell adj and seafloor
   int n_cell = seafloor.nrow();
 
+  // init counter for Queen's case
+  int counter = 0;
+
   // create vectors to store seafloor values
   Rcpp::NumericVector nutrients (n_cell);
 
@@ -51,9 +54,6 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
     detritus_fish(i) = (seafloor(i, 6) * detritus_fish_diffusion) / 8.0;
 
   }
-
-  // init counter for Queen's case
-  int counter = 0;
 
   // add and remove diffused amounts
   // loop through all cells
