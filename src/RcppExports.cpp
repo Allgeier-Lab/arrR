@@ -619,6 +619,41 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_runif
+double rcpp_runif(double min, double max);
+static SEXP _arrR_rcpp_runif_try(SEXP minSEXP, SEXP maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< double >::type min(minSEXP);
+    Rcpp::traits::input_parameter< double >::type max(maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_runif(min, max));
+    return rcpp_result_gen;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP _arrR_rcpp_runif(SEXP minSEXP, SEXP maxSEXP) {
+    SEXP rcpp_result_gen;
+    {
+        Rcpp::RNGScope rcpp_rngScope_gen;
+        rcpp_result_gen = PROTECT(_arrR_rcpp_runif_try(minSEXP, maxSEXP));
+    }
+    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
+    if (rcpp_isInterrupt_gen) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
+    if (rcpp_isLongjump_gen) {
+        Rcpp::internal::resumeJump(rcpp_result_gen);
+    }
+    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
+    if (rcpp_isError_gen) {
+        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
+        UNPROTECT(1);
+        Rf_error(CHAR(rcpp_msgSEXP_gen));
+    }
+    UNPROTECT(1);
+    return rcpp_result_gen;
+}
 // rcpp_seagrass_growth
 void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double seagrass_thres, double seagrass_slope, double seagrass_slough, double time_frac);
 static SEXP _arrR_rcpp_seagrass_growth_try(SEXP seafloorSEXP, SEXP bg_v_maxSEXP, SEXP bg_k_mSEXP, SEXP bg_gammaSEXP, SEXP ag_v_maxSEXP, SEXP ag_k_mSEXP, SEXP ag_gammaSEXP, SEXP bg_biomass_maxSEXP, SEXP bg_biomass_minSEXP, SEXP ag_biomass_maxSEXP, SEXP ag_biomass_minSEXP, SEXP seagrass_thresSEXP, SEXP seagrass_slopeSEXP, SEXP seagrass_sloughSEXP, SEXP time_fracSEXP) {
@@ -803,6 +838,7 @@ static int _arrR_RcppExport_validate(const char* sig) {
         signatures.insert("void(*rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
         signatures.insert("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
         signatures.insert("void(*rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
+        signatures.insert("double(*rcpp_runif)(double,double)");
         signatures.insert("void(*rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
         signatures.insert("Rcpp::IntegerVector(*rcpp_shuffle)(int,int)");
         signatures.insert("int(*rcpp_which)(double,Rcpp::NumericVector)");
@@ -823,6 +859,7 @@ RcppExport SEXP _arrR_RcppExport_registerCCallable() {
     R_RegisterCCallable("arrR", "_arrR_rcpp_nutr_input", (DL_FUNC)_arrR_rcpp_nutr_input_try);
     R_RegisterCCallable("arrR", "_arrR_rcpp_nutr_output", (DL_FUNC)_arrR_rcpp_nutr_output_try);
     R_RegisterCCallable("arrR", "_arrR_rcpp_respiration", (DL_FUNC)_arrR_rcpp_respiration_try);
+    R_RegisterCCallable("arrR", "_arrR_rcpp_runif", (DL_FUNC)_arrR_rcpp_runif_try);
     R_RegisterCCallable("arrR", "_arrR_rcpp_seagrass_growth", (DL_FUNC)_arrR_rcpp_seagrass_growth_try);
     R_RegisterCCallable("arrR", "_arrR_rcpp_shuffle", (DL_FUNC)_arrR_rcpp_shuffle_try);
     R_RegisterCCallable("arrR", "_arrR_rcpp_which", (DL_FUNC)_arrR_rcpp_which_try);
@@ -855,6 +892,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_respiration", (DL_FUNC) &_arrR_rcpp_respiration, 8},
     {"_arrR_rcpp_rlognorm", (DL_FUNC) &_arrR_rcpp_rlognorm, 4},
     {"_arrR_rcpp_rnorm", (DL_FUNC) &_arrR_rcpp_rnorm, 4},
+    {"_arrR_rcpp_runif", (DL_FUNC) &_arrR_rcpp_runif, 2},
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 15},
     {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
     {"_arrR_rcpp_simulate", (DL_FUNC) &_arrR_rcpp_simulate, 15},

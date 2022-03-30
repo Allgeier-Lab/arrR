@@ -53,7 +53,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
     double move_dist;
 
     // init vector for reef distance
-    Rcpp::NumericVector closest_reef;
+    Rcpp::NumericVector closest_reef (2, 0.0);
 
     // get current row id
     int id_attr = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));

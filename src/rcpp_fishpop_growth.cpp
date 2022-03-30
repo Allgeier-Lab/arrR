@@ -63,7 +63,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
                          Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                          double min_per_i) {
 
-  // MH: Lots of code repetition here. Maybe check conditions first and set flags?
+  // MH: Lots of code repetition here.
 
   // create random order if fish id because detritus can run out
   Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);

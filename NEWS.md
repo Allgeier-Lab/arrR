@@ -1,5 +1,6 @@
 # arrR 1.4.2.1
 * Better structure of `rcpp_fishpop_growth()`
+* Adding `rcpp_runif()` for better RNG handling
 
 # arrR 1.4.2
 * Update to "behav" movement

@@ -247,6 +247,27 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
+    inline double rcpp_runif(double min, double max) {
+        typedef SEXP(*Ptr_rcpp_runif)(SEXP,SEXP);
+        static Ptr_rcpp_runif p_rcpp_runif = NULL;
+        if (p_rcpp_runif == NULL) {
+            validateSignature("double(*rcpp_runif)(double,double)");
+            p_rcpp_runif = (Ptr_rcpp_runif)R_GetCCallable("arrR", "_arrR_rcpp_runif");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_rcpp_runif(Shield<SEXP>(Rcpp::wrap(min)), Shield<SEXP>(Rcpp::wrap(max)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
     inline void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor, double bg_v_max, double bg_k_m, double bg_gamma, double ag_v_max, double ag_k_m, double ag_gamma, double bg_biomass_max, double bg_biomass_min, double ag_biomass_max, double ag_biomass_min, double seagrass_thres, double seagrass_slope, double seagrass_slough, double time_frac) {
         typedef SEXP(*Ptr_rcpp_seagrass_growth)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_seagrass_growth p_rcpp_seagrass_growth = NULL;

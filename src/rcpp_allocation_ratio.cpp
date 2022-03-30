@@ -41,11 +41,8 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 
   }
 
-  // init ratio
-  double ratio = 0.0;
-
-  // init threshold temp
-  double threshold_temp = 0.0;
+  // init ratio and threshold temp
+  double ratio = 0.0, threshold_temp = 0.0;
 
   // if threshold is bigger than zero, all allocation before threshold goes to bg
   if (threshold > 0) {

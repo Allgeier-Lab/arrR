@@ -659,10 +659,10 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rlognorm`, mean, sd, min, max)
 }
 
-#' rcpp_rlognorm
+#' rcpp_rnorm
 #'
 #' @description
-#' Rcpp rlognorm.
+#' Rcpp rnorm.
 #'
 #' @param mean Double with mean.
 #' @param sd Double with sd
@@ -678,12 +678,35 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #'
 #' @return double
 #'
-#' @aliases rcpp_rlognorm
-#' @rdname rcpp_rlognorm
+#' @aliases rcpp_rnorm
+#' @rdname rcpp_rnorm
 #'
 #' @keywords internal
 rcpp_rnorm <- function(mean, sd, min, max) {
     .Call(`_arrR_rcpp_rnorm`, mean, sd, min, max)
+}
+
+#' rcpp_runif
+#'
+#' @description
+#' Rcpp runif.
+#'
+#' @param min,max Double boundaries.
+#'
+#' @details
+#' Draws random number from uniform distribution.
+#'
+#' @references
+#' <https://www.cplusplus.com/reference/random/uniform_real_distribution/>
+#'
+#' @return double
+#'
+#' @aliases rcpp_runif
+#' @rdname rcpp_runif
+#'
+#' @keywords internal
+rcpp_runif <- function(min, max) {
+    .Call(`_arrR_rcpp_runif`, min, max)
 }
 
 #' rcpp_seagrass_growth

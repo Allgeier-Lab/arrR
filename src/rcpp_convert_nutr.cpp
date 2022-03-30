@@ -27,7 +27,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_convert_nutr(double x, std::string to) {
 
-  double result;
+  double result = 0.0;
 
   // convert to gram by multiplying factor
   if (to == "g") {

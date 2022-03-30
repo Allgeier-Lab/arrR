@@ -2,6 +2,7 @@
 
 #include "rcpp_mortality.h"
 #include "rcpp_shuffle.h"
+#include "rcpp_runif.h"
 #include "rcpp_reincarnate.h"
 
 using namespace Rcpp;
@@ -49,7 +50,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against
-    double random_prob = Rcpp::runif(1, 0.0, 1.0)[0];
+    double random_prob = rcpp_runif(0.0, 1.0);
 
     // individual dies if random number is smaller than death probability
     if (random_prob < death_prob) {
