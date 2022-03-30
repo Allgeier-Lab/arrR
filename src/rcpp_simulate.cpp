@@ -158,9 +158,9 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     file_fishpop.open(path_disk + "fishpop.txt");
 
     // get colnames of matrices
-    CharacterVector colnames_seafloor = colnames(seafloor);
+    CharacterVector colnames_seafloor = Rcpp::colnames(seafloor);
 
-    CharacterVector colnames_fishpop = colnames(fishpop);
+    CharacterVector colnames_fishpop = Rcpp::colnames(fishpop);
 
     // write colnames in head
     file_seafloor << colnames_seafloor << " \"timestep\" \"burn_in\"" << std::endl;
