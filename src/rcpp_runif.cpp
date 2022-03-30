@@ -32,6 +32,14 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_runif(double min, double max) {
 
+
+  // check if boundaries are valid
+  if (min > max) {
+
+    Rcpp::stop("'min' > 'max' is not allowed.");
+
+  }
+
   // obtain a time-based seed
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
