@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,6 +121,8 @@
   <span class="va">save_each</span>,
   <span class="va">seagrass_each</span>,
   <span class="va">burn_in</span>,
+  <span class="va">to_disk</span>,
+  <span class="va">path_disk</span>,
   <span class="va">verbose</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -151,8 +153,12 @@
 <dd><p>Integer how often (each i * x) seagrass dynamics will be simulated.</p></dd>
 <dt>burn_in</dt>
 <dd><p>Numeric with time steps used to burn in.</p></dd>
+<dt>to_disk</dt>
+<dd><p>Logical if TRUE, results are written into a text file.</p></dd>
 <dt>verbose</dt>
 <dd><p>Logical if TRUE, progress reports are printed.</p></dd>
+<dt>disk_path</dt>
+<dd><p>String with path to result text files.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
