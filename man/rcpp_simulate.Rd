@@ -19,6 +19,8 @@ rcpp_simulate(
   save_each,
   seagrass_each,
   burn_in,
+  to_disk,
+  path_disk,
   verbose
 )
 }
@@ -47,7 +49,11 @@ rcpp_simulate(
 
 \item{burn_in}{Numeric with time steps used to burn in.}
 
+\item{to_disk}{Logical if TRUE, results are written into a text file.}
+
 \item{verbose}{Logical if TRUE, progress reports are printed.}
+
+\item{disk_path}{String with path to result text files.}
 }
 \value{
 void

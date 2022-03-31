@@ -793,6 +793,8 @@ rcpp_shuffle <- function(min, max) {
 #' @param save_each Numeric how often data should be saved to return.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 #' @param burn_in Numeric with time steps used to burn in.
+#' @param to_disk Logical if TRUE, results are written into a text file.
+#' @param disk_path String with path to result text files.
 #' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
@@ -812,8 +814,8 @@ rcpp_shuffle <- function(min, max) {
 #' @rdname rcpp_simulate
 #'
 #' @keywords internal
-rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose) {
-    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, verbose))
+rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose) {
+    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose))
 }
 
 #' rcpp_translate_torus

@@ -1,3 +1,6 @@
+# arrR 1.4.3
+* Allow to write results into a text file
+
 # arrR 1.4.2.1
 * Better structure of `rcpp_fishpop_growth()`
 * Adding `rcpp_runif()` for better RNG handling

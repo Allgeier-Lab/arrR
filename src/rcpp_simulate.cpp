@@ -3,11 +3,14 @@
 #include <Rcpp.h>
 #include <progress.hpp>
 #include <progress_bar.hpp>
+#include <iostream>
+#include <fstream>
 
 #include "rcpp_simulate.h"
 #include "rcpp_get_reef.h"
 #include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
+#include "rcpp_write_to_file.h"
 #include "rcpp_rnorm.h"
 #include "rcpp_nutr_input.h"
 #include "rcpp_seagrass_growth.h"
@@ -38,6 +41,8 @@ using namespace Rcpp;
 //' @param save_each Numeric how often data should be saved to return.
 //' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 //' @param burn_in Numeric with time steps used to burn in.
+//' @param to_disk Logical if TRUE, results are written into a text file.
+//' @param disk_path String with path to result text files.
 //' @param verbose Logical if TRUE, progress reports are printed.
 //'
 //' @details
@@ -60,10 +65,10 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
-                   Rcpp::List parameters, Rcpp::String movement,
+                   Rcpp::List parameters, std::string movement,
                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                    int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
-                   bool verbose) {
+                   bool to_disk, std::string path_disk, bool verbose) {
 
   // init flags to run processes //
 
@@ -134,9 +139,40 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // save original data //
 
   // save input data in tracking list
+
+  // seafloor
   seafloor_track[0] = Rcpp::clone(seafloor);
 
+  std::ofstream file_seafloor;
+
+  // fishpop
   fishpop_track[0] = Rcpp::clone(fishpop);
+
+  std::ofstream file_fishpop;
+
+  if (to_disk) {
+
+    // open files
+    file_seafloor.open(path_disk + "seafloor.txt");
+
+    file_fishpop.open(path_disk + "fishpop.txt");
+
+    // get colnames of matrices
+    CharacterVector colnames_seafloor = Rcpp::colnames(seafloor);
+
+    CharacterVector colnames_fishpop = Rcpp::colnames(fishpop);
+
+    // write colnames in head
+    file_seafloor << colnames_seafloor << " \"timestep\" \"burn_in\"" << std::endl;
+
+    file_fishpop << colnames_fishpop << " \"timestep\" \"burn_in\"" << std::endl;
+
+    // write first values to file
+    rcpp_write_to_file(file_seafloor, seafloor, 0, burn_in);
+
+    rcpp_write_to_file(file_fishpop, fishpop, 0, burn_in);
+
+  }
 
   // setup progress bar
   Progress progress(max_i, verbose);
@@ -149,9 +185,14 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
       Rcpp::stop("Stopped by user.");
 
+      // close files
+      file_seafloor.close();
+
+      file_fishpop.close();
+
     }
 
-    //
+    // init counter for nutrients input (different indexing)
     int i_temp = i - 1;
 
     // simulate nutrient input if present
@@ -226,14 +267,33 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // update tracking list
     if ((i % save_each) == 0) {
 
-      seafloor_track[i / save_each] = Rcpp::clone(seafloor);
+      if (to_disk) {
 
-      fishpop_track[i / save_each] = Rcpp::clone(fishpop);
+        rcpp_write_to_file(file_seafloor, seafloor, i, burn_in);
 
+        rcpp_write_to_file(file_fishpop, fishpop, i, burn_in);
+
+      } else {
+
+        seafloor_track[i / save_each] = Rcpp::clone(seafloor);
+
+        fishpop_track[i / save_each] = Rcpp::clone(fishpop);
+
+
+      }
     }
 
     // update progress bar
     progress.increment();
+
+  }
+
+  // close files
+  if (to_disk) {
+
+    file_seafloor.close();
+
+    file_fishpop.close();
 
   }
 }
