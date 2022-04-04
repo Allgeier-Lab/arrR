@@ -1,5 +1,3 @@
-// [[Rcpp::depends(RcppDist)]]
-
 #include <Rcpp.h>
 #include <chrono>
 #include <random>
@@ -15,7 +13,7 @@ using namespace Rcpp;
 //' @description
 //' Rcpp runif.
 //'
-//' @param min,max Double boundaries.
+//' @param min,max Double with boundaries of random number.
 //'
 //' @details
 //' Draws random number from uniform distribution.

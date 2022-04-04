@@ -12,9 +12,9 @@ using namespace Rcpp;
 //' @description
 //' Rcpp rlognorm.
 //'
-//' @param mean Double with mean.
-//' @param sd Double with sd
-//' @param min,max Double boundaries.
+//' @param mean Double with mean value.
+//' @param sd Double with sd value.
+//' @param min,max Double boundaries of random number.
 //'
 //' @details
 //' Draws random number from log-norm distribution. Function uses log-transformed

@@ -636,9 +636,9 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @description
 #' Rcpp rlognorm.
 #'
-#' @param mean Double with mean.
-#' @param sd Double with sd
-#' @param min,max Double boundaries.
+#' @param mean Double with mean value.
+#' @param sd Double with sd value.
+#' @param min,max Double boundaries of random number.
 #'
 #' @details
 #' Draws random number from log-norm distribution. Function uses log-transformed
@@ -664,9 +664,9 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' @description
 #' Rcpp rnorm.
 #'
-#' @param mean Double with mean.
-#' @param sd Double with sd
-#' @param min,max Double boundaries.
+#' @param mean Double with mean value.
+#' @param sd Double with sd value.
+#' @param min,max Double boundaries of random number.
 #'
 #' @details
 #' Draws random number from norm distribution.
@@ -691,7 +691,7 @@ rcpp_rnorm <- function(mean, sd, min, max) {
 #' @description
 #' Rcpp runif.
 #'
-#' @param min,max Double boundaries.
+#' @param min,max Double with boundaries of random number.
 #'
 #' @details
 #' Draws random number from uniform distribution.
