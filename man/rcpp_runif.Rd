@@ -7,7 +7,7 @@
 rcpp_runif(min, max)
 }
 \arguments{
-\item{min, max}{Double boundaries.}
+\item{min, max}{Double with boundaries of random number.}
 }
 \value{
 double

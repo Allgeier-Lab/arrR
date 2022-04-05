@@ -7,11 +7,11 @@
 rcpp_rlognorm(mean, sd, min, max)
 }
 \arguments{
-\item{mean}{Double with mean.}
+\item{mean}{Double with mean value.}
 
-\item{sd}{Double with sd}
+\item{sd}{Double with sd value.}
 
-\item{min, max}{Double boundaries.}
+\item{min, max}{Double boundaries of random number.}
 }
 \value{
 double
