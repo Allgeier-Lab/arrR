@@ -33,7 +33,7 @@
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(dimensions, grain, reef = NULL, starting_values, random = 0,
+setup_seafloor <- function(dimensions, grain = c(1,1), reef = NULL, starting_values, random = 0,
                            verbose = TRUE, ...) {
 
   # print progress

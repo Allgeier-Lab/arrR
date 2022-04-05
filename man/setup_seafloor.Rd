@@ -6,7 +6,7 @@
 \usage{
 setup_seafloor(
   dimensions,
-  grain,
+  grain = c(1, 1),
   reef = NULL,
   starting_values,
   random = 0,
