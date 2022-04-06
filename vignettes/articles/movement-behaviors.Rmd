@@ -40,8 +40,8 @@ A random distance is sampled from a log-normal distribution using `move_mean` an
 
 _...Work in progress..._
 
-1) Individuals move randomly (see "Random movement" above) and forage until their energy reserves are filled completely. 
+3) Individuals move randomly (see "Random movement" above) and forage until their energy reserves are filled completely. 
 
 2) If energy reserves are filled completely, individuals move directly towards the reef using either a random distance sampled from a log-normal distribution using `move_return` or the distance to the closest reef cell (if this distance is shorter than `move_return`) as mean. The direction is the direct bearing towards the reef cell. During this behavior, individuals do not forage.
 
-3) Individuals are considered to be "on the reef" if their distance to the closest reef cell is less than `move_border`. Individuals move randomly using a distance sampled from a log-normal distribution using `move_reef` as mean until their energy reserves are below `pop_reserves_thres`. During this behavior, individuals do not forage.
+1) Individuals are considered to be "on the reef" if their distance to the closest reef cell is less than `move_border`. Individuals move randomly using a distance sampled from a log-normal distribution using `move_reef` as mean until their energy reserves are below `pop_reserves_thres`. During this behavior, individuals do not forage.
