@@ -157,7 +157,7 @@
 <h3 id="behavioral-movement">Behavioral movement<a class="anchor" aria-label="anchor" href="#behavioral-movement"></a>
 </h3>
 <p><em>…Work in progress…</em></p>
-<ol style="list-style-type: decimal">
+<ol start="3" style="list-style-type: decimal">
 <li><p>Individuals move randomly (see “Random movement” above) and forage until their energy reserves are filled completely.</p></li>
 <li><p>If energy reserves are filled completely, individuals move directly towards the reef using either a random distance sampled from a log-normal distribution using <code>move_return</code> or the distance to the closest reef cell (if this distance is shorter than <code>move_return</code>) as mean. The direction is the direct bearing towards the reef cell. During this behavior, individuals do not forage.</p></li>
 <li><p>Individuals are considered to be “on the reef” if their distance to the closest reef cell is less than <code>move_border</code>. Individuals move randomly using a distance sampled from a log-normal distribution using <code>move_reef</code> as mean until their energy reserves are below <code>pop_reserves_thres</code>. During this behavior, individuals do not forage.</p></li>
