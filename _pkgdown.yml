@@ -13,7 +13,7 @@ reference:
       - default_parameters
       - setup_seafloor
       - setup_fishpop
-      - get_stable_values
+      - get_req_nutrients
 
   - title: Run model
     contents:

@@ -42,6 +42,7 @@ input_seafloor <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                        reef = reef_matrix, starting_values = starting_values,
                                        verbose = FALSE)
 
+# create input seafloor
 input_seafloor_rnd <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                            reef = reef_matrix,
                                            starting_values = starting_values,

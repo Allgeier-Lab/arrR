@@ -1,7 +1,7 @@
-#' get_stable_values
+#' get_req_nutrients
 #'
 #' @description
-#' Get values for stable biomass growth.
+#' Get required nutrients for stable biomass growth.
 #'
 #' @param bg_biomass,ag_biomass Numeric with starting bg and ag biomass.
 #' @param parameters List with all model parameters.
@@ -16,14 +16,14 @@
 #' @return list
 #'
 #' @examples
-#' get_stable_values(bg_biomass = default_starting$bg_biomass,
+#' get_req_nutrients(bg_biomass = default_starting$bg_biomass,
 #' ag_biomass = default_starting$ag_biomass, parameters = default_parameters)
 #'
-#' @aliases get_stable_values
-#' @rdname get_stable_values
+#' @aliases get_req_nutrients
+#' @rdname get_req_nutrients
 #'
 #' @export
-get_stable_values <- function(bg_biomass, ag_biomass, parameters) {
+get_req_nutrients <- function(bg_biomass, ag_biomass, parameters) {
 
   # calculate detritus modifier for ag biomass
   ag_modf <- (ag_biomass - parameters$ag_biomass_min) /
@@ -43,19 +43,12 @@ get_stable_values <- function(bg_biomass, ag_biomass, parameters) {
   nutrients_required <- (ag_detritus * parameters$ag_gamma) +
     (bg_detritus * parameters$bg_gamma)
 
-  # remove output amount from stable nutrients pool
-  nutrients_pool <- nutrients_required * (1 - parameters$nutrients_loss)
-
   # calculate detritus amount for stable nutrients minus slough amount
   detritus_pool <- ((nutrients_required / parameters$detritus_mineralization) -
     nutrients_required)
 
-  # calculate nutrient inputs
-  nutrients_input <- nutrients_required - nutrients_pool
-
   # combine to result list
-  result <- list(nutrients_pool = nutrients_pool, detritus_pool = detritus_pool,
-                 nutrients_input = nutrients_input)
+  result <- list(nutrients_pool = nutrients_required, detritus_pool = detritus_pool)
 
   return(result)
 }
