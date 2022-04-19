@@ -109,7 +109,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calc_size</span><span class="op">(</span>
   <span class="va">pop_n</span>,
   <span class="va">pop_mean_size</span>,
-  <span class="va">pop_var_size</span>,
+  <span class="va">pop_sd_size</span>,
   <span class="va">pop_linf</span>,
   <span class="va">pop_a</span>,
   <span class="va">pop_b</span>,
@@ -121,7 +121,7 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>pop_n</dt>
 <dd><p>Numeric with starting values for number of individuals.</p></dd>
-<dt>pop_mean_size, pop_var_size</dt>
+<dt>pop_mean_size, pop_sd_size</dt>
 <dd><p>Numeric with parameters for mean size
 and variance.</p></dd>
 <dt>pop_linf, pop_a, pop_b</dt>
@@ -153,7 +153,7 @@ and 90<!-- % of the maximum size (\code{pop_linf}), respectively. --></p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="fu">calc_size</span><span class="op">(</span>pop_n <span class="op">=</span> <span class="fl">8</span>, pop_mean_size <span class="op">=</span> <span class="va">default_starting</span><span class="op">$</span><span class="va">pop_mean_size</span>,</span>
-<span class="r-in">pop_var_size <span class="op">=</span> <span class="va">default_starting</span><span class="op">$</span><span class="va">pop_var_size</span>,</span>
+<span class="r-in">pop_sd_size <span class="op">=</span> <span class="va">default_starting</span><span class="op">$</span><span class="va">pop_sd_size</span>,</span>
 <span class="r-in">pop_linf <span class="op">=</span> <span class="va">default_parameters</span><span class="op">$</span><span class="va">pop_linf</span>, pop_a <span class="op">=</span> <span class="va">default_parameters</span><span class="op">$</span><span class="va">pop_a</span>,</span>
 <span class="r-in">pop_b <span class="op">=</span> <span class="va">default_parameters</span><span class="op">$</span><span class="va">pop_b</span>, use_log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
