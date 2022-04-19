@@ -33,7 +33,7 @@ using namespace Rcpp;
 double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand) {
 
   // init temp parameter values for behav or rand/attr movement
-  double mean_temp = 0.0, var_temp = 0.0;
+  double mean_temp = 0.0, sd_temp = 0.0;
 
   // create temp vector with 1 million values
   Rcpp::NumericVector max_dist_temp (n_rand, 0.0);
@@ -47,20 +47,20 @@ double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand
 
     mean_temp = std::max(mean_temp, as<double>(parameters["move_reef"]));
 
-    var_temp = std::max(as<double>(parameters["move_var"]), 1.0);
+    sd_temp = std::max(as<double>(parameters["move_sd"]), 1.0);
 
   } else {
 
     mean_temp = parameters["move_mean"];
 
-    var_temp = parameters["move_var"];
+    sd_temp = parameters["move_sd"];
 
   }
 
   // create 1 mio random movement distances
   for (int i = 0; i < max_dist_temp.length(); i ++) {
 
-    max_dist_temp[i] = rcpp_rlognorm(mean_temp, var_temp, 0.0, R_PosInf);
+    max_dist_temp[i] = rcpp_rlognorm(mean_temp, sd_temp, 0.0, R_PosInf);
 
   }
 

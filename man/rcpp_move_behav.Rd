@@ -8,7 +8,7 @@ rcpp_move_behav(
   fishpop,
   fishpop_attr,
   move_mean,
-  move_var,
+  move_sd,
   move_reef,
   move_border,
   move_return,
@@ -23,7 +23,7 @@ rcpp_move_behav(
 
 \item{fishpop_attr}{Matrix with id and threshold of pop_reserves_max.}
 
-\item{move_mean, move_var}{Double with mean movement parameter.}
+\item{move_mean, move_sd}{Double with mean movement parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef.}
 

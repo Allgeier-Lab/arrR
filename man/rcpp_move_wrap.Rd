@@ -9,7 +9,7 @@ rcpp_move_wrap(
   fishpop_attr,
   movement,
   move_mean,
-  move_var,
+  move_sd,
   move_reef,
   move_border,
   move_return,
@@ -26,7 +26,7 @@ rcpp_move_wrap(
 
 \item{movement}{String specifing movement algorithm.}
 
-\item{move_mean, move_var}{Double with mean movement parameter.}
+\item{move_mean, move_sd}{Double with mean movement parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef.}
 

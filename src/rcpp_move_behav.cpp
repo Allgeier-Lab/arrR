@@ -16,7 +16,7 @@ using namespace Rcpp;
 //'
 //' @param fishpop Matrix with fishpop values.
 //' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
-//' @param move_mean,move_var Double with mean movement parameter.
+//' @param move_mean,move_sd Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.
 //' @param move_return Double with mean movement distance when returning to reef.
@@ -41,7 +41,7 @@ using namespace Rcpp;
 //' @keywords internal
 // [[Rcpp::export]]
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr,
-                     double move_mean, double move_var, double move_reef,
+                     double move_mean, double move_sd, double move_reef,
                      double move_border, double move_return, double max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
                      Rcpp::IntegerVector dimensions) {
@@ -65,7 +65,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       if (fishpop(i, 9) < fishpop(i, 10)) {
 
         // pull move_dist from log norm with mean_move
-        move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
 
       // reserves are full, switch to behavior 2
       } else {
@@ -109,7 +109,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       } else {
 
         // pull move_dist from log norm with mean_move
-        move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
 
         fishpop(i, 11) = 3.0;
 
@@ -152,7 +152,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       } else {
 
         // pull move_dist from log norm with mean_move
-        move_dist = rcpp_rlognorm(move_mean, move_var, 0.0, max_dist);
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
 
         fishpop(i, 11) = 3.0;
 

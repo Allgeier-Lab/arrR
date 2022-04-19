@@ -4,7 +4,7 @@
 #' Calculate dimensions of fish individuals.
 #'
 #' @param pop_n Numeric with starting values for number of individuals.
-#' @param pop_mean_size,pop_var_size Numeric with parameters for mean size
+#' @param pop_mean_size,pop_sd_size Numeric with parameters for mean size
 #' and variance.
 #' @param pop_linf,pop_a,pop_b Numeric with parameters for weight calculation.
 #' @param use_log Logical if TRUE, random log distribution is used.
@@ -29,7 +29,7 @@
 #' @examples
 #' \dontrun{
 #' calc_size(pop_n = 8, pop_mean_size = default_starting$pop_mean_size,
-#' pop_var_size = default_starting$pop_var_size,
+#' pop_sd_size = default_starting$pop_sd_size,
 #' pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
 #' pop_b = default_parameters$pop_b, use_log = TRUE)
 #' }
@@ -38,14 +38,14 @@
 #' @rdname calc_size
 #'
 #' @keywords internal
-calc_size <- function(pop_n, pop_mean_size, pop_var_size,
+calc_size <- function(pop_n, pop_mean_size, pop_sd_size,
                       pop_linf, pop_a, pop_b, use_log = TRUE) {
 
   # use log distribution for starting size
   if (use_log) {
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
-      rcpp_rlognorm(mean = pop_mean_size, sd = pop_var_size,
+      rcpp_rlognorm(mean = pop_mean_size, sd = pop_sd_size,
                     min = 3.0, max = pop_linf * 0.75)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size

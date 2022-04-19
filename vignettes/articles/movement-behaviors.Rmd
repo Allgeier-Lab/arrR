@@ -30,11 +30,11 @@ If an individual moves outside the seafloor environment, it re-enters it on the 
 
 ### Random movement
 
-A random distance is sampled from a log-normal distribution using `move_mean` and `move_var` as mean and variance, respectively. A random directions is sampled from uniform distribution (0° <= direction <= 360°).
+A random distance is sampled from a log-normal distribution using `move_mean` and `move_sd` as mean and standard deviation, respectively. A random directions is sampled from uniform distribution (0° <= direction <= 360°).
 
 ### Attracted movement
 
-A random distance is sampled from a log-normal distribution using `move_mean` and `move_var` as mean and variance, respectively. In contrast to random movement, fish individuals perceive the relative distance to the artificial reef cells in three fixed directions ahead of them (45° left, 0° straight and 45° right) and always move in the direction that is the shortest to an artificial reef cell.
+A random distance is sampled from a log-normal distribution using `move_mean` and `move_sd` as mean and standard deviation, respectively. In contrast to random movement, fish individuals perceive the relative distance to the artificial reef cells in three fixed directions ahead of them (45° left, 0° straight and 45° right) and always move in the direction that is the shortest to an artificial reef cell.
 
 ### Behavioral movement
 

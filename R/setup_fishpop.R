@@ -55,7 +55,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
     size <- calc_size(pop_n = starting_values$pop_n,
                       pop_mean_size = starting_values$pop_mean_size,
                       pop_linf = parameters$pop_linf,
-                      pop_var_size = starting_values$pop_var_size,
+                      pop_sd_size = starting_values$pop_sd_size,
                       pop_a = parameters$pop_a, pop_b = parameters$pop_b,
                       use_log = use_log)
 

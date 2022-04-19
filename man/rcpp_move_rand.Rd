@@ -7,7 +7,7 @@
 rcpp_move_rand(
   fishpop,
   move_mean,
-  move_var,
+  move_sd,
   max_dist,
   reef_attraction,
   coords_reef,
@@ -18,7 +18,7 @@ rcpp_move_rand(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{move_mean, move_var}{Double with mean and variance movement parameter.}
+\item{move_mean, move_sd}{Double with mean and variance movement parameter.}
 
 \item{max_dist}{Numeric with maximum movement distance}
 

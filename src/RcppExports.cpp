@@ -356,14 +356,14 @@ RcppExport SEXP _arrR_rcpp_mortality(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, S
     return rcpp_result_gen;
 }
 // rcpp_move_behav
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
-RcppExport SEXP _arrR_rcpp_move_behav(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP move_meanSEXP, SEXP move_varSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, double move_mean, double move_sd, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
+RcppExport SEXP _arrR_rcpp_move_behav(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_attr(fishpop_attrSEXP);
     Rcpp::traits::input_parameter< double >::type move_mean(move_meanSEXP);
-    Rcpp::traits::input_parameter< double >::type move_var(move_varSEXP);
+    Rcpp::traits::input_parameter< double >::type move_sd(move_sdSEXP);
     Rcpp::traits::input_parameter< double >::type move_reef(move_reefSEXP);
     Rcpp::traits::input_parameter< double >::type move_border(move_borderSEXP);
     Rcpp::traits::input_parameter< double >::type move_return(move_returnSEXP);
@@ -371,36 +371,36 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
+    rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
     return R_NilValue;
 END_RCPP
 }
 // rcpp_move_rand
-void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_var, double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
-RcppExport SEXP _arrR_rcpp_move_rand(SEXP fishpopSEXP, SEXP move_meanSEXP, SEXP move_varSEXP, SEXP max_distSEXP, SEXP reef_attractionSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_sd, double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
+RcppExport SEXP _arrR_rcpp_move_rand(SEXP fishpopSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP max_distSEXP, SEXP reef_attractionSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< double >::type move_mean(move_meanSEXP);
-    Rcpp::traits::input_parameter< double >::type move_var(move_varSEXP);
+    Rcpp::traits::input_parameter< double >::type move_sd(move_sdSEXP);
     Rcpp::traits::input_parameter< double >::type max_dist(max_distSEXP);
     Rcpp::traits::input_parameter< bool >::type reef_attraction(reef_attractionSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_rand(fishpop, move_mean, move_var, max_dist, reef_attraction, coords_reef, extent, dimensions);
+    rcpp_move_rand(fishpop, move_mean, move_sd, max_dist, reef_attraction, coords_reef, extent, dimensions);
     return R_NilValue;
 END_RCPP
 }
 // rcpp_move_wrap
-void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, double move_mean, double move_var, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
-static SEXP _arrR_rcpp_move_wrap_try(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_varSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, double move_mean, double move_sd, double move_reef, double move_border, double move_return, double max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
+static SEXP _arrR_rcpp_move_wrap_try(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
 BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_attr(fishpop_attrSEXP);
     Rcpp::traits::input_parameter< std::string >::type movement(movementSEXP);
     Rcpp::traits::input_parameter< double >::type move_mean(move_meanSEXP);
-    Rcpp::traits::input_parameter< double >::type move_var(move_varSEXP);
+    Rcpp::traits::input_parameter< double >::type move_sd(move_sdSEXP);
     Rcpp::traits::input_parameter< double >::type move_reef(move_reefSEXP);
     Rcpp::traits::input_parameter< double >::type move_border(move_borderSEXP);
     Rcpp::traits::input_parameter< double >::type move_return(move_returnSEXP);
@@ -408,15 +408,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_wrap(fishpop, fishpop_attr, movement, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
+    rcpp_move_wrap(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
     return R_NilValue;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_varSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_move_wrap_try(fishpopSEXP, fishpop_attrSEXP, movementSEXP, move_meanSEXP, move_varSEXP, move_reefSEXP, move_borderSEXP, move_returnSEXP, max_distSEXP, coords_reefSEXP, extentSEXP, dimensionsSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_move_wrap_try(fishpopSEXP, fishpop_attrSEXP, movementSEXP, move_meanSEXP, move_sdSEXP, move_reefSEXP, move_borderSEXP, move_returnSEXP, max_distSEXP, coords_reefSEXP, extentSEXP, dimensionsSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {

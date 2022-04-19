@@ -43,7 +43,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # fishpop related
     "pop_n",
     "pop_mean_size",
-    "pop_var_size")
+    "pop_sd_size")
 
   # specify all required parameters
   required_parameters <- c(
@@ -80,7 +80,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     # fishpop movement
     "move_mean",
-    "move_var",
+    "move_sd",
     "move_border",
     "move_reef",
     "move_return",
@@ -88,7 +88,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # fishpop reserves
     "pop_reserves_max",
     "pop_reserves_thres_mean",
-    "pop_reserves_thres_var",
+    "pop_reserves_thres_sd",
     "pop_reserves_consump",
 
     # fishpop dimensions

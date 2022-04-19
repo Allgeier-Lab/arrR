@@ -7,7 +7,7 @@
 calc_size(
   pop_n,
   pop_mean_size,
-  pop_var_size,
+  pop_sd_size,
   pop_linf,
   pop_a,
   pop_b,
@@ -17,7 +17,7 @@ calc_size(
 \arguments{
 \item{pop_n}{Numeric with starting values for number of individuals.}
 
-\item{pop_mean_size, pop_var_size}{Numeric with parameters for mean size
+\item{pop_mean_size, pop_sd_size}{Numeric with parameters for mean size
 and variance.}
 
 \item{pop_linf, pop_a, pop_b}{Numeric with parameters for weight calculation.}
@@ -41,7 +41,7 @@ and 90% of the maximum size (\code{pop_linf}), respectively.
 \examples{
 \dontrun{
 calc_size(pop_n = 8, pop_mean_size = default_starting$pop_mean_size,
-pop_var_size = default_starting$pop_var_size,
+pop_sd_size = default_starting$pop_sd_size,
 pop_linf = default_parameters$pop_linf, pop_a = default_parameters$pop_a,
 pop_b = default_parameters$pop_b, use_log = TRUE)
 }

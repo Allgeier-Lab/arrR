@@ -55,10 +55,10 @@ double rcpp_rnorm(double mean, double sd, double min, double max) {
 /*** R
 mean <- 0.5
 sd <- 0.25
-n <- 3
+n <- 100000
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rnorm(mean = mean, sd = sd,
-                                                     min = 0.0, max = 1.0))
+                                                     min = -Inf, max = Inf))
 
 rand_b <- purrr::map_dbl(1:n, function(i) rnorm(n = 1, mean = mean, sd = sd))
 

@@ -127,7 +127,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       for (int i = 0; i < fishpop.nrow(); i++) {
 
         fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
-                                        parameters["pop_reserves_thres_var"], 0.0, 1.0);
+                                        parameters["pop_reserves_thres_sd"], 0.0, 1.0);
 
       }
     }
@@ -224,7 +224,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
       // calculate new coordinates and activity
       rcpp_move_wrap(fishpop, fishpop_attr, movement,
-                     parameters["move_mean"], parameters["move_var"],
+                     parameters["move_mean"], parameters["move_sd"],
                      parameters["move_reef"], parameters["move_border"],
                      parameters["move_return"], max_dist, coords_reef, extent, dimensions);
 

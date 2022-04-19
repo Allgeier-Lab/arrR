@@ -355,7 +355,7 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
-#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_mean,move_sd Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
@@ -378,8 +378,8 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #' @rdname rcpp_move_behav
 #'
 #' @keywords internal
-rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, fishpop_attr, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
 }
 
 #' rcpp_move_rand
@@ -388,7 +388,7 @@ rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_var, move_ree
 #' Rcpp simulate movement (rand/attr).
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param move_mean,move_var Double with mean and variance movement parameter.
+#' @param move_mean,move_sd Double with mean and variance movement parameter.
 #' @param max_dist Numeric with maximum movement distance
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param coords_reef Matrix with ID and coords of reef cells.
@@ -413,8 +413,8 @@ rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_var, move_ree
 #' @rdname rcpp_move_rand
 #'
 #' @keywords internal
-rcpp_move_rand <- function(fishpop, move_mean, move_var, max_dist, reef_attraction, coords_reef, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, move_mean, move_var, max_dist, reef_attraction, coords_reef, extent, dimensions))
+rcpp_move_rand <- function(fishpop, move_mean, move_sd, max_dist, reef_attraction, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_rand`, fishpop, move_mean, move_sd, max_dist, reef_attraction, coords_reef, extent, dimensions))
 }
 
 #' rcpp_move_wrap
@@ -425,7 +425,7 @@ rcpp_move_rand <- function(fishpop, move_mean, move_var, max_dist, reef_attracti
 #' @param fishpop Matrix with fishpop values.
 #' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
 #' @param movement String specifing movement algorithm.
-#' @param move_mean,move_var Double with mean movement parameter.
+#' @param move_mean,move_sd Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
 #' @param move_return Double with mean movement distance when returning to reef.
@@ -446,8 +446,8 @@ rcpp_move_rand <- function(fishpop, move_mean, move_var, max_dist, reef_attracti
 #' @rdname rcpp_move_wrap
 #'
 #' @keywords internal
-rcpp_move_wrap <- function(fishpop, fishpop_attr, movement, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, fishpop_attr, movement, move_mean, move_var, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+rcpp_move_wrap <- function(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
 }
 
 #' rcpp_nutr_input

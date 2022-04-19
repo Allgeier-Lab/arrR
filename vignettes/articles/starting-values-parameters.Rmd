@@ -43,7 +43,7 @@ starting_values_df <- data.frame(
     # fishpop related
     "pop_n", 
     "pop_mean_size", 
-    "pop_var_size"), 
+    "pop_sd_size"), 
   
   fun = c(
     
@@ -71,7 +71,7 @@ starting_values_df <- data.frame(
     # fishpop related                                     
     "Number of fish individuals", 
     "Mean fish individual size", 
-    "Variation fish individual size"))
+    "Standard deviation fish individual size"))
                 
 knitr::kable(starting_values_df, col.names = c("Name", "Function", "Describtion"), align = "lrr") %>% 
   kableExtra::kable_styling(full_width = TRUE, position = "center", font_size = 12, )
@@ -116,7 +116,7 @@ parameter_df <- data.frame(
     
     # move_* 
     "move_mean",
-    "move_var",
+    "move_sd",
     "move_border",
     "move_reef",
     "move_return",
@@ -234,7 +234,7 @@ parameter_df <- data.frame(
     
     # move_* 
     "Mean movement distance",
-    "Variance of movement distance",
+    "Standard deviation of movement distance",
     "Distance to the AR until individuals are considered to be at the AR",
     "Movement distance directly at the AR",
     "Movement distance for returning to the AR",

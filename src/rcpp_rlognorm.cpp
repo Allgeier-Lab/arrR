@@ -56,18 +56,18 @@ double rcpp_rlognorm(double mean, double sd, double min, double max) {
 /*** R
 mean <- 25
 sd <- 10
-n <- 1000000
+n <- 100000
 max <- 50
 
 foo <- function(n, m, s) {
   # https://msalganik.wordpress.com/2017/01/21/making-sense-of-the-rlnorm-function-in-r/comment-page-1/
   location <- log(m ^ 2 / sqrt(s ^ 2 + m ^ 2))
   shape <- sqrt(log(1 + (s ^ 2 / m ^ 2)))
-  rlnorm(n = n, location, shape)
+  rlnorm(n = n, meanlog = location, sdlog = shape)
 }
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rlognorm(mean = mean, sd = sd,
-                                                        min = 0.0, max = max))
+                                                        min = 0.0, max = Inf))
 
 rand_b <- purrr::map_dbl(1:n, function(i) foo(n = 1, m = mean, s = sd))
 
