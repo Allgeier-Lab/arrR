@@ -49,5 +49,4 @@ Suggests:
     covr
 LinkingTo: 
     Rcpp,
-    RcppDist, 
     RcppProgress

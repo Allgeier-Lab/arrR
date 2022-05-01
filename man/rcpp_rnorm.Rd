@@ -17,14 +17,10 @@ rcpp_rnorm(mean, sd, min, max)
 double
 }
 \description{
-Rcpp rnorm.
+Rcpp random truncated norm
 }
 \details{
-Draws random number from norm distribution.
-}
-\references{
-Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-Integration of Additional Probability Distributions. R package version 0.1.1.
-<https://CRAN.R-project.org/package=RcppDist>
+Draws random number from (truncated) normal distribution using rejection
+approach
 }
 \keyword{internal}

@@ -30,15 +30,15 @@
 Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
 
   // create sequence from min to max
-  Rcpp::IntegerVector x = Rcpp::seq(min, max);
+  Rcpp::IntegerVector rand = Rcpp::seq(min, max);
 
   // obtain a time-based seed
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
   // shuffle vector; std::default_random_engine(seed)
-  std::shuffle(x.begin(), x.end(), std::mt19937(seed));
+  std::shuffle(rand.begin(), rand.end(), std::mt19937(seed));
 
-  return x;
+  return rand;
 }
 
 /*** R

@@ -1,9 +1,7 @@
-// [[Rcpp::depends(RcppDist)]]
-
 #include <Rcpp.h>
-#include <truncnorm.h>
 
 #include "rcpp_rlognorm.h"
+#include "rcpp_rnorm.h"
 
 using namespace Rcpp;
 
@@ -17,13 +15,8 @@ using namespace Rcpp;
 //' @param min,max Double boundaries of random number.
 //'
 //' @details
-//' Draws random number from log-norm distribution. Function uses log-transformed
+//' Draws random number from (truncated) log-norm distribution. Function uses log-transformed
 //' values and a normal distribution internally.
-//'
-//' @references
-//' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-//' Integration of Additional Probability Distributions. R package version 0.1.1.
-//' <https://CRAN.R-project.org/package=RcppDist>
 //'
 //' @return double
 //'
@@ -33,6 +26,8 @@ using namespace Rcpp;
 //' @keywords internal
 // [[Rcpp::export]]
 double rcpp_rlognorm(double mean, double sd, double min, double max) {
+
+  double rand = 0.0;
 
   // check if values are within boundaries
   if ((mean < min) || (mean > max)) {
@@ -47,10 +42,10 @@ double rcpp_rlognorm(double mean, double sd, double min, double max) {
 
   double log_sd = std::sqrt(std::log(1 + (std::pow(sd, 2) / std::pow(mean, 2))));
 
-  // https://github.com/duckmayr/RcppDist
-  double log_rand = std::exp(r_truncnorm(log_mean, log_sd, std::log(min), std::log(max)));
+  // get log norm random number
+  rand = std::exp(rcpp_rnorm(log_mean, log_sd, std::log(min), std::log(max)));
 
-  return (log_rand);
+  return (rand);
 }
 
 /*** R
@@ -67,7 +62,7 @@ foo <- function(n, m, s) {
 }
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rlognorm(mean = mean, sd = sd,
-                                                        min = 0.0, max = Inf))
+                                                         min = 0.0, max = Inf))
 
 rand_b <- purrr::map_dbl(1:n, function(i) foo(n = 1, m = mean, s = sd))
 
@@ -87,8 +82,7 @@ abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
 
 bench::mark(
-  rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf),
-  foo(n = 1, m = mean, s = sd),
+  rcpp_rlognorm(mean = mean, sd = sd, min = 0.0, max = Inf), foo(n = 1, m = mean, s = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )
 */

@@ -641,13 +641,8 @@ rcpp_respiration <- function(fishpop, resp_intercept, resp_slope, resp_temp_low,
 #' @param min,max Double boundaries of random number.
 #'
 #' @details
-#' Draws random number from log-norm distribution. Function uses log-transformed
+#' Draws random number from (truncated) log-norm distribution. Function uses log-transformed
 #' values and a normal distribution internally.
-#'
-#' @references
-#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-#' Integration of Additional Probability Distributions. R package version 0.1.1.
-#' <https://CRAN.R-project.org/package=RcppDist>
 #'
 #' @return double
 #'
@@ -662,19 +657,15 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' rcpp_rnorm
 #'
 #' @description
-#' Rcpp rnorm.
+#' Rcpp random truncated norm
 #'
 #' @param mean Double with mean value.
 #' @param sd Double with sd value.
 #' @param min,max Double boundaries of random number.
 #'
 #' @details
-#' Draws random number from norm distribution.
-#'
-#' @references
-#' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-#' Integration of Additional Probability Distributions. R package version 0.1.1.
-#' <https://CRAN.R-project.org/package=RcppDist>
+#' Draws random number from (truncated) normal distribution using rejection
+#' approach
 #'
 #' @return double
 #'

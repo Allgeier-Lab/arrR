@@ -1,7 +1,6 @@
-// [[Rcpp::depends(RcppDist)]]
-
 #include <Rcpp.h>
-#include <truncnorm.h>
+#include <chrono>
+#include <random>
 
 #include "rcpp_rnorm.h"
 
@@ -10,19 +9,15 @@ using namespace Rcpp;
 //' rcpp_rnorm
 //'
 //' @description
-//' Rcpp rnorm.
+//' Rcpp random truncated norm
 //'
 //' @param mean Double with mean value.
 //' @param sd Double with sd value.
 //' @param min,max Double boundaries of random number.
 //'
 //' @details
-//' Draws random number from norm distribution.
-//'
-//' @references
-//' Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-//' Integration of Additional Probability Distributions. R package version 0.1.1.
-//' <https://CRAN.R-project.org/package=RcppDist>
+//' Draws random number from (truncated) normal distribution using rejection
+//' approach
 //'
 //' @return double
 //'
@@ -33,6 +28,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_rnorm(double mean, double sd, double min, double max) {
 
+  // init result double
   double rand = 0.0;
 
   // check if values are within boundaries
@@ -42,11 +38,28 @@ double rcpp_rnorm(double mean, double sd, double min, double max) {
 
   }
 
+  // if mean == 0 and sd == 0; rand = 0
   if ((mean != 0) || (sd != 0)) {
 
-    // https://github.com/duckmayr/RcppDist
-    rand = r_truncnorm(mean, sd, min, max);
+    // obtain a time-based seed
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
+    // create random number generater
+    std::mt19937 generator(seed);
+
+    // init normal distribution
+    std::normal_distribution<double> distribution(mean, sd);
+
+    // draw random number
+    rand = distribution(generator);
+
+    // rejection-approach
+    while (rand < min || rand > max) {
+
+      // redraw number outside limits
+      rand = distribution(generator);
+
+    }
   }
 
   return (rand);
@@ -56,9 +69,11 @@ double rcpp_rnorm(double mean, double sd, double min, double max) {
 mean <- 0.5
 sd <- 0.25
 n <- 100000
+min = 0.0
+max = 1.0
 
 rand_a <- purrr::map_dbl(1:n, function(i) rcpp_rnorm(mean = mean, sd = sd,
-                                                     min = -Inf, max = Inf))
+                                                      min = min, max = max))
 
 rand_b <- purrr::map_dbl(1:n, function(i) rnorm(n = 1, mean = mean, sd = sd))
 
@@ -68,7 +83,7 @@ mean(rand_b)
 sd(rand_a)
 sd(rand_b)
 
-plot(density(rand_a), col = "#3C9BED", main = "Density", xlim = range(c(rand_a, rand_b)))
+plot(density(rand_a), col = "#3C9BED", main = "Density", xlim = range(c(rand_a, rand_b, rand_c)))
 lines(density(rand_b), col = "#EC579A")
 
 abline(v = mean, lty = 2, col = "grey")
@@ -76,8 +91,7 @@ abline(v = mean - sd, lty = 2, col = "grey")
 abline(v = mean + sd, lty = 2, col = "grey")
 
 bench::mark(
-  rcpp_rnorm(mean = mean, sd = sd, min = 0.0, max = Inf),
-  rnorm(n = 1, mean = mean, sd = sd),
+  rcpp_rnorm(mean = mean, sd = sd, min = 0.0, max = Inf), rnorm(n = 1, mean = mean, sd = sd),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )
 */

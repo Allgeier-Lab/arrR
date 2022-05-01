@@ -20,12 +20,7 @@ double
 Rcpp rlognorm.
 }
 \details{
-Draws random number from log-norm distribution. Function uses log-transformed
+Draws random number from (truncated) log-norm distribution. Function uses log-transformed
 values and a normal distribution internally.
-}
-\references{
-Truncated normal distribution from: J.B. Duck-Mayr (2018). RcppDist: 'Rcpp'
-Integration of Additional Probability Distributions. R package version 0.1.1.
-<https://CRAN.R-project.org/package=RcppDist>
 }
 \keyword{internal}

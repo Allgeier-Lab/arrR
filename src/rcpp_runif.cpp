@@ -30,25 +30,26 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_runif(double min, double max) {
 
-
   // check if boundaries are valid
-  if (min > max) {
+  if (min > max || max < min) {
 
-    Rcpp::stop("'min' > 'max' is not allowed.");
+    Rcpp::stop("'min' > 'max' or 'max' < 'min' is not allowed.");
 
   }
 
   // obtain a time-based seed
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
+  // init random number generator
   std::mt19937 generator(seed);
 
+  // init uniform distribution
   std::uniform_real_distribution<double> distribution(min, max);
 
-  double x = distribution(generator);
+  // draw from distribution using generator
+  double rand = distribution(generator);
 
-  return x;
-
+  return rand;
 }
 
 /*** R
@@ -70,8 +71,7 @@ abline(v = lo, lty = 2, col = "grey")
 abline(v = hi, lty = 2, col = "grey")
 
 bench::mark(
-  rcpp_runif(min = lo, max = hi),
-  runif(n = 1, min = lo, max = hi),
+  rcpp_runif(min = lo, max = hi), runif(n = 1, min = lo, max = hi),
   check = FALSE, iterations = 1000000, relative = TRUE,
 )
 */
