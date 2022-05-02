@@ -755,7 +755,7 @@ rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max,
 #' @description
 #' Rcpp shuffle vector.
 #'
-#' @param min,max Integer with min/max values.
+#' @param x NumericVector with elements to shuffle.
 #'
 #' @details
 #' Creates vector with IDs from \code{min} to \code{max} in random order.
@@ -769,8 +769,8 @@ rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max,
 #' @rdname rcpp_shuffle
 #'
 #' @keywords internal
-rcpp_shuffle <- function(min, max) {
-    .Call(`_arrR_rcpp_shuffle`, min, max)
+rcpp_shuffle <- function(x) {
+    .Call(`_arrR_rcpp_shuffle`, x)
 }
 
 #' rcpp_simulate

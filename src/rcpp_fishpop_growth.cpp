@@ -65,14 +65,14 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
   // MH: Lots of code repetition here.
 
-  // create random order if fish id because detritus can run out
-  Rcpp::IntegerVector fish_id = rcpp_shuffle(0, fishpop.nrow() - 1);
+  // create random order of fish id because detritus can "run out"
+  Rcpp::NumericVector fish_id = rcpp_shuffle(fishpop(_, 0));
 
   // loop through all fish ids
   for (int i = 0; i < fish_id.length(); i++) {
 
-    // create counter for temp fish id because randomized in simulate_fishpop_growth
-    int fish_id_temp = fish_id[i];
+    // use Rcpp indexing counter of current loop iteration
+    int fish_id_temp = fish_id[i] - 1;
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(fish_id_temp, 2), fishpop(fish_id_temp, 3),

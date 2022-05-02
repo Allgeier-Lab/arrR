@@ -11,7 +11,7 @@
 //' @description
 //' Rcpp shuffle vector.
 //'
-//' @param min,max Integer with min/max values.
+//' @param x NumericVector with elements to shuffle.
 //'
 //' @details
 //' Creates vector with IDs from \code{min} to \code{max} in random order.
@@ -26,20 +26,17 @@
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
-
-  // create sequence from min to max
-  Rcpp::IntegerVector rand = Rcpp::seq(min, max);
+Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x) {
 
   // obtain a time-based seed
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
   // shuffle vector; std::default_random_engine(seed)
-  std::shuffle(rand.begin(), rand.end(), std::mt19937(seed));
+  std::shuffle(x.begin(), x.end(), std::mt19937(seed));
 
-  return rand;
+  return x;
 }
 
 /*** R
-rcpp_shuffle(min = 1, max = 10)
+rcpp_shuffle(seq(from = 1, to = 10, by = 1))
 */

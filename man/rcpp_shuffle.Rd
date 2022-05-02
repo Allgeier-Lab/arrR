@@ -4,10 +4,10 @@
 \alias{rcpp_shuffle}
 \title{rcpp_shuffle}
 \usage{
-rcpp_shuffle(min, max)
+rcpp_shuffle(x)
 }
 \arguments{
-\item{min, max}{Integer with min/max values.}
+\item{x}{NumericVector with elements to shuffle.}
 }
 \value{
 vector
