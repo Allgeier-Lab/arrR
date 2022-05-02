@@ -756,9 +756,10 @@ rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max,
 #' Rcpp shuffle vector.
 #'
 #' @param x NumericVector with elements to shuffle.
+#' @param elements Logical if vector elements or iteratos are returned.
 #'
 #' @details
-#' Creates vector with IDs from \code{min} to \code{max} in random order.
+#' Shuffles the element of a vector (or the elements iterators).
 #'
 #' @references
 #' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
@@ -769,8 +770,8 @@ rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max,
 #' @rdname rcpp_shuffle
 #'
 #' @keywords internal
-rcpp_shuffle <- function(x) {
-    .Call(`_arrR_rcpp_shuffle`, x)
+rcpp_shuffle <- function(x, elements) {
+    .Call(`_arrR_rcpp_shuffle`, x, elements)
 }
 
 #' rcpp_simulate

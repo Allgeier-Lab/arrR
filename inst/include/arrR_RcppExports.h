@@ -288,17 +288,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x) {
-        typedef SEXP(*Ptr_rcpp_shuffle)(SEXP);
+    inline Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x, bool elements) {
+        typedef SEXP(*Ptr_rcpp_shuffle)(SEXP,SEXP);
         static Ptr_rcpp_shuffle p_rcpp_shuffle = NULL;
         if (p_rcpp_shuffle == NULL) {
-            validateSignature("Rcpp::NumericVector(*rcpp_shuffle)(Rcpp::NumericVector)");
+            validateSignature("Rcpp::NumericVector(*rcpp_shuffle)(Rcpp::NumericVector,bool)");
             p_rcpp_shuffle = (Ptr_rcpp_shuffle)R_GetCCallable("arrR", "_arrR_rcpp_shuffle");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_shuffle(Shield<SEXP>(Rcpp::wrap(x)));
+            rcpp_result_gen = p_rcpp_shuffle(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(elements)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

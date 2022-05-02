@@ -4,10 +4,12 @@
 \alias{rcpp_shuffle}
 \title{rcpp_shuffle}
 \usage{
-rcpp_shuffle(x)
+rcpp_shuffle(x, elements)
 }
 \arguments{
 \item{x}{NumericVector with elements to shuffle.}
+
+\item{elements}{Logical if vector elements or iteratos are returned.}
 }
 \value{
 vector
@@ -16,7 +18,7 @@ vector
 Rcpp shuffle vector.
 }
 \details{
-Creates vector with IDs from \code{min} to \code{max} in random order.
+Shuffles the element of a vector (or the elements iterators).
 }
 \references{
 How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>

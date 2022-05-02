@@ -38,16 +38,16 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
-  Rcpp::NumericVector fish_id = rcpp_shuffle(fishpop(_, 0));
+  Rcpp::NumericVector row_id = rcpp_shuffle(fishpop(_, 0), false);
 
   // loop through all fish ids
-  for (int i = 0; i < fish_id.length(); i++) {
+  for (int i = 0; i < row_id.length(); i++) {
 
     // use Rcpp indexing counter of current loop iteration
-    int fish_id_temp = fish_id[i] - 1;
+    int row_id_temp = row_id[i] - 1;
 
     // create death probability
-    double death_prob = std::exp(fishpop(fish_id_temp, 5) - pop_linf);
+    double death_prob = std::exp(fishpop(row_id_temp, 5) - pop_linf);
 
     // create random number to test death prob against
     double random_prob = rcpp_runif(0.0, 1.0);
@@ -55,7 +55,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // individual dies if random number is smaller than death probability
     if (random_prob < death_prob) {
 
-      rcpp_reincarnate(fishpop, fishpop_track, fish_id_temp,
+      rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
                        pop_linf, pop_n_body, pop_reserves_max,
                        "background");

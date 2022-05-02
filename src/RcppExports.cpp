@@ -702,20 +702,21 @@ RcppExport SEXP _arrR_rcpp_seagrass_growth(SEXP seafloorSEXP, SEXP bg_v_maxSEXP,
     return rcpp_result_gen;
 }
 // rcpp_shuffle
-Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x);
-static SEXP _arrR_rcpp_shuffle_try(SEXP xSEXP) {
+Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x, bool elements);
+static SEXP _arrR_rcpp_shuffle_try(SEXP xSEXP, SEXP elementsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_shuffle(x));
+    Rcpp::traits::input_parameter< bool >::type elements(elementsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_shuffle(x, elements));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_shuffle(SEXP xSEXP) {
+RcppExport SEXP _arrR_rcpp_shuffle(SEXP xSEXP, SEXP elementsSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_shuffle_try(xSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_shuffle_try(xSEXP, elementsSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -841,7 +842,7 @@ static int _arrR_RcppExport_validate(const char* sig) {
         signatures.insert("void(*rcpp_respiration)(Rcpp::NumericMatrix,double,double,double,double,double,double,double)");
         signatures.insert("double(*rcpp_runif)(double,double)");
         signatures.insert("void(*rcpp_seagrass_growth)(Rcpp::NumericMatrix,double,double,double,double,double,double,double,double,double,double,double,double,double,double)");
-        signatures.insert("Rcpp::NumericVector(*rcpp_shuffle)(Rcpp::NumericVector)");
+        signatures.insert("Rcpp::NumericVector(*rcpp_shuffle)(Rcpp::NumericVector,bool)");
         signatures.insert("int(*rcpp_which)(double,Rcpp::NumericVector)");
     }
     return signatures.find(sig) != signatures.end();
@@ -895,7 +896,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_rnorm", (DL_FUNC) &_arrR_rcpp_rnorm, 4},
     {"_arrR_rcpp_runif", (DL_FUNC) &_arrR_rcpp_runif, 2},
     {"_arrR_rcpp_seagrass_growth", (DL_FUNC) &_arrR_rcpp_seagrass_growth, 15},
-    {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 1},
+    {"_arrR_rcpp_shuffle", (DL_FUNC) &_arrR_rcpp_shuffle, 2},
     {"_arrR_rcpp_simulate", (DL_FUNC) &_arrR_rcpp_simulate, 17},
     {"_arrR_rcpp_translate_torus", (DL_FUNC) &_arrR_rcpp_translate_torus, 3},
     {"_arrR_rcpp_update_coords", (DL_FUNC) &_arrR_rcpp_update_coords, 5},
