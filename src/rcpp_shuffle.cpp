@@ -28,13 +28,16 @@
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x) {
 
+  // clone to avoid modify-in-place
+  Rcpp::NumericVector x_shuffle = Rcpp::clone(x);
+
   // obtain a time-based seed
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
   // shuffle vector; std::default_random_engine(seed)
-  std::shuffle(x.begin(), x.end(), std::mt19937(seed));
+  std::shuffle(x_shuffle.begin(), x_shuffle.end(), std::mt19937(seed));
 
-  return x;
+  return x_shuffle;
 }
 
 /*** R

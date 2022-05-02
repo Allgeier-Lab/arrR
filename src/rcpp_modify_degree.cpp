@@ -42,5 +42,7 @@ double rcpp_modify_degree(double x, double y) {
 }
 
 /*** R
-rcpp_modify_degree(x = 332, y = 33.5)
+x <- 332
+y <- 33.5
+rcpp_modify_degree(x = x, y = y)
 */

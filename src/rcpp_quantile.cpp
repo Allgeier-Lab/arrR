@@ -28,11 +28,14 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 double rcpp_quantile(Rcpp::NumericVector x, double q) {
 
+  // clone to avoid modify-in-place of x
+  Rcpp::NumericVector x_sort = Rcpp::clone(x);
+
   // sort x from min to max
-  std::sort(x.begin(), x.end());
+  std::sort(x_sort.begin(), x_sort.end());
 
   // get qth object
-  double r = x[x.size() * q];
+  double r = x_sort[x.size() * q];
 
   return r;
 }
