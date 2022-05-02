@@ -23,4 +23,9 @@ Rcpp random truncated norm
 Draws random number from (truncated) normal distribution using rejection
 approach
 }
+\references{
+https://www.cplusplus.com/reference/random/normal_distribution/?kw=normal_distribution
+
+How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
+}
 \keyword{internal}

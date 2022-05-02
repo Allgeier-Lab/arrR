@@ -21,6 +21,8 @@ using namespace Rcpp;
 //' @references
 //' <https://www.cplusplus.com/reference/random/uniform_real_distribution/>
 //'
+//' How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
+//'
 //' @return double
 //'
 //' @aliases rcpp_runif
@@ -41,13 +43,13 @@ double rcpp_runif(double min, double max) {
   unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
   // init random number generator
-  std::mt19937 generator(seed);
+  std::mt19937 rng(seed);
 
   // init uniform distribution
   std::uniform_real_distribution<double> distribution(min, max);
 
   // draw from distribution using generator
-  double rand = distribution(generator);
+  double rand = distribution(rng);
 
   return rand;
 }

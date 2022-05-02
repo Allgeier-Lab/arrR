@@ -20,5 +20,7 @@ Draws random number from uniform distribution.
 }
 \references{
 <https://www.cplusplus.com/reference/random/uniform_real_distribution/>
+
+How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
 }
 \keyword{internal}

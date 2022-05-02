@@ -667,6 +667,11 @@ rcpp_rlognorm <- function(mean, sd, min, max) {
 #' Draws random number from (truncated) normal distribution using rejection
 #' approach
 #'
+#' @references
+#' https://www.cplusplus.com/reference/random/normal_distribution/?kw=normal_distribution
+#'
+#' How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
+#'
 #' @return double
 #'
 #' @aliases rcpp_rnorm
@@ -689,6 +694,8 @@ rcpp_rnorm <- function(mean, sd, min, max) {
 #'
 #' @references
 #' <https://www.cplusplus.com/reference/random/uniform_real_distribution/>
+#'
+#' How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
 #'
 #' @return double
 #'
@@ -754,8 +761,7 @@ rcpp_seagrass_growth <- function(seafloor, bg_v_max, bg_k_m, bg_gamma, ag_v_max,
 #' Creates vector with IDs from \code{min} to \code{max} in random order.
 #'
 #' @references
-#' How to use time-based seed taken from
-#' <http://www.cplusplus.com/reference/algorithm/shuffle/>
+#' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
 #'
 #' @return vector
 #'

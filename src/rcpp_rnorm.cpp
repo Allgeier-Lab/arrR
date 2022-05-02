@@ -19,6 +19,11 @@ using namespace Rcpp;
 //' Draws random number from (truncated) normal distribution using rejection
 //' approach
 //'
+//' @references
+//' https://www.cplusplus.com/reference/random/normal_distribution/?kw=normal_distribution
+//'
+//' How to use time-based seed based on <http://www.cplusplus.com/reference/algorithm/shuffle/>
+//'
 //' @return double
 //'
 //' @aliases rcpp_rnorm
@@ -45,19 +50,19 @@ double rcpp_rnorm(double mean, double sd, double min, double max) {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
     // create random number generater
-    std::mt19937 generator(seed);
+    std::mt19937 rng(seed);
 
     // init normal distribution
     std::normal_distribution<double> distribution(mean, sd);
 
     // draw random number
-    rand = distribution(generator);
+    rand = distribution(rng);
 
     // rejection-approach
     while (rand < min || rand > max) {
 
       // redraw number outside limits
-      rand = distribution(generator);
+      rand = distribution(rng);
 
     }
   }

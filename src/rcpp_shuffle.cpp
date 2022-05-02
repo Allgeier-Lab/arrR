@@ -17,8 +17,7 @@
 //' Creates vector with IDs from \code{min} to \code{max} in random order.
 //'
 //' @references
-//' How to use time-based seed taken from
-//' <http://www.cplusplus.com/reference/algorithm/shuffle/>
+//' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
 //'
 //' @return vector
 //'
