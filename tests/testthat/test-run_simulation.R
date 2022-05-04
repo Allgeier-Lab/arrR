@@ -12,8 +12,8 @@ test_that("run_simulation returns rnd_mdl", {
 
 test_that("run_simulation contains seafloor and fishpop", {
 
-  n_cells <- max_i * terra::ncell(input_seafloor) / save_each +
-    terra::ncell(input_seafloor)
+  n_cells <- max_i * nrow(input_seafloor) / save_each +
+    nrow(input_seafloor)
 
   n_fish <- max_i * nrow(input_fishpop) / save_each + nrow(input_fishpop)
 
@@ -35,9 +35,9 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = names(result_rand),
                expected = c("seafloor", "fishpop", "nutrients_input",  "movement",
-                            "parameters", "starting_values",
-                            "extent", "grain", "dimensions", "max_i", "min_per_i",
-                            "burn_in", "seagrass_each", "save_each"))
+                            "parameters", "starting_values", "dimensions", "extent",
+                            "grain", "max_i", "min_per_i", "burn_in", "seagrass_each",
+                            "save_each"))
 
   expect_equal(object = result_rand$movement, expected = "rand")
 
@@ -51,11 +51,13 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand_inout$nutrients_input, expected = nutrients_input)
 
 
-  expect_equal(object = terra::ext(result_rand$extent), expected = terra::ext(input_seafloor))
+  seafloor_dim <- arrR::get_seafloor_dim(input_seafloor)
 
-  expect_equal(object = result_rand$dimensions, expected = dim(input_seafloor)[1:2])
+  expect_equal(object = result_rand$extent, expected = seafloor_dim$extent)
 
-  expect_equal(object = result_rand$grain, expected = terra::res(input_seafloor))
+  expect_equal(object = result_rand$dimensions, expected = seafloor_dim$dimensions)
+
+  expect_equal(object = result_rand$grain, expected = seafloor_dim$grain)
 
 
   expect_equal(object = result_rand$max_i, expected = max_i)

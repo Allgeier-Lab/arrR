@@ -1,8 +1,11 @@
+# arrR 1.5
+* Remove `terra` dependency
+* Remove `RcppDist` dependency
+
 # arrR 1.4.3
 * Allow to write results into a text file
 * Renamed `get_stable_values` to `get_req_nutrients` and changes to function
 * Renamed all `*_var` parameters to `*_sd`
-* Removing `RcppDist` dependency
 
 # arrR 1.4.2.1
 * Better structure of `rcpp_fishpop_growth()`

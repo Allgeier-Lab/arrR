@@ -60,8 +60,7 @@ Rcpp::NumericMatrix rcpp_get_reef(Rcpp::NumericMatrix seafloor) {
 
 /*** R
 # convert seafloor and fishpop as matrix
-seafloor_values <- as.matrix(terra::as.data.frame(input_seafloor,
-                                                  xy = TRUE, na.rm = FALSE))
+seafloor_values <- as.matrix(seafloor)
 
 foo <- function(seafloor) {
 
@@ -69,12 +68,12 @@ foo <- function(seafloor) {
   cells_reef <- which(seafloor[, "reef"] == 1)
 
   # get cell id of reef cells and coordinates of reef cells
-  matrix(data = c(cells_reef, seafloor[cells_reef, c("x", "y")]),
-         ncol = 3)
+  matrix(nrow = length(cells_reef), ncol = 3,
+         data = c(cells_reef - 1, seafloor$x[cells_reef],seafloor$y[cells_reef]))
 }
 
 bench::mark(
-  foo(seafloor_values),
-  rcpp_get_reef(seafloor_values), iterations = 1000, relative = TRUE,
+  foo(seafloor),
+  rcpp_get_reef(seafloor_values), iterations = 10000, relative = TRUE,
 )
 */

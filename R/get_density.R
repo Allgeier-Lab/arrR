@@ -46,9 +46,9 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
     }
   }
 
-  # create empty raster
-  ras_density <- terra::rast(ext = terra::ext(result$extent), resolution = result$grain,
-                             crs = "", vals = 0.0, names = "density")
+  # create empty density data.frame
+  density_df <- cbind(result$seafloor[result$seafloor$timestep == 0, c("x", "y")],
+                      density = 0)
 
   if (nrow(result$fishpop > 0)) {
 
@@ -62,21 +62,28 @@ get_density <- function(result, normalize = FALSE, verbose = TRUE) {
     # convert coords to matrix
     xy_mat <- as.matrix(result$fishpop[, c("x", "y")], ncol = 2)
 
-    # count fish within each cell
-    ras_density <- terra::rasterize(x = terra::vect(x = xy_mat, crs = ""), y = ras_density,
-                                    fun = "length", background = 0)
+    # get cell id of fish population
+    fish_cell <- vapply(X = 1:nrow(xy_mat), function(i) {
+
+      rcpp_cell_from_xy(x = xy_mat[[i, "x"]], y = xy_mat[[i, "y"]],
+                        extent = result$extent, dimensions = result$dimensions,
+                        rcpp = FALSE)
+
+    }, FUN.VALUE = numeric(1))
+
+    # count number of fish within cells
+    density_table <- table(fish_cell)
+
+    # replace density of cells with fish with count
+    density_df[as.numeric(names(density_table)), "density"] <- density_table
 
     # normalize by max_i
     if (normalize) {
 
-      terra::values(ras_density)[, "density"] <- terra::values(ras_density)[, "density"] /
-        result$max_i
+      density_df$density <- density_df$density / result$max_i
 
     }
   }
 
-  # convert to dataframe
-  ras_density <- terra::as.data.frame(ras_density, xy = TRUE, na.rm = FALSE)
-
-  return(ras_density)
+  return(density_df)
 }

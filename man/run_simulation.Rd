@@ -22,9 +22,9 @@ run_simulation(
 )
 }
 \arguments{
-\item{seafloor}{SpatRaster with seafloor.}
+\item{seafloor}{Data.frame with seafloor.}
 
-\item{fishpop}{data.frame with fish population.}
+\item{fishpop}{Data.frame with fish population.}
 
 \item{nutrients_input}{Vector with nutrient input for each time step.}
 
@@ -90,7 +90,7 @@ before this time step is reached.
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 reef = reef, starting_values = default_starting)
 fishpop <- setup_fishpop(seafloor = seafloor,
 starting_values = default_starting, parameters = default_parameters)

@@ -6,18 +6,17 @@
 \usage{
 setup_seafloor(
   dimensions,
-  grain = c(1, 1),
+  grain = 1,
   reef = NULL,
   starting_values,
   random = 0,
-  verbose = TRUE,
-  ...
+  verbose = TRUE
 )
 }
 \arguments{
 \item{dimensions}{Vector with number of rows and columns (spatial dimensions).}
 
-\item{grain}{Vector with size of cells in x- and y-direction (spatial grain).}
+\item{grain}{Double with size of cells in x- and y-direction (spatial grain).}
 
 \item{reef}{2-Column matrix with coordinates of artificial reefs.}
 
@@ -26,11 +25,9 @@ setup_seafloor(
 \item{random}{Numeric to randomize input values.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
-
-\item{...}{Additional arguments passed on to \code{\link{rast}}.}
 }
 \value{
-SpatRaster
+data.frame
 }
 \description{
 Setup seafloor for model run.
@@ -48,7 +45,7 @@ If \code{random > 0}, the stochasticity is added to all starting values using
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 reef = reef, starting_values = default_starting)
 
 }
