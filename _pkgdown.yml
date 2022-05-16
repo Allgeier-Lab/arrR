@@ -5,12 +5,16 @@ template:
   bootswatch: lumen
 
 reference:
+
+  - title: Data
+    contents:
+      - default_starting
+      - default_parameters
+
   - title: Prepare model run
     contents:
       - read_parameters
       - check_parameters
-      - default_starting
-      - default_parameters
       - setup_seafloor
       - setup_fishpop
       - get_req_nutrients

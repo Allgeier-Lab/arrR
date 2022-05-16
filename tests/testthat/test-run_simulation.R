@@ -51,7 +51,7 @@ test_that("run_simulation contains model run information", {
   expect_equal(object = result_rand_inout$nutrients_input, expected = nutrients_input)
 
 
-  seafloor_dim <- arrR::get_seafloor_dim(input_seafloor)
+  seafloor_dim <- arrR:::get_seafloor_dim(input_seafloor)
 
   expect_equal(object = result_rand$extent, expected = seafloor_dim$extent)
 

@@ -11,6 +11,7 @@
 #' @return list
 #'
 #' @examples
+#' \dontrun{
 #' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
@@ -18,11 +19,12 @@
 #' reef = reef, starting_values = default_starting)
 #'
 #' get_seafloor_dim(seafloor = seafloor)
+#' }
 #'
 #' @aliases get_seafloor_dim
 #' @rdname get_seafloor_dim
 #'
-#' @export
+#' @keywords internal
 get_seafloor_dim <- function(seafloor) {
 
   # get dimensions of environment (nrow, ncol)

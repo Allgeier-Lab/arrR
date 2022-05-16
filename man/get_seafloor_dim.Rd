@@ -19,6 +19,7 @@ Setup seafloor for model run.
 Returns dimensions, extent, and grain of seafloor data.frame.
 }
 \examples{
+\dontrun{
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
@@ -26,5 +27,7 @@ seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 reef = reef, starting_values = default_starting)
 
 get_seafloor_dim(seafloor = seafloor)
+}
 
 }
+\keyword{internal}
