@@ -13,7 +13,7 @@ setup_fishpop(
 )
 }
 \arguments{
-\item{seafloor}{SpatRaster object.}
+\item{seafloor}{Data.frame object.}
 
 \item{starting_values}{List with all starting value parameters.}
 
@@ -38,7 +38,7 @@ of the fish population follows a log-norm distribution. For more information, se
 reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 reef = reef, starting_values = default_starting)
 fishpop <- setup_fishpop(seafloor = seafloor,
 starting_values = default_starting, parameters = default_parameters)

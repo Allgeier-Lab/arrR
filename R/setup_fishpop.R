@@ -3,7 +3,7 @@
 #' @description
 #' Setup fish population for model run.
 #'
-#' @param seafloor SpatRaster object.
+#' @param seafloor Data.frame object.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param use_log Logical if TRUE, random log distribution is used.
@@ -20,7 +20,7 @@
 #' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+#' seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 #' reef = reef, starting_values = default_starting)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
 #' starting_values = default_starting, parameters = default_parameters)
@@ -32,22 +32,28 @@
 setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                           verbose = TRUE) {
 
+
+  # get seafloor info
+  seafloor_info <- get_seafloor_dim(seafloor)
+
   if (verbose) {
 
     message("> ...Creating ", starting_values$pop_n, " individuals within ",
-            terra::ext(seafloor), "...")
+            paste(seafloor_info$extent, collapse = " "), " (xmin, xmax, ymin, max)...")
 
   }
 
   # create fishpop
   if (starting_values$pop_n != 0) {
 
-    # create random coordinates within environment
-    x <- stats::runif(n = starting_values$pop_n, min = terra::xmin(seafloor),
-                      max = terra::xmax(seafloor))
+    seafloor_info <- get_seafloor_dim(seafloor)
 
-    y <- stats::runif(n = starting_values$pop_n, min = terra::ymin(seafloor),
-                      max = terra::ymax(seafloor))
+    # create random coordinates within environment
+    x <- stats::runif(n = starting_values$pop_n, min = seafloor_info$extent[[1]],
+                      max = seafloor_info$extent[[2]])
+
+    y <- stats::runif(n = starting_values$pop_n, min = seafloor_info$extent[[3]],
+                      max = seafloor_info$extent[[4]])
 
     heading <- stats::runif(n = starting_values$pop_n, min = 0, max = 360)
 

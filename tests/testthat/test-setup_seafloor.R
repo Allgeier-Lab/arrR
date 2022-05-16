@@ -1,47 +1,43 @@
-test_that("setup_seafloor creates SpatRaster", {
-
-  expect_s4_class(object = input_seafloor, class = "SpatRaster")
-
-})
-
 test_that("setup_seafloor has correct dimensions", {
 
-  expect_equal(object = terra::ncell(input_seafloor),
+  seafloor_dim <- get_seafloor_dim(input_seafloor)
+
+  expect_equal(object = nrow(input_seafloor),
                expected = dimensions[[1]] * dimensions[[2]])
 
-  expect_equal(object = terra::res(input_seafloor),
+  expect_equal(object = unname(seafloor_dim$grain),
                expected = grain)
 
 })
 
 test_that("setup_seafloor includes reef cells", {
 
-  expect_equal(object = sum(terra::values(input_seafloor$reef, mat = FALSE)),
+  expect_equal(object = sum(input_seafloor$reef),
                expected = nrow(reef_matrix))
 
 })
 
 test_that("setup_seafloor has correct starting values", {
 
-  expect_equal(object = mean(terra::values(input_seafloor$ag_biomass, mat = FALSE), na.rm = TRUE),
+  expect_equal(object = mean(input_seafloor$ag_biomass, na.rm = TRUE),
                expected = starting_values$ag_biomass)
 
-  expect_equal(object = mean(terra::values(input_seafloor$bg_biomass, mat = FALSE), na.rm = TRUE),
+  expect_equal(object =  mean(input_seafloor$bg_biomass, na.rm = TRUE),
                expected = starting_values$bg_biomass)
 
-  expect_equal(object = mean(terra::values(input_seafloor$nutrients_pool, mat = FALSE), na.rm = TRUE),
+  expect_equal(object = mean(input_seafloor$nutrients_pool, na.rm = TRUE),
                expected = starting_values$nutrients_pool)
 
-  expect_equal(object = mean(terra::values(input_seafloor$detritus_pool, mat = FALSE), na.rm = TRUE),
+  expect_equal(object = mean(input_seafloor$detritus_pool, na.rm = TRUE),
                expected = starting_values$detritus_pool)
 
 })
 
 test_that("setup_seafloor adds random noise", {
 
-  range_homo <- range(terra::values(input_seafloor$ag_biomass, mat = FALSE), na.rm = TRUE)
+  range_homo <- range(input_seafloor$ag_biomass, na.rm = TRUE)
 
-  range_random <- range(terra::values(input_seafloor_rnd$ag_biomass, mat = FALSE), na.rm = TRUE)
+  range_random <- range(input_seafloor_rnd$ag_biomass, na.rm = TRUE)
 
 
   expect_equal(object = range_homo[[1]],

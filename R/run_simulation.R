@@ -3,8 +3,8 @@
 #' @description
 #' Run simulation.
 #'
-#' @param seafloor SpatRaster with seafloor.
-#' @param fishpop data.frame with fish population.
+#' @param seafloor Data.frame with seafloor.
+#' @param fishpop Data.frame with fish population.
 #' @param nutrients_input Vector with nutrient input for each time step.
 #' @param movement String specifying movement algorithm.
 #' @param parameters List with all model parameters.
@@ -59,7 +59,7 @@
 #' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
+#' seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
 #' reef = reef, starting_values = default_starting)
 #' fishpop <- setup_fishpop(seafloor = seafloor,
 #' starting_values = default_starting, parameters = default_parameters)
@@ -86,6 +86,24 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   }
 
   # check input and warnings #
+  if (any(names(fishpop) != c("id", "age", "x", "y", "heading", "length", "weight",
+                              "activity", "respiration", "reserves", "reserves_max",
+                              "behavior", "consumption", "excretion", "died_consumption",
+                              "died_background"))) {
+
+      stop("Please provide fish population created with 'setup_fishpop()'", call. = FALSE)
+
+  }
+
+  # check input and warnings #
+  if (any(names(seafloor) != c("x", "y", "ag_biomass", "bg_biomass", "nutrients_pool",
+                               "detritus_pool", "detritus_fish", "ag_production", "bg_production",
+                               "ag_slough", "bg_slough", "ag_uptake", "bg_uptake", "consumption",
+                               "excretion", "reef" ))) {
+
+    stop("Please provide seafloor created with 'setup_seafloor()'", call. = FALSE)
+
+  }
 
   # check parameters
   param_warnings <- tryCatch(check_parameters(parameters = parameters, verbose = FALSE),
@@ -143,14 +161,17 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   # setup seafloor #
 
+  # get seafloor dimensions, extent, grain
+  seafloor_dim <- get_seafloor_dim(seafloor = seafloor)
+
+  dimensions <- seafloor_dim$dimensions
+
+  extent <-  seafloor_dim$extent
+
+  grain <- seafloor_dim$grain
+
   # convert seafloor and fishpop as matrix
-  seafloor_values <- as.matrix(terra::as.data.frame(seafloor, xy = TRUE, na.rm = FALSE))
-
-  # get extent of environment
-  extent <- as.vector(terra::ext(seafloor))
-
-  # get dimensions of environment (nrow, ncol)
-  dimensions <- dim(seafloor)[1:2]
+  seafloor_values <- as.matrix(seafloor)
 
   # create lists to store results for each time step
   # even if to_disk = T, starting matrix is returned
@@ -287,7 +308,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
     # repeat all saved timesteps as often as cells are present
     timestep_seafloor_temp <- rep(x = seq(from = 0, to = max_i, by = save_each),
-                                  each = terra::ncell(seafloor))
+                                  each = nrow(seafloor))
 
     # repeat all saved timsteps as often as individuals are present
     timestep_fishpop_temp <- rep(x = seq(from = 0, to = max_i, by = save_each),
@@ -319,7 +340,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   # combine result to list
   result <- list(seafloor = seafloor_track, fishpop = fishpop_track, nutrients_input = nutrients_input,
                  movement = movement, parameters = parameters, starting_values = starting_values,
-                 extent = extent, grain = terra::res(seafloor), dimensions = dimensions,
+                 dimensions = dimensions, extent = extent, grain = grain,
                  max_i = max_i, min_per_i = min_per_i, burn_in = burn_in,
                  seagrass_each = seagrass_each, save_each = save_each)
 

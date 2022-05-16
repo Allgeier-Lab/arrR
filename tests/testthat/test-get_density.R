@@ -14,11 +14,9 @@ test_that("get_density returns data.frame", {
 
 test_that("get_density returns value for each cell", {
 
-  coords <- terra::xyFromCell(input_seafloor, 1:terra::ncell(input_seafloor))
+  expect_equal(density_rand$x, expected = input_seafloor$x)
 
-  expect_equal(density_rand$x, expected = coords[, 1])
-
-  expect_equal(density_rand$y, expected = coords[, 2])
+  expect_equal(density_rand$y, expected = input_seafloor$y)
 
 })
 

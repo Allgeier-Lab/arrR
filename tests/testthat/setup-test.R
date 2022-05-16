@@ -1,5 +1,4 @@
 library(dplyr)
-library(terra)
 
 # get parameters
 parameters <- arrR::default_parameters
@@ -23,7 +22,7 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 dimensions <- c(50, 50)
 
 # set grain
-grain <- c(1, 1)
+grain <- 1
 
 # setup iterations arguments
 max_i <- 1000
