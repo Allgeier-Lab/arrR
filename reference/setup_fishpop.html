@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,7 +118,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>seafloor</dt>
-<dd><p>SpatRaster object.</p></dd>
+<dd><p>Data.frame object.</p></dd>
 <dt>starting_values</dt>
 <dd><p>List with all starting value parameters.</p></dd>
 <dt>parameters</dt>
@@ -144,13 +144,13 @@ of the fish population follows a log-norm distribution. For more information, se
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">reef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span class="r-in">ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">seafloor</span> <span class="op">&lt;-</span> <span class="fu"><a href="setup_seafloor.html">setup_seafloor</a></span><span class="op">(</span>dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">100</span><span class="op">)</span>, grain <span class="op">=</span> <span class="fl">1</span>,</span>
+<span class="r-in"><span class="va">seafloor</span> <span class="op">&lt;-</span> <span class="fu"><a href="setup_seafloor.html">setup_seafloor</a></span><span class="op">(</span>dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">50</span><span class="op">)</span>, grain <span class="op">=</span> <span class="fl">1</span>,</span>
 <span class="r-in">reef <span class="op">=</span> <span class="va">reef</span>, starting_values <span class="op">=</span> <span class="va">default_starting</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating seafloor with 100 rows x 100 cols...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating seafloor with 50 rows x 50 cols...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating 5 artifical reef cell(s)...</span>
 <span class="r-in"><span class="va">fishpop</span> <span class="op">&lt;-</span> <span class="fu">setup_fishpop</span><span class="op">(</span>seafloor <span class="op">=</span> <span class="va">seafloor</span>,</span>
 <span class="r-in">starting_values <span class="op">=</span> <span class="va">default_starting</span>, parameters <span class="op">=</span> <span class="va">default_parameters</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating 8 individuals within ext(-50, 50, -50, 50)...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt; ...Creating 8 individuals within -25 25 -25 25 (xmin, xmax, ymin, max)...</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

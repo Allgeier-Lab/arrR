@@ -70,13 +70,13 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/get_req_nutrients.html</loc>
   </url>
   <url>
+    <loc>https://allgeier-lab.github.io/arrR/reference/get_seafloor_dim.html</loc>
+  </url>
+  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/get_starting_values.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/mdlrn_to_raster.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/plot.mdl_rn.html</loc>
@@ -190,13 +190,7 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/run_simulation.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/setup_envir_values.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_fishpop.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/setup_reef.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/setup_seafloor.html</loc>
