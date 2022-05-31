@@ -69,7 +69,7 @@ The functions is a 'wrapper' around the following sub-processes: (i) nutrient in
 }
 \references{
 For a detailed model description, please see Esquivel, K.E., Hesselbarth, M.H.K.,
-Allgeier, J.E., In Press. Mechanistic support for increased primary production
-around artificial reefs. Ecological Applications. v0.0
+Allgeier, J.E., 2022. Mechanistic support for increased primary production around
+artificial reefs. Ecological Applications e2617. <https://doi.org/10.1002/eap.2617>
 }
 \keyword{internal}
