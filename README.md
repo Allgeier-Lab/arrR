@@ -20,12 +20,12 @@ see `vignette("general-background")`. Please see
 ## Citation
 
 To cite *arrR* in a publication or acknowledge its use, please use the
-following citation information, substituting ‘v0.0’ with the version of
-the package that you used:
+following citation information:
 
-> *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., In Press.
+> *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., 2022.
 > Mechanistic support for increased primary production around artificial
-> reefs. Ecological Applications. v0.0*
+> reefs. Ecological Applications e2617.
+> <https://doi.org/10.1002/eap.2617>*
 
 For more information, please see `vignette("publication-record")`. To
 get a BibTex entry, please use `citation("arrR")`.
