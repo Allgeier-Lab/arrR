@@ -4,6 +4,7 @@
 #' Setup fish population for model run.
 #'
 #' @param seafloor Data.frame object.
+#' @param species Vector with species id.
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
 #' @param use_log Logical if TRUE, random log distribution is used.
@@ -13,6 +14,9 @@
 #' Function to setup the fish population. If \code{use_log = TRUE} the size distribution
 #' of the fish population follows a log-norm distribution. For more information, see
 #' \code{calc_size} (internal function). To create no fish, set \code{starting_values$pop_n = 0}.
+#'
+#' The species id vector must have the same length as \code{starting_values$pop_n} and contain
+#' species ids between 1 and i.
 #'
 #' @return data.frame
 #'
@@ -29,9 +33,9 @@
 #' @rdname setup_fishpop
 #'
 #' @export
-setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
+setup_fishpop <- function(seafloor, species = rep(x = 1, times = starting_values$pop_n),
+                          starting_values, parameters, use_log = TRUE,
                           verbose = TRUE) {
-
 
   # get seafloor info
   seafloor_info <- get_seafloor_dim(seafloor)
@@ -46,6 +50,13 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
   # create fishpop
   if (starting_values$pop_n != 0) {
 
+    # check if species vector has correct size
+    if (starting_values$pop_n != length(species)) {
+
+      stop("Species vector must be same length as pop_n")
+
+    }
+
     seafloor_info <- get_seafloor_dim(seafloor)
 
     # create random coordinates within environment
@@ -59,21 +70,21 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
 
     # calculate length and weight
     size <- calc_size(pop_n = starting_values$pop_n,
-                      pop_mean_size = starting_values$pop_mean_size,
-                      pop_linf = parameters$pop_linf,
-                      pop_sd_size = starting_values$pop_sd_size,
-                      pop_a = parameters$pop_a, pop_b = parameters$pop_b,
+                      pop_mean_size = starting_values$pop_mean_size[species],
+                      pop_linf = parameters$pop_linf[species],
+                      pop_sd_size = starting_values$pop_sd_size[species],
+                      pop_a = parameters$pop_a[species], pop_b = parameters$pop_b[species],
                       use_log = use_log)
 
     # calculate maximum reserves
-    reserves_max <- parameters$pop_n_body * size$weight * parameters$pop_reserves_max
+    reserves_max <- parameters$pop_n_body[species] * size$weight * parameters$pop_reserves_max[species]
 
     # create starting reserves
     reserves <- stats::runif(n = starting_values$pop_n,
-                             min = reserves_max * 0.5, max = reserves_max)
+                             min = reserves_max[species] * 0.5, max = reserves_max[species])
 
     # combine to final data frame
-    fishpop <- data.frame(id = 1:starting_values$pop_n, age = 0.0,
+    fishpop <- data.frame(id = 1:starting_values$pop_n, species = species, age = 0.0,
                           x = x, y = y, heading = heading,
                           length = size$length, weight = size$weight,
                           activity = numeric(starting_values$pop_n),
@@ -89,7 +100,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
   } else {
 
     # combine to final data frame
-    fishpop <- data.frame(id = numeric(), age = numeric(),
+    fishpop <- data.frame(id = numeric(), species = numeric(), age = numeric(),
                           x = numeric(), y = numeric(), heading = numeric(),
                           length = numeric(), weight = numeric(),
                           activity = numeric(), respiration = numeric(),

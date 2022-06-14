@@ -18,9 +18,9 @@ rcpp_move_rand(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{move_mean, move_sd}{Double with mean and variance movement parameter.}
+\item{move_mean, move_sd}{Vector with mean and variance movement parameter.}
 
-\item{max_dist}{Numeric with maximum movement distance}
+\item{max_dist}{Vector with maximum movement distance.}
 
 \item{reef_attraction}{Bool if attracted towards reef.}
 

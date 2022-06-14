@@ -4,14 +4,14 @@
 \alias{rcpp_get_max_dist}
 \title{rcpp_get_max_dist}
 \usage{
-rcpp_get_max_dist(movement, parameters, n_rand)
+rcpp_get_max_dist(movement, move_mean, move_sd, move_return, move_reef, n_rand)
 }
 \arguments{
 \item{movement}{String specifing movement algorithm.}
 
-\item{parameters}{List with parameters.}
-
 \item{n_rand}{Integer with amount of random numbers.}
+
+\item{parameters}{List with parameters.}
 }
 \value{
 double

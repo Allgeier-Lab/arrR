@@ -45,13 +45,14 @@ calc_size <- function(pop_n, pop_mean_size, pop_sd_size,
   if (use_log) {
 
     body_length <- vapply(X = 1:pop_n, FUN = function(i) {
-      rcpp_rlognorm(mean = pop_mean_size, sd = pop_sd_size,
-                    min = 3.0, max = pop_linf * 0.75)}, FUN.VALUE = numeric(1))
+      rcpp_rlognorm(mean = pop_mean_size[i], sd = pop_sd_size[i],
+                    min = 3.0, max = pop_linf[i] * 0.75)}, FUN.VALUE = numeric(1))
 
   # use uniform distribution for starting size
   } else {
 
-    body_length <- stats::runif(n = pop_n, min = 3.0, max = pop_linf * 0.75)
+    body_length <- vapply(X = 1:pop_n, FUN = function(i) {
+      rcpp_runif(min = 3.0, max = pop_linf[i] * 0.75)}, FUN.VALUE = numeric(1))
 
   }
 

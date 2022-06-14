@@ -136,9 +136,9 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
-#' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
-#' @param pop_reserves_consump Double with consumption limit to fill reserves each time step.
+#' @param pop_k,pop_linf,pop_a,pop_b Vector with parameters.
+#' @param pop_n_body,pop_reserves_max,min_per_i Vector with parameters.
+#' @param pop_reserves_consump Vector with consumption limit to fill reserves each time step.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -246,8 +246,8 @@ rcpp_get_bearing <- function(x1, y1, x2, y2) {
 #' @rdname rcpp_get_max_dist
 #'
 #' @keywords internal
-rcpp_get_max_dist <- function(movement, parameters, n_rand) {
-    .Call(`_arrR_rcpp_get_max_dist`, movement, parameters, n_rand)
+rcpp_get_max_dist <- function(movement, move_mean, move_sd, move_return, move_reef, n_rand) {
+    .Call(`_arrR_rcpp_get_max_dist`, movement, move_mean, move_sd, move_return, move_reef, n_rand)
 }
 
 #' rcpp_get_reef
@@ -329,7 +329,7 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param pop_linf,pop_n_body,pop_reserves_max Vector with parameters.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -355,11 +355,11 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #'
 #' @param fishpop Matrix with fishpop values.
 #' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
-#' @param move_mean,move_sd Double with mean movement parameter.
-#' @param move_reef Double with mean movement distance when sheltering at reef.
-#' @param move_border Double with movement distance that surrounds reef cell border.
-#' @param move_return Double with mean movement distance when returning to reef.
-#' @param max_dist Maximum distance an individual can move.
+#' @param move_mean,move_sd Vector with mean movement parameter.
+#' @param move_reef Vector with mean movement distance when sheltering at reef.
+#' @param move_border Vector with movement distance that surrounds reef cell border.
+#' @param move_return Vector with mean movement distance when returning to reef.
+#' @param max_dist Vector with maximum movement distance
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
@@ -388,8 +388,8 @@ rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_sd, move_reef
 #' Rcpp simulate movement (rand/attr).
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param move_mean,move_sd Double with mean and variance movement parameter.
-#' @param max_dist Numeric with maximum movement distance
+#' @param move_mean,move_sd Vector with mean and variance movement parameter.
+#' @param max_dist Vector with maximum movement distance.
 #' @param reef_attraction Bool if attracted towards reef.
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -425,11 +425,11 @@ rcpp_move_rand <- function(fishpop, move_mean, move_sd, max_dist, reef_attractio
 #' @param fishpop Matrix with fishpop values.
 #' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
 #' @param movement String specifing movement algorithm.
-#' @param move_mean,move_sd Double with mean movement parameter.
-#' @param move_reef Double with mean movement distance when sheltering at reef.
-#' @param move_border Double with movement distance that surrounds reef cell border.
-#' @param move_return Double with mean movement distance when returning to reef.
-#' @param max_dist Maximum distance an individual can move.
+#' @param move_mean,move_sd Vector with mean movement parameter.
+#' @param move_reef Vector with mean movement distance when sheltering at reef.
+#' @param move_border Vector with movement distance that surrounds reef cell border.
+#' @param move_return Vector with mean movement distance when returning to reef.
+#' @param max_dist Vector with maximum movement distance
 #' @param coords_reef Matrix with ID and coords of reef cells.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
@@ -600,8 +600,8 @@ rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, 
 #' Rcpp simulate respration.
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param resp_intercept,resp_slope Numeric with regression parameters.
-#' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with water temperature parameters.
+#' @param resp_intercept,resp_slope Vector with regression parameters.
+#' @param resp_temp_low,resp_temp_max,resp_temp_optm Vector with water temperature parameters.
 #' @param water_temp,min_per_i Numeric with various parameters.
 #'
 #' @details

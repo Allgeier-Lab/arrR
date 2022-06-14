@@ -12,8 +12,8 @@ using namespace Rcpp;
 //' Rcpp simulate respration.
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param resp_intercept,resp_slope Numeric with regression parameters.
-//' @param resp_temp_low,resp_temp_max,resp_temp_optm Numeric with water temperature parameters.
+//' @param resp_intercept,resp_slope Vector with regression parameters.
+//' @param resp_temp_low,resp_temp_max,resp_temp_optm Vector with water temperature parameters.
 //' @param water_temp,min_per_i Numeric with various parameters.
 //'
 //' @details
@@ -41,32 +41,39 @@ using namespace Rcpp;
 //' @keywords internal
 // [[Rcpp::export]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
-                      double resp_intercept, double resp_slope,
-                      double resp_temp_low, double resp_temp_max, double resp_temp_optm,
+                      Rcpp::NumericVector resp_intercept, Rcpp::NumericVector resp_slope,
+                      Rcpp::NumericVector resp_temp_low, Rcpp::NumericVector resp_temp_max,
+                      Rcpp::NumericVector resp_temp_optm,
                       double water_temp, double min_per_i) {
-
-  // scale intercept to correct tick scale from (g/g/day to min_per_i)
-  resp_intercept = resp_intercept / (24.0 * 60.0) * min_per_i;
-
-  // for f(T) temperature dependence function for respiration
-  double v_resp = (resp_temp_max - water_temp) / (resp_temp_max - resp_temp_optm);
-
-  double z_resp = log(resp_temp_low) * (resp_temp_max - resp_temp_optm);
-
-  double y_resp = log(resp_temp_low) * (resp_temp_max - resp_temp_optm + 2);
-
-  double x_resp = std::pow(z_resp, 2) * std::pow((1 + std::pow((1 + 40 / y_resp), 0.5)), 2) / 400.0;
-
-  // this is the f(t) equation 2
-  double temp_dependence = std::pow(v_resp, x_resp) * exp(x_resp * (1 - v_resp));
 
   // loop through all fish individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
+    // get current species id
+    int species_temp = fishpop(i, 1) - 1;
+
+    // scale intercept to correct tick scale from (g/g/day to min_per_i)
+    resp_intercept = resp_intercept[species_temp] / (24.0 * 60.0) * min_per_i;
+
+    // for f(T) temperature dependence function for respiration
+    double v_resp = (resp_temp_max[species_temp] - water_temp) /
+      (resp_temp_max[species_temp] - resp_temp_optm[species_temp]);
+
+    double z_resp = log(resp_temp_low[species_temp]) *
+      (resp_temp_max[species_temp] - resp_temp_optm[species_temp]);
+
+    double y_resp = log(resp_temp_low[species_temp]) *
+      (resp_temp_max[species_temp] - resp_temp_optm[species_temp] + 2);
+
+    double x_resp = std::pow(z_resp, 2) * std::pow((1 + std::pow((1 + 40 / y_resp), 0.5)), 2) / 400.0;
+
+    // this is the f(t) equation 2
+    double temp_dependence = std::pow(v_resp, x_resp) * exp(x_resp * (1 - v_resp));
+
     // calculate respiration
     // oxycaloric coefficient c=13560.0 in J/gO2; energy-density of fish e=4800.0 J/g(wet weight)
-    double respiration = (resp_intercept * std::pow(fishpop(i, 6), resp_slope) *
-                          temp_dependence * fishpop(i, 7)) * 13560.0 / 4800.0;
+    double respiration = (resp_intercept[species_temp] * std::pow(fishpop(i, 7), resp_slope[species_temp]) *
+                          temp_dependence * fishpop(i, 8)) * 13560.0 / 4800.0;
 
     // check if finite number
     bool check_finite = std::isfinite(respiration);
@@ -75,13 +82,13 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
     if (check_finite) {
 
       // update respiration col
-      fishpop(i, 8) = respiration;
+      fishpop(i, 9) = respiration;
 
     // respiration is infinite (divided by zero probably), use 1 instead
     } else {
 
       // update respiration col
-      fishpop(i, 8) = 1.0;
+      fishpop(i, 9) = 1.0;
 
     }
   }

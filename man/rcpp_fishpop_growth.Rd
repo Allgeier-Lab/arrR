@@ -25,11 +25,11 @@ rcpp_fishpop_growth(
 
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
+\item{pop_k, pop_linf, pop_a, pop_b}{Vector with parameters.}
 
-\item{pop_n_body, pop_reserves_max, min_per_i}{Numeric with parameters.}
+\item{pop_n_body, pop_reserves_max, min_per_i}{Vector with parameters.}
 
-\item{pop_reserves_consump}{Double with consumption limit to fill reserves each time step.}
+\item{pop_reserves_consump}{Vector with consumption limit to fill reserves each time step.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 

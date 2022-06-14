@@ -15,8 +15,8 @@ using namespace Rcpp;
 //' Rcpp simulate movement (rand/attr).
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param move_mean,move_sd Double with mean and variance movement parameter.
-//' @param max_dist Numeric with maximum movement distance
+//' @param move_mean,move_sd Vector with mean and variance movement parameter.
+//' @param max_dist Vector with maximum movement distance.
 //' @param reef_attraction Bool if attracted towards reef.
 //' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
@@ -41,15 +41,19 @@ using namespace Rcpp;
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_sd,
-                    double max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef,
+void rcpp_move_rand(Rcpp::NumericMatrix fishpop, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd,
+                    Rcpp::NumericVector max_dist, bool reef_attraction, Rcpp::NumericMatrix coords_reef,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
+    // get current fish species
+    int species_temp = fishpop(i, 1) - 1;
+
     // sample move dist
-    double move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
+    double move_dist = rcpp_rlognorm(move_mean[species_temp], move_sd[species_temp],
+                                     0.0, max_dist[species_temp]);
 
     // move towards reef
     if (reef_attraction) {
@@ -65,11 +69,11 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_s
 
         // get coordinate of Visibility coords
         // MH: This used to be move_visibility insead of move_dist
-        double x_temp = fishpop(i, 2) +
-          (move_dist * cos(std::fmod((fishpop(i, 4) + angles[j]), 360) * (M_PI / 180)));
+        double x_temp = fishpop(i, 3) +
+          (move_dist * cos(std::fmod((fishpop(i, 5) + angles[j]), 360) * (M_PI / 180)));
 
-        double y_temp = fishpop(i, 3) +
-          (move_dist * sin(std::fmod((fishpop(i, 4) + angles[j]), 360) * (M_PI / 180)));
+        double y_temp = fishpop(i, 4) +
+          (move_dist * sin(std::fmod((fishpop(i, 5) + angles[j]), 360) * (M_PI / 180)));
 
         // make sure coords are inside extent
         Rcpp::NumericVector coords_temp = rcpp_translate_torus(x_temp, y_temp, extent);
@@ -82,18 +86,18 @@ void rcpp_move_rand(Rcpp::NumericMatrix fishpop, double move_mean, double move_s
       // left distance is smaller than straight and right
       if ((distance[0] < distance[1]) && (distance[0] < distance[2])) {
 
-        fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), -45.0);
+        fishpop(i, 5) = rcpp_modify_degree(fishpop(i, 5), -45.0);
 
         // right distance is smaller than straight and left
       } else if ((distance[2] < distance[1]) && (distance[2] < distance[0])) {
 
-        fishpop(i, 4) = rcpp_modify_degree(fishpop(i, 4), 45.0);
+        fishpop(i, 5) = rcpp_modify_degree(fishpop(i, 5), 45.0);
 
       }
     }
 
     // update fish coordinates and activtity
-    rcpp_update_coords(fishpop, i, move_dist, max_dist, extent);
+    rcpp_update_coords(fishpop, i, move_dist, max_dist[species_temp], extent);
 
   }
 }

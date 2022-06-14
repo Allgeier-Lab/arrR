@@ -16,11 +16,11 @@ using namespace Rcpp;
 //' @param fishpop Matrix with fishpop values.
 //' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
 //' @param movement String specifing movement algorithm.
-//' @param move_mean,move_sd Double with mean movement parameter.
-//' @param move_reef Double with mean movement distance when sheltering at reef.
-//' @param move_border Double with movement distance that surrounds reef cell border.
-//' @param move_return Double with mean movement distance when returning to reef.
-//' @param max_dist Maximum distance an individual can move.
+//' @param move_mean,move_sd Vector with mean movement parameter.
+//' @param move_reef Vector with mean movement distance when sheltering at reef.
+//' @param move_border Vector with movement distance that surrounds reef cell border.
+//' @param move_return Vector with mean movement distance when returning to reef.
+//' @param max_dist Vector with maximum movement distance
 //' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -39,8 +39,8 @@ using namespace Rcpp;
 //' @keywords internal
 // [[Rcpp::export]]
 void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr,
-                    std::string movement, double move_mean, double move_sd, double move_reef,
-                    double move_border, double move_return, double max_dist,
+                    std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef,
+                    Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist,
                     Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
                     Rcpp::IntegerVector dimensions) {
 

@@ -10,7 +10,7 @@ parameters <- arrR::default_parameters
 # change some starting values and parameters
 starting_values$pop_n <- 8
 
-parameters$pop_reserves_max <- 0.1
+parameters$pop_reserves_max <- c(0.1, 0.15)
 
 parameters$seagrass_thres <- -1/4
 
@@ -19,9 +19,9 @@ reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
 # get stable value
-stable_values <- get_req_nutr(bg_biomass = starting_values$bg_biomass,
-                              ag_biomass = starting_values$ag_biomass,
-                              parameters = parameters)
+stable_values <- get_req_nutrients(bg_biomass = starting_values$bg_biomass,
+                                   ag_biomass = starting_values$ag_biomass,
+                                   parameters = parameters)
 
 starting_values$nutrients_pool <- stable_values$nutrients_pool
 
@@ -33,8 +33,8 @@ input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
                                  random = 0.05)
 
 # create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, starting_values = starting_values,
-                               parameters = parameters)
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 1, 2, 1, 1, 2, 2),
+                               starting_values = starting_values, parameters = parameters)
 
 # setup iterations things
 min_per_i <- 120
@@ -59,4 +59,4 @@ result_readme <- run_simulation(seafloor = input_seafloor, fishpop = input_fishp
                                 max_i = max_i, min_per_i = min_per_i,
                                 seagrass_each = seagrass_each, save_each = save_each)
 
-usethis::use_data(result_readme, internal = TRUE, overwrite = FALSE)
+usethis::use_data(result_readme, internal = TRUE, overwrite = TRUE)

@@ -26,6 +26,8 @@
 #' @export
 check_parameters <- function(starting_values = NULL, parameters = NULL, verbose = TRUE) {
 
+  # MH: Make sure all parameters are checked
+
   # logical for final ok
   flag_final <- TRUE
 
@@ -185,7 +187,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     }
 
     # pop_a must be positive
-    if (parameters$pop_a < 0) {
+    if (any(parameters$pop_a < 0.0)) {
 
       # set final flag to false
       flag_final <- FALSE

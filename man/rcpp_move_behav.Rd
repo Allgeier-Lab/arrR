@@ -23,15 +23,15 @@ rcpp_move_behav(
 
 \item{fishpop_attr}{Matrix with id and threshold of pop_reserves_max.}
 
-\item{move_mean, move_sd}{Double with mean movement parameter.}
+\item{move_mean, move_sd}{Vector with mean movement parameter.}
 
-\item{move_reef}{Double with mean movement distance when sheltering at reef.}
+\item{move_reef}{Vector with mean movement distance when sheltering at reef.}
 
-\item{move_border}{Double with movement distance that surrounds reef cell border.}
+\item{move_border}{Vector with movement distance that surrounds reef cell border.}
 
-\item{move_return}{Double with mean movement distance when returning to reef.}
+\item{move_return}{Vector with mean movement distance when returning to reef.}
 
-\item{max_dist}{Maximum distance an individual can move.}
+\item{max_dist}{Vector with maximum movement distance}
 
 \item{coords_reef}{Matrix with ID and coords of reef cells.}
 

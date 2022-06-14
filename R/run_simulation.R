@@ -86,7 +86,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   }
 
   # check input and warnings #
-  if (any(names(fishpop) != c("id", "age", "x", "y", "heading", "length", "weight",
+  if (any(names(fishpop) != c("id", "species", "age", "x", "y", "heading", "length", "weight",
                               "activity", "respiration", "reserves", "reserves_max",
                               "behavior", "consumption", "excretion", "died_consumption",
                               "died_background"))) {

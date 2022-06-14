@@ -31,24 +31,24 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {
 
   // calculate new x,y coord
-  double x_temp = fishpop(i, 2) + (move_dist * cos(fishpop(i, 4) * (M_PI / 180.0)));
+  double x_temp = fishpop(i, 3) + (move_dist * cos(fishpop(i, 5) * (M_PI / 180.0)));
 
-  double y_temp = fishpop(i, 3) + (move_dist * sin(fishpop(i, 4) * (M_PI / 180.0)));
+  double y_temp = fishpop(i, 4) + (move_dist * sin(fishpop(i, 5) * (M_PI / 180.0)));
 
   // make sure coords are within study area
   Rcpp::NumericVector xy_temp = rcpp_translate_torus(x_temp, y_temp, extent);
 
   // update x coord
-  fishpop(i, 2) = xy_temp[0];
+  fishpop(i, 3) = xy_temp[0];
 
   // update y coord
-  fishpop(i, 3) = xy_temp[1];
+  fishpop(i, 4) = xy_temp[1];
 
   // update activity
-  fishpop(i, 7) = (1 / max_dist) * move_dist + 1;
+  fishpop(i, 8) = (1 / max_dist) * move_dist + 1;
 
   // turn fish randomly after moving (runif always returns vector, thus (0))
   // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-  fishpop(i, 4) =  rcpp_runif(0.0, 360.0);
+  fishpop(i, 5) =  rcpp_runif(0.0, 360.0);
 
 }

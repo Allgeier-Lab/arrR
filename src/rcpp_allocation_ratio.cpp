@@ -82,6 +82,11 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
     ratio = 1 - (1 / (1 + std::pow((std::pow(biomass_norm, midpoint) /
       (1 - std::pow(biomass_norm, midpoint))), -slope)));
 
+    if (std::isnan(ratio)) {
+      Rcout << std::endl << "biomass=" << biomass << std::endl;
+      Rcout << "biomass_norm=" << biomass_norm << std::endl;
+    }
+
   }
 
   // check if ratio is not NaN (because 0 division)
@@ -97,8 +102,8 @@ double rcpp_allocation_ratio(double biomass, double biomass_min, double biomass_
 /***R
 parameters <- default_parameters
 
-parameters$seagrass_thres <- 1/3
-parameters$seagrass_slope <- 3
+# parameters$seagrass_thres <- 1/3
+# parameters$seagrass_slope <- 3
 
 biomass <- parameters$bg_biomass_min +
 (parameters$bg_biomass_max - parameters$bg_biomass_min) * 1/4

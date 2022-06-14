@@ -46,7 +46,7 @@ parameters <- arrR::default_parameters
 # change some starting values and parameters
 starting_values$pop_n <- 8
 
-parameters$pop_reserves_max <- 0.1
+parameters$pop_reserves_max <- c(0.1, 0.15)
 
 parameters$seagrass_thres <- -1/4
 
@@ -79,7 +79,7 @@ input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
                                  reef = reef_matrix, starting_values = starting_values)
 
 # create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, 
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 1, 2, 1, 1, 2, 2), 
                                starting_values = starting_values, 
                                parameters = parameters)
 ```
@@ -99,7 +99,7 @@ One of the most important function arguments of `run_simulation()` is the `movem
 min_per_i <- 120
 
 # run the model for ten years
-years <- 10
+years <- 5
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # run seagrass once each day

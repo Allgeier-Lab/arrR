@@ -1,3 +1,6 @@
+# arrR 2.0
+* Allow multi-species analysis
+
 # arrR 1.5
 * Remove `terra` dependency
 * Remove `RcppDist` dependency

@@ -109,25 +109,57 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // init matrix for reserves threshold
   Rcpp::NumericMatrix fishpop_attr(fishpop.nrow(), 2);
 
-  // add id column of fish
-  fishpop_attr(_, 0) = fishpop(_, 0);
+  // get unique species ids
+  Rcpp::NumericVector fishpop_species = Rcpp::unique(fishpop(_, 1));
 
   // init double for maximum movement distance
-  double max_dist = 0.0;
+  Rcpp::NumericVector max_dist (fishpop_species.length(), 0.0);
 
   // fishpop is present
   if (flag_fishpop) {
 
+    // add id column of fish
+    fishpop_attr(_, 0) = fishpop(_, 0);
+
+    // sort species id
+    std::sort(fishpop_species.begin(), fishpop_species.end());
+
     // get maximum movement distance
-    max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
+    for (int i = 0; i < fishpop_species.length(); i++) {
+
+      // get current species id
+      int species_temp = fishpop_species[i] - 1;
+
+      // get parameters
+      double move_mean = as<Rcpp::NumericVector>(parameters["move_mean"])[species_temp];
+
+      double move_sd = as<Rcpp::NumericVector>(parameters["move_sd"])[species_temp];
+
+      double move_return = as<Rcpp::NumericVector>(parameters["move_return"])[species_temp];
+
+      double move_reef = as<Rcpp::NumericVector>(parameters["move_reef"])[species_temp];
+
+      // get max distance
+      max_dist[i] = rcpp_get_max_dist(movement, move_mean, move_sd, move_return, move_reef,
+                                      1000000);
+
+    }
 
     if (movement == "behav") {
 
       // create random reserves threshold value
       for (int i = 0; i < fishpop.nrow(); i++) {
 
-        fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
-                                        parameters["pop_reserves_thres_sd"], 0.0, 1.0);
+        // get current species id
+        int species_temp = fishpop(i, 1) - 1;
+
+        // get parameter values
+        double mean = as<Rcpp::NumericVector>(parameters["pop_reserves_thres_mean"])[species_temp];
+
+        double sd = as<Rcpp::NumericVector>(parameters["pop_reserves_thres_sd"])[species_temp];
+
+        // simulate value
+        fishpop_attr(i, 1) = rcpp_rnorm(mean, sd, 0.0, 1.0);
 
       }
     }
@@ -240,10 +272,10 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                           parameters["pop_n_body"], parameters["pop_reserves_max"],
                           parameters["pop_reserves_consump"], extent, dimensions, min_per_i);
 
-      // simulate mortality
-      rcpp_mortality(fishpop, fishpop_track[0], seafloor,
-                     parameters["pop_linf"], parameters["pop_n_body"],
-                     parameters["pop_reserves_max"], extent, dimensions);
+      // // simulate mortality
+      // rcpp_mortality(fishpop, fishpop_track[0], seafloor,
+      //                parameters["pop_linf"], parameters["pop_n_body"],
+      //                parameters["pop_reserves_max"], extent, dimensions);
 
     }
 

@@ -18,9 +18,9 @@ rcpp_respiration(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{resp_intercept, resp_slope}{Numeric with regression parameters.}
+\item{resp_intercept, resp_slope}{Vector with regression parameters.}
 
-\item{resp_temp_low, resp_temp_max, resp_temp_optm}{Numeric with water temperature parameters.}
+\item{resp_temp_low, resp_temp_max, resp_temp_optm}{Vector with water temperature parameters.}
 
 \item{water_temp, min_per_i}{Numeric with various parameters.}
 }

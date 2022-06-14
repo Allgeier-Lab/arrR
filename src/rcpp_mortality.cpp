@@ -16,7 +16,7 @@ using namespace Rcpp;
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
-//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param pop_linf,pop_n_body,pop_reserves_max Vector with parameters.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -34,7 +34,8 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
-                    double pop_linf, double pop_n_body, double pop_reserves_max,
+                    Rcpp::NumericVector pop_linf,  Rcpp::NumericVector pop_n_body,
+                    Rcpp::NumericVector pop_reserves_max,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
@@ -46,8 +47,11 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // use Rcpp indexing counter of current loop iteration
     int row_id_temp = row_id[i] - 1;
 
+    // get current species id
+    int species_temp = fishpop(row_id_temp, 1) - 1;
+
     // create death probability
-    double death_prob = std::exp(fishpop(row_id_temp, 5) - pop_linf);
+    double death_prob = std::exp(fishpop(row_id_temp, 6) - pop_linf[species_temp]);
 
     // create random number to test death prob against
     double random_prob = rcpp_runif(0.0, 1.0);
@@ -57,7 +61,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
-                       pop_linf, pop_n_body, pop_reserves_max,
+                       pop_linf[species_temp], pop_n_body[species_temp], pop_reserves_max[species_temp],
                        "background");
 
     }

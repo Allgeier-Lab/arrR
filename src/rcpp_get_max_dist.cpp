@@ -30,7 +30,8 @@ using namespace Rcpp;
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand) {
+double rcpp_get_max_dist(std::string movement, double move_mean, double move_sd,
+                         double move_return, double move_reef, int n_rand) {
 
   // init temp parameter values for behav or rand/attr movement
   double mean_temp = 0.0, sd_temp = 0.0;
@@ -42,18 +43,17 @@ double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand
   if (movement == "behav") {
 
     // use either distance to closest_reef or move_return distance
-    mean_temp = std::max(as<double>(parameters["move_return"]),
-                         as<double>(parameters["move_mean"]));
+    mean_temp = std::max(move_mean, move_return);
 
-    mean_temp = std::max(mean_temp, as<double>(parameters["move_reef"]));
+    mean_temp = std::max(mean_temp, move_reef);
 
-    sd_temp = std::max(as<double>(parameters["move_sd"]), 1.0);
+    sd_temp = std::max(move_sd, 1.0);
 
   } else {
 
-    mean_temp = parameters["move_mean"];
+    mean_temp = move_mean;
 
-    sd_temp = parameters["move_sd"];
+    sd_temp = move_sd;
 
   }
 
@@ -71,6 +71,9 @@ double rcpp_get_max_dist(std::string movement, Rcpp::List parameters, int n_rand
 }
 
 /*** R
-rcpp_get_max_dist(movement = "attr", parameters = default_parameters, 1000000)
-rcpp_get_max_dist(movement = "behav", parameters = default_parameters, 1000000)
+rcpp_get_max_dist(movement = "attr", move_mean = 10, move_sd = 5,
+                  move_return = 25, move_reef = 1, n_rand = 1000000)
+
+rcpp_get_max_dist(movement = "behav", move_mean = 10, move_sd = 5,
+                  move_return = 25, move_reef = 1, n_rand = 1000000)
 */

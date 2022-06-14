@@ -2,8 +2,8 @@
 //#define RCPP_MOVE_FISHPOP
 
 void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix pop_reserves_thres,
-                     double move_mean, double move_sd, double move_reef,
-                     double move_border, double move_return, double max_dist,
+                     Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef,
+                     Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
                      Rcpp::IntegerVector dimensions);
 
