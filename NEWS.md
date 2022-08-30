@@ -1,3 +1,7 @@
+# arrR 1.5.1
+* Fix bug in detritus pool consumption if pool was very low
+* Remove `codemeta.json`
+
 # arrR 1.5
 * Remove `terra` dependency
 * Remove `RcppDist` dependency
