@@ -29,7 +29,6 @@ reference:
       - get_density
       - get_limits
       - get_production
-      - mdlrn_to_raster
       - plot_allocation
       - plot_production
       - plot.mdl_rn
