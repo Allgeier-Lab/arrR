@@ -127,13 +127,16 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           double nutrients_diff = fishpop(row_id_temp, 10) - fishpop(row_id_temp, 9);
 
           // calculate max amount that fish can consume
-          double consumption_limit = pop_reserves_consump * fishpop(row_id_temp, 10);
+          double consumption_max = pop_reserves_consump * fishpop(row_id_temp, 10);
 
-          // calculate max amount that fish can consume
-          double consumption_reserve = std::min(nutrients_diff, consumption_limit);
+          // calculate amount fish would consume if available
+          double consumption_wanted = std::min(nutrients_diff, consumption_max);
 
-          // calculate max amount that is present in cell
-          consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
+          // calculate remaining detritus after consumption for bioenergetics
+          double detritus_additional = seafloor(cell_id_temp, 5) - consumption_require;
+
+          // calculate amount that is consumed to fill reserves
+          double consumption_reserve = std::min(detritus_additional, consumption_wanted);
 
           // increase reserves
           fishpop(row_id_temp, 9) += consumption_reserve;
