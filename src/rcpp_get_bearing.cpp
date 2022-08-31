@@ -34,8 +34,6 @@ double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 
   }
 
-  // MH: Do I need to loop here?
-
   // convert to degree?
   theta = theta * (180.0 / M_PI);
 
