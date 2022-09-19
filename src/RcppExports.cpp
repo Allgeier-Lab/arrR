@@ -533,8 +533,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_reincarnate
-void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double pop_linf, double pop_n_body, double pop_reserves_max, std::string reason);
-RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP fish_idSEXP, SEXP seafloorSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP pop_linfSEXP, SEXP pop_n_bodySEXP, SEXP pop_reserves_maxSEXP, SEXP reasonSEXP) {
+void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id, Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, double pop_mean_size, double pop_n_body, double pop_reserves_max, std::string reason);
+RcppExport SEXP _arrR_rcpp_reincarnate(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, SEXP fish_idSEXP, SEXP seafloorSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP pop_mean_sizeSEXP, SEXP pop_n_bodySEXP, SEXP pop_reserves_maxSEXP, SEXP reasonSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
@@ -543,11 +543,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type seafloor(seafloorSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    Rcpp::traits::input_parameter< double >::type pop_linf(pop_linfSEXP);
+    Rcpp::traits::input_parameter< double >::type pop_mean_size(pop_mean_sizeSEXP);
     Rcpp::traits::input_parameter< double >::type pop_n_body(pop_n_bodySEXP);
     Rcpp::traits::input_parameter< double >::type pop_reserves_max(pop_reserves_maxSEXP);
     Rcpp::traits::input_parameter< std::string >::type reason(reasonSEXP);
-    rcpp_reincarnate(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason);
+    rcpp_reincarnate(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_mean_size, pop_n_body, pop_reserves_max, reason);
     return R_NilValue;
 END_RCPP
 }
