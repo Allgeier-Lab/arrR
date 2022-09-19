@@ -329,13 +329,13 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param pop_mean_size,pop_n_body,pop_reserves_max Numeric with parameters.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
 #' @details
-#' Function to simulate background mortality of fish individuals. The mortality
-#' probability increases with increasing size and approximates p=1 for \code{pop_linf}.
+#' Function to simulate background mortality of fish individuals.
+#' Fish automatically dies when \code{pop_mean_size} + 2.
 #' If a individual dies, a new individual is created.
 #'
 #' @return void
@@ -344,8 +344,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_mortality
 #'
 #' @keywords internal
-rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_reserves_max, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_linf, pop_n_body, pop_reserves_max, extent, dimensions))
+rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions))
 }
 
 #' rcpp_move_behav
