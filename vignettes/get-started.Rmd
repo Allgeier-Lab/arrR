@@ -44,7 +44,7 @@ starting_values <- arrR::default_starting
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 8
+starting_values$pop_n <- 2
 
 parameters$pop_reserves_max <- c(0.1, 0.15)
 
@@ -62,7 +62,7 @@ The function `get_req_nutrients` allows to calculate the nutrients and detritus 
 
 ```{r setup_inputs}
 # create 5 reef cells in center of seafloor
-reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), 
+reef_matrix <- matrix(data = c(-15, 0, 0, 15, 15, 0, 0, -15, 0, 0), 
                       ncol = 2, byrow = TRUE)
 
 # get stable nutrient/detritus values
@@ -79,9 +79,25 @@ input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
                                  reef = reef_matrix, starting_values = starting_values)
 
 # create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 1, 2, 1, 1, 2, 2), 
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 1), 
                                starting_values = starting_values, 
                                parameters = parameters)
+
+#changing parameters for species 2, sets reserves thresh to 0
+for(i in 1:nrow(input_fishpop)) {
+  if (input_fishpop[i,2] == 2) {
+    parameters$pop_reserves_thres_mean[i] <- 0
+    #subsequent edits are for other parameters (mostly to test locally)
+    parameters$pop_a[i] <- 0.2
+    parameters$pop_b[i] <- 3.5
+    parameters$pop_k[i] <- 0.3
+    parameters$pop_linf[i] <- 44
+    parameters$pop_n_body[i] <- 0.05
+    parameters$resp_intercept[i] <- 0.11
+    parameters$resp_slope[i] <- -0.22
+  }
+}
+
 ```
 
 ### 3. Run the model
@@ -99,7 +115,7 @@ One of the most important function arguments of `run_simulation()` is the `movem
 min_per_i <- 120
 
 # run the model for ten years
-years <- 5
+years <- 1
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # run seagrass once each day
@@ -111,7 +127,7 @@ days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                         parameters = parameters, movement = "attr",
+                         parameters = parameters, movement = "behav",
                          max_i = max_i, min_per_i = min_per_i, 
                          seagrass_each = seagrass_each, save_each = save_each)
 ```
@@ -149,6 +165,7 @@ Lastly, you can plot the results. Make sure to also check out the `summarize` ar
 ```{r plot_result, fig.align = "center"}
 # plot map of seafloor
 plot(result, what = "seafloor")
+# make sure species 2 is within 1 unit of a reef
 ```
 
 ### 5. Various
