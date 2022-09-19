@@ -165,6 +165,5 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
 
     // update fish coordinates and activity
     rcpp_update_coords(fishpop, i, move_dist, max_dist[species_temp], extent);
-
   }
 }

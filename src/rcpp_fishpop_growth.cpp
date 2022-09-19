@@ -124,7 +124,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       fishpop(row_id_temp, 14) += excretion;
 
       // behavior 3: individuals are foraging
-      if (fishpop(row_id_temp, 12) == 3.0) {
+      if (fishpop(row_id_temp, 12) == 3.0 || species_temp == 1) {
 
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
