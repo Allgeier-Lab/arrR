@@ -15,7 +15,7 @@ using namespace Rcpp;
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
-//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param pop_mean_size,pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'

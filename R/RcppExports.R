@@ -329,7 +329,7 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param pop_mean_size,pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -572,7 +572,7 @@ rcpp_quantile <- function(x, q) {
 #' @param seafloor Matrix with seafloor values.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
-#' @param pop_n_body Numeric with parameters.
+#' @param pop_linf, pop_n_body, pop_reserves_max Numeric with parameters.
 #' @param reason String with reason of reincarnation.
 #'
 #' @details
@@ -590,8 +590,8 @@ rcpp_quantile <- function(x, q) {
 #' @rdname rcpp_reincarnate
 #'
 #' @keywords internal
-rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_n_body, reason) {
-    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_n_body, reason))
+rcpp_reincarnate <- function(fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason) {
+    invisible(.Call(`_arrR_rcpp_reincarnate`, fishpop, fishpop_track, fish_id, seafloor, extent, dimensions, pop_linf, pop_n_body, pop_reserves_max, reason))
 }
 
 #' rcpp_respiration
