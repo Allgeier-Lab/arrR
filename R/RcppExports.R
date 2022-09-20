@@ -344,8 +344,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_mortality
 #'
 #' @keywords internal
-rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_linf, pop_reserves_max, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_linf, pop_reserves_max, extent, dimensions))
+rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions))
 }
 
 #' rcpp_move_behav
