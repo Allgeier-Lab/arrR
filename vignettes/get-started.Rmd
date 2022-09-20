@@ -44,7 +44,7 @@ starting_values <- arrR::default_starting
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 2
+starting_values$pop_n <- 6
 
 parameters$pop_reserves_max <- c(0.1, 0.15)
 
@@ -79,24 +79,20 @@ input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
                                  reef = reef_matrix, starting_values = starting_values)
 
 # create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 1), 
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 2, 1, 1, 1), 
                                starting_values = starting_values, 
                                parameters = parameters)
 
 #changing parameters for species 2, sets reserves thresh to 0
-for(i in 1:nrow(input_fishpop)) {
-  if (input_fishpop[i,2] == 2) {
-    parameters$pop_reserves_thres_mean[i] <- 0
-    #subsequent edits are for other parameters (mostly to test locally)
-    parameters$pop_a[i] <- 0.2
-    parameters$pop_b[i] <- 3.5
-    parameters$pop_k[i] <- 0.3
-    parameters$pop_linf[i] <- 44
-    parameters$pop_n_body[i] <- 0.05
-    parameters$resp_intercept[i] <- 0.11
-    parameters$resp_slope[i] <- -0.22
-  }
-}
+parameters$pop_reserves_thres_mean[2] <- 0
+#subsequent edits are for other parameters (mostly to test locally)
+parameters$pop_a[2] <- 0.2
+parameters$pop_b[2] <- 3.5
+parameters$pop_k[2] <- 0.3
+parameters$pop_linf[2] <- 44
+parameters$pop_n_body[2] <- 0.05
+parameters$resp_intercept[2] <- 0.11
+parameters$resp_slope[2] <- -0.22
 
 ```
 
@@ -115,7 +111,7 @@ One of the most important function arguments of `run_simulation()` is the `movem
 min_per_i <- 120
 
 # run the model for ten years
-years <- 1
+years <- 5
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # run seagrass once each day
