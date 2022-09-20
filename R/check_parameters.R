@@ -97,6 +97,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     "pop_k",
     "pop_linf",
     "pop_n_body",
+    "pop_ldie",
 
     # fishpop respiration
     "resp_intercept",
