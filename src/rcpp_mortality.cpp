@@ -15,7 +15,7 @@ using namespace Rcpp;
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
-//' @param pop_mean_size,pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param pop_ldie, pop_n_body,pop_reserves_max Numeric with parameters.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -33,7 +33,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
-                    double pop_mean_size, double pop_n_body, double pop_reserves_max,
+                    double pop_ldie, double pop_n_body, double pop_reserves_max,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
@@ -45,12 +45,16 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // use Rcpp indexing counter of current loop iteration
     int row_id_temp = row_id[i] - 1;
 
+    Rcout << "length=" << fishpop(row_id_temp, 5) << "; mean=" << pop_ldie <<  std::endl;
+
     // individual dies if current size is larger than pop_mean_size + X
-    if ((fishpop(row_id_temp, 5) > (pop_mean_size))) {
+    if (fishpop(row_id_temp, 5) > pop_ldie) {
+
+      Rcout << "DIE" << std::endl;
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
-                       pop_mean_size, pop_n_body, pop_reserves_max,
+                       pop_ldie, pop_n_body, pop_reserves_max,
                        "background");
 
     }

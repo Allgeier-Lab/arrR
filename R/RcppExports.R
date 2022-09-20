@@ -329,7 +329,7 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 #' @param seafloor Matrix with seafloor values.
-#' @param pop_mean_size,pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+#' @param pop_ldie, pop_n_body,pop_reserves_max Numeric with parameters.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -344,8 +344,8 @@ rcpp_modify_degree <- function(x, y) {
 #' @rdname rcpp_mortality
 #'
 #' @keywords internal
-rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_mean_size, pop_n_body, pop_reserves_max, extent, dimensions))
+rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_ldie, pop_n_body, pop_reserves_max, extent, dimensions) {
+    invisible(.Call(`_arrR_rcpp_mortality`, fishpop, fishpop_track, seafloor, pop_ldie, pop_n_body, pop_reserves_max, extent, dimensions))
 }
 
 #' rcpp_move_behav
