@@ -33,7 +33,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
-                    double pop_mean_size, double pop_n_body, double pop_reserves_max,
+                    double pop_mean_size, double pop_n_body,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
@@ -46,11 +46,11 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     int row_id_temp = row_id[i] - 1;
 
     // individual dies if current size is larger than pop_mean_size + 1
-    if ((fishpop(row_id_temp, 5) > (pop_mean_size += 2.0))) {
+    if ((fishpop(row_id_temp, 5) > (pop_mean_size + 2.0))) {
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
-                       pop_mean_size, pop_n_body, pop_reserves_max,
+                       pop_n_body,
                        "background");
 
     }
