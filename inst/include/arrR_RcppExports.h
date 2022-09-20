@@ -147,17 +147,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_mean_size, double pop_n_body, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr_rcpp_mortality)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+    inline void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix seafloor, double pop_mean_size, double pop_n_body, double pop_linf, double pop_reserves_max, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+        typedef SEXP(*Ptr_rcpp_mortality)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_mortality p_rcpp_mortality = NULL;
         if (p_rcpp_mortality == NULL) {
-            validateSignature("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            validateSignature("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector)");
             p_rcpp_mortality = (Ptr_rcpp_mortality)R_GetCCallable("arrR", "_arrR_rcpp_mortality");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_mortality(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_mean_size)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+            rcpp_result_gen = p_rcpp_mortality(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_track)), Shield<SEXP>(Rcpp::wrap(seafloor)), Shield<SEXP>(Rcpp::wrap(pop_mean_size)), Shield<SEXP>(Rcpp::wrap(pop_n_body)), Shield<SEXP>(Rcpp::wrap(pop_linf)), Shield<SEXP>(Rcpp::wrap(pop_reserves_max)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

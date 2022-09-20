@@ -15,7 +15,7 @@ using namespace Rcpp;
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop and starting fishpop values.
 //' @param seafloor Matrix with seafloor values.
-//' @param pop_mean_size,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -33,7 +33,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
                     Rcpp::NumericMatrix seafloor,
-                    double pop_mean_size, double pop_n_body,
+                    double pop_mean_size, double pop_n_body, double pop_linf, double pop_reserves_max,
                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
 
   // create random order if fish id because detritus can run out
@@ -50,7 +50,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
-                       pop_n_body,
+                       pop_linf, pop_n_body, pop_reserves_max,
                        "background");
 
     }
