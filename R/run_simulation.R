@@ -116,6 +116,12 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   }
 
+  if (any(fishpop$length > parameters$pop_ldie)) {
+
+    warning("Some individuals are larger than pop_ldie.", call. = FALSE)
+
+  }
+
   # check if max_i can be divided by provided save_each without reminder
   if (max_i %% save_each != 0) {
 

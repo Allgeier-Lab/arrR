@@ -45,12 +45,8 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // use Rcpp indexing counter of current loop iteration
     int row_id_temp = row_id[i] - 1;
 
-    Rcout << "length=" << fishpop(row_id_temp, 5) << "; mean=" << pop_ldie <<  std::endl;
-
     // individual dies if current size is larger than pop_mean_size + X
     if (fishpop(row_id_temp, 5) > pop_ldie) {
-
-      Rcout << "DIE" << std::endl;
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,

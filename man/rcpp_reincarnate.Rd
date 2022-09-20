@@ -28,7 +28,7 @@ rcpp_reincarnate(
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
 
-\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
+\item{pop_linf, }{pop_n_body, pop_reserves_max Numeric with parameters.}
 
 \item{reason}{String with reason of reincarnation.}
 }
