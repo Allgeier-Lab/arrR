@@ -84,15 +84,20 @@ input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 2, 1
                                parameters = parameters)
 
 #changing parameters for species 2, sets reserves thresh to 0
+#something about this is throwing the reserves off --> used in simulate fn
 parameters$pop_reserves_thres_mean[2] <- 0
+
 #subsequent edits are for other parameters (mostly to test locally)
-parameters$pop_a[2] <- 0.2
-parameters$pop_b[2] <- 3.5
-parameters$pop_k[2] <- 0.3
-parameters$pop_linf[2] <- 44
-parameters$pop_n_body[2] <- 0.05
-parameters$resp_intercept[2] <- 0.11
-parameters$resp_slope[2] <- -0.22
+#can have reserves after first life if param below are not run
+#should still look at the behavior tree
+
+parameters$pop_a[2] <- 0.05
+parameters$pop_b[2] <- 2.9
+parameters$pop_k[2] <- 0.1
+parameters$pop_linf[2] <- 39
+parameters$pop_n_body[2] <- 0.015
+parameters$resp_intercept[2] <- 0.1
+parameters$resp_slope[2] <- -0.18
 
 ```
 
@@ -111,7 +116,7 @@ One of the most important function arguments of `run_simulation()` is the `movem
 min_per_i <- 120
 
 # run the model for ten years
-years <- 5
+years <- 1
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # run seagrass once each day
@@ -119,7 +124,7 @@ days <- 1
 seagrass_each <- (24 / (min_per_i / 60)) * days
 
 # save results only every 365 days
-days <- 365
+days <- 5
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,

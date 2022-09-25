@@ -126,11 +126,15 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // behavior 3: individuals are foraging
       if (fishpop(row_id_temp, 12) == 3.0 || species_temp == 1) {
 
+        // always on reef, detritus pool should almost always be big enough
+
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
 
+
           // calculate difference between reserves max and current reserves
           double nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
+          // would normally be positive, but can be negative if value current is higher than reserves (like upon birth)
 
           // calculate max amount that fish can consume
           double consumption_limit = pop_reserves_consump[species_temp] * fishpop(row_id_temp, 11);
@@ -138,11 +142,15 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           // calculate max amount that fish can consume
           double consumption_reserve = std::min(nutrients_diff, consumption_limit);
 
+          // consupmtion_reserve will be negative if current reserves are higher than max (often happens at spawn)
+          // results in an actual decrease in the amount of reserves --> does not explain consistent zeroes though
+
           // calculate max amount that is present in cell
           consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
 
           // increase reserves
           fishpop(row_id_temp, 10) += consumption_reserve;
+          // if consumption_reserve is negative, reserves will decrease
 
           // reduce detritus pool by reserves
           seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
