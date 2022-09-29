@@ -124,7 +124,7 @@ days <- 1
 seagrass_each <- (24 / (min_per_i / 60)) * days
 
 # save results only every 365 days
-days <- 5
+days <- 1
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,

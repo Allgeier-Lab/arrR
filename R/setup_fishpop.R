@@ -81,7 +81,7 @@ setup_fishpop <- function(seafloor, species = rep(x = 1, times = starting_values
 
     # create starting reserves
     reserves <- stats::runif(n = starting_values$pop_n,
-                             min = reserves_max * 0.5, max = reserves_max)
+                             min = reserves_max[species] * 0.5, max = reserves_max[species])
 
     # combine to final data frame
     fishpop <- data.frame(id = 1:starting_values$pop_n, species = species, age = 0.0,

@@ -127,17 +127,25 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       fishpop(row_id_temp, 14) += excretion;
 
       // behavior 3: individuals are foraging
-      if (fishpop(row_id_temp, 12) == 3.0 || species_temp == 1) {
+      if (fishpop(row_id_temp, 12) == 3.0 || species_temp == 0) {
 
         // always on reef, detritus pool should almost always be big enough
+        // noticing that consumption is negative on result$fishpop, only starts consuming at 0
 
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
 
           // calculate difference between reserves max and current reserves
-          double nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
-          // would normally be positive, but can be negative if value current is higher than reserves (like upon birth)
-          // nutrients_diff would be equal to max when 0
+          double nutrients_diff;
+          // ensures nutrients_diff will not be negative --> still only eats when 0
+          if (fishpop(row_id_temp, 11) > fishpop(row_id_temp, 10)) {
+            nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
+            // would normally be positive, but can be negative if value current is higher than reserves (like upon birth)
+            // nutrients_diff would be equal to max when 0
+          }
+          else {
+            nutrients_diff = 0;
+          }
 
           // calculate max amount that fish can consume
           double consumption_limit = pop_reserves_consump[species_temp] * fishpop(row_id_temp, 11);
@@ -151,7 +159,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
           // calculate max amount that is present in cell
           consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
-          // unknown whether consumption limit will be higher than seafloor detritus
+          // unknown whether consumption limit will be higher than seafloor detritus, likely lower
 
           // increase reserves
           fishpop(row_id_temp, 10) += consumption_reserve;
