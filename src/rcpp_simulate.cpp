@@ -311,7 +311,6 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
         fishpop_track[i / save_each] = Rcpp::clone(fishpop);
 
-
       }
     }
 

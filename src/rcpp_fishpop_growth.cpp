@@ -79,6 +79,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // get current species id
     int species_temp = fishpop(row_id_temp, 1) - 1;
 
+    // MH: This is an example of printing (uncomment next line)
+    // Rcout << "i:" << i << "; species:" << species_temp << std::endl;
+
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(row_id_temp, 3), fishpop(row_id_temp, 4),
                                          extent, dimensions, true);
@@ -130,7 +133,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
-
 
           // calculate difference between reserves max and current reserves
           double nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
