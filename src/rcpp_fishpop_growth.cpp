@@ -111,15 +111,16 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // increase fish dimensions weight
       fishpop(row_id_temp, 7) += growth_weight;
 
-      //establish temporary variable for reserve proportional change upon birth
-      double reserves_max_temp = fishpop(row_id_temp, 11);
+      // //establish temporary variable for reserve proportional change upon birth
+      // double reserves_max_temp = fishpop(row_id_temp, 11);
 
       // update reserves_max
       fishpop(row_id_temp, 11) = fishpop(row_id_temp, 7) * pop_n_body[species_temp] * pop_reserves_max[species_temp];
 
-      if (fishpop(row_id_temp, 2) == 1) {
-        fishpop(row_id_temp, 10) = fishpop(row_id_temp, 10) * (fishpop(row_id_temp, 11) / reserves_max_temp);
-       }
+      // // MH: What is this doing?
+      // if (fishpop(row_id_temp, 2) == 1) {
+      //   fishpop(row_id_temp, 10) = fishpop(row_id_temp, 10) * (fishpop(row_id_temp, 11) / reserves_max_temp);
+      //  }
 
       // calc non-used consumption (excretion)
       double excretion = (consumption_require - (growth_weight * pop_n_body[species_temp]));
@@ -142,17 +143,26 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
 
+          // MH: Just for debugging
+          if (fishpop(row_id_temp, 10) > fishpop(row_id_temp, 11)) Rcpp::stop("WRONG");
+
           // calculate difference between reserves max and current reserves
-          double nutrients_diff;
-          // ensures nutrients_diff will not be negative --> still only eats when 0
-          if (fishpop(row_id_temp, 11) > fishpop(row_id_temp, 10)) {
-            nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
-            // would normally be positive, but can be negative if value current is higher than reserves (like upon birth)
-            // nutrients_diff would be equal to max when 0
-          }
-          else {
-            nutrients_diff = 0;
-          }
+          double nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
+
+          // MH: So far this never happend to me now
+          // double nutrients_diff = 0.0;
+          // // ensures nutrients_diff will not be negative --> still only eats when 0
+          // if (fishpop(row_id_temp, 11) > fishpop(row_id_temp, 10)) {
+          //   nutrients_diff = fishpop(row_id_temp, 11) - fishpop(row_id_temp, 10);
+          //   // would normally be positive, but can be negative if value current is higher than reserves (like upon birth)
+          //   // nutrients_diff would be equal to max when 0
+          // }
+          // else {
+          //   nutrients_diff = 0;
+          // }
+
+          // MH: Just for debugging
+          if (nutrients_diff < 0.0) Rcpp::stop("WRONG");
 
           // calculate max amount that fish can consume
           double consumption_limit = pop_reserves_consump[species_temp] * fishpop(row_id_temp, 11);
@@ -163,15 +173,22 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           // consupmtion_reserve will be negative if current reserves are higher than max (often happens at spawn)
           // results in an actual decrease in the amount of reserves --> does not explain consistent zeroes though
           // consumption_reserve will be consumption_limit always
+          // MH: I fixed the bug that allowed to be reserves_max bigger than reserves at spawn
 
           // calculate max amount that is present in cell
           consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
           // unknown whether consumption limit will be higher than seafloor detritus, likely lower
+          // MH: Does that matter? We first take the minimum of either the difference between current and max reserves and consumption limit
+          // and then the minimum of the previous and whats actually there. This should make sure they never eat more than they can
+          // or more than actually availaibe in cell
+
+          if (consumption_reserve < 0) Rcpp::stop("Nope");
 
           // increase reserves
           fishpop(row_id_temp, 10) += consumption_reserve;
           // if consumption_reserve is negative, reserves will decrease
           // consumption_reserve should be large when reserves are zero, means large increase in reserves
+          // MH: Shouldn't happen
 
           // reduce detritus pool by reserves
           seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
