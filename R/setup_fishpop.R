@@ -33,9 +33,8 @@
 #' @rdname setup_fishpop
 #'
 #' @export
-setup_fishpop <- function(seafloor, species = rep(x = 1, times = starting_values$pop_n),
-                          starting_values, parameters, use_log = TRUE,
-                          verbose = TRUE) {
+setup_fishpop <- function(seafloor, species, starting_values, parameters,
+                          use_log = TRUE, verbose = TRUE) {
 
   # get seafloor info
   seafloor_info <- get_seafloor_dim(seafloor)
@@ -53,7 +52,31 @@ setup_fishpop <- function(seafloor, species = rep(x = 1, times = starting_values
     # check if species vector has correct size
     if (starting_values$pop_n != length(species)) {
 
-      stop("Species vector must be same length as pop_n")
+      stop("Species vector must be same length as pop_n", call. = FALSE)
+
+    }
+
+    # check if starting values are correct for species
+    if (length(starting_values$pop_mean_size) != length(unique(species)) |
+        length(starting_values$pop_sd_size) != length(unique(species))) {
+
+      stop("'pop_mean_size' and 'pop_mean_sd' must store a value for each species", call. = FALSE)
+
+    }
+
+    # check params
+    check_param <- any(vapply(c("move_", "pop_", "resp_"), function(x) {
+
+      any(vapply(parameters[startsWith(x = names(parameters), prefix = x)], function(y) {
+
+        length(y) != length(unique(species))
+
+      }, FUN.VALUE = logical(1)))
+    }, FUN.VALUE = logical(1)))
+
+    if (check_param) {
+
+      stop("All move_*, pop_*, or resp_* must store a value for each species.", call. = FALSE)
 
     }
 

@@ -146,6 +146,22 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   }
 
+  # check species parameters
+  check_param <- any(vapply(c("move_", "pop_", "resp_"), function(x) {
+
+    any(vapply(parameters[startsWith(x = names(parameters), prefix = x)], function(y) {
+
+      length(y) != length(unique(fishpop$species))
+
+    }, FUN.VALUE = logical(1)))
+  }, FUN.VALUE = logical(1)))
+
+  if (check_param) {
+
+    stop("All move_*, pop_*, or resp_* must store a value for each species.", call. = FALSE)
+
+  }
+
   # check if burn in makes sense
   if (burn_in >= max_i || burn_in < 0) {
 

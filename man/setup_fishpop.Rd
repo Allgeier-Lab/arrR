@@ -6,7 +6,7 @@
 \usage{
 setup_fishpop(
   seafloor,
-  species = rep(x = 1, times = starting_values$pop_n),
+  species,
   starting_values,
   parameters,
   use_log = TRUE,
