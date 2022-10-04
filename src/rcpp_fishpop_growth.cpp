@@ -111,21 +111,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       // increase fish dimensions weight
       fishpop(row_id_temp, 7) += growth_weight;
 
-      // //establish temporary variable for reserve proportional change upon birth
-      double reserves_max_temp = fishpop(row_id_temp, 11);
-
       // update reserves_max
       fishpop(row_id_temp, 11) = fishpop(row_id_temp, 7) * pop_n_body[species_temp] * pop_reserves_max[species_temp];
-
-      // // MH: What is this doing?
-      // SR: I noticed that the reserves_max and reserves are calculated in setup_fishpop.R, but
-      // reserves_max gets updated in fishpop_growth right after the fish is created. This changes
-      // the reserves_max, but not the reserves, causing reserves to be higher than reserves_max.
-      // I added this code to proportionally change reserves when reserves_max changes upon fish birth
-      // The model throws the "WRONG" error when this is not present
-      if (fishpop(row_id_temp, 2) == 1) {
-       fishpop(row_id_temp, 10) = fishpop(row_id_temp, 10) * (fishpop(row_id_temp, 11) / reserves_max_temp);
-      }
 
       // calc non-used consumption (excretion)
       double excretion = (consumption_require - (growth_weight * pop_n_body[species_temp]));

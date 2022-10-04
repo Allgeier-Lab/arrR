@@ -74,15 +74,6 @@ starting_values$nutrients_pool <- stable_values$nutrients_pool
 
 starting_values$detritus_pool <- stable_values$detritus_pool
 
-# create seafloor
-input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1, 
-                                 reef = reef_matrix, starting_values = starting_values)
-
-# create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 2, 1, 1, 1), 
-                               starting_values = starting_values, 
-                               parameters = parameters)
-
 #changing parameters for species 2, sets reserves thresh to 0
 #something about this is throwing the reserves off --> used in simulate fn
 parameters$pop_reserves_thres_mean[2] <- 0
@@ -98,6 +89,17 @@ parameters$pop_linf[2] <- 39
 parameters$pop_n_body[2] <- 0.015
 parameters$resp_intercept[2] <- 0.1
 parameters$resp_slope[2] <- -0.18
+
+
+# create seafloor
+input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1, 
+                                 reef = reef_matrix, starting_values = starting_values)
+
+# create fishpop
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 2, 1, 1, 1), 
+                               starting_values = starting_values, 
+                               parameters = parameters)
+
 
 ```
 
@@ -125,7 +127,7 @@ seagrass_each <- (24 / (min_per_i / 60)) * days
 
 # save results only every 365 days
 days <- 1
-save_each <- (24 / (min_per_i / 60)) * days
+save_each <- 1
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                          parameters = parameters, movement = "behav",
