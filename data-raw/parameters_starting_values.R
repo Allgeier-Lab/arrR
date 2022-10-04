@@ -33,30 +33,30 @@ default_parameters <- list(
   detritus_loss = 0.0,
 
   # fishpop movement
-  move_mean = c(10.0, 15.0),
-  move_sd = c(5.0, 7.5),
+  move_mean = c(10.0, 1.0),#where to find? --> arbitrary, lower than forager though
+  move_sd = c(5.0, 0.5),
   move_reef = c(1.0, 1.0),
   move_return = c(15.0, 20.0),
   move_border = c(1.0, 1.0),
 
   # fishpop dimensions
-  pop_a = c(0.0121, 0.0121),
-  pop_b = c(3.161, 3.161),
-  pop_k = c(0.2, 0.2),
-  pop_linf = c(41.6, 41.6),
-  pop_n_body = c(0.02999, 0.02999),
+  pop_a = c(0.0121, 0.0198),
+  pop_b = c(3.161, 3),
+  pop_k = c(0.2, 1.2),
+  pop_linf = c(41.6, 26.5),
+  pop_n_body = c(0.02999, 0.02999), #need this still --> jakes data
 
   # fishpop reserves
-  pop_reserves_max = c(0.05, 0.05),
-  pop_reserves_thres_mean = c(0.1, 0.1),
+  pop_reserves_max = c(0.05, 0.05), #all arbitrary
+  pop_reserves_thres_mean = c(0.1, 0.0),
   pop_reserves_thres_sd = c(0.0, 0.0),
   pop_reserves_consump = c(0.1, 0.1),
 
   # fishpop respiration
-  resp_intercept = c(0.0108, 0.0108),
+  resp_intercept = c(0.0108, 0.0108), #jakes data
   resp_slope = c(-0.2, -0.2),
   resp_temp_low = c(2.1, 2.1),
-  resp_temp_optm = c(36.0, 36.0),
+  resp_temp_optm = c(36.0, 36.0), #make optimum for species 2 26 (water temp)
   resp_temp_max = c(40.0, 40.0)
 )
 
