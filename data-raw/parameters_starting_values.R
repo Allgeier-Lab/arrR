@@ -36,7 +36,7 @@ default_parameters <- list(
   move_mean = c(10.0, 1.0),#where to find? --> arbitrary, lower than forager though
   move_sd = c(5.0, 0.5),
   move_reef = c(1.0, 1.0),
-  move_return = c(15.0, 20.0),
+  move_return = c(15.0, 2.0),
   move_border = c(1.0, 1.0),
 
   # fishpop dimensions
@@ -47,7 +47,7 @@ default_parameters <- list(
   pop_n_body = c(0.02999, 0.02999), #need this still --> jakes data
 
   # fishpop reserves
-  pop_reserves_max = c(0.05, 0.05), #all arbitrary
+  pop_reserves_max = c(0.05, 0.05),
   pop_reserves_thres_mean = c(0.1, 0.0),
   pop_reserves_thres_sd = c(0.0, 0.0),
   pop_reserves_consump = c(0.1, 0.1),
@@ -56,7 +56,7 @@ default_parameters <- list(
   resp_intercept = c(0.0108, 0.0108), #jakes data
   resp_slope = c(-0.2, -0.2),
   resp_temp_low = c(2.1, 2.1),
-  resp_temp_optm = c(36.0, 36.0), #make optimum for species 2 26 (water temp)
+  resp_temp_optm = c(36.0, 26.0),
   resp_temp_max = c(40.0, 40.0)
 )
 

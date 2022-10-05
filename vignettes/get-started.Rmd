@@ -82,15 +82,6 @@ parameters$pop_reserves_thres_mean[2] <- 0
 #can have reserves after first life if param below are not run
 #should still look at the behavior tree
 
-parameters$pop_a[2] <- 0.05
-parameters$pop_b[2] <- 2.9
-parameters$pop_k[2] <- 0.1
-parameters$pop_linf[2] <- 39
-parameters$pop_n_body[2] <- 0.015
-parameters$resp_intercept[2] <- 0.1
-parameters$resp_slope[2] <- -0.18
-
-
 # create seafloor
 input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1, 
                                  reef = reef_matrix, starting_values = starting_values)
@@ -127,7 +118,7 @@ seagrass_each <- (24 / (min_per_i / 60)) * days
 
 # save results only every 365 days
 days <- 1
-save_each <- 1
+save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
                          parameters = parameters, movement = "behav",
