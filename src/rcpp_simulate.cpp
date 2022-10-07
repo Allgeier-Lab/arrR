@@ -33,6 +33,7 @@ using namespace Rcpp;
 //' @param nutrients_input Vector with amount of nutrient input each time step.
 //' @param seafloor_track,fishpop_track List with entry for each saving time step.
 //' @param parameters List with parameters.
+//' @param fishpop_attr Matrix with reserve threshold values.
 //' @param movement String specifing movement algorithm.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -65,7 +66,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
-                   Rcpp::List parameters, std::string movement,
+                   Rcpp::List parameters, Rcpp::NumericMatrix fishpop_attr, std::string movement,
                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                    int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                    bool to_disk, std::string path_disk, bool verbose) {
@@ -106,12 +107,6 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
   // init fishpop //
 
-  // init matrix for reserves threshold
-  Rcpp::NumericMatrix fishpop_attr(fishpop.nrow(), 2);
-
-  // add id column of fish
-  fishpop_attr(_, 0) = fishpop(_, 0);
-
   // init double for maximum movement distance
   double max_dist = 0.0;
 
@@ -121,14 +116,22 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // get maximum movement distance
     max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
 
+    // for behavement movement threshold values are needed
     if (movement == "behav") {
 
-      // create random reserves threshold value
-      for (int i = 0; i < fishpop.nrow(); i++) {
+      // if matrix was not provided, all values are zero
+      bool flag_thres = Rcpp::sum(fishpop_attr(_, 1)) == 0.0;
 
-        fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
-                                        parameters["pop_reserves_thres_sd"], 0.0, 1.0);
+      // fill matrix with values
+      if (flag_thres) {
 
+        // create random reserves threshold value
+        for (int i = 0; i < fishpop.nrow(); i++) {
+
+          fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
+                                          parameters["pop_reserves_thres_sd"], 0.0, 1.0);
+
+        }
       }
     }
   }

@@ -111,7 +111,7 @@ days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                         parameters = parameters, movement = "attr",
+                         parameters = parameters, movement = "behav",
                          max_i = max_i, min_per_i = min_per_i, 
                          seagrass_each = seagrass_each, save_each = save_each)
 ```
