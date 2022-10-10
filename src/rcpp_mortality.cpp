@@ -55,10 +55,8 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // individual dies if random number is smaller than death probability
     if (random_prob < death_prob) {
 
-      rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
-                       seafloor, extent, dimensions,
-                       pop_linf, pop_n_body, pop_reserves_max,
-                       "background");
+      rcpp_reincarnate(fishpop, fishpop_track, row_id_temp, seafloor, extent, dimensions,
+                       pop_n_body, "background");
 
     }
   }

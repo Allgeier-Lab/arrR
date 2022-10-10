@@ -11,9 +11,7 @@ rcpp_reincarnate(
   seafloor,
   extent,
   dimensions,
-  pop_linf,
   pop_n_body,
-  pop_reserves_max,
   reason
 )
 }
@@ -28,7 +26,7 @@ rcpp_reincarnate(
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
 
-\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
+\item{pop_n_body}{Nutrient content of body mass.}
 
 \item{reason}{String with reason of reincarnation.}
 }

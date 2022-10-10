@@ -196,10 +196,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // individual dies because consumption requirements cannot be met by detritus and reserves
     } else {
 
-      rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
-                       seafloor, extent, dimensions,
-                       pop_linf, pop_n_body, pop_reserves_max,
-                       "consumption");
+      rcpp_reincarnate(fishpop, fishpop_track, row_id_temp, seafloor, extent, dimensions,
+                      pop_n_body, "consumption");
 
     }
   }
