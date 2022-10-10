@@ -38,10 +38,10 @@ A random distance is sampled from a log-normal distribution using `move_mean` an
 
 ### Behavioral movement
 
-_...Work in progress..._
+For the behavioral movement, movement types differ across individuals depending on their spatial location and energy reserves.
 
-3) Individuals move randomly (see "Random movement" above) and forage until their energy reserves are filled completely. 
+1) **Sheltering**: Individuals shelter at a reef cell if their reserves are above a threshold of their maximum reserves, set by `pop_reserves_thres`. They are considered to be "on the reef" if their distance to the closest reef cell is less than `move_border`. Individuals move randomly using a distance sampled from a log-normal distribution using `move_reef` as mean. During this behavior, individuals do not forage. If reserves are below the threshold, individuals switch to the foraging behavior. If individuals move away from the reef (by chance), they switch to the returning behavior. 
 
-2) If energy reserves are filled completely, individuals move directly towards the reef using either a random distance sampled from a log-normal distribution using `move_return` or the distance to the closest reef cell (if this distance is shorter than `move_return`) as mean. The direction is the direct bearing towards the reef cell. During this behavior, individuals do not forage.
+2) **Returning**: If energy reserves are completely filled but they are not already sheltering, individuals move directly towards the reef using either a random distance sampled from a log-normal distribution using `move_return` or the distance to the closest reef cell (if this distance is shorter than `move_return`) as mean movement distance. The direction is the direct bearing towards the reef cell. During this behavior, individuals do not forage.
 
-1) Individuals are considered to be "on the reef" if their distance to the closest reef cell is less than `move_border`. Individuals move randomly using a distance sampled from a log-normal distribution using `move_reef` as mean until their energy reserves are below `pop_reserves_thres`. During this behavior, individuals do not forage.
+3) **Foraging**: Individuals move randomly (see "Random movement" above) and forage until their energy reserves are completely filled. However, the amount of nutrients that can be foraged each timestep is limited by `pop_reserves_consump`, which sets the maximum consumption amount relative to the maximum reserves. Once energy reserves are completely filled, they switch to sheltering or returning depending on their spatial location.
