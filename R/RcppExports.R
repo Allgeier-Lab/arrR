@@ -783,6 +783,7 @@ rcpp_shuffle <- function(x, elements) {
 #' @param nutrients_input Vector with amount of nutrient input each time step.
 #' @param seafloor_track,fishpop_track List with entry for each saving time step.
 #' @param parameters List with parameters.
+#' @param fishpop_attr Matrix with reserve threshold values.
 #' @param movement String specifing movement algorithm.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
@@ -812,8 +813,8 @@ rcpp_shuffle <- function(x, elements) {
 #' @rdname rcpp_simulate
 #'
 #' @keywords internal
-rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose) {
-    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose))
+rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, fishpop_attr, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose) {
+    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, fishpop_attr, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose))
 }
 
 #' rcpp_translate_torus
