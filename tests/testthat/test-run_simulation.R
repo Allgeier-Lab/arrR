@@ -6,8 +6,6 @@ test_that("run_simulation returns rnd_mdl", {
 
   expect_s3_class(object = result_behav, class = "mdl_rn")
 
-  expect_s3_class(object = result_rand_inout, class = "mdl_rn")
-
 })
 
 test_that("run_simulation contains seafloor and fishpop", {
@@ -18,7 +16,6 @@ test_that("run_simulation contains seafloor and fishpop", {
   n_fish <- max_i * nrow(input_fishpop) / save_each + nrow(input_fishpop)
 
   seq_i <- seq(from = 0, to = max_i, by = save_each)
-
 
   expect_equal(object = nrow(result_rand$seafloor), expected = n_cells)
 
@@ -48,7 +45,7 @@ test_that("run_simulation contains model run information", {
 
   expect_equal(object = result_rand$nutrients_input, expected = 0.0)
 
-  expect_equal(object = result_rand_inout$nutrients_input, expected = nutrients_input)
+  expect_equal(object = result_open$nutrients_input, expected = nutrients_input)
 
 
   seafloor_dim <- arrR:::get_seafloor_dim(input_seafloor)
@@ -97,9 +94,8 @@ test_that("run_simulation uses correct movement behavior", {
 test_that("run_simulation stops max_i cannot be divided by save_each", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                                    parameters = parameters,
-                                    movement = "rand",
-                                    max_i = max_i, save_each = 3),
+                                    parameters = arrR::default_parameters,
+                                    movement = "rand", max_i = max_i, save_each = 27),
                regexp = "'max_i' cannot be divided by 'save_each' without rest.")
 
 })
@@ -107,35 +103,8 @@ test_that("run_simulation stops max_i cannot be divided by save_each", {
 test_that("run_simulation stops if nutrients_input is not equal to max_i", {
 
   expect_error(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-                                    parameters = parameters,
-                                    nutrients_input = c(0.1, 0.2, 0.3),
-                                    movement = "rand",
-                                    max_i = max_i, min_per_i = min_per_i),
+                                    parameters = arrR::default_parameters, nutrients_input = c(0.1, 0.2, 0.3),
+                                    movement = "rand", max_i = max_i, min_per_i = min_per_i),
                regexp = "'nutrients_input' must have input amount for each iteration.")
 
 })
-
-# test_that("run_simulation does not return burn_in", {
-#
-#   result <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-#                                  parameters = parameters,
-#                                  movement = "rand",
-#                                  max_i = max_i, min_per_i = min_per_i,
-#                                  burn_in = 10, return_burnin = FALSE, verbose = FALSE)
-#
-#   expect_true(object = min(result$seafloor$timestep) == result$burn_in)
-#
-#   expect_true(object = min(result$fishpop$timestep) == result$burn_in)
-#
-# })
-
-# test_that("run_simulation stops if burn_in is out of limits", {
-#
-#   expect_warning(arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
-#                                       parameters = parameters,
-#                                       movement = "rand",
-#                                       max_i = max_i, min_per_i = min_per_i,
-#                                       burn_in = max_i + 1),
-#                  regexp = "'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0. Setting to burn_in = 0")
-#
-# })
