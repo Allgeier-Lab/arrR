@@ -41,6 +41,7 @@ For more information, please see `vignette("publication-record")`. To get a BibT
 You can install **arrR** from [GitHub](https://github.com/Allgeier-Lab/arrR) with the following line of code. If you want to install the most recent development version, please specify the argument `ref = "development"` within the function.
 
 ```{r install, eval = FALSE}
+# install.packages("remotes)
 remotes::install_github(repo = "Allgeier-Lab/arrR", ref = "main")
 ```
 
