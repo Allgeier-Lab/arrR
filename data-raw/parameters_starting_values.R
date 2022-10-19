@@ -44,7 +44,7 @@ default_parameters <- list(
   pop_b = c(3.161, 3),
   pop_k = c(0.2, 1.2),
   pop_linf = c(41.6, 26.5),
-  pop_n_body = c(0.02999, 0.02999), #need this still --> jakes data
+  pop_n_body = c(0.02999, 2.7518), #need this still --> jakes data
 
   # fishpop reserves
   pop_reserves_max = c(0.05, 0.05),

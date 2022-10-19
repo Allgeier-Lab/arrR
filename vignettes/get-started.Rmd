@@ -74,14 +74,6 @@ starting_values$nutrients_pool <- stable_values$nutrients_pool
 
 starting_values$detritus_pool <- stable_values$detritus_pool
 
-#changing parameters for species 2, sets reserves thresh to 0
-#something about this is throwing the reserves off --> used in simulate fn
-parameters$pop_reserves_thres_mean[2] <- 0
-
-#subsequent edits are for other parameters (mostly to test locally)
-#can have reserves after first life if param below are not run
-#should still look at the behavior tree
-
 # create seafloor
 input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1, 
                                  reef = reef_matrix, starting_values = starting_values)
@@ -109,7 +101,7 @@ One of the most important function arguments of `run_simulation()` is the `movem
 min_per_i <- 120
 
 # run the model for ten years
-years <- 1
+years <- 5
 max_i <- (60 * 24 * 365 * years) / min_per_i
 
 # run seagrass once each day
@@ -117,7 +109,7 @@ days <- 1
 seagrass_each <- (24 / (min_per_i / 60)) * days
 
 # save results only every 365 days
-days <- 1
+days <- 365
 save_each <- (24 / (min_per_i / 60)) * days
 
 result <- run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
