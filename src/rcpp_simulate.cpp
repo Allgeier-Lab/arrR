@@ -33,7 +33,7 @@ using namespace Rcpp;
 //' @param nutrients_input Vector with amount of nutrient input each time step.
 //' @param seafloor_track,fishpop_track List with entry for each saving time step.
 //' @param parameters List with parameters.
-//' @param fishpop_attr Matrix with reserve threshold values.
+//' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values
 //' @param movement String specifing movement algorithm.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -120,12 +120,13 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     if (movement == "behav") {
 
       // if matrix was not provided, all values are zero
+      // KSM: add in third column value check here
       bool flag_thres = Rcpp::sum(fishpop_attr(_, 1)) == 0.0;
 
       // fill matrix with values
       if (flag_thres) {
 
-        // create random reserves threshold value
+        // create random reserves threshold values
         for (int i = 0; i < fishpop.nrow(); i++) {
 
           fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],

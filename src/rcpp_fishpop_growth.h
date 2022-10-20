@@ -1,10 +1,10 @@
 //#ifndef RCPP_FISHPOP_GROWTH
 //#define RCPP_FISHPOP_GROWTH
 
-void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix fishpop_attr,
                          Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
-                         double pop_n_body, double pop_reserves_max, double pop_reserves_consump,
+                         double pop_n_body, double pop_reserves_max,
                          Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                          double min_per_i);
 

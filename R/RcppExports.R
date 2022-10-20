@@ -135,10 +135,10 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' Rcpp simulate fishpop growth.
 #'
 #' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+#' @param fishpop_attr Matrix with id, threshold of pop_reserves_thres_mean, and pop_reserves_consump values
 #' @param seafloor Matrix with seafloor values.
 #' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 #' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
-#' @param pop_reserves_consump Double with consumption limit to fill reserves each time step.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
 #'
@@ -175,8 +175,8 @@ rcpp_diffuse_values <- function(seafloor, cell_adj, nutrients_diffusion, detritu
 #' @rdname rcpp_fishpop_growth
 #'
 #' @keywords internal
-rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, pop_reserves_consump, extent, dimensions, min_per_i) {
-    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, pop_reserves_consump, extent, dimensions, min_per_i))
+rcpp_fishpop_growth <- function(fishpop, fishpop_track, fishpop_attr, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, extent, dimensions, min_per_i) {
+    invisible(.Call(`_arrR_rcpp_fishpop_growth`, fishpop, fishpop_track, fishpop_attr, seafloor, pop_k, pop_linf, pop_a, pop_b, pop_n_body, pop_reserves_max, extent, dimensions, min_per_i))
 }
 
 #' rcpp_get_adjacencies
@@ -335,7 +335,7 @@ rcpp_modify_degree <- function(x, y) {
 #'
 #' @details
 #' Function to simulate background mortality of fish individuals.
-#' Fish automatically dies when \code{pop_mean_size} + 2.
+#' Fish automatically dies when \code{pop_mean_size} is greater than \code{pop_ldie}.
 #' If a individual dies, a new individual is created.
 #'
 #' @return void
@@ -354,7 +354,7 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_ldie, pop_n_bod
 #' Rcpp simulate movement (behav).
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+#' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values
 #' @param move_mean,move_sd Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
 #' @param move_border Double with movement distance that surrounds reef cell border.
@@ -423,7 +423,7 @@ rcpp_move_rand <- function(fishpop, move_mean, move_sd, max_dist, reef_attractio
 #' Rcpp movement behavior wrapper.
 #'
 #' @param fishpop Matrix with fishpop values.
-#' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+#' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump_values
 #' @param movement String specifing movement algorithm.
 #' @param move_mean,move_sd Double with mean movement parameter.
 #' @param move_reef Double with mean movement distance when sheltering at reef.
@@ -783,7 +783,7 @@ rcpp_shuffle <- function(x, elements) {
 #' @param nutrients_input Vector with amount of nutrient input each time step.
 #' @param seafloor_track,fishpop_track List with entry for each saving time step.
 #' @param parameters List with parameters.
-#' @param fishpop_attr Matrix with reserve threshold values.
+#' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values
 #' @param movement String specifing movement algorithm.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
