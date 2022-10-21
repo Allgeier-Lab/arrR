@@ -127,8 +127,6 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       // fill matrix with values threshold
       if (flag_thres) {
 
-        Rcout << "FLAG" <<  std::endl;
-
         // create random reserves threshold values
         for (int i = 0; i < fishpop.nrow(); i++) {
 
