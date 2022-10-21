@@ -201,8 +201,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     } else {
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
-                       seafloor, extent, dimensions,
-                       pop_linf, pop_n_body, pop_reserves_max,
+                       seafloor, extent, dimensions, pop_n_body, pop_reserves_max,
                        "consumption");
 
     }
