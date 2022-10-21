@@ -14,7 +14,7 @@ using namespace Rcpp;
 //' Rcpp movement behavior wrapper.
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+//' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump_values
 //' @param movement String specifing movement algorithm.
 //' @param move_mean,move_sd Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
@@ -56,14 +56,14 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_att
     rcpp_move_rand(fishpop, move_mean, move_sd, max_dist, true,
                    coords_reef, extent, dimensions);
 
-    // behaviour movement
+  // behaviour movement
   } else if (movement == "behav") {
 
     rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd,
                     move_reef, move_border, move_return, max_dist,
                     coords_reef, extent, dimensions);
 
-    // throw error
+  // throw error
   } else {
 
     Rcpp::stop("'movement' must be either 'rand', 'attr', or 'behav'.");

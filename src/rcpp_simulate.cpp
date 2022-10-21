@@ -33,6 +33,7 @@ using namespace Rcpp;
 //' @param nutrients_input Vector with amount of nutrient input each time step.
 //' @param seafloor_track,fishpop_track List with entry for each saving time step.
 //' @param parameters List with parameters.
+//' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values
 //' @param movement String specifing movement algorithm.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
@@ -65,7 +66,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
-                   Rcpp::List parameters, std::string movement,
+                   Rcpp::List parameters, Rcpp::NumericMatrix fishpop_attr, std::string movement,
                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                    int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                    bool to_disk, std::string path_disk, bool verbose) {
@@ -106,12 +107,6 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
   // init fishpop //
 
-  // init matrix for reserves threshold
-  Rcpp::NumericMatrix fishpop_attr(fishpop.nrow(), 2);
-
-  // add id column of fish
-  fishpop_attr(_, 0) = fishpop(_, 0);
-
   // init double for maximum movement distance
   double max_dist = 0.0;
 
@@ -121,13 +116,34 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // get maximum movement distance
     max_dist = rcpp_get_max_dist(movement, parameters, 1000000);
 
+    // for behavement movement threshold values are needed
     if (movement == "behav") {
 
-      // create random reserves threshold value
-      for (int i = 0; i < fishpop.nrow(); i++) {
+      // if matrix was not provided, all values are zero
+      bool flag_thres = Rcpp::sum(fishpop_attr(_, 1)) == 0.0;
 
-        fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
-                                        parameters["pop_reserves_thres_sd"], 0.0, 1.0);
+      bool flag_consump = Rcpp::sum(fishpop_attr(_, 2)) == 0.0;
+
+      // fill matrix with values threshold
+      if (flag_thres) {
+
+        Rcout << "FLAG" <<  std::endl;
+
+        // create random reserves threshold values
+        for (int i = 0; i < fishpop.nrow(); i++) {
+
+          fishpop_attr(i, 1) = rcpp_rnorm(parameters["pop_reserves_thres_mean"],
+                                          parameters["pop_reserves_thres_sd"], 0.0, 1.0);
+
+        }
+      }
+
+      // fill matrix with values consumption
+      if (flag_consump) {
+
+        NumericVector consump_temp (fishpop.nrow(), parameters["pop_reserves_consump"]);
+
+        fishpop_attr(_, 2) = consump_temp;
 
       }
     }
@@ -233,16 +249,18 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                        parameters["resp_temp_low"], parameters["resp_temp_max"],
                        parameters["resp_temp_optm"], 26.0, min_per_i);
 
+      // HERE
+
       // simulate fishpop growth and including change of seafloor pools
-      rcpp_fishpop_growth(fishpop, fishpop_track[0], seafloor,
+      rcpp_fishpop_growth(fishpop, fishpop_track[0], fishpop_attr, seafloor,
                           parameters["pop_k"], parameters["pop_linf"],
                           parameters["pop_a"], parameters["pop_b"],
                           parameters["pop_n_body"], parameters["pop_reserves_max"],
-                          parameters["pop_reserves_consump"], extent, dimensions, min_per_i);
+                          extent, dimensions, min_per_i);
 
       // simulate mortality
       rcpp_mortality(fishpop, fishpop_track[0], seafloor,
-                     parameters["pop_linf"], parameters["pop_n_body"],
+                     parameters["pop_ldie"], parameters["pop_n_body"],
                      parameters["pop_reserves_max"], extent, dimensions);
 
     }

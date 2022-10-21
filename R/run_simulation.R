@@ -8,6 +8,7 @@
 #' @param nutrients_input Vector with nutrient input for each time step.
 #' @param movement String specifying movement algorithm.
 #' @param parameters List with all model parameters.
+#' @param threshold_mat Matrix with reserve threshold values.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
@@ -35,7 +36,10 @@
 #'
 #' The \code{movement} argument allows to either specify random movement of individuals
 #' (\code{'rand'}), attracted movement towards the artificial reef cells of individuals
-#' (\code{'attr'}) or a movement behavior based on their biosenergetics (\code{'behav'}).
+#' (\code{'attr'}) or a movement behavior based on their bioenergetics (\code{'behav'}).
+#'
+#' If \code{threshold_mat} equals NULL, the matrix is created automatically using a
+#' normal distribution with \code{pop_reserves_thres_mean} and \code{pop_reserves_thres_sd}.
 #'
 #' \code{seagrass_each} allows to simulate all seagrass sub-processes only each
 #' specified time step.
@@ -73,7 +77,7 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
-                           movement = "rand", parameters,
+                           movement = "rand", parameters, threshold_mat = NULL,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            to_disk = FALSE, path_disk = NULL, verbose = TRUE) {
@@ -113,6 +117,12 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   if (length(param_warnings$message) > 0) {
 
     stop(param_warnings$message, call. = FALSE)
+
+  }
+
+  if (any(fishpop$length > parameters$pop_ldie)) {
+
+    warning("Some individuals are larger than pop_ldie.", call. = FALSE)
 
   }
 
@@ -157,6 +167,23 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
       warning("'burn_in' larger than or equal to 'max_i' or 'burn_in' < 0. Setting to burn_in = 0", call. = FALSE)
 
     }
+  }
+
+  # threshold matrix is not provided
+  if (is.null(threshold_mat)) {
+
+    # create empty one
+    threshold_mat <- cbind(fishpop$id, 0.0, 0.0)
+
+  # check provided matrix
+  } else {
+
+    if (any(threshold_mat[, 1] != fishpop$id)) stop("'threshold_mat' must have some fishpop IDs as 'fishpop.'", call. = FALSE)
+
+    if (ncol(threshold_mat) != 3) stop("'threshold_mat' must have two or three columns.", call. = FALSE)
+
+    if (any(threshold_mat[, 2] < 0) || any(threshold_mat[, 2] > 1.0)) stop("All 'threshold_mat' values must be 0 <= x <= 1.", call. = FALSE)
+
   }
 
   # setup seafloor #
@@ -249,6 +276,8 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
     message("> Population with ", starting_values$pop_n, " individuals [movement: '", movement, "'].")
 
+    if (is.null(threshold_mat)) {message("> Generating reserve threshold values.")} else {message("> Using provided reserve threshold values.")}
+
     message("> Simulating ", max_i, " iterations (", total_time, " days) [Burn-in: ", burn_in, " iter.].")
 
     message("> Saving each ", save_each, " iterations (", total_save_each, " days).")
@@ -271,7 +300,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
                 seafloor_track = seafloor_track, fishpop_track = fishpop_track,
-                parameters = parameters, movement = movement,
+                parameters = parameters, fishpop_attr = threshold_mat, movement = movement,
                 extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
                 save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
                 to_disk = to_disk, path_disk = path_disk, verbose = verbose)

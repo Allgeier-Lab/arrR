@@ -22,7 +22,7 @@ rcpp_move_wrap(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{fishpop_attr}{Matrix with id and threshold of pop_reserves_max.}
+\item{fishpop_attr}{Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump_values}
 
 \item{movement}{String specifing movement algorithm.}
 

@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 
 #include "rcpp_fishpop_growth.h"
+#include "rcpp_which.h"
 #include "rcpp_cell_from_xy.h"
 #include "rcpp_reincarnate.h"
 #include "rcpp_shuffle.h"
@@ -15,10 +16,10 @@ using namespace Rcpp;
 //' Rcpp simulate fishpop growth.
 //'
 //' @param fishpop,fishpop_track Matrix with fishpop values and starting population.
+//' @param fishpop_attr Matrix with id, threshold of pop_reserves_thres_mean, and pop_reserves_consump values
 //' @param seafloor Matrix with seafloor values.
 //' @param pop_k,pop_linf,pop_a,pop_b Numeric with parameters.
 //' @param pop_n_body,pop_reserves_max,min_per_i Numeric with parameters.
-//' @param pop_reserves_consump Double with consumption limit to fill reserves each time step.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
@@ -57,9 +58,9 @@ using namespace Rcpp;
 //' @keywords internal
 // [[Rcpp::export]]
 void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
-                         Rcpp::NumericMatrix seafloor,
+                         Rcpp::NumericMatrix fishpop_attr, Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
-                         double pop_n_body, double pop_reserves_max, double pop_reserves_consump,
+                         double pop_n_body, double pop_reserves_max,
                          Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
                          double min_per_i) {
 
@@ -73,6 +74,9 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
     // use Rcpp indexing counter of current loop iteration
     int row_id_temp = row_id[i] - 1;
+
+    // get current row id
+    int id_attr = rcpp_which(fishpop(row_id_temp, 0), fishpop_attr(_, 0));
 
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(row_id_temp, 2), fishpop(row_id_temp, 3),
@@ -126,8 +130,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           // calculate difference between reserves max and current reserves
           double nutrients_diff = fishpop(row_id_temp, 10) - fishpop(row_id_temp, 9);
 
-          // calculate max amount that fish can consume
-          double consumption_max = pop_reserves_consump * fishpop(row_id_temp, 10);
+          // calculate max amount that fish can consume from threshold matrix
+          double consumption_max = fishpop_attr(id_attr, 2) * fishpop(row_id_temp, 10);
 
           // calculate amount fish would consume if available
           double consumption_wanted = std::min(nutrients_diff, consumption_max);

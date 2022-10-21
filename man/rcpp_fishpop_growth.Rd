@@ -7,6 +7,7 @@
 rcpp_fishpop_growth(
   fishpop,
   fishpop_track,
+  fishpop_attr,
   seafloor,
   pop_k,
   pop_linf,
@@ -14,7 +15,6 @@ rcpp_fishpop_growth(
   pop_b,
   pop_n_body,
   pop_reserves_max,
-  pop_reserves_consump,
   extent,
   dimensions,
   min_per_i
@@ -23,13 +23,13 @@ rcpp_fishpop_growth(
 \arguments{
 \item{fishpop, fishpop_track}{Matrix with fishpop values and starting population.}
 
+\item{fishpop_attr}{Matrix with id, threshold of pop_reserves_thres_mean, and pop_reserves_consump values}
+
 \item{seafloor}{Matrix with seafloor values.}
 
 \item{pop_k, pop_linf, pop_a, pop_b}{Numeric with parameters.}
 
 \item{pop_n_body, pop_reserves_max, min_per_i}{Numeric with parameters.}
-
-\item{pop_reserves_consump}{Double with consumption limit to fill reserves each time step.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
