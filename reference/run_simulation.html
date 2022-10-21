@@ -112,6 +112,7 @@
 <span>  nutrients_input <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  movement <span class="op">=</span> <span class="st">"rand"</span>,</span>
 <span>  <span class="va">parameters</span>,</span>
+<span>  threshold_mat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">max_i</span>,</span>
 <span>  <span class="va">min_per_i</span>,</span>
 <span>  seagrass_each <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -144,6 +145,10 @@
 
 <dt>parameters</dt>
 <dd><p>List with all model parameters.</p></dd>
+
+
+<dt>threshold_mat</dt>
+<dd><p>Matrix with reserve threshold values.</p></dd>
 
 
 <dt>max_i</dt>
@@ -203,7 +208,9 @@ information about the model run itself.</p>
 To simulate no nutrient output, set the <code>nutrients_loss</code> parameter to zero.</p>
 <p>The <code>movement</code> argument allows to either specify random movement of individuals
 (<code>'rand'</code>), attracted movement towards the artificial reef cells of individuals
-(<code>'attr'</code>) or a movement behavior based on their biosenergetics (<code>'behav'</code>).</p>
+(<code>'attr'</code>) or a movement behavior based on their bioenergetics (<code>'behav'</code>).</p>
+<p>If <code>threshold_mat</code> equals NULL, the matrix is created automatically using a
+normal distribution with <code>pop_reserves_thres_mean</code> and <code>pop_reserves_thres_sd</code>.</p>
 <p><code>seagrass_each</code> allows to simulate all seagrass sub-processes only each
 specified time step.</p>
 <p>If <code>save_each &gt; 1</code>, not all iterations are saved in the final <code>mdl_rn</code> object,

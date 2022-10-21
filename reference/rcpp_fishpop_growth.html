@@ -109,6 +109,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rcpp_fishpop_growth</span><span class="op">(</span></span>
 <span>  <span class="va">fishpop</span>,</span>
 <span>  <span class="va">fishpop_track</span>,</span>
+<span>  <span class="va">fishpop_attr</span>,</span>
 <span>  <span class="va">seafloor</span>,</span>
 <span>  <span class="va">pop_k</span>,</span>
 <span>  <span class="va">pop_linf</span>,</span>
@@ -116,7 +117,6 @@
 <span>  <span class="va">pop_b</span>,</span>
 <span>  <span class="va">pop_n_body</span>,</span>
 <span>  <span class="va">pop_reserves_max</span>,</span>
-<span>  <span class="va">pop_reserves_consump</span>,</span>
 <span>  <span class="va">extent</span>,</span>
 <span>  <span class="va">dimensions</span>,</span>
 <span>  <span class="va">min_per_i</span></span>
@@ -129,6 +129,10 @@
 <dd><p>Matrix with fishpop values and starting population.</p></dd>
 
 
+<dt>fishpop_attr</dt>
+<dd><p>Matrix with id, threshold of pop_reserves_thres_mean, and pop_reserves_consump values</p></dd>
+
+
 <dt>seafloor</dt>
 <dd><p>Matrix with seafloor values.</p></dd>
 
@@ -139,10 +143,6 @@
 
 <dt>pop_n_body, pop_reserves_max, min_per_i</dt>
 <dd><p>Numeric with parameters.</p></dd>
-
-
-<dt>pop_reserves_consump</dt>
-<dd><p>Double with consumption limit to fill reserves each time step.</p></dd>
 
 
 <dt>extent</dt>
