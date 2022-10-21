@@ -173,18 +173,16 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   if (is.null(threshold_mat)) {
 
     # create empty one
-    # KSM: add third column here?
-    threshold_mat <- cbind(fishpop$id, 0.0)
+    threshold_mat <- cbind(fishpop$id, 0.0, 0.0)
 
-  # check if provided threshold values matrix makes sense
-  # KSM: edit this to include 3 column
+  # check provided matrix
   } else {
 
     if (any(threshold_mat[, 1] != fishpop$id)) stop("'threshold_mat' must have some fishpop IDs as 'fishpop.'", call. = FALSE)
 
-    if (ncol(threshold_mat) != 2) stop("'threshold_mat' must have two columns.", call. = FALSE)
+    if (ncol(threshold_mat) != 3) stop("'threshold_mat' must have two or three columns.", call. = FALSE)
 
-    if (any(threshold_mat[, 2] < 0) | any(threshold_mat[, 2] > 1.0)) stop("All 'threshold_mat' values must be 0 <= x <= 1.", call. = FALSE)
+    if (any(threshold_mat[, 2] < 0) || any(threshold_mat[, 2] > 1.0)) stop("All 'threshold_mat' values must be 0 <= x <= 1.", call. = FALSE)
 
   }
 

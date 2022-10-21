@@ -34,7 +34,7 @@ Rcpp simulate (background) mortality.
 }
 \details{
 Function to simulate background mortality of fish individuals.
-Fish automatically dies when \code{pop_mean_size} + 2.
+Fish automatically dies when \code{pop_mean_size} is greater than \code{pop_ldie}.
 If a individual dies, a new individual is created.
 }
 \keyword{internal}

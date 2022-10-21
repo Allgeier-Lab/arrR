@@ -120,11 +120,14 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     if (movement == "behav") {
 
       // if matrix was not provided, all values are zero
-      // KSM: add in third column value check here
       bool flag_thres = Rcpp::sum(fishpop_attr(_, 1)) == 0.0;
 
-      // fill matrix with values
+      bool flag_consump = Rcpp::sum(fishpop_attr(_, 2)) == 0.0;
+
+      // fill matrix with values threshold
       if (flag_thres) {
+
+        Rcout << "FLAG" <<  std::endl;
 
         // create random reserves threshold values
         for (int i = 0; i < fishpop.nrow(); i++) {
@@ -133,6 +136,15 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                                           parameters["pop_reserves_thres_sd"], 0.0, 1.0);
 
         }
+      }
+
+      // fill matrix with values consumption
+      if (flag_consump) {
+
+        NumericVector consump_temp (fishpop.nrow(), parameters["pop_reserves_consump"]);
+
+        fishpop_attr(_, 2) = consump_temp;
+
       }
     }
   }
@@ -237,12 +249,14 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                        parameters["resp_temp_low"], parameters["resp_temp_max"],
                        parameters["resp_temp_optm"], 26.0, min_per_i);
 
+      // HERE
+
       // simulate fishpop growth and including change of seafloor pools
-      rcpp_fishpop_growth(fishpop, fishpop_track[0], seafloor,
+      rcpp_fishpop_growth(fishpop, fishpop_track[0], fishpop_attr, seafloor,
                           parameters["pop_k"], parameters["pop_linf"],
                           parameters["pop_a"], parameters["pop_b"],
                           parameters["pop_n_body"], parameters["pop_reserves_max"],
-                          parameters["pop_reserves_consump"], extent, dimensions, min_per_i);
+                          extent, dimensions, min_per_i);
 
       // simulate mortality
       rcpp_mortality(fishpop, fishpop_track[0], seafloor,

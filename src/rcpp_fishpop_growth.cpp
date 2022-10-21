@@ -57,8 +57,8 @@ using namespace Rcpp;
 //'
 //' @keywords internal
 // [[Rcpp::export]]
-void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, Rcpp::NumericMatrix fishpop_attr,
-                         Rcpp::NumericMatrix seafloor,
+void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track,
+                         Rcpp::NumericMatrix fishpop_attr, Rcpp::NumericMatrix seafloor,
                          double pop_k, double pop_linf, double pop_a, double pop_b,
                          double pop_n_body, double pop_reserves_max,
                          Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
@@ -73,7 +73,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
   for (int i = 0; i < row_id.length(); i++) {
 
     // use Rcpp indexing counter of current loop iteration
-  int row_id_temp = row_id[i] - 1;
+    int row_id_temp = row_id[i] - 1;
 
     // get current row id
     int id_attr = rcpp_which(fishpop(row_id_temp, 0), fishpop_attr(_, 0));
@@ -131,7 +131,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           double nutrients_diff = fishpop(row_id_temp, 10) - fishpop(row_id_temp, 9);
 
           // calculate max amount that fish can consume from threshold matrix
-          double consumption_max = (fishpop_attr(id_attr, 2) * fishpop(row_id_temp, 10));
+          double consumption_max = fishpop_attr(id_attr, 2) * fishpop(row_id_temp, 10);
 
           // calculate amount fish would consume if available
           double consumption_wanted = std::min(nutrients_diff, consumption_max);

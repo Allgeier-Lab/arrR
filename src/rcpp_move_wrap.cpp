@@ -56,14 +56,14 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_att
     rcpp_move_rand(fishpop, move_mean, move_sd, max_dist, true,
                    coords_reef, extent, dimensions);
 
-    // behaviour movement
+  // behaviour movement
   } else if (movement == "behav") {
 
     rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd,
                     move_reef, move_border, move_return, max_dist,
                     coords_reef, extent, dimensions);
 
-    // throw error
+  // throw error
   } else {
 
     Rcpp::stop("'movement' must be either 'rand', 'attr', or 'behav'.");

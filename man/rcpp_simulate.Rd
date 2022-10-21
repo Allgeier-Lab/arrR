@@ -34,7 +34,7 @@ rcpp_simulate(
 
 \item{parameters}{List with parameters.}
 
-\item{fishpop_attr}{Matrix with reserve threshold values.}
+\item{fishpop_attr}{Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values}
 
 \item{movement}{String specifing movement algorithm.}
 
