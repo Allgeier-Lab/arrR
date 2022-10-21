@@ -1,18 +1,4 @@
-library(dplyr)
-
-# get parameters
-parameters <- arrR::default_parameters
-
-parameters_output <- parameters
-
-parameters_output$nutrients_loss <- 0.01
-
-# get starting values
-starting_values <- arrR::default_starting
-
-starting_values_null <- arrR::default_starting
-
-starting_values_null$pop_n <- 0
+### Arguments ####
 
 # create reef
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
@@ -24,65 +10,76 @@ dimensions <- c(50, 50)
 # set grain
 grain <- 1
 
-# setup iterations arguments
-max_i <- 1000
-
 min_per_i <- 120
 
-burn_in <- 5
+# setup iterations arguments
+max_i <- (95 * 24) / (min_per_i / 60)
 
-save_each <- 10
+burn_in <- (5 * 24) / (min_per_i / 60)
 
-# create nutrient input
-nutrients_input <- rep(x = starting_values$nutrients_pool, times = max_i)
+save_each <- 24 / (min_per_i / 60)
+
+# get stable values
+stable_values <- arrR::get_req_nutrients(bg_biomass = arrR::default_starting$bg_biomass,
+                                         ag_biomass = arrR::default_starting$ag_biomass,
+                                         parameters = arrR::default_parameters)
+
+#### Parameters ####
+
+starting_values_stable <- arrR::default_starting
+starting_values_stable$nutrients_pool <- stable_values$nutrients_pool
+starting_values_stable$detritus_pool <- stable_values$detritus_pool
+
+parameters_open <- arrR::default_parameters
+parameters_open$nutrients_loss <- 0.1
+nutrients_input <- rep(x = arrR::default_starting$nutrients_pool, times = max_i)
+
+#### Seafloor ####
 
 # create input seafloor
 input_seafloor <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                       reef = reef_matrix, starting_values = starting_values,
-                                       verbose = FALSE)
+                                       reef = reef_matrix, starting_values = arrR::default_starting)
 
 # create input seafloor
 input_seafloor_rnd <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                           reef = reef_matrix,
-                                           starting_values = starting_values,
-                                           random = 0.25, verbose = FALSE)
+                                           reef = reef_matrix, starting_values = arrR::default_starting,
+                                           random = 0.25)
+
+input_seafloor_stable <- arrR::setup_seafloor(dimensions = dimensions, grain = grain,
+                                              reef = NULL, starting_values = starting_values_stable,
+                                              verbose = FALSE)
+
+#### Fishpop ####
 
 # create fishpop
-input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                     starting_values = starting_values,
-                                     parameters = parameters, verbose = FALSE)
+input_fishpop <- arrR::setup_fishpop(seafloor = input_seafloor, starting_values = arrR::default_starting,
+                                     parameters = arrR::default_parameters)
 
-input_fishpop_unif <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                          starting_values = starting_values,
-                                          parameters = parameters,
-                                          use_log = FALSE, verbose = FALSE)
+input_fishpop_unif <- arrR::setup_fishpop(seafloor = input_seafloor, starting_values = arrR::default_starting,
+                                          parameters = arrR::default_parameters,
+                                          use_log = FALSE)
 
-input_fishpop_null <- arrR::setup_fishpop(seafloor = input_seafloor,
-                                          starting_values = starting_values_null,
-                                          parameters = parameters,
-                                          use_log = TRUE, verbose = FALSE)
+#### Model runs ####
 
-# run model
-result_rand <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
-                                    parameters = parameters, movement = "rand",
+result_rand <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                    parameters = arrR::default_parameters, movement = "rand",
                                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                                    burn_in = burn_in, verbose = FALSE)
+                                    burn_in = burn_in)
 
-# run model
-result_rand_inout <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
-                                          parameters = parameters_output, movement = "rand",
-                                          nutrients_input = nutrients_input,
-                                          max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                                          burn_in = burn_in, verbose = FALSE)
+result_attr <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                    parameters = arrR::default_parameters, movement = "attr",
+                                    max_i = max_i, min_per_i = min_per_i, save_each = save_each)
 
-# run model with attr movement
-result_attr <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
-                                    parameters = parameters, movement = "attr",
-                                    max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                                    burn_in = burn_in, verbose = FALSE)
+result_behav <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                     parameters = arrR::default_parameters, movement = "behav",
+                                     max_i = max_i, min_per_i = min_per_i, save_each = save_each)
 
-# run model with attr movement
-result_behav <- arrR::run_simulation(seafloor = input_seafloor, fishpop  = input_fishpop,
-                                     parameters = parameters, movement = "behav",
-                                     max_i = max_i, min_per_i = min_per_i, save_each = save_each,
-                                     burn_in = burn_in, verbose = FALSE)
+result_stable <- arrR::run_simulation(seafloor = input_seafloor_stable, fishpop = NULL,
+                                      parameters = arrR::default_parameters, movement = "rand",
+                                      max_i = max_i, min_per_i = min_per_i, save_each = save_each,
+                                      burn_in = burn_in)
+
+result_open <- arrR::run_simulation(seafloor = input_seafloor, fishpop = input_fishpop,
+                                    parameters = parameters_open, movement = "rand",
+                                    nutrients_input = nutrients_input,
+                                    max_i = max_i, min_per_i = min_per_i, save_each = save_each)
