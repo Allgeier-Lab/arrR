@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# **arrR** | **Ar**tifical **r**eefs in **R** <img src="man/figures/logo.png" align="right" alt="" width="150" />
+# **arrR** \| **Ar**tifical **r**eefs in **R** <img src="man/figures/logo.png" align="right" alt="" width="150" />
 
 <!-- badges: start -->
 
 | Development                                                                                                                        | CI                                                                                                                                                                           | License                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
 | [![Project Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)                       | [![R-CMD-check](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml) | [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
-| [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) | [![codecov](https://codecov.io/gh/Allgeier-Lab/arrR/branch/development/graph/badge.svg?token=Jx7R1vWP3s)](https://codecov.io/gh/Allgeier-Lab/arrR)                           |                                                                                                                 |
+| [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) | [![codecov](https://codecov.io/gh/Allgeier-Lab/arrR/branch/development/graph/badge.svg?token=Jx7R1vWP3s)](https://codecov.io/gh/Allgeier-Lab/arrR)                           | [![DOI](https://img.shields.io/badge/DOI-10.1002/eap.2617-blue.svg)](https://doi.org/10.1002/eap.2617)          |
 
 <!-- badges: end -->
 
@@ -58,6 +58,6 @@ guidelines](CONTRIBUTING.md).
 ### Contact
 
 Questions or bugs? Please get in touch via
-[mhk.hesselbarth\<at\>gmail.com](mailto:mhk.hesselbarth@gmail.com) or
+[mhk.hesselbarth\<at>gmail.com](mailto:mhk.hesselbarth@gmail.com) or
 submit an issue [here](https://github.com/Allgeier-Lab/arrR/issues). We
-are always happy to hear your input\!
+are always happy to hear your input!
