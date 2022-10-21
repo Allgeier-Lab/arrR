@@ -8,7 +8,7 @@ rcpp_mortality(
   fishpop,
   fishpop_track,
   seafloor,
-  pop_ldie,
+  pop_linf,
   pop_n_body,
   pop_reserves_max,
   extent,
@@ -20,7 +20,7 @@ rcpp_mortality(
 
 \item{seafloor}{Matrix with seafloor values.}
 
-\item{pop_ldie, }{pop_n_body,pop_reserves_max Numeric with parameters.}
+\item{pop_linf, pop_n_body, pop_reserves_max}{Numeric with parameters.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -33,8 +33,8 @@ void
 Rcpp simulate (background) mortality.
 }
 \details{
-Function to simulate background mortality of fish individuals.
-Fish automatically dies when \code{pop_mean_size} is greater than \code{pop_ldie}.
+Function to simulate background mortality of fish individuals. The mortality
+probability increases with increasing size and approximates p=1 for \code{pop_linf}.
 If a individual dies, a new individual is created.
 }
 \keyword{internal}

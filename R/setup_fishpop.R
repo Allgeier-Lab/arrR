@@ -95,7 +95,7 @@ setup_fishpop <- function(seafloor, starting_values, parameters, use_log = TRUE,
                           activity = numeric(), respiration = numeric(),
                           reserves = numeric(), reserves_max = numeric(),
                           behavior = numeric(), consumption = numeric(), excretion = numeric(),
-                          died_consumption = numeric(), died_background = numeric(), length_die = numeric())
+                          died_consumption = numeric(), died_background = numeric())
 
   }
 

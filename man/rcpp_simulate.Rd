@@ -11,7 +11,6 @@ rcpp_simulate(
   seafloor_track,
   fishpop_track,
   parameters,
-  fishpop_attr,
   movement,
   extent,
   dimensions,
@@ -33,8 +32,6 @@ rcpp_simulate(
 \item{seafloor_track, fishpop_track}{List with entry for each saving time step.}
 
 \item{parameters}{List with parameters.}
-
-\item{fishpop_attr}{Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values}
 
 \item{movement}{String specifing movement algorithm.}
 
