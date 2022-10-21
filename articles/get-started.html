@@ -227,25 +227,21 @@
 <span><span class="va">save_each</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">24</span> <span class="op">/</span> <span class="op">(</span><span class="va">min_per_i</span> <span class="op">/</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">days</span></span>
 <span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_simulation.html">run_simulation</a></span><span class="op">(</span>seafloor <span class="op">=</span> <span class="va">input_seafloor</span>, fishpop <span class="op">=</span> <span class="va">input_fishpop</span>,</span>
-<span>                         parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"behav"</span>,</span>
+<span>                         parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"attr"</span>,</span>
 <span>                         max_i <span class="op">=</span> <span class="va">max_i</span>, min_per_i <span class="op">=</span> <span class="va">min_per_i</span>, </span>
 <span>                         seagrass_each <span class="op">=</span> <span class="va">seagrass_each</span>, save_each <span class="op">=</span> <span class="va">save_each</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Some individuals are larger than pop_ldie.</span></span>
-<span><span class="co">#&gt; &gt; ...Starting at &lt;2022-10-21 14:05:34&gt;...</span></span>
+<span><span class="co">#&gt; &gt; ...Starting at &lt;2022-10-21 14:09:35&gt;...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; Seafloor with 50 rows x 50 cols; 5 reef cell(s).</span></span>
-<span><span class="co">#&gt; &gt; Population with 8 individuals [movement: 'behav'].</span></span>
-<span><span class="co">#&gt; &gt; Using provided reserve threshold values.</span></span>
+<span><span class="co">#&gt; &gt; Population with 8 individuals [movement: 'attr'].</span></span>
 <span><span class="co">#&gt; &gt; Simulating 43800 iterations (3650 days) [Burn-in: 0 iter.].</span></span>
 <span><span class="co">#&gt; &gt; Saving each 4380 iterations (365 days).</span></span>
 <span><span class="co">#&gt; &gt; One iteration equals 120 minutes.</span></span>
 <span><span class="co">#&gt; &gt; Storing results in RAM.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; FLAG</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; ...Saving results...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &gt; ...All done at &lt;2022-10-21 14:05:53&gt;...</span></span></code></pre></div>
+<span><span class="co">#&gt; &gt; ...All done at &lt;2022-10-21 14:09:58&gt;...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="look-at-model-results">4. Look at model results<a class="anchor" aria-label="anchor" href="#look-at-model-results"></a>
@@ -257,17 +253,17 @@
 <span><span class="co">#&gt; Total time : 0-43800 iterations (3650 days) [Burn-in: 0 iter.]</span></span>
 <span><span class="co">#&gt; Saved each : 4380 iterations (365 days)</span></span>
 <span><span class="co">#&gt; Seafloor   : 50 rows x 50 cols; 5 reef cell(s)</span></span>
-<span><span class="co">#&gt; Fishpop    : 8 indiv (movement: 'behav')</span></span>
+<span><span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool)</span></span>
-<span><span class="co">#&gt; Minimum  : 84.818, 604.528, 0.003, 2.63</span></span>
-<span><span class="co">#&gt; Mean     : 101.784, 605.726, 0.003, 3.178</span></span>
-<span><span class="co">#&gt; Maximum  : 172.732, 628.344, 0.007, 3.332</span></span>
+<span><span class="co">#&gt; Minimum  : 86.75, 605.138, 0.003, 3.058</span></span>
+<span><span class="co">#&gt; Mean     : 102.517, 615.33, 0.003, 3.071</span></span>
+<span><span class="co">#&gt; Maximum  : 171.127, 682.67, 0.01, 3.074</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span></span>
-<span><span class="co">#&gt; Minimum  : 7.105, 5.95, 0, 13</span></span>
-<span><span class="co">#&gt; Mean     : 9.984, 21.325, 0, 10972.5</span></span>
-<span><span class="co">#&gt; Maximum  : 15.657, 72.325, 0, 43800</span></span></code></pre></div>
+<span><span class="co">#&gt; Minimum  : 14.552, 57.383, 0, 1</span></span>
+<span><span class="co">#&gt; Mean     : 20.423, 191.476, 0, 1</span></span>
+<span><span class="co">#&gt; Maximum  : 29.007, 507.864, 0, 1</span></span></code></pre></div>
 <p>The returning object <code>mdl_rn</code> object is simply a list “under the hood”, so analyzing the results yourself should be pretty straightforward. Simply access the data you need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show all elements of result list</span></span>
@@ -279,20 +275,20 @@
 <span></span>
 <span><span class="co"># show e.g. result for fish population</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">fishpop</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   id age          x          y  heading    length    weight activity</span></span>
-<span><span class="co">#&gt; 1  1   0  -2.559498 -13.214727 324.9656  5.987057  3.463832        0</span></span>
-<span><span class="co">#&gt; 2  2   0   6.727982 -12.343385 173.6996  5.758591  3.062985        0</span></span>
-<span><span class="co">#&gt; 3  3   0  14.404457  -1.920433 239.0716 15.657352 72.325253        0</span></span>
-<span><span class="co">#&gt; 4  4   0   6.287189 -19.281190 124.8197  6.523223  4.542558        0</span></span>
-<span><span class="co">#&gt; 5  5   0 -17.985789  -6.171498 243.6409  5.124619  2.118486        0</span></span>
-<span><span class="co">#&gt; 6  6   0  -4.129387  -9.645519 155.4733  8.198165  9.355000        0</span></span>
+<span><span class="co">#&gt;   id age          x           y    heading    length     weight activity</span></span>
+<span><span class="co">#&gt; 1  1   0 -2.3527798  22.1915631  28.154248  5.764649  3.0731828        0</span></span>
+<span><span class="co">#&gt; 2  2   0 -5.0904967   0.6976023   0.926603  4.032979  0.9935029        0</span></span>
+<span><span class="co">#&gt; 3  3   0 13.6210616  19.1292203 102.401573  4.143359  1.0820235        0</span></span>
+<span><span class="co">#&gt; 4  4   0 24.8975706 -16.7448479 108.738561  4.254074  1.1760833        0</span></span>
+<span><span class="co">#&gt; 5  5   0  0.1441424  13.1455031 158.937454  4.072891  1.0249159        0</span></span>
+<span><span class="co">#&gt; 6  6   0  4.1401831  22.7066129 359.411832 15.612823 71.6770559        0</span></span>
 <span><span class="co">#&gt;   respiration    reserves reserves_max behavior consumption excretion</span></span>
-<span><span class="co">#&gt; 1           0 0.009659206  0.010388034        3           0         0</span></span>
-<span><span class="co">#&gt; 2           0 0.006003143  0.009185893        3           0         0</span></span>
-<span><span class="co">#&gt; 3           0 0.115770687  0.216903433        3           0         0</span></span>
-<span><span class="co">#&gt; 4           0 0.010522017  0.013623131        3           0         0</span></span>
-<span><span class="co">#&gt; 5           0 0.006075743  0.006353338        3           0         0</span></span>
-<span><span class="co">#&gt; 6           0 0.015367188  0.028055645        3           0         0</span></span>
+<span><span class="co">#&gt; 1           0 0.006020953  0.009216475        3           0         0</span></span>
+<span><span class="co">#&gt; 2           0 0.002628304  0.002979515        3           0         0</span></span>
+<span><span class="co">#&gt; 3           0 0.001706241  0.003244989        3           0         0</span></span>
+<span><span class="co">#&gt; 4           0 0.002164169  0.003527074        3           0         0</span></span>
+<span><span class="co">#&gt; 5           0 0.001804051  0.003073723        3           0         0</span></span>
+<span><span class="co">#&gt; 6           0 0.182791871  0.214959491        3           0         0</span></span>
 <span><span class="co">#&gt;   died_consumption died_background timestep burn_in</span></span>
 <span><span class="co">#&gt; 1                0               0        0     yes</span></span>
 <span><span class="co">#&gt; 2                0               0        0     yes</span></span>
