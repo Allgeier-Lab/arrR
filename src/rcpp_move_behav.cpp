@@ -15,7 +15,7 @@ using namespace Rcpp;
 //' Rcpp simulate movement (behav).
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+//' @param fishpop_attr Matrix with id, pop_reserves_thres_mean, and pop_reserves_consump values
 //' @param move_mean,move_sd Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.

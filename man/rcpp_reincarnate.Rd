@@ -11,7 +11,6 @@ rcpp_reincarnate(
   seafloor,
   extent,
   dimensions,
-  pop_linf,
   pop_n_body,
   pop_reserves_max,
   reason
@@ -27,8 +26,6 @@ rcpp_reincarnate(
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
-
-\item{pop_linf, }{pop_n_body, pop_reserves_max Numeric with parameters.}
 
 \item{reason}{String with reason of reincarnation.}
 }

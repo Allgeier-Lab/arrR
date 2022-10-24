@@ -1,6 +1,6 @@
 test_that("setup_seafloor has correct dimensions", {
 
-  seafloor_dim <- get_seafloor_dim(input_seafloor)
+  seafloor_dim <- arrR:::get_seafloor_dim(input_seafloor)
 
   expect_equal(object = nrow(input_seafloor),
                expected = dimensions[[1]] * dimensions[[2]])
@@ -20,16 +20,16 @@ test_that("setup_seafloor includes reef cells", {
 test_that("setup_seafloor has correct starting values", {
 
   expect_equal(object = mean(input_seafloor$ag_biomass, na.rm = TRUE),
-               expected = starting_values$ag_biomass)
+               expected = arrR::default_starting$ag_biomass)
 
   expect_equal(object =  mean(input_seafloor$bg_biomass, na.rm = TRUE),
-               expected = starting_values$bg_biomass)
+               expected = arrR::default_starting$bg_biomass)
 
   expect_equal(object = mean(input_seafloor$nutrients_pool, na.rm = TRUE),
-               expected = starting_values$nutrients_pool)
+               expected = arrR::default_starting$nutrients_pool)
 
   expect_equal(object = mean(input_seafloor$detritus_pool, na.rm = TRUE),
-               expected = starting_values$detritus_pool)
+               expected = arrR::default_starting$detritus_pool)
 
 })
 
@@ -51,13 +51,13 @@ test_that("setup_seafloor adds random noise", {
 test_that("setup_seafloor returns error", {
 
   expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
-                                             reef = 5, starting_values = starting_values,
+                                             reef = 5, starting_values = arrR::default_starting,
                                              random = 0.25),
                regexp = "Please provide a 2-column with x,y coordinates of reef cells.")
 
   expect_error(object = arrR::setup_seafloor(dimensions = dimensions, grain = grain,
                                              reef = cbind(reef_matrix, 5),
-                                             starting_values = starting_values,
+                                             starting_values = arrR::default_starting,
                                              random = 0.25),
                regexp = "Please provide a 2-column with x,y coordinates of reef cells.")
 

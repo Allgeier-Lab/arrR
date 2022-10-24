@@ -45,7 +45,7 @@ default_parameters <- list(
   pop_k = 0.2,
   pop_linf = 41.6,
   pop_n_body = 0.02999,
-  pop_ldie = 0.0,
+  pop_ldie = 45.0,
 
   # fishpop reserves
   pop_reserves_max = 0.05,

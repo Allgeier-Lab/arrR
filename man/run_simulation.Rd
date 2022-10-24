@@ -76,7 +76,7 @@ To simulate no nutrient output, set the \code{nutrients_loss} parameter to zero.
 
 The \code{movement} argument allows to either specify random movement of individuals
 (\code{'rand'}), attracted movement towards the artificial reef cells of individuals
-(\code{'attr'}) or a movement behavior based on their biosenergetics (\code{'behav'}).
+(\code{'attr'}) or a movement behavior based on their bioenergetics (\code{'behav'}).
 
 If \code{threshold_mat} equals NULL, the matrix is created automatically using a
 normal distribution with \code{pop_reserves_thres_mean} and \code{pop_reserves_thres_sd}.

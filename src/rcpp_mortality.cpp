@@ -49,8 +49,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     if (fishpop(row_id_temp, 5) > pop_ldie) {
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
-                       seafloor, extent, dimensions,
-                       pop_ldie, pop_n_body, pop_reserves_max,
+                       seafloor, extent, dimensions, pop_n_body, pop_reserves_max,
                        "background");
 
     }
