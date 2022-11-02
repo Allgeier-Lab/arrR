@@ -59,6 +59,6 @@ guidelines](CONTRIBUTING.md).
 ### Contact
 
 Questions or bugs? Please get in touch via
-[mhk.hesselbarth\<at>gmail.com](mailto:mhk.hesselbarth@gmail.com) or
+[mhk.hesselbarth\<at\>gmail.com](mailto:mhk.hesselbarth@gmail.com) or
 submit an issue [here](https://github.com/Allgeier-Lab/arrR/issues). We
 are always happy to hear your input!
