@@ -141,27 +141,63 @@
 <div class="section level2">
 <h2 id="movement-behaviors">Movement behaviors<a class="anchor" aria-label="anchor" href="#movement-behaviors"></a>
 </h2>
-<p>The <strong>arrR</strong> model allows to specify different movement behaviors for each model run.</p>
-<p>Fish movement is simulated using a movement distance and direction. How these distance and directions are simulated for each individual depends on the type of movement.</p>
-<p>If an individual moves outside the seafloor environment, it re-enters it on the opposite side (“torus translation”).</p>
+<p>The <strong>arrR</strong> model allows to specify different movement
+behaviors for each model run.</p>
+<p>Fish movement is simulated using a movement distance and direction.
+How these distance and directions are simulated for each individual
+depends on the type of movement.</p>
+<p>If an individual moves outside the seafloor environment, it re-enters
+it on the opposite side (“torus translation”).</p>
 <div class="section level3">
 <h3 id="random-movement">Random movement<a class="anchor" aria-label="anchor" href="#random-movement"></a>
 </h3>
-<p>A random distance is sampled from a log-normal distribution using <code>move_mean</code> and <code>move_sd</code> as mean and standard deviation, respectively. A random directions is sampled from uniform distribution (0° &lt;= direction &lt;= 360°).</p>
+<p>A random distance is sampled from a log-normal distribution using
+<code>move_mean</code> and <code>move_sd</code> as mean and standard
+deviation, respectively. A random directions is sampled from uniform
+distribution (0° &lt;= direction &lt;= 360°).</p>
 </div>
 <div class="section level3">
 <h3 id="attracted-movement">Attracted movement<a class="anchor" aria-label="anchor" href="#attracted-movement"></a>
 </h3>
-<p>A random distance is sampled from a log-normal distribution using <code>move_mean</code> and <code>move_sd</code> as mean and standard deviation, respectively. In contrast to random movement, fish individuals perceive the relative distance to the artificial reef cells in three fixed directions ahead of them (45° left, 0° straight and 45° right) and always move in the direction that is the shortest to an artificial reef cell.</p>
+<p>A random distance is sampled from a log-normal distribution using
+<code>move_mean</code> and <code>move_sd</code> as mean and standard
+deviation, respectively. In contrast to random movement, fish
+individuals perceive the relative distance to the artificial reef cells
+in three fixed directions ahead of them (45° left, 0° straight and 45°
+right) and always move in the direction that is the shortest to an
+artificial reef cell.</p>
 </div>
 <div class="section level3">
 <h3 id="behavioral-movement">Behavioral movement<a class="anchor" aria-label="anchor" href="#behavioral-movement"></a>
 </h3>
-<p>For the behavioral movement, movement types differ across individuals depending on their spatial location and energy reserves.</p>
+<p>For the behavioral movement, movement types differ across individuals
+depending on their spatial location and energy reserves.</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Sheltering</strong>: Individuals shelter at a reef cell if their reserves are above a threshold of their maximum reserves, set by <code>pop_reserves_thres</code>. They are considered to be “on the reef” if their distance to the closest reef cell is less than <code>move_border</code>. Individuals move randomly using a distance sampled from a log-normal distribution using <code>move_reef</code> as mean. During this behavior, individuals do not forage. If reserves are below the threshold, individuals switch to the foraging behavior. If individuals move away from the reef (by chance), they switch to the returning behavior.</p></li>
-<li><p><strong>Returning</strong>: If energy reserves are completely filled but they are not already sheltering, individuals move directly towards the reef using either a random distance sampled from a log-normal distribution using <code>move_return</code> or the distance to the closest reef cell (if this distance is shorter than <code>move_return</code>) as mean movement distance. The direction is the direct bearing towards the reef cell. During this behavior, individuals do not forage.</p></li>
-<li><p><strong>Foraging</strong>: Individuals move randomly (see “Random movement” above) and forage until their energy reserves are completely filled. However, the amount of nutrients that can be foraged each timestep is limited by <code>pop_reserves_consump</code>, which sets the maximum consumption amount relative to the maximum reserves. Once energy reserves are completely filled, they switch to sheltering or returning depending on their spatial location.</p></li>
+<li><p><strong>Sheltering</strong>: Individuals shelter at a reef cell
+if their reserves are above a threshold of their maximum reserves, set
+by <code>pop_reserves_thres</code>. They are considered to be “on the
+reef” if their distance to the closest reef cell is less than
+<code>move_border</code>. Individuals move randomly using a distance
+sampled from a log-normal distribution using <code>move_reef</code> as
+mean. During this behavior, individuals do not forage. If reserves are
+below the threshold, individuals switch to the foraging behavior. If
+individuals move away from the reef (by chance), they switch to the
+returning behavior.</p></li>
+<li><p><strong>Returning</strong>: If energy reserves are completely
+filled but they are not already sheltering, individuals move directly
+towards the reef using either a random distance sampled from a
+log-normal distribution using <code>move_return</code> or the distance
+to the closest reef cell (if this distance is shorter than
+<code>move_return</code>) as mean movement distance. The direction is
+the direct bearing towards the reef cell. During this behavior,
+individuals do not forage.</p></li>
+<li><p><strong>Foraging</strong>: Individuals move randomly (see “Random
+movement” above) and forage until their energy reserves are completely
+filled. However, the amount of nutrients that can be foraged each
+timestep is limited by <code>pop_reserves_consump</code>, which sets the
+maximum consumption amount relative to the maximum reserves. Once energy
+reserves are completely filled, they switch to sheltering or returning
+depending on their spatial location.</p></li>
 </ol>
 </div>
 </div>

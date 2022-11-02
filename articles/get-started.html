@@ -136,7 +136,10 @@
 
     
     
-<p>Please see <code><a href="../articles/general-background.html">vignette("general-background")</a></code> for a general model description of <strong>arrR</strong>. To get a BibTex entry, please use <code>citation("arrR")</code> or see <code><a href="../articles/publication-record.html">vignette("publication-record")</a></code>.</p>
+<p>Please see <code><a href="../articles/general-background.html">vignette("general-background")</a></code> for a general
+model description of <strong>arrR</strong>. To get a BibTex entry,
+please use <code>citation("arrR")</code> or see
+<code><a href="../articles/publication-record.html">vignette("publication-record")</a></code>.</p>
 <div class="section level2">
 <h2 id="how-to-use-arrr">How to use <strong>arrR</strong><a class="anchor" aria-label="anchor" href="#how-to-use-arrr"></a>
 </h2>
@@ -144,13 +147,25 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://allgeier-lab.github.io/arrR/">arrR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<p>You can always use <code>?</code> in front of a function to see the help page. For many functions, there are additionally arguments which you can specify, which are not necessarily explained here.</p>
+<p>You can always use <code>?</code> in front of a function to see the
+help page. For many functions, there are additionally arguments which
+you can specify, which are not necessarily explained here.</p>
 <div class="section level3">
 <h3 id="import-and-change-starting-values-and-parameters">1. Import and change starting values and parameters<a class="anchor" aria-label="anchor" href="#import-and-change-starting-values-and-parameters"></a>
 </h3>
-<p>After you installed and loaded the package, you can access default/exemplary starting values and parameters of the model. Since both objects are just named lists, you can easily change certain parameters. If you pass the objects to <code><a href="../reference/check_parameters.html">check_parameters()</a></code>, the function will check if all required values are available and return warnings if not.</p>
-<p>Of course, you can also load your own data as a list containing starting values and parameters. The <code><a href="../reference/read_parameters.html">read_parameters()</a></code> function can help with this. You can also create the starting values and parameter lists completely from scratch as long as they are two named lists containing all required values.</p>
-<p>Please see <code><a href="../articles/starting-values-parameters.html">vignette("starting-values-parameters")</a></code> for more information about all parameters.</p>
+<p>After you installed and loaded the package, you can access
+default/exemplary starting values and parameters of the model. Since
+both objects are just named lists, you can easily change certain
+parameters. If you pass the objects to <code><a href="../reference/check_parameters.html">check_parameters()</a></code>,
+the function will check if all required values are available and return
+warnings if not.</p>
+<p>Of course, you can also load your own data as a list containing
+starting values and parameters. The <code><a href="../reference/read_parameters.html">read_parameters()</a></code>
+function can help with this. You can also create the starting values and
+parameter lists completely from scratch as long as they are two named
+lists containing all required values.</p>
+<p>Please see <code><a href="../articles/starting-values-parameters.html">vignette("starting-values-parameters")</a></code> for
+more information about all parameters.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get starting values</span></span>
 <span><span class="va">starting_values</span> <span class="op">&lt;-</span> <span class="fu">arrR</span><span class="fu">::</span><span class="va"><a href="../reference/default_starting.html">default_starting</a></span></span>
@@ -175,8 +190,16 @@
 <div class="section level3">
 <h3 id="setup-seafloor-and-fish-population">2. Setup seafloor and fish population<a class="anchor" aria-label="anchor" href="#setup-seafloor-and-fish-population"></a>
 </h3>
-<p>Next, you need to setup the seafloor and the fish population. If you want to add artificial reefs (ARs), simply provide a <code>matrix</code> with <em>x</em>- and <em>y</em>-coordinates of all reef cells. The center cell always has the coordinate <em>x,y(0,0)</em>. Additionally, when setting up the seafloor, you need to specify the dimensions in <em>x</em>- and <em>y</em>-directions and the grain of one cell.</p>
-<p>The function <code>get_req_nutrients</code> allows to calculate the nutrients and detritus amount to keep the whole ecosystem theoretical stable (excluding fish detritus consumption and nutrient excretion). The values can be used to set up the simulation environment.</p>
+<p>Next, you need to setup the seafloor and the fish population. If you
+want to add artificial reefs (ARs), simply provide a <code>matrix</code>
+with <em>x</em>- and <em>y</em>-coordinates of all reef cells. The
+center cell always has the coordinate <em>x,y(0,0)</em>. Additionally,
+when setting up the seafloor, you need to specify the dimensions in
+<em>x</em>- and <em>y</em>-directions and the grain of one cell.</p>
+<p>The function <code>get_req_nutrients</code> allows to calculate the
+nutrients and detritus amount to keep the whole ecosystem theoretical
+stable (excluding fish detritus consumption and nutrient excretion). The
+values can be used to set up the simulation environment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create 5 reef cells in center of seafloor</span></span>
 <span><span class="va">reef_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, </span>
@@ -206,10 +229,24 @@
 <div class="section level3">
 <h3 id="run-the-model">3. Run the model<a class="anchor" aria-label="anchor" href="#run-the-model"></a>
 </h3>
-<p>The <code><a href="../reference/run_simulation.html">run_simulation()</a></code> function is the core function of the package that starts a simulation run. You only need to provide the previously created seafloor and fish population as well as the parameters. Additionally, you need to specify the total run time of the simulation (in # of iterations called <em>i</em> here).</p>
-<p>Further, you can specify how often all seagrass related processes should be simulated, e.g. only once a day using <code>seagrass_each</code>.</p>
-<p>Last, because the produced output can be quite large, you can save only every <em>j</em> iterations, specified by <code>save_each</code>. The model will still simulate all processes each iteration, however, only safe and return the specified iterations to reduce the required memory.</p>
-<p>One of the most important function arguments of <code><a href="../reference/run_simulation.html">run_simulation()</a></code> is the <code>movement</code> argument, which specifies how individuals move across the simulation environment. For more information, please see <code><a href="../articles/movement-behaviors.html">vignette("movement-behaviors")</a></code>.</p>
+<p>The <code><a href="../reference/run_simulation.html">run_simulation()</a></code> function is the core function of
+the package that starts a simulation run. You only need to provide the
+previously created seafloor and fish population as well as the
+parameters. Additionally, you need to specify the total run time of the
+simulation (in # of iterations called <em>i</em> here).</p>
+<p>Further, you can specify how often all seagrass related processes
+should be simulated, e.g. only once a day using
+<code>seagrass_each</code>.</p>
+<p>Last, because the produced output can be quite large, you can save
+only every <em>j</em> iterations, specified by <code>save_each</code>.
+The model will still simulate all processes each iteration, however,
+only safe and return the specified iterations to reduce the required
+memory.</p>
+<p>One of the most important function arguments of
+<code><a href="../reference/run_simulation.html">run_simulation()</a></code> is the <code>movement</code> argument,
+which specifies how individuals move across the simulation environment.
+For more information, please see
+<code><a href="../articles/movement-behaviors.html">vignette("movement-behaviors")</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># one iterations equals 120 minutes</span></span>
 <span><span class="va">min_per_i</span> <span class="op">&lt;-</span> <span class="fl">120</span></span>
@@ -230,7 +267,7 @@
 <span>                         parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"attr"</span>,</span>
 <span>                         max_i <span class="op">=</span> <span class="va">max_i</span>, min_per_i <span class="op">=</span> <span class="va">min_per_i</span>, </span>
 <span>                         seagrass_each <span class="op">=</span> <span class="va">seagrass_each</span>, save_each <span class="op">=</span> <span class="va">save_each</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &gt; ...Starting at &lt;2022-10-21 15:04:12&gt;...</span></span>
+<span><span class="co">#&gt; &gt; ...Starting at &lt;2022-11-02 13:16:31&gt;...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; Seafloor with 50 rows x 50 cols; 5 reef cell(s).</span></span>
 <span><span class="co">#&gt; &gt; Population with 8 individuals [movement: 'attr'].</span></span>
@@ -241,12 +278,14 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; ...Saving results...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &gt; ...All done at &lt;2022-10-21 15:04:29&gt;...</span></span></code></pre></div>
+<span><span class="co">#&gt; &gt; ...All done at &lt;2022-11-02 13:16:54&gt;...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="look-at-model-results">4. Look at model results<a class="anchor" aria-label="anchor" href="#look-at-model-results"></a>
 </h3>
-<p>You can get a first glance and the results simply printing the model output. This gives you some summary statistics at the last iteration of the model.</p>
+<p>You can get a first glance and the results simply printing the model
+output. This gives you some summary statistics at the last iteration of
+the model.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># print model results</span></span>
 <span><span class="va">result</span></span>
@@ -256,15 +295,17 @@
 <span><span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool)</span></span>
-<span><span class="co">#&gt; Minimum  : 85.838, 604.683, 0.003, 2.972</span></span>
-<span><span class="co">#&gt; Mean     : 106.419, 616.317, 0.003, 2.996</span></span>
-<span><span class="co">#&gt; Maximum  : 193.01, 686.109, 0.011, 3.002</span></span>
+<span><span class="co">#&gt; Minimum  : 85.845, 605, 0.003, 3.015</span></span>
+<span><span class="co">#&gt; Mean     : 104.356, 616.409, 0.003, 3.033</span></span>
+<span><span class="co">#&gt; Maximum  : 191.905, 688.192, 0.009, 3.036</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span></span>
-<span><span class="co">#&gt; Minimum  : 16.318, 82.412, 0, 1</span></span>
-<span><span class="co">#&gt; Mean     : 24.718, 349.454, 0, 1.25</span></span>
-<span><span class="co">#&gt; Maximum  : 31.078, 631.581, 0, 3</span></span></code></pre></div>
-<p>The returning object <code>mdl_rn</code> object is simply a list “under the hood”, so analyzing the results yourself should be pretty straightforward. Simply access the data you need.</p>
+<span><span class="co">#&gt; Minimum  : 16.363, 83.138, 0, 1</span></span>
+<span><span class="co">#&gt; Mean     : 22.936, 268.529, 0, 1.25</span></span>
+<span><span class="co">#&gt; Maximum  : 28.505, 480.618, 0, 3</span></span></code></pre></div>
+<p>The returning object <code>mdl_rn</code> object is simply a list
+“under the hood”, so analyzing the results yourself should be pretty
+straightforward. Simply access the data you need.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show all elements of result list</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
@@ -276,19 +317,19 @@
 <span><span class="co"># show e.g. result for fish population</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">fishpop</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   id age          x          y   heading    length      weight activity</span></span>
-<span><span class="co">#&gt; 1  1   0  10.329878 -13.949105 304.31333 10.370152  19.6644628        0</span></span>
-<span><span class="co">#&gt; 2  2   0   3.891348 -16.765339 258.71718 27.389319 423.6231125        0</span></span>
-<span><span class="co">#&gt; 3  3   0  -5.108519  -5.929677 237.89355 14.695243  59.1876573        0</span></span>
-<span><span class="co">#&gt; 4  4   0 -22.363617 -11.705698 113.46475  6.762443   5.0902936        0</span></span>
-<span><span class="co">#&gt; 5  5   0  11.119701   8.209255 133.31032  8.065679   8.8854086        0</span></span>
-<span><span class="co">#&gt; 6  6   0  -4.627566 -19.103871  33.72823  3.243736   0.4991146        0</span></span>
+<span><span class="co">#&gt; 1  1   0   2.084471 -14.778162  61.47493  4.072193   1.0243605        0</span></span>
+<span><span class="co">#&gt; 2  2   0 -19.172571 -23.552910 131.69847 11.045131  24.0020595        0</span></span>
+<span><span class="co">#&gt; 3  3   0 -13.271524  -2.429064  68.33307  9.445751  14.6388817        0</span></span>
+<span><span class="co">#&gt; 4  4   0 -23.239067 -23.666004 196.69728 26.620337 387.1554760        0</span></span>
+<span><span class="co">#&gt; 5  5   0  11.435932  -1.952032 189.81276  6.213872   3.8958623        0</span></span>
+<span><span class="co">#&gt; 6  6   0  -2.053129  -6.973994 215.69379  3.998170   0.9666493        0</span></span>
 <span><span class="co">#&gt;   respiration    reserves reserves_max behavior consumption excretion</span></span>
-<span><span class="co">#&gt; 1           0 0.053322832  0.058973724        3           0         0</span></span>
-<span><span class="co">#&gt; 2           0 0.706994741  1.270445714        3           0         0</span></span>
-<span><span class="co">#&gt; 3           0 0.152432981  0.177503784        3           0         0</span></span>
-<span><span class="co">#&gt; 4           0 0.010616547  0.015265791        3           0         0</span></span>
-<span><span class="co">#&gt; 5           0 0.020604161  0.026647340        3           0         0</span></span>
-<span><span class="co">#&gt; 6           0 0.001182326  0.001496845        3           0         0</span></span>
+<span><span class="co">#&gt; 1           0 0.002090147  0.003072057        3           0         0</span></span>
+<span><span class="co">#&gt; 2           0 0.064886967  0.071982176        3           0         0</span></span>
+<span><span class="co">#&gt; 3           0 0.031885719  0.043902006        3           0         0</span></span>
+<span><span class="co">#&gt; 4           0 1.004587560  1.161079272        3           0         0</span></span>
+<span><span class="co">#&gt; 5           0 0.006966944  0.011683691        3           0         0</span></span>
+<span><span class="co">#&gt; 6           0 0.002075823  0.002898981        3           0         0</span></span>
 <span><span class="co">#&gt;   died_consumption died_background timestep burn_in</span></span>
 <span><span class="co">#&gt; 1                0               0        0     yes</span></span>
 <span><span class="co">#&gt; 2                0               0        0     yes</span></span>
@@ -305,7 +346,8 @@
 <span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Length [cm]"</span>, y <span class="op">=</span> <span class="st">"Weight [g]"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="get-started_files/figure-html/access_result-1.png" width="700" style="display: block; margin: auto;"></p>
-<p>Lastly, you can plot the results. Make sure to also check out the <code>summarize</code> argument of the plot function.</p>
+<p>Lastly, you can plot the results. Make sure to also check out the
+<code>summarize</code> argument of the plot function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot map of seafloor</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, what <span class="op">=</span> <span class="st">"seafloor"</span><span class="op">)</span></span></code></pre></div>
@@ -314,7 +356,11 @@
 <div class="section level3">
 <h3 id="various">5. Various<a class="anchor" aria-label="anchor" href="#various"></a>
 </h3>
-<p><strong>arrR</strong> comes with many helper functions, such as <code><a href="../reference/get_density.html">get_density()</a></code>, <code><a href="../reference/get_limits.html">get_limits()</a></code>, <code><a href="../reference/filter_mdlrn.html">filter_mdlrn()</a></code> or <code><a href="../reference/summarize_mdlrn.html">summarize_mdlrn()</a></code>. Make sure to check out the <a href="https://allgeier-lab.github.io/arrR/reference/index.html">Index</a> for an overview.</p>
+<p><strong>arrR</strong> comes with many helper functions, such as
+<code><a href="../reference/get_density.html">get_density()</a></code>, <code><a href="../reference/get_limits.html">get_limits()</a></code>,
+<code><a href="../reference/filter_mdlrn.html">filter_mdlrn()</a></code> or <code><a href="../reference/summarize_mdlrn.html">summarize_mdlrn()</a></code>. Make sure
+to check out the <a href="https://allgeier-lab.github.io/arrR/reference/index.html">Index</a>
+for an overview.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
