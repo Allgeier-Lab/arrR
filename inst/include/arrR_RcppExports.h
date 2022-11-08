@@ -64,17 +64,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr_rcpp_get_adjacencies)(SEXP);
+    inline Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions, bool torus) {
+        typedef SEXP(*Ptr_rcpp_get_adjacencies)(SEXP,SEXP);
         static Ptr_rcpp_get_adjacencies p_rcpp_get_adjacencies = NULL;
         if (p_rcpp_get_adjacencies == NULL) {
-            validateSignature("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector)");
+            validateSignature("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector,bool)");
             p_rcpp_get_adjacencies = (Ptr_rcpp_get_adjacencies)R_GetCCallable("arrR", "_arrR_rcpp_get_adjacencies");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_get_adjacencies(Shield<SEXP>(Rcpp::wrap(dimensions)));
+            rcpp_result_gen = p_rcpp_get_adjacencies(Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(torus)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

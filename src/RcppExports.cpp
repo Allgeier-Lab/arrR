@@ -151,20 +151,21 @@ RcppExport SEXP _arrR_rcpp_fishpop_growth(SEXP fishpopSEXP, SEXP fishpop_trackSE
     return rcpp_result_gen;
 }
 // rcpp_get_adjacencies
-Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions);
-static SEXP _arrR_rcpp_get_adjacencies_try(SEXP dimensionsSEXP) {
+Rcpp::IntegerMatrix rcpp_get_adjacencies(Rcpp::IntegerVector dimensions, bool torus);
+static SEXP _arrR_rcpp_get_adjacencies_try(SEXP dimensionsSEXP, SEXP torusSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpp_get_adjacencies(dimensions));
+    Rcpp::traits::input_parameter< bool >::type torus(torusSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_get_adjacencies(dimensions, torus));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_get_adjacencies(SEXP dimensionsSEXP) {
+RcppExport SEXP _arrR_rcpp_get_adjacencies(SEXP dimensionsSEXP, SEXP torusSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_get_adjacencies_try(dimensionsSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_get_adjacencies_try(dimensionsSEXP, torusSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -829,7 +830,7 @@ static int _arrR_RcppExport_validate(const char* sig) {
     if (signatures.empty()) {
         signatures.insert("void(*rcpp_diffuse_values)(Rcpp::NumericMatrix,Rcpp::IntegerMatrix,double,double,double)");
         signatures.insert("void(*rcpp_fishpop_growth)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,double,double,double,double,double,double,double,Rcpp::NumericVector,Rcpp::IntegerVector,double)");
-        signatures.insert("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector)");
+        signatures.insert("Rcpp::IntegerMatrix(*rcpp_get_adjacencies)(Rcpp::IntegerVector,bool)");
         signatures.insert("double(*rcpp_get_max_dist)(std::string,Rcpp::List,int)");
         signatures.insert("Rcpp::NumericMatrix(*rcpp_get_reef)(Rcpp::NumericMatrix)");
         signatures.insert("void(*rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
@@ -874,7 +875,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_convert_nutr", (DL_FUNC) &_arrR_rcpp_convert_nutr, 2},
     {"_arrR_rcpp_diffuse_values", (DL_FUNC) &_arrR_rcpp_diffuse_values, 5},
     {"_arrR_rcpp_fishpop_growth", (DL_FUNC) &_arrR_rcpp_fishpop_growth, 13},
-    {"_arrR_rcpp_get_adjacencies", (DL_FUNC) &_arrR_rcpp_get_adjacencies, 1},
+    {"_arrR_rcpp_get_adjacencies", (DL_FUNC) &_arrR_rcpp_get_adjacencies, 2},
     {"_arrR_rcpp_get_bearing", (DL_FUNC) &_arrR_rcpp_get_bearing, 4},
     {"_arrR_rcpp_get_max_dist", (DL_FUNC) &_arrR_rcpp_get_max_dist, 3},
     {"_arrR_rcpp_get_reef", (DL_FUNC) &_arrR_rcpp_get_reef, 1},

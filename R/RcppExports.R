@@ -185,6 +185,7 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' Rcpp get adjacencies
 #'
 #' @param dimensions Vector with number or rows and cols
+#' @param torus Logical if true, torus translation is used.
 #'
 #' @details
 #' Get matrix with cell IDs of all neighboring cells. Indices start with 0
@@ -200,8 +201,8 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' @rdname rcpp_get_adjacencies
 #'
 #' @keywords internal
-rcpp_get_adjacencies <- function(dimensions) {
-    .Call(`_arrR_rcpp_get_adjacencies`, dimensions)
+rcpp_get_adjacencies <- function(dimensions, torus) {
+    .Call(`_arrR_rcpp_get_adjacencies`, dimensions, torus)
 }
 
 #' rcpp_get_bearing

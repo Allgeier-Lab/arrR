@@ -93,7 +93,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   Rcpp::NumericMatrix coords_reef = rcpp_get_reef(seafloor);
 
   // get cell neighborhoods
-  Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions);
+  Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions, true);
 
   // setup nutrients input //
 
