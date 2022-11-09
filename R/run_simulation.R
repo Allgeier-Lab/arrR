@@ -8,6 +8,7 @@
 #' @param nutrients_input Vector with nutrient input for each time step.
 #' @param movement String specifying movement algorithm.
 #' @param parameters List with all model parameters.
+#' @param torus_diffusion Logical if diffusion uses torus
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
@@ -73,7 +74,7 @@
 #'
 #' @export
 run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
-                           movement = "rand", parameters,
+                           movement = "rand", parameters, torus_diffusion = TRUE,
                            max_i, min_per_i, seagrass_each = 1,
                            save_each = 1, burn_in = 0, return_burnin = TRUE,
                            to_disk = FALSE, path_disk = NULL, verbose = TRUE) {
@@ -272,9 +273,9 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   rcpp_simulate(seafloor = seafloor_values, fishpop = fishpop_values, nutrients_input = nutrients_input,
                 seafloor_track = seafloor_track, fishpop_track = fishpop_track,
                 parameters = parameters, movement = movement,
-                extent = extent, dimensions = dimensions, max_i = max_i, min_per_i = min_per_i,
-                save_each = save_each, seagrass_each = seagrass_each, burn_in = burn_in,
-                to_disk = to_disk, path_disk = path_disk, verbose = verbose)
+                extent = extent, dimensions = dimensions, torus_diffusion = torus_diffusion,
+                max_i = max_i, min_per_i = min_per_i, save_each = save_each, seagrass_each = seagrass_each,
+                burn_in = burn_in, to_disk = to_disk, path_disk = path_disk, verbose = verbose)
 
    # new line after last progress message
   if (verbose) {

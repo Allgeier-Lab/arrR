@@ -36,6 +36,7 @@ using namespace Rcpp;
 //' @param movement String specifing movement algorithm.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
+//' @param torus_diffusion Logical if diffusion uses torus.
 //' @param max_i Integer with maximum number of simulation time steps.
 //' @param min_per_i Integer to specify minutes per i.
 //' @param save_each Numeric how often data should be saved to return.
@@ -66,7 +67,7 @@ using namespace Rcpp;
 void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rcpp::NumericVector nutrients_input,
                    Rcpp::List seafloor_track, Rcpp::List fishpop_track,
                    Rcpp::List parameters, std::string movement,
-                   Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
+                   Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, bool torus_diffusion,
                    int max_i, int min_per_i, int save_each, int seagrass_each, int burn_in,
                    bool to_disk, std::string path_disk, bool verbose) {
 
@@ -93,7 +94,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   Rcpp::NumericMatrix coords_reef = rcpp_get_reef(seafloor);
 
   // get cell neighborhoods
-  Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions, true);
+  Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions, torus_diffusion);
 
   // setup nutrients input //
 

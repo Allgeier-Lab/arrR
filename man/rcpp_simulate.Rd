@@ -14,6 +14,7 @@ rcpp_simulate(
   movement,
   extent,
   dimensions,
+  torus_diffusion,
   max_i,
   min_per_i,
   save_each,
@@ -38,6 +39,8 @@ rcpp_simulate(
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
 \item{dimensions}{Vector with dimensions (nrow, ncol).}
+
+\item{torus_diffusion}{Logical if diffusion uses torus.}
 
 \item{max_i}{Integer with maximum number of simulation time steps.}
 

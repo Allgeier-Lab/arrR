@@ -10,6 +10,7 @@ run_simulation(
   nutrients_input = 0,
   movement = "rand",
   parameters,
+  torus_diffusion = TRUE,
   max_i,
   min_per_i,
   seagrass_each = 1,
@@ -31,6 +32,8 @@ run_simulation(
 \item{movement}{String specifying movement algorithm.}
 
 \item{parameters}{List with all model parameters.}
+
+\item{torus_diffusion}{Logical if diffusion uses torus}
 
 \item{max_i}{Integer with maximum number of simulation time steps.}
 
