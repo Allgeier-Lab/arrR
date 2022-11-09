@@ -34,9 +34,6 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
   // get number of rows for cell adj and seafloor
   int n_cell = seafloor.nrow();
 
-  // init counter for Queen's case
-  int counter = 0;
-
   // create vectors to store seafloor values
   Rcpp::NumericVector nutrients (n_cell);
 
@@ -44,45 +41,33 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
 
   Rcpp::NumericVector detritus_fish (n_cell);
 
-  // get all seafloor values
+  // calculate diffusion amount and remove amount from focal cells
   for (int i = 0; i < n_cell; i++) {
 
-    nutrients(i) = (seafloor(i, 4) * nutrients_diffusion) / 8.0;
+    nutrients[i] = seafloor(i, 4) * nutrients_diffusion;
+    seafloor(i, 4) -= nutrients[i];
 
-    detritus(i) = (seafloor(i, 5) * detritus_diffusion) / 8.0;
+    detritus[i] = seafloor(i, 5) * detritus_diffusion;
+    seafloor(i, 5) -= detritus[i];
 
-    detritus_fish(i) = (seafloor(i, 6) * detritus_fish_diffusion) / 8.0;
+    detritus_fish[i] = seafloor(i, 6) * detritus_fish_diffusion;
+    seafloor(i, 6) -= detritus_fish[i];
 
   }
 
-  // add and remove diffused amounts
-  // loop through all cells
-  for (int j = 0; j < n_cell; j++) {
+  // diffuse values
+  for (int j = 0; j < cell_adj.nrow(); j++) {
 
-    // loop through all neighbors
-    for (int k = 0; k < 8; k++) {
+    // get focal and neighboring cell
+    int focal = cell_adj(j, 0);
+    int neighbor = cell_adj(j, 1);
 
-      // gut id of neighbor
-      int neighbor = cell_adj(k + counter, 1);
+    // add values of focal cell to neighbor cell
+    seafloor(neighbor, 4) += nutrients[focal] / 8.0;
 
-      // add values of focal cell to neighbor cell
-      seafloor(neighbor, 4) += nutrients[j];
+    seafloor(neighbor, 5) += detritus[focal] / 8.0;
 
-      seafloor(neighbor, 5) += detritus[j];
-
-      seafloor(neighbor, 6) += detritus_fish[j];
-
-      // remove value from focal cell
-      seafloor(j, 4) -= nutrients[j];
-
-      seafloor(j, 5) -= detritus[j];
-
-      seafloor(j, 6) -= detritus_fish[j];
-
-    }
-
-    // increase counter
-    counter += 8;
+    seafloor(neighbor, 6) += detritus_fish[focal] / 8.0;
 
   }
 }

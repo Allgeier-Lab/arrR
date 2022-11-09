@@ -4,10 +4,12 @@
 \alias{rcpp_get_adjacencies}
 \title{rcpp_get_adjacencies}
 \usage{
-rcpp_get_adjacencies(dimensions)
+rcpp_get_adjacencies(dimensions, torus)
 }
 \arguments{
 \item{dimensions}{Vector with number or rows and cols}
+
+\item{torus}{Logical if true, torus translation is used.}
 }
 \value{
 matrix

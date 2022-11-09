@@ -185,6 +185,7 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' Rcpp get adjacencies
 #'
 #' @param dimensions Vector with number or rows and cols
+#' @param torus Logical if true, torus translation is used.
 #'
 #' @details
 #' Get matrix with cell IDs of all neighboring cells. Indices start with 0
@@ -200,8 +201,8 @@ rcpp_fishpop_growth <- function(fishpop, fishpop_track, seafloor, pop_k, pop_lin
 #' @rdname rcpp_get_adjacencies
 #'
 #' @keywords internal
-rcpp_get_adjacencies <- function(dimensions) {
-    .Call(`_arrR_rcpp_get_adjacencies`, dimensions)
+rcpp_get_adjacencies <- function(dimensions, torus) {
+    .Call(`_arrR_rcpp_get_adjacencies`, dimensions, torus)
 }
 
 #' rcpp_get_bearing
@@ -786,6 +787,7 @@ rcpp_shuffle <- function(x, elements) {
 #' @param movement String specifing movement algorithm.
 #' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 #' @param dimensions Vector with dimensions (nrow, ncol).
+#' @param torus_diffusion Logical if diffusion uses torus.
 #' @param max_i Integer with maximum number of simulation time steps.
 #' @param min_per_i Integer to specify minutes per i.
 #' @param save_each Numeric how often data should be saved to return.
@@ -812,8 +814,8 @@ rcpp_shuffle <- function(x, elements) {
 #' @rdname rcpp_simulate
 #'
 #' @keywords internal
-rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose) {
-    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose))
+rcpp_simulate <- function(seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, torus_diffusion, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose) {
+    invisible(.Call(`_arrR_rcpp_simulate`, seafloor, fishpop, nutrients_input, seafloor_track, fishpop_track, parameters, movement, extent, dimensions, torus_diffusion, max_i, min_per_i, save_each, seagrass_each, burn_in, to_disk, path_disk, verbose))
 }
 
 #' rcpp_translate_torus

@@ -1,3 +1,6 @@
+# arrR 1.5.2
+* Update `rcpp_get_adjacencies`
+
 # arrR 1.5.1
 * Fix bug in detritus pool consumption if pool was very low
 * Remove `codemeta.json`
