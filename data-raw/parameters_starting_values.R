@@ -33,7 +33,7 @@ default_parameters <- list(
   detritus_loss = 0.0,
 
   # fishpop movement
-  move_mean = c(10.0, 1.0),#where to find? --> arbitrary, lower than forager though
+  move_mean = c(10.0, 1.0),
   move_sd = c(5.0, 0.5),
   move_reef = c(1.0, 1.0),
   move_return = c(15.0, 2.0),
@@ -44,7 +44,7 @@ default_parameters <- list(
   pop_b = c(3.161, 3),
   pop_k = c(0.2, 1.2),
   pop_linf = c(41.6, 26.5),
-  pop_n_body = c(0.02999, 2.7518), #need this still --> jakes data
+  pop_n_body = c(0.02999, 0.027518),
 
   # fishpop reserves
   pop_reserves_max = c(0.05, 0.05),

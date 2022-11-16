@@ -151,7 +151,8 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
     any(vapply(parameters[startsWith(x = names(parameters), prefix = x)], function(y) {
 
-      length(y) != length(unique(fishpop$species))
+
+      length(y) < length(unique(fishpop$species))
 
     }, FUN.VALUE = logical(1)))
   }, FUN.VALUE = logical(1)))

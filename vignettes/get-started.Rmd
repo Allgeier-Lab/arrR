@@ -44,7 +44,7 @@ starting_values <- arrR::default_starting
 parameters <- arrR::default_parameters
 
 # change some starting values and parameters
-starting_values$pop_n <- 6
+starting_values$pop_n <- 8
 
 parameters$pop_reserves_max <- c(0.1, 0.15)
 
@@ -79,7 +79,7 @@ input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
                                  reef = reef_matrix, starting_values = starting_values)
 
 # create fishpop
-input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 2, 1, 1, 1), 
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, species = c(2, 2, 1, 2, 1, 1, 2, 2), 
                                starting_values = starting_values, 
                                parameters = parameters)
 

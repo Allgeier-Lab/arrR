@@ -112,8 +112,18 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // get unique species ids
   Rcpp::NumericVector fishpop_species = Rcpp::unique(fishpop(_, 1));
 
+  // find max species id value in fishpop_species
+  int temp_max_sp_id = fishpop_species[0];
+  for (int i = 1; i < fishpop_species.length(); i++) {
+    if (fishpop_species[i] > temp_max_sp_id) {
+      temp_max_sp_id = fishpop_species[i];
+    }
+  }
+
   // init double for maximum movement distance
-  Rcpp::NumericVector max_dist (fishpop_species.length(), 0.0);
+  // SR: creates a max distance space for every species, even if they are not
+  // present; if not present, the value just won't be used
+  Rcpp::NumericVector max_dist (temp_max_sp_id, 0.0);
 
   // fishpop is present
   if (flag_fishpop) {
@@ -140,9 +150,8 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       double move_reef = as<Rcpp::NumericVector>(parameters["move_reef"])[species_temp];
 
       // get max distance
-      max_dist[i] = rcpp_get_max_dist(movement, move_mean, move_sd, move_return, move_reef,
+      max_dist[species_temp] = rcpp_get_max_dist(movement, move_mean, move_sd, move_return, move_reef,
                                       1000000);
-
     }
 
     if (movement == "behav") {

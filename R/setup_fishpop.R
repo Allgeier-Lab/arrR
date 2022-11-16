@@ -57,8 +57,9 @@ setup_fishpop <- function(seafloor, species, starting_values, parameters,
     }
 
     # check if starting values are correct for species
-    if (length(starting_values$pop_mean_size) != length(unique(species)) |
-        length(starting_values$pop_sd_size) != length(unique(species))) {
+    # SR: now allows there to be one species present even if two species are coded
+    if (length(starting_values$pop_mean_size) < length(unique(species)) |
+        length(starting_values$pop_sd_size) < length(unique(species))) {
 
       stop("'pop_mean_size' and 'pop_mean_sd' must store a value for each species", call. = FALSE)
 
@@ -68,8 +69,9 @@ setup_fishpop <- function(seafloor, species, starting_values, parameters,
     check_param <- any(vapply(c("move_", "pop_", "resp_"), function(x) {
 
       any(vapply(parameters[startsWith(x = names(parameters), prefix = x)], function(y) {
-
-        length(y) != length(unique(species))
+#SR: same thing here, number of unique species present in model does not have to be equal to
+# parameters available, but if there are more unique species present than parameters, this is bad
+        length(y) < length(unique(species))
 
       }, FUN.VALUE = logical(1)))
     }, FUN.VALUE = logical(1)))
