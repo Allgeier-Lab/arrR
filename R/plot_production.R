@@ -67,7 +67,7 @@ plot_production <- function(result, summarize = FALSE, lag = TRUE) {
 
     # create plot
     gg_top_left <- ggplot2::ggplot(data = seafloor) +
-      ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[3])) +
+      ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[3]))) +
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A", name = col_names[3]) +
       ggplot2::coord_equal() +
@@ -76,7 +76,7 @@ plot_production <- function(result, summarize = FALSE, lag = TRUE) {
 
     # create plot
     gg_top_right <- ggplot2::ggplot(data = seafloor) +
-      ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[4])) +
+      ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[4]))) +
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A", name = col_names[4]) +
       ggplot2::coord_equal() +
@@ -85,7 +85,7 @@ plot_production <- function(result, summarize = FALSE, lag = TRUE) {
 
     # create plot
     gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
-      ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[5])) +
+      ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[5]))) +
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A", name = col_names[5]) +
       ggplot2::coord_equal() +
@@ -94,7 +94,7 @@ plot_production <- function(result, summarize = FALSE, lag = TRUE) {
 
     # create plot
     gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
-      ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[6])) +
+      ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[6]))) +
       ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                     na.value = "#9B964A", name = col_names[6]) +
       ggplot2::coord_equal() +
