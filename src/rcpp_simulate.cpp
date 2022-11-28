@@ -1,4 +1,4 @@
-// [[Rcpp::depends(RcppProgress)]]
+// [[Rcpp::depends(RcppProgress, arrR.seagrass)]]
 
 #include <Rcpp.h>
 #include <progress.hpp>
@@ -6,21 +6,16 @@
 #include <iostream>
 #include <fstream>
 
+#include <arrR_seagrass.h>
+
 #include "rcpp_simulate.h"
-#include "rcpp_get_reef.h"
-#include "rcpp_get_adjacencies.h"
 #include "rcpp_get_max_dist.h"
 #include "rcpp_write_to_file.h"
 #include "rcpp_rnorm.h"
-#include "rcpp_nutr_input.h"
-#include "rcpp_seagrass_growth.h"
-#include "rcpp_mineralization.h"
 #include "rcpp_move_wrap.h"
 #include "rcpp_respiration.h"
 #include "rcpp_fishpop_growth.h"
 #include "rcpp_mortality.h"
-#include "rcpp_diffuse_values.h"
-#include "rcpp_nutr_output.h"
 
 using namespace Rcpp;
 
@@ -91,10 +86,10 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
   // init reef coords //
 
   // get reef coords matrix
-  Rcpp::NumericMatrix coords_reef = rcpp_get_reef(seafloor);
+  Rcpp::NumericMatrix coords_reef = arrR_seagrass::rcpp_get_reef(seafloor);
 
   // get cell neighborhoods
-  Rcpp::IntegerMatrix cell_adj = rcpp_get_adjacencies(dimensions, torus_diffusion);
+  Rcpp::IntegerMatrix cell_adj = arrR_seagrass::rcpp_get_adjacencies(dimensions, torus_diffusion);
 
   // setup nutrients input //
 
@@ -199,7 +194,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // simulate nutrient input if present
     if (flag_input && (nutrients_input[i_temp] > 0.0)) {
 
-      rcpp_nutr_input(seafloor, nutrients_input[i_temp]);
+      arrR_seagrass::rcpp_nutr_input(seafloor, nutrients_input[i_temp]);
 
     }
 
@@ -207,16 +202,16 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     if ((i % seagrass_each) == 0) {
 
       // simulate seagrass growth
-      rcpp_seagrass_growth(seafloor, parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
-                           parameters["ag_v_max"], parameters["ag_k_m"], parameters["ag_gamma"],
-                           parameters["bg_biomass_max"], parameters["bg_biomass_min"],
-                           parameters["ag_biomass_max"], parameters["ag_biomass_min"],
-                           parameters["seagrass_thres"], parameters["seagrass_slope"],
-                           parameters["seagrass_slough"], time_frac);
+      arrR_seagrass::rcpp_seagrass_growth(seafloor, parameters["bg_v_max"], parameters["bg_k_m"], parameters["bg_gamma"],
+                                          parameters["ag_v_max"], parameters["ag_k_m"], parameters["ag_gamma"],
+                                          parameters["bg_biomass_max"], parameters["bg_biomass_min"],
+                                          parameters["ag_biomass_max"], parameters["ag_biomass_min"],
+                                          parameters["seagrass_thres"], parameters["seagrass_slope"],
+                                          parameters["seagrass_slough"], time_frac);
 
       // simulate mineralization (detritus to nutrients pool)
-      rcpp_mineralization(seafloor, parameters["detritus_mineralization"],
-                          parameters["detritus_fish_decomp"]);
+      arrR_seagrass::rcpp_mineralization(seafloor, parameters["detritus_mineralization"],
+                                         parameters["detritus_fish_decomp"]);
 
     }
 
@@ -252,16 +247,16 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     if (flag_diffuse) {
 
       // diffuse values between neighbors
-      rcpp_diffuse_values(seafloor, cell_adj,
-                          parameters["nutrients_diffusion"], parameters["detritus_diffusion"],
-                          parameters["detritus_fish_diffusion"]);
+      arrR_seagrass::rcpp_diffuse_values(seafloor, cell_adj,  parameters["nutrients_diffusion"],
+                                         parameters["detritus_diffusion"], parameters["detritus_fish_diffusion"]);
 
     }
 
     // remove nutrients from cells if output parameter > 0
     if (flag_output) {
 
-      rcpp_nutr_output(seafloor, parameters["nutrients_loss"], parameters["detritus_loss"]);
+      arrR_seagrass::rcpp_nutr_output(seafloor, parameters["nutrients_loss"], 
+                                      parameters["detritus_loss"]);
 
     }
 

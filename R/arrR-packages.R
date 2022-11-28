@@ -8,6 +8,5 @@
 #' @name arrR
 #' @docType package
 #' @useDynLib arrR, .registration = TRUE
-#' @importFrom Rcpp sourceCpp
-#' @keywords internal
+#' @importFrom Rcpp evalCpp
 "_PACKAGE"

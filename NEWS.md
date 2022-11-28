@@ -1,3 +1,6 @@
+# arrR 2.0.0
+* Split `arrR` into several sup-packages
+
 # arrR 1.5.2
 * Update `rcpp_get_adjacencies`
 
