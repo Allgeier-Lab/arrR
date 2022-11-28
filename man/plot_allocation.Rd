@@ -15,7 +15,7 @@ Plotting method.
 \details{
 Plotting method for the allocation ratio rule used during the nutrient uptake
 allocation within the seagrass dynamics. For more information see \code{rcpp_seagrass_growth}
-and \code{rcpp_allocation_ratio} (internal functions).
+and \code{rcpp_allocation_ratio}.
 }
 \examples{
 plot_allocation(parameters = default_parameters)
