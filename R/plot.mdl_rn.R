@@ -63,8 +63,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_top_left <- ggplot2::ggplot(data = data_sum) +
       # ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[2],
-                                             col = "summary", linetype = "summary")) +
+      ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = !!ggplot2::sym(col_names[2]),
+                                      col = summary, linetype = summary)) +
       ggplot2::scale_y_continuous(limits = limits$bg_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
@@ -75,8 +75,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_top_right <- ggplot2::ggplot(data = data_sum) +
       # ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[3],
-                                             col = "summary", linetype = "summary")) +
+      ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = !!ggplot2::sym(col_names[3]),
+                                      col = summary, linetype = summary)) +
       ggplot2::scale_y_continuous(limits = limits$ag_biomass) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
@@ -87,8 +87,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_bottom_left <- ggplot2::ggplot(data = data_sum) +
       # ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[4],
-                                             col = "summary", linetype = "summary")) +
+      ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = !!ggplot2::sym(col_names[4]),
+                                      col = summary, linetype = summary)) +
       ggplot2::scale_y_continuous(limits = limits$nutrients_pool) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
@@ -99,8 +99,8 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
     # create plot
     gg_bottom_right <- ggplot2::ggplot(data = data_sum) +
       # ggplot2::geom_vline(xintercept = x$burn_in, col = col_burn, linetype = 3) +
-      ggplot2::geom_line(ggplot2::aes_string(x = "timestep", y = col_names[5],
-                                             col = "summary", linetype = "summary")) +
+      ggplot2::geom_line(ggplot2::aes(x = .data$timestep, y = !!ggplot2::sym(col_names[5]),
+                                      col = summary, linetype = summary)) +
       ggplot2::scale_y_continuous(limits = limits$detritus_pool) +
       ggplot2::scale_color_manual(values = c("grey", "black", "grey")) +
       ggplot2::scale_linetype_manual(values = c(2, 1, 2)) +
@@ -123,7 +123,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_top_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[3])) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[3]))) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$bg_biomass,
                                       name = col_names[3]) +
@@ -133,7 +133,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_top_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[4])) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[4]))) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$ag_biomass,
                                       name = col_names[4]) +
@@ -143,7 +143,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_bottom_left <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[5])) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[5]))) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$nutrients_pool,
                                       name = col_names[5]) +
@@ -153,7 +153,7 @@ plot.mdl_rn <- function(x, what = "seafloor", summarize = FALSE, limits = NULL, 
 
       # create plot
       gg_bottom_right <- ggplot2::ggplot(data = seafloor) +
-        ggplot2::geom_raster(ggplot2::aes_string(x = "x", y = "y", fill = col_names[6])) +
+        ggplot2::geom_raster(ggplot2::aes(x = .data$x, y = .data$y, fill = !!ggplot2::sym(col_names[6]))) +
         ggplot2::scale_fill_gradientn(colours = c("#368AC0", "#F4B5BD", "#EC747F"),
                                       na.value = "#9B964A", limits = limits$detritus_pool,
                                       name = col_names[6]) +

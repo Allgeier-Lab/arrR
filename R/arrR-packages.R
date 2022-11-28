@@ -8,5 +8,7 @@
 #' @name arrR
 #' @docType package
 #' @useDynLib arrR, .registration = TRUE
+#' @exportPattern ˆ[[:alpha:]]+
 #' @importFrom Rcpp evalCpp
+#' @importFrom rlang .data
 "_PACKAGE"
