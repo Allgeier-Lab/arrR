@@ -1,7 +1,7 @@
 Package: arrR
 Type: Package
 Title: Individual-Based Simulation Model of Artifical Reefs in R
-Version: 1.5.2
+Version: 2.0.0
 Authors@R: c(person("Maximilian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
@@ -48,4 +48,5 @@ Suggests:
     covr
 LinkingTo: 
     Rcpp,
-    RcppProgress
+    RcppProgress, 
+    arrR.seagrass
