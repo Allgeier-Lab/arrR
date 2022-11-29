@@ -257,7 +257,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
                           extent, dimensions, min_per_i);
 
       // simulate mortality
-      rcpp_mortality(fishpop, fishpop_track[0], seafloor,
+      rcpp_mortality(fishpop, fishpop_track[0], seafloor, parameters["pop_linf"],
                      parameters["pop_ldie"], parameters["pop_n_body"],
                      parameters["pop_reserves_max"], extent, dimensions);
 

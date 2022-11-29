@@ -120,7 +120,8 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
 
   }
 
-  if (any(fishpop$length > parameters$pop_ldie)) {
+  # only check if pop_ldie is not equal to zero (default)
+  if (parameters$pop_ldie > 0.0 & (any(fishpop$length > parameters$pop_ldie))) {
 
     warning("Some individuals are larger than pop_ldie.", call. = FALSE)
 
