@@ -91,37 +91,19 @@
     <loc>https://allgeier-lab.github.io/arrR/reference/print.mdl_rn.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_allocation_ratio.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_cell_from_xy.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_closest_reef.html</loc>
   </url>
   <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_convert_nutr.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_diffuse_values.html</loc>
-  </url>
-  <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_fishpop_growth.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_adjacencies.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_bearing.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_max_dist.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_get_reef.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_mineralization.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_modify_degree.html</loc>
@@ -137,15 +119,6 @@
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_move_wrap.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_input.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_output.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_nutr_uptake.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_quantile.html</loc>
@@ -164,9 +137,6 @@
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_runif.html</loc>
-  </url>
-  <url>
-    <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_seagrass_growth.html</loc>
   </url>
   <url>
     <loc>https://allgeier-lab.github.io/arrR/reference/rcpp_shuffle.html</loc>
