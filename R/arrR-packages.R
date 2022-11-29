@@ -7,6 +7,7 @@
 #'
 #' @name arrR
 #' @docType package
+#' @keywords internal
 #' @useDynLib arrR, .registration = TRUE
 #' @exportPattern ˆ[[:alpha:]]+
 #' @importFrom Rcpp evalCpp
