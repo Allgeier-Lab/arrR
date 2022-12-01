@@ -128,6 +128,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
       // behavior 3: individuals are foraging
       // this conditional might need to be changed so multiple species can be present
+      // requires all foragers be odd species id and all recyclers to be even
       // ex. 3 foragers (0, 2, 3) and 2 recyclers (1, 4), would not have correct behavior
       if (fishpop(row_id_temp, 12) == 3.0 || (species_temp % 2) == 1) {
 
