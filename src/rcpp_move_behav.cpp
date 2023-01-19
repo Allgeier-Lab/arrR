@@ -45,6 +45,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
                      Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, NumericVector max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
                      Rcpp::IntegerVector dimensions) {
+  Rcout << fishpop_attr << std::endl;
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
