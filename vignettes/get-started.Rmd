@@ -62,7 +62,7 @@ The function `get_req_nutrients` allows to calculate the nutrients and detritus 
 
 ```{r setup_inputs}
 # create 5 reef cells in center of seafloor
-reef_matrix <- matrix(data = c(-15, 0, 0, 15, 15, 0, 0, -15, 0, 0), 
+reef_matrix <- matrix(data = c(0, 0), 
                       ncol = 2, byrow = TRUE)
 
 # get stable nutrient/detritus values

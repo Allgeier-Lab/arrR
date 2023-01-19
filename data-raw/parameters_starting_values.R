@@ -48,7 +48,7 @@ default_parameters <- list(
 
   # fishpop reserves
   pop_reserves_max = c(0.05, 0.05),
-  pop_reserves_thres_mean = c(0.1, 0.0),
+  pop_reserves_thres_mean = c(0.1, 0.1),
   pop_reserves_thres_sd = c(0.0, 0.0),
   pop_reserves_consump = c(0.1, 0.1),
 
