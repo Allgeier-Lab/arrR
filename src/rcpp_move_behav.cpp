@@ -45,6 +45,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
                      Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, NumericVector max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
                      Rcpp::IntegerVector dimensions) {
+  Rcout << fishpop_attr << std::endl;
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
@@ -68,8 +69,36 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       if (fishpop(i, 10) < fishpop(i, 11)) {
 
         // pull move_dist from log norm with mean_move
-        move_dist = rcpp_rlognorm(move_mean[species_temp], move_sd[species_temp], 0.0, max_dist[species_temp]);
+        // this conditional might need to be changed so multiple species can be present
+        // requires all foragers be odd species id and all recyclers to be even
+        // ex. 3 foragers (0, 2, 3) and 2 recyclers (1, 4), would not have correct behavior
+        if ((species_temp % 2) == 0) {
+          move_dist = rcpp_rlognorm(move_mean[species_temp], move_sd[species_temp], 0.0, max_dist[species_temp]);
+        } else {
+          // still "on reef"
+          if (closest_reef[1] <= move_border[species_temp]) {
 
+            // pull random movement distance
+            move_dist = rcpp_rlognorm(move_reef[species_temp], 1.0, 0.0, max_dist[species_temp]);
+
+            // moved away from reef; switch to behavior 2
+          } else {
+
+            // update heading towards reef
+            fishpop(i, 5) = rcpp_get_bearing(fishpop(i, 3), fishpop(i, 4),
+                    coords_reef(closest_reef[0], 1),
+                    coords_reef(closest_reef[0], 2));;
+
+            // use either distance to closest_reef or move_return distance
+            double move_temp = std::min(closest_reef[1], move_return[species_temp]);
+
+            // sample move distance from around distance to reef
+            move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist[species_temp]);
+
+            fishpop(i, 12) = 2.0;
+
+          }
+        }
       // reserves are full, switch to behavior 2
       } else {
 
