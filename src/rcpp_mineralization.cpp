@@ -44,10 +44,10 @@ void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
 
     // calculate decomposition amount
     double fish_decompostion = seafloor(i, 6) * detritus_fish_decomp;
-
+    if (seafloor(i, 4) < 0) { Rcpp::stop("(48.) seafloor(i, 4) is neg");}
     // add detritus to nutrients pool
     seafloor(i, 4) += mineralization;
-
+    if (seafloor(i, 4) < 0) { Rcpp::stop("(50m) seafloor(i, 4) is neg");}
     // remove biomass from detritus pool
     seafloor(i, 5) -= mineralization;
 
@@ -55,6 +55,6 @@ void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
     seafloor(i, 5) += fish_decompostion;
 
     seafloor(i, 6) -= fish_decompostion;
-
+    Rcout << "(58m) seafloor(i,4) at " << i << " = " << seafloor(i, 4) << std::endl;
   }
 }

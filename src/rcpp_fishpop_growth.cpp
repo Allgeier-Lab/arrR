@@ -98,7 +98,7 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // consumption req based on growth in weight + metabolic costs based on weight + n required
     double consumption_require = ((growth_weight + fishpop(row_id_temp, 9) *
                                   fishpop(row_id_temp, 7)) / 0.55) * pop_n_body[species_temp];
-
+    Rcout << "(101fpg) fish of " << row_id[i] << " fishpop(row_id_temp, 9) = " << fishpop(row_id_temp, 9) << " fishpop(row_id_temp, 7) = " << fishpop(row_id_temp, 7) << std::endl;
     // enough nutrients for individual growth
     if ((seafloor(cell_id_temp, 5) + fishpop(row_id_temp, 10)) >= consumption_require) {
 
@@ -116,10 +116,11 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
       // calc non-used consumption (excretion)
       double excretion = (consumption_require - (growth_weight * pop_n_body[species_temp]));
-
+      Rcout << "(119fpg) seafloor at " << cell_id_temp << " before excretion added = " << seafloor(cell_id_temp, 4) << std::endl;
       // add non-used consumption to nutrient pool
       seafloor(cell_id_temp, 4) += excretion;
-
+      Rcout << "(121fpg) seafloor  at " << cell_id_temp << " after excretion added = " << seafloor(cell_id_temp, 4) << std::endl;
+      if (seafloor(cell_id_temp, 4) < 0) { Rcout  << "after excretion " << seafloor(cell_id_temp, 4) << std::endl; Rcout << "consumption_require = " << consumption_require << " growth weight = " << growth_weight << " pop_n_body " << pop_n_body[species_temp] << std::endl; Rcpp::stop("excretion");}
       // track excretion cell
       seafloor(cell_id_temp, 14) += excretion;
 

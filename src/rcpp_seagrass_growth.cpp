@@ -61,9 +61,9 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
     // check if current cell is a seagrass cell
     if (seafloor(i, 15) == 0) {
-
+      Rcout << "(64)before_row_id = " << i << " values = " << seafloor (i, 3) << std::endl;
       // calculate detritus //
-
+      if (seafloor(i, 4) < 0) {Rcout << seafloor(i, 4); Rcpp::stop("(66) seafloor(i, 4) is neg");}
       // calculate bg detritus modifier
       double bg_modf = (seafloor(i, 3) - bg_biomass_min) /
         (bg_biomass_max - bg_biomass_min);
@@ -94,20 +94,22 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
       seafloor(i, 5) += (ag_detritus * ag_gamma) + (bg_detritus * bg_gamma);
 
       // calculate uptake //
-
+      Rcout << "(97) seafloor(i, 4) = " << seafloor(i, 4) << " seafloor (i, 3) = " << seafloor(i, 3)<<  std::endl;
       // calculate total possible nutrient uptake bg
       double bg_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 3),
                                           bg_v_max, bg_k_m, time_frac);
-
+      Rcout << "(101)bg_uptake = " << bg_uptake << std::endl;
+      if (seafloor(i, 4) < 0) { Rcpp::stop("(102) stopped before bg_uptake loss");}
       // remove bg nutrients uptake
       seafloor(i, 4) -= bg_uptake;
-
+      if (seafloor(i, 4) < 0) { Rcout << "(105) seafloor(i, 4) after bg_uptake loss = " << seafloor(i, 4) << std::endl;}
       // track bg nutrients uptake
       seafloor(i, 12) += bg_uptake;
-
+      if (seafloor(i, 4) < 0) { Rcpp::stop("(108) stopped after bg_uptake loss");}
       // calculate total possible nutrient uptake bg
       double ag_uptake = rcpp_nutr_uptake(seafloor(i, 4), seafloor(i, 2),
                                           ag_v_max, ag_k_m, time_frac);
+
 
       // remove ag nutrients uptake
       seafloor(i, 4) -= ag_uptake;
@@ -117,6 +119,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       // calculate total nutrient uptake
       double total_uptake = bg_uptake + ag_uptake;
+      Rcout << "(122)total_uptake = " <<  total_uptake << std::endl;
 
       // seagrass growth //
 
@@ -125,10 +128,10 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
         // calculate bg growth
         double bg_growth = total_uptake / bg_gamma;
-
+        Rcout << "(131)seafloor(i,3) before bg_growth = " << seafloor(i,3) << std::endl;
         // add bg detritus to biomass
         seafloor(i, 3) += bg_growth;
-
+        Rcout << "(134)seafloor(i,3) after bg_growth = " << seafloor(i,3) << std::endl;
         // track bg biomass production
         seafloor(i, 8) += bg_growth;
 
@@ -171,16 +174,17 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
           // additional growth //
 
           // calculate potential allocation ratio
+    //      Rcout << "(177)seafloori, 3 going into a_ratio = " << seafloor(i, 3) << std::endl;
           double bg_ratio = rcpp_allocation_ratio(seafloor(i, 3),
                                                   bg_biomass_min, bg_biomass_max,
                                                   seagrass_thres, seagrass_slope);
 
           // calculate bg growth
           double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
-
+  //        Rcout << "(184) bg_growth = " << bg_growth << std::endl;
           // add bg growth to biomass
           seafloor(i, 3) += bg_growth;
-
+//          Rcout << "(187) seafloor(i,3) = " << seafloor(i, 3) << std::endl;
           // track bg biomass production
           seafloor(i, 8) += bg_growth;
 
@@ -200,7 +204,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       // check belowground biomass
       if (seafloor(i, 3) > bg_biomass_max) {
-
+        Rcout << "(207)biomass > max" << std::endl;
         // calculate difference between current and max
         bg_detritus = seafloor(i, 3) - bg_biomass_max;
 
@@ -232,5 +236,7 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
 
       }
     }
+    Rcout << "(239)after row id = " << i << " biomass = " << seafloor(i, 3) <<  " nutrients " << seafloor(i, 4) << std::endl;
+    if (seafloor(i, 4) < 0) { Rcpp::stop("(240) seafloor(i, 4) is neg");}
   }
 }

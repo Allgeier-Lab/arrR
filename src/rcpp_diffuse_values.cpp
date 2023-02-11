@@ -58,7 +58,7 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
   // add and remove diffused amounts
   // loop through all cells
   for (int j = 0; j < n_cell; j++) {
-
+    Rcout << " cell = " << j << " current nutrients = " << seafloor(j, 4) << std::endl;
     // loop through all neighbors
     for (int k = 0; k < 8; k++) {
 
@@ -73,8 +73,8 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
       seafloor(neighbor, 6) += detritus_fish[j];
 
       // remove value from focal cell
-      seafloor(j, 4) -= nutrients[j];
-
+      double temp = seafloor(j, 4); seafloor(j, 4) -= nutrients[j];
+      if (seafloor(j, 4) < 0) { Rcout << j << " before diffusion " << temp << std::endl << "after diffusion " << seafloor(j, 4) << std::endl; Rcpp::stop("diffusion");}
       seafloor(j, 5) -= detritus[j];
 
       seafloor(j, 6) -= detritus_fish[j];
@@ -83,6 +83,5 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
 
     // increase counter
     counter += 8;
-
   }
 }
