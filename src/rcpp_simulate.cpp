@@ -220,7 +220,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
 
   // run simulation
   for (int i = 1; i <= max_i; i++) {
-    Rcout << "time = " << i << std::endl;
+
     // check abort of function
     if (Progress::check_abort()) {
 

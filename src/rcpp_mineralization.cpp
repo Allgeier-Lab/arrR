@@ -55,6 +55,5 @@ void rcpp_mineralization(Rcpp::NumericMatrix seafloor,
     seafloor(i, 5) += fish_decompostion;
 
     seafloor(i, 6) -= fish_decompostion;
-    Rcout << "(58m) seafloor(i,4) at " << i << " = " << seafloor(i, 4) << std::endl;
   }
 }

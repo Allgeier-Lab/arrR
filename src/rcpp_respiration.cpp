@@ -48,14 +48,14 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
 
   // loop through all fish individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
-    Rcout << "(51resp)resp intercept vector = "<< resp_intercept[0] << " " << resp_intercept[1] << std::endl;
+
     // get current species id
     int species_temp = fishpop(i, 1) - 1;
 
     // scale intercept to correct tick scale from (g/g/day to min_per_i)
-    resp_intercept[species_temp] = resp_intercept[species_temp] / (24.0 * 60.0) * min_per_i;
-    Rcout << "(57resp)resp intercept vector = "<< resp_intercept[0] << " " << resp_intercept[1] << std::endl;
-    if(i == 3) {Rcpp:stop("testing this");}// for f(T) temperature dependence function for respiration
+    double resp_intercept_temp = resp_intercept[species_temp] / (24.0 * 60.0) * min_per_i;
+
+    // for f(T) temperature dependence function for respiration
     double v_resp = (resp_temp_max[species_temp] - water_temp) /
       (resp_temp_max[species_temp] - resp_temp_optm[species_temp]);
 
@@ -72,16 +72,15 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
 
     // calculate respiration
     // oxycaloric coefficient c=13560.0 in J/gO2; energy-density of fish e=4800.0 J/g(wet weight)
-    double respiration = (resp_intercept[species_temp] * std::pow(fishpop(i, 7), resp_slope[species_temp]) *
+    double respiration = (resp_intercept_temp * std::pow(fishpop(i, 7), resp_slope[species_temp]) *
                           temp_dependence * fishpop(i, 8)) * 13560.0 / 4800.0;
-    Rcout << "(76 resp) temp dependence = " << temp_dependence <<  " fishpop(i, 7) = " << fishpop(i, 7) << " fishpop(i, 8) = " << fishpop(i, 8) << " resp_intercept[species_temp] = " << resp_intercept[species_temp]<< " resp_slope = " << resp_slope[species_temp]<<std::endl;
-    Rcout << "(77resp) respiration at " << i << " = " << respiration << std::endl;
+
     // check if finite number
     bool check_finite = std::isfinite(respiration);
 
     // respiration is finite number; keep value
     if (check_finite) {
-      Rcout << "(83resp) fishpop(i, 9) before adding respiration = " << fishpop(i, 9) << std::endl;
+
       // update respiration col
       fishpop(i, 9) = respiration;
 
@@ -92,7 +91,6 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
       fishpop(i, 9) = 1.0;
 
     }
-    resp_intercept[species_temp] = resp_intercept[species_temp] * (24.0 * 60.0) / min_per_i;
 
   }
 }
