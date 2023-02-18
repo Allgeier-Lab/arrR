@@ -44,7 +44,7 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
                      Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef,
                      Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, NumericVector max_dist,
                      Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
-                     Rcpp::IntegerVector dimensions) {
+                     Rcpp::IntegerVector dimensions, Rcpp::NumericVector behavior) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
@@ -68,10 +68,8 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
       if (fishpop(i, 10) < fishpop(i, 11)) {
 
         // pull move_dist from log norm with mean_move
-        // this conditional might need to be changed so multiple species can be present
-        // requires all foragers be odd species id and all recyclers to be even
-        // ex. 3 foragers (0, 2, 3) and 2 recyclers (1, 4), would not have correct behavior
-        if ((species_temp % 2) == 0) {
+        // use behavior type to determine whether fish should leave reef to forage
+        if (behavior[0] == 0) {
           move_dist = rcpp_rlognorm(move_mean[species_temp], move_sd[species_temp], 0.0, max_dist[species_temp]);
         } else {
           // still "on reef"

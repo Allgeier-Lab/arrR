@@ -42,7 +42,7 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_att
                     std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef,
                     Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist,
                     Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
-                    Rcpp::IntegerVector dimensions) {
+                    Rcpp::IntegerVector dimensions, Rcpp::NumericVector behavior) {
 
   // random movement
   if (movement == "rand") {
@@ -61,7 +61,7 @@ void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_att
 
     rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd,
                     move_reef, move_border, move_return, max_dist,
-                    coords_reef, extent, dimensions);
+                    coords_reef, extent, dimensions, behavior);
 
     // throw error
   } else {

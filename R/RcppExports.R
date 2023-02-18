@@ -378,8 +378,8 @@ rcpp_mortality <- function(fishpop, fishpop_track, seafloor, pop_linf, pop_n_bod
 #' @rdname rcpp_move_behav
 #'
 #' @keywords internal
-rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+rcpp_move_behav <- function(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior) {
+    invisible(.Call(`_arrR_rcpp_move_behav`, fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior))
 }
 
 #' rcpp_move_rand
@@ -446,8 +446,8 @@ rcpp_move_rand <- function(fishpop, move_mean, move_sd, max_dist, reef_attractio
 #' @rdname rcpp_move_wrap
 #'
 #' @keywords internal
-rcpp_move_wrap <- function(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions) {
-    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions))
+rcpp_move_wrap <- function(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior) {
+    invisible(.Call(`_arrR_rcpp_move_wrap`, fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior))
 }
 
 #' rcpp_nutr_input

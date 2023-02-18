@@ -57,7 +57,10 @@ default_parameters <- list(
   resp_slope = c(-0.2, -0.2),
   resp_temp_low = c(2.1, 2.1),
   resp_temp_optm = c(36.0, 26.0),
-  resp_temp_max = c(40.0, 40.0)
+  resp_temp_max = c(40.0, 40.0),
+
+  # fishpop behavior
+  pop_behav = c(0, 1)
 )
 
 ag <- default_parameters$ag_biomass_min +
@@ -79,7 +82,8 @@ default_starting <- list(
   # fishpop related
   pop_n = 8,
   pop_mean_size = c(9.0, 15.0),
-  pop_sd_size = c(10.0, 5.0)
+  pop_sd_size = c(10.0, 5.0),
+  pop_behav = c(0, 1)
 )
 
 usethis::use_data(default_parameters, default_starting, overwrite = TRUE)

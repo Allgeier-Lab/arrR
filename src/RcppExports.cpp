@@ -359,8 +359,8 @@ RcppExport SEXP _arrR_rcpp_mortality(SEXP fishpopSEXP, SEXP fishpop_trackSEXP, S
     return rcpp_result_gen;
 }
 // rcpp_move_behav
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
-RcppExport SEXP _arrR_rcpp_move_behav(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, Rcpp::NumericVector behavior);
+RcppExport SEXP _arrR_rcpp_move_behav(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP behaviorSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
@@ -374,7 +374,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type behavior(behaviorSEXP);
+    rcpp_move_behav(fishpop, fishpop_attr, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior);
     return R_NilValue;
 END_RCPP
 }
@@ -396,8 +397,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_move_wrap
-void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
-static SEXP _arrR_rcpp_move_wrap_try(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, Rcpp::NumericVector behavior);
+static SEXP _arrR_rcpp_move_wrap_try(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP behaviorSEXP) {
 BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop(fishpopSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type fishpop_attr(fishpop_attrSEXP);
@@ -411,15 +412,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type coords_reef(coords_reefSEXP);
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type extent(extentSEXP);
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type dimensions(dimensionsSEXP);
-    rcpp_move_wrap(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type behavior(behaviorSEXP);
+    rcpp_move_wrap(fishpop, fishpop_attr, movement, move_mean, move_sd, move_reef, move_border, move_return, max_dist, coords_reef, extent, dimensions, behavior);
     return R_NilValue;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP) {
+RcppExport SEXP _arrR_rcpp_move_wrap(SEXP fishpopSEXP, SEXP fishpop_attrSEXP, SEXP movementSEXP, SEXP move_meanSEXP, SEXP move_sdSEXP, SEXP move_reefSEXP, SEXP move_borderSEXP, SEXP move_returnSEXP, SEXP max_distSEXP, SEXP coords_reefSEXP, SEXP extentSEXP, SEXP dimensionsSEXP, SEXP behaviorSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_arrR_rcpp_move_wrap_try(fishpopSEXP, fishpop_attrSEXP, movementSEXP, move_meanSEXP, move_sdSEXP, move_reefSEXP, move_borderSEXP, move_returnSEXP, max_distSEXP, coords_reefSEXP, extentSEXP, dimensionsSEXP));
+        rcpp_result_gen = PROTECT(_arrR_rcpp_move_wrap_try(fishpopSEXP, fishpop_attrSEXP, movementSEXP, move_meanSEXP, move_sdSEXP, move_reefSEXP, move_borderSEXP, move_returnSEXP, max_distSEXP, coords_reefSEXP, extentSEXP, dimensionsSEXP, behaviorSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -839,7 +841,7 @@ static int _arrR_RcppExport_validate(const char* sig) {
         signatures.insert("Rcpp::NumericMatrix(*rcpp_get_reef)(Rcpp::NumericMatrix)");
         signatures.insert("void(*rcpp_mineralization)(Rcpp::NumericMatrix,double,double)");
         signatures.insert("void(*rcpp_mortality)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::IntegerVector)");
-        signatures.insert("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,std::string,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+        signatures.insert("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,std::string,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector,Rcpp::NumericVector)");
         signatures.insert("void(*rcpp_nutr_input)(Rcpp::NumericMatrix,double)");
         signatures.insert("void(*rcpp_nutr_output)(Rcpp::NumericMatrix,double,double)");
         signatures.insert("void(*rcpp_respiration)(Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,double,double)");
@@ -886,9 +888,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_arrR_rcpp_mineralization", (DL_FUNC) &_arrR_rcpp_mineralization, 3},
     {"_arrR_rcpp_modify_degree", (DL_FUNC) &_arrR_rcpp_modify_degree, 2},
     {"_arrR_rcpp_mortality", (DL_FUNC) &_arrR_rcpp_mortality, 8},
-    {"_arrR_rcpp_move_behav", (DL_FUNC) &_arrR_rcpp_move_behav, 11},
+    {"_arrR_rcpp_move_behav", (DL_FUNC) &_arrR_rcpp_move_behav, 12},
     {"_arrR_rcpp_move_rand", (DL_FUNC) &_arrR_rcpp_move_rand, 8},
-    {"_arrR_rcpp_move_wrap", (DL_FUNC) &_arrR_rcpp_move_wrap, 12},
+    {"_arrR_rcpp_move_wrap", (DL_FUNC) &_arrR_rcpp_move_wrap, 13},
     {"_arrR_rcpp_nutr_input", (DL_FUNC) &_arrR_rcpp_nutr_input, 2},
     {"_arrR_rcpp_nutr_output", (DL_FUNC) &_arrR_rcpp_nutr_output, 3},
     {"_arrR_rcpp_nutr_uptake", (DL_FUNC) &_arrR_rcpp_nutr_uptake, 5},

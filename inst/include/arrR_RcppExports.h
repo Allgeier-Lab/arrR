@@ -167,17 +167,17 @@ namespace arrR {
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
     }
 
-    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
-        typedef SEXP(*Ptr_rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+    inline void rcpp_move_wrap(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr, std::string movement, Rcpp::NumericVector move_mean, Rcpp::NumericVector move_sd, Rcpp::NumericVector move_reef, Rcpp::NumericVector move_border, Rcpp::NumericVector move_return, Rcpp::NumericVector max_dist, Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions, Rcpp::NumericVector behavior) {
+        typedef SEXP(*Ptr_rcpp_move_wrap)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
         static Ptr_rcpp_move_wrap p_rcpp_move_wrap = NULL;
         if (p_rcpp_move_wrap == NULL) {
-            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,std::string,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector)");
+            validateSignature("void(*rcpp_move_wrap)(Rcpp::NumericMatrix,Rcpp::NumericMatrix,std::string,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericVector,Rcpp::NumericMatrix,Rcpp::NumericVector,Rcpp::IntegerVector,Rcpp::NumericVector)");
             p_rcpp_move_wrap = (Ptr_rcpp_move_wrap)R_GetCCallable("arrR", "_arrR_rcpp_move_wrap");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_rcpp_move_wrap(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_sd)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)));
+            rcpp_result_gen = p_rcpp_move_wrap(Shield<SEXP>(Rcpp::wrap(fishpop)), Shield<SEXP>(Rcpp::wrap(fishpop_attr)), Shield<SEXP>(Rcpp::wrap(movement)), Shield<SEXP>(Rcpp::wrap(move_mean)), Shield<SEXP>(Rcpp::wrap(move_sd)), Shield<SEXP>(Rcpp::wrap(move_reef)), Shield<SEXP>(Rcpp::wrap(move_border)), Shield<SEXP>(Rcpp::wrap(move_return)), Shield<SEXP>(Rcpp::wrap(max_dist)), Shield<SEXP>(Rcpp::wrap(coords_reef)), Shield<SEXP>(Rcpp::wrap(extent)), Shield<SEXP>(Rcpp::wrap(dimensions)), Shield<SEXP>(Rcpp::wrap(behavior)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
