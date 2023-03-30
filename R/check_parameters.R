@@ -105,7 +105,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     "resp_slope",
     "resp_temp_low",
     "resp_temp_optm",
-    "resp_temp_max")
+    "resp_temp_max",
+    "pop_behav")
 
   # just print list with required parameters
   if (is.null(starting_values) && is.null(parameters)) {

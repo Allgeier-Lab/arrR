@@ -72,14 +72,13 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
         if (behavior[0] == 0) {
           move_dist = rcpp_rlognorm(move_mean[species_temp], move_sd[species_temp], 0.0, max_dist[species_temp]);
         } else {
-          // still "on reef"
-          if (closest_reef[1] <= move_border[species_temp]) {
+          // recycler fish will be directed to the closest reef and will move
+          // in that direction if they are too far (will still be foraging)
+          // get id and distance to closest reef
+          closest_reef = rcpp_closest_reef(fishpop(i, 3), fishpop(i, 4), coords_reef);
 
-            // pull random movement distance
-            move_dist = rcpp_rlognorm(move_reef[species_temp], 1.0, 0.0, max_dist[species_temp]);
-
-            // moved away from reef; switch to behavior 2
-          } else {
+          // reef is further away than the threshold to be "on the reef"
+          if (closest_reef[1] > move_border[species_temp]) {
 
             // update heading towards reef
             fishpop(i, 5) = rcpp_get_bearing(fishpop(i, 3), fishpop(i, 4),
@@ -92,9 +91,13 @@ void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_at
             // sample move distance from around distance to reef
             move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist[species_temp]);
 
-            fishpop(i, 12) = 2.0;
+          } else{ // if not off the reef, then must be on the reef, so move randomly
+
+            // pull random movement distance
+            move_dist = rcpp_rlognorm(move_reef[species_temp], 1.0, 0.0, max_dist[species_temp]);
 
           }
+
         }
       // reserves are full, switch to behavior 2
       } else {
