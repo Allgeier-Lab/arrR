@@ -85,7 +85,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
     // get cell id of current individual
     int cell_id_temp = rcpp_cell_from_xy(fishpop(row_id_temp, 3), fishpop(row_id_temp, 4),
                                          extent, dimensions, true);
-
     // calculate growth in length and weight
     double growth_length = pop_k[species_temp] / (365.0 * 24.0 * 60.0) * min_per_i *
       (pop_linf[species_temp] - fishpop(row_id_temp, 6));
@@ -131,7 +130,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         // detritus pool is big enough to fill reserves
         if (seafloor(cell_id_temp, 5) > consumption_require) {
-
           // MH: Just for debugging
           if (fishpop(row_id_temp, 10) > fishpop(row_id_temp, 11)) Rcpp::stop("WRONG");
 
@@ -149,24 +147,35 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
           // calculate max amount that is present in cell
           consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
-          // MH: Does that matter? We first take the minimum of either the difference between current and max reserves and consumption limit
-          // and then the minimum of the previous and whats actually there. This should make sure they never eat more than they can
-          // or more than actually availaibe in cell
-          // SR: this was only an issue if the nutrients_diff was negative, not an issue anymore
 
           if (consumption_reserve < 0) Rcpp::stop("Nope");
 
-          // increase reserves
-          fishpop(row_id_temp, 10) += consumption_reserve;
+          // detritus pool is big enough for both growth and expanding reserves
+          if ((consumption_require + consumption_reserve) <= seafloor(cell_id_temp, 5)) {
+            // increase reserves
+            fishpop(row_id_temp, 10) += consumption_reserve;
+            // reduce detritus pool by reserves
+            seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
+            // track consumption cell
+            seafloor(cell_id_temp, 13) += (consumption_require + consumption_reserve);
 
-          // reduce detritus pool by reserves
-          seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
+            // track consumption fish
+            fishpop(row_id_temp, 13) += (consumption_require + consumption_reserve);
 
-          // track consumption cell
-          seafloor(cell_id_temp, 13) += (consumption_require + consumption_reserve);
+          // detritus pool is big enough for required consumption but not for expanding reserves
+          } else {
+            // increase reserves by excess detritus after required consumption
+            fishpop(row_id_temp, 10) += (seafloor(cell_id_temp, 5) - consumption_require);
+            // track consumption cell
+            seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
+            // track consumption fish
+            fishpop(row_id_temp, 13) += seafloor(cell_id_temp, 5);
+            // set detrital pool to zero since all was consumed
+            seafloor(cell_id_temp, 5) = 0;
 
-          // track consumption fish
-          fishpop(row_id_temp, 13) += (consumption_require + consumption_reserve);
+
+          }
+
 
         // detritus pool is not big enough to me consumption requirements
         } else {
@@ -195,10 +204,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         // reserves not big enough to meet consumption requirements
         } else {
-
           // reduced detritus pool because there were not enough reserves
           seafloor(cell_id_temp, 5) -= (consumption_require - fishpop(row_id_temp, 10));
-
           // use all reserves
           fishpop(row_id_temp, 10) = 0.0;
 
@@ -210,7 +217,6 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
 
         }
       }
-
     // individual dies because consumption requirements cannot be met by detritus and reserves
     } else {
 
