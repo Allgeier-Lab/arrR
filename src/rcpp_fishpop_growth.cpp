@@ -145,37 +145,22 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
           // calculate max amount that fish can consume
           double consumption_reserve = std::min(nutrients_diff, consumption_limit);
 
+          double detritus_additional = seafloor(cell_id_temp, 5) - consumption_require;
+
           // calculate max amount that is present in cell
-          consumption_reserve = std::min(consumption_reserve, seafloor(cell_id_temp, 5));
+          consumption_reserve = std::min(consumption_reserve, detritus_additional);
 
           if (consumption_reserve < 0) Rcpp::stop("Nope");
 
-          // detritus pool is big enough for both growth and expanding reserves
-          if ((consumption_require + consumption_reserve) <= seafloor(cell_id_temp, 5)) {
-            // increase reserves
-            fishpop(row_id_temp, 10) += consumption_reserve;
-            // reduce detritus pool by reserves
-            seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
-            // track consumption cell
-            seafloor(cell_id_temp, 13) += (consumption_require + consumption_reserve);
+          // increase reserves
+          fishpop(row_id_temp, 10) += consumption_reserve;
+          // reduce detritus pool by reserves
+          seafloor(cell_id_temp, 5) -= (consumption_require + consumption_reserve);
+          // track consumption cell
+          seafloor(cell_id_temp, 13) += (consumption_require + consumption_reserve);
 
-            // track consumption fish
-            fishpop(row_id_temp, 13) += (consumption_require + consumption_reserve);
-
-          // detritus pool is big enough for required consumption but not for expanding reserves
-          } else {
-            // increase reserves by excess detritus after required consumption
-            fishpop(row_id_temp, 10) += (seafloor(cell_id_temp, 5) - consumption_require);
-            // track consumption cell
-            seafloor(cell_id_temp, 13) += seafloor(cell_id_temp, 5);
-            // track consumption fish
-            fishpop(row_id_temp, 13) += seafloor(cell_id_temp, 5);
-            // set detrital pool to zero since all was consumed
-            seafloor(cell_id_temp, 5) = 0;
-
-
-          }
-
+          // track consumption fish
+          fishpop(row_id_temp, 13) += (consumption_require + consumption_reserve);
 
         // detritus pool is not big enough to me consumption requirements
         } else {
