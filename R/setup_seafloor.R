@@ -104,7 +104,8 @@ setup_seafloor <- function(dimensions, grain = 1, reef = NULL, starting_values, 
                          bg_production = numeric(length = n_cells), ag_slough = numeric(length = n_cells),
                          bg_slough = numeric(length = n_cells), ag_uptake = numeric(length = n_cells),
                          bg_uptake = numeric(length = n_cells), consumption = numeric(length = n_cells),
-                         excretion = numeric(length = n_cells), reef = numeric(length = n_cells))
+                         excretion = numeric(length = n_cells), reef = numeric(length = n_cells),
+                         diff_in = numeric(length = n_cells), diff_out = numeric(length = n_cells))
 
   # AR coords provided
   if (!is.null(reef)) {

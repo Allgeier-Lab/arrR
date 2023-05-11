@@ -44,6 +44,11 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
 
   Rcpp::NumericVector detritus_fish (n_cell);
 
+  // for sean, calculating diffusion in/out of reef
+  int calc_range = 5;
+  std::vector<bool> edge_reef (n_cell);
+  std::vector<bool> edge_open (n_cell);
+
   // get all seafloor values
   for (int i = 0; i < n_cell; i++) {
 
@@ -53,6 +58,35 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
 
     detritus_fish(i) = (seafloor(i, 6) * detritus_fish_diffusion) / 8.0;
 
+    // extent of reef (inclusive)
+    if((seafloor(i, 0) == (seafloor(1275,0) + calc_range) && seafloor(i,1) <=
+       (seafloor(1275,1) + calc_range) && seafloor(i, 1) >= (seafloor(1275,1) - calc_range)) ||
+       (seafloor(i, 0) == seafloor(1275,0) - calc_range && seafloor(i,1) <=
+       (seafloor(1275,1) + calc_range) && seafloor(i, 1) >= (seafloor(1275,1) - calc_range)) ||
+       (seafloor(i, 1) == seafloor(1275,1) + calc_range && seafloor(i,0) <=
+       (seafloor(1275,0) + calc_range) && seafloor(i, 0) >= (seafloor(1275,0) - calc_range)) ||
+       (seafloor(i, 1) == seafloor(1275,1) - calc_range && seafloor(i,0) <=
+       (seafloor(1275,0) + calc_range) && seafloor(i, 0) >= (seafloor(1275,0) - calc_range))) {
+      edge_reef[i] = TRUE;
+    }
+    else {
+      edge_reef[i] = FALSE;
+    }
+
+    // extent of reef (exclusive), open starts here
+    if((seafloor(i, 0) == seafloor(1275,0) + (calc_range + 1) && seafloor(i,1) <=
+       (seafloor(1275,1) + (calc_range + 1)) && seafloor(i, 1) >= (seafloor(1275,1) - (calc_range + 1))) ||
+       (seafloor(i, 0) == seafloor(1275,0) - (calc_range + 1) && seafloor(i,1) <=
+       (seafloor(1275,1) + (calc_range + 1)) && seafloor(i, 1) >= (seafloor(1275,1) - (calc_range + 1))) ||
+       (seafloor(i, 1) == seafloor(1275,1) + (calc_range + 1) && seafloor(i,0) <=
+       (seafloor(1275,0) + (calc_range + 1)) && seafloor(i, 0) >= (seafloor(1275,0) - (calc_range + 1))) ||
+       (seafloor(i, 1) == seafloor(1275,1) - (calc_range + 1) && seafloor(i,0) <=
+       (seafloor(1275,0) + (calc_range + 1)) && seafloor(i, 0) >= (seafloor(1275,0) - (calc_range + 1)))) {
+      edge_open[i] = TRUE;
+    }
+    else{
+      edge_open[i] = FALSE;
+    }
   }
 
   // add and remove diffused amounts
@@ -71,7 +105,14 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
       seafloor(neighbor, 5) += detritus[j];
 
       seafloor(neighbor, 6) += detritus_fish[j];
-
+      if (edge_reef[neighbor] == TRUE && edge_open[j] == TRUE) {
+        seafloor(j, 17) += nutrients[j];
+        seafloor(neighbor, 16) += nutrients[j];
+      }
+      if (edge_open[neighbor] == TRUE&& edge_reef[j] == TRUE) {
+        seafloor(j, 17) += nutrients[j];
+        seafloor(neighbor, 16) += nutrients[j];
+      }
       // remove value from focal cell
       double temp = seafloor(j, 4); seafloor(j, 4) -= nutrients[j];
 

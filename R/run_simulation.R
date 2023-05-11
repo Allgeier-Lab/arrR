@@ -99,7 +99,7 @@ run_simulation <- function(seafloor, fishpop, nutrients_input = 0.0,
   if (any(names(seafloor) != c("x", "y", "ag_biomass", "bg_biomass", "nutrients_pool",
                                "detritus_pool", "detritus_fish", "ag_production", "bg_production",
                                "ag_slough", "bg_slough", "ag_uptake", "bg_uptake", "consumption",
-                               "excretion", "reef" ))) {
+                               "excretion", "reef", "diff_in", "diff_out" ))) {
 
     stop("Please provide seafloor created with 'setup_seafloor()'", call. = FALSE)
 
