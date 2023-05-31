@@ -58,15 +58,13 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
 
     detritus_fish(i) = (seafloor(i, 6) * detritus_fish_diffusion) / 8.0;
 
-    // extent of reef (inclusive)
-    if((seafloor(i, 0) == (seafloor(1275,0) + calc_range) && seafloor(i,1) <=
-       (seafloor(1275,1) + calc_range) && seafloor(i, 1) >= (seafloor(1275,1) - calc_range)) ||
-       (seafloor(i, 0) == seafloor(1275,0) - calc_range && seafloor(i,1) <=
-       (seafloor(1275,1) + calc_range) && seafloor(i, 1) >= (seafloor(1275,1) - calc_range)) ||
-       (seafloor(i, 1) == seafloor(1275,1) + calc_range && seafloor(i,0) <=
-       (seafloor(1275,0) + calc_range) && seafloor(i, 0) >= (seafloor(1275,0) - calc_range)) ||
-       (seafloor(i, 1) == seafloor(1275,1) - calc_range && seafloor(i,0) <=
-       (seafloor(1275,0) + calc_range) && seafloor(i, 0) >= (seafloor(1275,0) - calc_range))) {
+    // extent of reef (inclusive) manually derived cell id's for edges
+    if(i == 1025 || i == 1072 || i == 1073 || i == 1074 || i == 1076 || i == 1077 ||
+       i == 1078 || i == 1121 || i == 1122 || i == 1128 || i == 1129 || i == 1171 ||
+       i == 1179 || i == 1221 || i == 1229 || i == 1270 || i == 1280 || i == 1321 ||
+       i == 1329 || i == 1371 || i == 1379 || i == 1421 || i == 1422 || i == 1428 ||
+       i == 1429 || i == 1472 || i == 1473 || i == 1474 || i == 1476 || i == 1477 ||
+       i == 1478 || i == 1525) {
       edge_reef[i] = TRUE;
     }
     else {
@@ -74,14 +72,12 @@ void rcpp_diffuse_values(Rcpp::NumericMatrix seafloor, Rcpp::IntegerMatrix cell_
     }
 
     // extent of reef (exclusive), open starts here
-    if((seafloor(i, 0) == seafloor(1275,0) + (calc_range + 1) && seafloor(i,1) <=
-       (seafloor(1275,1) + (calc_range + 1)) && seafloor(i, 1) >= (seafloor(1275,1) - (calc_range + 1))) ||
-       (seafloor(i, 0) == seafloor(1275,0) - (calc_range + 1) && seafloor(i,1) <=
-       (seafloor(1275,1) + (calc_range + 1)) && seafloor(i, 1) >= (seafloor(1275,1) - (calc_range + 1))) ||
-       (seafloor(i, 1) == seafloor(1275,1) + (calc_range + 1) && seafloor(i,0) <=
-       (seafloor(1275,0) + (calc_range + 1)) && seafloor(i, 0) >= (seafloor(1275,0) - (calc_range + 1))) ||
-       (seafloor(i, 1) == seafloor(1275,1) - (calc_range + 1) && seafloor(i,0) <=
-       (seafloor(1275,0) + (calc_range + 1)) && seafloor(i, 0) >= (seafloor(1275,0) - (calc_range + 1)))) {
+    if(i == 975 || i == 1022 || i == 1023 || i == 1024 || i == 1026 || i == 1027 ||
+       i == 1028 || i == 1071 || i == 1079 || i == 1120 || i == 1130 || i == 1170 ||
+       i == 1180 || i == 1220 || i == 1230 || i == 1269 || i == 1281 || i == 1320 ||
+       i == 1330 || i == 1370 || i == 1420 || i == 1430 || i == 1471 || i == 1479 ||
+       i == 1522 || i == 1523 || i == 1524 || i == 1526 || i == 1527 || i == 1528 ||
+       i == 1575) {
       edge_open[i] = TRUE;
     }
     else{
