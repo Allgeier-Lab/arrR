@@ -5,6 +5,7 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
                     Rcpp::NumericMatrix seafloor,
                     Rcpp::NumericVector pop_linf,  Rcpp::NumericVector pop_n_body,
                     Rcpp::NumericVector pop_reserves_max,
-                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions);
+                    Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
+                    Rcpp::NumericVector pop_ldie);
 
 //#endif // RCPP_MORTALITY

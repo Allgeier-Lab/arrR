@@ -99,14 +99,15 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     "pop_k",
     "pop_linf",
     "pop_n_body",
+    "pop_behav",
+    "pop_ldie",
 
     # fishpop respiration
     "resp_intercept",
     "resp_slope",
     "resp_temp_low",
     "resp_temp_optm",
-    "resp_temp_max",
-    "pop_behav")
+    "resp_temp_max")
 
   # just print list with required parameters
   if (is.null(starting_values) && is.null(parameters)) {

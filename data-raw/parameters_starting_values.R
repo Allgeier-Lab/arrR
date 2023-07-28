@@ -60,7 +60,8 @@ default_parameters <- list(
   resp_temp_max = c(40.0, 40.0),
 
   # fishpop behavior
-  pop_behav = c(0, 1)
+  pop_behav = c(0, 1),
+  pop_ldie = c(41.6, 26.5) # change according to desired constraints
 )
 
 ag <- default_parameters$ag_biomass_min +

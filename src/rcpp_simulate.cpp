@@ -273,7 +273,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       // simulate fish respiration (26°C is mean water temperature in the Bahamas)
       rcpp_respiration(fishpop, parameters["resp_intercept"], parameters["resp_slope"],
                        parameters["resp_temp_low"], parameters["resp_temp_max"],
-                       parameters["resp_temp_optm"], 18.0, min_per_i);
+                       parameters["resp_temp_optm"], 26.0, min_per_i);
 
       // simulate fishpop growth and including change of seafloor pools
       rcpp_fishpop_growth(fishpop, fishpop_track[0], seafloor,
@@ -285,7 +285,8 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
       // simulate mortality
        rcpp_mortality(fishpop, fishpop_track[0], seafloor,
                       parameters["pop_linf"], parameters["pop_n_body"],
-                      parameters["pop_reserves_max"], extent, dimensions);
+                      parameters["pop_reserves_max"], extent, dimensions,
+                      parameters["pop_ldie"]);
 
     }
 

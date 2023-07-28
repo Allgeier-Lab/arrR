@@ -94,9 +94,10 @@ setup_fishpop <- function(seafloor, species, starting_values, parameters,
     heading <- stats::runif(n = starting_values$pop_n, min = 0, max = 360)
 
     # calculate length and weight
+    # use pop_ldie values to ensure all fish start within constraints
     size <- calc_size(pop_n = starting_values$pop_n,
                       pop_mean_size = starting_values$pop_mean_size[species],
-                      pop_linf = parameters$pop_linf[species],
+                      pop_linf = parameters$pop_ldie[species],
                       pop_sd_size = starting_values$pop_sd_size[species],
                       pop_a = parameters$pop_a[species], pop_b = parameters$pop_b[species],
                       use_log = use_log)
