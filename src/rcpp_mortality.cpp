@@ -51,16 +51,26 @@ void rcpp_mortality(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_tra
     // get current species id
     int species_temp = fishpop(row_id_temp, 1) - 1;
 
-    // create death probability
-    double death_prob = std::exp(fishpop(row_id_temp, 6) - pop_ldie[species_temp]);
+    bool flag_die = FALSE;
 
-    // create random number to test death prob against
-    double random_prob = rcpp_runif(0.0, 1.0);
+    if (pop_ldie[species_temp] > 0.0) {
+      flag_die = fishpop(row_id_temp, 6) >= pop_ldie[species_temp];
+    }
+    else {
+      // create death probability
+      double death_prob = std::exp(fishpop(row_id_temp, 6) - pop_linf[species_temp]);
+
+      // create random number to test death prob against
+      double random_prob = rcpp_runif(0.0, 1.0);
+
+      flag_die = random_prob < death_prob;
+    }
+
 
 
     // individual dies if random number is smaller than death probability
     // individual also dies if length is >= length constraint
-    if (random_prob < death_prob) {
+    if (flag_die) {
 
       rcpp_reincarnate(fishpop, fishpop_track, row_id_temp,
                        seafloor, extent, dimensions,
