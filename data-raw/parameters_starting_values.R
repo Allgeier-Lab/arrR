@@ -33,10 +33,10 @@ default_parameters <- list(
   detritus_loss = 0.0,
 
   # fishpop movement
-  move_mean = c(10.0, 1.0),
-  move_sd = c(5.0, 0.5),
+  move_mean = c(10.0, 10.0),
+  move_sd = c(5.0, 5.0),
   move_reef = c(1.0, 1.0),
-  move_return = c(15.0, 2.0),
+  move_return = c(15.0, 15.0),
   move_border = c(1.0, 1.0),
 
   # fishpop dimensions
