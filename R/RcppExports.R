@@ -889,5 +889,5 @@ rcpp_which <- function(x, y) {
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call('_arrR_RcppExport_registerCCallable', PACKAGE = 'arrR')
+    .Call(`_arrR_RcppExport_registerCCallable`)
 })

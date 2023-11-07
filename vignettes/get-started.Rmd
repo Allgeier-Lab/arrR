@@ -151,7 +151,6 @@ Lastly, you can plot the results. Make sure to also check out the `summarize` ar
 ```{r plot_result, fig.align = "center"}
 # plot map of seafloor
 plot(result, what = "seafloor")
-# make sure species 2 is within 1 unit of a reef
 ```
 
 ### 5. Various
