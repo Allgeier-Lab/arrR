@@ -4,14 +4,14 @@ default_parameters <- list(
 
   # belowground biomass
   bg_biomass_min = 275.89,
-  bg_biomass_max = 933.03,
+  bg_biomass_max = 1200,
   bg_v_max = 9.8,
   bg_k_m = 178.1,
   bg_gamma = 0.0082,
 
   # aboveground biomass
   ag_biomass_min = 8.87,
-  ag_biomass_max = 193.01,
+  ag_biomass_max = 500,
   ag_v_max = 8.1,
   ag_k_m = 12.6,
   ag_gamma = 0.0144,
@@ -83,8 +83,8 @@ default_starting <- list(
 
   # fishpop related
   pop_n = 8,
-  pop_mean_size = c(9.0, 15.0),
-  pop_sd_size = c(10.0, 5.0)
+  pop_mean_size = c(9.0, 5.733),
+  pop_sd_size = c(10.0, 6.37)
 )
 
 usethis::use_data(default_parameters, default_starting, overwrite = TRUE)
