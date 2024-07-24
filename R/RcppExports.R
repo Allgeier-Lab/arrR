@@ -510,7 +510,7 @@ rcpp_shuffle <- function(x, elements) {
 #' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 #' @param burn_in Numeric with time steps used to burn in.
 #' @param to_disk Logical if TRUE, results are written into a text file.
-#' @param disk_path String with path to result text files.
+#' @param path_disk String with path to result text files.
 #' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
@@ -607,5 +607,5 @@ rcpp_which <- function(x, y) {
 
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
-    .Call('_arrR_RcppExport_registerCCallable', PACKAGE = 'arrR')
+    .Call(`_arrR_RcppExport_registerCCallable`)
 })

@@ -54,9 +54,9 @@ rcpp_simulate(
 
 \item{to_disk}{Logical if TRUE, results are written into a text file.}
 
-\item{verbose}{Logical if TRUE, progress reports are printed.}
+\item{path_disk}{String with path to result text files.}
 
-\item{disk_path}{String with path to result text files.}
+\item{verbose}{Logical if TRUE, progress reports are printed.}
 }
 \value{
 void

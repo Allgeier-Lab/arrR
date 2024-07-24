@@ -1,3 +1,6 @@
+# arrR 2.0.1
+* Minor export bugfixes
+
 # arrR 2.0.0
 * Split `arrR` into several sup-packages
 

@@ -38,7 +38,7 @@ using namespace Rcpp;
 //' @param seagrass_each Integer how often (each i * x) seagrass dynamics will be simulated.
 //' @param burn_in Numeric with time steps used to burn in.
 //' @param to_disk Logical if TRUE, results are written into a text file.
-//' @param disk_path String with path to result text files.
+//' @param path_disk String with path to result text files.
 //' @param verbose Logical if TRUE, progress reports are printed.
 //'
 //' @details
@@ -255,7 +255,7 @@ void rcpp_simulate(Rcpp::NumericMatrix seafloor, Rcpp::NumericMatrix fishpop, Rc
     // remove nutrients from cells if output parameter > 0
     if (flag_output) {
 
-      arrR_seagrass::rcpp_nutr_output(seafloor, parameters["nutrients_loss"], 
+      arrR_seagrass::rcpp_nutr_output(seafloor, parameters["nutrients_loss"],
                                       parameters["detritus_loss"]);
 
     }

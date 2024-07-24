@@ -7,9 +7,8 @@
 #'
 #' @name arrR
 #' @docType package
-#' @keywords internal
 #' @useDynLib arrR, .registration = TRUE
-#' @exportPattern ˆ[[:alpha:]]+
 #' @importFrom Rcpp evalCpp
 #' @importFrom rlang .data
+#' @keywords internal
 "_PACKAGE"
