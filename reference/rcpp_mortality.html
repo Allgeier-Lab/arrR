@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>rcpp_mortality</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/development/R/RcppExports.R" class="external-link"><code>R/RcppExports.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/v1.2/R/RcppExports.R" class="external-link"><code>R/RcppExports.R</code></a></small>
       <div class="d-none name"><code>rcpp_mortality.Rd</code></div>
     </div>
 
@@ -53,6 +53,7 @@
 <span>  <span class="va">fishpop_track</span>,</span>
 <span>  <span class="va">seafloor</span>,</span>
 <span>  <span class="va">pop_linf</span>,</span>
+<span>  <span class="va">pop_ldie</span>,</span>
 <span>  <span class="va">pop_n_body</span>,</span>
 <span>  <span class="va">pop_reserves_max</span>,</span>
 <span>  <span class="va">extent</span>,</span>
@@ -72,7 +73,7 @@
 <dd><p>Matrix with seafloor values.</p></dd>
 
 
-<dt id="arg-pop-linf-pop-n-body-pop-reserves-max">pop_linf, pop_n_body, pop_reserves_max<a class="anchor" aria-label="anchor" href="#arg-pop-linf-pop-n-body-pop-reserves-max"></a></dt>
+<dt id="arg-pop-linf-pop-ldie-pop-n-body-pop-reserves-max">pop_linf, pop_ldie, pop_n_body, pop_reserves_max<a class="anchor" aria-label="anchor" href="#arg-pop-linf-pop-ldie-pop-n-body-pop-reserves-max"></a></dt>
 <dd><p>Numeric with parameters.</p></dd>
 
 
@@ -90,8 +91,8 @@
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Function to simulate background mortality of fish individuals. The mortality
-probability increases with increasing size and approximates p=1 for <code>pop_linf</code>.
+    <p>Function to simulate background mortality of fish individuals.
+Fish automatically dies when current size is greater than <code>pop_ldie</code>.
 If a individual dies, a new individual is created.</p>
     </div>
 
@@ -104,7 +105,7 @@ If a individual dies, a new individual is created.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

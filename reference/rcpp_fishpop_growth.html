@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>rcpp_fishpop_growth</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/development/R/RcppExports.R" class="external-link"><code>R/RcppExports.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/v1.2/R/RcppExports.R" class="external-link"><code>R/RcppExports.R</code></a></small>
       <div class="d-none name"><code>rcpp_fishpop_growth.Rd</code></div>
     </div>
 
@@ -51,6 +51,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rcpp_fishpop_growth</span><span class="op">(</span></span>
 <span>  <span class="va">fishpop</span>,</span>
 <span>  <span class="va">fishpop_track</span>,</span>
+<span>  <span class="va">fishpop_attr</span>,</span>
 <span>  <span class="va">seafloor</span>,</span>
 <span>  <span class="va">pop_k</span>,</span>
 <span>  <span class="va">pop_linf</span>,</span>
@@ -58,7 +59,6 @@
 <span>  <span class="va">pop_b</span>,</span>
 <span>  <span class="va">pop_n_body</span>,</span>
 <span>  <span class="va">pop_reserves_max</span>,</span>
-<span>  <span class="va">pop_reserves_consump</span>,</span>
 <span>  <span class="va">extent</span>,</span>
 <span>  <span class="va">dimensions</span>,</span>
 <span>  <span class="va">min_per_i</span></span>
@@ -73,6 +73,10 @@
 <dd><p>Matrix with fishpop values and starting population.</p></dd>
 
 
+<dt id="arg-fishpop-attr">fishpop_attr<a class="anchor" aria-label="anchor" href="#arg-fishpop-attr"></a></dt>
+<dd><p>Matrix with id, threshold of pop_reserves_thres_mean, and pop_reserves_consump values</p></dd>
+
+
 <dt id="arg-seafloor">seafloor<a class="anchor" aria-label="anchor" href="#arg-seafloor"></a></dt>
 <dd><p>Matrix with seafloor values.</p></dd>
 
@@ -83,10 +87,6 @@
 
 <dt id="arg-pop-n-body-pop-reserves-max-min-per-i">pop_n_body, pop_reserves_max, min_per_i<a class="anchor" aria-label="anchor" href="#arg-pop-n-body-pop-reserves-max-min-per-i"></a></dt>
 <dd><p>Numeric with parameters.</p></dd>
-
-
-<dt id="arg-pop-reserves-consump">pop_reserves_consump<a class="anchor" aria-label="anchor" href="#arg-pop-reserves-consump"></a></dt>
-<dd><p>Double with consumption limit to fill reserves each time step.</p></dd>
 
 
 <dt id="arg-extent">extent<a class="anchor" aria-label="anchor" href="#arg-extent"></a></dt>
@@ -136,7 +136,7 @@ harvest. Sci. Adv. 6, eaax8329. &lt;https://doi.org/10.1126/sciadv.aax8329&gt;</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

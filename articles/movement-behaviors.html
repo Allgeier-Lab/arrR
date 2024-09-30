@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Movement behaviors</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/development/vignettes/articles/movement-behaviors.Rmd" class="external-link"><code>vignettes/articles/movement-behaviors.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/v1.2/vignettes/articles/movement-behaviors.Rmd" class="external-link"><code>vignettes/articles/movement-behaviors.Rmd</code></a></small>
       <div class="d-none name"><code>movement-behaviors.Rmd</code></div>
     </div>
 
@@ -110,34 +110,23 @@ artificial reef cell.</p>
 <div class="section level3">
 <h3 id="behavioral-movement">Behavioral movement<a class="anchor" aria-label="anchor" href="#behavioral-movement"></a>
 </h3>
-<p>For the behavioral movement, movement types differ across individuals
-depending on their spatial location and energy reserves.</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Sheltering</strong>: Individuals shelter at a reef cell
-if their reserves are above a threshold of their maximum reserves, set
-by <code>pop_reserves_thres</code>. They are considered to be “on the
-reef” if their distance to the closest reef cell is less than
-<code>move_border</code>. Individuals move randomly using a distance
-sampled from a log-normal distribution using <code>move_reef</code> as
-mean. During this behavior, individuals do not forage. If reserves are
-below the threshold, individuals switch to the foraging behavior. If
-individuals move away from the reef (by chance), they switch to the
-returning behavior.</p></li>
-<li><p><strong>Returning</strong>: If energy reserves are completely
-filled but they are not already sheltering, individuals move directly
-towards the reef using either a random distance sampled from a
+<p><em>…Work in progress…</em></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Individuals move randomly (see “Random movement” above) and
+forage until their energy reserves are filled completely.</p></li>
+<li><p>If energy reserves are filled completely, individuals move
+directly towards the reef using either a random distance sampled from a
 log-normal distribution using <code>move_return</code> or the distance
 to the closest reef cell (if this distance is shorter than
-<code>move_return</code>) as mean movement distance. The direction is
-the direct bearing towards the reef cell. During this behavior,
-individuals do not forage.</p></li>
-<li><p><strong>Foraging</strong>: Individuals move randomly (see “Random
-movement” above) and forage until their energy reserves are completely
-filled. However, the amount of nutrients that can be foraged each
-timestep is limited by <code>pop_reserves_consump</code>, which sets the
-maximum consumption amount relative to the maximum reserves. Once energy
-reserves are completely filled, they switch to sheltering or returning
-depending on their spatial location.</p></li>
+<code>move_return</code>) as mean. The direction is the direct bearing
+towards the reef cell. During this behavior, individuals do not
+forage.</p></li>
+<li><p>Individuals are considered to be “on the reef” if their distance
+to the closest reef cell is less than <code>move_border</code>.
+Individuals move randomly using a distance sampled from a log-normal
+distribution using <code>move_reef</code> as mean until their energy
+reserves are below <code>pop_reserves_thres</code>. During this
+behavior, individuals do not forage.</p></li>
 </ol>
 </div>
 </div>
@@ -152,7 +141,7 @@ depending on their spatial location.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

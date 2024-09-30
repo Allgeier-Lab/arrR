@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">arrR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Get started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/development/vignettes/get-started.Rmd" class="external-link"><code>vignettes/get-started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Allgeier-Lab/arrR/blob/v1.2/vignettes/get-started.Rmd" class="external-link"><code>vignettes/get-started.Rmd</code></a></small>
       <div class="d-none name"><code>get-started.Rmd</code></div>
     </div>
 
@@ -204,13 +204,14 @@ For more information, please see
 <span><span class="va">save_each</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">24</span> <span class="op">/</span> <span class="op">(</span><span class="va">min_per_i</span> <span class="op">/</span> <span class="fl">60</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">days</span></span>
 <span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_simulation.html">run_simulation</a></span><span class="op">(</span>seafloor <span class="op">=</span> <span class="va">input_seafloor</span>, fishpop <span class="op">=</span> <span class="va">input_fishpop</span>,</span>
-<span>                         parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"attr"</span>,</span>
+<span>                         parameters <span class="op">=</span> <span class="va">parameters</span>, movement <span class="op">=</span> <span class="st">"behav"</span>,</span>
 <span>                         max_i <span class="op">=</span> <span class="va">max_i</span>, min_per_i <span class="op">=</span> <span class="va">min_per_i</span>, </span>
 <span>                         seagrass_each <span class="op">=</span> <span class="va">seagrass_each</span>, save_each <span class="op">=</span> <span class="va">save_each</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &gt; ...Starting at &lt;2024-07-24 13:59:49.861663&gt;...</span></span>
+<span><span class="co">#&gt; &gt; ...Starting at &lt;2024-09-30 06:06:58.650147&gt;...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; Seafloor with 50 rows x 50 cols; 5 reef cell(s).</span></span>
-<span><span class="co">#&gt; &gt; Population with 8 individuals [movement: 'attr'].</span></span>
+<span><span class="co">#&gt; &gt; Population with 8 individuals [movement: 'behav'].</span></span>
+<span><span class="co">#&gt; &gt; Using provided reserve threshold values.</span></span>
 <span><span class="co">#&gt; &gt; Simulating 43800 iterations (3650 days) [Burn-in: 0 iter.].</span></span>
 <span><span class="co">#&gt; &gt; Saving each 4380 iterations (365 days).</span></span>
 <span><span class="co">#&gt; &gt; One iteration equals 120 minutes.</span></span>
@@ -218,7 +219,7 @@ For more information, please see
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; &gt; ...Saving results...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; &gt; ...All done at &lt;2024-07-24 14:00:09.868103&gt;...</span></span></code></pre></div>
+<span><span class="co">#&gt; &gt; ...All done at &lt;2024-09-30 06:07:25.643&gt;...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="look-at-model-results">4. Look at model results<a class="anchor" aria-label="anchor" href="#look-at-model-results"></a>
@@ -232,17 +233,17 @@ the model.</p>
 <span><span class="co">#&gt; Total time : 0-43800 iterations (3650 days) [Burn-in: 0 iter.]</span></span>
 <span><span class="co">#&gt; Saved each : 4380 iterations (365 days)</span></span>
 <span><span class="co">#&gt; Seafloor   : 50 rows x 50 cols; 5 reef cell(s)</span></span>
-<span><span class="co">#&gt; Fishpop    : 8 indiv (movement: 'attr')</span></span>
+<span><span class="co">#&gt; Fishpop    : 8 indiv (movement: 'behav')</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Seafloor : (ag_biomass, bg_biomass, nutrients_pool, detritus_pool)</span></span>
-<span><span class="co">#&gt; Minimum  : 86.011, 604.975, 0.003, 2.997</span></span>
-<span><span class="co">#&gt; Mean     : 104.759, 616.055, 0.003, 3.023</span></span>
-<span><span class="co">#&gt; Maximum  : 193.01, 686.349, 0.013, 3.028</span></span>
+<span><span class="co">#&gt; Minimum  : 94.444, 605.631, 0.003, 3.109</span></span>
+<span><span class="co">#&gt; Mean     : 100.556, 611.347, 0.003, 3.13</span></span>
+<span><span class="co">#&gt; Maximum  : 193.01, 844.028, 0.031, 3.229</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fishpop  : (length, weight, died_consumption, died_background)</span></span>
-<span><span class="co">#&gt; Minimum  : 16.866, 91.487, 0, 1</span></span>
-<span><span class="co">#&gt; Mean     : 23.445, 303.414, 0, 1</span></span>
-<span><span class="co">#&gt; Maximum  : 32.982, 762.149, 0, 1</span></span></code></pre></div>
+<span><span class="co">#&gt; Minimum  : 14.257, 53.792, 0, 1</span></span>
+<span><span class="co">#&gt; Mean     : 21, 231.991, 0, 1</span></span>
+<span><span class="co">#&gt; Maximum  : 30.168, 574.957, 0, 1</span></span></code></pre></div>
 <p>The returning object <code>mdl_rn</code> object is simply a list
 “under the hood”, so analyzing the results yourself should be pretty
 straightforward. Simply access the data you need.</p>
@@ -256,20 +257,20 @@ straightforward. Simply access the data you need.</p>
 <span></span>
 <span><span class="co"># show e.g. result for fish population</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">fishpop</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   id age          x          y   heading    length      weight activity</span></span>
-<span><span class="co">#&gt; 1  1   0 -20.962493  11.644099 145.27372 18.339424 119.2195774        0</span></span>
-<span><span class="co">#&gt; 2  2   0  16.716652  13.626076  22.91812  3.853876   0.8606136        0</span></span>
-<span><span class="co">#&gt; 3  3   0   5.038044  18.730033 139.93247  4.493507   1.3983244        0</span></span>
-<span><span class="co">#&gt; 4  4   0 -17.139578 -16.252969 351.19722  4.990982   1.9487284        0</span></span>
-<span><span class="co">#&gt; 5  5   0 -24.630028 -23.287933 104.36123  6.272955   4.0141612        0</span></span>
-<span><span class="co">#&gt; 6  6   0  -1.680325  -8.980713 244.21695 13.077149  40.9339057        0</span></span>
+<span><span class="co">#&gt;   id age          x          y   heading    length     weight activity</span></span>
+<span><span class="co">#&gt; 1  1   0 -20.962493  11.644099 145.27372  6.420574  4.3204235        0</span></span>
+<span><span class="co">#&gt; 2  2   0  16.716652  13.626076  22.91812  5.274089  2.3200292        0</span></span>
+<span><span class="co">#&gt; 3  3   0   5.038044  18.730033 139.93247  3.501701  0.6356992        0</span></span>
+<span><span class="co">#&gt; 4  4   0 -17.139578 -16.252969 351.19722  6.533766  4.5658049        0</span></span>
+<span><span class="co">#&gt; 5  5   0 -24.630028 -23.287933 104.36123  4.599896  1.5056769        0</span></span>
+<span><span class="co">#&gt; 6  6   0  -1.680325  -8.980713 244.21695 15.312161 67.4040053        0</span></span>
 <span><span class="co">#&gt;   respiration    reserves reserves_max behavior consumption excretion</span></span>
-<span><span class="co">#&gt; 1           0 0.354060595  0.357539512        3           0         0</span></span>
-<span><span class="co">#&gt; 2           0 0.002247416  0.002580980        3           0         0</span></span>
-<span><span class="co">#&gt; 3           0 0.002204659  0.004193575        3           0         0</span></span>
-<span><span class="co">#&gt; 4           0 0.004471462  0.005844236        3           0         0</span></span>
-<span><span class="co">#&gt; 5           0 0.010207562  0.012038470        3           0         0</span></span>
-<span><span class="co">#&gt; 6           0 0.103644229  0.122760783        3           0         0</span></span>
+<span><span class="co">#&gt; 1           0 0.012830877  0.012956950        3           0         0</span></span>
+<span><span class="co">#&gt; 2           0 0.006058551  0.006957767        3           0         0</span></span>
+<span><span class="co">#&gt; 3           0 0.001002271  0.001906462        3           0         0</span></span>
+<span><span class="co">#&gt; 4           0 0.010476484  0.013692849        3           0         0</span></span>
+<span><span class="co">#&gt; 5           0 0.003828768  0.004515525        3           0         0</span></span>
+<span><span class="co">#&gt; 6           0 0.170666249  0.202144612        3           0         0</span></span>
 <span><span class="co">#&gt;   died_consumption died_background timestep burn_in</span></span>
 <span><span class="co">#&gt; 1                0               0        0     yes</span></span>
 <span><span class="co">#&gt; 2                0               0        0     yes</span></span>
@@ -319,7 +320,7 @@ for an overview.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
