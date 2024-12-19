@@ -94,7 +94,8 @@ void rcpp_fishpop_growth(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpo
       (std::pow((fishpop(row_id_temp, 6) + growth_length), pop_b[species_temp]) -
       std::pow(fishpop(row_id_temp, 6), pop_b[species_temp]));
 
-    // consumption req based on growth in weight + metabolic costs based on weight + n required
+    // consumption req based on growth in weight g + metabolic costs based on weight g + n required
+    // 0.55 is scalar from detritus to invertebrates (because fish do not eat inverts)
     double consumption_require = ((growth_weight + fishpop(row_id_temp, 9) *
                                   fishpop(row_id_temp, 7)) / 0.55) * pop_n_body[species_temp];
 
