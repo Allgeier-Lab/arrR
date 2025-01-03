@@ -40,8 +40,9 @@ default_parameters <- list(
   move_border = c(1.0, 1.0),
 
   # fishpop dimensions
-  pop_a = c(0.0121, 0.0198),
-  pop_b = c(3.161, 3),
+  # A & B from KSM
+  pop_a = c(0.03638739, 0.04696877),
+  pop_b = c(2.86568226, 2.73973755),
   pop_k = c(0.2, 1.2),
   pop_linf = c(41.6, 26.5),
   pop_n_body = c(0.02999, 0.027518),
@@ -62,7 +63,7 @@ default_parameters <- list(
 
   # fishpop behavior
   pop_behav = c(0, 1),
-  pop_ldie = c(41.6, 26.5) # change according to desired constraints
+  pop_ldie = c(41.5, 26.4) # change according to desired constraints
 )
 
 ag <- default_parameters$ag_biomass_min +
