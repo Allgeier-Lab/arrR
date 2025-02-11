@@ -10,8 +10,6 @@
 | [![Project Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)                       | [![R-CMD-check](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Allgeier-Lab/arrR/actions/workflows/R-CMD-check.yaml) | [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) |
 | [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable) | [![Codecov test coverage](https://codecov.io/gh/Allgeier-Lab/arrR/graph/badge.svg)](https://app.codecov.io/gh/Allgeier-Lab/arrR)                                             | [![DOI](https://img.shields.io/badge/DOI-10.1002/eap.2617-blue.svg)](https://doi.org/10.1002/eap.2617)          |
 
-[![Codecov test
-coverage](https://codecov.io/gh/Allgeier-Lab/arrR/graph/badge.svg)](https://app.codecov.io/gh/Allgeier-Lab/arrR)
 <!-- badges: end -->
 
 The goal of **arrR** is to simulate seagrass primary production around
