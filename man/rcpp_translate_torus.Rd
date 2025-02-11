@@ -7,7 +7,7 @@
 rcpp_translate_torus(x, y, extent)
 }
 \arguments{
-\item{x, y}{Double with x,y coordinates}
+\item{x, y}{Double with xy coordinates}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 }
@@ -19,6 +19,7 @@ Rcpp translate coordinates around torus.
 }
 \details{
 Torus translation of coordinates if they exceed the provided extent. The translation
-is done until coordinate is within extent (i.e., could be translated several times
+is done until coordinates are within extent (i.e., could be translated several times
 if the difference is big).
 }
+\keyword{internal}

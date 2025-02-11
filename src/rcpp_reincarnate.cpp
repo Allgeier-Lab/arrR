@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_reincarnate.h"
 #include "rcpp_cell_from_xy.h"
 
@@ -14,27 +15,28 @@ using namespace Rcpp;
 //' @param seafloor Matrix with seafloor values.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
-//' @param pop_linf,pop_n_body,pop_reserves_max Numeric with parameters.
+//' @param pop_n_body Nutrient content of body mass.
 //' @param reason String with reason of reincarnation.
 //'
 //' @details
 //' Creates a new individual after mortality event. The new individual has the same
-//' value as the just died individual at the beginning of the simulation (i.e., timestep zero).
-//' The mass difference (i.e. current mass minus mass at timestep zero) plus reserves
-//' of the died individual are added to the detritus pool. The reincarnated individual
-//' tries to fill its reserves from the detritus pool if enough nutrients are available.
+//' values as the died individual at the beginning of the simulation.
+//'
+//' The mass difference (i.e. current mass minus mass at time step zero) and the
+//' reserves of the died individual are added to the detritus pool. The reincarnated
+//' individual tries to fill its reserves from the detritus pool if enough nutrients
+//' are available.
 //'
 //' @return void
 //'
 //' @aliases rcpp_reincarnate
 //' @rdname rcpp_reincarnate
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_track, int fish_id,
                       Rcpp::NumericMatrix seafloor, Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions,
-                      double pop_linf, double pop_n_body, double pop_reserves_max,
-                      Rcpp::String reason) {
+                      double pop_n_body, std::string reason) {
 
   int cell_id = 0;
 
@@ -42,7 +44,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   // get cell id of old individual
   cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
-                              extent, dimensions, TRUE);
+                              extent, dimensions, true);
 
   // calculate increase in fish mass including reserves
   // mass_difference = weight - weight specific nutrient content + fish reserves
@@ -62,7 +64,7 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   double excretion = fishpop(fish_id, 13);
 
-  // create new individual
+  // create new individual //
 
   // create new individual, access all columns of fish_id matrix
   fishpop(fish_id, _) = fishpop_track(fish_id, _);
@@ -96,44 +98,37 @@ void rcpp_reincarnate(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_t
 
   // get cell id of new individual
   cell_id = rcpp_cell_from_xy(fishpop(fish_id, 2), fishpop(fish_id, 3),
-                              extent, dimensions, TRUE);
+                              extent, dimensions, true);
 
-  // detritus pool is smaller than wanted reserves, detritus pool is fully used
-  if (fishpop(fish_id, 10) >= seafloor(cell_id, 5)) {
+  // init consumed detritus
+  double detritus_consumed = 0.0;
 
-    // fish fully consumes detritus pool in cell
-    fishpop(fish_id, 9) = seafloor(cell_id, 5);
+  // detritus pool is smaller than wanted reserves
+  if (seafloor(cell_id, 5) <= fishpop(fish_id, 9)) {
+
+    // fully consumes detritus pool in cell
+    detritus_consumed = seafloor(cell_id, 5);
 
     // set pool to zero
     seafloor(cell_id, 5) = 0.0;
 
-    // track consumption cell
-    seafloor(cell_id, 13) += seafloor(cell_id, 5);
-
-    // track consumption fish
-    fishpop(fish_id, 12) += seafloor(cell_id, 5);
-
-  // detritus pool is larger than what is wanted, so only subset is used
+  // detritus pool is larger than wanted reserves
   } else {
 
-    // wanted reserves can be filled completely
-    fishpop(fish_id, 9) = fishpop(fish_id, 10);
+    // consume wanted reserves
+    detritus_consumed = fishpop(fish_id, 9);
 
-    // reduced detritus pool by wanted reserves
-    seafloor(cell_id, 5) -= fishpop(fish_id, 10);
-
-    // track consumption cell
-    seafloor(cell_id, 13) += fishpop(fish_id, 10);
-
-    // track consumption fish
-    fishpop(fish_id, 12) += fishpop(fish_id, 10);
+    // reduce detritus pool by consumption
+    seafloor(cell_id, 5) -= detritus_consumed;
 
   }
-}
 
-/*** R
-rcpp_reincarnate(fishpop = fishpop_values, fishpop_track = fishpop_track[[1]], fish_id = fish_id_temp,
-                 seafloor = seafloor_values, extent = extent, dimensions = dimensions,
-                 pop_linf = parameters$pop_linf, pop_n_body = parameters$pop_n_body,
-                 pop_reserves_max = pop_reserves_max, reason = "consumption")
-*/
+  fishpop(fish_id, 9) = detritus_consumed;
+
+  // track consumption cell
+  seafloor(cell_id, 13) += detritus_consumed;
+
+  // track consumption fish
+  fishpop(fish_id, 12) += detritus_consumed;
+
+}

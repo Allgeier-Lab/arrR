@@ -1,69 +1,84 @@
-title: arrR | Simulating artifical reefs in R
+url: https://allgeier-lab.github.io/arrR/
 
 template:
-  params:
-    bootswatch: sandstone
+  bootstrap: 5
+  bootswatch: lumen
 
 reference:
-  - title: Main functions
+
+  - title: Data
+    contents:
+      - default_starting
+      - default_parameters
+
+  - title: Prepare model run
     contents:
       - read_parameters
       - check_parameters
-      - setup_fish_population
       - setup_seafloor
-      - run_simulation
-  - title: Sub-models
+      - setup_fishpop
+      - get_req_nutrients
+
+  - title: Run model
     contents:
-      - simulate_seagrass
-      - distribute_detritus
-      - simulate_movement
-      - simulate_respiration
-      - simulate_growth
-      - simulate_mortality
-      - simulate_diffusion
+      - run_simulation
+
   - title: Various
     contents:
+      - filter_mdlrn
       - get_density
       - get_limits
-      - summarize_results
-      - print.mdl_rn
+      - get_production
+      - plot_allocation
+      - plot_production
       - plot.mdl_rn
-  - title: Internal functions
-    contents:
-      - calc_nutr_uptake
-      - calc_size
-      - calc_summary
-      - convert_nutr
-      - create_rebirth
-      - get_neighbors
-      - grow_seagrass
-      - rcpp_diffuse_values
-      - setup_envir_values
-      - setup_reefs
-      - translate_torus
+      - print.mdl_rn
+      - summarize_mdlrn
 
 navbar:
-  title: arrR
-  left:
-    - icon: fa-gears
+  structure:
+    left:  [getstarted, reference, articles, news]
+    right: [github, contact, search]
+  components:
+    getstarted:
+      text: "Get Started"
+      icon: fa fa-magic
+      href: articles/get-started.html
+
+    reference:
+      icon: fa-gears
       text: "Functions"
       href: reference/index.html
-    - text: "More"
+
+    articles:
       icon: fa-graduation-cap
+      text: "More"
       menu:
        - text: "General Background"
          icon: fa-book
-         href: articles/background.html
+         href: articles/general-background.html
+       - text: "Movement behaviors"
+         icon: fa-book
+         href: articles/movement-behaviors.html
+       - text: "Parameters"
+         icon: fa-book
+         href: articles/starting-values-parameters.html
        - text: "Publication Record"
          icon: fa-file-text-o
-         href: articles/publication_record.html
-  right:
-    - icon: fa-newspaper-o
+         href: articles/publication-record.html
+       - text: "Shiny app"
+         icon: fa-tv
+         href: https://mhkhesselbarth.shinyapps.io/arrR
+
+    news:
+      icon: fa-newspaper-o
       text: "News"
       href: news/index.html
-    - icon: fa-github fa-lg
-      text: "Github"
-      href: https://github.com/Allgeier-Lab/arrR
-    - icon: fa-user
-      text: "Contact"
+
+    contact:
+      icon: fa-user
       hreft: https://mhesselbarth.rbind.io
+
+home:
+  sidebar:
+    structure: [authors, license, community]

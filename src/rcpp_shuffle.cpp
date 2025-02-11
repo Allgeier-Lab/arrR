@@ -1,44 +1,68 @@
 #include <Rcpp.h>
-#include <random>
 #include <chrono>
+#include <random>
+
 #include "rcpp_shuffle.h"
 
-using namespace Rcpp;
+// [[Rcpp::interfaces(r, cpp)]]
 
 //' rcpp_shuffle
 //'
 //' @description
 //' Rcpp shuffle vector.
 //'
-//' @param min,max Integer with minimum and maximum value of vector.
+//' @param x NumericVector with elements to shuffle.
+//' @param elements Logical if vector elements or iteratos are returned.
 //'
 //' @details
-//' Creates vector with IDs from \code{min} to \code{max}, but in random order.
+//' Shuffles the element of a vector (or the elements iterators).
 //'
 //' @references
-//' How to use time-based seed taken from http://www.cplusplus.com/reference/algorithm/shuffle/
+//' How to use time-based seed taken from <http://www.cplusplus.com/reference/algorithm/shuffle/>
 //'
 //' @return vector
 //'
 //' @aliases rcpp_shuffle
 //' @rdname rcpp_shuffle
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
-Rcpp::IntegerVector rcpp_shuffle(int min, int max) {
-
-  // create sequance from min to max
-  Rcpp::IntegerVector x = Rcpp::seq(min, max);
+Rcpp::NumericVector rcpp_shuffle(Rcpp::NumericVector x, bool elements) {
 
   // obtain a time-based seed
-  int seed = std::chrono::system_clock::now().time_since_epoch().count();
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+  // init shuffle vector
+  Rcpp::NumericVector x_shuffle (x.length());
+
+  // return shuffled vector elements
+  if (elements) {
+
+    // clone to avoid modify-in-place
+    x_shuffle = Rcpp::clone(x);
+
+  // return shuffled iterators
+  } else {
+
+    // loop through all elements of vector
+    for (int i = 0; i < x_shuffle.length(); i++) {
+
+      // create sequence of iterators
+      x_shuffle(i) = i + 1;
+
+    }
+  }
 
   // shuffle vector; std::default_random_engine(seed)
-  std::shuffle(x.begin(), x.end(), std::mt19937(seed));
+  std::shuffle(x_shuffle.begin(), x_shuffle.end(), std::mt19937(seed));
 
-  return x;
+  return x_shuffle;
+
 }
 
 /*** R
-rcpp_shuffle(min = 1, max = 10)
+x <- seq(from = 11, to = 18, by = 1)
+
+rcpp_shuffle(x = x, elements = TRUE)
+rcpp_shuffle(x = x, elements = FALSE)
 */

@@ -7,86 +7,96 @@
 run_simulation(
   seafloor,
   fishpop,
+  nutrients_input = 0,
   movement = "rand",
   parameters,
+  torus_diffusion = TRUE,
   max_i,
   min_per_i,
   seagrass_each = 1,
   save_each = 1,
   burn_in = 0,
   return_burnin = TRUE,
-  nutr_input = NULL,
+  to_disk = FALSE,
+  path_disk = NULL,
   verbose = TRUE
 )
 }
 \arguments{
-\item{seafloor}{RasterBrick with environment created with \code{\link{setup_seafloor}}.}
+\item{seafloor}{Data.frame with seafloor.}
 
-\item{fishpop}{Data.frame with fish population created with \code{\link{setup_fishpop}}.}
+\item{fishpop}{Data.frame with fish population.}
 
-\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
+\item{nutrients_input}{Vector with nutrient input for each time step.}
+
+\item{movement}{String specifying movement algorithm.}
 
 \item{parameters}{List with all model parameters.}
 
-\item{max_i}{Integer with maximum number of simulation timesteps.}
+\item{torus_diffusion}{Logical if diffusion uses torus}
+
+\item{max_i}{Integer with maximum number of simulation time steps.}
 
 \item{min_per_i}{Integer to specify minutes per i.}
 
 \item{seagrass_each}{Integer how often (each i * x) seagrass dynamics will be simulated.}
 
-\item{save_each}{Numeric how often data should be saved to return.}
+\item{save_each}{Numeric how often data should be saved.}
 
-\item{burn_in}{Numeric with timesteps used to burn in.}
+\item{burn_in}{Numeric with time steps used to burn in (no fish).}
 
-\item{return_burnin}{If FALSE all timesteps < burn_in are not returned.}
+\item{return_burnin}{If FALSE, all time steps < burn_in are not saved.}
 
-\item{nutr_input}{Vector with amount of nutrient input each timestep.}
+\item{to_disk}{Logical if TRUE, results are written into a text file.}
 
-\item{verbose}{If TRUE, progress reports are printed.}
+\item{path_disk}{String with path to result text file.}
+
+\item{verbose}{Logical if TRUE, progress reports are printed.}
 }
 \value{
 mdl_rn
 }
 \description{
-Core function to run model.
+Run simulation.
 }
 \details{
-This is the core function of the \code{arrR} model that allows to easily run the
-model. Besides running all sub-processes, the function also includes some basic
-checks to make sure the model does not crash. However, this does not ensure that
-e.g. all parameter values "make sense". The function returns a \code{mdl_rn} object
-which stores besides the model run results a lot of information about the model run
-specification and many function that can handle the objects exist (e.g. plotting).
+This is the main function of the simulation model. Besides running all sub-processes,
+the function also includes some basic checks to make sure the model does not crash.
+However, this does not ensure that all parameter values "make sense". The function
+returns a \code{mdl_rn} object, which stores the model run results and additionally
+information about the model run itself.
 
 The functions is a 'wrapper' around the following sub-processes: (i) nutrient input,
 (ii) seagrass growth, (iii) detritus mineralization, (iv) movement of individuals,
 (v) respiration of individuals, (vi) growth of individuals, (vii) mortality of individuals,
 (viii) diffusion of nutrients/detritus, and ix) nutrient output.
 
-The \code{movement} argument allows to either specify random movement of individuals,
-attracted movement towards the artificial reef of individuals or a movement behavior based
-on their biosenergetics.
+If \code{nutrients_input} is zero (default), no nutrient input is simulated.
+To simulate no nutrient output, set the \code{nutrients_loss} parameter to zero.
 
-If \code{nutr_input} is \code{NULL}, no nutrient input is simulated. To also simulate no
-nutrient output, set the \code{nutrients_output} parameter to zero.
+The \code{movement} argument allows to either specify random movement of individuals
+(\code{'rand'}), attracted movement towards the artificial reef cells of individuals
+(\code{'attr'}) or a movement behavior based on their biosenergetics (\code{'behav'}).
+
+\code{seagrass_each} allows to simulate all seagrass sub-processes only each
+specified time step.
 
 If \code{save_each > 1}, not all iterations are saved in the final \code{mdl_rn} object,
-but only each timestep specified by the object. However, \code{max_i} must be dividable by
-\code{save_each} without rest. Similar,  \code{seagrass_each} allows to simulate all
-seagrass sub-processes only each specified timestep.
+but only each time step specified by the argument. \code{max_i} must be dividable by
+\code{save_each} without rest.
 
 If \code{burn_in > 0}, all sub-processes related to fish individuals are not simulated
-before this timestep is reached.
+before this time step is reached.
 }
 \examples{
 \dontrun{
-reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reefs = reefs, starting_values = arrR_starting_values)
+seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
+reef = reef, starting_values = default_starting)
 fishpop <- setup_fishpop(seafloor = seafloor,
-starting_values = arrR_starting_values, parameters = arrR_parameters)
+starting_values = default_starting, parameters = default_parameters)
 
 run_simulation(seafloor = seafloor, fishpop = fishpop, parameters = parameters,
 max_i = 1000, min_per_i = 120, save_each = 10)
@@ -94,6 +104,7 @@ max_i = 1000, min_per_i = 120, save_each = 10)
 
 }
 \references{
-For a detailed model description see Esquivel et al (2021). Mechanistic support for
-increased primary production around artificial reefs. Manuscript in preparation.
+For a detailed model description, please see Esquivel, K.E., Hesselbarth, M.H.K.,
+Allgeier, J.E., 2022. Mechanistic support for increased primary production around
+artificial reefs. Ecological Applications e2617. <https://doi.org/10.1002/eap.2617>
 }

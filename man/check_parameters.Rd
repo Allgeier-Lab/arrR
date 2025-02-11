@@ -11,7 +11,7 @@ check_parameters(starting_values = NULL, parameters = NULL, verbose = TRUE)
 
 \item{parameters}{List with all model parameters.}
 
-\item{verbose}{If TRUE, progress reports are printed.}
+\item{verbose}{Logical if TRUE, progress reports are printed.}
 }
 \value{
 void
@@ -22,8 +22,10 @@ Check model parameters and starting values.
 \details{
 The function checks if all required starting values and parameters are provided.
 If parameters and/or starting values are missing, a vector with the name of the
-corresponding values is returned. If no arguments are provided, a list of all
-required parameters and values is printed
+corresponding values is returned.
+
+If no arguments are provided, a list of all required parameters and values is
+printed.
 }
 \examples{
 check_parameters()

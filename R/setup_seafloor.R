@@ -4,116 +4,155 @@
 #' Setup seafloor for model run.
 #'
 #' @param dimensions Vector with number of rows and columns (spatial dimensions).
-#' @param grain Vector with size of cells in x- and y-direction (spatial grain).
-#' @param reefs 2-Column matrix with coordinates of artificial reefs.
+#' @param grain Double with size of cells in x- and y-direction (spatial grain).
+#' @param reef 2-Column matrix with coordinates of artificial reefs.
 #' @param starting_values List with all starting value parameters.
-#' @param random Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.
+#' @param random Numeric to randomize input values.
 #' @param verbose If TRUE, progress reports are printed.
-#' @param ... Additional arguments passed on to \code{\link{raster}}.
 #'
 #' @details
-#' Function to setup the environment (seafloor). The center of the environment is
-#' always set to (0,0). bg_biomass and ag_biomass values are in g dry weight.
-#' Nutrients_pool and deritus_pool values are in g nutrients. Reef cells are indicated
-#' by \code{reef = 1}, whereas non-reef cells are indicated by \code{reef = 0}. All
-#' other values are increased cumulative during the model run started by \code{\link{run_simulation}}.
+#' Function to setup the seafloor. The center of the seafloor raster is always x,y (0,0).
+#' bg_biomass and ag_biomass values are in g dry weight. nutrients_pool and deritus_pool
+#' values are in g nutrients. If reef cells are present, the cells in the corresponding
+#' raster layer are idntified usinge the value one.
 #'
-#' If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
-#' as \code{x * (1 +- random)} as minimum and maximum values, respectively.
+#' If \code{random > 0}, the stochasticity is added to all starting values using
+#' \code{x * (1 +- random)} as minimum and maximum values, respectively.
 #'
-#' @return RasterBrick
+#' @return data.frame
 #'
 #' @examples
-#' reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+#' reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 #' ncol = 2, byrow = TRUE)
 #'
-#' seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-#' reefs = reefs, starting_values = arrR_starting_values)
+#' seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
+#' reef = reef, starting_values = default_starting)
 #'
 #' @aliases setup_seafloor
 #' @rdname setup_seafloor
 #'
 #' @export
-setup_seafloor <- function(dimensions, grain, reefs = NULL, starting_values, random = 0,
-                           verbose = TRUE, ...) {
+setup_seafloor <- function(dimensions, grain = 1, reef = NULL, starting_values, random = 0.0,
+                           verbose = TRUE) {
 
-  # print progress
-  if (verbose) {
+  # check length of grain argument
+  if (length(grain) != 1) {
 
-    message("> ...Creating seafloor with ", dimensions[1], " rows x ", dimensions[2], " cols...")
+    stop("Please provide one 'grain' value.", call. = FALSE)
 
   }
 
-  # check length of grain argument
-  if (length(grain) == 1) {
+  if (any(dimensions <= 0) || length(dimensions) != 2 || any(dimensions %% 1 != 0)) {
 
-    grain <- rep(x = grain, times = 2)
+    stop("'dimensions must be a vector with two integer values.", call. = FALSE)
 
-  } else if (length(grain) > 2) {
+  }
 
-    stop("Please provide 'grain' argument with either one or two elements.", call. = FALSE)
+  if (random < 0 || random > 1) {
+
+    stop("'random' must be 0 <= x <= 1", call. = FALSE)
 
   }
 
   # calculate extent of environment with the center being (0,0)
-  extent_x <- dimensions[1] / 2 * c(-1, 1)
+  extent_x <- c(-dimensions[[1]] / 2, dimensions[[1]] / 2)
 
-  extent_y <- dimensions[2] / 2 * c(-1, 1)
+  extent_y <- c(-dimensions[[2]] / 2, dimensions[[2]] / 2)
 
-  # setup template landscape
-  seafloor <- raster::raster(nrows = dimensions[1], ncol = dimensions[2], res = grain,
-                             xmn = extent_x[1], xmx = extent_x[2],
-                             ymn = extent_y[1], ymx = extent_y[2],
-                             vals = NA, crs = NA, ...)
+  # calculate coordinates
+  coords_x <- rep(x = seq(from = extent_x[[1]] + grain / 2, to = extent_x[[2]] - grain / 2,
+                          by = grain), times = dimensions[[2]] / grain)
 
-  # setup environmental values
-  seafloor <- setup_envir_values(seafloor = seafloor,
-                                 ag_biomass = starting_values$ag_biomass,
-                                 bg_biomass = starting_values$bg_biomass,
-                                 nutrients_pool = starting_values$nutrients_pool,
-                                 detritus_pool = starting_values$detritus_pool,
-                                 random = random)
+  coords_y <- rep(x = rev(seq(from = extent_y[[1]] + grain / 2, to = extent_y[[2]] - grain / 2,
+                              by = grain)), each = dimensions[[1]] / grain)
+
+  if (length(coords_x) != length(coords_y)) {
+
+    stop("Length of x and y coordinates are not identical.", call. = FALSE)
+
+  }
+
+  # # calculate total number of cells
+  n_cells <- length(coords_x)
+
+  # create seafloor value
+  ag_biomass <- stats::runif(n = n_cells, min = starting_values$ag_biomass * (1 - random),
+                             max = starting_values$ag_biomass * (1 + random))
+
+  bg_biomass <- stats::runif(n = n_cells, min = starting_values$bg_biomass * (1 - random),
+                             max = starting_values$bg_biomass * (1 + random))
+
+  nutrients_pool <- stats::runif(n = n_cells, min = starting_values$nutrients_pool * (1 - random),
+                                 max = starting_values$nutrients_pool * (1 + random))
+
+  detritus_pool <- stats::runif(n = n_cells, min = starting_values$detritus_pool * (1 - random),
+                                max = starting_values$detritus_pool * (1 + random))
+
+  # print progress
+  if (verbose) {
+
+    message("> ...Creating seafloor with ", length(unique(coords_x)), " rows x ",
+            length(unique(coords_y)), " cols...")
+
+  }
+
+
+  # create data.frame
+  seafloor <- data.frame(x = coords_x, y = coords_y, ag_biomass = ag_biomass, bg_biomass = bg_biomass,
+                         nutrients_pool = nutrients_pool, detritus_pool = detritus_pool,
+                         detritus_fish = numeric(length = n_cells), ag_production = numeric(length = n_cells),
+                         bg_production = numeric(length = n_cells), ag_slough = numeric(length = n_cells),
+                         bg_slough = numeric(length = n_cells), ag_uptake = numeric(length = n_cells),
+                         bg_uptake = numeric(length = n_cells), consumption = numeric(length = n_cells),
+                         excretion = numeric(length = n_cells), reef = numeric(length = n_cells))
 
   # AR coords provided
-  if (!is.null(reefs)) {
+  if (!is.null(reef)) {
 
     # print progress
     if (verbose) {
 
-      message("> ...Creating ", nrow(reefs), " artifical reef cells...")
+      message("> ...Creating ", nrow(reef), " artifical reef cell(s)...")
 
     }
 
     # check if matrix with coords is provided
-    if (!inherits(x = reefs, what = "matrix")) {
+    if (!inherits(x = reef, what = "matrix")) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
 
     }
 
-    if (inherits(x = reefs, what = "matrix") && ncol(reefs) != 2) {
+    if (inherits(x = reef, what = "matrix") && ncol(reef) != 2) {
 
       stop("Please provide a 2-column with x,y coordinates of reef cells.",
            call. = FALSE)
 
     }
 
-    # set AR = 1 and non-AR = 0 and reset environmental values to 0
-    seafloor <- setup_reefs(object = seafloor, xy = reefs, dimensions = dimensions)
+    # get reef cell ids
+    reef_id <- vapply(1:nrow(reef), function(i) {
 
-  # no AR coords provided
+      rcpp_cell_from_xy(x = reef[[i, 1]], y = reef[[i, 2]], extent = c(extent_x, extent_y),
+                        dimensions = c(dimensions[[2]] / grain, dimensions[[1]] / grain),
+                        rcpp = FALSE)
+
+    }, FUN.VALUE = numeric(1))
+
+    seafloor[reef_id, "reef"] <- 1
+
+    seafloor[reef_id, c("ag_biomass", "bg_biomass", "ag_production", "bg_production",
+                        "ag_slough", "bg_slough", "ag_uptake", "bg_uptake")] <- NA
+
+    # no AR coords provided
   } else {
 
     if (verbose) {
 
-      message("> ...No artifical reefs present...")
+      message("> ...No artifical reef(s) present...")
 
     }
-
-    # add reef layer
-    seafloor$reef <- 0
-
   }
 
   return(seafloor)

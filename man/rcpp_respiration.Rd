@@ -31,11 +31,12 @@ void
 Rcpp simulate respration.
 }
 \details{
-Function to simulate respiration of fish population individuals based on movement,
-body size and water temperature. The respiration is temperature dependent with an
+Function to simulate respiration of fish individuals based on movement, body +
+size and water temperature. The respiration is temperature dependent with an
 activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
 
-If respiration is a infinite number (due to zero division), set to respiration = 1.0.
+If respiration is a infinite number (due to zero division), set to
+\code{erespiration=1.0}.
 }
 \references{
 Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
@@ -44,5 +45,6 @@ Centre for Limnology, Madison,USA.
 
 Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
 model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
-J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
+J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
 }
+\keyword{internal}

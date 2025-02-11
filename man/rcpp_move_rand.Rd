@@ -6,11 +6,11 @@
 \usage{
 rcpp_move_rand(
   fishpop,
-  coords_reef,
   move_mean,
-  move_var,
+  move_sd,
   max_dist,
   reef_attraction,
+  coords_reef,
   extent,
   dimensions
 )
@@ -18,13 +18,13 @@ rcpp_move_rand(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{coords_reef}{Matrix with ID and coords of reef cells.}
-
-\item{move_mean, move_var}{Double with mean and variance movement parameter.}
+\item{move_mean, move_sd}{Double with mean and variance movement parameter.}
 
 \item{max_dist}{Numeric with maximum movement distance}
 
 \item{reef_attraction}{Bool if attracted towards reef.}
+
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -34,17 +34,18 @@ rcpp_move_rand(
 void
 }
 \description{
-Rcpp simulate random/attracted movement.
+Rcpp simulate movement (rand/attr).
 }
 \details{
-Simulate movemnt of indivudals eiter either random (\code{reef_attraction = FALSE})
-or attracted towards the artifical reef cells (\code{reef_attraction = TRUE}).
+Simulate movement of indivudals eiter either random (\code{reef_attraction = FALSE})
+or attracted towards the reef cells (\code{reef_attraction = TRUE}).
 
-In the case of random movement, each timestep a random movement distance
+In the case of random movement, each time step a random movement distance
 is drawn from a lognorm distribution and the individal moves into a random heading
 direction drawn from an uniform distribution.
 
 In the case of attracted movement, fish individuals are aware of the distance to
 the closest reef cell in three directions ahead of them (-45, 0, 45 degree) and
-always swim in the direction of the shortest distance to a reef cell.
+always move in the direction of the shortest distance to a reef cell.
 }
+\keyword{internal}

@@ -5,13 +5,15 @@
 #'
 #' @param starting_values List with all starting value parameters.
 #' @param parameters List with all model parameters.
-#' @param verbose If TRUE, progress reports are printed.
+#' @param verbose Logical if TRUE, progress reports are printed.
 #'
 #' @details
 #' The function checks if all required starting values and parameters are provided.
 #' If parameters and/or starting values are missing, a vector with the name of the
-#' corresponding values is returned. If no arguments are provided, a list of all
-#' required parameters and values is printed
+#' corresponding values is returned.
+#'
+#' If no arguments are provided, a list of all required parameters and values is
+#' printed.
 #'
 #' @return void
 #'
@@ -28,63 +30,80 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   flag_final <- TRUE
 
   # specify all required starting values
-  required_starting <- c("ag_biomass",
-                         "bg_biomass",
+  required_starting <- c(
 
-                         "nutrients_pool",
-                         "detritus_pool",
+    # biomasses
+    "bg_biomass",
+    "ag_biomass",
 
-                         "pop_n",
-                         "pop_mean_size",
-                         "pop_var_size")
+    # nutr/detritus
+    "nutrients_pool",
+    "detritus_pool",
+
+    # fishpop related
+    "pop_n",
+    "pop_mean_size",
+    "pop_sd_size")
 
   # specify all required parameters
-  required_parameters <- c("ag_biomass_max",
-                           "ag_biomass_min",
-                           "ag_v_max",
-                           "ag_k_m",
-                           "ag_gamma",
+  required_parameters <- c(
 
-                           "bg_biomass_max",
-                           "bg_biomass_min",
-                           "bg_v_max",
-                           "bg_k_m",
-                           "bg_gamma",
+    # belowground biomass
+    "bg_biomass_min",
+    "bg_biomass_max",
+    "bg_v_max",
+    "bg_k_m",
+    "bg_gamma",
 
-                           "seagrass_thres",
-                           "seagrass_slope",
-                           "seagrass_slough",
+    # aboveground biomass
+    "ag_biomass_min",
+    "ag_biomass_max",
+    "ag_v_max",
+    "ag_k_m",
+    "ag_gamma",
 
-                           "nutrients_diffusion",
-                           "nutrients_output",
+    # seagrass relate
+    "seagrass_thres",
+    "seagrass_slope",
+    "seagrass_slough",
 
-                           "detritus_mineralization",
-                           "detritus_diffusion",
-                           "detritus_fish_decomp",
-                           "detritus_fish_diffusion",
+    # nutrients
+    "nutrients_diffusion",
+    "nutrients_loss",
 
-                           "move_mean",
-                           "move_var",
-                           "move_border",
-                           "move_reef",
-                           "move_return",
+    # detritus
+    "detritus_mineralization",
+    "detritus_diffusion",
+    "detritus_fish_decomp",
+    "detritus_fish_diffusion",
+    "detritus_loss",
 
-                           "pop_reserves_max",
-                           "pop_reserves_thres_lo",
-                           "pop_reserves_thres_hi",
-                           "pop_reserves_consump", # pop_reserves_consumption
+    # fishpop movement
+    "move_mean",
+    "move_sd",
+    "move_border",
+    "move_reef",
+    "move_return",
 
-                           "pop_a",
-                           "pop_b",
-                           "pop_k",
-                           "pop_linf",
-                           "pop_n_body",
+    # fishpop reserves
+    "pop_reserves_max",
+    "pop_reserves_thres_mean",
+    "pop_reserves_thres_sd",
+    "pop_reserves_consump",
 
-                           "resp_intercept",
-                           "resp_slope",
-                           "resp_temp_low",
-                           "resp_temp_optm",
-                           "resp_temp_max")
+    # fishpop dimensions
+    "pop_a",
+    "pop_b",
+    "pop_k",
+    "pop_linf",
+    "pop_n_body",
+
+    # fishpop respiration
+    "resp_intercept",
+    "resp_slope",
+    "resp_temp_low",
+    "resp_temp_optm",
+    "resp_temp_max")
 
   # just print list with required parameters
   if (is.null(starting_values) && is.null(parameters)) {
@@ -116,10 +135,8 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     # check if any additional parameters are present
     add_starting <- which(!names(starting_values) %in% required_starting)
 
-  }
-
   # no starting values present, add NULL so later TRUE/FALSE is working
-  else {
+  } else {
 
     check_starting <- NULL
 
@@ -154,14 +171,15 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
 
     }
 
+    # check if min is smaller than max
     # check if min parameter is above maximum parameter
-    if (any(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
-            c(parameters$bg_biomass_max, parameters$ag_biomass_max))) {
+    if (any(c(c(parameters$bg_biomass_min, parameters$ag_biomass_min) >
+              c(parameters$bg_biomass_max, parameters$ag_biomass_max)))) {
 
       # set final flag to false
       flag_final <- FALSE
 
-      warning("Minimum biomasses are larger than maximum biomasses.",
+      warning("Some minimum parameters are larger than maximum parameters.",
               call. = FALSE)
 
     }
@@ -182,26 +200,30 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
                             parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
-                            parameters$nutrients_output,
+                            parameters$nutrients_loss,
 
                             parameters$detritus_mineralization,
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
+                            parameters$detritus_loss,
 
-                            parameters$pop_reserves_max) > 1,
+                            parameters$pop_reserves_max,
+                            parameters$pop_reserves_thres_mean) > 1,
 
                           c(parameters$seagrass_slough,
 
                             parameters$nutrients_diffusion,
-                            parameters$nutrients_output,
+                            parameters$nutrients_loss,
 
                             parameters$detritus_mineralization,
                             parameters$detritus_fish_decomp,
                             parameters$detritus_diffusion,
                             parameters$detritus_fish_diffusion,
+                            parameters$detritus_loss,
 
-                            parameters$pop_reserves_max) < 0))
+                            parameters$pop_reserves_max,
+                            parameters$pop_reserves_thres_mean) < 0))
 
     # check if all fraction are between 0 and 1
     if (check_ratios) {
@@ -212,10 +234,9 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
               call. = FALSE)
 
     }
-  }
 
   # no parameter values present, add NULL so later TRUE/FALSE is working
-  else {
+  } else {
 
     check_parameters <- NULL
 
@@ -268,7 +289,7 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
     if (verbose) {
 
       message("> Not needed starting values: ",
-              additional_starting, "\n")
+              additional_starting)
 
     }
   }
@@ -319,13 +340,11 @@ check_parameters <- function(starting_values = NULL, parameters = NULL, verbose 
   }
 
   # print final message
-  if (verbose && flag_final && !is.null(parameters) || !is.null(starting_values)) {
+  if (verbose && flag_final && (!is.null(parameters) || !is.null(starting_values))) {
 
     message("> All checking done!")
 
-  }
-
-  else if (verbose && !flag_final) {
+  } else if (verbose && !flag_final) {
 
     message("> Make sure to check critical warnings!\n")
 

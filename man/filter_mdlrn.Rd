@@ -4,27 +4,29 @@
 \alias{filter_mdlrn}
 \title{filter_mdlrn}
 \usage{
-filter_mdlrn(result, timestep = max(result$max_i))
+filter_mdlrn(result, filter = max(result$max_i), reset = FALSE)
 }
 \arguments{
-\item{result}{mdl_rn object of simulation run.}
+\item{result}{mdl_rn object.}
 
-\item{timestep}{Vector with timesteps to select}
+\item{filter}{Integer with one or vector with min/max time step(s) to filter.}
+
+\item{reset}{Logical if TRUE, cumulative seafloor values are reduced by value
+before filter minimum.}
 }
 \value{
 mdl_rn
 }
 \description{
-Filter model run for specific timestep.
+Filter model run for specific time step.
 }
 \details{
-This functions allows to return only specific timesteps of a \code{mdl_rn} object
-created with \code{\link{run_simulation}}. The function ensures that the object will
-still be a \code{mdl_rn} object. Currently, only one timestep can be returned.
+This functions allows to return only specific time steps of a \code{mdl_rn} object
+created with \code{\link{run_simulation}}.
 }
 \examples{
- \dontrun{
-filter_mdlrn(result = result_rand, timestep = 10200)
+\dontrun{
+filter_mdlrn(result = result_rand, filter = c(result_rand$max_i / 2, result_rand$max_i))
 }
 
 }

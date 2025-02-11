@@ -1,3 +1,62 @@
+# arrR 2.0.1
+* Minor export bugfixes
+
+# arrR 2.0.0
+* Split `arrR` into several sup-packages
+
+# arrR 1.5.2
+* Update `rcpp_get_adjacencies`
+
+# arrR 1.5.1
+* Fix bug in detritus pool consumption if pool was very low
+* Remove `codemeta.json`
+
+# arrR 1.5
+* Remove `terra` dependency
+* Remove `RcppDist` dependency
+
+# arrR 1.4.3
+* Allow to write results into a text file
+* Renamed `get_stable_values` to `get_req_nutrients` and changes to function
+* Renamed all `*_var` parameters to `*_sd`
+
+# arrR 1.4.2.1
+* Better structure of `rcpp_fishpop_growth()`
+* Adding `rcpp_runif()` for better RNG handling
+
+# arrR 1.4.2
+* Update to "behav" movement
+* Renamed `pop_thres_reserves_lo`/`pop_thres_reserves_hi` to `pop_thres_reserves_mean`/`pop_thres_reserves_var`
+* Using `rcpp_rnorm()` for random reserves threshold value
+
+# arrR 1.4.1
+* Move some pre-process code from `R` to `Rcpp` and use internal functions
+* Improve documentation
+
+# arrR 1.4
+* Use `terra` instead of `raster`
+* Rename `nutr_input` to `nutrients_input`
+* Rename `nutrients_output` to `nutrients_loss`
+* Rename `detritus_output` to `detritus_loss`
+* Run all seagrass/water column processes on same temporal scale
+* Better global variables handling
+
+# arrR 1.3.1
+* Changes to `get_stable_values`
+
+# arrR 1.3
+* Adding `pkgdown` homepage
+* Add `detritus_output` to `rcpp_nutr_output`
+* Streamlined code for `summarize_mdlrn` and `plot.mdl_rn`
+* Adding `get_production` and `plot_production` function
+* Adding `reset` argument to `filter_mdlrn`
+
+# arrR 1.2
+* Return `pop_reserves_thres` in final `mdl_rn` object
+* Fix bug in `get_density` if not `max_i` was selected as timestep
+* Return `max_dist` in `run_simulation`
+* Minor bugfix in `run_simulation` if fishpop with 0 indiv was provided
+
 # arrR 1.1
 * Fix bug in `run_simulation` and return of `nutr_input`
 * Export `R` and `Rcpp` interfaces of core functions

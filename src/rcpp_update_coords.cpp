@@ -1,6 +1,8 @@
 #include <Rcpp.h>
+
 #include "rcpp_update_coords.h"
 #include "rcpp_translate_torus.h"
+#include "rcpp_runif.h"
 
 using namespace Rcpp;
 
@@ -15,14 +17,15 @@ using namespace Rcpp;
 //' @param extent Vector with extent of study area.
 //'
 //' @details
-//' Update xy coordinates and activity of fish individuals depending on \code{move_dist}.
+//' Update xy coordinates and activity of fish individuals depending on
+//' \code{move_dist}.
 //'
 //' @return void
 //'
 //' @aliases rcpp_update_coords
 //' @rdname rcpp_update_coords
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
                         double move_dist, double max_dist, Rcpp::NumericVector extent) {
@@ -46,10 +49,6 @@ void rcpp_update_coords(Rcpp::NumericMatrix fishpop, int i,
 
   // turn fish randomly after moving (runif always returns vector, thus (0))
   // MH: This could be correlated to heading; runif(min = heading - x, max = heading + x)
-  fishpop(i, 4) = Rcpp::runif(1, 0.0, 360.0)[0];
+  fishpop(i, 4) =  rcpp_runif(0.0, 360.0);
 
 }
-
-/*** R
-update_coords(fishpop = fishpop_values, i = i, move_dist = move_dist, max_dist = max_dist)
-*/

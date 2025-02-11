@@ -9,7 +9,7 @@ rcpp_modify_degree(x, y)
 \arguments{
 \item{x}{Numeric with current angle in degree.}
 
-\item{y}{Numerich with change of degree (negative or positive).}
+\item{y}{Numeric with change of degree (negative or positive).}
 }
 \value{
 double
@@ -18,6 +18,7 @@ double
 Rcpp modify degree.
 }
 \details{
-Modify the degree of direction heading of individuals. The function ensures that
-all degree are between 0 <= x <= 360.
+Modify the degree of direction heading of individuals. The function ensures
+that all degrees are between 0 <= x <= 360.
 }
+\keyword{internal}

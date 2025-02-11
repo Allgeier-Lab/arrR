@@ -10,14 +10,14 @@ plot_allocation(parameters)
 \item{parameters}{List with model parameters.}
 }
 \description{
-Plotting method for seagrass growth allocation ratio.
+Plotting method.
 }
 \details{
-Plotting method for the allocation ratio rule used during the seagrass growth
-dynamics. For more information see \code{\link{rcpp_seagrass_growth}} and
-\code{rcpp_allocation_ratio}.
+Plotting method for the allocation ratio rule used during the nutrient uptake
+allocation within the seagrass dynamics. For more information see \code{rcpp_seagrass_growth}
+and \code{rcpp_allocation_ratio}.
 }
 \examples{
-plot_allocation(parameters = arrR_parameters)
+plot_allocation(parameters = default_parameters)
 
 }

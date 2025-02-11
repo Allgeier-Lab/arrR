@@ -6,50 +6,46 @@
 \usage{
 setup_seafloor(
   dimensions,
-  grain,
-  reefs = NULL,
+  grain = 1,
+  reef = NULL,
   starting_values,
   random = 0,
-  verbose = TRUE,
-  ...
+  verbose = TRUE
 )
 }
 \arguments{
 \item{dimensions}{Vector with number of rows and columns (spatial dimensions).}
 
-\item{grain}{Vector with size of cells in x- and y-direction (spatial grain).}
+\item{grain}{Double with size of cells in x- and y-direction (spatial grain).}
 
-\item{reefs}{2-Column matrix with coordinates of artificial reefs.}
+\item{reef}{2-Column matrix with coordinates of artificial reefs.}
 
 \item{starting_values}{List with all starting value parameters.}
 
-\item{random}{Numeric to randomize input values by 0 = 0 percent to 1 = 100 percent.}
+\item{random}{Numeric to randomize input values.}
 
 \item{verbose}{If TRUE, progress reports are printed.}
-
-\item{...}{Additional arguments passed on to \code{\link{raster}}.}
 }
 \value{
-RasterBrick
+data.frame
 }
 \description{
 Setup seafloor for model run.
 }
 \details{
-Function to setup the environment (seafloor). The center of the environment is
-always set to (0,0). bg_biomass and ag_biomass values are in g dry weight.
-Nutrients_pool and deritus_pool values are in g nutrients. Reef cells are indicated
-by \code{reef = 1}, whereas non-reef cells are indicated by \code{reef = 0}. All
-other values are increased cumulative during the model run started by \code{\link{run_simulation}}.
+Function to setup the seafloor. The center of the seafloor raster is always x,y (0,0).
+bg_biomass and ag_biomass values are in g dry weight. nutrients_pool and deritus_pool
+values are in g nutrients. If reef cells are present, the cells in the corresponding
+raster layer are idntified usinge the value one.
 
-If \code{random > 0}, the stochasticity is added to all starting values using \code{random}
-as \code{x * (1 +- random)} as minimum and maximum values, respectively.
+If \code{random > 0}, the stochasticity is added to all starting values using
+\code{x * (1 +- random)} as minimum and maximum values, respectively.
 }
 \examples{
-reefs <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
+reef <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
 ncol = 2, byrow = TRUE)
 
-seafloor <- setup_seafloor(dimensions = c(100, 100), grain = 1,
-reefs = reefs, starting_values = arrR_starting_values)
+seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
+reef = reef, starting_values = default_starting)
 
 }

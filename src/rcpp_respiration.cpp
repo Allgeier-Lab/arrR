@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_respiration.h"
 
 using namespace Rcpp;
@@ -16,11 +17,12 @@ using namespace Rcpp;
 //' @param water_temp,min_per_i Numeric with various parameters.
 //'
 //' @details
-//' Function to simulate respiration of fish population individuals based on movement,
-//' body size and water temperature. The respiration is temperature dependent with an
+//' Function to simulate respiration of fish individuals based on movement, body +
+//' size and water temperature. The respiration is temperature dependent with an
 //' activity multiplier (Hanson et al. 1997). Originally descibed in Kitchell et al. (1977).
 //'
-//' If respiration is a infinite number (due to zero division), set to respiration = 1.0.
+//' If respiration is a infinite number (due to zero division), set to
+//' \code{erespiration=1.0}.
 //'
 //' @references
 //' Hanson, P.C., Johnson, T.B., Schindler, D.E., Kitchell, J.F., 1997. Fish
@@ -29,14 +31,14 @@ using namespace Rcpp;
 //'
 //' Kitchell, J.F., Stewart, D.J., Weininger, D., 1977. Applications of a bioenergetics
 //' model to Yellow Perch (Perca flavescens) and Walleye (Stizostedion vitreum vitreum).
-//' J. Fish. Res. Bd. Can. 34, 1922–1935. https://doi.org/10.1139/f77-258
+//' J. Fish. Res. Bd. Can. 34, 1922–1935. <https://doi.org/10.1139/f77-258>
 //'
 //' @return void
 //'
 //' @aliases rcpp_respiration
 //' @rdname rcpp_respiration
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 void rcpp_respiration(Rcpp::NumericMatrix fishpop,
                       double resp_intercept, double resp_slope,
@@ -84,10 +86,3 @@ void rcpp_respiration(Rcpp::NumericMatrix fishpop,
     }
   }
 }
-
-/*** R
-rcpp_respiration(fishpop = fishpop_values, resp_intercept = parameters$resp_intercept,
-                 resp_slope = parameters$resp_slope, resp_temp_low = parameters$resp_temp_low,
-                 resp_temp_optm = parameters$resp_temp_optm, resp_temp_max = parameters$resp_temp_max,
-                 water_temp = water_temp, min_per_i = min_per_i)
-*/

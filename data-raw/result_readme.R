@@ -1,34 +1,42 @@
 ## code to prepare `DATASET` dataset goes here
 library(arrR)
 
-starting_values <- arrR::arrR_starting_values
+# get starting values
+starting_values <- arrR::default_starting
 
-parameters <- arrR::arrR_parameters
+# get parameters
+parameters <- arrR::default_parameters
 
-check_parameters(starting_values = starting_values, parameters = parameters)
+# change some starting values and parameters
+starting_values$pop_n <- 8
 
 parameters$pop_reserves_max <- 0.1
 
 parameters$seagrass_thres <- -1/4
 
+# create 5 reef cells in center of seafloor
 reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0),
                       ncol = 2, byrow = TRUE)
 
-stable_values <- get_stable_values(starting_values = starting_values,
-                                   parameters = parameters)
+# get stable value
+stable_values <- get_req_nutr(bg_biomass = starting_values$bg_biomass,
+                              ag_biomass = starting_values$ag_biomass,
+                              parameters = parameters)
 
 starting_values$nutrients_pool <- stable_values$nutrients_pool
 
 starting_values$detritus_pool <- stable_values$detritus_pool
 
-input_seafloor <- setup_seafloor(dimensions = c(100, 100), grain = c(1, 1),
-                                 reefs = reef_matrix,
-                                 starting_values = starting_values)
+# create seafloor
+input_seafloor <- setup_seafloor(dimensions = c(50, 50), grain = 1,
+                                 reef = reef_matrix, starting_values = starting_values,
+                                 random = 0.05)
 
-input_fishpop <- setup_fishpop(seafloor = input_seafloor,
-                               starting_values = starting_values,
+# create fishpop
+input_fishpop <- setup_fishpop(seafloor = input_seafloor, starting_values = starting_values,
                                parameters = parameters)
 
+# setup iterations things
 min_per_i <- 120
 
 # run the model for 10 years
@@ -51,4 +59,4 @@ result_readme <- run_simulation(seafloor = input_seafloor, fishpop = input_fishp
                                 max_i = max_i, min_per_i = min_per_i,
                                 seagrass_each = seagrass_each, save_each = save_each)
 
-usethis::use_data(result_readme, internal = TRUE, overwrite = TRUE)
+usethis::use_data(result_readme, internal = TRUE, overwrite = FALSE)

@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+
 #include "rcpp_move_behav.h"
+#include "rcpp_which.h"
 #include "rcpp_closest_reef.h"
 #include "rcpp_get_bearing.h"
 #include "rcpp_rlognorm.h"
@@ -10,112 +12,155 @@ using namespace Rcpp;
 //' rcpp_move_behav
 //'
 //' @description
-//' Rcpp simulate movement based on bioenergetics.
+//' Rcpp simulate movement (behav).
 //'
 //' @param fishpop Matrix with fishpop values.
-//' @param coords_reef Matrix with ID and coords of reef cells.
-//' @param pop_reserves_thres Vector with threshold of pop_reserves_max to drain prior to foraging.
-//' @param move_mean,move_var Double with mean movement parameter.
+//' @param fishpop_attr Matrix with id and threshold of pop_reserves_max.
+//' @param move_mean,move_sd Double with mean movement parameter.
 //' @param move_reef Double with mean movement distance when sheltering at reef.
 //' @param move_border Double with movement distance that surrounds reef cell border.
 //' @param move_return Double with mean movement distance when returning to reef.
 //' @param max_dist Maximum distance an individual can move.
+//' @param coords_reef Matrix with ID and coords of reef cells.
 //' @param extent Vector with extent (xmin,xmax,ymin,ymax).
 //' @param dimensions Vector with dimensions (nrow, ncol).
 //'
 //' @details
-//' Fish indivivuals move based on how much nutrients they have stored in their
-//' reserves. There are three different movement behaviors.
+//' Fish individuals move based on how much nutrients they have stored in their
+//' reserves. There are three different movement states.
 //'
-//' If reservers above a certain threshold, individuals either shelter at reef cells (behavior 1)
-//' or move back towards reef cells (behavior 2). If reserves are not above the threshold,
-//' individuals move randomly across the environment to forage.
+//' If reserves are above a certain threshold, individuals either shelter at reef cells
+//' (state 1) or move back towards reef cells (state 2). If reserves are not above
+//' the threshold, individuals move randomly across the seafloor to forage (state 3).
 //'
 //' @return void
 //'
 //' @aliases rcpp_move_behav
 //' @rdname rcpp_move_behav
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
-void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix coords_reef,
-                     Rcpp::NumericVector pop_reserves_thres,
-                     double move_mean, double move_var,
-                     double move_reef, double move_border, double move_return, double max_dist,
-                     Rcpp::NumericVector extent, Rcpp::IntegerVector dimensions) {
+void rcpp_move_behav(Rcpp::NumericMatrix fishpop, Rcpp::NumericMatrix fishpop_attr,
+                     double move_mean, double move_sd, double move_reef,
+                     double move_border, double move_return, double max_dist,
+                     Rcpp::NumericMatrix coords_reef, Rcpp::NumericVector extent,
+                     Rcpp::IntegerVector dimensions) {
 
   // loop through fishpop individuals
   for (int i = 0; i < fishpop.nrow(); i++) {
 
-    // init move_dist
-    double move_dist = 0.0;
+    // init move_dist and bearing
+    double move_dist;
 
-    // behaviour 1 and 2: reserves above doggy bag
-    if (fishpop(i, 9) >= (pop_reserves_thres(i) * fishpop(i, 10))) {
+    // init vector for reef distance
+    Rcpp::NumericVector closest_reef (2, 0.0);
 
-      // get id and distance to closest reef
-      Rcpp::NumericVector closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3),
-                                                           coords_reef);
-
-      // behaviour 1: fish already at reef so they stay there
-      if (closest_reef[1] <= move_border) {
-
-        //Behavior column = 1
-        fishpop(i, 11) = 1.0;
-
-        // move_dist is now from a log-normal distribution within Xm of reef to move
-        move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
-
-      // behaviour 2: fish return towards reef
-      } else {
-
-        // set behavior column
-        fishpop(i, 11) = 2.0;
-
-        double theta = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
-                                        coords_reef(closest_reef[0], 0),
-                                        coords_reef(closest_reef[0], 1));
-
-        // update heading
-        fishpop(i, 4) = theta;
-
-        // check if reef is further away then move return distance
-        if (move_return <= closest_reef[1]) {
-
-          // sample move distance from lognorm of move_return (swim faster/move further)
-          move_dist = rcpp_rlognorm(move_return, 1.0, 0.0, max_dist);
-
-        // reef is closer than move_return, so make sure fish don't overshoot
-        } else {
-
-          // sample move distance from around distance to reef
-          move_dist = rcpp_rlognorm(closest_reef[1], 1.0, 0.0, max_dist);
-
-        }
-      }
+    // get current row id
+    int id_attr = rcpp_which(fishpop(i, 0), fishpop_attr(_, 0));
 
     // behavior 3: foraging
-    } else {
+    if (fishpop(i, 11) == 3.0) {
 
-      // Behavior column = 3
-      fishpop(i, 11) = 3.0;
+      // keep foraging because reserves below maximum
+      if (fishpop(i, 9) < fishpop(i, 10)) {
 
-      // pull move_dist from log norm with mean_move
-      move_dist = rcpp_rlognorm(move_mean, std::sqrt(move_var), 0.0, max_dist);
+        // pull move_dist from log norm with mean_move
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
 
+      // reserves are full, switch to behavior 2
+      } else {
+
+        fishpop(i, 11) = 2.0;
+
+      }
     }
 
-    // update fish coordinates and activtity
+    // behavior 2: move towards reef
+    if (fishpop(i, 11) == 2.0) {
+
+      // reserves above threshold; return towards reef
+      if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
+
+        // get id and distance to closest reef
+        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3), coords_reef);
+
+        // reef is further away than the threshold to be "on the reef"
+        if (closest_reef[1] > move_border) {
+
+          // update heading towards reef
+          fishpop(i, 4) = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
+                                           coords_reef(closest_reef[0], 1),
+                                           coords_reef(closest_reef[0], 2));;
+
+          // use either distance to closest_reef or move_return distance
+          double move_temp = std::min(closest_reef[1], move_return);
+
+          // sample move distance from around distance to reef
+          move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist);
+
+        // already at reef, switch to behavior 1
+        } else {
+
+          fishpop(i, 11) = 1.0;
+
+        }
+
+      // start to forage because reserves below threshold, switch to behavior 3
+      } else {
+
+        // pull move_dist from log norm with mean_move
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
+
+        fishpop(i, 11) = 3.0;
+
+      }
+    }
+
+    if (fishpop(i, 11) == 1.0) {
+
+      // stay at reef because reserves are above threshold
+      if (fishpop(i, 9) >= (fishpop_attr(id_attr, 1) * fishpop(i, 10))) {
+
+        // get id and distance to closest reef
+        closest_reef = rcpp_closest_reef(fishpop(i, 2), fishpop(i, 3), coords_reef);
+
+        // still "on reef"
+        if (closest_reef[1] <= move_border) {
+
+          // pull random movement distance
+          move_dist = rcpp_rlognorm(move_reef, 1.0, 0.0, max_dist);
+
+        // moved away from reef; switch to behavior 2
+        } else {
+
+          // update heading towards reef
+          fishpop(i, 4) = rcpp_get_bearing(fishpop(i, 2), fishpop(i, 3),
+                                           coords_reef(closest_reef[0], 1),
+                                           coords_reef(closest_reef[0], 2));;
+
+          // use either distance to closest_reef or move_return distance
+          double move_temp = std::min(closest_reef[1], move_return);
+
+          // sample move distance from around distance to reef
+          move_dist = rcpp_rlognorm(move_temp, 1.0, 0.0, max_dist);
+
+          fishpop(i, 11) = 2.0;
+
+        }
+
+      // start to forage because reserves below threshold, switch to behavior 3
+      } else {
+
+        // pull move_dist from log norm with mean_move
+        move_dist = rcpp_rlognorm(move_mean, move_sd, 0.0, max_dist);
+
+        fishpop(i, 11) = 3.0;
+
+      }
+    }
+
+    // update fish coordinates and activity
     rcpp_update_coords(fishpop, i, move_dist, max_dist, extent);
 
   }
 }
-
-/*** R
-rcpp_move_behav(fishpop = fishpop_values, coords_reef = coords_reef,
-                pop_reserves_thres = pop_reserves_thres, move_mean = parameters$move_mean,
-                move_var = parameters$move_var, move_reef = parameters$move_reef,
-                move_border = parameters$move_border, move_return = parameters$move_return,
-                max_dist = max_dist, extent = as.vector(extent, mode = "numeric"),
-                dimensions = dimensions)
-*/

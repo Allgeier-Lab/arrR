@@ -8,41 +8,39 @@
   x,
   what = "seafloor",
   summarize = FALSE,
-  timestep = x$max_i,
   limits = NULL,
   burn_in = TRUE,
   normalize = FALSE,
-  base_size = 10,
+  verbose = TRUE,
   ...
 )
 }
 \arguments{
-\item{x}{mdl_rn object of simulation run.}
+\item{x}{mdl_rn object.}
 
 \item{what}{Character specifying what to plot.}
 
-\item{summarize}{Character to specify which values of environmental data is used as fill.}
+\item{summarize}{Logical if values over time should be plotted.}
 
-\item{timestep}{Integer to specify which timestep is plotted.}
-
-\item{limits}{Named list with vectors with min and maximum value of values.}
+\item{limits}{Named list with vectors specifying min/max values.}
 
 \item{burn_in}{If TRUE, line to indicate burn-in time is plotted.}
 
-\item{normalize}{Logical if TRUE count is divided by timesteps.}
+\item{normalize}{Logical if TRUE, count is divided by time steps.}
 
-\item{base_size}{Numeric to specify base font size.}
+\item{verbose}{If TRUE, progress reports are printed.}
 
 \item{...}{Not used.}
 }
 \description{
-Plotting method for \code{mdl_rn} object.
+Plotting method.
 }
 \details{
-Plotting method for model run results simulated with \code{\link{run_simulation}}.
+Plotting method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}.
 The \code{what} arguments allows to either plot the seafloor values or fishpop values.
-For both, it is possible to either plot a spatial raster at a certain timestep
-\code{summarize = FALSE} or a summary of the values over all saved  timestep \code{summarize = TRUE}.
+For both, it is possible to either plot a spatial raster at a certain time step,
+or a summary of the values over all saved time steps (\code{summarize} argument).
+
 If a spatial raster is plotted, the limits can be set identical. For more information see
 \code{\link{get_limits}}.
 }

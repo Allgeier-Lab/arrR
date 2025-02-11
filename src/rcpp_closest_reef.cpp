@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_closest_reef.h"
 
 using namespace Rcpp;
@@ -20,7 +21,7 @@ using namespace Rcpp;
 //' @aliases rcpp_closest_reef
 //' @rdname rcpp_closest_reef
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix coords_reef) {
 
@@ -66,6 +67,6 @@ Rcpp::NumericVector rcpp_closest_reef(double x, double y, Rcpp::NumericMatrix co
 }
 
 /*** R
-rcpp_closest_reef(fishpop_values[1, "x"], fishpop_values[1, "y"], coords_reef)
-rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
+rcpp_closest_reef(x = 23.5, y = -6.4, reef_matrix)
+rcpp_closest_reef(x = 0.5, y = -1.5, reef_matrix)
 */

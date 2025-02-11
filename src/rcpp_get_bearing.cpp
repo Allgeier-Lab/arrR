@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+
 #include "rcpp_get_bearing.h"
 
 using namespace Rcpp;
@@ -19,7 +20,7 @@ using namespace Rcpp;
 //' @aliases rcpp_get_bearing
 //' @rdname rcpp_get_bearing
 //'
-//' @export
+//' @keywords internal
 // [[Rcpp::export]]
 double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 
@@ -40,10 +41,14 @@ double rcpp_get_bearing(double x1, double y1, double x2, double y2) {
 }
 
 /*** R
-closest_reef <- rcpp_closest_reef(fishpop_values[3, "x"], fishpop_values[3, "y"], coords_reef)
+x <- -12.5
+y <-  23.5
+
+reef_matrix <- matrix(data = c(-1, 0, 0, 1, 1, 0, 0, -1, 0, 0), ncol = 2, byrow = TRUE)
+
+closest_reef <- rcpp_closest_reef(x = x, y = y, coords_reef = reef_matrix)
 
 reef_id <- closest_reef[1] + 1
 
-rcpp_get_bearing(fishpop_values[3, "x"], fishpop_values[3, "y"],
-                 coords_reef[reef_id, "x"], coords_reef[reef_id, "y"])
+rcpp_get_bearing(x1 = x, y1 = y, x2 = reef_matrix[reef_id, 1], y2 = reef_matrix[reef_id, 2])
 */

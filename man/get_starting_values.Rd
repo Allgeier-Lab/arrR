@@ -9,7 +9,7 @@ get_starting_values(seafloor_values, fishpop_values)
 \arguments{
 \item{seafloor_values}{Matrix with seafloor values.}
 
-\item{fishpop_values}{Matrix population created with \code{\link{setup_fishpop}}.}
+\item{fishpop_values}{Matrix population values.}
 }
 \value{
 list
@@ -18,10 +18,10 @@ list
 Get mean starting values of model run.
 }
 \details{
-Internal function to get mean starting values during \code{\link{run_simulation}}.
-Includes values for i) bg_biomass, ii) ag_biomass, iii) nutrients_pool, iv) detritus_pool,
-v) pop_n, and vi) pop_mean_size. The function is needed because some of the values
-can include stochasticity  and thus differ from the starting values.
+Get mean starting values. Includes values for i) bg_biomass, ii) ag_biomass,
+iii) nutrients_pool, iv) detritus_pool, v) pop_n, and vi) pop_mean_size.
+The function is needed because some of the values can include stochasticity
+and can differ from the provided starting values.
 }
 \examples{
 \dontrun{
@@ -29,3 +29,4 @@ get_starting_values(seafloor_values = seafloor_values, fishpop_values = fishpop_
 }
 
 }
+\keyword{internal}

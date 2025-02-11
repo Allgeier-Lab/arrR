@@ -3,18 +3,19 @@
 #' @description
 #' Summarize results of model run.
 #'
-#' @param result mdl_rn object of simulation run.
-#' @param summary String with summary functions. Must return one value when used
-#' with aggregate().
+#' @param result mdl_rn object.
+#' @param what Vector with 'seafloor' and/or 'fishpop' to specify what to summarize.
+#' @param summary String with summary functions.
+#' @param verbose Logical if TRUE, warning messages are printed.
 #'
 #' @details
-#' Function to summarize results for each timestep. The \code{summary} argument
+#' Summarize results for each time step. The \code{summary} argument
 #' allows to specify which summary statistics are used for each cell. The selected
-#' statistics are used by \code{\link{aggregate}} and must return one value.
+#' statistics are used by \code{\link{aggregate}} and must return a single value.
 #'
-#' For the seafloor i) ag_biomass, ii) bg_biomass, iii) nutrients_pool, iv) detritus_pool
-#' are returned. For the fish population i) length, ii) weight, iii) died_consumption, and
-#' iv) died_background are returned.
+#' If \code{what='seafloor'}, the i) bg_biomass, ii) ag_biomass, iii) nutrients_pool,
+#' and iv) detritus_pool are returned. If \code{what='fishpop'}, the i) length,
+#' ii) weight, iii) died_consumption, and iv) died_background are returned.
 #'
 #' @return list
 #'
@@ -27,64 +28,70 @@
 #' @rdname summarize_mdlrn
 #'
 #' @export
-summarize_mdlrn <- function(result, summary = c("min", "mean", "max")) {
+summarize_mdlrn <- function(result, what = c("seafloor", "fishpop"),
+                            summary = c("min", "mean", "max"), verbose = TRUE) {
 
-  # get timesteps
-  timestep_seafloor <- result$seafloor$timestep
+  # check if what arguments makes sense
+  if (!all(what %in% c("seafloor", "fishpop"))) {
 
-  # get cols to summarise
-  seafloor <- subset(result$seafloor, select = c("ag_biomass", "bg_biomass",
-                                                 "nutrients_pool", "detritus_pool"))
-
-  seafloor <- lapply(X = summary, function(i) {
-
-    stats::aggregate(x = seafloor, by = list(timestep = timestep_seafloor),
-                     FUN = i, na.rm = TRUE)
-
-  })
-
-  seafloor <- do.call(what = "rbind", args = seafloor)
-
-  seafloor$summary <- rep(x = summary,
-                          each = nrow(seafloor) / length(summary))
-
-  # add burn_in col
-  seafloor$burn_in <- ifelse(test = seafloor$timestep < result$burn_in,
-                             yes = "yes", no = "no")
-
-  if (nrow(result$fishpop > 0)) {
-
-    # get timesteps
-    timestep_fish <- result$fishpop$timestep
-
-    # get cols to summarise
-    fishpop <- subset(result$fishpop,
-                      select = c("length", "weight",
-                                 "died_consumption", "died_background"))
-
-    fishpop <- lapply(X = summary, function(i) {
-
-      stats::aggregate(x = fishpop, by = list(timestep = timestep_fish),
-                       FUN = i, na.rm = TRUE)
-    })
-
-    fishpop <- do.call(what = "rbind", args = fishpop)
-
-    fishpop$summary <- rep(x = summary,
-                           each = nrow(fishpop) / length(summary))
-
-    # add burn_in col
-    fishpop$burn_in <- ifelse(test = fishpop$timestep < result$burn_in,
-                              yes = "yes", no = "no")
-
-  # no fish present
-  } else {
-
-    fishpop <- NA
+    stop("'what' must be either 'seafloor' and/or 'fishpop'.", call. = FALSE)
 
   }
 
-  result <- list(seafloor = seafloor, fishpop = fishpop)
+  # check if there is fishpop
+  if (nrow(result$fishpop) == 0 && "fishpop" %in% what) {
 
-  return(result)
+    # print warning
+    if (verbose) {
+
+      warning("No fish population present. Only summarizing seafloor.", call. = FALSE)
+
+    }
+
+    # only return seafloor
+    what <- "seafloor"
+
+  }
+
+  result_sum <- lapply(X = seq_along(what), function(i) {
+
+    if (what[i] == "seafloor") {
+
+      # create vector with columns
+      cols_temp <- c("ag_biomass", "bg_biomass", "nutrients_pool", "detritus_pool")
+
+      # get time steps
+      timestep_temp <- result$seafloor$timestep
+
+    } else {
+
+      # create vector with columns
+      cols_temp <- c("length", "weight", "died_consumption", "died_background")
+
+      # get time steps
+      timestep_temp <- result$fishpop$timestep
+
+    }
+
+    # subset data
+    data_temp <- result[[what[i]]][, cols_temp]
+
+    # calc summary and combine to df
+    data_temp <- do.call(what = "rbind", args = lapply(X = summary, function(j) {
+
+      cbind(stats::aggregate(x = data_temp, by = list(timestep = timestep_temp),
+                             FUN = j, na.rm = TRUE), summary = j)}))
+
+    # add burn_in col
+    data_temp$burn_in <- ifelse(test = data_temp$timestep < result$burn_in,
+                                yes = "yes", no = "no")
+
+    return(data_temp)
+
+  })
+
+  # set names of list
+  names(result_sum) <- what
+
+  return(result_sum)
 }

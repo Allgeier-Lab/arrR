@@ -1,14 +1,15 @@
 Package: arrR
 Type: Package
 Title: Individual-Based Simulation Model of Artifical Reefs in R
-Version: 1.1
-Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
+Version: 2.0.1
+Authors@R: c(person("Maximilian H.K.", "Hesselbarth",
              role = c("aut", "cre"),
              email = "mhk.hesselbarth@gmail.com",
              comment = c(ORCID = "0000-0003-1125-9918")), 
-             person("Kenzo", "Esquivel", 
+             person("Kenzo E.", "Esquivel", 
              role = "aut", 
-             email = "kesquivel@berkeley.edu"),
+             email = "kesquivel@berkeley.edu",
+             comment = c(ORCID = "0000-0002-1326-289X")),
              person("Katrina S.", "Munsterman", 
              role = "aut", 
              email = "kmunster@umich.edu", 
@@ -21,30 +22,34 @@ Authors@R: c(person("Maximillian H.K.", "Hesselbarth",
              role = "rth", 
              email = "jeallg@umich.edu", 
              comment = c(ORCID = "0000-0002-9005-6432")))
-Maintainer: Maximillian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
+Maintainer: Maximilian H.K. Hesselbarth <mhk.hesselbarth@gmail.com>
 Description: The goal of arrR is to simulate seagrass growth around artificial reefs.
-URL: https://github.com/Allgeier-Lab/arrR
+URL: https://allgeier-lab.github.io/arrR/
 BugReports: https://github.com/Allgeier-Lab/arrR/issues
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
+Remotes: Allgeier-Lab/arrR.seagrass
 Depends: R (>= 3.1)
 Imports:
+    arrR.seagrass,
     cowplot,
     ggplot2,
-    raster,
     Rcpp,
+    rlang, 
     stats,
     utils
 Suggests: 
     dplyr,
-    testthat,
+    testthat (>= 3.0.0),
     kableExtra,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 LinkingTo: 
     Rcpp,
-    RcppDist, 
-    RcppProgress
+    RcppProgress, 
+    arrR.seagrass
+Config/testthat/edition: 3

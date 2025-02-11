@@ -1,17 +1,18 @@
-citHeader("To cite arrR in publications or acknowledge its use, please use the following temporary citation information, substituting the version of the application that you used for ‘v0.0’:")
+citHeader("To cite 'arrR' in a publication or acknowledge its use, please use the following citation information:")
 
 citEntry(
   entry    = "Article",
   title    = "Mechanistic support for increased primary production around artificial reefs",
-  author   = personList(as.person("Kenzo Esquivel"),
+  author   = personList(as.person("Kenzo E. Esquivel"),
                         as.person("Maximilian H.K. Hesselbarth"),
                         as.person("Jacob E. Allgeier")),
-  journal  = "tba",
-  year     = "in preparation",
+  journal  = "Ecological Applications",
+  year     = "2022",
   volume   = "",
   number   = "",
-  pages    = "",
-  url      = "https://github.com/Allgeier-Lab/arrR",
-  version  = "0.0",
-  textVersion = paste("Esquivel, K., Hesselbarth, M.H.K., Allgeier, J.E. In preparation. Mechanistic support for increased primary production around artificial reefs. v0.0")
+  pages    = "e2617",
+  doi      = "10.1002/eap.2617",
+  textVersion = paste("Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., 2022. Mechanistic support for increased primary production around artificial reefs. Ecological Applications e2617. https://doi.org/10.1002/eap.2617")
 )
+
+

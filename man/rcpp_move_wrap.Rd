@@ -6,15 +6,15 @@
 \usage{
 rcpp_move_wrap(
   fishpop,
-  coords_reef,
+  fishpop_attr,
   movement,
-  pop_reserves_thres,
   move_mean,
-  move_var,
+  move_sd,
   move_reef,
   move_border,
   move_return,
   max_dist,
+  coords_reef,
   extent,
   dimensions
 )
@@ -22,13 +22,11 @@ rcpp_move_wrap(
 \arguments{
 \item{fishpop}{Matrix with fishpop values.}
 
-\item{coords_reef}{Matrix with ID and coords of reef cells.}
+\item{fishpop_attr}{Matrix with id and threshold of pop_reserves_max.}
 
-\item{movement}{String specifing movement algorithm. Either 'rand', 'attr' or 'behav'.}
+\item{movement}{String specifing movement algorithm.}
 
-\item{pop_reserves_thres}{Vector with threshold of pop_reserves_max to drain prior to foraging.}
-
-\item{move_mean, move_var}{Double with mean movement parameter.}
+\item{move_mean, move_sd}{Double with mean movement parameter.}
 
 \item{move_reef}{Double with mean movement distance when sheltering at reef.}
 
@@ -37,6 +35,8 @@ rcpp_move_wrap(
 \item{move_return}{Double with mean movement distance when returning to reef.}
 
 \item{max_dist}{Maximum distance an individual can move.}
+
+\item{coords_reef}{Matrix with ID and coords of reef cells.}
 
 \item{extent}{Vector with extent (xmin,xmax,ymin,ymax).}
 
@@ -50,8 +50,8 @@ Rcpp movement behavior wrapper.
 }
 \details{
 Wrapper function around different movement algorithms. Individuals can either move
-completely random (\code{movement = "rand"}), attracted towards the artifical reef cells
-\code{movement = "attr"} or movement can be  depending on the bioenergetics of the
-fish individuals \code{movement = "behav"}. For more information see \code{\link{rcpp_move_rand}},
-\code{\link{rcpp_move_rand}} or \code{\link{rcpp_move_behav}}.
+completely random (\code{'rand'}), attracted towards the artifical reef cells
+\code{'attr'} or movement can be depending on the bioenergetics of the
+fish individuals \code{'behav'}.
 }
+\keyword{internal}

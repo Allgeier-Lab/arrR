@@ -1,17 +1,17 @@
 #' plot_allocation
 #'
 #' @description
-#' Plotting method for seagrass growth allocation ratio.
+#' Plotting method.
 #'
 #' @param parameters List with model parameters.
 #'
 #' @details
-#' Plotting method for the allocation ratio rule used during the seagrass growth
-#' dynamics. For more information see \code{\link{rcpp_seagrass_growth}} and
-#' \code{rcpp_allocation_ratio}.
+#' Plotting method for the allocation ratio rule used during the nutrient uptake
+#' allocation within the seagrass dynamics. For more information see \code{rcpp_seagrass_growth}
+#' and \code{rcpp_allocation_ratio}.
 #'
 #' @examples
-#' plot_allocation(parameters = arrR_parameters)
+#' plot_allocation(parameters = default_parameters)
 #'
 #' @aliases plot_allocation
 #' @rdname plot_allocation
@@ -25,10 +25,8 @@ plot_allocation <- function(parameters) {
 
   # calc ratios
   ratio <- vapply(bg_biomass, function(x)
-    rcpp_allocation_ratio(x, biomass_min = parameters$bg_biomass_min,
-                          biomass_max = parameters$bg_biomass_max,
-                          threshold = parameters$seagrass_thres,
-                          slope = parameters$seagrass_slope),
+    arrR.seagrass:::rcpp_allocation_ratio(x, biomass_min = parameters$bg_biomass_min, biomass_max = parameters$bg_biomass_max,
+                                          threshold = parameters$seagrass_thres, slope = parameters$seagrass_slope),
     FUN.VALUE = numeric(1))
 
   # calc threshold

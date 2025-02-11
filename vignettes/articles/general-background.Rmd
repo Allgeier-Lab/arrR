@@ -1,0 +1,59 @@
+---
+title: "General Background"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{General Background}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+> For a detailed model description, please see *Esquivel, K.E., Hesselbarth, M.H.K., Allgeier, J.E., 2022. Mechanistic support for increased primary production around artificial reefs. Ecological Applications e2617. <https://doi.org/10.1002/eap.2617>*
+
+To get a BibTex entry, please use `citation("arrR")`.
+
+## Model concept
+
+The goal of **arrR** is to simulate seagrass primary production around artificial reefs (ARs) using an individual-based simulation model (IBM, DeAngelis and Grimm, 2014). The grid-based simulation environment (also referred to as seafloor) is populated by fish individuals all belonging to the same species.
+
+Seagrass primary production is simulated using a single-nutrient primary production model adapted from DeAngelis (1992). Consumption and excretion of nutrients by fish individuals follows principles of bioenergetics (Schreck and Moyle, 1990).
+
+```{r concept_fig, echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Schematic overview of model concept (Adapted from DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. https://doi.org/10.1007/978-94-011-2342-6."}
+
+knitr::include_graphics(path = "concept.png")
+
+```
+
+## Processes
+
+A simulation is started using the `run_simulation()` function. This includes the simulation of the several processes with the following scheduling:
+
+**Nutrient input**: Each iteration, a specified amount of nutrients is added to each cell of the seafloor simulation environment. This processes is simulated only if a corresponding vector with nutrient amounts is provided to `run_simulation()`.
+
+**1. Seagrass dynamics**: Simulates (i) belowground (BG) and aboveground (AG) seagrass slough (i.e., loss of standing biomass to detrital biomass). The amount of sloughed biomass depends on the current biomass of the iteration (more sloughed th closer to its maximum). (ii) Nutrient uptake from the water column is simulated based on Michaelis-Menten uptake dynamics (Lee and Dunton, 1999). The total uptake depends on the available nutrients and the current biomass. (iii) Allocation of the total nutrient uptake to BG or AG biomass. How much of the nutrient uptake is allocated BG or AG is mostly governed by the current capacity of the BG biomass.
+
+**2. Mineralization**: Simulates mineralization of detrital biomass to water column nutrients. Each iteration, a fraction of the total detrital biomass is remineralized to water column nutrients. Additionally, a fraction of the fish detrital biomass (i.e., pool of nutrients of died individuals) is decomposed to the detrital biomass.
+
+**3. Fish movement**: Simulates movement of fish individuals across the simulation environment. Movement can be random, attracted towards AR cells or based on fish characteristics. The moved distance each iterations is used to calculate the activity of individuals. For more information about movement, please see the `vignette("movement-behaviors")`. Uses torus translation at the boundary of the simulation environment.
+
+**4. Fish respiration**: A bioenergetics model is used to simulate respiration of fish individuals based on their body size and movement activity. For this, a homogeneous water temperature throughout the simulation environment is assumed.
+
+**5. Fish growth, consumption and excretion**: Fish individual growth is simulated using the Bertalanffy growth curve (Froese and Pauly, 2019). Length growth is converted to body mass and individuals need to consume the required nutrients to follow the growth curve including respiration. This amount is consumed from the detrital biomass. If the detrital biomass is smaller than the required consumption amount of individuals, mortality takes place. Lastly, fish individuals excrete non-required consumption to the nutrients pool.
+
+**6. Fish (background) mortality**: Simulates background mortality of fish individuals based on their body size. The mortality probability increases with increasing body size. All mortality events increase the (fish) detrital biomass.
+
+**7. Nutrients and detritus diffusion**: Simulates diffusion of detritus biomass and water-column nutrients across neighboring cells.
+
+**Nutrients output**: Simulates a certain fraction of the water column nutrients that are lost from each cell and timestep. This is not simulated if the corresponding parameter is set to zero.
+
+### References
+
+DeAngelis, D.L., 1992. Dynamics of Nutrient Cycling and Food Webs. Springer Netherlands, Dordrecht. <https://doi.org/10.1007/978-94-011-2342-6>
+
+DeAngelis, D.L., Grimm, V., 2014. Individual-based models in ecology after four decades. F1000Prime Reports 6, 1–6. <https://doi.org/10.12703/P6-39>
+
+Froese, R., Pauly, D., 2019. FishBase. World Wide Web electronic publication [WWW Document]. URL <www.fishbase.org> (accessed 9.9.20).
+
+Lee, K.-S., Dunton, K.H., 1999. Inorganic nitrogen acquisition in the seagrass Thalassia testudinum: Development of a whole-plant nitrogen budget. Limnol. Oceanogr. 44, 1204–1215. <https://doi.org/10.4319/lo.1999.44.5.1204>
+
+Schreck, C.B., Moyle, P.B. (Eds.), 1990. Methods for fish biology. American Fisheries Society, Bethesda, MD, USA.

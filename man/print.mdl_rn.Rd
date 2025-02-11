@@ -4,24 +4,21 @@
 \alias{print.mdl_rn}
 \title{print.mdl_rn}
 \usage{
-\method{print}{mdl_rn}(x, timestep = x$max_i, digits = 3, ...)
+\method{print}{mdl_rn}(x, digits = 3, ...)
 }
 \arguments{
 \item{x}{mdl_rn object.}
-
-\item{timestep}{Numeric with timestep to print.}
 
 \item{digits}{Numeric of decimal places (round).}
 
 \item{...}{Arguments passed to cat.}
 }
 \description{
-Printing method for \code{mdl_rn} object.
+Printing method.
 }
 \details{
-Printing method for model run results simulated with \code{\link{run_simulation}}.
-Includes some information about the model run itself and distribution values (min, mean, max)
-for some values of the seafloor and fishpop.
+Printing method for \code{mdl_rn} object simulated with \code{\link{run_simulation}}.
+Includes information about the model run and resulting seafloor and fishpop values.
 }
 \examples{
 \dontrun{

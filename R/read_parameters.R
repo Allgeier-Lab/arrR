@@ -3,14 +3,14 @@
 #' @description
 #' Read parameters from text file.
 #'
-#' @details
-#' Creates a list with all parameters or starting values. Columns must be named 'parameter' and
-#' 'value'.
-#'
 #' @param file String with path to text file.
 #' @param sep String with separator of columns.
-#' @param return_list Logical if TRUE parameters are returned as list.
-#' @param ... Arguments passed on to \code{read.table}.
+#' @param return_list Logical if TRUE, parameters are returned as list.
+#' @param ... Arguments passed on to \code{\link{read.table}}.
+#'
+#' @details
+#' Creates a list with all parameters or starting values or parameters. Columns
+#' must be named 'parameter' and value'.
 #'
 #' @return list
 #'
