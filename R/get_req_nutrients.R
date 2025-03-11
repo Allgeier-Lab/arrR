@@ -47,8 +47,11 @@ get_req_nutrients <- function(bg_biomass, ag_biomass, parameters) {
   detritus_pool <- ((nutrients_required / parameters$detritus_mineralization) -
     nutrients_required)
 
+  input <- (nutrients_required) * parameters$nutrients_loss
+
   # combine to result list
-  result <- list(nutrients_pool = nutrients_required, detritus_pool = detritus_pool)
+  result <- list(nutrients_pool = nutrients_required, detritus_pool = detritus_pool,
+                 input_nutr = input)
 
   return(result)
 }

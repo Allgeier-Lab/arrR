@@ -44,6 +44,6 @@ void rcpp_nutr_output(Rcpp::NumericMatrix seafloor, double nutrients_loss, doubl
 
     // remove output from detritus pool
     seafloor(i, 5) -= detritus;
-
+seafloor(i, 13) = nutrients;
   }
 }

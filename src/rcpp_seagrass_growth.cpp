@@ -176,6 +176,8 @@ void rcpp_seagrass_growth(Rcpp::NumericMatrix seafloor,
                                                   bg_biomass_min, bg_biomass_max,
                                                   seagrass_thres, seagrass_slope);
 
+          seafloor(i, 18) = bg_ratio;
+
           // calculate bg growth
           double bg_growth = (total_uptake * bg_ratio) / bg_gamma;
 
